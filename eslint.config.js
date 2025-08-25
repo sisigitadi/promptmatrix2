@@ -41,9 +41,10 @@ export default tseslint.config(
         sourceType: "module",
       },
       globals: {
+        // Define global variables available in browser and Node.js environments
         ...globals.browser,
         ...globals.node,
-        jest: true,
+                jest: true, // Enable Jest global variables for test files
       },
     },
   },

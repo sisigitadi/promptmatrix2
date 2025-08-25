@@ -25,9 +25,8 @@ Prompt Matrix 2.0 dirancang untuk menyederhanakan proses pembuatan prompt AI. Be
 3.  **Isi Formulir:** Lengkapi semua bidang input yang diperlukan di panel tengah. Perhatikan tooltip dan pesan validasi untuk panduan. Beberapa bidang mungkin memiliki opsi kustom atau bantuan AI.
 4.  **Pratinjau Prompt:** Saat Anda mengisi formulir, prompt yang dihasilkan akan diperbarui secara real-time di panel kanan. Anda dapat beralih antara tampilan bahasa alami dan JSON.
 5.  **Gunakan Prompt:** Salin prompt yang dihasilkan dan gunakan di model AI pilihan Anda.
-6.  **Fitur Tambahan:**
-    *   **Simpan Prompt:** Simpan prompt yang sering Anda gunakan untuk akses cepat di masa mendatang.
-    *   **Output -> Input:** Gunakan output dari satu prompt sebagai input untuk prompt lain, memungkinkan alur kerja yang kompleks.
+6.  **Simpan Prompt:** Simpan prompt yang sering Anda gunakan untuk akses cepat di masa mendatang.
+7.  **Chaining Prompt:** Gunakan output dari satu prompt sebagai input untuk prompt lain, memungkinkan alur kerja yang kompleks.
  
 
 
