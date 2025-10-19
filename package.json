@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://sisigitadi.github.io/PromptMatrixV20/",
+  "homepage": "https://sisigitadi.github.io/promptmatrix2/",
   "scripts": {
     "dev": "vite",
     "build": "node scripts/generate-docs-list.js && npm run lint && vite build",
