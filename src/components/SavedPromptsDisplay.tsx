@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { generateFileName } from "../utils/promptGenerators";
 import {
   Modal,
   Button,
@@ -56,6 +57,86 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
     setNewPromptName("");
   };
 
+  const handleExportIndividualPrompt = (prompt: any) => {
+    const filename = generateFileName(
+      `${prompt.frameworkName}_${prompt.id}`,
+      "json",
+    );
+    const blob = new Blob([JSON.stringify(prompt, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleExportCsv = () => {
+    const headers = [
+      "id",
+      "frameworkName",
+      "category",
+      "subcategory",
+      "latestTimestamp",
+      "formData",
+      "customInputs",
+      "naturalLanguageOutput",
+      "jsonOutput",
+    ];
+
+    const csvRows = [headers.join(",")];
+
+    const escapeCsvCell = (cellData: any) => {
+      if (cellData === null || cellData === undefined) {
+        return "";
+      }
+      const stringData =
+        typeof cellData === "object"
+          ? JSON.stringify(cellData)
+          : String(cellData);
+      if (
+        stringData.includes(",") ||
+        stringData.includes('"') ||
+        stringData.includes("\n")
+      ) {
+        return `"${stringData.replace(/"/g, '""')}"`;
+      }
+      return stringData;
+    };
+
+    savedPrompts.forEach((prompt) => {
+      const latestVersion = prompt.versions[prompt.versions.length - 1];
+      const row = [
+        prompt.id,
+        prompt.frameworkName,
+        prompt.category,
+        prompt.subcategory,
+        new Date(latestVersion.timestamp).toISOString(),
+        escapeCsvCell(latestVersion.formData),
+        escapeCsvCell(latestVersion.customInputs),
+        escapeCsvCell(latestVersion.naturalLanguageOutput),
+        escapeCsvCell(latestVersion.jsonOutput),
+      ];
+      csvRows.push(row.join(","));
+    });
+
+    const blob = new Blob([csvRows.join("\n")], {
+      type: "text/csv;charset=utf-8;",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = generateFileName("saved_prompts", "csv");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   const handleImport = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -85,7 +166,9 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
     if (sortBy === "nameAsc") {
       return a.frameworkName.localeCompare(b.frameworkName);
     } else if (sortBy === "dateDesc") {
-      return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+      const lastVersionA = a.versions?.[a.versions.length - 1]?.timestamp || 0;
+      const lastVersionB = b.versions?.[b.versions.length - 1]?.timestamp || 0;
+      return lastVersionB - lastVersionA;
     }
     return 0;
   });
@@ -102,14 +185,22 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
               variant="success"
               className="me-2"
               onClick={() => onExportPrompts(savedPrompts)}
-              aria-label="Ekspor Semua Prompt Tersimpan ⬇️"
+              aria-label="Ekspor Semua Prompt Tersimpan ke JSON"
             >
-              ⬇️ Ekspor
+              ⬇️ Ekspor JSON
+            </Button>
+            <Button
+              variant="success"
+              className="me-2"
+              onClick={handleExportCsv}
+              aria-label="Ekspor Semua Prompt Tersimpan ke CSV"
+            >
+              ⬇️ Ekspor CSV
             </Button>
             <Button
               variant="info"
               onClick={handleImport}
-              aria-label="Impor Prompt dari File ⬆️"
+              aria-label="Impor Prompt dari File"
             >
               ⬆️ Impor
             </Button>
@@ -197,6 +288,7 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
                           onClick={() =>
                             onLoadPrompt(
                               prompt.versions[prompt.versions.length - 1],
+                              prompt,
                             )
                           }
                           title="Muat Versi Terbaru"
@@ -222,6 +314,15 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
                         >
                           🗑️
                         </Button>
+                        <Button
+                          variant="outline-success"
+                          size="sm"
+                          onClick={() => handleExportIndividualPrompt(prompt)}
+                          title="Ekspor Prompt Ini"
+                          aria-label="Ekspor Prompt Ini"
+                        >
+                          ⬇️ JSON
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -242,7 +343,7 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
                           <Button
                             variant="outline-primary"
                             size="sm"
-                            onClick={() => onLoadPrompt(version)}
+                            onClick={() => onLoadPrompt(version, prompt)}
                             title="Muat Versi Ini"
                             aria-label={`Muat Versi ${index + 1}`}
                           >

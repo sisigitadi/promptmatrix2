@@ -22,14 +22,12 @@ export function useFrameworkNavigation(dispatch: (action: any) => void) {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  // Debounce search query
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchQuery(searchQuery);
-    }, 300); // 300ms delay
-
-    return () => {
-      clearTimeout(handler);
-    };
+    }, 300);
+    return () => clearTimeout(handler);
   }, [searchQuery]);
 
   const allFrameworksFlattened = useMemo(() => {
@@ -63,135 +61,6 @@ export function useFrameworkNavigation(dispatch: (action: any) => void) {
     return flattened;
   }, []);
 
-  const filteredFrameworks = useMemo(() => {
-    setIsLoading(true); // Start loading
-    const result: PromptFrameworksType = {};
-
-    // If no category is selected and no search/filter is active, return empty results
-    if (!selectedCategory && !debouncedSearchQuery && !toolTypeFilter) {
-      setIsLoading(false);
-      return {};
-    }
-
-    const filtered = allFrameworksFlattened.filter((framework) => {
-      const searchTerm = debouncedSearchQuery.toLowerCase();
-      const searchMatch =
-        framework.name.toLowerCase().includes(searchTerm) ||
-        (framework.id_kerangka &&
-          framework.id_kerangka.toLowerCase().includes(searchTerm)) ||
-        (framework.nama_kerangka &&
-          framework.nama_kerangka.toLowerCase().includes(searchTerm)) ||
-        framework.description.toLowerCase().includes(searchTerm) ||
-        (framework.perspektif_user &&
-          framework.perspektif_user.toLowerCase().includes(searchTerm)) ||
-        (framework.logika_ai &&
-          framework.logika_ai.toLowerCase().includes(searchTerm)) ||
-        (framework.components &&
-          framework.components.some(
-            (component) =>
-              (component.name &&
-                component.name.toLowerCase().includes(searchTerm)) ||
-              (component.label &&
-                component.label.toLowerCase().includes(searchTerm)) ||
-              (component.placeholder &&
-                component.placeholder.toLowerCase().includes(searchTerm)) ||
-              (component.info &&
-                component.info.toLowerCase().includes(searchTerm)) ||
-              (component.options &&
-                component.options.some((option) =>
-                  option.toLowerCase().includes(searchTerm),
-                )),
-          )) ||
-        (framework.komponen_prompt &&
-          framework.komponen_prompt.VARIABEL_INPUT &&
-          Object.values(framework.komponen_prompt.VARIABEL_INPUT).some(
-            (input) =>
-              (input.name && input.name.toLowerCase().includes(searchTerm)) ||
-              (input.label && input.label.toLowerCase().includes(searchTerm)) ||
-              (input.placeholder &&
-                input.placeholder.toLowerCase().includes(searchTerm)) ||
-              (input.info && input.info.toLowerCase().includes(searchTerm)) ||
-              (input.options &&
-                input.options.some((option) =>
-                  option.toLowerCase().includes(searchTerm),
-                )),
-          )) ||
-        (framework.dynamicSubcomponents &&
-          Object.values(framework.dynamicSubcomponents.options).some(
-            (subcomponentsArray) =>
-              subcomponentsArray.some(
-                (component) =>
-                  (component.name &&
-                    component.name.toLowerCase().includes(searchTerm)) ||
-                  (component.label &&
-                    component.label.toLowerCase().includes(searchTerm)) ||
-                  (component.placeholder &&
-                    component.placeholder.toLowerCase().includes(searchTerm)) ||
-                  (component.info &&
-                    component.info.toLowerCase().includes(searchTerm)) ||
-                  (component.options &&
-                    component.options.some((option) =>
-                      option.toLowerCase().includes(searchTerm),
-                    )),
-              ),
-          ));
-
-      const toolTypeMatch =
-        !toolTypeFilter || framework.toolType === toolTypeFilter;
-      const categoryMatch =
-        !selectedCategory || framework.category === selectedCategory;
-
-      return searchMatch && toolTypeMatch && categoryMatch;
-    });
-
-    console.log(
-      "filteredFrameworks useMemo - filtered array length:",
-      filtered.length,
-    );
-
-    filtered.forEach((framework) => {
-      if (!result[framework.category]) result[framework.category] = {};
-      if (!result[framework.category][framework.subcategory])
-        result[framework.category][framework.subcategory] = {};
-      result[framework.category][framework.subcategory][framework.name] =
-        framework;
-    });
-
-    setIsLoading(false); // Stop loading after filtering is done
-    return result;
-  }, [
-    debouncedSearchQuery,
-    toolTypeFilter,
-    allFrameworksFlattened,
-    selectedCategory,
-  ]);
-
-  useEffect(() => {
-    const subcategoriesToOpen: { [key: string]: boolean } = {};
-    if (debouncedSearchQuery || toolTypeFilter) {
-      Object.values(filteredFrameworks).forEach((categoryObj) => {
-        Object.keys(categoryObj).forEach((subcategoryName) => {
-          subcategoriesToOpen[subcategoryName] = true;
-        });
-      });
-    }
-    setOpenSubcategories(subcategoriesToOpen);
-  }, [filteredFrameworks, debouncedSearchQuery, toolTypeFilter]);
-
-  const findFramework = (
-    categoryName: string,
-    frameworkName: string,
-  ): { framework: Framework; category: string; subcategory: string } | null => {
-    const found = allFrameworksFlattened.find(
-      (f) => f.category === categoryName && f.name === frameworkName,
-    );
-    if (found) {
-      const { category, subcategory, ...framework } = found;
-      return { framework: framework as Framework, category, subcategory };
-    }
-    return null;
-  };
-
   const findFrameworkInAllCategories = useCallback(
     (
       frameworkName: string,
@@ -212,91 +81,209 @@ export function useFrameworkNavigation(dispatch: (action: any) => void) {
     [allFrameworksFlattened],
   );
 
-  const handleCategorySelect = (category: string) => {
+  const handleCategorySelect = useCallback((category: string) => {
     setSelectedCategory(category);
     setSelectedFramework(null);
     setSearchQuery("");
     setDebouncedSearchQuery("");
     setToolTypeFilter("");
-  };
+    setOpenSubcategories({}); // Collapse all subcategories
+    setManualOpenSubcategories({}); // Clear manual toggles
+  }, []);
 
-  const handleFrameworkSelect = (
-    frameworkName: string,
-    categoryNameFromSearch?: string,
-    subcategoryNameFromSearch?: string,
-  ) => {
-    console.log("handleFrameworkSelect called with:", {
-      frameworkName,
-      categoryNameFromSearch,
-      subcategoryNameFromSearch,
-    });
-    let frameworkDetails: {
-      framework: Framework;
-      category: string;
-      subcategory: string;
-    } | null = null;
+  const handleFrameworkSelect = useCallback(
+    (
+      frameworkName: string,
+      categoryNameFromSearch?: string,
+      subcategoryNameFromSearch?: string,
+    ) => {
+      let frameworkDetails: {
+        framework: Framework;
+        category: string;
+        subcategory: string;
+      } | null = null;
 
-    if (categoryNameFromSearch && subcategoryNameFromSearch) {
-      frameworkDetails = {
-        framework:
-          PROMPT_FRAMEWORKS[categoryNameFromSearch][subcategoryNameFromSearch][
-            frameworkName
-          ],
-        category: categoryNameFromSearch,
-        subcategory: subcategoryNameFromSearch,
-      };
-    } else if (selectedCategory) {
-      frameworkDetails = findFramework(selectedCategory, frameworkName);
-    }
-
-    if (!frameworkDetails) return;
-
-    setSelectedCategory(frameworkDetails.category);
-    setSelectedFramework(frameworkName);
-    setToolTypeFilter(frameworkDetails.framework.toolType || "");
-
-    // Reset search and toolTypeFilter to ensure only the selected subcategory is open
-    setSearchQuery("");
-    setDebouncedSearchQuery("");
-    setToolTypeFilter("");
-
-    // Explicitly open only the selected subcategory
-    setManualOpenSubcategories({
-      [frameworkDetails.subcategory]: true,
-    });
-
-    const initialFormData: { [key: string]: any } = {};
-    // Logic to handle both old and new framework structures
-    const inputs = frameworkDetails.framework.komponen_prompt?.VARIABEL_INPUT
-      ? Object.entries(
-          frameworkDetails.framework.komponen_prompt.VARIABEL_INPUT,
-        )
-      : frameworkDetails.framework.components.map((c) => [c.name, c]);
-
-    for (const [name, details] of inputs) {
-      if (details.type === "select" && details.options?.length) {
-        // If the first option is a placeholder, select the second option as default
-        if (
-          details.options[0].startsWith("Pilih") ||
-          details.options[0].startsWith("Select")
-        ) {
-          initialFormData[name] = details.options[1] || ""; // Use the second option, or empty if only one option
-        } else {
-          initialFormData[name] = details.options[0];
-        }
+      if (categoryNameFromSearch && subcategoryNameFromSearch) {
+        frameworkDetails = {
+          framework:
+            PROMPT_FRAMEWORKS[categoryNameFromSearch][
+              subcategoryNameFromSearch
+            ][frameworkName],
+          category: categoryNameFromSearch,
+          subcategory: subcategoryNameFromSearch,
+        };
       } else {
-        initialFormData[name] = details.default ?? "";
+        frameworkDetails = findFrameworkInAllCategories(frameworkName);
       }
+
+      if (!frameworkDetails) return;
+
+      setSelectedCategory(frameworkDetails.category);
+      setSelectedFramework(frameworkName);
+
+      // Reset search and filters to ensure a clean state
+      setSearchQuery("");
+      setDebouncedSearchQuery("");
+      setToolTypeFilter("");
+
+      // Explicitly open only the selected subcategory
+      setManualOpenSubcategories({
+        [frameworkDetails.subcategory]: true,
+      });
+
+      const initialFormData: { [key: string]: any } = {};
+      const inputs = frameworkDetails.framework.components.map((c) => [
+        c.name,
+        c,
+      ]);
+
+      for (const [name, details] of inputs) {
+        if (details.type === "select" && details.options?.length) {
+          if (
+            details.options[0].startsWith("Pilih") ||
+            details.options[0].startsWith("Select")
+          ) {
+            initialFormData[name] = details.options[1] || "";
+          } else {
+            initialFormData[name] = details.options[0];
+          }
+        } else {
+          initialFormData[name] = details.default ?? "";
+        }
+      }
+
+      dispatch({
+        type: "SET_FORM_DATA",
+        payload: { formData: initialFormData },
+      });
+    },
+    [dispatch, findFrameworkInAllCategories],
+  );
+
+  // Effect to read from URL on initial load
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const categoryParam = params.get("category");
+    const frameworkParam = params.get("framework");
+
+    if (frameworkParam) {
+      handleFrameworkSelect(frameworkParam);
+    } else if (categoryParam) {
+      handleCategorySelect(categoryParam);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run only once on initial mount
+
+  // Effect to update URL when selection changes
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (selectedFramework) {
+      params.set("framework", selectedFramework);
+    } else if (selectedCategory) {
+      params.set("category", selectedCategory);
     }
 
-    dispatch({ type: "SET_FORM_DATA", payload: { formData: initialFormData } });
-  };
+    const queryString = params.toString();
+    const newUrl = queryString
+      ? `${window.location.pathname}?${queryString}`
+      : window.location.pathname;
+
+    if (window.location.search !== (queryString ? `?${queryString}` : "")) {
+      history.pushState({}, "", newUrl);
+    }
+  }, [selectedCategory, selectedFramework]);
+
+  const filteredFrameworks = useMemo(() => {
+    setIsLoading(true);
+    const result: PromptFrameworksType = {};
+    const searchTerm = debouncedSearchQuery.toLowerCase();
+    const hasActiveFilter = debouncedSearchQuery || toolTypeFilter;
+
+    if (!selectedCategory && !hasActiveFilter) {
+      setIsLoading(false);
+      return {};
+    }
+
+    if (selectedCategory && !hasActiveFilter) {
+      if (PROMPT_FRAMEWORKS[selectedCategory]) {
+        result[selectedCategory] = JSON.parse(
+          JSON.stringify(PROMPT_FRAMEWORKS[selectedCategory]),
+        );
+      }
+    } else {
+      allFrameworksFlattened.forEach((framework) => {
+        const categoryName = framework.category;
+        const subcategoryName = framework.subcategory;
+        const frameworkName = framework.name;
+        const isCategorySelectedMatch =
+          !selectedCategory || categoryName === selectedCategory;
+        const searchMatch =
+          frameworkName.toLowerCase().includes(searchTerm) ||
+          (framework.id_kerangka &&
+            framework.id_kerangka.toLowerCase().includes(searchTerm)) ||
+          (framework.nama_kerangka &&
+            framework.nama_kerangka.toLowerCase().includes(searchTerm)) ||
+          framework.description.toLowerCase().includes(searchTerm);
+        const toolTypeMatch =
+          !toolTypeFilter || framework.toolType === toolTypeFilter;
+
+        if (isCategorySelectedMatch && searchMatch && toolTypeMatch) {
+          if (!result[categoryName]) result[categoryName] = {};
+          if (!result[categoryName][subcategoryName])
+            result[categoryName][subcategoryName] = {};
+          result[categoryName][subcategoryName][frameworkName] = framework;
+        }
+      });
+
+      Object.keys(result).forEach((categoryName) => {
+        if (result[categoryName]) {
+          Object.keys(result[categoryName]).forEach((subcategoryName) => {
+            if (
+              Object.keys(result[categoryName][subcategoryName]).length === 0
+            ) {
+              delete result[categoryName][subcategoryName];
+            }
+          });
+          if (Object.keys(result[categoryName]).length === 0) {
+            delete result[categoryName];
+          }
+        }
+      });
+    }
+
+    setIsLoading(false);
+    return result;
+  }, [
+    debouncedSearchQuery,
+    toolTypeFilter,
+    selectedCategory,
+    allFrameworksFlattened,
+  ]);
+
+  useEffect(() => {
+    const subcategoriesToOpen: { [key: string]: boolean } = {};
+    const hasActiveFilter = debouncedSearchQuery || toolTypeFilter;
+
+    if (hasActiveFilter) {
+      Object.values(filteredFrameworks).forEach((categoryObj) => {
+        Object.keys(categoryObj).forEach((subcategoryName) => {
+          subcategoriesToOpen[subcategoryName] = true;
+        });
+      });
+    }
+    setOpenSubcategories(subcategoriesToOpen);
+  }, [
+    filteredFrameworks,
+    debouncedSearchQuery,
+    toolTypeFilter,
+    selectedCategory,
+  ]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setSearchQuery(query);
-    setSelectedCategory(null); // Reset selected category when searching
-    setManualOpenSubcategories({}); // Clear manual toggles when searching
+    setSelectedCategory(null);
+    setManualOpenSubcategories({});
   };
 
   const handleToolTypeFilterChange = (
@@ -305,38 +292,29 @@ export function useFrameworkNavigation(dispatch: (action: any) => void) {
     setToolTypeFilter(e.target.value);
     setSearchQuery("");
     setDebouncedSearchQuery("");
-    setSelectedCategory(null); // Reset selected category when filtering by tool type
-    setManualOpenSubcategories({}); // Clear manual toggles when filtering
+    setSelectedCategory(null);
+    setManualOpenSubcategories({});
   };
 
   const handleSubcategoryToggle = (subcategoryName: string) => {
-    setManualOpenSubcategories((prev) => {
-      const isOpen = prev[subcategoryName];
-      if (isOpen) {
-        // If currently open, close it
-        return { [subcategoryName]: false };
-      } else {
-        // If currently closed, open it and close all others
-        return { [subcategoryName]: true };
-      }
-    });
+    setManualOpenSubcategories((prev) => ({
+      ...prev,
+      [subcategoryName]: !prev[subcategoryName],
+    }));
   };
 
   const handleBackToCategories = () => {
     setSelectedCategory(null);
     setSelectedFramework(null);
-
     setSearchQuery("");
     setDebouncedSearchQuery("");
     setToolTypeFilter("");
   };
 
   const currentFrameworkDetails = useMemo(() => {
-    const details = selectedFramework
+    return selectedFramework
       ? findFrameworkInAllCategories(selectedFramework)
       : null;
-    console.log("currentFrameworkDetails useMemo result:", details);
-    return details;
   }, [selectedFramework, findFrameworkInAllCategories]);
 
   return {
@@ -347,7 +325,7 @@ export function useFrameworkNavigation(dispatch: (action: any) => void) {
     openSubcategories,
     manualOpenSubcategories,
     searchQuery,
-    debouncedSearchQuery, // Expose debouncedSearchQuery
+    debouncedSearchQuery,
     toolTypeFilter,
     handleToolTypeFilterChange,
     filteredFrameworks,

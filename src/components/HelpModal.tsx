@@ -1,17 +1,60 @@
-import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Modal, Button, Spinner } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
+import {
+  FaBook,
+  FaQuestionCircle,
+  FaList,
+  FaGift,
+  FaUsers,
+  FaFileAlt,
+} from "react-icons/fa";
 
 interface HelpModalProps {
   show: boolean;
   onHide: () => void;
 }
 
+interface Document {
+  title: string;
+  file: string;
+}
+
 const HelpModal: React.FC<HelpModalProps> = ({ show, onHide }) => {
   const [markdownContent, setMarkdownContent] = useState<string | null>(null);
   const [documentTitle, setDocumentTitle] = useState<string | null>(null);
+  const [documents, setDocuments] = useState<Document[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (show && documents.length === 0) {
+      // Only fetch if modal is shown and documents are not loaded yet
+      const fetchDocuments = async () => {
+        setIsLoading(true);
+        try {
+          // The base path is needed for GitHub Pages deployment
+          const response = await fetch("/PromptMatrixV20/docs-manifest.json");
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data: Document[] = await response.json();
+          setDocuments(data);
+        } catch (e) {
+          console.error("Failed to load documents manifest:", e);
+          setError(e instanceof Error ? e.message : String(e));
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      fetchDocuments();
+    }
+  }, [show, documents.length]);
 
   const loadMarkdown = async (filePath: string, title: string) => {
+    setIsLoading(true);
+    setError(null);
     try {
       const response = await fetch(filePath);
       if (!response.ok) {
@@ -20,18 +63,50 @@ const HelpModal: React.FC<HelpModalProps> = ({ show, onHide }) => {
       const text = await response.text();
       setMarkdownContent(text);
       setDocumentTitle(title);
-    } catch (error) {
-      console.error("Failed to load markdown file:", error);
+    } catch (e) {
+      console.error("Failed to load markdown file:", e);
       setMarkdownContent(
-        `Failed to load content. Error: ${error instanceof Error ? error.message : String(error)}`,
+        `Failed to load content. Error: ${e instanceof Error ? e.message : String(e)}`,
       );
       setDocumentTitle("Error");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleBackToHelp = () => {
     setMarkdownContent(null);
     setDocumentTitle(null);
+    setError(null);
+  };
+
+  // Reset state when modal is closed
+  useEffect(() => {
+    if (!show) {
+      // Delay reset to avoid flash of content change during closing animation
+      setTimeout(() => {
+        handleBackToHelp();
+        setDocuments([]); // Clear documents to allow refetching next time
+      }, 300);
+    }
+  }, [show]);
+
+  const getIconForTitle = (title: string) => {
+    const lowerTitle = title.toLowerCase();
+    if (lowerTitle.includes("panduan")) return <FaBook />;
+    if (lowerTitle.includes("faq")) return <FaQuestionCircle />;
+    if (lowerTitle.includes("kerangka")) return <FaList />;
+    if (lowerTitle.includes("rilis")) return <FaGift />;
+    if (lowerTitle.includes("kontribusi")) return <FaUsers />;
+    return <FaFileAlt />; // Default icon
+  };
+
+  const getButtonClass = (title: string) => {
+    const lowerTitle = title.toLowerCase();
+    if (lowerTitle.includes("panduan")) return "btn-vibrant-green";
+    if (lowerTitle.includes("faq")) return "btn-electric-purple";
+    if (lowerTitle.includes("kerangka")) return "btn-cyber-orange";
+    return "btn-cool-blue"; // Default class
   };
 
   return (
@@ -47,8 +122,15 @@ const HelpModal: React.FC<HelpModalProps> = ({ show, onHide }) => {
           {documentTitle || "Prompt Matrix 2.0 - Bantuan"}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="modal-body-themed text-start">
-        {markdownContent ? (
+      <Modal.Body
+        className="modal-body-themed text-start"
+        style={{ minHeight: "300px" }}
+      >
+        {isLoading && !markdownContent ? (
+          <div className="d-flex justify-content-center align-items-center h-100">
+            <Spinner animation="border" />
+          </div>
+        ) : markdownContent ? (
           <>
             <Button
               variant="outline-info"
@@ -57,90 +139,56 @@ const HelpModal: React.FC<HelpModalProps> = ({ show, onHide }) => {
             >
               Kembali ke Bantuan
             </Button>
-            <ReactMarkdown>{markdownContent}</ReactMarkdown>
+            {isLoading ? (
+              <div className="d-flex justify-content-center align-items-center">
+                <Spinner animation="border" />
+              </div>
+            ) : (
+              <ReactMarkdown>{markdownContent}</ReactMarkdown>
+            )}
           </>
         ) : (
           <>
             <h5>Selamat Datang di Prompt Matrix 2.0!</h5>
-            <div className="d-flex flex-wrap justify-content-around gap-3 mb-4">
-              <button
-                className="help-doc-icon btn btn-vibrant-green"
-                onClick={() =>
-                  loadMarkdown(
-                    "/PromptMatrixV20/docs/PanduanPenggunaanInteraktif.md",
-                    "Panduan Penggunaan Interaktif",
-                  )
-                }
-                aria-label="Baca Panduan Penggunaan Interaktif"
-              >
-                <i className="bi bi-book"></i>
-                <span>Panduan</span>
-              </button>
-              <button
-                className="help-doc-icon btn btn-electric-purple"
-                onClick={() =>
-                  loadMarkdown("/PromptMatrixV20/docs/FAQ.md", "FAQ")
-                }
-                aria-label="Baca FAQ"
-              >
-                <i className="bi bi-question-circle"></i>
-                <span>FAQ</span>
-              </button>
-              <button
-                className="help-doc-icon btn btn-cyber-orange"
-                onClick={() =>
-                  loadMarkdown(
-                    "docs/DaftarKerangkaKerja.md",
-                    "Daftar Kerangka Kerja",
-                  )
-                }
-                aria-label="Lihat Daftar Kerangka Kerja"
-              >
-                <i className="bi bi-list-columns-reverse"></i>
-                <span>Kerangka Kerja</span>
-              </button>
-            </div>
             <p>
-              Aplikasi ini dirancang untuk membantu Anda membuat prompt AI yang
-              terstruktur dan efektif.
+              Pilih salah satu dokumen di bawah ini untuk membaca panduan lebih
+              lanjut.
             </p>
+            {error && (
+              <div className="alert alert-danger">
+                Gagal memuat daftar dokumen: {error}
+              </div>
+            )}
+            <div className="d-flex flex-wrap justify-content-around gap-3 mb-4">
+              {documents.map((doc) => (
+                <button
+                  key={doc.file}
+                  className={`help-doc-icon btn ${getButtonClass(doc.title)}`}
+                  onClick={() =>
+                    loadMarkdown(`/PromptMatrixV20/docs/${doc.file}`, doc.title)
+                  }
+                  aria-label={`Baca ${doc.title}`}
+                >
+                  {getIconForTitle(doc.title)}
+                  <span>{doc.title}</span>
+                </button>
+              ))}
+            </div>
+            <hr />
             <h6>Alur Kerja Dasar:</h6>
             <ol>
               <li>
-                <strong>Pilih Kategori:</strong> Jelajahi kategori prompt di
-                panel navigasi kiri.
+                <strong>Pilih Kategori & Kerangka Kerja:</strong> Jelajahi panel
+                navigasi kiri.
               </li>
               <li>
-                <strong>Pilih Kerangka Kerja:</strong> Pilih kerangka kerja
-                spesifik yang sesuai dengan kebutuhan Anda.
+                <strong>Isi Formulir:</strong> Lengkapi input di panel tengah.
               </li>
               <li>
-                <strong>Isi Formulir:</strong> Lengkapi semua input yang
-                diperlukan di panel tengah. Perhatikan ikon dan tooltip untuk
-                panduan.
-              </li>
-              <li>
-                <strong>Pratinjau & Hasilkan:</strong> Lihat pratinjau prompt
-                Anda di panel kanan. Anda bisa menyalinnya.
+                <strong>Pratinjau & Salin:</strong> Lihat hasilnya di panel
+                kanan.
               </li>
             </ol>
-            <h6>Fitur Tambahan:</h6>
-            <ul>
-              <li>
-                <strong>Prompt Tersimpan:</strong> Simpan, muat, ekspor, dan
-                impor prompt Anda untuk penggunaan di masa mendatang.
-              </li>
-              <li>
-                <strong>Output &rarr; Input:</strong> Gunakan output dari satu
-                prompt sebagai input untuk prompt lainnya.
-              </li>
-            </ul>
-            <h6>Prinsip Kualitas Prompt:</h6>
-            <p>
-              Setiap kerangka kerja di Prompt Matrix 2.0 dirancang untuk menjadi
-              Komprehensif, Dinamis, Relevan, Detail, memiliki Logika AI, dan
-              Perspektif Pengguna.
-            </p>
             <p className="mt-3">
               Untuk informasi lebih lanjut, silakan email ke{" "}
               <strong>
@@ -148,8 +196,6 @@ const HelpModal: React.FC<HelpModalProps> = ({ show, onHide }) => {
               </strong>
               .
             </p>
-            <hr />
-            <div className="d-flex flex-wrap justify-content-around"></div>
           </>
         )}
       </Modal.Body>

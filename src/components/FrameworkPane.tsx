@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Card,
   Form,
@@ -8,7 +8,8 @@ import {
   OverlayTrigger,
   Spinner,
 } from "react-bootstrap";
-import { Framework, FrameworkComponent } from "../data/frameworks";
+import { Framework } from "../data/frameworks";
+import VisualPromptBuilder, { PromptBlock } from "./VisualPromptBuilder";
 import {
   FaKeyboard,
   FaHashtag,
@@ -24,16 +25,17 @@ import {
   FaInfoCircle,
   FaImage,
   FaFileAlt,
+  FaExclamationCircle,
 } from "react-icons/fa";
 
 import { callGeminiApi } from "../utils/api"; // Import API functions
+import { toast } from "react-toastify";
 
 interface FrameworkPaneProps {
   currentFrameworkDetails: Framework | null;
   selectedFramework: string | null;
   formData: { [key: string]: any };
   customInputs: { [key: string]: string };
-  dynamicComponentsToRender: FrameworkComponent[];
 
   onModelSelect: (model: string) => void; // New prop for model selection
   selectedModel: string; // New prop to hold the selected model
@@ -43,7 +45,7 @@ interface FrameworkPaneProps {
   setApiKey: (key: string) => void;
   handleInputChangeWithValidation: (
     name: string,
-    value: string | number,
+    value: string | number | boolean | string[],
     inputDetails: any,
   ) => void; // New prop
   handleCustomInputChangeWithValidation: (
@@ -54,6 +56,8 @@ interface FrameworkPaneProps {
   validationErrors: { [key: string]: string }; // New prop
   touchedFields: { [key: string]: boolean }; // New prop
   handleInputBlur: (name: string) => void; // New prop
+  promptBlocks: PromptBlock[];
+  onPromptBlocksChange: (blocks: PromptBlock[]) => void;
 }
 
 const FrameworkPane: React.FC<FrameworkPaneProps> = ({
@@ -61,7 +65,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   selectedFramework,
   formData,
   customInputs,
-  dynamicComponentsToRender,
 
   onModelSelect,
   selectedModel,
@@ -74,20 +77,41 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   validationErrors,
   touchedFields,
   handleInputBlur,
+  promptBlocks,
+  onPromptBlocksChange,
 }) => {
   const [isAiAssisting, setIsAiAssisting] = useState<{
     [key: string]: boolean;
   }>({});
 
-  const [hoveredField, setHoveredField] = useState<string | null>(null);
+  const dynamicComponentsToRender = useMemo(() => {
+    const { framework } = currentFrameworkDetails || {};
+    if (!framework?.dynamicSubcomponents) {
+      return [];
+    }
+
+    // Ensure dynamicSubcomponents is always an array to handle data inconsistency
+    const subcomponentsArray = Array.isArray(framework.dynamicSubcomponents)
+      ? framework.dynamicSubcomponents
+      : [framework.dynamicSubcomponents];
+
+    return subcomponentsArray.flatMap((dynamicSubcomponent) => {
+      if (!dynamicSubcomponent || !dynamicSubcomponent.trigger) return [];
+      const triggerValue = formData[dynamicSubcomponent.trigger];
+      if (triggerValue && dynamicSubcomponent.options[triggerValue]) {
+        return dynamicSubcomponent.options[triggerValue];
+      }
+      return [];
+    });
+  }, [currentFrameworkDetails, formData]);
 
   // This function is a placeholder. In a real application, you'd implement
   // a proper toast notification system (e.g., using react-toastify).
   const showToast = (message: string, type: "success" | "error") => {
-    console.log(`Toast (${type}): ${message}`);
-    // For demonstration, we'll just use an alert for errors
-    if (type === "error") {
-      alert(message);
+    if (type === "success") {
+      toast.success(message);
+    } else {
+      toast.error(message);
     }
   };
 
@@ -99,8 +123,9 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
     // Determine properties based on structure
     const compName = inputName;
     // Use 'label' for old components, 'description' for new VARIABEL_INPUT
-    const compLabel =
-      inputDetails.label || inputDetails.description || inputName;
+    const compLabel = String(
+      inputDetails.label || inputDetails.description || inputName,
+    );
     const compType = inputDetails.type;
     const compPlaceholder = inputDetails.placeholder;
     const compOptions = inputDetails.options;
@@ -119,13 +144,13 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
         selectedModel,
       });
       if (!apiKey) {
-        alert(
+        toast.error(
           "API Key tidak ditemukan. Harap masukkan API Key di Pengaturan Mode Pengembang.",
         );
         return;
       }
       if (!isApiKeyEnabled) {
-        alert(
+        toast.error(
           "API Key tidak diaktifkan. Harap aktifkan API Key di Pengaturan Mode Pengembang.",
         );
         return;
@@ -134,7 +159,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
       setIsAiAssisting((prev) => ({ ...prev, [name]: true }));
 
       const currentFramework = currentFrameworkDetails?.framework;
-      const aiLogic = currentFramework?.logika_ai || "";
+      const aiLogic = currentFramework?.ai_logic_description || "";
       const userPerspective = currentFramework?.perspektif_user || "";
       const role = currentFramework?.komponen_prompt?.PERAN || "";
       const context = currentFramework?.komponen_prompt?.KONTEKS || "";
@@ -156,18 +181,28 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
       }
 
       try {
-        const response = await callGeminiApi(
+        const apiResult = await callGeminiApi(
           apiKey,
           aiPrompt,
           selectedModel,
           undefined,
           imagePayload,
         );
-        handleInputChangeWithValidation(name, response, details);
-      } catch (error) {
+
+        if (apiResult.error) {
+          // Check for the error property
+          showToast(
+            `Gagal mendapatkan bantuan AI untuk ${compLabel}. ${apiResult.error}`,
+            "error",
+          );
+        } else {
+          handleInputChangeWithValidation(name, apiResult, details);
+        }
+      } catch (error: any) {
+        // Catch any unexpected errors
         console.error("AI Assist Error:", error);
         showToast(
-          `Gagal mendapatkan bantuan AI untuk ${compLabel}. Error: ${error instanceof Error ? error.message : String(error)}`,
+          `Gagal mendapatkan bantuan AI untuk ${compLabel}. Error: ${error.message || String(error)}`,
           "error",
         );
       } finally {
@@ -215,7 +250,10 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
 
     return (
       <Form.Group className="mb-3" controlId={compName} key={compName}>
-        <Form.Label className="small mb-1 d-flex align-items-center">
+        <Form.Label
+          htmlFor={compName}
+          className="small mb-1 d-flex align-items-center"
+        >
           {getIconForType(compType)}
           {compLabel}
 
@@ -247,6 +285,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
             <InputGroup className="flex-grow-1">
               <Form.Control
                 type="text"
+                id={compName}
                 name={compName}
                 placeholder={compPlaceholder}
                 value={formData[compName] || ""}
@@ -258,8 +297,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   )
                 }
                 onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
                 isInvalid={
                   touchedFields[compName] && !!validationErrors[compName]
                 }
@@ -287,7 +324,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 type="invalid"
                 id={`validation-feedback-${compName}`}
               >
-                {validationErrors[compName] || " "}
+                <FaExclamationCircle className="me-1" />
+                {validationErrors[compName] || " "}
               </Form.Control.Feedback>
             </InputGroup>
             {showDevMode && (
@@ -303,7 +341,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 }
                 disabled={isAiAssisting[compName]}
                 title="AI Assist"
-                className="ms-2 glow-on-hover"
               >
                 {isAiAssisting[compName] ? (
                   <Spinner as="span" animation="border" size="sm" />
@@ -319,6 +356,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
             <InputGroup className="flex-grow-1">
               <Form.Control
                 type="number"
+                id={compName}
                 name={compName}
                 placeholder={compPlaceholder}
                 value={formData[compName] || ""}
@@ -330,8 +368,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   )
                 }
                 onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
                 isInvalid={
                   touchedFields[compName] && !!validationErrors[compName]
                 }
@@ -359,7 +395,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 type="invalid"
                 id={`validation-feedback-${compName}`}
               >
-                {validationErrors[compName] || " "}
+                <FaExclamationCircle className="me-1" />
+                {validationErrors[compName] || " "}
               </Form.Control.Feedback>
             </InputGroup>
             {showDevMode && (
@@ -375,7 +412,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 }
                 disabled={isAiAssisting[compName]}
                 title="AI Assist"
-                className="ms-2 glow-on-hover"
               >
                 {isAiAssisting[compName] ? (
                   <Spinner as="span" animation="border" size="sm" />
@@ -391,6 +427,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
             <InputGroup className="flex-grow-1">
               <Form.Control
                 as="textarea"
+                id={compName}
                 name={compName}
                 placeholder={compPlaceholder}
                 value={formData[compName] || ""}
@@ -402,8 +439,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   )
                 }
                 onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
                 rows={Math.max(
                   3,
                   (formData[compName] || "").split("\n").length + 1,
@@ -435,7 +470,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 type="invalid"
                 id={`validation-feedback-${compName}`}
               >
-                {validationErrors[compName] || " "}
+                <FaExclamationCircle className="me-1" />
+                {validationErrors[compName] || " "}
               </Form.Control.Feedback>
             </InputGroup>
             {showDevMode && (
@@ -451,7 +487,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 }
                 disabled={isAiAssisting[compName]}
                 title="AI Assist"
-                className="ms-2 glow-on-hover"
               >
                 {isAiAssisting[compName] ? (
                   <Spinner as="span" animation="border" size="sm" />
@@ -467,6 +502,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
             <InputGroup className="flex-grow-1">
               <Form.Control
                 as="textarea"
+                id={compName}
                 name={compName}
                 placeholder={
                   compPlaceholder || "Masukkan hal-hal yang ingin dihindari..."
@@ -480,8 +516,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   )
                 }
                 onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
                 rows={Math.max(
                   2,
                   (formData[compName] || "").split("\n").length + 1,
@@ -513,7 +547,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 type="invalid"
                 id={`validation-feedback-${compName}`}
               >
-                {validationErrors[compName] || " "}
+                <FaExclamationCircle className="me-1" />
+                {validationErrors[compName] || " "}
               </Form.Control.Feedback>
             </InputGroup>
             {showDevMode && (
@@ -529,7 +564,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 }
                 disabled={isAiAssisting[compName]}
                 title="AI Assist"
-                className="ms-2 glow-on-hover"
               >
                 {isAiAssisting[compName] ? (
                   <Spinner as="span" animation="border" size="sm" />
@@ -545,6 +579,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
             <InputGroup className="flex-grow-1">
               <Form.Control
                 type="color"
+                id={compName}
                 name={compName}
                 placeholder={compPlaceholder}
                 value={formData[compName] || ""}
@@ -556,8 +591,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   )
                 }
                 onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
                 isInvalid={
                   touchedFields[compName] && !!validationErrors[compName]
                 }
@@ -585,7 +618,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 type="invalid"
                 id={`validation-feedback-${compName}`}
               >
-                {validationErrors[compName] || " "}
+                <FaExclamationCircle className="me-1" />
+                {validationErrors[compName] || " "}
               </Form.Control.Feedback>
             </InputGroup>
             {showDevMode && (
@@ -601,7 +635,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 }
                 disabled={isAiAssisting[compName]}
                 title="AI Assist"
-                className="ms-2 glow-on-hover"
               >
                 {isAiAssisting[compName] ? (
                   <Spinner as="span" animation="border" size="sm" />
@@ -617,6 +650,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
             <InputGroup className="flex-grow-1">
               <Form.Control
                 type="date"
+                id={compName}
                 name={compName}
                 placeholder={compPlaceholder}
                 value={formData[compName] || ""}
@@ -628,8 +662,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   )
                 }
                 onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
                 isInvalid={
                   touchedFields[compName] && !!validationErrors[compName]
                 }
@@ -657,7 +689,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 type="invalid"
                 id={`validation-feedback-${compName}`}
               >
-                {validationErrors[compName] || " "}
+                <FaExclamationCircle className="me-1" />
+                {validationErrors[compName] || " "}
               </Form.Control.Feedback>
             </InputGroup>
             {showDevMode && (
@@ -673,7 +706,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 }
                 disabled={isAiAssisting[compName]}
                 title="AI Assist"
-                className="ms-2 glow-on-hover"
               >
                 {isAiAssisting[compName] ? (
                   <Spinner as="span" animation="border" size="sm" />
@@ -688,6 +720,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
           <div className="d-flex align-items-center">
             <InputGroup className="flex-grow-1">
               <Form.Range
+                id={compName}
                 name={compName}
                 min={inputDetails.min || 0}
                 max={inputDetails.max || 100}
@@ -701,8 +734,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   )
                 }
                 onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
                 isInvalid={
                   touchedFields[compName] && !!validationErrors[compName]
                 }
@@ -721,7 +752,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 type="invalid"
                 id={`validation-feedback-${compName}`}
               >
-                {validationErrors[compName] || " "}
+                <FaExclamationCircle className="me-1" />
+                {validationErrors[compName] || " "}
               </Form.Control.Feedback>
             </InputGroup>
             {showDevMode && (
@@ -737,7 +769,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 }
                 disabled={isAiAssisting[compName]}
                 title="AI Assist"
-                className="ms-2 glow-on-hover"
               >
                 {isAiAssisting[compName] ? (
                   <Spinner as="span" animation="border" size="sm" />
@@ -749,49 +780,72 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
           </div>
         )}
         {compType === "select" && (
-          <div className="d-flex align-items-center">
-            <InputGroup className="flex-grow-1">
-              <Form.Select
-                name={compName}
-                value={formData[compName] || ""}
-                onChange={(e) =>
-                  handleInputChangeWithValidation(
-                    compName,
-                    e.target.value,
-                    inputDetails,
-                  )
-                }
-                onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
-                isInvalid={
-                  touchedFields[compName] && !!validationErrors[compName]
-                }
-                aria-invalid={
-                  touchedFields[compName] && !!validationErrors[compName]
-                    ? "true"
-                    : "false"
-                }
-                aria-describedby={
-                  touchedFields[compName] && !!validationErrors[compName]
-                    ? `validation-feedback-${compName}`
-                    : undefined
-                }
-              >
-                {compOptions?.map((option: string) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </Form.Select>
-              <Form.Control.Feedback
-                type="invalid"
-                id={`validation-feedback-${compName}`}
-              >
-                {validationErrors[compName] || " "}
-              </Form.Control.Feedback>
-            </InputGroup>
-          </div>
+          <>
+            <div className="d-flex align-items-center">
+              <InputGroup className="flex-grow-1">
+                <Form.Select
+                  id={compName}
+                  name={compName}
+                  value={formData[compName] || ""}
+                  onChange={(e) =>
+                    handleInputChangeWithValidation(
+                      compName,
+                      e.target.value,
+                      inputDetails,
+                    )
+                  }
+                  onBlur={() => handleInputBlur(compName)}
+                  isInvalid={
+                    touchedFields[compName] && !!validationErrors[compName]
+                  }
+                >
+                  {compOptions?.map(
+                    (option: string | { label: string; value: string }) => {
+                      if (typeof option === "string") {
+                        return (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        );
+                      }
+                      return (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      );
+                    },
+                  )}
+                </Form.Select>
+                <Form.Control.Feedback type="invalid">
+                  {validationErrors[compName]}
+                </Form.Control.Feedback>
+              </InputGroup>
+            </div>
+            {formData[compName] === "Lainnya..." && (
+              <Form.Group className="mt-2" controlId={`${compName}-custom`}>
+                <Form.Control
+                  type="text"
+                  placeholder={`Sebutkan ${compLabel} Lainnya`}
+                  value={customInputs[compName] || ""}
+                  onChange={(e) =>
+                    handleCustomInputChangeWithValidation(
+                      compName,
+                      e.target.value,
+                      inputDetails,
+                    )
+                  }
+                  onBlur={() => handleInputBlur(`${compName}-custom`)}
+                  isInvalid={
+                    touchedFields[`${compName}-custom`] &&
+                    !!validationErrors[`${compName}-custom`]
+                  }
+                />
+                <Form.Control.Feedback type="invalid">
+                  {validationErrors[`${compName}-custom`]}
+                </Form.Control.Feedback>
+              </Form.Group>
+            )}
+          </>
         )}
         {compType === "boolean" && (
           <div className="d-flex align-items-center">
@@ -809,8 +863,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 )
               }
               onBlur={() => handleInputBlur(compName)}
-              onMouseEnter={() => setHoveredField(compName)}
-              onMouseLeave={() => setHoveredField(null)}
               isInvalid={
                 touchedFields[compName] && !!validationErrors[compName]
               }
@@ -829,7 +881,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
               type="invalid"
               id={`validation-feedback-${compName}`}
             >
-              {validationErrors[compName] || " "}
+              {validationErrors[compName] || " "}
             </Form.Control.Feedback>
           </div>
         )}
@@ -838,6 +890,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
             <InputGroup className="flex-grow-1">
               <Form.Control
                 as="textarea"
+                id={compName}
                 name={compName}
                 placeholder={compPlaceholder}
                 value={formData[compName] || ""}
@@ -849,8 +902,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   )
                 }
                 onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
                 rows={Math.max(
                   5,
                   (formData[compName] || "").split("\n").length + 1,
@@ -882,7 +933,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 type="invalid"
                 id={`validation-feedback-${compName}`}
               >
-                {validationErrors[compName] || " "}
+                <FaExclamationCircle className="me-1" />
+                {validationErrors[compName] || " "}
               </Form.Control.Feedback>
             </InputGroup>
             {showDevMode && (
@@ -898,7 +950,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 }
                 disabled={isAiAssisting[compName]}
                 title="AI Assist"
-                className="ms-2 glow-on-hover"
               >
                 {isAiAssisting[compName] ? (
                   <Spinner as="span" animation="border" size="sm" />
@@ -910,54 +961,79 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
           </div>
         )}
         {compType === "multiselect" && (
-          <div className="w-100">
-            <InputGroup>
-              <Form.Select
-                name={compName}
-                value={formData[compName] || []}
-                onChange={(e) =>
-                  handleInputChangeWithValidation(
-                    compName,
-                    Array.from(
-                      e.target.selectedOptions,
-                      (option) => option.value,
-                    ),
-                    inputDetails,
-                  )
-                }
-                onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
-                className="form-select"
-                multiple
-                isInvalid={
-                  touchedFields[compName] && !!validationErrors[compName]
-                }
-                aria-invalid={
-                  touchedFields[compName] && !!validationErrors[compName]
-                    ? "true"
-                    : "false"
-                }
-                aria-describedby={
-                  touchedFields[compName] && !!validationErrors[compName]
-                    ? `validation-feedback-${compName}`
-                    : undefined
-                }
-              >
-                {compOptions?.map((opt: string) => (
-                  <option key={opt} value={opt}>
-                    {opt}
-                  </option>
-                ))}
-              </Form.Select>
-              <Form.Control.Feedback
-                type="invalid"
-                id={`validation-feedback-${compName}`}
-              >
-                {validationErrors[compName] || " "}
-              </Form.Control.Feedback>
-            </InputGroup>
-          </div>
+          <>
+            <div className="w-100">
+              <InputGroup>
+                <Form.Select
+                  name={compName}
+                  value={formData[compName] || []}
+                  onChange={(e) =>
+                    handleInputChangeWithValidation(
+                      compName,
+                      Array.from(
+                        e.target.selectedOptions,
+                        (option) => option.value,
+                      ),
+                      inputDetails,
+                    )
+                  }
+                  onBlur={() => handleInputBlur(compName)}
+                  className="form-select"
+                  multiple
+                  isInvalid={
+                    touchedFields[compName] && !!validationErrors[compName]
+                  }
+                  aria-invalid={
+                    touchedFields[compName] && !!validationErrors[compName]
+                      ? "true"
+                      : "false"
+                  }
+                  aria-describedby={
+                    touchedFields[compName] && !!validationErrors[compName]
+                      ? `validation-feedback-${compName}`
+                      : undefined
+                  }
+                >
+                  {compOptions?.map((opt: { label: string; value: string }) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </Form.Select>
+                <Form.Control.Feedback
+                  type="invalid"
+                  id={`validation-feedback-${compName}`}
+                >
+                  {validationErrors[compName] || " "}
+                </Form.Control.Feedback>
+              </InputGroup>
+            </div>
+            {formData[compName] &&
+              formData[compName].includes("Lainnya...") && (
+                <Form.Group className="mt-2" controlId={`${compName}-custom`}>
+                  <Form.Control
+                    type="text"
+                    placeholder={`Sebutkan ${compLabel} Lainnya`}
+                    value={customInputs[compName] || ""}
+                    onChange={(e) =>
+                      handleCustomInputChangeWithValidation(
+                        compName,
+                        e.target.value,
+                        inputDetails,
+                      )
+                    }
+                    onBlur={() => handleInputBlur(`${compName}-custom`)}
+                    isInvalid={
+                      touchedFields[`${compName}-custom`] &&
+                      !!validationErrors[`${compName}-custom`]
+                    }
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {validationErrors[`${compName}-custom`]}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              )}
+          </>
         )}
         {compType === "image" && (
           <div className="d-flex align-items-center">
@@ -965,8 +1041,10 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
               <Form.Control
                 type="file"
                 name={compName}
+                accept="image/*" // Accept only image files
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
                     const reader = new FileReader();
                     reader.onload = (event) => {
                       handleInputChangeWithValidation(
@@ -975,12 +1053,10 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                         inputDetails,
                       );
                     };
-                    reader.readAsDataURL(e.target.files[0]);
+                    reader.readAsDataURL(file);
                   }
                 }}
                 onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
                 isInvalid={
                   touchedFields[compName] && !!validationErrors[compName]
                 }
@@ -999,7 +1075,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 type="invalid"
                 id={`validation-feedback-${compName}`}
               >
-                {validationErrors[compName] || " "}
+                <FaExclamationCircle className="me-1" />
+                {validationErrors[compName] || " "}
               </Form.Control.Feedback>
             </InputGroup>
           </div>
@@ -1010,22 +1087,25 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
               <Form.Control
                 type="file"
                 name={compName}
+                accept=".txt,.pdf" // Accept only text and PDF files
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
                     const reader = new FileReader();
                     reader.onload = (event) => {
+                      // For text files, read as text. For PDF, we might need a library to extract text.
+                      // For simplicity, we'll read all as text for now.
                       handleInputChangeWithValidation(
                         compName,
                         event.target?.result as string,
                         inputDetails,
                       );
                     };
-                    reader.readAsDataURL(e.target.files[0]);
+                    // Read as text for .txt, for .pdf it will be base64 which can be processed by AI
+                    reader.readAsText(file);
                   }
                 }}
                 onBlur={() => handleInputBlur(compName)}
-                onMouseEnter={() => setHoveredField(compName)}
-                onMouseLeave={() => setHoveredField(null)}
                 isInvalid={
                   touchedFields[compName] && !!validationErrors[compName]
                 }
@@ -1044,7 +1124,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 type="invalid"
                 id={`validation-feedback-${compName}`}
               >
-                {validationErrors[compName] || " "}
+                <FaExclamationCircle className="me-1" />
+                {validationErrors[compName] || " "}
               </Form.Control.Feedback>
             </InputGroup>
           </div>
@@ -1053,12 +1134,55 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
     );
   };
 
+  const [isWizardMode, setIsWizardMode] = useState(false);
+  const [wizardStep, setWizardStep] = useState(0);
+
+  // Reset wizard step when framework changes
+  React.useEffect(() => {
+    setWizardStep(0);
+  }, [selectedFramework]);
+
+  const allComponentsToRender = useMemo(() => {
+    const staticComps = currentFrameworkDetails?.framework?.components || [];
+    return [...staticComps, ...dynamicComponentsToRender];
+  }, [currentFrameworkDetails, dynamicComponentsToRender]);
+
+  const handleNextStep = () => {
+    if (wizardStep < allComponentsToRender.length - 1) {
+      setWizardStep(wizardStep + 1);
+    }
+  };
+
+  const handlePrevStep = () => {
+    if (wizardStep > 0) {
+      setWizardStep(wizardStep - 1);
+    }
+  };
+
+  const currentWizardComponent = allComponentsToRender[wizardStep];
+  const isNextDisabled =
+    (currentWizardComponent &&
+      !currentWizardComponent.optional &&
+      !!validationErrors[currentWizardComponent.name]) ||
+    (currentWizardComponent &&
+      !currentWizardComponent.optional &&
+      !formData[currentWizardComponent.name]);
+
   return (
     <Card className="flex-grow-1 h-100">
       <Card.Body className="d-flex flex-column text-start">
-        <h2 className="h5 pb-3 mb-3 border-bottom">
-          3. Komponen Kerangka Kerja:
-        </h2>
+        <div className="d-flex justify-content-between align-items-center pb-3 mb-3 border-bottom">
+          <h2 className="h5 mb-0">3. Komponen Kerangka Kerja:</h2>
+          <Form.Check
+            type="switch"
+            id="wizard-mode-switch"
+            label="Mode Wizard"
+            checked={isWizardMode}
+            onChange={() => setIsWizardMode(!isWizardMode)}
+            title="Aktifkan untuk mode panduan langkah-demi-langkah"
+          />
+        </div>
+
         {!currentFrameworkDetails ? (
           <div className="flex-grow-1 d-flex flex-column justify-content-center align-items-center placeholder-content">
             <svg
@@ -1095,81 +1219,153 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
               kiri untuk melihat komponennya di sini.
             </p>
           </div>
+        ) : currentFrameworkDetails.framework?.builder === "visual" ? (
+          <VisualPromptBuilder
+            blocks={promptBlocks}
+            onBlocksChange={onPromptBlocksChange}
+          />
         ) : (
           <>
             <h3 className="h5">{selectedFramework}</h3>
             <p className="small">
-              {currentFrameworkDetails.framework.description}
+              {currentFrameworkDetails.framework?.description}
             </p>
             <div className="flex-grow-1 overflow-auto pe-2">
-              <Form>
-                {currentFrameworkDetails.framework.components
-                  ? currentFrameworkDetails.framework.components.map((comp) =>
-                      renderFormComponent(comp.name, comp),
-                    )
-                  : currentFrameworkDetails.framework.komponen_prompt
-                        ?.VARIABEL_INPUT
-                    ? Object.entries(
-                        currentFrameworkDetails.framework.komponen_prompt
-                          .VARIABEL_INPUT,
-                      ).map(([name, details]) =>
-                        renderFormComponent(name, details),
-                      )
-                    : null}
-                {dynamicComponentsToRender.length > 0 && (
-                  <div
-                    className="p-2 mb-3 rounded"
-                    style={{ backgroundColor: "rgba(0, 255, 255, 0.1)" }}
-                  >
-                    <p className="small mb-0">
-                      Bagian ini muncul berdasarkan pilihan Anda di atas. Ini
-                      adalah bidang dinamis yang menyesuaikan dengan kebutuhan
-                      spesifik Anda.
+              {isWizardMode ? (
+                // WIZARD MODE UI
+                <div className="d-flex flex-column h-100">
+                  <div className="flex-grow-1">
+                    <p className="text-center mb-2">
+                      Langkah {wizardStep + 1} dari{" "}
+                      {allComponentsToRender.length}
                     </p>
-                  </div>
-                )}
-                {dynamicComponentsToRender.map((comp) =>
-                  renderFormComponent(comp.name, comp),
-                )}
-              </Form>
-              {currentFrameworkDetails.examples &&
-                currentFrameworkDetails.examples.length > 0 && (
-                  <div className="mt-4 pt-3 border-top">
-                    <h4 className="h6 mb-3">Contoh Few-Shot:</h4>
-                    {currentFrameworkDetails.examples.map((example, index) => (
+                    <div
+                      className="progress mb-4"
+                      role="progressbar"
+                      aria-valuenow={
+                        ((wizardStep + 1) / allComponentsToRender.length) * 100
+                      }
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      style={{ height: "8px" }}
+                    >
                       <div
-                        key={index}
-                        className="mb-3 p-3 border rounded"
-                        style={{ backgroundColor: "var(--background-color)" }}
-                      >
-                        <p className="small mb-1">
-                          <strong>Input Contoh:</strong>
+                        className="progress-bar"
+                        style={{
+                          width: `${((wizardStep + 1) / allComponentsToRender.length) * 100}%`,
+                        }}
+                      ></div>
+                    </div>
+                    {currentWizardComponent && (
+                      <div className="mb-3 p-3 border rounded">
+                        <p className="fw-bold">
+                          Panduan Cara Menggunakan Mode Wizard:
                         </p>
-                        <pre
-                          className="small text-muted"
-                          style={{
-                            whiteSpace: "pre-wrap",
-                            wordBreak: "break-word",
-                          }}
-                        >
-                          {example.input}
-                        </pre>
-                        <p className="small mb-1">
-                          <strong>Output Contoh:</strong>
+                        <p className="small mb-2">
+                          Mode Wizard memandu Anda mengisi prompt langkah demi
+                          langkah. Fokus pada satu input relevan per langkah.
+                          Gunakan tombol navigasi. Bidang wajib diisi sebelum
+                          lanjut. Mode ini ideal untuk prompt kompleks atau
+                          pengguna baru. Matikan sakelar &apos;Mode Wizard&apos;
+                          untuk keluar.
                         </p>
-                        <pre
-                          className="small text-muted"
-                          style={{
-                            whiteSpace: "pre-wrap",
-                            wordBreak: "break-word",
-                          }}
-                        >
-                          {example.output}
-                        </pre>
+                        <p className="fw-bold">Deskripsi Kerangka Kerja:</p>
+                        <p className="small mb-0">
+                          {currentFrameworkDetails.framework?.description && (
+                            <p className="mb-1">
+                              <strong>Ringkasan:</strong>{" "}
+                              {currentFrameworkDetails.framework.description}
+                            </p>
+                          )}
+                          {currentFrameworkDetails.framework
+                            ?.perspektif_user && (
+                            <p className="mb-1">
+                              <strong>Perspektif Pengguna:</strong>{" "}
+                              {
+                                currentFrameworkDetails.framework
+                                  .perspektif_user
+                              }
+                            </p>
+                          )}
+                          {currentFrameworkDetails.framework
+                            ?.ai_logic_description && (
+                            <p className="mb-1">
+                              <strong>Logika AI:</strong>{" "}
+                              {
+                                currentFrameworkDetails.framework
+                                  .ai_logic_description
+                              }
+                            </p>
+                          )}
+                          {currentFrameworkDetails.framework
+                            ?.konteks_tambahan_instruksi_khusus && (
+                            <p className="mb-1">
+                              <strong>Instruksi Khusus:</strong>{" "}
+                              {
+                                currentFrameworkDetails.framework
+                                  .konteks_tambahan_instruksi_khusus
+                              }
+                            </p>
+                          )}
+                          {currentFrameworkDetails.framework
+                            ?.contoh_kalimat && (
+                            <p className="mb-0">
+                              <strong>Contoh Penggunaan:</strong>{" "}
+                              {currentFrameworkDetails.framework.contoh_kalimat}
+                            </p>
+                          )}
+                        </p>
                       </div>
-                    ))}
+                    )}
+                    <Form>
+                      {currentWizardComponent &&
+                        renderFormComponent(
+                          currentWizardComponent.name,
+                          currentWizardComponent,
+                        )}
+                    </Form>
                   </div>
-                )}
+                  <div className="mt-auto pt-3 d-flex justify-content-between">
+                    <Button
+                      variant="secondary"
+                      onClick={handlePrevStep}
+                      disabled={wizardStep === 0}
+                    >
+                      &larr; Sebelumnya
+                    </Button>
+                    <Button
+                      variant="primary"
+                      onClick={handleNextStep}
+                      disabled={
+                        wizardStep === allComponentsToRender.length - 1 ||
+                        isNextDisabled
+                      }
+                    >
+                      Berikutnya &rarr;
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                // STANDARD FORM UI
+                <Form>
+                  {currentFrameworkDetails.framework?.components?.map((comp) =>
+                    renderFormComponent(comp.name, comp),
+                  )}
+                  {dynamicComponentsToRender.length > 0 && (
+                    <div className="dynamic-components-section p-3 my-3 rounded">
+                      <h6 className="h6 mb-2">Pengaturan Lanjutan:</h6>
+                      <p className="small mb-0">
+                        Bidang-bidang ini muncul berdasarkan pilihan Anda di
+                        atas, menyesuaikan dengan kebutuhan spesifik kerangka
+                        kerja.
+                      </p>
+                    </div>
+                  )}
+                  {dynamicComponentsToRender.map((comp) =>
+                    renderFormComponent(comp.name, comp),
+                  )}
+                </Form>
+              )}
             </div>
           </>
         )}
@@ -1178,4 +1374,4 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   );
 };
 
-export default FrameworkPane;
+export default React.memo(FrameworkPane);

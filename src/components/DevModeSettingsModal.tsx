@@ -91,6 +91,13 @@ const DevModeSettingsModal: React.FC<DevModeSettingsModalProps> = ({
               {showApiKey ? <FaEyeSlash /> : <FaEye />}
             </Button>
           </InputGroup>
+          <Form.Text className="text-muted mt-2">
+            <small className="text-warning">
+              Peringatan: API Key disimpan secara lokal di browser Anda. Jangan
+              gunakan API Key yang memiliki akses ke data sensitif atau berbayar
+              tinggi untuk tujuan pengembangan.
+            </small>
+          </Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="temperatureInput">

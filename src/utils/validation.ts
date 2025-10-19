@@ -46,9 +46,9 @@ export const validateInput = (
       validationRules &&
       typeof value === "string" &&
       validationRules.min_length &&
-      value.length < validationRules.min_length
+      validationRules.min_length > 0 // Only apply if min_length is explicitly set and greater than 0
     ) {
-      return `Input ini membutuhkan minimal ${validationRules.min_length} karakter.`;
+      return `Bidang '${details.label || details.name || name}' membutuhkan minimal ${validationRules.min_length} karakter.`;
     }
     // If no specific min_length error, then it's just a generic "tidak boleh kosong" error
     return `Bidang '${details.label || details.name || name}' tidak boleh kosong.`;

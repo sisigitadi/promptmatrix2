@@ -3,13 +3,82 @@
   "title": "PromptMatrix Framework Schema",
   "description": "Schema for validating PromptMatrix 2.0 framework definitions.",
   "type": "object",
+  "definitions": {
+    "FrameworkComponent": {
+      "type": "object",
+      "required": ["name", "label", "type"],
+      "properties": {
+        "name": { "type": "string" },
+        "label": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": [
+            "text",
+            "number",
+            "select",
+            "textarea",
+            "color",
+            "date",
+            "slider",
+            "boolean",
+            "code",
+            "multiselect",
+            "image",
+            "file"
+          ]
+        },
+        "placeholder": { "type": "string" },
+        "options": { "type": "array", "items": { "type": "string" } },
+        "info": { "type": "string" },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "step": { "type": "number" },
+        "optional": { "type": "boolean" },
+        "unit": { "type": "string" },
+        "validation": {
+          "type": "object",
+          "properties": {
+            "min_length": { "type": "number" },
+            "max_length": { "type": "number" },
+            "regex": { "type": "string" },
+            "min_value": { "type": "number" },
+            "max_value": { "type": "number" },
+            "min_date": { "type": "string", "format": "date-time" },
+            "max_date": { "type": "string", "format": "date-time" }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "DynamicSubcomponents": {
+      "type": "object",
+      "required": ["trigger", "options"],
+      "properties": {
+        "trigger": { "type": "string" },
+        "options": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9_\\s&/()-]+$": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FrameworkComponent"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  },
   "required": [
+    "description",
+    "toolType",
     "id_kerangka",
     "nama_kerangka",
     "version",
     "kategori",
     "perspektif_user",
-    "logika_ai",
+    "ai_logic_description",
     "komponen_prompt",
     "konteks_tambahan_instruksi_khusus",
     "contoh_kalimat",
@@ -54,7 +123,7 @@
     },
     "id_kerangka": {
       "type": "string",
-      "pattern": "^[A-Z]{2,4}-\d{1,3}-\d{1,3}$",
+      "pattern": "^[A-Z]{2,4}-[A-Z]{2,4}-\\d{3}$",
       "description": "Unique identifier for the framework (e.g., 'PE-001-001')."
     },
     "nama_kerangka": {
@@ -63,7 +132,7 @@
     },
     "version": {
       "type": "string",
-      "pattern": "^\d+\.\d+\.\d+$",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "description": "Version of the framework (e.g., '1.0.0')."
     },
     "kategori": {
@@ -77,13 +146,18 @@
       "type": "string",
       "description": "Description from the user's perspective."
     },
-    "logika_ai": {
+    "ai_logic_description": {
       "type": "string",
       "description": "AI persona and logic description."
     },
     "komponen_prompt": {
       "type": "object",
-      "required": ["PERAN", "KONTEKS", "TUGAS", "VARIABEL_INPUT", "FORMAT_OUTPUT"],
+      "required": [
+        "PERAN",
+        "KONTEKS",
+        "TUGAS",
+        "FORMAT_OUTPUT"
+      ],
       "properties": {
         "PERAN": { "type": "string" },
         "KONTEKS": { "type": "string" },
@@ -96,7 +170,23 @@
               "required": ["description", "type"],
               "properties": {
                 "description": { "type": "string" },
-                "type": { "type": "string", "enum": ["text", "textarea", "number", "options", "multiselect", "boolean", "code", "slider", "date", "datetime"] },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "text",
+                    "textarea",
+                    "number",
+                    "options",
+                    "multiselect",
+                    "boolean",
+                    "code",
+                    "slider",
+                    "date",
+                    "datetime",
+                    "image",
+                    "file"
+                  ]
+                },
                 "default": {},
                 "options": { "type": "array", "items": { "type": "string" } },
                 "optional": { "type": "boolean" },
@@ -140,7 +230,42 @@
       "type": "string",
       "enum": ["natural_language_prompt", "json_prompt"],
       "description": "Type of output expected."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the framework."
+    },
+    "toolType": {
+      "type": "string",
+      "enum": [
+        "text",
+        "code",
+        "music-composition",
+        "music-generation",
+        "audio-generation",
+        "image-generation",
+        "image-editing",
+        "planning",
+        "video"
+      ],
+      "description": "Type of tool the framework is for."
+    },
+    "components": {
+      "type": "array",
+      "description": "Optional: Array of framework components (input fields).",
+      "items": {
+        "$ref": "#/definitions/FrameworkComponent"
+      }
+    },
+    "dynamicSubcomponents": {
+      "description": "Optional: Dynamic subcomponents triggered by other inputs.",
+      "oneOf": [
+        { "$ref": "#/definitions/DynamicSubcomponents" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DynamicSubcomponents" }
+        }
+      ]
     }
-  },
-  "additionalProperties": false
+  }
 }

@@ -8,12 +8,14 @@ export type FrameworkComponent = {
     | "textarea"
     | "color"
     | "date"
+    | "datetime" // Added this line
     | "slider"
     | "boolean"
     | "code"
     | "multiselect"
     | "image"
     | "file";
+  description?: string;
   placeholder?: string;
   options?: string[];
   info?: string;
@@ -22,6 +24,7 @@ export type FrameworkComponent = {
   step?: number;
   optional?: boolean;
   unit?: string;
+  default?: any;
   validation?: {
     min_length?: number;
     max_length?: number;
@@ -61,21 +64,20 @@ export type Framework = {
     | "planning"
     | "video";
   components?: FrameworkComponent[]; // Make optional
-  dynamicSubcomponents?: DynamicSubcomponents;
-  ai_logic_description?: string;
-
+  dynamicSubcomponents?: DynamicSubcomponents | DynamicSubcomponents[];
   // New fields from SOP
   id_kerangka?: string;
-  nama_kerangka?: string; // Changed from nama_kerangka_json
-  version?: string; // New
-  kategori?: string[]; // New
-  perspektif_user?: string; // Changed from perspektif_user_json
-  logika_ai?: string; // Changed from logika_ai_json
-  komponen_prompt?: KomponenPromptType; // Changed from komponen_prompt_json
-  konteks_tambahan_instruksi_khusus?: string; // Changed from konteks_tambahan_instruksi_khusus_json
-  contoh_kalimat?: string; // Changed from contoh_kalimat_json
-  output?: "natural_language_prompt" | "json_prompt"; // Changed from output_json
-  examples?: { input: string; output: string }[]; // New field for few-shot examples
+  nama_kerangka?: string;
+  version?: string;
+  kategori?: string[];
+  perspektif_user?: string;
+  ai_logic_description?: string;
+  komponen_prompt?: KomponenPromptType;
+  konteks_tambahan_instruksi_khusus?: string;
+  contoh_kalimat?: string;
+  output?: "natural_language_prompt" | "json_prompt";
+  crossValidationRules?: any[];
+  examples?: { input: string; output: string }[];
   temperature?: number;
   top_p?: number;
   top_k?: number;
@@ -90,8 +92,2834 @@ export type PromptFrameworksType = {
 };
 
 export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
-  "Koleksi & Inovasi": {},
-
+  "Koleksi & Inovasi": {
+    "Dokumen Lanjutan": {
+      "Pusat Dokumen Strategis & Kreatif": {
+        id_kerangka: "KOL-DOC-001",
+        nama_kerangka: "Pusat Dokumen Strategis & Kreatif",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Dokumen Lanjutan"],
+        description:
+          "Satu alat terpusat untuk menghasilkan berbagai dokumen terstruktur yang kompleks, mulai dari Game Design Document, analisis keuangan mendalam, hingga persiapan debat.",
+        perspektif_user:
+          "Saya perlu membuat dokumen yang spesifik dan terstruktur, seperti GDD untuk ide game saya, menganalisis laporan keuangan bisnis, atau mempersiapkan argumen untuk debat penting. Saya ingin panduan yang jelas untuk setiap jenis dokumen.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang konsultan ahli multi-disiplin. Bergantung pada pilihan pengguna, Anda akan bertindak sebagai Game Designer, Analis Keuangan, atau Pelatih Debat untuk menghasilkan dokumen yang diminta.",
+        components: [
+          {
+            name: "JENIS_DOKUMEN",
+            label: "Jenis Dokumen yang Ingin Dibuat",
+            type: "select",
+            options: [
+              "Dokumen Desain Game (GDD)",
+              "Analisis Laporan Keuangan",
+              "Perencanaan Argumen Debat",
+            ],
+            default: "Dokumen Desain Game (GDD)",
+            info: "Pilih jenis dokumen terstruktur yang ingin Anda hasilkan. Pilihan Anda akan menampilkan kolom input yang sesuai.",
+          },
+        ],
+        dynamicSubcomponents: {
+          trigger: "JENIS_DOKUMEN",
+          options: {
+            "Dokumen Desain Game (GDD)": [
+              {
+                name: "NAMA_GAME",
+                label: "Judul Game",
+                type: "text",
+                placeholder: "Contoh: Chrono Weavers",
+                info: "Judul kerja atau judul final dari game Anda.",
+              },
+              {
+                name: "GENRE_GAME",
+                label: "Genre Utama & Sub-genre",
+                type: "text",
+                placeholder: "Contoh: RPG, Platformer, Puzzle, Strategy",
+                info: "Sebutkan genre utama dan sub-genre jika ada (misal: RPG Aksi).",
+              },
+              {
+                name: "KONSEP_UTAMA",
+                label: "Konsep Inti & Unique Selling Point (USP)",
+                type: "textarea",
+                placeholder:
+                  "Contoh: Sebuah game puzzle di mana pemain mengendalikan waktu untuk menyelesaikan rintangan, dengan narasi non-linear.",
+                info: "Jelaskan dalam 1-2 kalimat apa yang membuat game Anda unik dan menarik.",
+              },
+              {
+                name: "MEKANIK_INTI",
+                label: "Mekanik Gameplay Inti",
+                type: "textarea",
+                placeholder:
+                  "Contoh: Pemain bisa memundurkan waktu 5 detik. Ada sistem crafting sederhana. Pertarungan berbasis giliran.",
+                info: "Sebutkan 2-3 mekanik utama yang menjadi dasar permainan.",
+              },
+              {
+                name: "NARASI_RINGKAS",
+                label: "Ringkasan Cerita & Latar Belakang Dunia",
+                type: "textarea",
+                placeholder:
+                  "Contoh: Di sebuah dunia yang hancur, seorang pahlawan harus mengumpulkan artefak waktu untuk menyelamatkan peradaban.",
+                info: "Berikan gambaran umum tentang plot dan dunia game.",
+              },
+              {
+                name: "GAYA_VISUAL",
+                label: "Gaya Visual & Mood",
+                type: "text",
+                placeholder:
+                  "Contoh: Seni piksel (pixel art) dengan nuansa gelap, fantasi cat air (watercolor fantasy), 3D realistis.",
+                info: "Jelaskan estetika visual dan suasana yang ingin Anda capai.",
+              },
+            ],
+            "Analisis Laporan Keuangan": [
+              {
+                name: "NAMA_PERUSAHAAN",
+                label: "Nama Perusahaan",
+                type: "text",
+                placeholder: "Contoh: PT Sejahtera Abadi Tbk.",
+                info: "Nama perusahaan yang laporan keuangannya akan dianalisis.",
+              },
+              {
+                name: "PERIODE_LAPORAN",
+                label: "Periode Laporan",
+                type: "text",
+                placeholder:
+                  "Contoh: Laporan Tahunan 2024 atau Laporan Kuartal 3 2025",
+                info: "Cakupan waktu dari laporan yang dianalisis.",
+              },
+              {
+                name: "DATA_LABA_RUGI",
+                label: "Data Laba Rugi (Income Statement)",
+                type: "textarea",
+                placeholder:
+                  "Contoh: Pendapatan: 1 Miliar, HPP: 600 Juta, Laba Kotor: 400 Juta, Biaya Operasional: 250 Juta, Laba Bersih: 150 Juta.",
+                info: "Masukkan poin-poin utama dari laporan laba rugi.",
+              },
+              {
+                name: "DATA_NERACA",
+                label: "Data Neraca (Balance Sheet)",
+                type: "textarea",
+                placeholder:
+                  "Contoh: Aset Lancar: 500 Juta, Aset Tetap: 1.2 Miliar, Total Aset: 1.7 Miliar. Liabilitas Jangka Pendek: 300 Juta, Liabilitas Jangka Panjang: 700 Juta, Ekuitas: 700 Juta.",
+                info: "Masukkan poin-poin utama dari neraca keuangan.",
+              },
+              {
+                name: "DATA_ARUS_KAS",
+                label: "Data Arus Kas (Cash Flow Statement)",
+                type: "textarea",
+                placeholder:
+                  "Contoh: Arus Kas dari Operasi: 200 Juta, Arus Kas dari Investasi: -150 Juta, Arus Kas dari Pendanaan: -50 Juta.",
+                info: "Masukkan poin-poin utama dari laporan arus kas.",
+              },
+              {
+                name: "FOKUS_ANALISIS",
+                label: "Fokus Analisis",
+                type: "multiselect",
+                options: [
+                  "Analisis Rasio Profitabilitas",
+                  "Analisis Rasio Likuiditas",
+                  "Analisis Rasio Solvabilitas",
+                  "Identifikasi Red Flags",
+                ],
+                default: [
+                  "Analisis Rasio Profitabilitas",
+                  "Analisis Rasio Likuiditas",
+                ],
+                info: "Pilih aspek analisis yang paling penting bagi Anda.",
+              },
+            ],
+            "Perencanaan Argumen Debat": [
+              {
+                name: "MOSI_DEBAT",
+                label: "Mosi atau Topik Debat",
+                type: "text",
+                placeholder:
+                  "Contoh: 'Kecerdasan Buatan Lebih Banyak Membawa Manfaat Daripada Mudarat'",
+                info: "Tuliskan pernyataan atau topik yang akan diperdebatkan.",
+              },
+              {
+                name: "POSISI_SAYA",
+                label: "Posisi Anda",
+                type: "select",
+                options: ["Pro (Setuju)", "Kontra (Tidak Setuju)"],
+                default: "Pro (Setuju)",
+                info: "Pilih sisi argumen yang akan Anda bela.",
+              },
+              {
+                name: "ARGUMEN_UTAMA_SAYA",
+                label: "Poin-poin Argumen Utama Anda",
+                type: "textarea",
+                placeholder:
+                  "Contoh: 1. AI meningkatkan efisiensi di berbagai industri. 2. AI mempercepat penemuan ilmiah. 3. AI membuka lapangan kerja baru.",
+                info: "Sebutkan 2-3 poin utama yang mendukung posisi Anda.",
+              },
+              {
+                name: "POTENSI_ARGUMEN_LAWAN",
+                label: "Potensi Argumen Lawan (Opsional)",
+                type: "textarea",
+                placeholder:
+                  "Contoh: AI akan menyebabkan pengangguran massal. Ada risiko penyalahgunaan AI untuk tujuan jahat.",
+                info: "Antisipasi argumen yang mungkin akan digunakan oleh pihak lawan.",
+                optional: true,
+              },
+            ],
+          },
+        },
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang konsultan ahli multi-disiplin. Bergantung pada pilihan pengguna, Anda akan bertindak sebagai Game Designer, Analis Keuangan, atau Pelatih Debat untuk menghasilkan dokumen yang diminta.",
+          KONTEKS:
+            "Pengguna ingin membuat sebuah dokumen terstruktur dengan jenis: '{{JENIS_DOKUMEN}}'. Anda harus memproses input yang diberikan untuk menghasilkan output yang komprehensif dan profesional sesuai dengan peran yang relevan.",
+          TUGAS:
+            "Berdasarkan jenis dokumen yang dipilih, lakukan tugas berikut:\n\n{{#if JENIS_DOKUMEN === 'Dokumen Desain Game (GDD)'}}**Tugas: Buat Draf Game Design Document**\nBuat draf GDD yang terstruktur untuk game berjudul **'{{NAMA_GAME}}'**. Elaborasikan setiap bagian berdasarkan detail berikut:\n- **Genre:** {{GENRE_GAME}}\n- **Konsep Inti & USP:** {{KONSEP_UTAMA}}\n- **Mekanik Gameplay:** {{MEKANIK_INTI}}\n- **Narasi & Dunia:** {{NARASI_RINGKAS}}\n- **Gaya Visual & Mood:** {{GAYA_VISUAL}}\nStruktur dokumen harus mencakup: 1. Ringkasan Eksekutif, 2. Konsep Inti, 3. Target Audiens, 4. Mekanik Gameplay (jelaskan mekanik inti), 5. Narasi & Dunia (cerita, karakter), 6. Gaya Visual & Audio.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Analisis Laporan Keuangan'}}**Tugas: Lakukan Analisis Laporan Keuangan**\nLakukan analisis kesehatan keuangan untuk **{{NAMA_PERUSAHAAN}}** periode **{{PERIODE_LAPORAN}}**. Berdasarkan data berikut:\n- **Laba Rugi:** {{DATA_LABA_RUGI}}\n- **Neraca:** {{DATA_NERACA}}\n- **Arus Kas:** {{DATA_ARUS_KAS}}\nFokuskan analisis Anda pada: **{{FOKUS_ANALISIS}}**. Hitung rasio-rasio yang relevan, berikan interpretasi dari setiap angka, dan berikan ringkasan eksekutif mengenai kesehatan keuangan perusahaan secara keseluruhan.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Perencanaan Argumen Debat'}}**Tugas: Siapkan Materi Debat**\nSiapkan materi untuk debat dengan mosi **'{{MOSI_DEBAT}}'**. Anda berada di posisi **{{POSISI_SAYA}}**. Bangun argumen yang kuat berdasarkan poin-poin berikut: {{ARGUMEN_UTAMA_SAYA}}. Untuk setiap poin, berikan elaborasi dan contoh. Jika disediakan, siapkan juga sanggahan (rebuttal) untuk potensi argumen lawan berikut: {{POTENSI_ARGUMEN_LAWAN}}. Susun materi ini menjadi sebuah kerangka pidato yang logis dan persuasif.\n{{/if}}",
+          "FORMAT OUTPUT":
+            "Selalu gunakan format Markdown yang sangat terstruktur dengan heading, sub-heading, dan daftar berpoin untuk memastikan keterbacaan maksimal. Setiap dokumen harus memiliki judul yang jelas sesuai dengan jenisnya.",
+        },
+        toolType: "planning",
+        konteks_tambahan_instruksi_khusus:
+          "Untuk setiap tugas, berikan output yang mendalam dan profesional. Jika ada informasi yang kurang dari pengguna, buat asumsi yang cerdas dan nyatakan asumsi tersebut di awal laporan Anda. Contoh: 'Dengan asumsi target audiens adalah pemain kasual...'.",
+        contoh_kalimat: "Bantu saya membuat GDD untuk game platformer.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+    },
+    Bisnis: {
+      "Keuangan & Investasi": {
+        id_kerangka: "BIS-KEU-001",
+        nama_kerangka: "Pusat Analisis Keuangan & Investasi",
+        version: "1.0.0",
+        kategori: ["Bisnis", "Keuangan & Investasi"],
+        description:
+          "Pusat komando untuk semua kebutuhan analisis keuangan dan investasi, dari strategi jangka panjang hingga analisis saham individual.",
+        perspektif_user:
+          "Saya butuh alat fleksibel untuk membantu saya dengan berbagai tugas keuangan, seperti merancang rencana investasi, menganalisis saham, membandingkan produk, atau mensimulasikan dana pensiun.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Analis Keuangan yang akan menganalisis keuangan dan investasi.",
+        components: [
+          {
+            name: "TUGAS_ANALISIS_KEUANGAN",
+            label: "Jenis Analisis Keuangan",
+            type: "select",
+            options: [
+              "Perencanaan Strategi Investasi",
+              "Analisis Saham Tunggal",
+              "Perbandingan Produk Investasi",
+              "Simulasi Proyeksi Dana",
+            ],
+            default: "Perencanaan Strategi Investasi",
+            info: "Pilihan Anda akan menampilkan serangkaian input yang dirancang khusus untuk area tersebut.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TUGAS_ANALISIS_KEUANGAN",
+            options: {
+              "Perencanaan Strategi Investasi": [
+                {
+                  name: "TUJUAN_INVESTASI",
+                  label: "Tujuan Investasi Anda",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Mempersiapkan dana pensiun dalam 20 tahun",
+                  info: "Tujuan yang spesifik akan menghasilkan rekomendasi yang lebih akurat.",
+                },
+                {
+                  name: "MODAL_AWAL",
+                  label: "Modal Awal & Investasi Bulanan",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Modal awal Rp 10.000.000, investasi bulanan Rp 1.000.000",
+                  info: "Sebutkan jumlah beserta mata uangnya.",
+                },
+                {
+                  name: "TINGKAT_RISIKO",
+                  label: "Toleransi Risiko Anda",
+                  type: "select",
+                  options: ["Konservatif", "Moderat", "Agresif"],
+                  default: "Moderat",
+                  info: "Ini akan sangat mempengaruhi jenis instrumen investasi yang akan direkomendasikan.",
+                },
+                {
+                  name: "HORIZON_WAKTU",
+                  label: "Horizon Waktu Investasi",
+                  type: "text",
+                  placeholder: "Contoh: 10 tahun",
+                  info: "Jangka waktu (pendek, menengah, panjang) sangat mempengaruhi strategi.",
+                },
+              ],
+              "Analisis Saham Tunggal": [
+                {
+                  name: "KODE_SAHAM",
+                  label: "Kode Ticker atau Nama Saham",
+                  type: "text",
+                  placeholder: "Contoh: BBCA atau Bank Central Asia",
+                  info: "Masukkan kode saham (ticker) atau nama perusahaan yang ingin dianalisis.",
+                },
+                {
+                  name: "FOKUS_ANALISIS_SAHAM",
+                  label: "Fokus Analisis",
+                  type: "multiselect",
+                  options: [
+                    "Analisis Fundamental",
+                    "Analisis Teknikal",
+                    "Sentimen Berita",
+                  ],
+                  default: ["Analisis Fundamental"],
+                  info: "Pilih aspek yang ingin Anda dalami dari saham tersebut.",
+                },
+              ],
+              "Perbandingan Produk Investasi": [
+                {
+                  name: "PRODUK_A",
+                  label: "Nama Produk Investasi Pertama",
+                  type: "text",
+                  placeholder: "Contoh: Reksa Dana Saham Manulife",
+                  info: "Nama produk pertama yang akan dibandingkan.",
+                },
+                {
+                  name: "PRODUK_B",
+                  label: "Nama Produk Investasi Kedua",
+                  type: "text",
+                  placeholder: "Contoh: Reksa Dana Indeks Batavia",
+                  info: "Nama produk kedua yang akan dibandingkan.",
+                },
+                {
+                  name: "METRIK_PERBANDINGAN",
+                  label: "Metrik Perbandingan",
+                  type: "multiselect",
+                  options: [
+                    "Imbal Hasil (1th, 3th, 5th)",
+                    "Tingkat Risiko (Volatility)",
+                    "Biaya Manajemen",
+                    "Minimum Investasi",
+                  ],
+                  default: [
+                    "Imbal Hasil (1th, 3th, 5th)",
+                    "Tingkat Risiko (Volatility)",
+                  ],
+                  info: "Pilih kriteria yang ingin Anda gunakan untuk membandingkan.",
+                },
+              ],
+              "Simulasi Proyeksi Dana": [
+                {
+                  name: "TARGET_DANA",
+                  label: "Target Dana di Masa Depan",
+                  type: "number",
+                  placeholder: "1000000000",
+                  unit: "Rp",
+                  info: "Jumlah total dana yang ingin Anda capai.",
+                },
+                {
+                  name: "SALDO_SAAT_INI",
+                  label: "Saldo Investasi Saat Ini",
+                  type: "number",
+                  placeholder: "50000000",
+                  unit: "Rp",
+                  info: "Jumlah dana yang sudah Anda miliki saat ini.",
+                },
+                {
+                  name: "INVESTASI_BULANAN",
+                  label: "Investasi Rutin per Bulan",
+                  type: "number",
+                  placeholder: "1000000",
+                  unit: "Rp",
+                  info: "Jumlah yang akan Anda tambahkan setiap bulan.",
+                },
+                {
+                  name: "ASUMSI_RETURN",
+                  label: "Asumsi Imbal Hasil Tahunan (%)",
+                  type: "slider",
+                  min: 1,
+                  max: 25,
+                  step: 1,
+                  default: 8,
+                  info: "Perkiraan rata-rata keuntungan investasi Anda per tahun.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Analis Keuangan dan Perencana Investasi profesional.",
+          KONTEKS:
+            "Seorang klien meminta bantuan analisis keuangan. Tugas yang dipilih adalah: '{TUGAS_ANALISIS_KEUANGAN}'.",
+          TUGAS:
+            "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Perencanaan Strategi Investasi'**: Buat proposal strategi investasi komprehensif berdasarkan tujuan '{TUJUAN_INVESTASI}', modal '{MODAL_AWAL}', risiko '{TINGKAT_RISIKO}', dan horizon '{HORIZON_WAKTU}'. Sertakan alokasi aset, contoh instrumen, dan justifikasi.\n- **Jika 'Analisis Saham Tunggal'**: Lakukan analisis pada saham '{KODE_SAHAM}' dengan fokus pada '{FOKUS_ANALISIS_SAHAM}'. Sajikan laporan yang mencakup valuasi kunci, tren harga, sentimen berita, serta potensi kelebihan dan kekurangan.\n- **Jika 'Perbandingan Produk Investasi'**: Buat tabel perbandingan antara '{PRODUK_A}' dan '{PRODUK_B}' berdasarkan metrik '{METRIK_PERBANDINGAN}'. Berikan ringkasan perbandingan di akhir.\n- **Jika 'Simulasi Proyeksi Dana'**: Hitung proyeksi untuk mencapai target '{TARGET_DANA}' dengan saldo awal '{SALDO_SAAT_INI}', investasi bulanan '{INVESTASI_BULANAN}', dan asumsi return '{ASUMSI_RETURN}%'. Tampilkan perkiraan waktu yang dibutuhkan dan berikan saran jika perlu.",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Sajikan dalam bentuk laporan yang terstruktur dengan judul yang jelas untuk setiap bagian. Gunakan daftar berpoin atau tabel untuk mempermudah pembacaan.",
+        },
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Selalu berikan disclaimer bahwa semua investasi mengandung risiko dan kinerja masa lalu tidak mencerminkan hasil di masa depan. Gunakan bahasa yang profesional namun mudah dimengerti.",
+        contoh_kalimat: "Bantu saya menganalisis saham BBCA.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "Akselerator Perencanaan Startup": {
+        id_kerangka: "BIS-STP-001",
+        nama_kerangka: "Akselerator Perencanaan Startup",
+        version: "1.0.0",
+        kategori: ["Bisnis", "Startup"],
+        description:
+          "Co-founder AI strategis untuk memandu wirausahawan melalui tahapan krusial membangun bisnis, dari ide hingga pitch deck.",
+        perspektif_user:
+          "Saya butuh bantuan terstruktur untuk setiap tahap memulai bisnis, mulai dari mencari ide, menganalisis pasar, hingga membuat materi untuk investor.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang ahli strategi startup yang akan merencanakan dan mengembangkan startup.",
+        components: [
+          {
+            name: "TUGAS_PERENCANAAN_STARTUP",
+            label: "Tugas Perencanaan Startup",
+            type: "select",
+            options: [
+              "Generator Ide Bisnis",
+              "Penyusun Model Bisnis Kanvas",
+              "Analisis Persaingan dan Pasar",
+              "Pembuat Draf Konten Pitch Deck",
+            ],
+            default: "Generator Ide Bisnis",
+            info: "Pilih tugas yang paling relevan dengan tahap Anda saat ini.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TUGAS_PERENCANAAN_STARTUP",
+            options: {
+              "Generator Ide Bisnis": [
+                {
+                  name: "INDUSTRI_STARTUP",
+                  label: "Industri atau Sektor",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Teknologi Pendidikan, Makanan & Minuman",
+                  info: "Sebutkan industri yang Anda minati.",
+                },
+                {
+                  name: "MASALAH_STARTUP",
+                  label: "Masalah Spesifik yang Ingin Dipecahkan",
+                  type: "text",
+                  placeholder: "Contoh: Sulitnya mencari mentor berkualitas",
+                  info: "Masalah apa yang ingin Anda selesaikan dengan bisnis ini?",
+                },
+              ],
+              "Penyusun Model Bisnis Kanvas": [
+                {
+                  name: "BMC_PROPOSISI_NILAI",
+                  label: "Proposisi Nilai (Value Propositions)",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: Platform mentor on-demand yang terjangkau dan terverifikasi.",
+                  info: "Apa nilai unik yang Anda tawarkan kepada pelanggan?",
+                },
+                {
+                  name: "BMC_SEGMEN_PELANGGAN",
+                  label: "Segmen Pelanggan (Customer Segments)",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: Mahasiswa tingkat akhir dan profesional muda.",
+                  info: "Siapa target pelanggan utama Anda?",
+                },
+              ],
+              "Analisis Persaingan dan Pasar": [
+                {
+                  name: "ANALISIS_DESKRIPSI_BISNIS",
+                  label: "Deskripsi Singkat Bisnis Anda",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: Platform marketplace untuk menghubungkan mentor dengan mentee.",
+                  info: "Jelaskan bisnis Anda secara singkat untuk analisis.",
+                },
+                {
+                  name: "ANALISIS_KOMPETITOR",
+                  label: "Nama 2-3 Kompetitor Utama",
+                  type: "text",
+                  placeholder: "Contoh: Top-Mentor, Mentor.io",
+                  info: "Sebutkan pemain utama lain di pasar Anda.",
+                },
+              ],
+              "Pembuat Draf Konten Pitch Deck": [
+                {
+                  name: "PITCH_NAMA_STARTUP",
+                  label: "Nama Startup",
+                  type: "text",
+                  placeholder: "Contoh: MentorConnect",
+                  info: "Nama startup Anda untuk pitch deck.",
+                },
+                {
+                  name: "PITCH_MASALAH_SOLUSI",
+                  label: "Masalah dan Solusi",
+                  type: "textarea",
+                  placeholder:
+                    "Masalah: Mahasiswa sulit menemukan mentor yang sesuai. Solusi: Aplikasi kami menggunakan AI untuk mencocokkan mereka secara instan.",
+                  info: "Jelaskan masalah yang ada dan bagaimana startup Anda menyelesaikannya.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang ahli strategi startup dan co-founder AI.",
+          KONTEKS:
+            "Pengguna memerlukan bantuan untuk tahap '{TUGAS_PERENCANAAN_STARTUP}' dari perjalanan startup mereka.",
+          TUGAS:
+            "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Generator Ide Bisnis'**: Berikan 3 ide startup unik di industri '{INDUSTRI_STARTUP}' yang menyelesaikan masalah '{MASALAH_STARTUP}'. Sertakan usulan nama, proposisi nilai, dan langkah validasi awal.\n- **Jika 'Penyusun Model Bisnis Kanvas'**: Buat draf Business Model Canvas berdasarkan proposisi nilai '{BMC_PROPOSISI_NILAI}' dan segmen pelanggan '{BMC_SEGMEN_PELANGGAN}'. Isi blok lainnya dengan asumsi yang cerdas dan berikan saran perbaikan.\n- **Jika 'Analisis Persaingan dan Pasar'**: Lakukan analisis SWOT untuk bisnis '{ANALISIS_DESKRIPSI_BISNIS}' dan analisis singkat kompetitor '{ANALISIS_KOMPETITOR}'.\n- **Jika 'Pembuat Draf Konten Pitch Deck'**: Buat draf konten terstruktur untuk 10 slide pitch deck untuk startup '{PITCH_NAMA_STARTUP}' yang menyelesaikan '{PITCH_MASALAH_SOLUSI}'.",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Sajikan dalam bentuk laporan atau dokumen yang terstruktur dengan judul dan sub-judul yang jelas.",
+        },
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Selalu gunakan pendekatan yang praktis dan berorientasi pada tindakan. Berikan saran yang realistis untuk startup tahap awal.",
+        contoh_kalimat:
+          "Bantu saya membuat model bisnis kanvas untuk ide startup saya.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "Pusat Analisis Data Bisnis": {
+        id_kerangka: "BIS-DAT-001",
+        nama_kerangka: "Pusat Analisis Data Bisnis",
+        version: "1.0.0",
+        kategori: ["Bisnis", "Analisis Data"],
+        description:
+          "Analis data virtual untuk mengekstrak wawasan bisnis berharga dari data mentah, dari eksplorasi hingga visualisasi.",
+        perspektif_user:
+          "Saya punya data penjualan tapi tidak tahu harus mulai dari mana untuk menganalisisnya. Saya butuh bantuan untuk memahami data, menemukan tren, dan mendapatkan saran visualisasi.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Analis Data yang akan menganalisis data bisnis.",
+        components: [
+          {
+            name: "TUGAS_ANALISIS_DATA",
+            label: "Tugas Analisis Data",
+            type: "select",
+            options: [
+              "Eksplorasi & Pembersihan Data",
+              "Analisis Statistik Deskriptif",
+              "Identifikasi Tren dan Pola",
+              "Rekomendasi Visualisasi Data",
+            ],
+            default: "Identifikasi Tren dan Pola",
+            info: "Pilih jenis analisis yang ingin Anda lakukan.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TUGAS_ANALISIS_DATA",
+            options: {
+              "Eksplorasi & Pembersihan Data": [
+                {
+                  name: "DATA_SAMPEL_EKSPLORASI",
+                  label: "Tempelkan Sampel Data Anda",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: salin beberapa baris dari file CSV atau Excel Anda di sini.",
+                  info: "Berikan sampel data untuk dianalisis kesehatannya.",
+                },
+              ],
+              "Analisis Statistik Deskriptif": [
+                {
+                  name: "DATA_SAMPEL_STATISTIK",
+                  label: "Tempelkan Sampel Data Anda",
+                  type: "textarea",
+                  placeholder: "Contoh: salin data numerik Anda di sini.",
+                  info: "Data untuk dihitung statistik dasarnya.",
+                },
+                {
+                  name: "KOLOM_STATISTIK",
+                  label: "Nama Kolom yang Dianalisis",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Kolom 'Pendapatan' dan 'Usia Pelanggan'",
+                  info: "Sebutkan kolom mana yang ingin Anda hitung statistiknya.",
+                },
+              ],
+              "Identifikasi Tren dan Pola": [
+                {
+                  name: "DATA_SAMPEL_TREN",
+                  label: "Tempelkan Sampel Data Anda",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: salin data time-series atau data kategorikal Anda.",
+                  info: "Data yang akan dianalisis untuk menemukan pola.",
+                },
+                {
+                  name: "PERTANYAAN_BISNIS_TREN",
+                  label: "Pertanyaan Bisnis yang Ingin Dijawab",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Bagaimana tren penjualan produk A selama 6 bulan terakhir?",
+                  info: "Pertanyaan spesifik akan mengarahkan analisis.",
+                },
+              ],
+              "Rekomendasi Visualisasi Data": [
+                {
+                  name: "DATA_VISUALISASI",
+                  label: "Jelaskan Data yang Ingin Divisualisasikan",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: Saya punya data penjualan bulanan per kategori produk.",
+                  info: "Deskripsi data Anda.",
+                },
+                {
+                  name: "PESAN_VISUALISASI",
+                  label: "Pesan Utama yang Ingin Disampaikan",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Saya ingin menunjukkan kategori produk mana yang paling cepat bertumbuh.",
+                  info: "Apa cerita yang ingin Anda sampaikan dengan data ini?",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang Analis Data Bisnis yang terampil.",
+          KONTEKS:
+            "Pengguna ingin menganalisis data mereka dan telah memilih tugas: '{TUGAS_ANALISIS_DATA}'.",
+          TUGAS:
+            "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Eksplorasi & Pembersihan Data'**: Analisis sampel data '{DATA_SAMPEL_EKSPLORASI}'. Berikan ringkasan profil data, identifikasi masalah (data hilang, duplikat), dan sarankan langkah pembersihan.\n- **Jika 'Analisis Statistik Deskriptif'**: Hitung statistik dasar (rata-rata, median, min, max) dari kolom '{KOLOM_STATISTIK}' pada data '{DATA_SAMPEL_STATISTIK}' dan berikan interpretasi bisnisnya.\n- **Jika 'Identifikasi Tren dan Pola'**: Jawab pertanyaan bisnis '{PERTANYAAN_BISNIS_TREN}' dengan menganalisis data '{DATA_SAMPEL_TREN}'. Soroti tren, pola, atau korelasi yang signifikan.\n- **Jika 'Rekomendasi Visualisasi Data'**: Berdasarkan deskripsi data '{DATA_VISUALISASI}' dan pesan '{PESAN_VISUALISASI}', rekomendasikan 2-3 jenis grafik yang paling efektif dan jelaskan alasannya.",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Sajikan analisis dalam format laporan yang jelas dengan poin-poin dan penjelasan yang mudah dimengerti.",
+        },
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Fokus pada penyajian wawasan dalam bahasa bisnis yang sederhana, bukan jargon teknis data science.",
+        contoh_kalimat:
+          "Bantu saya menemukan tren dari data penjualan bulanan saya.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "Konsultan Dokumen & Kepatuhan Hukum": {
+        id_kerangka: "BIS-LGL-001",
+        nama_kerangka: "Konsultan Dokumen & Kepatuhan Hukum",
+        version: "1.0.0",
+        kategori: ["Bisnis", "Legal"],
+        description:
+          "Asisten legal virtual untuk kebutuhan bisnis sehari-hari, dari draf perjanjian hingga checklist kepatuhan.",
+        perspektif_user:
+          "Saya butuh bantuan untuk membuat draf dokumen legal umum atau memahami istilah hukum tanpa harus langsung ke pengacara untuk draf pertama.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang asisten legal virtual yang akan menyusun dokumen dan memahami hukum bisnis.",
+        components: [
+          {
+            name: "TUGAS_BANTUAN_HUKUM",
+            label: "Jenis Bantuan Hukum",
+            type: "select",
+            options: [
+              "Pembuat Draf Perjanjian Dasar",
+              "Generator Kebijakan Privasi & Syarat Layanan",
+              "Penerjemah Istilah Hukum",
+              "Checklist Kepatuhan Bisnis",
+            ],
+            default: "Pembuat Draf Perjanjian Dasar",
+            info: "Pilih tugas legal yang Anda butuhkan.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TUGAS_BANTUAN_HUKUM",
+            options: {
+              "Pembuat Draf Perjanjian Dasar": [
+                {
+                  name: "JENIS_PERJANJIAN",
+                  label: "Jenis Perjanjian",
+                  type: "select",
+                  options: [
+                    "Perjanjian Kerja (PKWT)",
+                    "Perjanjian Kerahasiaan (NDA)",
+                    "Surat Perjanjian Kerja Sama (MoU)",
+                  ],
+                  default: "Perjanjian Kerja (PKWT)",
+                  info: "Pilih jenis dokumen yang ingin Anda buat drafnya.",
+                },
+                {
+                  name: "PIHAK_PERTAMA",
+                  label: "Nama Pihak Pertama",
+                  type: "text",
+                  placeholder: "Contoh: PT Jaya Abadi",
+                  info: "Nama perusahaan atau individu pihak pertama.",
+                },
+                {
+                  name: "PIHAK_KEDUA",
+                  label: "Nama Pihak Kedua",
+                  type: "text",
+                  placeholder: "Contoh: John Doe",
+                  info: "Nama perusahaan atau individu pihak kedua.",
+                },
+              ],
+              "Generator Kebijakan Privasi & Syarat Layanan": [
+                {
+                  name: "NAMA_WEBSITE_APP",
+                  label: "Nama Website atau Aplikasi Anda",
+                  type: "text",
+                  placeholder: "Contoh: Aplikasi 'BelajarKuy'",
+                  info: "Nama layanan Anda untuk dicantumkan dalam kebijakan.",
+                },
+                {
+                  name: "JENIS_DATA_PENGGUNA",
+                  label: "Jenis Data Pengguna yang Dikumpulkan",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: Nama, email, nomor telepon, data lokasi, riwayat pembelian.",
+                  info: "Sebutkan semua jenis data pribadi yang Anda kumpulkan dari pengguna.",
+                },
+              ],
+              "Penerjemah Istilah Hukum": [
+                {
+                  name: "ISTILAH_HUKUM",
+                  label: "Istilah atau Klausul Hukum",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: Apa arti dari klausul 'force majeure'? atau salin-tempel satu klausul penuh di sini.",
+                  info: "Masukkan istilah atau klausul yang ingin Anda pahami.",
+                },
+              ],
+              "Checklist Kepatuhan Bisnis": [
+                {
+                  name: "BENTUK_BADAN_USAHA",
+                  label: "Bentuk Badan Usaha",
+                  type: "select",
+                  options: ["PT Perorangan", "CV", "Firma", "UMKM Perorangan"],
+                  default: "UMKM Perorangan",
+                  info: "Pilih bentuk badan usaha Anda.",
+                },
+                {
+                  name: "BIDANG_USAHA",
+                  label: "Bidang Usaha",
+                  type: "text",
+                  placeholder: "Contoh: Kafe, Toko Online, Jasa Konsultasi IT",
+                  info: "Sebutkan bidang usaha spesifik Anda.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang asisten legal virtual yang terampil dalam penyusunan dokumen.",
+          KONTEKS:
+            "Pengguna memerlukan bantuan untuk tugas '{TUGAS_BANTUAN_HUKUM}'. Penting untuk diingat bahwa output yang Anda berikan adalah draf awal dan bukan nasihat hukum formal.",
+          TUGAS:
+            "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Pembuat Draf Perjanjian Dasar'**: Buat draf '{JENIS_PERJANJIAN}' antara '{PIHAK_PERTAMA}' dan '{PIHAK_KEDUA}'. Gunakan klausul-klausul standar yang umum dan sertakan placeholder untuk detail spesifik.\n- **Jika 'Generator Kebijakan Privasi & Syarat Layanan'**: Buat draf Kebijakan Privasi dan Syarat & Ketentuan untuk '{NAMA_WEBSITE_APP}' yang mengumpulkan data seperti '{JENIS_DATA_PENGGUNA}'.\n- **Jika 'Penerjemah Istilah Hukum'**: Jelaskan istilah atau klausul '{ISTILAH_HUKUM}' dalam bahasa bisnis yang sederhana dan berikan contoh implikasi praktisnya.\n- **Jika 'Checklist Kepatuhan Bisnis'**: Buat checklist umum mengenai izin dan pendaftaran yang mungkin diperlukan untuk '{BENTUK_BADAN_USAHA}' di bidang '{BIDANG_USAHA}' di Indonesia.",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Untuk draf dokumen, gunakan struktur yang jelas dengan judul, pasal, dan ayat. Selalu awali output dengan disclaimer bahwa ini adalah draf dan perlu ditinjau oleh ahli hukum.",
+        },
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Disclaimer hukum adalah yang paling penting. Pastikan setiap output menekankan bahwa ini bukan pengganti nasihat pengacara profesional.",
+        contoh_kalimat: "Bantu saya membuat draf Perjanjian Kerahasiaan (NDA).",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "Studio Desain UI/UX": {
+        id_kerangka: "BIS-UIX-001",
+        nama_kerangka: "Studio Desain UI/UX",
+        version: "1.0.0",
+        kategori: ["Bisnis", "UI/UX"],
+        description:
+          "Konsultan desain produk digital untuk merencanakan pengalaman dan antarmuka pengguna yang efektif, dari alur pengguna hingga konsep visual.",
+        perspektif_user:
+          "Saya perlu bantuan untuk merancang aplikasi saya, mulai dari bagaimana pengguna akan memakainya, seperti apa tampilan halamannya, hingga teks yang harus ditulis di tombol.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Konsultan Desain UI/UX yang akan merancang pengalaman dan antarmuka pengguna.",
+        components: [
+          {
+            name: "TUGAS_DESAIN_UIUX",
+            label: "Tugas Desain UI/UX",
+            type: "select",
+            options: [
+              "Perancangan Alur Pengguna (User Flow)",
+              "Generator Konsep Tata Letak (Wireframe)",
+              "Analisis & Umpan Balik Desain",
+              "Generator Teks Antarmuka (UX Writing)",
+            ],
+            default: "Perancangan Alur Pengguna (User Flow)",
+            info: "Pilih jenis bantuan desain yang Anda perlukan.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TUGAS_DESAIN_UIUX",
+            options: {
+              "Perancangan Alur Pengguna (User Flow)": [
+                {
+                  name: "FLOW_TUGAS_PENGGUNA",
+                  label: "Tugas Utama Pengguna",
+                  type: "text",
+                  placeholder: "Contoh: Melakukan pendaftaran akun baru",
+                  info: "Jelaskan tugas yang ingin Anda petakan alurnya.",
+                },
+                {
+                  name: "FLOW_TITIK_AWAL_AKHIR",
+                  label: "Titik Awal dan Akhir Alur",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Dari halaman utama hingga halaman 'selamat datang'",
+                  info: "Sebutkan dari mana alur dimulai dan di mana berakhir.",
+                },
+              ],
+              "Generator Konsep Tata Letak (Wireframe)": [
+                {
+                  name: "WIREFRAME_JENIS_HALAMAN",
+                  label: "Jenis Halaman/Layar",
+                  type: "text",
+                  placeholder: "Contoh: Halaman Beranda, Layar Login",
+                  info: "Sebutkan halaman yang ingin dibuatkan konsep tata letaknya.",
+                },
+                {
+                  name: "WIREFRAME_ELEMEN_KUNCI",
+                  label: "Elemen-elemen Kunci",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: Logo, Tombol Login, Banner Promo, Daftar Produk",
+                  info: "Sebutkan semua elemen yang wajib ada di halaman tersebut.",
+                },
+              ],
+              "Analisis & Umpan Balik Desain": [
+                {
+                  name: "ANALISIS_DESKRIPSI_DESAIN",
+                  label: "Deskripsi atau Link ke Desain Anda",
+                  type: "textarea",
+                  placeholder:
+                    "Jelaskan desain Anda saat ini atau tempelkan link ke gambar (misal: Imgur).",
+                  info: "Berikan konteks sebanyak mungkin tentang desain yang ingin dianalisis.",
+                },
+                {
+                  name: "ANALISIS_TUJUAN_DESAIN",
+                  label: "Tujuan Utama Halaman/Desain",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Meyakinkan pengguna untuk menekan tombol 'Daftar Gratis'",
+                  info: "Apa aksi terpenting yang diharapkan dari pengguna di halaman ini?",
+                },
+              ],
+              "Generator Teks Antarmuka (UX Writing)": [
+                {
+                  name: "UXWRITING_KONTEKS",
+                  label: "Konteks dan Elemen UI",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Pesan error untuk form login, Teks untuk tombol konfirmasi",
+                  info: "Jelaskan di mana teks ini akan muncul.",
+                },
+                {
+                  name: "UXWRITING_TONE",
+                  label: "Nada Suara (Tone of Voice)",
+                  type: "select",
+                  options: ["Formal", "Ramah", "Jenaka", "Profesional"],
+                  default: "Ramah",
+                  info: "Pilih gaya bahasa yang sesuai dengan brand Anda.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang Konsultan Desain Produk Digital (UI/UX)",
+          KONTEKS:
+            "Pengguna memerlukan bantuan dengan '{TUGAS_DESAIN_UIUX}' untuk produk digital mereka.",
+          TUGAS:
+            "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Perancangan Alur Pengguna (User Flow)'**: Petakan alur langkah-demi-langkah untuk tugas '{FLOW_TUGAS_PENGGUNA}' dari '{FLOW_TITIK_AWAL_AKHIR}'. Identifikasi potensi masalah dan berikan saran penyederhanaan.\n- **Jika 'Generator Konsep Tata Letak (Wireframe)'**: Buat deskripsi tekstual konsep wireframe untuk '{WIREFRAME_JENIS_HALAMAN}' yang mengandung elemen '{WIREFRAME_ELEMEN_KUNCI}'. Jelaskan alasan di balik penempatan elemen.\n- **Jika 'Analisis & Umpan Balik Desain'**: Berikan kritik membangun untuk desain '{ANALISIS_DESKRIPSI_DESAIN}' yang bertujuan untuk '{ANALISIS_TUJUAN_DESAIN}'. Gunakan prinsip usability sebagai dasar analisis.\n- **Jika 'Generator Teks Antarmuka (UX Writing)'**: Buat 3 alternatif teks untuk '{UXWRITING_KONTEKS}' dengan nada '{UXWRITING_TONE}'. Jelaskan kelebihan masing-masing alternatif.",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Sajikan output secara terstruktur, jelas, dan mudah ditindaklanjuti. Gunakan daftar berpoin atau bernomor untuk alur dan analisis.",
+        },
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Fokus pada pengguna. Semua saran dan output harus bertujuan untuk membuat pengalaman pengguna lebih mudah, lebih jelas, dan lebih menyenangkan.",
+        contoh_kalimat:
+          "Bantu saya membuat konsep tata letak untuk halaman beranda website saya.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "Manajer Produk Virtual": {
+        id_kerangka: "BIS-PRD-001",
+        nama_kerangka: "Manajer Produk Virtual",
+        version: "1.0.0",
+        kategori: ["Bisnis", "Manajemen Produk"],
+        description:
+          "Partner strategis AI untuk manajer produk, membantu dalam penulisan PRD, penyusunan roadmap, dan prioritas fitur.",
+        perspektif_user:
+          "Sebagai manajer produk, saya butuh bantuan untuk menyusun dokumen persyaratan, membuat roadmap, dan memprioritaskan pekerjaan tim secara efisien.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Manajer Produk yang akan mengelola dan memprioritaskan produk.",
+        components: [
+          {
+            name: "TUGAS_MANAJEMEN_PRODUK",
+            label: "Tugas Manajemen Produk",
+            type: "select",
+            options: [
+              "Penulis Dokumen Persyaratan Produk (PRD)",
+              "Generator Peta Jalan Produk (Roadmap)",
+              "Asisten Prioritas Fitur",
+              "Penulis Cerita Pengguna (User Story)",
+            ],
+            default: "Penulis Dokumen Persyaratan Produk (PRD)",
+            info: "Pilih tugas manajemen produk yang ingin Anda selesaikan.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TUGAS_MANAJEMEN_PRODUK",
+            options: {
+              "Penulis Dokumen Persyaratan Produk (PRD)": [
+                {
+                  name: "PRD_NAMA_FITUR",
+                  label: "Nama Fitur atau Produk",
+                  type: "text",
+                  placeholder: "Contoh: Fitur 'Kolaborasi Tim Real-time'",
+                  info: "Fitur yang akan dibuatkan dokumen persyaratannya.",
+                },
+                {
+                  name: "PRD_MASALAH_PENGGUNA",
+                  label: "Masalah Pengguna yang Diselesaikan",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: Tim yang bekerja remote kesulitan untuk berdiskusi secara sinkron.",
+                  info: "Jelaskan masalah yang ingin Anda pecahkan dengan fitur ini.",
+                },
+              ],
+              "Generator Peta Jalan Produk (Roadmap)": [
+                {
+                  name: "ROADMAP_VISI_PRODUK",
+                  label: "Visi Produk (Jangka Panjang)",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Menjadi platform kolaborasi nomor satu untuk tim kreatif.",
+                  info: "Apa tujuan besar dari produk Anda?",
+                },
+                {
+                  name: "ROADMAP_TUJUAN_BISNIS",
+                  label: "Tujuan Bisnis untuk 3-6 Bulan ke Depan",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: Meningkatkan retensi pengguna sebesar 15%",
+                  info: "Apa target bisnis yang ingin dicapai dalam waktu dekat?",
+                },
+              ],
+              "Asisten Prioritas Fitur": [
+                {
+                  name: "PRIORITAS_DAFTAR_FITUR",
+                  label: "Daftar Fitur (pisahkan dengan koma)",
+                  type: "textarea",
+                  placeholder: "Contoh: Fitur A, Fitur B, Fitur C",
+                  info: "Masukkan daftar fitur yang perlu diprioritaskan.",
+                },
+                {
+                  name: "PRIORITAS_KERANGKA",
+                  label: "Kerangka Prioritas",
+                  type: "select",
+                  options: [
+                    "RICE (Reach, Impact, Confidence, Effort)",
+                    "MoSCoW (Must, Should, Could, Won't)",
+                  ],
+                  default: "RICE (Reach, Impact, Confidence, Effort)",
+                  info: "Pilih metode untuk membantu prioritas.",
+                },
+              ],
+              "Penulis Cerita Pengguna (User Story)": [
+                {
+                  name: "USERSTORY_DESKRIPSI_FITUR",
+                  label: "Deskripsi Singkat Fitur",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: Pengguna ingin bisa memfilter produk berdasarkan warna agar lebih cepat menemukan barang.",
+                  info: "Jelaskan kebutuhan dari sudut pandang pengguna.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Manajer Produk (Product Manager) AI yang strategis.",
+          KONTEKS:
+            "Pengguna memerlukan bantuan dengan tugas '{TUGAS_MANAJEMEN_PRODUK}'.",
+          TUGAS:
+            "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Penulis Dokumen Persyaratan Produk (PRD)'**: Buat draf PRD untuk fitur '{PRD_NAMA_FITUR}' yang menyelesaikan masalah '{PRD_MASALAH_PENGGUNA}'. Sertakan bagian Latar Belakang, Tujuan, Target Pengguna, dan Persyaratan Fungsional.\n- **Jika 'Generator Peta Jalan Produk (Roadmap)'**: Buat draf roadmap berbasis teks per kuartal berdasarkan visi '{ROADMAP_VISI_PRODUK}' dan tujuan '{ROADMAP_TUJUAN_BISNIS}'.\n- **Jika 'Asisten Prioritas Fitur'**: Prioritaskan daftar fitur '{PRIORITAS_DAFTAR_FITUR}' menggunakan kerangka '{PRIORITAS_KERANGKA}' dan sajikan dalam bentuk tabel dengan justifikasi.\n- **Jika 'Penulis Cerita Pengguna (User Story)'**: Ubah deskripsi '{USERSTORY_DESKRIPSI_FITUR}' menjadi format User Story yang benar ('Sebagai seorang..., saya ingin..., agar...') lengkap dengan beberapa contoh Kriteria Penerimaan (Acceptance Criteria).",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Sajikan output dalam format dokumen yang terstruktur, profesional, dan mudah ditindaklanjuti.",
+        },
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Fokus pada kejelasan, kelengkapan informasi, dan keselarasan antara masalah pengguna dengan solusi yang diusulkan.",
+        contoh_kalimat: "Bantu saya membuat PRD untuk fitur kolaborasi baru.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "Asisten Rekrutmen & SDM": {
+        id_kerangka: "BIS-HR-001",
+        nama_kerangka: "Asisten Rekrutmen & SDM",
+        version: "1.0.0",
+        kategori: ["Bisnis", "SDM"],
+        description:
+          "Asisten personalia untuk menyederhanakan tugas rekrutmen dan SDM, dari deskripsi pekerjaan hingga rencana onboarding.",
+        perspektif_user:
+          "Saya perlu bantuan untuk tugas-tugas HR seperti membuat lowongan kerja yang menarik, menyiapkan pertanyaan wawancara yang bagus, dan merancang proses orientasi untuk karyawan baru.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Spesialis SDM yang akan merekrut dan mengelola sumber daya manusia.",
+        components: [
+          {
+            name: "TUGAS_SDM",
+            label: "Tugas Rekrutmen atau SDM",
+            type: "select",
+            options: [
+              "Pembuat Deskripsi Pekerjaan",
+              "Generator Pertanyaan Wawancara",
+              "Penyusun Rencana Onboarding",
+              "Pembuat Draf Email Rekrutmen",
+            ],
+            default: "Pembuat Deskripsi Pekerjaan",
+            info: "Pilih tugas SDM yang ingin Anda kerjakan.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TUGAS_SDM",
+            options: {
+              "Pembuat Deskripsi Pekerjaan": [
+                {
+                  name: "HR_POSISI_JABATAN",
+                  label: "Posisi Jabatan dan Level",
+                  type: "text",
+                  placeholder: "Contoh: Senior Graphic Designer",
+                  info: "Sebutkan jabatan yang sedang dibuka.",
+                },
+                {
+                  name: "HR_TANGGUNG_JAWAB",
+                  label: "3-5 Tanggung Jawab Utama",
+                  type: "textarea",
+                  placeholder:
+                    "- Membuat desain untuk media sosial\n- Mengembangkan konsep visual untuk kampanye",
+                  info: "Sebutkan poin-poin tanggung jawab terpenting.",
+                },
+              ],
+              "Generator Pertanyaan Wawancara": [
+                {
+                  name: "HR_POSISI_WAWANCARA",
+                  label: "Posisi Jabatan",
+                  type: "text",
+                  placeholder: "Contoh: Customer Service, Software Engineer",
+                  info: "Posisi yang akan diwawancarai.",
+                },
+                {
+                  name: "HR_SOFT_SKILL",
+                  label: "Soft Skill yang Dicari",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Kemampuan memecahkan masalah, kolaborasi tim",
+                  info: "Karakteristik perilaku yang penting untuk posisi ini.",
+                },
+              ],
+              "Penyusun Rencana Onboarding": [
+                {
+                  name: "HR_POSISI_ONBOARDING",
+                  label: "Posisi Jabatan Karyawan Baru",
+                  type: "text",
+                  placeholder: "Contoh: Junior Accountant",
+                  info: "Posisi karyawan yang akan menjalani orientasi.",
+                },
+                {
+                  name: "HR_TUJUAN_30_HARI",
+                  label: "Tujuan Utama untuk 30 Hari Pertama",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Memahami alur kerja tim dan berhasil menangani 5 klien kecil.",
+                  info: "Apa target utama yang harus dicapai karyawan baru di bulan pertama?",
+                },
+              ],
+              "Pembuat Draf Email Rekrutmen": [
+                {
+                  name: "HR_JENIS_EMAIL",
+                  label: "Jenis Email",
+                  type: "select",
+                  options: [
+                    "Undangan Wawancara",
+                    "Surat Penolakan Kandidat",
+                    "Surat Penawaran Kerja",
+                  ],
+                  default: "Undangan Wawancara",
+                  info: "Pilih templat email yang Anda butuhkan.",
+                },
+                {
+                  name: "HR_NAMA_KANDIDAT",
+                  label: "Nama Kandidat",
+                  type: "text",
+                  placeholder: "Contoh: Budi Santoso",
+                  info: "Nama kandidat untuk personalisasi email.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Spesialis SDM (Human Resources) yang berpengalaman.",
+          KONTEKS: "Pengguna memerlukan bantuan untuk tugas '{TUGAS_SDM}'.",
+          TUGAS:
+            "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Pembuat Deskripsi Pekerjaan'**: Buat draf deskripsi pekerjaan yang lengkap untuk posisi '{HR_POSISI_JABATAN}' dengan tanggung jawab utama '{HR_TANGGUNG_JAWAB}'. Sertakan bagian Kualifikasi dan paragraf 'Tentang Kami' yang menarik.\n- **Jika 'Generator Pertanyaan Wawancara'**: Buat daftar pertanyaan wawancara yang terstruktur untuk posisi '{HR_POSISI_WAWANCARA}' yang menguji soft skill '{HR_SOFT_SKILL}'. Kategorikan pertanyaan menjadi Perilaku, Teknis/Studi Kasus, dan Kecocokan Budaya.\n- **Jika 'Penyusun Rencana Onboarding'**: Buat checklist rencana onboarding 30 hari untuk posisi '{HR_POSISI_ONBOARDING}' dengan tujuan '{HR_TUJUAN_30_HARI}'. Pisahkan rencana per Hari ke-1, Minggu ke-1, dan 30 Hari Pertama.\n- **Jika 'Pembuat Draf Email Rekrutmen'**: Buat draf '{HR_JENIS_EMAIL}' yang ditujukan kepada '{HR_NAMA_KANDIDAT}'. Pastikan email penolakan tetap sopan dan email penawaran jelas serta profesional.",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Sajikan output dalam format dokumen yang sesuai (misalnya, deskripsi pekerjaan atau checklist) yang rapi dan mudah digunakan.",
+        },
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Gunakan bahasa yang inklusif dan profesional. Untuk email, selalu gunakan nada yang sopan dan menghargai kandidat.",
+        contoh_kalimat:
+          "Buatkan saya templat email untuk menanggapi keluhan produk rusak.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "Asisten Akuntansi & Keuangan Bisnis": {
+        id_kerangka: "BIS-ACC-001",
+        nama_kerangka: "Asisten Akuntansi & Keuangan Bisnis",
+        version: "1.0.0",
+        kategori: ["Bisnis", "Akuntansi"],
+        description:
+          "Asisten akuntansi virtual untuk membantu tugas keuangan dasar, seperti membuat laporan, faktur, dan menganalisis biaya.",
+        perspektif_user:
+          "Sebagai pemilik usaha kecil, saya butuh bantuan untuk tugas akuntansi dasar seperti membuat laporan laba rugi atau menghitung titik impas tanpa harus menjadi akuntan.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang asisten akuntansi yang akan melakukan tugas-tugas akuntansi dan keuangan dasar.",
+        components: [
+          {
+            name: "TUGAS_AKUNTANSI",
+            label: "Tugas Akuntansi atau Keuangan",
+            type: "select",
+            options: [
+              "Pembuat Laporan Keuangan Sederhana",
+              "Generator Draf Faktur (Invoice)",
+              "Alat Analisis & Kategorisasi Biaya",
+              "Kalkulator Titik Impas (Break-Even Point)",
+            ],
+            default: "Pembuat Laporan Keuangan Sederhana",
+            info: "Pilih tugas keuangan yang ingin Anda selesaikan.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TUGAS_AKUNTANSI",
+            options: {
+              "Pembuat Laporan Keuangan Sederhana": [
+                {
+                  name: "ACC_JENIS_LAPORAN",
+                  label: "Jenis Laporan Keuangan",
+                  type: "select",
+                  options: ["Laporan Laba Rugi", "Laporan Arus Kas Sederhana"],
+                  default: "Laporan Laba Rugi",
+                  info: "Pilih jenis laporan yang ingin Anda buat.",
+                },
+                {
+                  name: "ACC_PERIODE",
+                  label: "Periode Laporan",
+                  type: "text",
+                  placeholder: "Contoh: Bulan Juli 2025",
+                  info: "Sebutkan periode waktu yang dicakup laporan.",
+                },
+                {
+                  name: "ACC_DATA_RINGKAS",
+                  label: "Data Keuangan Ringkas",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh L/R: Total Pendapatan: 50jt, HPP: 20jt, Biaya Operasional: 15jt",
+                  info: "Masukkan data keuangan ringkas sesuai jenis laporan.",
+                },
+              ],
+              "Generator Draf Faktur (Invoice)": [
+                {
+                  name: "INV_NAMA_KLIEN",
+                  label: "Nama Klien",
+                  type: "text",
+                  placeholder: "Contoh: PT Sejahtera Makmur",
+                  info: "Nama klien yang akan ditagih.",
+                },
+                {
+                  name: "INV_DETAIL_TAGIHAN",
+                  label: "Detail Barang/Jasa (pisahkan baris)",
+                  type: "textarea",
+                  placeholder:
+                    "Contoh: Desain Logo (1, Rp 2.000.000)\nJasa Konsultasi (2 jam, Rp 500.000/jam)",
+                  info: "Masukkan setiap item, kuantitas, dan harga.",
+                },
+              ],
+              "Alat Analisis & Kategorisasi Biaya": [
+                {
+                  name: "BIAYA_DAFTAR",
+                  label: "Tempelkan Daftar Pengeluaran Anda",
+                  type: "textarea",
+                  placeholder:
+                    "- Sewa kantor 5.000.000\n- Gaji staf 15.000.000\n- Iklan online 2.000.000",
+                  info: "Masukkan daftar pengeluaran Anda, satu per baris.",
+                },
+              ],
+              "Kalkulator Titik Impas (Break-Even Point)": [
+                {
+                  name: "BEP_BIAYA_TETAP",
+                  label: "Total Biaya Tetap per Bulan",
+                  type: "number",
+                  placeholder: "20000000",
+                  unit: "Rp",
+                  info: "Biaya yang selalu sama, tidak peduli penjualan (gaji, sewa).",
+                },
+                {
+                  name: "BEP_HARGA_JUAL",
+                  label: "Harga Jual per Unit",
+                  type: "number",
+                  placeholder: "100000",
+                  unit: "Rp",
+                  info: "Harga jual satu unit produk/jasa Anda.",
+                },
+                {
+                  name: "BEP_BIAYA_VARIABEL",
+                  label: "Biaya Variabel per Unit",
+                  type: "number",
+                  placeholder: "40000",
+                  unit: "Rp",
+                  info: "Biaya yang hanya muncul jika ada penjualan (bahan baku, komisi).",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang asisten akuntansi yang praktis dan mudah dimengerti.",
+          KONTEKS:
+            "Pengguna memerlukan bantuan untuk tugas '{TUGAS_AKUNTANSI}'. Tujuannya adalah menyederhanakan konsep akuntansi untuk non-akuntan.",
+          TUGAS:
+            "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Pembuat Laporan Keuangan Sederhana'**: Buat '{ACC_JENIS_LAPORAN}' untuk periode '{ACC_PERIODE}' menggunakan data '{ACC_DATA_RINGKAS}'. Sajikan dalam tabel yang jelas.\n- **Jika 'Generator Draf Faktur (Invoice)'**: Buat draf faktur profesional untuk '{INV_NAMA_KLIEN}' dengan detail tagihan '{INV_DETAIL_TAGIHAN}'. Sertakan semua elemen standar faktur.\n- **Jika 'Alat Analisis & Kategorisasi Biaya'**: Analisis daftar pengeluaran '{BIAYA_DAFTAR}'. Kategorikan setiap biaya, hitung total per kategori, dan tunjukkan persentasenya dari total pengeluaran.\n- **Jika 'Kalkulator Titik Impas (Break-Even Point)'**: Hitung titik impas (dalam unit dan Rupiah) menggunakan biaya tetap '{BEP_BIAYA_TETAP}', harga jual '{BEP_HARGA_JUAL}', dan biaya variabel '{BEP_BIAYA_VARIABEL}'. Jelaskan artinya.",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Sajikan output dalam format yang rapi, mudah dibaca, dan profesional. Gunakan tabel untuk data keuangan dan faktur.",
+        },
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Hindari jargon akuntansi yang rumit. Selalu berikan penjelasan singkat tentang arti angka atau laporan yang dihasilkan. Ingatkan pengguna bahwa ini adalah alat bantu dan bukan pengganti akuntan profesional.",
+        contoh_kalimat: "Bantu saya hitung titik impas usaha saya.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "Pusat Bantuan Layanan Pelanggan": {
+        id_kerangka: "BIS-CS-001",
+        nama_kerangka: "Pusat Bantuan Layanan Pelanggan",
+        version: "1.0.0",
+        kategori: ["Bisnis", "Layanan Pelanggan"],
+        description:
+          "Pusat komando untuk tim layanan pelanggan untuk meningkatkan kualitas, konsistensi, dan efisiensi interaksi.",
+        perspektif_user:
+          "Tim saya butuh bantuan untuk membuat respons standar yang baik, menangani keluhan, dan menganalisis umpan balik pelanggan secara efisien.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Manajer Layanan Pelanggan yang akan meningkatkan kualitas layanan pelanggan.",
+        components: [
+          {
+            name: "TUGAS_LAYANAN_PELANGGAN",
+            label: "Tugas Layanan Pelanggan",
+            type: "select",
+            options: [
+              "Generator Templat Respons",
+              "Penyusun Skrip Eskalasi Masalah",
+              "Pembuat Konten Halaman FAQ",
+              "Analisis Umpan Balik Pelanggan",
+            ],
+            default: "Generator Templat Respons",
+            info: "Pilih tugas yang ingin Anda optimalkan.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TUGAS_LAYANAN_PELANGGAN",
+            options: {
+              "Generator Templat Respons": [
+                {
+                  name: "CS_SKENARIO",
+                  label: "Skenario Pelanggan",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Keluhan produk rusak, Pertanyaan status pengiriman",
+                  info: "Jelaskan situasi umum yang dihadapi agen Anda.",
+                },
+                {
+                  name: "CS_TONE",
+                  label: "Nada Suara Respons",
+                  type: "select",
+                  options: [
+                    "Empatik & Profesional",
+                    "Cepat & Efisien",
+                    "Sangat Sopan & Formal",
+                  ],
+                  default: "Empatik & Profesional",
+                  info: "Pilih gaya bahasa untuk respons.",
+                },
+              ],
+              "Penyusun Skrip Eskalasi Masalah": [
+                {
+                  name: "CS_MASALAH_ESKALASI",
+                  label: "Jenis Masalah yang Perlu Eskalasi",
+                  type: "text",
+                  placeholder:
+                    "Contoh: Masalah teknis kompleks, Pelanggan yang sangat tidak puas",
+                  info: "Sebutkan situasi yang memerlukan penanganan tim senior.",
+                },
+              ],
+              "Pembuat Konten Halaman FAQ": [
+                {
+                  name: "CS_PRODUK_FAQ",
+                  label: "Produk atau Layanan",
+                  type: "text",
+                  placeholder: "Contoh: Layanan langganan premium kami",
+                  info: "Produk yang akan dibuatkan halaman FAQ-nya.",
+                },
+                {
+                  name: "CS_PERTANYAAN_UMUM",
+                  label: "Contoh Pertanyaan Umum (Opsional)",
+                  type: "textarea",
+                  placeholder:
+                    "- Bagaimana cara membatalkan langganan?\n- Apakah ada refund?",
+                  info: "Jika Anda sudah punya daftar, masukkan di sini. Jika tidak, AI akan membuatnya.",
+                  optional: true,
+                },
+              ],
+              "Analisis Umpan Balik Pelanggan": [
+                {
+                  name: "CS_UMPAN_BALIK",
+                  label: "Tempelkan Umpan Balik Pelanggan",
+                  type: "textarea",
+                  placeholder:
+                    "Salin dan tempel beberapa ulasan pelanggan dari Google Reviews, App Store, atau survei di sini...",
+                  info: "AI akan menganalisis teks ini untuk menemukan tema umum.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Manajer Layanan Pelanggan yang berpengalaman.",
+          KONTEKS:
+            "Pengguna memerlukan bantuan untuk tugas '{TUGAS_LAYANAN_PELANGGAN}' untuk meningkatkan kualitas layanan mereka.",
+          TUGAS:
+            "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Generator Templat Respons'**: Buat draf templat email/chat untuk skenario '{CS_SKENARIO}' dengan nada '{CS_TONE}'. Sertakan placeholder untuk personalisasi.\n- **Jika 'Penyusun Skrip Eskalasi Masalah'**: Buat panduan skrip untuk agen tentang cara mengeskalasi masalah '{CS_MASALAH_ESKALASI}' ke tim senior, termasuk informasi apa yang harus dikumpulkan.\n- **Jika 'Pembuat Konten Halaman FAQ'**: Buat daftar Pertanyaan dan Jawaban yang jelas dan ringkas untuk produk '{CS_PRODUK_FAQ}', berdasarkan '{CS_PERTANYAAN_UMUM}' jika ada.\n- **Jika 'Analisis Umpan Balik Pelanggan'**: Analisis umpan balik di '{CS_UMPAN_BALIK}'. Identifikasi 3 tema positif utama, 3 tema negatif utama, dan berikan saran perbaikan yang dapat ditindaklanjuti.",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Sajikan output dalam format yang paling praktis untuk setiap tugas (misalnya, templat, checklist, atau laporan analisis).",
+        },
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Prioritaskan kejelasan, empati, dan solusi dalam setiap output. Tujuannya adalah untuk menyelesaikan masalah pelanggan secara efisien sambil menjaga kepuasan mereka.",
+        contoh_kalimat:
+          "Buatkan saya templat email untuk menanggapi keluhan produk rusak.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+    },
+    "Pengembangan Perangkat Lunak": {
+      "Asisten Pengembang Cerdas": {
+        id_kerangka: "KOL-PP-100",
+        nama_kerangka: "Asisten Pengembang Cerdas",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
+        description:
+          "Pusat komprehensif untuk tugas-tugas pengembangan perangkat lunak, mulai dari pembuatan kode, analisis, pengujian, hingga dokumentasi, menggunakan pendekatan dinamis untuk alur kerja yang efisien.",
+        perspektif_user:
+          "Sebagai seorang pengembang, saya membutuhkan satu alat terpusat yang dapat membantu saya dengan berbagai tugas pengembangan sehari-hari, seperti menulis kode baru, meninjau kode yang ada, membuat pengujian, dan menghasilkan dokumentasi, tanpa harus berpindah-pindah kerangka kerja.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Asisten Pengembang Cerdas yang akan membantu pengembangan perangkat lunak.",
+        components: [
+          {
+            name: "TUGAS_PENGEMBANGAN",
+            label: "Tugas Pengembangan",
+            type: "select",
+            options: [
+              "Buat Kode Baru",
+              "Tinjau & Perbaiki Kode",
+              "Jelaskan Kode",
+              "Buat Pengujian Otomatis",
+              "Buat Dokumentasi Teknis",
+              "Lainnya...",
+            ],
+            description:
+              "Pilih tugas pengembangan utama yang ingin Anda lakukan.",
+            default: "Buat Kode Baru",
+            info: "Pilih tugas utama yang ingin Anda lakukan. Pilihan Anda akan menampilkan opsi-opsi yang relevan di bawah.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TUGAS_PENGEMBANGAN",
+            options: {
+              "Buat Kode Baru": [
+                {
+                  name: "functionalityDescription",
+                  label: "Deskripsi Fungsionalitas yang Diinginkan",
+                  type: "textarea",
+                  placeholder:
+                    "e.g., 'Fungsi Python untuk menghitung faktorial dari sebuah angka.'",
+                  description:
+                    "Jelaskan secara detail fungsionalitas kode yang Anda inginkan.",
+                  validation: { min_length: 20 },
+                  info: "Jelaskan secara detail fungsionalitas kode yang Anda inginkan.",
+                },
+                {
+                  name: "programmingLanguage",
+                  label: "Bahasa Pemrograman",
+                  type: "select",
+                  options: ["Python", "JavaScript", "Java", "C#", "Lainnya..."],
+                  description:
+                    "Pilih bahasa pemrograman untuk kode yang akan dihasilkan.",
+                  default: "Python",
+                  info: "Pilih bahasa pemrograman untuk kode yang akan dihasilkan.",
+                },
+                {
+                  name: "codeStyle",
+                  label: "Gaya Kode (Opsional)",
+                  type: "text",
+                  placeholder: "e.g., 'Pythonic, ES6, Java Clean Code'",
+                  description:
+                    "Sebutkan preferensi gaya pengkodean (misalnya, PEP 8 untuk Python).",
+                  optional: true,
+                  info: "Sebutkan preferensi gaya pengkodean (misalnya, PEP 8 untuk Python).",
+                },
+                {
+                  name: "includeComments",
+                  label: "Sertakan Komentar?",
+                  type: "boolean",
+                  description:
+                    "Apakah Anda ingin kode disertai komentar penjelasan?",
+                  default: false,
+                  info: "Apakah Anda ingin kode disertai komentar penjelasan?",
+                },
+                {
+                  name: "additionalInstructions",
+                  label: "Instruksi Tambahan & Batasan",
+                  type: "textarea",
+                  placeholder:
+                    "e.g., 'Pastikan fungsi ini menangani input negatif. Gunakan rekursi.'",
+                  description:
+                    "Sebutkan batasan, kompleksitas, atau instruksi khusus lainnya untuk kode.",
+                  optional: true,
+                  info: "Sebutkan batasan, kompleksitas, atau instruksi khusus lainnya untuk kode.",
+                },
+              ],
+              "Tinjau & Perbaiki Kode": [
+                {
+                  name: "codeSnippet",
+                  label: "Potongan Kode untuk Ditinjau",
+                  type: "code",
+                  placeholder:
+                    "e.g., 'function calculateTotal(price, quantity) { ... }'",
+                  description:
+                    "Tempelkan potongan kode yang ingin Anda tinjau di sini.",
+                  validation: { min_length: 10 },
+                  info: "Tempelkan potongan kode yang ingin Anda tinjau di sini.",
+                },
+                {
+                  name: "programmingLanguage",
+                  label: "Bahasa Pemrograman",
+                  type: "select",
+                  options: [
+                    "JavaScript",
+                    "Python",
+                    "Java",
+                    "C++",
+                    "Go",
+                    "Ruby",
+                    "PHP",
+                    "Swift",
+                    "Kotlin",
+                    "TypeScript",
+                    "Lainnya...",
+                  ],
+                  description: "Pilih bahasa pemrograman dari potongan kode.",
+                  default: "Python",
+                  info: "Pilih bahasa pemrograman dari potongan kode.",
+                },
+                {
+                  name: "reviewFocus",
+                  label: "Fokus Peninjauan & Refactoring",
+                  type: "multiselect",
+                  options: [
+                    "Keterbacaan",
+                    "Pemeliharaan",
+                    "Skalabilitas",
+                    "Efisiensi",
+                    "Keamanan",
+                    "Kepatuhan Standar",
+                    "Struktur",
+                    "Pengurangan Duplikasi",
+                    "Lainnya...",
+                  ],
+                  description:
+                    "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring.",
+                  default: ["Keterbacaan", "Efisiensi"],
+                  info: "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring.",
+                },
+                {
+                  name: "userLevel",
+                  label: "Tingkat Keahlian Anda",
+                  type: "select",
+                  options: ["Pemula", "Menengah", "Ahli", "Lainnya..."],
+                  description:
+                    "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran.",
+                  default: "Menengah",
+                  info: "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran.",
+                },
+                {
+                  name: "additionalInstructions",
+                  label: "Instruksi Tambahan & Gaya",
+                  type: "textarea",
+                  description:
+                    "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
+                  optional: true,
+                  placeholder:
+                    "e.g., 'Berikan contoh kode sebelum dan sesudah. Jelaskan manfaatnya secara bisnis.'",
+                  info: "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
+                },
+              ],
+              "Jelaskan Kode": [
+                {
+                  name: "codeSnippet",
+                  label: "Potongan Kode",
+                  type: "code",
+                  description:
+                    "Tempelkan potongan kode yang ingin Anda terjemahkan di sini.",
+                  validation: { min_length: 10 },
+                  placeholder: "e.g., function factorial(n) { ... }",
+                  info: "Tempelkan potongan kode yang ingin Anda terjemahkan di sini.",
+                },
+                {
+                  name: "programmingLanguage",
+                  label: "Bahasa Pemrograman",
+                  type: "select",
+                  options: [
+                    "JavaScript",
+                    "Python",
+                    "Java",
+                    "C++",
+                    "Go",
+                    "Ruby",
+                    "PHP",
+                    "Swift",
+                    "Kotlin",
+                    "TypeScript",
+                    "Lainnya...",
+                  ],
+                  info: "Pilih bahasa pemrograman dari potongan kode.",
+                },
+                {
+                  name: "targetAudience",
+                  label: "Target Audiens Penjelasan",
+                  type: "select",
+                  options: [
+                    "Pemula (non-teknis)",
+                    "Mahasiswa (dasar)",
+                    "Pengembang Junior",
+                    "Pengembang Senior",
+                    "Manajer Proyek (non-teknis)",
+                    "Lainnya...",
+                  ],
+                  info: "Siapa yang akan membaca penjelasan ini?",
+                },
+                {
+                  name: "explanationDetailLevel",
+                  label: "Tingkat Detail Penjelasan",
+                  type: "select",
+                  options: [
+                    "Sangat Sederhana (gambaran umum)",
+                    "Menengah (konsep kunci)",
+                    "Rinci (langkah demi langkah)",
+                    "Lainnya...",
+                  ],
+                  info: "Pilih seberapa detail penjelasan yang Anda inginkan.",
+                },
+                {
+                  name: "additionalInstructions",
+                  label: "Instruksi Tambahan & Gaya",
+                  type: "textarea",
+                  description:
+                    "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
+                  optional: true,
+                  placeholder:
+                    "e.g., 'Gunakan analogi memasak. Jangan lebih dari 200 kata.'",
+                  info: "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
+                },
+              ],
+              "Buat Pengujian Otomatis": [
+                {
+                  name: "codeSnippet",
+                  label: "Potongan Kode/Fungsionalitas untuk Dites",
+                  type: "code",
+                  placeholder: "e.g., 'function validateEmail(email) { ... }'",
+                  description:
+                    "Tempelkan kode atau jelaskan fungsionalitas yang ingin Anda tulis tesnya.",
+                  validation: { min_length: 10 },
+                  info: "Tempelkan kode atau jelaskan fungsionalitas yang ingin Anda tulis tesnya.",
+                },
+                {
+                  name: "programmingLanguage",
+                  label: "Bahasa Pemrograman",
+                  type: "select",
+                  options: ["Python", "JavaScript", "Java", "C#", "Lainnya..."],
+                  description: "Pilih bahasa pemrograman dari kode.",
+                  default: "JavaScript",
+                  info: "Pilih bahasa pemrograman dari kode.",
+                },
+                {
+                  name: "testType",
+                  label: "Jenis Tes",
+                  type: "select",
+                  options: [
+                    "Unit Test",
+                    "Integration Test",
+                    "End-to-End Test",
+                    "Lainnya...",
+                  ],
+                  description: "Pilih jenis tes yang ingin Anda buat.",
+                  default: "Unit Test",
+                  info: "Pilih jenis tes yang ingin Anda buat.",
+                },
+                {
+                  name: "testFramework",
+                  label: "Framework Tes (Opsional)",
+                  type: "text",
+                  placeholder: "e.g., 'Jest, Pytest, JUnit'",
+                  description: "Sebutkan framework tes yang Anda gunakan.",
+                  optional: true,
+                  info: "Sebutkan framework tes yang Anda gunakan.",
+                },
+                {
+                  name: "additionalInstructions",
+                  label: "Instruksi Tambahan & Skenario",
+                  type: "textarea",
+                  placeholder:
+                    "e.g., 'Sertakan kasus uji untuk input yang tidak valid. Fokus pada skenario edge case.'",
+                  description:
+                    "Sebutkan skenario spesifik, batasan, atau instruksi khusus lainnya untuk tes.",
+                  optional: true,
+                  info: "Sebutkan skenario spesifik, batasan, atau instruksi khusus lainnya untuk tes.",
+                },
+              ],
+              "Buat Dokumentasi Teknis": [
+                {
+                  name: "documentType",
+                  label: "Jenis Dokumen",
+                  type: "select",
+                  options: [
+                    "README Proyek",
+                    "Panduan API",
+                    "Panduan Pengguna",
+                    "Dokumentasi Kode Internal",
+                    "Lainnya...",
+                  ],
+                  placeholder: "Pilih jenis dokumen",
+                  info: "Pilih jenis dokumentasi yang ingin Anda buat.",
+                },
+                {
+                  name: "projectDescription",
+                  label: "Deskripsi Proyek/Fungsionalitas",
+                  type: "textarea",
+                  placeholder:
+                    "e.g., 'Aplikasi web untuk manajemen tugas dengan fitur CRUD dan autentikasi pengguna.'",
+                  info: "Jelaskan proyek atau fungsionalitas yang ingin Anda dokumentasikan.",
+                },
+                {
+                  name: "targetAudience",
+                  label: "Target Audiens Dokumen",
+                  type: "select",
+                  options: [
+                    "Pengembang (Internal)",
+                    "Pengembang (Eksternal/API User)",
+                    "Pengguna Akhir",
+                    "Manajer Proyek",
+                    "Lainnya...",
+                  ],
+                  placeholder: "Pilih target audiens",
+                  info: "Siapa yang akan membaca dokumentasi ini?",
+                },
+                {
+                  name: "codeSnippet",
+                  label: "Potongan Kode (Opsional)",
+                  type: "code",
+                  placeholder: "e.g., function createUser(name, email) { ... }",
+                  optional: true,
+                  info: "Tempelkan potongan kode yang relevan jika Anda ingin dokumentasi berfokus pada kode.",
+                },
+                {
+                  name: "additionalInstructions",
+                  label: "Instruksi Tambahan & Gaya",
+                  type: "textarea",
+                  description:
+                    "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
+                  optional: true,
+                  placeholder:
+                    "e.g., 'Gunakan bahasa yang formal dan ringkas. Sertakan contoh penggunaan.'",
+                  info: "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
+                },
+              ],
+              "Lainnya...": [
+                {
+                  name: "customDevelopmentTask",
+                  label: "Sebutkan Tugas Pengembangan Lainnya",
+                  type: "textarea",
+                  description:
+                    "Jelaskan secara rinci tugas pengembangan spesifik yang ingin Anda lakukan.",
+                  placeholder:
+                    "e.g., 'Optimalkan query database untuk performa', 'Buat skema database untuk aplikasi e-commerce'",
+                  info: "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Asisten Pengembang Cerdas serbaguna, siap membantu dengan berbagai tugas pengembangan perangkat lunak.",
+          KONTEKS:
+            "Pengguna telah memilih tugas: '{TUGAS_PENGEMBANGAN}'. Berdasarkan pilihan ini, Anda akan bertindak sebagai spesialis yang relevan (misalnya, Insinyur Kode, Auditor Kode, Penulis Teknis).",
+          TUGAS:
+            "Berdasarkan tugas '{TUGAS_PENGEMBANGAN}', lakukan hal berikut:\n\n*   **Jika 'Buat Kode Baru'**: Hasilkan kode fungsional berdasarkan deskripsi: '{functionalityDescription}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Gunakan gaya '{codeStyle}'. {additionalInstructions}\n*   **Jika 'Tinjau & Perbaiki Kode'**: Analisis kode '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Fokus pada: {reviewFocus}. Jika fokus adalah 'Lainnya...', gunakan '{customReviewFocus}'. Berikan saran perbaikan yang sesuai untuk tingkat keahlian '{userLevel}'. Jika tingkat keahlian adalah 'Lainnya...', gunakan '{customUserLevel}'. {additionalInstructions}\n*   **Jika 'Jelaskan Kode'**: Terjemahkan kode '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Jadikan penjelasan mudah dipahami untuk audiens '{targetAudience}'. Jika audiens adalah 'Lainnya...', gunakan '{customTargetAudience}', dengan tingkat detail '{explanationDetailLevel}'. Jika tingkat detail adalah 'Lainnya...', gunakan '{customExplanationDetailLevel}'. {additionalInstructions}\n*   **Jika 'Buat Pengujian Otomatis'**: Buat '{testType}'. Jika jenis tes adalah 'Lainnya...', gunakan '{customTestType}'. Buat tes untuk kode/fungsionalitas '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}', menggunakan framework '{testFramework}'. {additionalInstructions}\n*   **Jika 'Buat Dokumentasi Teknis'**: Buat '{documentType}'. Jika jenis dokumen adalah 'Lainnya...', gunakan '{customDocumentType}'. Buat dokumentasi untuk proyek '{projectDescription}' yang ditujukan untuk '{targetAudience}'. Jika audiens adalah 'Lainnya...', gunakan '{customTargetAudience}'. Gunakan kode '{codeSnippet}' jika disediakan. {additionalInstructions}\n*   **Jika 'Lainnya...**: Tanggapi permintaan kustom '{customDevelopmentTask}' dengan memberikan solusi, kode, atau panduan terbaik.",
+          "FORMAT OUTPUT":
+            "Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, blok kode untuk pembuatan kode, daftar poin-poin untuk ulasan, Markdown terstruktur untuk dokumentasi). Pastikan output jelas, akurat, dan dapat ditindaklanjuti.",
+        },
+        toolType: "code",
+        konteks_tambahan_instruksi_khusus:
+          "Selalu prioritaskan kode yang bersih, efisien, dan mudah dipelihara. Berikan penjelasan yang mendidik di balik saran Anda. Jika ada ambiguitas dalam permintaan pengguna, ajukan pertanyaan klarifikasi sebelum menghasilkan output.",
+        contoh_kalimat:
+          "Gunakan Asisten Pengembang Cerdas untuk membuat fungsi Python baru.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "Panduan DevOps & MLOps": {
+        id_kerangka: "KOL-PP-101",
+        nama_kerangka: "Panduan DevOps & MLOps",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
+        description:
+          "Panduan terpusat untuk manajemen proyek, infrastruktur, dan operasional, mencakup siklus hidup DevOps dan MLOps dari perencanaan hingga pemantauan.",
+        perspektif_user:
+          "Sebagai seorang insinyur DevOps, MLOps, atau manajer proyek, saya memerlukan alat terintegrasi untuk membantu saya dengan berbagai tugas operasional seperti perencanaan Agile, manajemen dependensi, containerization, CI/CD, pemantauan, IaC, dan alur kerja data science.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Ahli DevOps dan MLOps yang akan mengelola operasional dan infrastruktur.",
+        components: [
+          {
+            name: "TUGAS_OPERASIONAL",
+            label: "Tugas Operasional",
+            type: "select",
+            options: [
+              "Manajemen Proyek Agile",
+              "Manajemen Dependensi & Versi",
+              "Containerization & Deployment",
+              "Bangun CI/CD Pipeline",
+              "Monitoring & Logging",
+              "Infrastructure as Code (IaC)",
+              "Alur Kerja Data Science",
+              "Lainnya...",
+            ],
+            description:
+              "Pilih tugas operasional utama yang ingin Anda lakukan.",
+            default: "Manajemen Proyek Agile",
+            info: "Pilih tugas utama yang ingin Anda lakukan. Pilihan Anda akan menampilkan opsi-opsi yang relevan di bawah.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TUGAS_OPERASIONAL",
+            options: {
+              "Manajemen Proyek Agile": [
+                {
+                  name: "agileFramework",
+                  label: "Kerangka Kerja Agile",
+                  type: "select",
+                  options: ["Scrum", "Kanban", "Lainnya..."],
+                  default: "Scrum",
+                  info: "Pilih kerangka kerja Agile yang Anda gunakan.",
+                },
+                {
+                  name: "projectGoal",
+                  label: "Tujuan Proyek/Sprint",
+                  type: "textarea",
+                  placeholder:
+                    "e.g., 'Mengembangkan fitur autentikasi pengguna baru'",
+                  info: "Jelaskan tujuan utama dari proyek atau sprint ini.",
+                },
+                {
+                  name: "teamSize",
+                  label: "Ukuran Tim",
+                  type: "number",
+                  placeholder: "e.g., 5",
+                  info: "Masukkan jumlah anggota dalam tim Anda.",
+                },
+              ],
+              "Manajemen Dependensi & Versi": [
+                {
+                  name: "helpTopic",
+                  label: "Topik Bantuan",
+                  type: "select",
+                  options: [
+                    "Manajemen Dependensi",
+                    "Kontrol Versi (Git)",
+                    "Keduanya",
+                  ],
+                  default: "Kontrol Versi (Git)",
+                  info: "Pilih topik yang Anda butuhkan bantuan.",
+                },
+                {
+                  name: "programmingLanguage",
+                  label: "Bahasa/Ekosistem Pemrograman (Opsional)",
+                  type: "text",
+                  placeholder:
+                    "e.g., 'Node.js (npm), Python (pip), Java (Maven/Gradle)'",
+                  optional: true,
+                  info: "Sebutkan bahasa atau ekosistem pemrograman Anda.",
+                },
+                {
+                  name: "specificProblem",
+                  label: "Masalah Spesifik (Opsional)",
+                  type: "textarea",
+                  placeholder:
+                    "e.g., 'Saya tidak tahu cara menggabungkan dua branch di Git tanpa konflik.'",
+                  optional: true,
+                  info: "Jelaskan masalah spesifik yang Anda hadapi.",
+                },
+              ],
+              "Containerization & Deployment": [
+                {
+                  name: "taskType",
+                  label: "Jenis Tugas",
+                  type: "select",
+                  options: [
+                    "Membuat Dockerfile",
+                    "Membangun Image Docker",
+                    "Menjalankan Kontainer",
+                    "Deployment ke Cloud",
+                    "Lainnya...",
+                  ],
+                  default: "Membuat Dockerfile",
+                  info: "Pilih tugas yang ingin Anda lakukan.",
+                },
+                {
+                  name: "applicationType",
+                  label: "Jenis Aplikasi",
+                  type: "text",
+                  placeholder:
+                    "e.g., 'Aplikasi web Node.js', 'API Python dengan Flask'",
+                  info: "Jelaskan jenis aplikasi Anda.",
+                },
+                {
+                  name: "programmingLanguage",
+                  label: "Bahasa Pemrograman",
+                  type: "select",
+                  options: ["Node.js", "Python", "Java", "Go", "Lainnya..."],
+                  default: "Node.js",
+                  info: "Pilih bahasa pemrograman aplikasi Anda.",
+                },
+              ],
+              "Bangun CI/CD Pipeline": [
+                {
+                  name: "ciCdPlatform",
+                  label: "Platform CI/CD",
+                  type: "select",
+                  options: [
+                    "GitHub Actions",
+                    "GitLab CI/CD",
+                    "Jenkins",
+                    "CircleCI",
+                    "Lainnya...",
+                  ],
+                  default: "GitHub Actions",
+                  info: "Pilih platform CI/CD yang ingin Anda gunakan.",
+                },
+                {
+                  name: "projectType",
+                  label: "Jenis Proyek",
+                  type: "text",
+                  placeholder:
+                    "e.g., 'Aplikasi web frontend', 'API backend', 'Library Python'",
+                  info: "Jelaskan jenis proyek Anda.",
+                },
+                {
+                  name: "pipelineStages",
+                  label: "Tahapan Pipeline yang Diinginkan",
+                  type: "multiselect",
+                  options: [
+                    "Linting",
+                    "Testing",
+                    "Building",
+                    "Deployment",
+                    "Notifikasi",
+                    "Lainnya...",
+                  ],
+                  default: ["Linting", "Testing", "Building", "Deployment"],
+                  info: "Pilih tahapan yang ingin Anda sertakan dalam pipeline.",
+                },
+              ],
+              "Monitoring & Logging": [
+                {
+                  name: "monitoringTool",
+                  label: "Alat Pemantauan/Pencatatan",
+                  type: "select",
+                  options: [
+                    "Prometheus & Grafana",
+                    "ELK Stack (Elasticsearch, Logstash, Kibana)",
+                    "Datadog",
+                    "New Relic",
+                    "Lainnya...",
+                  ],
+                  default: "Prometheus & Grafana",
+                  info: "Pilih alat yang ingin Anda gunakan.",
+                },
+                {
+                  name: "applicationType",
+                  label: "Jenis Aplikasi",
+                  type: "text",
+                  placeholder:
+                    "e.g., 'Aplikasi web Node.js', 'Microservice Java'",
+                  info: "Jelaskan jenis aplikasi yang akan dipantau.",
+                },
+                {
+                  name: "metricsToTrack",
+                  label: "Metrik Kunci yang Ingin Dilacak",
+                  type: "multiselect",
+                  options: [
+                    "Penggunaan CPU",
+                    "Penggunaan Memori",
+                    "Latensi Permintaan",
+                    "Jumlah Error",
+                    "Trafik Jaringan",
+                    "Lainnya...",
+                  ],
+                  default: [
+                    "Penggunaan CPU",
+                    "Latensi Permintaan",
+                    "Jumlah Error",
+                  ],
+                  info: "Pilih metrik yang paling penting untuk Anda.",
+                },
+              ],
+              "Infrastructure as Code (IaC)": [
+                {
+                  name: "iacTool",
+                  label: "Alat IaC",
+                  type: "select",
+                  options: [
+                    "Terraform",
+                    "AWS CloudFormation",
+                    "Azure Resource Manager (ARM)",
+                    "Pulumi",
+                    "Lainnya...",
+                  ],
+                  default: "Terraform",
+                  info: "Pilih alat Infrastructure as Code yang ingin Anda gunakan.",
+                },
+                {
+                  name: "cloudProvider",
+                  label: "Penyedia Cloud",
+                  type: "select",
+                  options: [
+                    "AWS",
+                    "Azure",
+                    "Google Cloud Platform (GCP)",
+                    "Lainnya...",
+                  ],
+                  default: "AWS",
+                  info: "Pilih penyedia layanan cloud Anda.",
+                },
+                {
+                  name: "resourceType",
+                  label: "Jenis Sumber Daya",
+                  type: "multiselect",
+                  options: [
+                    "Virtual Machine (VM)",
+                    "Database",
+                    "Jaringan (VPC/VNet)",
+                    "Penyimpanan (Storage)",
+                    "Load Balancer",
+                    "Lainnya...",
+                  ],
+                  default: ["Virtual Machine (VM)", "Jaringan (VPC/VNet)"],
+                  info: "Pilih jenis sumber daya yang ingin Anda definisikan.",
+                },
+              ],
+              "Alur Kerja Data Science": [
+                {
+                  name: "workflowTask",
+                  label: "Tugas Alur Kerja",
+                  type: "select",
+                  options: [
+                    "Pengumpulan Data",
+                    "Pembersihan & Pra-pemrosesan Data",
+                    "Eksplorasi Data (EDA)",
+                    "Pelatihan Model",
+                    "Evaluasi Model",
+                    "Deployment Model",
+                    "Lainnya...",
+                  ],
+                  default: "Eksplorasi Data (EDA)",
+                  info: "Pilih tugas dalam alur kerja data science yang Anda butuhkan bantuan.",
+                },
+                {
+                  name: "datasetDescription",
+                  label: "Deskripsi Dataset (Opsional)",
+                  type: "textarea",
+                  placeholder:
+                    "e.g., 'Dataset berisi data transaksi pelanggan selama 1 tahun.'",
+                  optional: true,
+                  info: "Jelaskan secara singkat tentang dataset yang Anda gunakan.",
+                },
+                {
+                  name: "goal",
+                  label: "Tujuan Analisis/Model",
+                  type: "textarea",
+                  placeholder:
+                    "e.g., 'Memprediksi churn pelanggan', 'Mengelompokkan pelanggan berdasarkan perilaku pembelian'",
+                  info: "Jelaskan tujuan akhir dari analisis atau model yang ingin Anda bangun.",
+                },
+              ],
+              "Lainnya...": [
+                {
+                  name: "customOperationalTask",
+                  label: "Sebutkan Tugas Operasional Lainnya",
+                  type: "textarea",
+                  description:
+                    "Jelaskan secara rinci tugas operasional spesifik yang ingin Anda lakukan.",
+                  placeholder:
+                    "e.g., 'Melakukan audit keamanan pada infrastruktur cloud', 'Merancang strategi pemulihan bencana'",
+                  info: "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang Ahli DevOps dan MLOps serbaguna.",
+          KONTEKS:
+            "Pengguna telah memilih tugas operasional: '{TUGAS_OPERASIONAL}'. Anda akan bertindak sebagai spesialis yang relevan untuk memandu pengguna.",
+          TUGAS:
+            "Berdasarkan tugas '{TUGAS_OPERASIONAL}', berikan panduan, konfigurasi, atau rencana yang relevan. Gunakan variabel input yang disediakan dari sub-komponen yang sesuai untuk menyusun respons Anda.",
+          "FORMAT OUTPUT":
+            "Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, file konfigurasi YAML, daftar langkah-langkah dalam Markdown, atau rencana proyek). Pastikan output jelas, akurat, dan dapat ditindaklanjuti.",
+        },
+        toolType: "planning",
+        konteks_tambahan_instruksi_khusus:
+          "Selalu prioritaskan praktik terbaik industri untuk keamanan, efisiensi, dan skalabilitas. Jika ada ambiguitas, ajukan pertanyaan klarifikasi.",
+        contoh_kalimat:
+          "Bantu saya merancang CI/CD pipeline untuk aplikasi web Node.js saya menggunakan GitHub Actions.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "Tutor Pemrograman & Konsep Lanjutan": {
+        id_kerangka: "KOL-PP-102",
+        nama_kerangka: "Tutor Pemrograman & Konsep Lanjutan",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
+        description:
+          "Pusat pembelajaran terintegrasi untuk pemula hingga ahli, mencakup pemilihan bahasa, dasar-dasar pemrograman, debugging, dan konsep lanjutan seperti AI, keamanan siber, dan blockchain.",
+        perspektif_user:
+          "Sebagai seseorang yang ingin belajar atau memperdalam ilmu pemrograman, saya memerlukan satu tempat untuk mendapatkan bimbingan, mulai dari memilih bahasa pertama, memahami dasar-dasarnya, hingga menjelajahi topik-topik canggih seperti AI dan keamanan siber.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Tutor Pemrograman yang akan mengajarkan konsep pemrograman dan teknologi.",
+        components: [
+          {
+            name: "TOPIK_PEMBELAJARAN",
+            label: "Topik Pembelajaran",
+            type: "select",
+            options: [
+              "Pilih Bahasa Pemrograman Pertama",
+              "Dasar-Dasar Pemrograman",
+              "Visualisasi Algoritma & Struktur Data",
+              "Dasar-Dasar Keamanan Siber",
+              "Dasar-Dasar AI/Machine Learning",
+              "Dasar-Dasar Web3 & Blockchain",
+              "Panduan Debugging",
+              "Lainnya...",
+            ],
+            description: "Pilih topik pembelajaran yang ingin Anda jelajahi.",
+            default: "Dasar-Dasar Pemrograman",
+            info: "Pilih topik utama yang ingin Anda pelajari. Pilihan Anda akan menampilkan opsi-opsi yang relevan di bawah.",
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "TOPIK_PEMBELAJARAN",
+            options: {
+              "Pilih Bahasa Pemrograman Pertama": [
+                {
+                  name: "userInterests",
+                  label: "Minat Anda",
+                  type: "text",
+                  placeholder: "e.g., 'Pengembangan web, game, analisis data'",
+                  info: "Sebutkan area minat Anda dalam pemrograman.",
+                },
+                {
+                  name: "careerGoals",
+                  label: "Tujuan Karir",
+                  type: "text",
+                  placeholder:
+                    "e.g., 'Menjadi full-stack developer, ilmuwan data'",
+                  info: "Sebutkan tujuan karir jangka panjang Anda.",
+                },
+              ],
+              "Dasar-Dasar Pemrograman": [
+                {
+                  name: "programmingLanguage",
+                  label: "Bahasa Pemrograman",
+                  type: "select",
+                  options: [
+                    "Python",
+                    "JavaScript",
+                    "Java",
+                    "C++",
+                    "Lainnya...",
+                  ],
+                  default: "Python",
+                  info: "Pilih bahasa pemrograman yang ingin Anda pelajari.",
+                },
+                {
+                  name: "focusConcepts",
+                  label: "Konsep yang Ingin Dipelajari",
+                  type: "multiselect",
+                  options: [
+                    "Variabel",
+                    "Tipe Data",
+                    "Kondisi (if/else)",
+                    "Loop (for/while)",
+                    "Fungsi",
+                  ],
+                  default: ["Variabel", "Kondisi (if/else)"],
+                  info: "Pilih konsep dasar yang ingin Anda fokuskan.",
+                },
+              ],
+              "Visualisasi Algoritma & Struktur Data": [
+                {
+                  name: "specificConcept",
+                  label: "Konsep Spesifik",
+                  type: "text",
+                  placeholder:
+                    "e.g., 'Bubble Sort', 'Linked List', 'Binary Tree'",
+                  info: "Sebutkan algoritma atau struktur data yang ingin divisualisasikan.",
+                },
+                {
+                  name: "inputData",
+                  label: "Data Input (Opsional)",
+                  type: "text",
+                  placeholder: "e.g., '5, 2, 8, 1, 9'",
+                  optional: true,
+                  info: "Masukkan data yang akan digunakan untuk visualisasi (pisahkan dengan koma).",
+                },
+              ],
+              "Dasar-Dasar Keamanan Siber": [
+                {
+                  name: "securityTopic",
+                  label: "Topik Keamanan",
+                  type: "select",
+                  options: [
+                    "Pencegahan Injeksi SQL",
+                    "Cross-Site Scripting (XSS)",
+                    "Manajemen Kata Sandi yang Aman",
+                    "Lainnya...",
+                  ],
+                  default: "Pencegahan Injeksi SQL",
+                  info: "Pilih topik keamanan siber yang ingin Anda pelajari.",
+                },
+                {
+                  name: "codeSnippet",
+                  label: "Contoh Kode Rentan (Opsional)",
+                  type: "code",
+                  placeholder: "Tempelkan contoh kode yang mungkin rentan...",
+                  optional: true,
+                  info: "Jika Anda memiliki contoh kode, tempelkan di sini untuk dianalisis.",
+                },
+              ],
+              "Dasar-Dasar AI/Machine Learning": [
+                {
+                  name: "mlConcept",
+                  label: "Konsep AI/ML",
+                  type: "select",
+                  options: [
+                    "Regresi Linear",
+                    "Klasifikasi",
+                    "Clustering",
+                    "Jaringan Saraf Tiruan",
+                    "Lainnya...",
+                  ],
+                  default: "Regresi Linear",
+                  info: "Pilih konsep AI/ML yang ingin Anda pelajari.",
+                },
+                {
+                  name: "datasetDescription",
+                  label: "Deskripsi Dataset (Opsional)",
+                  type: "textarea",
+                  placeholder:
+                    "e.g., 'Dataset harga rumah dengan fitur luas tanah dan jumlah kamar.'",
+                  optional: true,
+                  info: "Jelaskan dataset yang ingin Anda gunakan untuk membangun model.",
+                },
+              ],
+              "Dasar-Dasar Web3 & Blockchain": [
+                {
+                  name: "blockchainConcept",
+                  label: "Konsep Web3/Blockchain",
+                  type: "select",
+                  options: [
+                    "Apa itu Blockchain?",
+                    "Smart Contract",
+                    "Decentralized Applications (dApps)",
+                    "NFT",
+                    "Lainnya...",
+                  ],
+                  default: "Apa itu Blockchain?",
+                  info: "Pilih konsep Web3/Blockchain yang ingin Anda pelajari.",
+                },
+              ],
+              "Panduan Debugging": [
+                {
+                  name: "problemDescription",
+                  label: "Jelaskan Masalah Debugging",
+                  type: "textarea",
+                  placeholder:
+                    "e.g., 'Aplikasi saya crash saat mencoba menyimpan data, dengan pesan error 'NullPointerException'.",
+                  info: "Jelaskan masalah atau error yang Anda hadapi.",
+                },
+                {
+                  name: "programmingLanguage",
+                  label: "Bahasa Pemrograman",
+                  type: "select",
+                  options: [
+                    "Python",
+                    "JavaScript",
+                    "Java",
+                    "C++",
+                    "Lainnya...",
+                  ],
+                  default: "Python",
+                  info: "Pilih bahasa pemrograman yang relevan.",
+                },
+              ],
+              "Lainnya...": [
+                {
+                  name: "customLearningTopic",
+                  label: "Sebutkan Topik Pembelajaran Lainnya",
+                  type: "textarea",
+                  description:
+                    "Jelaskan secara rinci topik pembelajaran spesifik yang ingin Anda jelajahi.",
+                  placeholder:
+                    "e.g., 'Pengantar Komputasi Kuantum', 'Praktik Terbaik untuk Arsitektur Mikroservis'",
+                  info: "Jelaskan topik kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Tutor Pemrograman serbaguna dan ahli dalam konsep-konsep teknologi canggih.",
+          KONTEKS:
+            "Pengguna telah memilih topik pembelajaran: '{TOPIK_PEMBELAJARAN}'. Anda akan bertindak sebagai tutor atau ahli di bidang tersebut.",
+          TUGAS:
+            "Berdasarkan topik '{TOPIK_PEMBELAJARAN}', berikan penjelasan, panduan, atau contoh kode yang relevan. Gunakan variabel input dari sub-komponen yang sesuai untuk menyusun respons Anda.",
+          "FORMAT OUTPUT":
+            "Sajikan output dalam format yang paling sesuai dengan topik pembelajaran (misalnya, panduan langkah demi langkah, penjelasan konsep dengan contoh, atau visualisasi teks). Gunakan Markdown untuk keterbacaan yang baik.",
+        },
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Sesuaikan kedalaman penjelasan dengan topik yang dipilih. Untuk pemula, gunakan analogi dan bahasa yang sederhana. Untuk topik lanjutan, berikan detail teknis yang akurat.",
+        contoh_kalimat:
+          "Bantu saya memahami dasar-dasar pemrograman Python, khususnya tentang loop.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "Generator Dokumentasi API": {
+        id_kerangka: "KOL-PP-103",
+        nama_kerangka: "Generator Dokumentasi API",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
+        description:
+          "Buat dokumentasi teknis yang jelas dan terstruktur untuk sebuah endpoint API berdasarkan spesifikasi yang diberikan.",
+        perspektif_user:
+          "Saya seorang developer dan saya sudah selesai membuat sebuah endpoint API. Sekarang saya butuh bantuan untuk menulis dokumentasi yang lengkap dan mudah dipahami untuk rekan tim atau pengguna eksternal.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Technical Writer ahli. Anda akan membuat dokumentasi untuk sebuah endpoint API, mencakup deskripsi, parameter, contoh request, dan contoh response sukses/error.",
+        components: [
+          {
+            name: "ENDPOINT_URL",
+            label: "URL Endpoint",
+            type: "text",
+            placeholder: "Contoh: /api/v1/users/{id}",
+            info: "Masukkan path URL untuk endpoint, gunakan kurung kurawal {} untuk parameter path.",
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "HTTP_METHOD",
+            label: "Metode HTTP",
+            type: "select",
+            options: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+            default: "GET",
+            info: "Pilih metode HTTP yang sesuai untuk endpoint ini.",
+          },
+          {
+            name: "ENDPOINT_DESCRIPTION",
+            label: "Deskripsi Singkat Endpoint",
+            type: "textarea",
+            placeholder:
+              "Contoh: Mengambil detail data pengguna berdasarkan ID unik.",
+            info: "Jelaskan secara singkat fungsi utama dari endpoint ini.",
+            validation: {
+              min_length: 10,
+            },
+          },
+          {
+            name: "PATH_PARAMETERS",
+            label: "Parameter Path (Opsional)",
+            type: "textarea",
+            placeholder: "Contoh: id:integer:ID unik pengguna",
+            info: "Tulis parameter yang ada di URL. Gunakan format 'nama:tipe:deskripsi', satu per baris.",
+            optional: true,
+          },
+          {
+            name: "QUERY_PARAMETERS",
+            label: "Parameter Query (Opsional)",
+            type: "textarea",
+            placeholder:
+              "Contoh: include_details:boolean:Sertakan detail tambahan dalam respons.",
+            info: "Tulis parameter setelah tanda tanya (?). Gunakan format 'nama:tipe:deskripsi', satu per baris.",
+            optional: true,
+          },
+          {
+            name: "REQUEST_BODY",
+            label: "Contoh Request Body (JSON, Opsional)",
+            type: "code",
+            info: "Tempelkan contoh request body dalam format JSON jika ada (umumnya untuk POST, PUT, PATCH).",
+            optional: true,
+          },
+          {
+            name: "SUCCESS_RESPONSE",
+            label: "Contoh Response Sukses (JSON)",
+            type: "code",
+            info: "Tempelkan contoh response sukses (200 OK) dalam format JSON.",
+            validation: {
+              min_length: 10,
+            },
+          },
+          {
+            name: "ERROR_RESPONSE",
+            label: "Contoh Response Error (JSON, Opsional)",
+            type: "code",
+            info: "Tempelkan contoh response error (misal: 404 Not Found, 400 Bad Request) dalam format JSON.",
+            optional: true,
+          },
+          {
+            name: "AUTH_METHOD",
+            label: "Metode Autentikasi",
+            type: "select",
+            options: [
+              "Tidak Ada",
+              "API Key (Header)",
+              "Bearer Token (Header)",
+              "OAuth2",
+              "Lainnya...",
+            ],
+            default: "Tidak Ada",
+            info: "Pilih metode autentikasi yang diperlukan untuk mengakses endpoint ini.",
+          },
+        ],
+        dynamicSubcomponents: {
+          trigger: "AUTH_METHOD",
+          options: {
+            "Lainnya...": [
+              {
+                name: "AUTH_METHOD_LAINNYA",
+                label: "Sebutkan Metode Autentikasi Lainnya",
+                type: "text",
+                placeholder: "Contoh: Basic Auth",
+                info: "Jelaskan metode autentikasi kustom Anda.",
+              },
+            ],
+          },
+        },
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Technical Writer profesional yang sangat teliti, bertugas membuat dokumentasi API yang jelas, akurat, dan mudah diikuti untuk developer lain.",
+          KONTEKS:
+            "Anda akan diberikan detail sebuah endpoint API. Tugas Anda adalah mengubah detail teknis ini menjadi blok dokumentasi Markdown yang terstruktur dengan baik dan siap digunakan.",
+          TUGAS:
+            "Buat dokumentasi Markdown untuk endpoint berikut:\n\n**Endpoint:** `{{HTTP_METHOD}} {{ENDPOINT_URL}}`\n\n**Deskripsi:**\n{{ENDPOINT_DESCRIPTION}}\n\n**Autentikasi:**\n{{#if AUTH_METHOD === 'Lainnya...'}}{{AUTH_METHOD_LAINNYA}}{{else}}{{AUTH_METHOD}}{{/if}}\n\n{{#if PATH_PARAMETERS}}**Parameter Path:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split PATH_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if QUERY_PARAMETERS}}**Parameter Query:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split QUERY_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if REQUEST_BODY}}**Contoh Request Body:**\n```json\n{{REQUEST_BODY}}\n```\n{{/if}}\n\n**Contoh Response:**\n*   **200 OK (Sukses):**\n    ```json\n    {{SUCCESS_RESPONSE}}\n    ```\n{{#if ERROR_RESPONSE}}*   **Contoh Error:**\n    ```json\n    {{ERROR_RESPONSE}}\n    ```\n{{/if}}",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Gunakan heading, list, tabel, dan blok kode untuk keterbacaan maksimal. Pastikan tabel untuk parameter diformat dengan benar.",
+        },
+        toolType: "code",
+        konteks_tambahan_instruksi_khusus:
+          "Pastikan untuk memformat parameter dalam bentuk tabel Markdown. Jika suatu bagian (misal: Parameter Query) tidak disediakan, jangan sertakan heading untuk bagian tersebut dalam output.",
+        contoh_kalimat: "Buatkan saya dokumentasi untuk API get user by id.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+    },
+    "Advanced Prompting Techniques": {
+      "Multi-Agent Code Review": {
+        id_kerangka: "KOL-APT-001",
+        nama_kerangka: "Multi-Agent Code Review",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Advanced Prompting Techniques"],
+        description:
+          "Simulasikan tinjauan kode kolaboratif dengan beberapa persona AI yang menganalisis kode dari berbagai sudut pandang (misalnya, keamanan, kinerja, keterbacaan).",
+        perspektif_user:
+          "Saya ingin mendapatkan tinjauan kode yang komprehensif dari berbagai perspektif, seperti yang dilakukan oleh tim pengembang yang beragam, untuk memastikan kualitas dan keamanan kode saya.",
+        ai_logic_description:
+          "Persona AI: Anda adalah sebuah tim ahli tinjauan kode AI yang akan memberikan tinjauan kode yang holistik.",
+        components: [
+          {
+            name: "codeSnippet",
+            label: "Potongan Kode untuk Ditinjau",
+            type: "code",
+            placeholder:
+              "e.g., `def factorial(n):\n    if n == 0: return 1\n    else: return n * factorial(n-1)`",
+            info: "Tempelkan potongan kode yang ingin Anda tinjau di sini.",
+            validation: { min_length: 10 },
+          },
+          {
+            name: "programmingLanguage",
+            label: "Bahasa Pemrograman",
+            type: "select",
+            options: ["Python", "JavaScript", "Java", "C#", "Go", "Lainnya..."],
+            default: "Python",
+            info: "Pilih bahasa pemrograman dari potongan kode.",
+          },
+          {
+            name: "reviewFocus",
+            label: "Fokus Tinjauan (Pilih satu atau lebih)",
+            type: "multiselect",
+            options: [
+              "Keamanan",
+              "Kinerja",
+              "Keterbacaan",
+              "Praktik Terbaik",
+              "Lainnya...",
+            ],
+            default: ["Keamanan", "Kinerja", "Keterbacaan"],
+            info: "Pilih aspek yang ingin Anda fokuskan dalam tinjauan.",
+          },
+          {
+            name: "additionalContext",
+            label: "Instruksi Tambahan & Batasan",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Fokus pada potensi kerentanan SQL Injection. Pertimbangkan skalabilitas untuk 1 juta pengguna.'",
+            optional: true,
+            info: "Sebutkan batasan, preferensi, atau instruksi khusus lainnya untuk tim AI.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah sebuah tim ahli tinjauan kode AI yang terdiri dari seorang Insinyur Keamanan, seorang Insinyur Kinerja, dan seorang Arsitek Perangkat Lunak.",
+          KONTEKS:
+            "Pengguna telah menyediakan potongan kode dalam bahasa {programmingLanguage} dan ingin mendapatkan tinjauan kode multi-agen dengan fokus pada {reviewFocus}. Potongan kode yang akan ditinjau adalah:\n\n```{{programmingLanguage}}\n{{codeSnippet}}\n```\n\nInstruksi tambahan dari pengguna: {{additionalContext || 'Tidak ada instruksi tambahan.'}}",
+          TUGAS:
+            "Sebagai tim ahli, lakukan tinjauan kode multi-agen. Setiap agen harus memberikan analisis terpisah berdasarkan fokusnya, kemudian ringkas temuan utama dan berikan rekomendasi gabungan.\n\n**1. Insinyur Keamanan:**\n   - Analisis `codeSnippet` untuk potensi kerentanan keamanan (misalnya, injeksi, XSS, otentikasi yang lemah, kesalahan penanganan data sensitif).\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan keamanan.\n\n**2. Insinyur Kinerja:**\n   - Analisis `codeSnippet` untuk potensi masalah kinerja (misalnya, kompleksitas algoritma, penggunaan sumber daya yang tidak efisien, *bottleneck*).\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan kinerja.\n\n**3. Arsitek Perangkat Lunak:**\n   - Analisis `codeSnippet` untuk keterbacaan, pemeliharaan, kepatuhan terhadap praktik terbaik, dan keselarasan dengan pola desain umum.\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan kualitas kode dan arsitektur.\n\n**4. Ringkasan & Rekomendasi Gabungan:**\n   - Setelah setiap agen memberikan analisisnya, berikan ringkasan singkat dari temuan paling kritis dari semua agen.\n   - Sajikan daftar rekomendasi gabungan yang dapat ditindaklanjuti, diprioritaskan berdasarkan dampak dan urgensi.",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Sajikan output dalam bagian-bagian yang jelas untuk setiap agen, diikuti dengan ringkasan dan daftar rekomendasi gabungan. Gunakan daftar berpoin untuk temuan dan rekomendasi.",
+        },
+        toolType: "code",
+        konteks_tambahan_instruksi_khusus:
+          "Setiap agen harus memberikan analisis terpisah berdasarkan fokusnya, kemudian ringkas temuan utama dan berikan rekomendasi gabungan. Pastikan output terstruktur dan mudah dibaca.",
+        contoh_kalimat:
+          "Lakukan tinjauan kode multi-agen pada potongan kode Python ini untuk keamanan dan kinerja.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+      "RAG-Enhanced Content Generator": {
+        id_kerangka: "KOL-APT-002",
+        nama_kerangka: "RAG-Enhanced Content Generator",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Advanced Prompting Techniques"],
+        description:
+          "Hasilkan konten yang akurat dan berbasis fakta dengan menyediakan sumber informasi eksternal (dokumen, URL) yang akan digunakan AI sebagai referensi.",
+        perspektif_user:
+          "Saya ingin membuat konten yang tidak hanya kreatif tetapi juga faktual. Saya perlu AI untuk merujuk pada dokumen atau sumber web yang saya sediakan untuk memastikan akurasi dan kedalaman informasi.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Peneliti dan Penulis Konten yang akan menghasilkan konten yang akurat dan terverifikasi berdasarkan sumber eksternal.",
+        components: [
+          {
+            name: "TOPIK_UTAMA_KONTEN",
+            label: "Topik Utama Konten",
+            type: "text",
+            placeholder: "Contoh: 'Sejarah dan Dampak Revolusi Industri 4.0'",
+            info: "Topik utama yang ingin Anda bahas dalam konten.",
+            validation: { min_length: 10 },
+          },
+          {
+            name: "SUMBER_EKSTERNAL",
+            label: "Sumber Informasi Eksternal (Dokumen/URL)",
+            type: "textarea",
+            placeholder:
+              "Tempelkan teks dokumen, atau daftar URL (pisahkan dengan baris baru) yang relevan di sini. AI akan menggunakan ini sebagai referensi.",
+            info: "Sediakan sumber yang relevan agar AI dapat menghasilkan konten yang akurat dan terverifikasi.",
+            validation: { min_length: 20 },
+          },
+          {
+            name: "FORMAT_OUTPUT_KONTEN",
+            label: "Format Output Konten",
+            type: "select",
+            options: ["Artikel Blog", "Ringkasan Laporan", "FAQ", "Lainnya..."],
+            default: "Artikel Blog",
+            info: "Pilih format konten yang Anda inginkan.",
+          },
+          {
+            name: "NADA_BAHASA",
+            label: "Nada Bahasa",
+            type: "select",
+            options: [
+              "Formal",
+              "Informatif",
+              "Persuasif",
+              "Akademis",
+              "Lainnya...",
+            ],
+            default: "Informatif",
+            info: "Pilih nada yang sesuai untuk konten Anda.",
+          },
+        ],
+        dynamicSubcomponents: {
+          trigger: "FORMAT_OUTPUT_KONTEN",
+          options: {
+            "Lainnya...": [
+              {
+                name: "FORMAT_OUTPUT_KONTEN_LAINNYA",
+                label: "Sebutkan Format Output Lainnya",
+                type: "text",
+                placeholder: "Contoh: 'Naskah presentasi', 'Brosur'",
+                info: "Sebutkan format kustom yang Anda inginkan.",
+              },
+            ],
+          },
+        },
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Peneliti dan Penulis Konten yang sangat teliti dan akurat.",
+          KONTEKS:
+            "Pengguna ingin menghasilkan konten tentang '{TOPIK_UTAMA_KONTEN}'. Anda harus menggunakan sumber informasi eksternal yang disediakan untuk memastikan akurasi dan kedalaman konten. Sumber-sumber yang diberikan adalah: {SUMBER_EKSTERNAL}.",
+          TUGAS:
+            "Hasilkan konten dalam format '{FORMAT_OUTPUT_KONTEN}' (jika 'FORMAT_OUTPUT_KONTEN' adalah 'Lainnya...' gunakan '{FORMAT_OUTPUT_KONTEN_LAINNYA}') tentang '{TOPIK_UTAMA_KONTEN}'. Pastikan semua informasi yang disajikan didukung oleh 'SUMBER_EKSTERNAL' yang diberikan. Gunakan nada bahasa '{NADA_BAHASA}'. Jika ada informasi yang tidak dapat diverifikasi dari sumber yang diberikan, nyatakan dengan jelas atau hindari.",
+          "FORMAT OUTPUT":
+            "Sajikan output dalam format Markdown yang terstruktur, dengan kutipan atau referensi yang jelas ke sumber eksternal jika memungkinkan. Untuk 'Artikel Blog', gunakan judul, sub-judul, dan paragraf yang mudah dibaca. Untuk 'Ringkasan Laporan', gunakan poin-poin utama. Untuk 'FAQ', gunakan format tanya-jawab.",
+        },
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Prioritaskan akurasi dan verifikasi fakta dari sumber yang diberikan. Hindari spekulasi atau informasi yang tidak didukung. Jika sumber adalah URL, coba ekstrak informasi relevan dari sana. Jika sumber adalah teks, analisis teks tersebut secara mendalam.",
+        contoh_kalimat:
+          "Buatkan saya artikel blog tentang AI generatif menggunakan dokumen PDF ini sebagai referensi.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+    },
+    Pemasaran: {
+      "Pusat Strategi Pemasaran 360°": {
+        id_kerangka: "KI-PEM-001",
+        nama_kerangka: "Pusat Strategi Pemasaran 360°",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Pemasaran"],
+        description:
+          "Dasbor komprehensif untuk merancang, mengimplementasikan, dan menganalisis berbagai aspek kampanye pemasaran, dari SEO hingga peluncuran produk.",
+        perspektif_user:
+          "Sebagai seorang profesional pemasaran, saya memerlukan satu alat terpusat yang dapat membantu saya dengan berbagai tugas pemasaran sehari-hari tanpa harus berpindah-pindah kerangka kerja.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Ahli Strategi Pemasaran 360° yang akan merancang kampanye pemasaran.",
+        components: [
+          {
+            name: "TUGAS_PEMASARAN_UTAMA",
+            label: "Tugas Pemasaran Utama",
+            type: "select",
+            options: [
+              "Strategi SEO & SEM",
+              "Pengembangan Konten & Blog",
+              "Manajemen Media Sosial",
+              "Kampanye Pemasaran Email",
+              "Peluncuran Produk & Kampanye",
+              "Riset Pasar & Analisis Kompetitor",
+              "Branding & Hubungan Masyarakat (PR)",
+              "Optimasi Penjualan & Konversi",
+            ],
+            default: "Strategi SEO & SEM",
+            info: "Pilihan Anda akan menampilkan serangkaian input yang dirancang khusus untuk area tersebut.",
+          },
+        ],
+        dynamicSubcomponents: {
+          trigger: "TUGAS_PEMASARAN_UTAMA",
+          options: {
+            "Strategi SEO & SEM": [
+              {
+                name: "TOPIK_UTAMA",
+                label: "Topik Utama / Kata Kunci Target",
+                type: "text",
+                placeholder: "Contoh: software akuntansi untuk UMKM",
+                info: "Masukkan topik inti atau kata kunci utama yang ingin Anda targetkan.",
+              },
+              {
+                name: "TARGET_AUDIENS_SEO",
+                label: "Deskripsi Target Audiens",
+                type: "textarea",
+                placeholder:
+                  "Contoh: Pemilik bisnis kecil yang tidak punya latar belakang akuntansi",
+                info: "Siapa target audiens untuk strategi SEO/SEM ini?",
+              },
+              {
+                name: "FOKUS_STRATEGI_SEO",
+                label: "Fokus Strategi",
+                type: "multiselect",
+                options: [
+                  "Riset Kata Kunci",
+                  "Analisis SERP",
+                  "Outline Konten SEO",
+                  "Ide Iklan SEM",
+                ],
+                default: ["Riset Kata Kunci", "Outline Konten SEO"],
+                info: "Pilih aspek yang ingin Anda dalami.",
+              },
+            ],
+            "Pengembangan Konten & Blog": [
+              {
+                name: "JENIS_KONTEN",
+                label: "Jenis Konten yang Diinginkan",
+                type: "select",
+                options: ["Artikel Blog", "Naskah Video", "Utas Media Sosial"],
+                default: "Artikel Blog",
+                info: "Pilih format konten yang ingin dibuat.",
+              },
+              {
+                name: "JUDUL_KONTEN",
+                label: "Judul atau Ide Utama Konten",
+                type: "text",
+                placeholder: "Contoh: 5 Cara Mengelola Keuangan Bisnis",
+                info: "Apa topik utama konten Anda?",
+              },
+              {
+                name: "POIN_KUNCI_KONTEN",
+                label: "Poin-Poin Kunci",
+                type: "textarea",
+                placeholder:
+                  "1. Pisahkan rekening pribadi & bisnis\n2. Gunakan software akuntansi\n3. ...",
+                info: "Sebutkan poin-poin utama yang harus ada dalam konten.",
+              },
+              {
+                name: "GAYA_BAHASA_KONTEN",
+                label: "Gaya Bahasa dan Nada",
+                type: "select",
+                options: [
+                  "Profesional",
+                  "Santai & Ramah",
+                  "Edukasi & Informatif",
+                  "Menghibur",
+                ],
+                default: "Profesional",
+                info: "Pilih tone yang sesuai dengan brand Anda.",
+              },
+            ],
+            "Manajemen Media Sosial": [
+              {
+                name: "PLATFORM_TARGET",
+                label: "Platform Media Sosial",
+                type: "multiselect",
+                options: [
+                  "Instagram",
+                  "TikTok",
+                  "LinkedIn",
+                  "X/Twitter",
+                  "Facebook",
+                ],
+                default: ["Instagram", "LinkedIn"],
+                info: "Pilih platform di mana Anda ingin aktif.",
+              },
+              {
+                name: "TUJUAN_POSTING",
+                label: "Tujuan Utama Posting",
+                type: "select",
+                options: [
+                  "Meningkatkan Awareness",
+                  "Mendorong Engagement",
+                  "Memicu Konversi",
+                ],
+                default: "Meningkatkan Awareness",
+                info: "Apa gol dari aktivitas media sosial Anda?",
+              },
+              {
+                name: "DESKRIPSI_BRAND_MEDSOS",
+                label: "Deskripsi Singkat Brand/Produk",
+                type: "textarea",
+                placeholder:
+                  "Contoh: Kami adalah brand kopi spesialti yang fokus pada biji lokal.",
+                info: "Berikan konteks tentang brand Anda untuk pembuatan konten.",
+              },
+            ],
+            "Kampanye Pemasaran Email": [
+              {
+                name: "JENIS_KAMPANYE_EMAIL",
+                label: "Jenis Kampanye Email",
+                type: "select",
+                options: [
+                  "Welcome Email Series",
+                  "Newsletter Bulanan",
+                  "Email Promosi",
+                  "Email Re-engagement",
+                ],
+                default: "Welcome Email Series",
+                info: "Pilih jenis kampanye email yang ingin Anda buat.",
+              },
+              {
+                name: "NAMA_BRAND_EMAIL",
+                label: "Nama Brand Anda",
+                type: "text",
+                placeholder: "Contoh: Kopi Aroma Pagi",
+                info: "Nama brand untuk personalisasi email.",
+              },
+              {
+                name: "PENAWARAN_UTAMA_EMAIL",
+                label: "Penawaran Utama (jika ada)",
+                type: "text",
+                placeholder: "Contoh: Diskon 20% untuk pembelian pertama",
+                info: "Sebutkan insentif yang ingin ditawarkan.",
+                optional: true,
+              },
+            ],
+            "Peluncuran Produk & Kampanye": [
+              {
+                name: "NAMA_PRODUK_BARU",
+                label: "Nama Produk/Kampanye Baru",
+                type: "text",
+                placeholder: "Contoh: Aplikasi TaskMaster Pro",
+                info: "Nama resmi produk atau kampanye Anda.",
+              },
+              {
+                name: "USP_PRODUK",
+                label: "Unique Selling Proposition (USP)",
+                type: "textarea",
+                placeholder:
+                  "Contoh: Satu-satunya aplikasi to-do-list dengan prediksi waktu selesai tugas.",
+                info: "Apa yang membuat produk Anda unik dan lebih baik dari yang lain?",
+              },
+              {
+                name: "ASET_KAMPANYE",
+                label: "Aset Kampanye yang Dibutuhkan",
+                type: "multiselect",
+                options: [
+                  "Siaran Pers (Press Release)",
+                  "Email Pengumuman",
+                  "Paket Konten Media Sosial",
+                  "Draf Iklan Digital",
+                ],
+                default: ["Email Pengumuman", "Paket Konten Media Sosial"],
+                info: "Pilih materi komunikasi yang ingin Anda hasilkan.",
+              },
+            ],
+            "Riset Pasar & Analisis Kompetitor": [
+              {
+                name: "NAMA_BISNIS_RISET",
+                label: "Nama Bisnis/Produk Anda",
+                type: "text",
+                placeholder: "Contoh: Kedai Kopi 'Aroma Pagi'",
+                info: "Bisnis yang akan menjadi subjek analisis.",
+              },
+              {
+                name: "DESKRIPSI_BISNIS_RISET",
+                label: "Deskripsi Singkat Bisnis",
+                type: "textarea",
+                placeholder:
+                  "Contoh: Kedai kopi di Jakarta Selatan yang fokus pada biji lokal dan suasana kerja nyaman.",
+                info: "Berikan konteks untuk analisis SWOT.",
+              },
+              {
+                name: "URL_KOMPETITOR_RISET",
+                label: "URL atau Nama Kompetitor Utama",
+                type: "textarea",
+                placeholder: "https://www.kompetitor.com\nKopi Kenangan",
+                info: "Sebutkan pemain utama lain di pasar Anda.",
+                optional: true,
+              },
+              {
+                name: "FOKUS_RISET",
+                label: "Fokus Riset",
+                type: "multiselect",
+                options: [
+                  "Analisis SWOT",
+                  "Analisis Kompetitor",
+                  "Pembuatan Buyer Persona",
+                ],
+                default: ["Analisis SWOT", "Analisis Kompetitor"],
+                info: "Pilih jenis analisis yang Anda butuhkan.",
+              },
+            ],
+            "Branding & Hubungan Masyarakat (PR)": [
+              {
+                name: "NAMA_BRAND_PR",
+                label: "Nama Brand",
+                type: "text",
+                placeholder: "Contoh: EcoRun Shoes",
+                info: "Brand yang akan dibangun citranya.",
+              },
+              {
+                name: "NILAI_INTI_BRAND",
+                label: "3 Nilai Inti Brand",
+                type: "text",
+                placeholder: "Contoh: Keberlanjutan, Performa, Komunitas",
+                info: "Sebutkan 3 pilar utama brand Anda.",
+              },
+              {
+                name: "TUGAS_BRANDING_PR",
+                label: "Tugas Branding/PR",
+                type: "select",
+                options: [
+                  "Platform Identitas Merek",
+                  "Draf Siaran Pers",
+                  "Rencana Komunikasi Krisis",
+                ],
+                default: "Platform Identitas Merek",
+                info: "Pilih output yang Anda butuhkan.",
+              },
+            ],
+            "Optimasi Penjualan & Konversi": [
+              {
+                name: "PRODUK_DIJUAL",
+                label: "Produk/Layanan yang Dijual",
+                type: "text",
+                placeholder: "Contoh: Langganan software SaaS",
+                info: "Apa yang Anda tawarkan kepada pelanggan?",
+              },
+              {
+                name: "TARGET_PROSPEK",
+                label: "Deskripsi Target Prospek",
+                type: "textarea",
+                placeholder:
+                  "Contoh: Manajer marketing di perusahaan startup teknologi.",
+                info: "Siapa yang ingin Anda jangkau dengan pesan penjualan ini?",
+              },
+              {
+                name: "FOKUS_OPTIMASI_PENJUALAN",
+                label: "Fokus Optimasi",
+                type: "select",
+                options: [
+                  "Naskah Penjualan (Sales Script)",
+                  "Copy Halaman Arahan (Landing Page)",
+                  "Ide Lead Magnet",
+                ],
+                default: "Copy Halaman Arahan (Landing Page)",
+                info: "Pilih aset penjualan yang ingin Anda buat.",
+              },
+            ],
+          },
+        },
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Ahli Strategi Pemasaran 360° yang serbaguna.",
+          KONTEKS:
+            "Pengguna memerlukan bantuan untuk tugas pemasaran: '{TUGAS_PEMASARAN_UTAMA}'. Anda harus memandu mereka untuk memberikan input yang relevan dan menghasilkan output yang dapat ditindaklanjuti.",
+          TUGAS:
+            "Berdasarkan tugas yang dipilih, gunakan input yang diberikan untuk menghasilkan output yang komprehensif dan profesional. Sesuaikan respons Anda dengan setiap sub-tugas yang dipilih pengguna.",
+          "FORMAT OUTPUT":
+            "Gunakan format Markdown. Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, laporan, draf konten, rencana, atau tabel). Pastikan output jelas, terstruktur, dan mudah dipahami.",
+        },
+        toolType: "planning",
+        konteks_tambahan_instruksi_khusus:
+          "Selalu prioritaskan strategi yang berpusat pada pelanggan. Berikan saran yang praktis dan dapat diimplementasikan. Jika ada ambiguitas, berikan asumsi yang cerdas atau ajukan pertanyaan klarifikasi.",
+        contoh_kalimat:
+          "Bantu saya membuat strategi SEO untuk website e-commerce saya.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+    },
+  },
   "Teks & Konten": {
     "Penulisan & Konten": {
       "Penulisan Artikel SEO": {
@@ -99,7 +2927,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat konten artikel yang dioptimalkan untuk mesin pencari.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pakar SEO Konten. AI akan menganalisis input untuk menghasilkan artikel SEO yang relevan dan terstruktur, dengan fokus pada optimasi kata kunci dan keterbacaan.",
+          "Persona AI: Anda adalah seorang Penulis Artikel SEO yang akan membuat artikel yang dioptimalkan untuk mesin pencari.",
         components: [
           {
             name: "targetKeyword",
@@ -174,7 +3002,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat draf blog post lengkap dengan fokus pada narasi dan storytelling, lebih dari sekadar SEO.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Storyteller Konten. AI akan menyusun blog post dengan narasi yang kuat dan storytelling, berfokus pada sudut pandang unik dan pesan kunci yang ingin disampaikan.",
+          "Persona AI: Anda adalah seorang Storyteller Konten yang akan menyusun blog post.",
         components: [
           {
             name: "topic",
@@ -245,7 +3073,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Ubah data dan hasil proyek menjadi narasi studi kasus yang persuasif dan profesional.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Analis Studi Kasus. AI akan menyusun studi kasus dengan fokus pada masalah, solusi, dan hasil kuantitatif, memastikan narasi yang persuasif dan profesional.",
+          "Persona AI: Anda adalah seorang Analis Studi Kasus yang akan menyusun narasi studi kasus.",
         components: [
           {
             name: "clientName",
@@ -309,7 +3137,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Hasilkan dokumen laporan atau white paper yang informatif dan berwibawa berdasarkan data atau riset.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penulis Laporan Korporat. AI akan menyusun laporan atau white paper yang informatif dan berwibawa, dengan fokus pada data dan riset yang mendukung tesis utama.",
+          "Persona AI: Anda adalah seorang Penulis Laporan Korporat yang akan menyusun dokumen informatif.",
         components: [
           {
             name: "reportTitle",
@@ -377,7 +3205,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat deskripsi produk yang menarik dan persuasif untuk e-commerce.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Spesialis Copywriting Produk. AI akan membuat deskripsi produk yang menarik dan persuasif, menyoroti fitur, manfaat, dan USP produk untuk target audiens yang spesifik.",
+          "Persona AI: Anda adalah seorang Spesialis Copywriting Produk yang akan membuat deskripsi produk.",
         components: [
           {
             name: "productName",
@@ -454,7 +3282,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Ubah ide atau poin-poin menjadi naskah podcast yang terstruktur, lengkap dengan intro, segmen, dan outro.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penulis Naskah Podcast. AI akan menyusun naskah podcast yang terstruktur, mengubah ide menjadi alur naratif yang kohesif dengan intro, segmen, dan outro yang jelas.",
+          "Persona AI: Anda adalah seorang Penulis Naskah Podcast yang akan menyusun naskah.",
         components: [
           {
             name: "podcastTitle",
@@ -520,7 +3348,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat narasi yang menarik dan otentik untuk halaman 'Tentang Kami' di sebuah website.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Narator Brand. AI akan menciptakan narasi 'Tentang Kami' yang menarik dan otentik, menyoroti misi, nilai, dan cerita asal perusahaan untuk membangun koneksi dengan audiens.",
+          "Persona AI: Anda adalah seorang Narator Brand yang akan menciptakan narasi 'Tentang Kami'.",
         components: [
           {
             name: "companyName",
@@ -589,7 +3417,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat poin-poin pencapaian yang kuat untuk resume atau CV Anda.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Konsultan Karir. AI akan menghasilkan poin-poin pencapaian yang kuat dan terukur untuk resume atau CV, dengan fokus pada relevansi posisi yang dilamar dan dampak kuantitatif.",
+          "Persona AI: Anda adalah seorang Konsultan Karir yang akan menghasilkan poin-poin pencapaian untuk resume.",
         components: [
           {
             name: "jobTitle",
@@ -659,7 +3487,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Ubah tulisan yang ada menjadi versi baru untuk menyederhanakan, mengubah gaya, atau menghindari plagiarisme.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Ahli Parafrase. AI akan menulis ulang teks yang diberikan, menyesuaikan gaya, panjang, dan kompleksitas sesuai tujuan yang diinginkan, sambil mempertahankan makna asli.",
+          "Persona AI: Anda adalah seorang Ahli Parafrase yang akan menulis ulang teks.",
         components: [
           {
             name: "originalText",
@@ -725,7 +3553,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Perbaiki tulisan yang ada agar lebih jelas, ringkas, kuat, dan berdampak.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Editor Gaya Bahasa. AI akan menganalisis teks yang diberikan untuk mengidentifikasi area perbaikan dalam kejelasan, keringkasan, kekuatan, dan dampak, serta menawarkan saran yang relevan.",
+          "Persona AI: Anda adalah seorang Editor Gaya Bahasa yang akan menganalisis dan menyempurnakan tulisan.",
         components: [
           {
             name: "originalText",
@@ -774,7 +3602,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Dapatkan beberapa opsi judul yang menarik (click-worthy) untuk artikel, blog, email, atau video.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Kreator Headline. AI akan menghasilkan berbagai opsi judul dan headline yang menarik dan click-worthy, dengan mempertimbangkan topik utama, kata kunci, dan gaya yang diinginkan.",
+          "Persona AI: Anda adalah seorang Kreator Headline yang akan menghasilkan berbagai opsi judul.",
         components: [
           {
             name: "mainTopic",
@@ -832,7 +3660,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat daftar pertanyaan yang sering diajukan (FAQ) secara otomatis dari sebuah blok teks atau deskripsi.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Spesialis FAQ. AI akan menganalisis teks sumber untuk mengidentifikasi pertanyaan umum dan menghasilkan jawaban yang relevan, dengan mempertimbangkan target audiens dan gaya yang diinginkan.",
+          "Persona AI: Anda adalah seorang Spesialis FAQ yang akan menghasilkan pertanyaan dan jawaban.",
         components: [
           {
             name: "sourceText",
@@ -902,7 +3730,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Ambil teks panjang (artikel, laporan, email) dan rangkum menjadi poin-poin kunci atau paragraf singkat.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Ahli Ringkasan. AI akan menganalisis teks panjang untuk mengekstrak ide-ide utama dan menyajikannya dalam format ringkasan yang diminta, dengan mempertimbangkan fokus dan batasan yang diberikan.",
+          "Persona AI: Anda adalah seorang Ahli Ringkasan yang akan mengekstrak ide-ide utama dari teks.",
         components: [
           {
             name: "originalText",
@@ -961,7 +3789,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat meta deskripsi yang menarik dan kaya kata kunci (<160 karakter) untuk halaman web.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Spesialis SEO On-Page. AI akan membuat meta deskripsi yang menarik dan kaya kata kunci, dengan mempertimbangkan judul halaman, ringkasan konten, dan ajakan bertindak untuk optimasi SEO.",
+          "Persona AI: Anda adalah seorang Spesialis SEO On-Page yang akan membuat meta deskripsi.",
         components: [
           {
             name: "pageTitle",
@@ -1015,7 +3843,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         description: "Hasilkan naskah email untuk kampanye pemasaran.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Spesialis Pemasaran Email. AI akan menghasilkan naskah email pemasaran yang persuasif, dengan mempertimbangkan tujuan, produk, segmen penerima, persona pengirim, dan ajakan bertindak untuk memaksimalkan konversi.",
+          "Persona AI: Anda adalah seorang Spesialis Pemasaran Email yang akan menghasilkan naskah email.",
         components: [
           {
             name: "objective",
@@ -1088,7 +3916,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat draf email yang jelas dan efektif untuk berbagai skenario bisnis sehari-hari.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Asisten Komunikasi Profesional. AI akan menyusun draf email profesional yang jelas dan efektif, dengan mempertimbangkan skenario, penerima, informasi kunci, dan tingkat formalitas untuk mencapai tindakan yang diharapkan.",
+          "Persona AI: Anda adalah seorang Asisten Komunikasi Profesional yang akan menyusun draf email.",
         components: [
           {
             name: "scenario",
@@ -1160,7 +3988,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat balasan yang profesional dan empatik untuk ulasan pelanggan (positif maupun negatif).",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Manajer Hubungan Pelanggan. AI akan menganalisis sentimen ulasan pelanggan dan menghasilkan balasan yang profesional, empatik, dan relevan, dengan mempertimbangkan nama bisnis dan solusi yang ditawarkan.",
+          "Persona AI: Anda adalah seorang Manajer Hubungan Pelanggan yang akan menghasilkan balasan.",
         components: [
           {
             name: "originalReview",
@@ -1231,7 +4059,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Susun kerangka atau naskah lengkap untuk pidato yang terstruktur dan meyakinkan.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Konsultan Pidato. AI akan menyusun naskah pidato atau presentasi yang terstruktur dan meyakinkan, dengan mempertimbangkan profil audiens, pesan inti, dan gaya penyampaian untuk mencapai tujuan komunikasi.",
+          "Persona AI: Anda adalah seorang Konsultan Pidato yang akan menyusun naskah.",
         components: [
           {
             name: "audienceProfile",
@@ -1299,7 +4127,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat surat lamaran kerja yang personal dan meyakinkan untuk posisi spesifik.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Spesialis Lamaran Kerja. AI akan membuat surat lamaran kerja yang personal dan meyakinkan, menyoroti kualifikasi dan pengalaman relevan pelamar untuk posisi dan perusahaan yang spesifik.",
+          "Persona AI: Anda adalah seorang Spesialis Lamaran Kerja yang akan membuat surat lamaran.",
         components: [
           {
             name: "jobTitle",
@@ -1374,7 +4202,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Ubah transkrip atau catatan rapat yang panjang menjadi ringkasan yang padat dan berisi daftar tindakan.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Notulis Rapat Cerdas. AI akan menganalisis transkrip atau catatan rapat untuk menghasilkan ringkasan yang padat dan daftar tindakan yang jelas, dengan fokus pada poin-poin kunci dan penanggung jawab.",
+          "Persona AI: Anda adalah seorang Notulis Rapat yang akan menghasilkan ringkasan.",
         components: [
           {
             name: "meetingTranscript",
@@ -1439,7 +4267,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat pengumuman internal perusahaan yang jelas, ringkas, dan profesional untuk berbagai keperluan.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Spesialis Komunikasi Internal. AI akan membuat memo atau pengumuman internal yang jelas, ringkas, dan profesional, dengan memastikan semua informasi kunci tersampaikan kepada audiens yang dituju.",
+          "Persona AI: Anda adalah seorang Spesialis Komunikasi Internal yang akan membuat pengumuman.",
         components: [
           {
             name: "subject",
@@ -1499,7 +4327,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Ciptakan pertanyaan atau topik pembuka yang menarik untuk mencairkan suasana di awal rapat.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Fasilitator Rapat. AI akan menciptakan pertanyaan atau topik icebreaker yang menarik dan relevan dengan konteks rapat dan profil tim, bertujuan untuk mencairkan suasana dan mendorong interaksi awal.",
+          "Persona AI: Anda adalah seorang Fasilitator Rapat yang akan menciptakan pertanyaan icebreaker.",
         components: [
           {
             name: "meetingContext",
@@ -1559,7 +4387,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat skrip video penjualan yang mengikuti formula copywriting terbukti untuk memaksimalkan konversi.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Ahli Skrip Penjualan. AI akan membuat skrip Video Sales Letter (VSL) yang persuasif, mengikuti formula copywriting terbukti untuk menarik perhatian, membangun minat, menciptakan keinginan, dan mendorong tindakan, dengan fokus pada konversi.",
+          "Persona AI: Anda adalah seorang Ahli Skrip Penjualan yang akan membuat skrip VSL.",
         components: [
           {
             name: "productName",
@@ -1639,7 +4467,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Rumuskan pernyataan yang jelas dan ringkas tentang mengapa pelanggan harus memilih produk Anda.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Strategis Nilai Produk. AI akan merumuskan proposisi nilai yang jelas dan ringkas, menyoroti masalah yang diselesaikan, manfaat utama, dan pembeda dari kompetitor untuk meyakinkan pelanggan.",
+          "Persona AI: Anda adalah seorang Strategis Nilai Produk yang akan merumuskan proposisi nilai.",
         components: [
           {
             name: "productName",
@@ -1701,7 +4529,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Rencanakan strategi konten SEO dengan mengidentifikasi satu topik pilar utama dan beberapa klaster topik pendukungnya.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Arsitek Konten SEO. AI akan membantu merencanakan strategi konten SEO dengan mengidentifikasi topik pilar utama dan klaster topik pendukung, memastikan cakupan konten yang komprehensif dan terstruktur.",
+          "Persona AI: Anda adalah seorang Arsitek Konten SEO yang akan merencanakan strategi konten.",
         components: [
           {
             name: "mainTheme",
@@ -1752,11 +4580,11 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat postingan yang menarik dan ringkas untuk berbagai platform.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Spesialis Konten Media Sosial. AI akan membuat postingan media sosial yang menarik dan ringkas, disesuaikan dengan platform yang dipilih dan tujuan komunikasi.",
+          "Persona AI: Anda adalah seorang Spesialis Konten Media Sosial yang akan membuat postingan.",
         components: [
           {
             name: "platform",
-            label: "Pilih Platform",
+            label: "Platform",
             type: "select",
             options: [
               "LinkedIn",
@@ -2001,7 +4829,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buat teks iklan pendek dan persuasif untuk platform seperti Google Ads atau Facebook Ads.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Spesialis Iklan Digital. AI akan membuat teks iklan yang pendek, persuasif, dan dioptimalkan untuk platform tertentu, dengan fokus pada manfaat unik dan ajakan bertindak yang jelas.",
+          "Persona AI: Anda adalah seorang Spesialis Iklan Digital yang akan membuat teks iklan.",
         components: [
           {
             name: "platform",
@@ -2065,7 +4893,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Rancang serangkaian email (misal: welcome series, nurture sequence) untuk memandu pelanggan.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Spesialis Otomatisasi Email. AI akan merancang serangkaian email otomatis yang terstruktur untuk memandu pelanggan melalui siklus hidup tertentu, dengan mempertimbangkan jenis urutan, produk, dan tujuan akhir.",
+          "Persona AI: Anda adalah seorang Spesialis Otomatisasi Email yang akan merancang serangkaian email otomatis.",
         components: [
           {
             name: "sequenceType",
@@ -2134,7 +4962,7 @@ Email 3: Studi kasus pengguna`,
           "Bantu guru dan instruktur membuat rencana pembelajaran (RPP) yang terstruktur dan efektif.",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Perencana Pembelajaran. AI akan membantu menyusun rencana pembelajaran yang terstruktur dan efektif, dengan mempertimbangkan mata pelajaran, tingkat kelas, topik, dan tujuan pembelajaran untuk merancang aktivitas dan penilaian yang sesuai.",
+          "Persona AI: Anda adalah seorang Perencana Pembelajaran yang akan menyusun rencana pembelajaran.",
         components: [
           {
             name: "subject",
@@ -2212,7 +5040,7 @@ Email 3: Studi kasus pengguna`,
           "Bantu membuat kerangka, argumen, dan kalimat tesis yang kuat untuk esai akademis.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penulis Esai Akademis. AI akan membantu menyusun kerangka, argumen, dan kalimat tesis yang kuat untuk esai akademis, dengan fokus pada pertanyaan esai, posisi argumen, dan poin-poin pendukung.",
+          "Persona AI: Anda adalah seorang Penulis Esai Akademis yang akan menyusun kerangka, argumen, dan kalimat tesis.",
         components: [
           {
             name: "essayQuestion",
@@ -2284,7 +5112,7 @@ Email 3: Studi kasus pengguna`,
           "Buat berbagai jenis soal (pilihan ganda, esai singkat) berdasarkan materi pelajaran yang diberikan.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pembuat Soal Ujian. AI akan membuat berbagai jenis soal kuis dan ujian berdasarkan materi pelajaran yang diberikan, dengan mempertimbangkan jenis soal, jumlah, dan tingkat kesulitan yang diinginkan.",
+          "Persona AI: Anda adalah seorang Pembuat Soal Ujian yang akan membuat soal kuis dan ujian.",
         components: [
           {
             name: "subjectMatter",
@@ -2346,7 +5174,7 @@ Email 3: Studi kasus pengguna`,
           "Bantu peneliti merangkum makalah atau penelitian yang kompleks menjadi abstrak yang padat dan informatif.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penulis Abstrak Penelitian. AI akan merangkum makalah atau penelitian yang kompleks menjadi abstrak yang padat dan informatif, dengan fokus pada latar belakang, metodologi, temuan utama, dan implikasi.",
+          "Persona AI: Anda adalah seorang Penulis Abstrak Penelitian yang akan merangkum makalah atau penelitian.",
         components: [
           {
             name: "researchTitle",
@@ -2412,7 +5240,7 @@ Email 3: Studi kasus pengguna`,
           "Buat jadwal perjalanan harian yang detail dan logis berdasarkan preferensi Anda.",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Perencana Perjalanan. AI akan membuat jadwal perjalanan harian yang detail dan logis, dengan mempertimbangkan tujuan, durasi, minat, dan gaya perjalanan untuk mengoptimalkan pengalaman pengguna.",
+          "Persona AI: Anda adalah seorang Perencana Perjalanan yang akan membuat jadwal perjalanan harian.",
         components: [
           {
             name: "destination",
@@ -2478,7 +5306,7 @@ Email 3: Studi kasus pengguna`,
           "Buat resep masakan baru dan kreatif berdasarkan bahan-bahan yang Anda miliki.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Koki AI. AI akan membuat resep masakan baru dan kreatif berdasarkan bahan-bahan yang Anda miliki, dengan mempertimbangkan jenis masakan, preferensi diet, dan tingkat kesulitan yang diinginkan.",
+          "Persona AI: Anda adalah seorang Koki AI yang akan membuat resep masakan baru dan kreatif.",
         components: [
           {
             name: "mainIngredients",
@@ -2549,7 +5377,7 @@ Email 3: Studi kasus pengguna`,
           "Pecah tujuan besar Anda menjadi langkah-langkah kecil yang dapat ditindaklanjuti dan terukur.",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pelatih Tujuan Pribadi. AI akan membantu memecah tujuan besar menjadi langkah-langkah kecil yang dapat ditindaklanjuti dan terukur, dengan mempertimbangkan jangka waktu, situasi saat ini, dan kerangka perencanaan yang dipilih.",
+          "Persona AI: Anda adalah seorang Pelatih Tujuan Pribadi yang akan memecah tujuan besar menjadi langkah-langkah kecil.",
         components: [
           {
             name: "mainGoal",
@@ -2606,7 +5434,7 @@ Email 3: Studi kasus pengguna`,
           "Buat template balasan email atau pesan untuk situasi yang sering terjadi untuk menghemat waktu.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Asisten Komunikasi Cepat. AI akan membuat template balasan cepat yang efisien dan sesuai untuk skenario komunikasi yang sering terjadi, dengan mempertimbangkan peran pengirim, pesan kunci, dan gaya bahasa yang diinginkan.",
+          "Persona AI: Anda adalah seorang Asisten Komunikasi Cepat yang akan membuat template balasan cepat.",
         components: [
           {
             name: "scenario",
@@ -2667,7 +5495,7 @@ Email 3: Studi kasus pengguna`,
           "Kembangkan ide cerita atau kerangka plot yang kreatif untuk novel, skenario, atau cerita pendek.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penulis Cerita Kreatif. AI akan mengembangkan ide cerita dan kerangka plot yang kreatif, dengan mempertimbangkan genre, karakter utama, setting, konflik, dan elemen unik untuk menghasilkan narasi yang menarik.",
+          "Persona AI: Anda adalah seorang Penulis Cerita Kreatif yang akan mengembangkan ide cerita dan kerangka plot.",
         components: [
           {
             name: "genre",
@@ -2739,7 +5567,7 @@ Email 3: Studi kasus pengguna`,
           "Temukan nama yang unik, berkesan, dan relevan untuk bisnis atau produk Anda.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Ahli Penamaan. AI akan menghasilkan nama brand atau produk yang unik, berkesan, dan relevan, dengan mempertimbangkan konsep inti, nilai-nilai brand, dan gaya nama yang diinginkan.",
+          "Persona AI: Anda adalah seorang Ahli Penamaan yang akan menghasilkan nama brand atau produk.",
         components: [
           {
             name: "coreConcept",
@@ -2804,7 +5632,7 @@ Email 3: Studi kasus pengguna`,
           "Ciptakan slogan atau tagline yang singkat, menarik, dan berkesan untuk brand atau kampanye Anda.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pakar Slogan. AI akan menciptakan slogan atau tagline yang singkat, menarik, dan berkesan, dengan mempertimbangkan nama brand, manfaat inti, target audiens, dan gaya slogan yang diinginkan.",
+          "Persona AI: Anda adalah seorang Pakar Slogan yang akan menciptakan slogan atau tagline.",
         components: [
           {
             name: "brandName",
@@ -2871,7 +5699,7 @@ Email 3: Studi kasus pengguna`,
           "Kembangkan ide premis satu kalimat (logline) yang menarik untuk film atau serial TV.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penulis Premis Sinematik. AI akan mengembangkan ide premis satu kalimat (logline) yang menarik untuk film atau serial TV, dengan mempertimbangkan genre, tokoh utama, tujuan, rintangan, dan elemen unik untuk menghasilkan narasi yang ringkas dan memikat.",
+          "Persona AI: Anda adalah seorang Penulis Premis Sinematik yang akan mengembangkan ide premis satu kalimat.",
         components: [
           {
             name: "genre",
@@ -2928,7 +5756,7 @@ Email 3: Studi kasus pengguna`,
           "Ambil satu ide sentral dan hasilkan cabang-cabang ide terkait untuk mind mapping atau eksplorasi kreatif.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Fasilitator Ide. AI akan menghasilkan cabang-cabang ide terkait dari ide sentral yang diberikan, dengan mempertimbangkan fokus brainstorming dan batasan yang ada untuk mendukung eksplorasi kreatif.",
+          "Persona AI: Anda adalah seorang Fasilitator Ide yang akan menghasilkan cabang-cabang ide terkait dari ide sentral.",
         components: [
           {
             name: "centralIdea",
@@ -2987,7 +5815,7 @@ Email 3: Studi kasus pengguna`,
           "Buat data palsu (dummy data) yang terstruktur untuk keperluan testing, prototyping, atau mengisi desain mockup.",
         toolType: "code",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Generator Data. AI akan menghasilkan data palsu (dummy data) yang terstruktur sesuai skema yang ditentukan, dengan mempertimbangkan jumlah record dan format output untuk keperluan testing atau prototyping.",
+          "Persona AI: Anda adalah seorang Generator Data yang akan menghasilkan data palsu.",
         components: [
           {
             name: "schemaName",
@@ -3033,7 +5861,7 @@ Email 3: Studi kasus pengguna`,
           "Buat penjelasan (docstring) yang jelas untuk fungsi atau kelas dalam kode pemrograman.",
         toolType: "code",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penulis Dokumentasi Kode. AI akan menganalisis potongan kode yang diberikan dan menghasilkan dokumentasi (docstring) yang jelas dan relevan, dengan mempertimbangkan bahasa pemrograman dan gaya dokumentasi yang diinginkan.",
+          "Persona AI: Anda adalah seorang Penulis Dokumentasi Kode yang akan menganalisis dan mendokumentasikan kode.",
         components: [
           {
             name: "codeSnippet",
@@ -3084,7 +5912,7 @@ Email 3: Studi kasus pengguna`,
           "Ubah pesan error teknis menjadi penjelasan yang mudah dipahami oleh pengguna non-teknis.",
         toolType: "code",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penerjemah Error. AI akan mengubah pesan error teknis menjadi penjelasan yang mudah dipahami oleh pengguna non-teknis, dengan fokus pada konteks pengguna dan saran tindakan yang jelas.",
+          "Persona AI: Anda adalah seorang Penerjemah Error yang akan mengubah pesan error teknis menjadi penjelasan yang mudah dipahami.",
         components: [
           {
             name: "technicalError",
@@ -3132,7 +5960,7 @@ Email 3: Studi kasus pengguna`,
           "Rangkum dokumen hukum yang panjang (misal: Ketentuan Layanan) ke dalam bahasa yang mudah dipahami.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Analis Hukum. AI akan menganalisis dokumen hukum yang panjang untuk mengekstrak poin-poin penting dan menyajikannya dalam bahasa yang mudah dipahami, dengan mempertimbangkan peran pengguna dan fokus analisis.",
+          "Persona AI: Anda adalah seorang Analis Hukum yang akan menganalisis dokumen hukum dan mengekstrak poin-poin penting.",
         components: [
           {
             name: "legalDocument",
@@ -3192,7 +6020,7 @@ Email 3: Studi kasus pengguna`,
           "Tarik keluar informasi spesifik dari blok teks tidak terstruktur (nama orang, organisasi, lokasi, dll.).",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Ekstraktor Data. AI akan menganalisis teks tidak terstruktur untuk mengidentifikasi dan mengekstrak entitas spesifik (seperti nama orang, organisasi, lokasi, dll.) dan menyajikannya dalam format yang diminta.",
+          "Persona AI: Anda adalah seorang Ekstraktor Data yang akan menganalisis teks tidak terstruktur dan mengekstrak entitas.",
         components: [
           {
             name: "sourceText",
@@ -3238,7 +6066,7 @@ Email 3: Studi kasus pengguna`,
           "Proses puluhan ulasan pelanggan untuk mengidentifikasi sentimen umum dan tema yang sering dibicarakan.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Analis Sentimen. AI akan menganalisis data umpan balik untuk mengidentifikasi sentimen (positif, negatif, netral) dan tema-tema utama yang muncul, serta menyajikan hasilnya dalam format yang diminta.",
+          "Persona AI: Anda adalah seorang Analis Sentimen yang akan menganalisis data umpan balik dan mengidentifikasi sentimen dan tema.",
         components: [
           {
             name: "feedbackData",
@@ -3290,7 +6118,7 @@ Email 3: Studi kasus pengguna`,
           "Dapatkan serangkaian pertanyaan atau prompt yang merangsang pemikiran untuk jurnal harian Anda.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Fasilitator Jurnal. AI akan menghasilkan serangkaian pertanyaan atau prompt yang merangsang pemikiran untuk jurnal, disesuaikan dengan tema, mood, dan preferensi pengguna untuk memfasilitasi refleksi diri.",
+          "Persona AI: Anda adalah seorang Fasilitator Jurnal yang akan menghasilkan serangkaian pertanyaan atau prompt untuk jurnal.",
         components: [
           {
             name: "journalTheme",
@@ -3347,7 +6175,7 @@ Email 3: Studi kasus pengguna`,
           "Berlatih untuk percakapan sulit dengan AI yang berperan sebagai lawan bicara.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pelatih Komunikasi. AI akan mensimulasikan percakapan sulit, berperan sebagai lawan bicara dengan persona yang ditentukan, dan merespons berdasarkan skenario dan tujuan pengguna untuk membantu latihan komunikasi.",
+          "Persona AI: Anda adalah seorang Pelatih Komunikasi yang akan mensimulasikan percakapan sulit.",
         components: [
           {
             name: "scenario",
@@ -3397,7 +6225,7 @@ Email 3: Studi kasus pengguna`,
           "Buat latar belakang, kepribadian, dan penampilan untuk karakter dalam permainan role-playing (e.g., D&D).",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pencipta Karakter RPG. AI akan menghasilkan latar belakang, kepribadian, dan penampilan untuk karakter RPG, dengan mempertimbangkan kelas, ras, watak, dan sifat kunci untuk menciptakan karakter yang unik dan menarik.",
+          "Persona AI: Anda adalah seorang Pencipta Karakter RPG yang akan menghasilkan latar belakang, kepribadian, dan penampilan untuk karakter.",
         components: [
           {
             name: "gameSystem",
@@ -3461,7 +6289,7 @@ Email 3: Studi kasus pengguna`,
           "Buat teka-teki, riddle, atau puzzle logika yang orisinal berdasarkan sebuah tema atau jawaban.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Perancang Teka-Teki. AI akan membuat teka-teki, riddle, atau puzzle logika yang orisinal, dengan mempertimbangkan jenis teka-teki, jawaban, tingkat kesulitan, dan tema untuk menghasilkan tantangan yang menarik.",
+          "Persona AI: Anda adalah seorang Perancang Teka-Teki yang akan membuat teka-teki, riddle, atau puzzle logika.",
         components: [
           {
             name: "puzzleType",
@@ -3522,7 +6350,7 @@ Email 3: Studi kasus pengguna`,
           "Buat undangan atau kartu ucapan untuk berbagai keperluan, dari pernikahan hingga bisnis.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Perancang Undangan. AI akan menganalisis jenis acara untuk mengadopsi persona yang sesuai (Perencana Pernikahan, Asisten Eksekutif, dll.) dan menyusun teks dengan nada dan format yang tepat, menghasilkan undangan atau kartu ucapan yang dinamis dan personal.",
+          "Persona AI: Anda adalah seorang Perancang Undangan yang akan menyusun teks undangan atau kartu ucapan untuk acara.",
         components: [
           {
             name: "eventType",
@@ -3958,13 +6786,380 @@ Email 3: Studi kasus pengguna`,
           "AI harus sangat peka terhadap `Jenis Acara`. Jika pengguna tidak memberikan `Gaya & Nada`, AI harus memilih yang paling sesuai secara default (misal: 'Elegan' untuk Pernikahan, 'Profesional' untuk Bisnis). Tujuan utamanya adalah menghasilkan output yang terasa otentik dan dibuat khusus untuk acara tersebut, bukan hasil dari template generik.",
       },
     },
+    "Lead Generation": {
+      "Strategi Lead Generation": {
+        id_kerangka: "PROJ-LG-001",
+        nama_kerangka: "Strategi Lead Generation",
+        version: "1.0.0",
+        kategori: ["Prompt Proyek", "Lead Generation"],
+        description:
+          "Kerangka kerja ini membantu Anda merancang strategi dan konten yang efektif untuk menghasilkan prospek (leads) berkualitas tinggi.",
+        perspektif_user:
+          "Sebagai pemasar, pemilik bisnis, atau profesional penjualan, saya membutuhkan bantuan untuk membuat rencana yang komprehensif untuk menarik calon pelanggan, mengumpulkan informasi mereka, dan membimbing mereka melalui saluran penjualan.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang ahli strategi pemasaran digital yang akan membantu pengguna merancang rencana Lead Generation yang efektif.",
+        components: [
+          {
+            name: "nama_produk_layanan",
+            label: "Nama Produk/Layanan",
+            type: "text",
+            description:
+              "Sebutkan nama produk atau layanan yang ingin Anda promosikan.",
+            default: "",
+            optional: false,
+            placeholder: "Contoh: Aplikasi Manajemen Proyek 'TaskFlow'",
+            info: "Nama produk atau layanan yang akan menjadi fokus strategi Lead Generation ini.",
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "deskripsi_produk_layanan",
+            label: "Deskripsi Singkat Produk/Layanan",
+            type: "textarea",
+            description:
+              "Jelaskan secara singkat apa itu produk/layanan Anda dan apa manfaat utamanya.",
+            default: "",
+            optional: false,
+            placeholder:
+              "Contoh: TaskFlow adalah aplikasi SaaS yang membantu tim mengelola proyek, melacak tugas, dan berkolaborasi secara efisien, meningkatkan produktivitas hingga 30%.",
+            info: "Penjelasan singkat tentang produk atau layanan Anda, termasuk nilai jual uniknya.",
+            validation: {
+              min_length: 20,
+            },
+          },
+          {
+            name: "target_audiens",
+            label: "Target Audiens Utama",
+            type: "textarea",
+            description:
+              "Jelaskan siapa target audiens utama Anda (demografi, psikografi, masalah yang mereka hadapi).",
+            default: "",
+            optional: false,
+            placeholder:
+              "Contoh: Manajer proyek di perusahaan teknologi skala menengah (50-500 karyawan) yang kesulitan dengan koordinasi tim dan tenggat waktu yang ketat.",
+            info: "Detail tentang siapa calon pelanggan ideal Anda, termasuk karakteristik demografi, minat, dan tantangan yang mereka hadapi.",
+            validation: {
+              min_length: 20,
+            },
+          },
+          {
+            name: "tujuan_leadgen",
+            label: "Tujuan Utama Lead Generation",
+            type: "options",
+            description:
+              "Pilih tujuan utama dari kampanye Lead Generation ini.",
+            default: "Meningkatkan jumlah prospek berkualitas (MQL/SQL)",
+            optional: false,
+            options: [
+              {
+                label: "Meningkatkan jumlah prospek berkualitas (MQL/SQL)",
+                value: "Meningkatkan jumlah prospek berkualitas (MQL/SQL)",
+              },
+              {
+                label: "Meningkatkan brand awareness",
+                value: "Meningkatkan brand awareness",
+              },
+              {
+                label: "Mengumpulkan data kontak untuk email marketing",
+                value: "Mengumpulkan data kontak untuk email marketing",
+              },
+              {
+                label: "Mendorong pendaftaran uji coba gratis",
+                value: "Mendorong pendaftaran uji coba gratis",
+              },
+              { label: "Lainnya...", value: "Lainnya" },
+            ],
+            info: "Tujuan spesifik yang ingin Anda capai dengan strategi Lead Generation ini.",
+          },
+          {
+            name: "saluran_pemasaran",
+            label: "Saluran Pemasaran yang Dipertimbangkan",
+            type: "multiselect",
+            description:
+              "Pilih saluran pemasaran yang ingin Anda gunakan untuk menjangkau audiens.",
+            default: [],
+            optional: false,
+            options: [
+              {
+                label: "Iklan Media Sosial (Facebook, Instagram, LinkedIn)",
+                value: "Iklan Media Sosial",
+              },
+              { label: "SEO (Optimasi Mesin Pencari)", value: "SEO" },
+              {
+                label: "Content Marketing (Blog, Artikel)",
+                value: "Content Marketing",
+              },
+              { label: "Email Marketing", value: "Email Marketing" },
+              { label: "Webinar/Event Online", value: "Webinar/Event Online" },
+              { label: "Iklan Berbayar (Google Ads)", value: "Google Ads" },
+              { label: "Lainnya...", value: "Lainnya" },
+            ],
+            info: "Pilih platform atau metode yang akan Anda gunakan untuk mendistribusikan konten dan menarik prospek.",
+          },
+          {
+            name: "jenis_konten_penawaran",
+            label: "Jenis Konten/Penawaran untuk Menarik Leads",
+            type: "multiselect",
+            description:
+              "Pilih jenis konten atau penawaran yang akan digunakan untuk menarik prospek.",
+            default: [],
+            optional: false,
+            options: [
+              { label: "E-book/Whitepaper", value: "E-book/Whitepaper" },
+              {
+                label: "Webinar/Workshop Gratis",
+                value: "Webinar/Workshop Gratis",
+              },
+              {
+                label: "Uji Coba Gratis (Free Trial)",
+                value: "Uji Coba Gratis",
+              },
+              {
+                label: "Template/Checklist Gratis",
+                value: "Template/Checklist Gratis",
+              },
+              {
+                label: "Studi Kasus/Laporan Industri",
+                value: "Studi Kasus/Laporan Industri",
+              },
+              { label: "Konsultasi Gratis", value: "Konsultasi Gratis" },
+              { label: "Lainnya...", value: "Lainnya" },
+            ],
+            info: "Pilih jenis 'lead magnet' atau penawaran nilai yang akan Anda gunakan untuk mendapatkan informasi kontak prospek.",
+          },
+          {
+            name: "metrik_keberhasilan",
+            label: "Metrik Keberhasilan",
+            type: "textarea",
+            description:
+              "Sebutkan metrik spesifik yang akan Anda gunakan untuk mengukur keberhasilan kampanye Lead Generation ini.",
+            default: "",
+            optional: true,
+            placeholder:
+              "Contoh: Jumlah MQL, tingkat konversi dari MQL ke SQL, biaya per lead (CPL).",
+            info: "Indikator Kinerja Utama (KPI) yang akan digunakan untuk mengevaluasi efektivitas strategi.",
+            validation: {
+              min_length: 10,
+            },
+          },
+          {
+            name: "kriteria_pencarian_prospek",
+            label: "Kriteria Pencarian Prospek (Opsional)",
+            type: "textarea",
+            description:
+              "Jelaskan kriteria spesifik untuk mencari data prospek (perusahaan atau perorangan) yang relevan dengan strategi ini. Contoh: 'Daftar perusahaan SaaS di Indonesia dengan lebih dari 50 karyawan', atau 'Email kontak manajer pemasaran di industri e-commerce'.",
+            default: "",
+            optional: true,
+            placeholder:
+              "Contoh: Daftar perusahaan manufaktur di Jawa Barat dengan omset > 10M USD, atau profil LinkedIn direktur HRD di perusahaan multinasional.",
+            info: "Definisikan kriteria untuk mencari data prospek yang spesifik, baik itu informasi perusahaan atau individu, yang akan digunakan dalam strategi Lead Generation Anda.",
+            validation: {
+              min_length: 10,
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang ahli strategi pemasaran digital yang akan membantu pengguna merancang rencana Lead Generation yang efektif.",
+          KONTEKS:
+            "Saya ingin Anda membantu saya merancang strategi Lead Generation yang komprehensif untuk produk/layanan saya. Berikut adalah detailnya:\n\nNama Produk/Layanan: {{nama_produk_layanan}}\nDeskripsi Produk/Layanan: {{deskripsi_produk_layanan}}\nTarget Audiens Utama: {{target_audiens}}\nTujuan Utama Lead Generation: {{tujuan_leadgen}}{{#if tujuan_leadgen_lainnya}} ({{tujuan_leadgen_lainnya}}){{/if}}\nSaluran Pemasaran yang Dipertimbangkan: {{saluran_pemasaran}}{{#if saluran_pemasaran_lainnya}}, {{saluran_pemasaran_lainnya}}{{/if}}\nJenis Konten/Penawaran untuk Menarik Leads: {{jenis_konten_penawaran}}{{#if jenis_konten_penawaran_lainnya}}, {{jenis_konten_penawaran_lainnya}}{{/if}}\nMetrik Keberhasilan: {{metrik_keberhasilan}}\n{{#if kriteria_pencarian_prospek}}Kriteria Pencarian Prospek: {{kriteria_pencarian_prospek}}{{/if}}",
+          TUGAS:
+            "Berdasarkan informasi di atas, buatkan saya strategi Lead Generation yang terperinci. Strategi ini harus mencakup:\n\n1.  **Ringkasan Eksekutif:** Gambaran umum singkat tentang strategi.\n2.  **Analisis Target Audiens:** Penjelasan lebih lanjut tentang persona target dan bagaimana produk/layanan Anda menyelesaikan masalah mereka.\n3.  **Tujuan SMART:** Tujuan spesifik, terukur, dapat dicapai, relevan, dan terikat waktu untuk kampanye Lead Generation ini.\n4.  **Strategi Konten & Penawaran:** Ide-ide konten spesifik dan 'lead magnet' yang relevan untuk setiap saluran yang dipilih, serta bagaimana mereka akan menarik prospek.\n5.  **Rencana Distribusi & Promosi:** Bagaimana konten dan penawaran akan didistribusikan melalui saluran pemasaran yang dipilih.\n6.  **Proses Pengumpulan & Kualifikasi Lead:** Langkah-langkah untuk mengumpulkan informasi prospek dan bagaimana mereka akan dikualifikasi (misalnya, MQL, SQL).\n7.  **Metrik & Pengukuran:** Bagaimana keberhasilan akan diukur berdasarkan metrik yang diberikan, dan saran untuk alat pelacakan.\n8.  **Timeline (Opsional):** Saran timeline umum untuk implementasi strategi.\n9.  **Rekomendasi Pencarian Data Prospek:** Berdasarkan kriteria yang diberikan (jika ada), sarankan metode, alat, atau sumber daya yang efektif untuk mencari dan mengumpulkan data prospek (perusahaan atau perorangan) yang relevan.",
+          FORMAT_OUTPUT:
+            "Sajikan strategi dalam format Markdown yang terstruktur dengan baik, menggunakan heading, bullet points, dan bold untuk keterbacaan yang maksimal.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "tujuan_leadgen",
+            options: {
+              Lainnya: [
+                {
+                  name: "tujuan_leadgen_lainnya",
+                  label: "Tujuan Lead Generation Lainnya",
+                  type: "text",
+                  description:
+                    "Sebutkan tujuan Lead Generation spesifik Anda jika memilih 'Lainnya'.",
+                  default: "",
+                  optional: false,
+                  placeholder:
+                    "Contoh: Mendapatkan 1000 pendaftar webinar dalam 1 bulan.",
+                  info: "Jelaskan tujuan Lead Generation Anda secara spesifik jika tidak ada dalam pilihan yang tersedia.",
+                  validation: {
+                    min_length: 5,
+                  },
+                },
+              ],
+            },
+          },
+          {
+            trigger: "saluran_pemasaran",
+            options: {
+              Lainnya: [
+                {
+                  name: "saluran_pemasaran_lainnya",
+                  label: "Saluran Pemasaran Lainnya",
+                  type: "textarea",
+                  description:
+                    "Sebutkan saluran pemasaran spesifik Anda jika memilih 'Lainnya'.",
+                  default: "",
+                  optional: false,
+                  placeholder:
+                    "Contoh: Kemitraan dengan influencer industri, podcast.",
+                  info: "Jelaskan saluran pemasaran tambahan yang ingin Anda pertimbangkan.",
+                  validation: {
+                    min_length: 5,
+                  },
+                },
+              ],
+            },
+          },
+          {
+            trigger: "jenis_konten_penawaran",
+            options: {
+              Lainnya: [
+                {
+                  name: "jenis_konten_penawaran_lainnya",
+                  label: "Jenis Konten/Penawaran Lainnya",
+                  type: "textarea",
+                  description:
+                    "Sebutkan jenis konten/penawaran spesifik Anda jika memilih 'Lainnya'.",
+                  default: "",
+                  optional: false,
+                  placeholder: "Contoh: Kuis interaktif, demo produk personal.",
+                  info: "Jelaskan jenis konten atau penawaran tambahan yang ingin Anda gunakan.",
+                  validation: {
+                    min_length: 5,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Pastikan strategi yang dihasilkan relevan dengan industri dan target audiens yang disebutkan. Berikan saran yang praktis dan dapat ditindaklanjuti. Hindari jargon yang tidak perlu dan fokus pada kejelasan.",
+        contoh_kalimat:
+          "Buatkan saya strategi lead generation untuk produk SaaS baru.",
+        output: "natural_language_prompt",
+        crossValidationRules: [
+          {
+            triggerField: "tujuan_leadgen",
+            triggerValue: "Lainnya",
+            dependentField: "tujuan_leadgen_lainnya",
+            validationType: "required",
+            errorMessage:
+              "Harap isi 'Tujuan Lead Generation Lainnya' jika Anda memilih 'Lainnya'.",
+          },
+          {
+            triggerField: "saluran_pemasaran",
+            triggerValue: "Lainnya",
+            dependentField: "saluran_pemasaran_lainnya",
+            validationType: "required",
+            errorMessage:
+              "Harap isi 'Saluran Pemasaran Lainnya' jika Anda memilih 'Lainnya'.",
+          },
+          {
+            triggerField: "jenis_konten_penawaran",
+            triggerValue: "Lainnya",
+            dependentField: "jenis_konten_penawaran_lainnya",
+            validationType: "required",
+            errorMessage:
+              "Harap isi 'Jenis Konten/Penawaran Lainnya' jika Anda memilih 'Lainnya'.",
+          },
+        ],
+      },
+    },
+    "Perencanaan & Manajemen": {
+      "Project Planning & Breakdown": {
+        id_kerangka: "PROJ-PLAN-001",
+        nama_kerangka: "Project Planning & Breakdown",
+        version: "1.0.0",
+        kategori: ["Prompt Proyek", "Perencanaan & Manajemen"],
+        description:
+          "Memecah tujuan proyek besar menjadi tugas-tugas yang lebih kecil, mengidentifikasi dependensi, dan memperkirakan waktu.",
+        perspektif_user:
+          "Sebagai manajer proyek atau individu yang mengerjakan proyek kompleks, saya membutuhkan bantuan untuk merencanakan dan memecah proyek menjadi langkah-langkah yang dapat dikelola.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Manajer Proyek yang akan memecah tujuan proyek menjadi langkah-langkah yang dapat ditindaklanjuti.",
+        components: [
+          {
+            name: "tujuan_proyek",
+            label: "Tujuan Proyek Utama",
+            type: "textarea",
+            description: "Jelaskan tujuan utama proyek Anda secara detail.",
+            default: "",
+            optional: false,
+            placeholder:
+              "Contoh: 'Meluncurkan aplikasi mobile e-commerce baru dalam 6 bulan.'",
+            info: "Tujuan yang jelas akan membantu AI membuat rencana yang lebih akurat.",
+          },
+          {
+            name: "deadline_proyek",
+            label: "Tenggat Waktu Proyek",
+            type: "date",
+            description: "Pilih tanggal tenggat waktu untuk proyek ini.",
+            default: "",
+            optional: true,
+            info: "Tanggal tenggat waktu akan membantu AI dalam estimasi waktu.",
+          },
+          {
+            name: "sumber_daya_tersedia",
+            label: "Sumber Daya yang Tersedia",
+            type: "textarea",
+            description:
+              "Sebutkan tim, anggaran, atau alat yang tersedia untuk proyek.",
+            default: "",
+            optional: true,
+            placeholder:
+              "Contoh: 'Tim 5 developer, anggaran Rp 100 juta, menggunakan React Native.'",
+            info: "Informasi sumber daya akan membantu AI membuat rencana yang realistis.",
+          },
+          {
+            name: "output_detail_level",
+            label: "Tingkat Detail Output",
+            type: "options",
+            description:
+              "Pilih seberapa detail rencana proyek yang Anda inginkan.",
+            default: "tinggi",
+            optional: false,
+            options: [
+              { label: "Ringkasan (Tahapan Utama)", value: "ringkasan" },
+              { label: "Menengah (Tugas & Sub-tugas)", value: "menengah" },
+              {
+                label: "Tinggi (Tugas, Sub-tugas, Estimasi Waktu)",
+                value: "tinggi",
+              },
+            ],
+            info: "Pilih tingkat detail yang sesuai dengan kebutuhan perencanaan Anda.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Manajer Proyek yang sangat terorganisir dan berpengalaman dalam perencanaan proyek.",
+          KONTEKS:
+            "Pengguna membutuhkan bantuan untuk memecah proyek mereka. Tujuan proyek utama adalah: {{tujuan_proyek}}. Tenggat waktu yang diberikan adalah: {{deadline_proyek || 'Tidak ditentukan'}}. Sumber daya yang tersedia: {{sumber_daya_tersedia || 'Tidak disebutkan'}}.",
+          TUGAS:
+            "Buat rencana proyek yang terstruktur untuk mencapai tujuan: {{tujuan_proyek}}. Pecah proyek ini menjadi tahapan-tahapan utama, lalu setiap tahapan menjadi tugas-tugas yang lebih kecil. Jika tingkat detail output adalah 'tinggi', sertakan juga estimasi waktu untuk setiap tugas. Pertimbangkan tenggat waktu {{deadline_proyek || 'yang fleksibel'}} dan sumber daya {{sumber_daya_tersedia || 'standar'}}. Sajikan rencana dengan tingkat detail: {{output_detail_level}}.",
+          FORMAT_OUTPUT:
+            "Sajikan rencana proyek dalam format Markdown yang jelas dan terstruktur, menggunakan daftar berpoin atau bernomor untuk tahapan dan tugas. Gunakan judul dan sub-judul yang sesuai. Jika tingkat detail 'tinggi', gunakan format: '- [Tahapan Utama]\n  - [Tugas Kecil] (Estimasi Waktu: X hari/minggu)'.",
+        },
+        toolType: "planning",
+        konteks_tambahan_instruksi_khusus:
+          "Fokus pada pendekatan yang realistis dan dapat ditindaklanjuti. Jika ada ambiguitas, buat asumsi yang masuk akal dan nyatakan asumsi tersebut. Prioritaskan langkah-langkah yang paling kritis untuk mencapai tujuan proyek.",
+        contoh_kalimat:
+          "Bantu saya merencanakan peluncuran aplikasi mobile e-commerce baru dalam 6 bulan.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
+      },
+    },
     "Konten & Pemasaran": {
       "Generator Konten Multi-Platform": {
         description:
           "Buat konten untuk berbagai platform—artikel blog yang SEO-friendly, postingan media sosial yang menarik, deskripsi produk yang menjual, skrip video pendek, bahkan lirik lagu.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Kepala Strategi Konten. AI akan bertindak sebagai Kepala Strategi Konten yang adaptif, memahami jenis konten yang diminta dan bertransformasi menjadi persona spesialis yang relevan untuk menghasilkan konten yang dioptimalkan untuk berbagai platform.",
+          "Persona AI: Anda adalah seorang Kepala Strategi Konten yang akan menghasilkan konten untuk berbagai platform.",
         components: [
           {
             name: "contentType",
@@ -4337,7 +7532,7 @@ Email 3: Studi kasus pengguna`,
           "Dapatkan bantuan untuk nama, slogan, dan konsep logo untuk bisnis atau proyek baru Anda.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Direktur Kreatif Branding. AI akan bertindak sebagai Direktur Kreatif di agensi branding, menerjemahkan esensi ide menjadi aset kreatif (nama, slogan, konsep logo) yang relevan dan memberikan opsi yang bervariasi.",
+          "Persona AI: Anda adalah seorang Direktur Kreatif Branding yang akan menerjemahkan esensi ide menjadi aset kreatif.",
         components: [
           {
             name: "assetType",
@@ -4489,7 +7684,7 @@ Email 3: Studi kasus pengguna`,
           "Dapatkan rencana terstruktur untuk diet, olahraga, kebersihan, dan pengembangan diri.",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Lifestyle Architect. AI akan bertindak sebagai 'Lifestyle Architect' yang holistik. Anda akan bertransformasi menjadi Ahli Gizi, Pelatih Kebugaran, atau Pelatih Produktivitas tergantung pada jenis rencana yang diminta pengguna untuk membuat rencana yang paling efektif dan memotivasi.",
+          "Persona AI: Anda adalah seorang Lifestyle Architect yang akan membuat rencana yang paling efektif dan memotivasi.",
         components: [
           {
             name: "planType",
@@ -4769,7 +7964,7 @@ Email 3: Studi kasus pengguna`,
           "Dapatkan nama kreatif untuk bayi, bisnis, tim, karakter fiksi, dan lainnya.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Nomenclaturist & Onomastika Kreatif. AI akan bertindak sebagai Nomenclaturist dan Onomastika Kreatif, memahami kategori penamaan yang diberikan pengguna dan mengadopsi gaya berpikir yang sesuai untuk memberikan opsi nama yang relevan dan kreatif.",
+          "Persona AI: Anda adalah seorang Nomenclaturist & Onomastika Kreatif yang akan memberikan opsi nama.",
         components: [
           {
             name: "category",
@@ -5071,7 +8266,7 @@ Email 3: Studi kasus pengguna`,
           "Dapatkan bantuan terstruktur untuk merencanakan semua detail acara Anda.",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Event Organizer Pro. AI akan bertindak sebagai Event Organizer Pro yang terorganisir dan kreatif, memahami jenis dokumen acara yang dibutuhkan pengguna dan menyusunnya secara efisien untuk perencanaan acara yang komprehensif.",
+          "Persona AI: Anda adalah seorang Event Organizer Pro yang akan menyusun dokumen perencanaan acara.",
         components: [
           {
             name: "documentType",
@@ -5379,7 +8574,7 @@ Email 3: Studi kasus pengguna`,
           "Dapatkan bantuan untuk membuat rencana belajar, kuis, RPP, dan materi edukasi lainnya.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pelatih Akademik & Desainer Instruksional. AI akan bertindak sebagai Pelatih Akademik dan Desainer Instruksional, bertransformasi menjadi Tutor Pribadi atau Asisten Kurikulum tergantung pada jenis bantuan akademik yang diminta untuk membuat materi edukasi yang efektif.",
+          "Persona AI: Anda adalah seorang Pelatih Akademik & Desainer Instruksional yang akan membuat materi edukasi.",
         components: [
           {
             name: "assistanceType",
@@ -5555,7 +8750,7 @@ Email 3: Studi kasus pengguna`,
           "Buat draf cepat untuk surat lamaran, laporan, notulen rapat, dan email profesional.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Asisten Eksekutif Virtual. AI akan bertindak sebagai Asisten Eksekutif Virtual yang kompeten, beradaptasi menjadi Career Coach, Analis Bisnis, atau Pakar Komunikasi tergantung pada jenis dokumen yang diminta untuk menghasilkan draf yang paling sesuai.",
+          "Persona AI: Anda adalah seorang Asisten Eksekutif Virtual yang akan menghasilkan draf dokumen profesional.",
         components: [
           {
             name: "documentType",
@@ -5858,7 +9053,7 @@ Email 3: Studi kasus pengguna`,
           "Dapatkan cetak biru (blueprint) terstruktur untuk website, aplikasi, atau proyek digital lainnya.",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Arsitek Produk Digital. AI akan bertindak sebagai Arsitek Produk Digital senior, bertransformasi menjadi Arsitek Informasi, Desainer UX/UI, atau Manajer Produk Teknis tergantung pada jenis dokumen proyek yang diminta untuk mengubah ide menjadi rencana yang dapat ditindaklanjuti.",
+          "Persona AI: Anda adalah seorang Arsitek Produk Digital yang akan mengubah ide menjadi rencana yang dapat ditindaklanjuti.",
         components: [
           {
             name: "documentType",
@@ -6023,7 +9218,7 @@ Email 3: Studi kasus pengguna`,
           "Hasilkan ide-ide video yang menarik untuk platform media sosial.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Strategis Konten Video. AI akan menghasilkan ide-ide video yang menarik dan relevan dengan platform, niche, format, dan tujuan yang diinginkan, dengan fokus pada peningkatan engagement dan pencapaian target pengguna.",
+          "Persona AI: Anda adalah seorang Strategis Konten Video yang akan menghasilkan ide-ide video.",
         components: [
           {
             name: "platform",
@@ -6083,7 +9278,7 @@ Email 3: Studi kasus pengguna`,
         description: "Buat naskah singkat untuk iklan video atau audio.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penulis Naskah Iklan. AI akan membuat naskah iklan yang singkat dan persuasif, dengan mempertimbangkan produk, target audiens, durasi, pesan kunci, dan platform penayangan untuk memaksimalkan dampak iklan.",
+          "Persona AI: Anda adalah seorang Penulis Naskah Iklan yang akan membuat naskah iklan.",
         components: [
           {
             name: "product",
@@ -6144,7 +9339,7 @@ Email 3: Studi kasus pengguna`,
           "Buat prompt yang sangat detail untuk Midjourney, lengkap dengan parameter teknis untuk kontrol maksimal.",
         toolType: "image-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Seniman Prompt Midjourney. AI akan menginterpretasikan deskripsi subjek, gaya, dan parameter teknis untuk menghasilkan prompt Midjourney yang optimal, memaksimalkan kontrol atas output visual.",
+          "Persona AI: Anda adalah seorang Seniman Prompt Midjourney yang akan menghasilkan prompt Midjourney.",
         components: [
           {
             name: "subject",
@@ -6315,7 +9510,7 @@ Email 3: Studi kasus pengguna`,
           "Tulis prompt naratif dan deskriptif yang kaya untuk DALL-E 3, yang unggul dalam memahami bahasa alami.",
         toolType: "image-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pelukis Digital AI. AI akan memproses deskripsi naratif untuk menghasilkan gambar yang kreatif dan akurat, memanfaatkan pemahaman DALL-E 3 tentang bahasa alami dan detail kontekstual.",
+          "Persona AI: Anda adalah seorang Pelukis Digital AI yang akan menghasilkan gambar yang kreatif dan akurat.",
         components: [
           {
             name: "subject",
@@ -6379,7 +9574,7 @@ Email 3: Studi kasus pengguna`,
           "Buat prompt positif dan negatif yang terstruktur untuk kontrol mendetail pada model Stable Diffusion.",
         toolType: "image-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pengendali Gambar. AI akan memproses prompt positif dan negatif untuk menghasilkan gambar yang sesuai, dengan fokus pada detail dan penghindaran elemen yang tidak diinginkan, memanfaatkan kemampuan kontrol Stable Diffusion.",
+          "Persona AI: Anda adalah seorang Pengendali Gambar yang akan menghasilkan gambar yang sesuai.",
         components: [
           {
             name: "positivePrompt",
@@ -6426,7 +9621,7 @@ Email 3: Studi kasus pengguna`,
           "Prompt untuk Leonardo AI, dengan penekanan pada model dan elemen khasnya.",
         toolType: "image-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Kreator Visual Leonardo. AI akan menghasilkan gambar berdasarkan prompt positif dan negatif, dengan mempertimbangkan model dan elemen khas Leonardo AI untuk menciptakan visual yang unik dan berkualitas tinggi.",
+          "Persona AI: Anda adalah seorang Kreator Visual Leonardo yang akan menghasilkan gambar.",
         components: [
           {
             name: "positivePrompt",
@@ -6480,7 +9675,7 @@ Email 3: Studi kasus pengguna`,
           "Buat prompt untuk Ideogram, dengan fokus khusus pada kemampuannya merender teks di dalam gambar.",
         toolType: "image-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Perancang Tipografi Visual. AI akan memprioritaskan rendering teks yang akurat di dalam gambar, sambil tetap mempertahankan gaya visual yang kohesif berdasarkan deskripsi adegan.",
+          "Persona AI: Anda adalah seorang Perancang Tipografi Visual yang akan merender teks yang akurat di dalam gambar.",
         components: [
           {
             name: "textToRender",
@@ -6524,7 +9719,7 @@ Email 3: Studi kasus pengguna`,
           "Prompt untuk Adobe Firefly, dengan penekanan pada gaya dan efek yang tersedia.",
         toolType: "image-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Seniman Efek Digital. AI akan menerapkan gaya dan efek yang diminta pada subjek, menghasilkan gambar yang artistik dan sesuai dengan preferensi visual yang ditentukan.",
+          "Persona AI: Anda adalah seorang Seniman Efek Digital yang akan menerapkan gaya dan efek pada subjek.",
         components: [
           {
             name: "subject",
@@ -6578,7 +9773,7 @@ Email 3: Studi kasus pengguna`,
           "Buat prompt untuk Playground AI, platform yang fleksibel untuk berbagai gaya.",
         toolType: "image-editing",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Eksplorator Visual. AI akan menghasilkan gambar berdasarkan prompt utama dan elemen yang dikecualikan, memanfaatkan fleksibilitas Playground AI untuk berbagai gaya visual.",
+          "Persona AI: Anda adalah seorang Eksplorator Visual yang akan menghasilkan gambar berdasarkan prompt utama.",
         components: [
           {
             name: "prompt",
@@ -6615,7 +9810,7 @@ Email 3: Studi kasus pengguna`,
           "Buat prompt untuk NightCafe Creator, dengan mempertimbangkan model dan preset gayanya.",
         toolType: "image-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Kurator Seni AI. AI akan menghasilkan karya seni berdasarkan prompt utama, preset gaya, dan model AI yang dipilih, dengan mempertimbangkan elemen negatif untuk hasil yang lebih baik.",
+          "Persona AI: Anda adalah seorang Kurator Seni AI yang akan menghasilkan karya seni berdasarkan prompt utama.",
         components: [
           {
             name: "mainPrompt",
@@ -6668,7 +9863,7 @@ Email 3: Studi kasus pengguna`,
           "Demonstrasi input interaktif: color picker, date picker, dan slider.",
         toolType: "image-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Demonstrator Input. AI akan menampilkan bagaimana berbagai jenis input interaktif dapat digunakan untuk mengontrol parameter generasi gambar.",
+          "Persona AI: Anda adalah seorang Demonstrator Input yang akan menampilkan bagaimana berbagai jenis input interaktif dapat digunakan.",
         components: [
           {
             name: "mainSubject",
@@ -6719,6 +9914,202 @@ Email 3: Studi kasus pengguna`,
           },
         ],
       },
+      "Image Description & Generation": {
+        id_kerangka: "IMG-GEN-001",
+        nama_kerangka: "Image Description & Generation",
+        version: "1.0.0",
+        kategori: ["Gambar & Desain", "Generasi Gambar"],
+        description:
+          "Menghasilkan deskripsi tekstual dari gambar yang diunggah atau membuat gambar baru dari deskripsi teks dan gaya visual.",
+        perspektif_user:
+          "Sebagai seorang desainer, pemasar, atau kreator konten, saya membutuhkan alat untuk dengan cepat mendapatkan deskripsi akurat dari gambar yang ada atau untuk menghasilkan visual baru yang sesuai dengan visi saya.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang seniman digital dan deskriptor visual yang akan menganalisis atau menciptakan visual.",
+        components: [
+          {
+            name: "mode_operasi",
+            label: "Pilih Mode Operasi",
+            type: "options",
+            description:
+              "Pilih apakah Anda ingin mendeskripsikan gambar atau menghasilkan gambar.",
+            default: "deskripsikan_gambar",
+            optional: false,
+            options: [
+              { label: "Deskripsikan Gambar", value: "deskripsikan_gambar" },
+              { label: "Hasilkan Gambar", value: "hasilkan_gambar" },
+            ],
+            info: "Pilih 'Deskripsikan Gambar' untuk mendapatkan deskripsi dari gambar yang Anda unggah, atau 'Hasilkan Gambar' untuk membuat gambar baru dari teks.",
+          },
+          {
+            name: "input_gambar",
+            label: "Unggah Gambar",
+            type: "image",
+            description: "Unggah gambar yang ingin Anda deskripsikan.",
+            default: "",
+            optional: true,
+            placeholder: "Pilih file gambar...",
+            info: "Unggah gambar dalam format JPG, PNG, atau WEBP. Maksimal ukuran file 5MB.",
+          },
+          {
+            name: "deskripsi_teks_gambar",
+            label: "Deskripsi Teks Gambar",
+            type: "textarea",
+            description:
+              "Masukkan deskripsi detail untuk gambar yang ingin Anda hasilkan.",
+            default: "",
+            optional: true,
+            placeholder:
+              "Contoh: 'Pemandangan kota futuristik saat matahari terbenam, dengan mobil terbang dan gedung pencakar langit yang berkilauan.'",
+            info: "Berikan deskripsi yang jelas dan spesifik untuk hasil terbaik.",
+          },
+          {
+            name: "gaya_visual",
+            label: "Gaya Visual",
+            type: "options",
+            description: "Pilih gaya visual untuk gambar yang dihasilkan.",
+            default: "fotorealistik",
+            optional: true,
+            options: [
+              { label: "Fotorealistik", value: "fotorealistik" },
+              { label: "Kartun", value: "kartun" },
+              { label: "Abstrak", value: "abstrak" },
+              { label: "Seni Digital", value: "seni_digital" },
+              { label: "Lainnya...", value: "lainnya" },
+            ],
+            info: "Pilih gaya yang paling sesuai dengan kebutuhan visual Anda.",
+          },
+          {
+            name: "rasio_aspek",
+            label: "Rasio Aspek",
+            type: "options",
+            description: "Pilih rasio aspek untuk gambar yang dihasilkan.",
+            default: "1:1",
+            optional: true,
+            options: [
+              { label: "1:1 (Persegi)", value: "1:1" },
+              { label: "16:9 (Lanskap)", value: "16:9" },
+              { label: "9:16 (Potret)", value: "9:16" },
+            ],
+            info: "Rasio aspek menentukan orientasi dan proporsi gambar.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang seniman digital dan deskriptor visual.",
+          KONTEKS:
+            "Pengguna ingin {{mode_operasi === 'deskripsikan_gambar' ? 'mendapatkan deskripsi dari gambar yang diunggah.' : 'menghasilkan gambar baru.'}}",
+          TUGAS:
+            "{{mode_operasi === 'deskripsikan_gambar' ? 'Deskripsikan gambar berikut secara detail dan komprehensif, fokus pada objek, warna, suasana, dan gaya visual: ' + input_gambar : 'Hasilkan gambar berdasarkan deskripsi berikut: \"' + deskripsi_teks_gambar + '\". Gunakan gaya visual: \"' + gaya_visual + '\" dan rasio aspek: \"' + rasio_aspek + '\".'}}",
+          FORMAT_OUTPUT:
+            "{{mode_operasi === 'deskripsikan_gambar' ? 'Berikan deskripsi dalam format Markdown dengan poin-poin utama.' : 'Sajikan output sebagai URL gambar yang dihasilkan atau instruksi untuk mengaksesnya.'}}",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "mode_operasi",
+            options: {
+              deskripsikan_gambar: [
+                {
+                  name: "input_gambar_deskripsi",
+                  label: "Unggah Gambar untuk Deskripsi",
+                  type: "image",
+                  description: "Unggah gambar yang ingin Anda deskripsikan.",
+                  default: "",
+                  optional: false,
+                  placeholder: "Pilih file gambar...",
+                  info: "Unggah gambar dalam format JPG, PNG, atau WEBP. Maksimal ukuran file 5MB.",
+                },
+              ],
+              hasilkan_gambar: [
+                {
+                  name: "deskripsi_teks_gambar_generasi",
+                  label: "Deskripsi Teks Gambar",
+                  type: "textarea",
+                  description:
+                    "Masukkan deskripsi detail untuk gambar yang ingin Anda hasilkan.",
+                  default: "",
+                  optional: false,
+                  placeholder:
+                    "Contoh: 'Pemandangan kota futuristik saat matahari terbenam, dengan mobil terbang dan gedung pencakar langit yang berkilauan.'",
+                  info: "Berikan deskripsi yang jelas dan spesifik untuk hasil terbaik.",
+                },
+                {
+                  name: "gaya_visual_generasi",
+                  label: "Gaya Visual",
+                  type: "options",
+                  description:
+                    "Pilih gaya visual untuk gambar yang dihasilkan.",
+                  default: "fotorealistik",
+                  optional: false,
+                  options: [
+                    { label: "Fotorealistik", value: "fotorealistik" },
+                    { label: "Kartun", value: "kartun" },
+                    { label: "Abstrak", value: "abstrak" },
+                    { label: "Seni Digital", value: "seni_digital" },
+                    { label: "Lainnya...", value: "lainnya" },
+                  ],
+                  info: "Pilih gaya yang paling sesuai dengan kebutuhan visual Anda.",
+                },
+                {
+                  name: "rasio_aspek_generasi",
+                  label: "Rasio Aspek",
+                  type: "options",
+                  description:
+                    "Pilih rasio aspek untuk gambar yang dihasilkan.",
+                  default: "1:1",
+                  optional: false,
+                  options: [
+                    { label: "1:1 (Persegi)", value: "1:1" },
+                    { label: "16:9 (Lanskap)", value: "16:9" },
+                    { label: "9:16 (Potret)", value: "9:16" },
+                  ],
+                  info: "Rasio aspek menentukan orientasi dan proporsi gambar.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "gaya_visual_generasi",
+            options: {
+              lainnya: [
+                {
+                  name: "gaya_visual_lainnya",
+                  label: "Sebutkan Gaya Visual Lainnya",
+                  type: "text",
+                  description:
+                    "Masukkan gaya visual kustom yang Anda inginkan.",
+                  default: "",
+                  optional: false,
+                  placeholder: "Contoh: 'Gaya Van Gogh'",
+                  info: "Gaya kustom akan digunakan jika tersedia oleh model AI.",
+                },
+              ],
+            },
+          },
+        ],
+        toolType: "image-generation",
+        konteks_tambahan_instruksi_khusus:
+          "Untuk mode 'Deskripsikan Gambar', pastikan deskripsi sangat detail dan komprehensif. Untuk mode 'Hasilkan Gambar', fokus pada interpretasi kreatif dari deskripsi dan gaya yang diberikan.",
+        contoh_kalimat:
+          "Hasilkan gambar pemandangan pegunungan dengan gaya seni digital.",
+        output: "natural_language_prompt",
+        crossValidationRules: [
+          {
+            triggerField: "mode_operasi",
+            triggerValue: "deskripsikan_gambar",
+            dependentField: "input_gambar_deskripsi",
+            validationType: "required",
+            errorMessage:
+              "Gambar harus diunggah untuk mode 'Deskripsikan Gambar'.",
+          },
+          {
+            triggerField: "mode_operasi",
+            triggerValue: "hasilkan_gambar",
+            dependentField: "deskripsi_teks_gambar_generasi",
+            validationType: "required",
+            errorMessage:
+              "Deskripsi teks gambar harus diisi untuk mode 'Hasilkan Gambar'.",
+          },
+        ],
+      },
     },
     "Prompt AI Video (Text-to-Video)": {
       "Sora (OpenAI)": {
@@ -6726,7 +10117,7 @@ Email 3: Studi kasus pengguna`,
           "Buat prompt yang sangat deskriptif dan sinematik untuk menghasilkan video berkualitas tinggi dengan Sora.",
         toolType: "video",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Sutradara AI. AI akan menginterpretasikan deskripsi adegan yang kaya dan instruksi kamera untuk menghasilkan video sinematik yang detail dan berkualitas tinggi, memanfaatkan kemampuan Sora dalam memahami narasi visual.",
+          "Persona AI: Anda adalah seorang Sutradara AI yang akan menghasilkan video sinematik.",
         components: [
           {
             name: "sceneDescription",
@@ -6781,7 +10172,7 @@ Email 3: Studi kasus pengguna`,
           "Buat prompt untuk Pika, dengan opsi untuk menganimasikan gambar atau menghasilkan video dari teks.",
         toolType: "video",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Animator AI. AI akan menganimasikan gambar atau menghasilkan video dari teks, dengan mempertimbangkan prompt utama, elemen negatif, dan kontrol gerakan untuk menciptakan output visual yang dinamis.",
+          "Persona AI: Anda adalah seorang Animator AI yang akan menganimasikan gambar atau menghasilkan video dari teks.",
         components: [
           {
             name: "mainPrompt",
@@ -6838,7 +10229,7 @@ Email 3: Studi kasus pengguna`,
           "Buat prompt untuk Runway, platform serbaguna untuk generasi video dari teks, gambar, atau video lain.",
         toolType: "video",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Produser Video AI. AI akan menghasilkan video berdasarkan prompt, sumber input, dan kontrol kamera, memanfaatkan keserbagunaan Runway untuk berbagai kebutuhan generasi video.",
+          "Persona AI: Anda adalah seorang Produser Video AI yang akan menghasilkan video berdasarkan prompt.",
         components: [
           {
             name: "prompt",
@@ -6893,7 +10284,7 @@ Email 3: Studi kasus pengguna`,
           "Buat prompt untuk Kaiber, yang dikenal dengan gaya visual artistik dan transformasi video.",
         toolType: "video",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Transformator Visual. AI akan menghasilkan video dengan gaya visual artistik yang unik, mampu mentransformasi video input atau menciptakan adegan baru berdasarkan deskripsi subjek dan gaya yang diberikan.",
+          "Persona AI: Anda adalah seorang Transformator Visual yang akan menghasilkan video dengan gaya visual artistik.",
         components: [
           {
             name: "subject",
@@ -6945,7 +10336,7 @@ Email 3: Studi kasus pengguna`,
           "Buat prompt yang sangat deskriptif dan sinematik untuk menghasilkan video berkualitas tinggi dengan Google VEO.",
         toolType: "video",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Sinematografer AI. AI akan menghasilkan video berkualitas tinggi berdasarkan prompt deskriptif dan parameter sinematik, memanfaatkan pemahaman Google VEO tentang komposisi visual dan gerakan kamera.",
+          "Persona AI: Anda adalah seorang Sinematografer AI yang akan menghasilkan video berkualitas tinggi.",
         components: [
           {
             name: "prompt",
@@ -7070,7 +10461,7 @@ Email 3: Studi kasus pengguna`,
           "Gunakan deskripsi teks untuk menghasilkan template desain yang dapat disesuaikan secara instan di Canva.",
         toolType: "image-editing",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Desainer Grafis AI. AI akan menghasilkan template desain yang dapat disesuaikan secara instan di Canva berdasarkan deskripsi teks, dengan mempertimbangkan jenis desain, ide, gaya, dan konten yang diinginkan.",
+          "Persona AI: Anda adalah seorang Desainer Grafis AI yang akan menghasilkan template desain yang dapat disesuaikan di Canva.",
         components: [
           {
             name: "designType",
@@ -7123,7 +10514,7 @@ Email 3: Studi kasus pengguna`,
           "Gunakan prompt untuk berbagai alat bantu AI dari Clipdrop, seperti mengganti latar belakang atau memperbesar gambar.",
         toolType: "image-editing",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Editor Foto AI. AI akan menginterpretasikan prompt dan input gambar untuk menerapkan fungsi alat Clipdrop yang dipilih, seperti mengganti latar belakang, memperbesar gambar, atau menghasilkan variasi visual, dengan fokus pada hasil yang akurat dan berkualitas tinggi.",
+          "Persona AI: Anda adalah seorang Editor Foto AI yang akan menerapkan fungsi alat Clipdrop.",
         components: [
           {
             name: "tool",
@@ -7173,6 +10564,101 @@ Email 3: Studi kasus pengguna`,
         ],
       },
     },
+    "Analisis Multimodal": {
+      "Analis Multimodal Cerdas": {
+        id_kerangka: "GD-AMCS-001",
+        nama_kerangka: "Analis Multimodal Cerdas",
+        version: "1.0.0",
+        kategori: ["Gambar & Desain", "Analisis Multimodal"],
+        description:
+          "Kerangka kerja terpadu untuk menganalisis dan memproses berbagai jenis input media, seperti gambar dan audio, untuk menghasilkan deskripsi, transkripsi, atau analisis.",
+        perspektif_user:
+          "Saya memiliki file gambar atau audio dan saya ingin AI memahaminya. Saya mungkin ingin mendapatkan deskripsi detail dari sebuah gambar, mentranskripsikan audio, atau bahkan menggabungkan informasi dari keduanya untuk mendapatkan wawasan baru.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Analis Media Digital yang akan memahami dan menafsirkan konten visual dan audio.",
+        components: [
+          {
+            name: "TUGAS_MULTIMODAL",
+            label: "Pilih Tugas Analisis",
+            type: "select",
+            description:
+              "Pilih jenis analisis yang ingin Anda lakukan pada media Anda.",
+            default: "Deskripsikan Gambar",
+            optional: false,
+            options: [
+              "Deskripsikan Gambar",
+              "Transkripsikan Audio",
+              "Analisis Gambar dengan Konteks Teks",
+            ],
+            info: "Pilihan Anda akan menampilkan kolom input yang sesuai untuk tugas tersebut.",
+          },
+        ],
+        dynamicSubcomponents: {
+          trigger: "TUGAS_MULTIMODAL",
+          options: {
+            "Deskripsikan Gambar": [
+              {
+                name: "GAMBAR_INPUT",
+                label: "Unggah Gambar",
+                type: "image",
+                description: "Unggah gambar yang ingin Anda analisis.",
+                optional: false,
+                info: "AI akan menganalisis konten visual dari gambar ini.",
+              },
+            ],
+            "Transkripsikan Audio": [
+              {
+                name: "AUDIO_INPUT",
+                label: "Unggah File Audio",
+                type: "file",
+                description:
+                  "Unggah file audio (misalnya, .mp3, .wav) yang ingin Anda transkripsikan.",
+                optional: false,
+                info: "AI akan mencoba mentranskripsikan ucapan dari file audio ini.",
+              },
+            ],
+            "Analisis Gambar dengan Konteks Teks": [
+              {
+                name: "GAMBAR_INPUT_ANALISIS",
+                label: "Unggah Gambar untuk Dianalisis",
+                type: "image",
+                description: "Unggah gambar yang ingin Anda analisis.",
+                optional: false,
+                info: "Gambar yang akan menjadi subjek utama analisis.",
+              },
+              {
+                name: "TEKS_KONTEKS",
+                label: "Teks Kontekstual",
+                type: "textarea",
+                description:
+                  "Berikan teks atau pertanyaan yang berhubungan dengan gambar.",
+                optional: false,
+                placeholder:
+                  "Contoh: Apa hubungan antara objek di latar depan dengan tulisan di latar belakang gambar ini?",
+                info: "Teks ini akan memberikan konteks kepada AI untuk menganalisis gambar lebih dalam.",
+              },
+            ],
+          },
+        },
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Analis Media Digital dengan kemampuan pemahaman multimodal (gambar dan audio) yang canggih.",
+          KONTEKS:
+            "Pengguna ingin melakukan tugas analisis media: '{TUGAS_MULTIMODAL}'.",
+          TUGAS:
+            "Berdasarkan tugas yang dipilih, lakukan analisis berikut:\n\n- **Jika tugasnya 'Deskripsikan Gambar'**: Analisis gambar yang diunggah (`{GAMBAR_INPUT}`). Berikan deskripsi yang sangat detail mencakup: objek utama, latar belakang, komposisi, warna, gaya, dan kemungkinan makna atau konteks dari gambar tersebut.\n\n- **Jika tugasnya 'Transkripsikan Audio'**: Transkripsikan konten audio dari file yang diunggah (`{AUDIO_INPUT}`). Pastikan transkripsi akurat, termasuk identifikasi pembicara jika memungkinkan. Setelah transkripsi, berikan ringkasan 3 poin utama dari isi pembicaraan.\n\n- **Jika tugasnya 'Analisis Gambar dengan Konteks Teks'**: Analisis gambar yang diunggah (`{GAMBAR_INPUT_ANALISIS}`) dalam konteks teks yang diberikan: '{TEKS_KONTEKS}'. Jelaskan bagaimana gambar dan teks saling berhubungan. Apa wawasan gabungan yang bisa didapat dari keduanya?",
+          "FORMAT OUTPUT":
+            "Sajikan output dalam format Markdown yang terstruktur. Gunakan heading dan bullet points untuk kejelasan.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat: "Deskripsikan gambar pemandangan kota ini untuk saya.",
+        konteks_tambahan_instruksi_khusus:
+          "Saat menganalisis, berikan interpretasi yang cerdas dan jangan hanya menyebutkan apa yang terlihat atau terdengar secara harfiah. Cari makna yang lebih dalam jika memungkinkan.",
+
+        crossValidationRules: [],
+      },
+    },
   },
   "Audio & Musik": {
     "Alat Bantu Komposisi": {
@@ -7181,7 +10667,7 @@ Email 3: Studi kasus pengguna`,
           "Buat lirik untuk lagu dengan struktur dan nuansa tertentu.",
         toolType: "music-composition",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penulis Lirik Profesional. AI akan menginterpretasikan lirik dan gaya musik yang diberikan untuk menghasilkan komposisi lagu yang kohesif, termasuk melodi dan vokal yang sesuai.",
+          "Persona AI: Anda adalah seorang Penulis Lirik Profesional yang akan menulis lirik lagu.",
         components: [
           {
             name: "genre",
@@ -7248,7 +10734,7 @@ Email 3: Studi kasus pengguna`,
         description: "Hasilkan ide progresi kord berdasarkan genre dan mood.",
         toolType: "music-composition",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Komposer Musik Ahli. AI akan menghasilkan ide progresi kord berdasarkan genre, mood, kunci nada, dan tingkat kompleksitas yang diinginkan, dengan fokus pada menciptakan harmoni yang sesuai dan menarik.",
+          "Persona AI: Anda adalah seorang Komposer Musik yang akan menghasilkan ide progresi kord.",
         components: [
           {
             name: "genre",
@@ -7327,7 +10813,7 @@ Email 3: Studi kasus pengguna`,
           "Buat lagu lengkap dengan vokal dari deskripsi teks menggunakan Suno AI.",
         toolType: "music-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Produser Musik AI. AI akan menginterpretasikan lirik dan gaya musik yang diberikan untuk menghasilkan komposisi lagu yang kohesif, termasuk melodi dan vokal yang sesuai, dengan fokus pada kualitas produksi dan kreativitas.",
+          "Persona AI: Anda adalah seorang Produser Musik AI yang akan menghasilkan lagu.",
         components: [
           {
             name: "lyrics",
@@ -7381,7 +10867,7 @@ Email 3: Studi kasus pengguna`,
           "Buat prompt untuk Udio, yang dikenal dengan kualitas audio dan fleksibilitas gayanya.",
         toolType: "music-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Komposer Audio Kreatif. AI akan menghasilkan musik berdasarkan prompt deskriptif dan lirik (jika disediakan), dengan fokus pada kualitas audio dan fleksibilitas gaya yang menjadi ciri khas Udio.",
+          "Persona AI: Anda adalah seorang Komposer Audio Kreatif yang akan menghasilkan musik.",
         components: [
           {
             name: "prompt",
@@ -7420,7 +10906,7 @@ Email 3: Studi kasus pengguna`,
           "Hasilkan audio, efek suara, atau musik instrumental berkualitas tinggi dari deskripsi teks.",
         toolType: "audio-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Insinyur Audio AI. AI akan menghasilkan audio, efek suara, atau musik instrumental berkualitas tinggi dari deskripsi teks, dengan fokus pada genre, mood, instrumen, dan BPM yang ditentukan, serta mengoptimalkan kualitas suara.",
+          "Persona AI: Anda adalah seorang Insinyur Audio AI yang akan menghasilkan audio, efek suara, atau musik instrumental.",
         components: [
           {
             name: "prompt",
@@ -7459,7 +10945,7 @@ Email 3: Studi kasus pengguna`,
           "Eksplorasi ide musik dengan cepat menggunakan model MusicLM from Google.",
         toolType: "music-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Eksplorator Musik Cepat. AI akan menghasilkan ide musik berdasarkan prompt deskriptif, dengan fokus pada mood, genre, dan instrumen, memanfaatkan model MusicLM untuk eksplorasi cepat dan kreatif.",
+          "Persona AI: Anda adalah seorang Eksplorator Musik Cepat yang akan menghasilkan ide musik.",
         components: [
           {
             name: "prompt",
@@ -7491,7 +10977,7 @@ Email 3: Studi kasus pengguna`,
           "Hasilkan musik fungsional bebas royalti berdasarkan durasi, mood, atau aktivitas.",
         toolType: "music-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Kurator Musik Fungsional. AI akan menghasilkan musik fungsional bebas royalti berdasarkan durasi, mood, atau aktivitas yang ditentukan, dengan fokus pada kebutuhan spesifik pengguna dan kualitas audio yang optimal.",
+          "Persona AI: Anda adalah seorang Kurator Musik Fungsional yang akan menghasilkan musik fungsional bebas royalti.",
         components: [
           {
             name: "prompt",
@@ -7526,7 +11012,7 @@ Email 3: Studi kasus pengguna`,
           "Buat teks persuasif yang menarik perhatian, membangun minat, menciptakan keinginan, dan mendorong tindakan.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Ahli Persuasi. AI akan menghasilkan teks persuasif yang mengikuti formula AIDA (Attention, Interest, Desire, Action), dengan fokus pada menarik perhatian, membangun minat, menciptakan keinginan, dan mendorong tindakan audiens target.",
+          "Persona AI: Anda adalah seorang Ahli Persuasi yang akan menghasilkan teks persuasif.",
         components: [
           {
             name: "productOrService",
@@ -7589,7 +11075,7 @@ Email 3: Studi kasus pengguna`,
           "Identifikasi masalah audiens, buat mereka merasakan urgensinya, lalu tawarkan solusi Anda.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Diagnostik Pemasaran. AI akan mengidentifikasi masalah audiens, memperburuk urgensinya, dan kemudian menawarkan solusi yang relevan, mengikuti formula PAS (Problem, Agitate, Solution) untuk copywriting yang efektif.",
+          "Persona AI: Anda adalah seorang Diagnostik Pemasaran yang akan mengidentifikasi masalah audiens dan menawarkan solusi.",
         components: [
           {
             name: "problem",
@@ -7630,7 +11116,7 @@ Email 3: Studi kasus pengguna`,
           "Jelaskan fitur produk, keunggulannya dibanding yang lain, dan manfaatnya bagi pelanggan.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penjelas Produk. AI akan menjelaskan fitur produk, keunggulannya, dan manfaatnya bagi pelanggan, mengikuti formula FAB (Features, Advantages, Benefits) untuk komunikasi produk yang efektif.",
+          "Persona AI: Anda adalah seorang Penjelas Produk yang akan menjelaskan fitur produk, keunggulannya, dan manfaatnya.",
         components: [
           {
             name: "productOrService",
@@ -7678,7 +11164,7 @@ Email 3: Studi kasus pengguna`,
           "Struktur umpan balik atau studi kasus dengan memberikan konteks, tindakan yang diambil, hasil yang dicapai, dan contoh nyata.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pencerita Dampak. AI akan menyusun umpan balik atau studi kasus dengan memberikan konteks, tindakan yang diambil, hasil yang dicapai, dan contoh nyata, mengikuti formula CARE (Context, Action, Result, Example) untuk komunikasi yang jelas dan berdampak.",
+          "Persona AI: Anda adalah seorang Pencerita Dampak yang akan menyusun umpan balik atau studi kasus.",
         components: [
           {
             name: "context",
@@ -7727,7 +11213,7 @@ Email 3: Studi kasus pengguna`,
           "Rencanakan strategi pemasaran digital lengkap dari menjangkau audiens hingga mempertahankan mereka.",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Perencana Pemasaran Digital. AI akan merencanakan strategi pemasaran digital lengkap, mulai dari menjangkau audiens (Reach), mendorong interaksi awal (Act), mengkonversi menjadi pelanggan (Convert), hingga mempertahankan mereka (Engage), mengikuti kerangka RACE.",
+          "Persona AI: Anda adalah seorang Perencana Pemasaran Digital yang akan merencanakan strategi pemasaran digital.",
         components: [
           {
             name: "reachStrategy",
@@ -7776,7 +11262,7 @@ Email 3: Studi kasus pengguna`,
           "Gambarkan dunia audiens sebelum dan sesudah menggunakan produk Anda, lalu posisikan produk sebagai jembatannya.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Narator Transformasi. AI akan menggambarkan kondisi audiens sebelum dan sesudah menggunakan produk, serta memposisikan produk sebagai jembatan yang menghubungkan kedua kondisi tersebut, mengikuti formula BAB (Before, After, Bridge) untuk narasi yang persuasif.",
+          "Persona AI: Anda adalah seorang Narator Transformasi yang akan menggambarkan kondisi audiens sebelum dan sesudah menggunakan produk.",
         components: [
           {
             name: "beforeState",
@@ -7819,7 +11305,7 @@ Email 3: Studi kasus pengguna`,
           "Pandu AI untuk memecah masalah kompleks menjadi langkah-langkah kecil dan menunjukkannya, menghasilkan jawaban yang lebih logis.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pemikir Logis. AI akan memecah masalah kompleks menjadi langkah-langkah penalaran yang lebih kecil dan transparan, menghasilkan jawaban yang lebih logis dan mudah diverifikasi, dengan meniru proses berpikir manusia.",
+          "Persona AI: Anda adalah seorang Pemikir Logis yang akan memecah masalah kompleks menjadi langkah-langkah penalaran.",
         components: [
           {
             name: "complexQuestion",
@@ -7851,7 +11337,7 @@ Email 3: Studi kasus pengguna`,
           "Versi sederhana dari Chain of Thought, cukup dengan menambahkan frasa ajaib untuk memicu penalaran langkah-demi-langkah.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penalaran Cepat. AI akan menerapkan penalaran langkah-demi-langkah secara otomatis hanya dengan menambahkan frasa pemicu, memungkinkan pemecahan masalah yang lebih kompleks tanpa contoh eksplisit.",
+          "Persona AI: Anda adalah seorang Penalaran Cepat yang akan menerapkan penalaran langkah-demi-langkah.",
         components: [
           {
             name: "question",
@@ -7882,7 +11368,7 @@ Email 3: Studi kasus pengguna`,
           "Minta AI untuk mengeksplorasi beberapa jalur pemikiran yang berbeda secara bersamaan dan mengevaluasinya untuk menemukan solusi terbaik.",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pemikir Strategis. AI akan mengeksplorasi beberapa jalur pemikiran secara paralel, mengevaluasi setiap jalur berdasarkan kriteria yang diberikan, dan mengidentifikasi solusi terbaik, meniru proses pengambilan keputusan yang kompleks.",
+          "Persona AI: Anda adalah seorang Pemikir Strategis yang akan mengeksplorasi beberapa jalur pemikiran.",
         components: [
           {
             name: "problem",
@@ -7922,7 +11408,7 @@ Email 3: Studi kasus pengguna`,
           "Strukturkan jawaban untuk pertanyaan wawancara berbasis perilaku atau jelaskan sebuah pencapaian.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Narator Pencapaian. AI akan menyusun jawaban atau deskripsi pencapaian menggunakan metode STAR (Situation, Task, Action, Result), memastikan narasi yang terstruktur, relevan, dan berfokus pada dampak.",
+          "Persona AI: Anda adalah seorang Narator Pencapaian yang akan menyusun jawaban atau deskripsi pencapaian.",
         components: [
           {
             name: "situation",
@@ -7971,7 +11457,7 @@ Email 3: Studi kasus pengguna`,
           "Lakukan analisis strategis dengan mengidentifikasi Kekuatan, Kelemahan, Peluang, dan Ancaman.",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Analis Strategis. AI akan melakukan analisis SWOT (Strengths, Weaknesses, Opportunities, Threats) dengan mengidentifikasi faktor internal dan eksternal yang relevan, serta menyajikan analisis strategis yang komprehensif.",
+          "Persona AI: Anda adalah seorang Analis Strategis yang akan melakukan analisis SWOT.",
         components: [
           {
             name: "subject",
@@ -8028,7 +11514,7 @@ Email 3: Studi kasus pengguna`,
           "Pecah masalah kompleks menjadi kebenaran-kebenaran fundamentalnya untuk membangun solusi dari dasar.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pemikir Fundamental. AI akan memecah masalah kompleks menjadi kebenaran-kebenaran fundamentalnya, mengidentifikasi asumsi yang ada, dan membangun solusi baru dari dasar, mendorong pemikiran inovatif.",
+          "Persona AI: Anda adalah seorang Pemikir Fundamental yang akan memecah masalah kompleks menjadi kebenaran-kebenaran fundamentalnya.",
         components: [
           {
             name: "problem",
@@ -8077,7 +11563,7 @@ Email 3: Studi kasus pengguna`,
           "Gunakan 7 pemicu pemikiran untuk melakukan brainstorming dan inovasi pada ide atau produk yang sudah ada.",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Inovator Kreatif. AI akan menerapkan kerangka SCAMPER (Substitute, Combine, Adapt, Modify, Put to another use, Eliminate, Reverse) untuk menghasilkan ide-ide inovatif dan solusi kreatif pada produk atau konsep yang ada.",
+          "Persona AI: Anda adalah seorang Inovator Kreatif yang akan menerapkan kerangka SCAMPER.",
         components: [
           {
             name: "subject",
@@ -8157,7 +11643,7 @@ Email 3: Studi kasus pengguna`,
           "Struktur prompt dengan menentukan Tugas, Persyaratan, Ekspektasi, dan Format.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Perencana Tugas. AI akan menyusun respons berdasarkan struktur TREF (Tugas, Persyaratan, Ekspektasi, Format), memastikan semua instruksi dipenuhi secara sistematis untuk hasil yang akurat dan terstruktur.",
+          "Persona AI: Anda adalah seorang Perencana Tugas yang akan menyusun respons berdasarkan struktur TREF.",
         components: [
           {
             name: "task",
@@ -8206,7 +11692,7 @@ Email 3: Studi kasus pengguna`,
           "Kerangka kerja untuk pembuatan konten: Peran, Aksi, Konteks, Contoh, Format.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Komunikator Efektif. AI akan menghasilkan konten berdasarkan kerangka RACEF (Role, Action, Context, Example, Format), memastikan output yang terstruktur, relevan, dan sesuai dengan instruksi yang diberikan.",
+          "Persona AI: Anda adalah seorang Komunikator Efektif yang akan menghasilkan konten berdasarkan kerangka RACEF.",
         components: [
           {
             name: "role",
@@ -8262,7 +11748,7 @@ Email 3: Studi kasus pengguna`,
           "Struktur prompt dengan menentukan Goal, Role, Audience, Desired format, and Extra details.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Perancang Respons. AI akan menghasilkan respons yang terstruktur berdasarkan kerangka GRADE (Goal, Role, Audience, Desired format, Extra details), memastikan semua elemen penting dari prompt dipertimbangkan untuk hasil yang optimal.",
+          "Persona AI: Anda adalah seorang Perancang Respons yang akan menghasilkan respons yang terstruktur berdasarkan kerangka GRADE.",
         components: [
           {
             name: "goal",
@@ -8311,7 +11797,7 @@ Email 3: Studi kasus pengguna`,
           "Minta AI untuk mengadopsi persona seorang ahli di bidang tertentu untuk mendapatkan jawaban yang lebih mendalam dan berwibawa.",
         toolType: "text",
         ai_logic_description:
-          "AI akan mengadopsi persona seorang ahli di bidang yang ditentukan, memberikan jawaban yang mendalam, berwibawa, dan sesuai dengan gaya komunikasi ahli tersebut.",
+          "Persona AI: Anda adalah seorang Ahli Persona yang akan mengadopsi persona seorang ahli.",
         components: [
           {
             name: "expertRole",
@@ -8344,7 +11830,7 @@ Email 3: Studi kasus pengguna`,
           "Eksplorasi ide atau jelaskan konsep kompleks melalui dialog antara dua atau lebih karakter fiksi.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Penulis Dialog. AI akan menghasilkan dialog fiksi antara karakter yang ditentukan, mengeksplorasi topik kompleks melalui percakapan yang dinamis dan relevan dengan persona karakter.",
+          "Persona AI: Anda adalah seorang Penulis Dialog yang akan menghasilkan dialog fiksi antara karakter.",
         components: [
           {
             name: "topic",
@@ -8400,7 +11886,7 @@ Email 3: Studi kasus pengguna`,
           "Minta AI untuk berperan sebagai tokoh sejarah dan menjawab pertanyaan dari sudut pandang mereka.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Sejarawan Berbicara. AI akan mengadopsi persona tokoh sejarah yang dipilih, menjawab pertanyaan dari sudut pandang mereka, dengan mempertahankan gaya bahasa dan pengetahuan yang relevan dengan era dan kepribadian tokoh tersebut.",
+          "Persona AI: Anda adalah seorang Sejarawan Berbicara yang akan mengadopsi persona tokoh sejarah dan menjawab pertanyaan.",
         components: [
           {
             name: "figure",
@@ -8440,7 +11926,7 @@ Email 3: Studi kasus pengguna`,
           "Rancang narasi atau cerita brand menggunakan struktur klasik Perjalanan Pahlawan (Monomyth).",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pencerita Brand. AI akan merancang narasi atau cerita brand menggunakan struktur klasik Perjalanan Pahlawan (Monomyth), memetakan elemen-elemen cerita ke dalam konteks brand atau produk untuk menciptakan narasi yang menarik dan relevan.",
+          "Persona AI: Anda adalah seorang Pencerita Brand yang akan merancang narasi atau cerita brand.",
         components: [
           {
             name: "hero",
@@ -8504,7 +11990,7 @@ Email 3: Studi kasus pengguna`,
           "Gunakan metode bertanya ala Socrates untuk mengeksplorasi sebuah topik secara mendalam dan kritis.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Filsuf. AI akan menggunakan metode bertanya ala Socrates untuk mengeksplorasi topik secara mendalam dan kritis, mengajukan pertanyaan yang menantang asumsi dan mendorong pemikiran reflektif.",
+          "Persona AI: Anda adalah seorang Filsuf yang akan menggunakan metode bertanya ala Socrates.",
         components: [
           {
             name: "topic",
@@ -8551,7 +12037,7 @@ Email 3: Studi kasus pengguna`,
           "Tulis ulang sebuah teks dengan meniru gaya penulisan dari sumber lain (penulis, publikasi, dll.).",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Peniru Gaya. AI akan menulis ulang teks yang diberikan dengan meniru gaya penulisan dari sumber yang ditentukan (penulis, publikasi, dll.), sambil mempertahankan elemen kunci dari teks asli.",
+          "Persona AI: Anda adalah seorang Peniru Gaya yang akan menulis ulang teks dengan meniru gaya penulisan.",
         components: [
           {
             name: "originalText",
@@ -8591,7 +12077,7 @@ Email 3: Studi kasus pengguna`,
           "Jelaskan konsep yang kompleks atau abstrak dengan menggunakan metafora atau analogi yang mudah dipahami.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Ahli Metafora. AI akan menjelaskan konsep kompleks atau abstrak menggunakan metafora atau analogi yang mudah dipahami, disesuaikan dengan target audiens dan jumlah opsi yang diminta.",
+          "Persona AI: Anda adalah seorang Ahli Metafora yang akan menjelaskan konsep kompleks atau abstrak menggunakan metafora atau analogi.",
         components: [
           {
             name: "complexConcept",
@@ -8629,7 +12115,7 @@ Email 3: Studi kasus pengguna`,
           "Bangun sebuah adegan untuk cerita atau skenario dengan mendeskripsikan lingkungan, karakter, dan dialog.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Perancang Adegan. AI akan membangun sebuah adegan yang detail untuk cerita atau skenario, dengan mendeskripsikan lingkungan, karakter, dan dialog, serta memastikan poin plot atau tujuan adegan tercapai.",
+          "Persona AI: Anda adalah seorang Perancang Adegan yang akan membangun sebuah adegan yang detail untuk cerita atau skenario.",
         components: [
           {
             name: "setting",
@@ -8680,7 +12166,7 @@ Email 3: Studi kasus pengguna`,
           "Minta AI untuk menganalisis dan memberikan umpan balik tentang prompt Anda sendiri untuk memperbaikinya.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Kritikus Prompt. AI akan menganalisis prompt yang diberikan, mengidentifikasi kelemahan berdasarkan kriteria yang ditentukan, dan memberikan umpan balik konstruktif untuk perbaikan, dengan fokus pada peningkatan kualitas prompt.",
+          "Persona AI: Anda adalah seorang Kritikus Prompt yang akan menganalisis prompt dan memberikan umpan balik konstruktif.",
         components: [
           {
             name: "originalPrompt",
@@ -8720,7 +12206,7 @@ Email 3: Studi kasus pengguna`,
           "Minta AI untuk menghasilkan respons awal, lalu mengkritik dan memperbaikinya sendiri dalam satu prompt.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pelatih AI. AI akan melakukan proses self-correction dengan menghasilkan respons awal, kemudian menganalisis dan mengidentifikasi kelemahan, serta merevisi respons tersebut untuk meningkatkan kualitas dan akurasi.",
+          "Persona AI: Anda adalah seorang Pelatih AI yang akan melakukan self-correction.",
         components: [
           {
             name: "task",
@@ -8753,7 +12239,7 @@ Email 3: Studi kasus pengguna`,
           "Metode multi-langkah di mana AI berperan sebagai Penulis, Penerbit, dan Editor untuk menyempurnakan teks.",
         toolType: "planning",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Editor Multi-Tahap. AI akan menerapkan metode APE (Author, Publisher, Editor) untuk menyempurnakan teks secara multi-langkah, menghasilkan draf awal, meninjau dari sudut pandang audiens, dan melakukan penyuntingan teknis untuk kualitas akhir.",
+          "Persona AI: Anda adalah seorang Editor Multi-Tahap yang akan menerapkan metode APE untuk menyempurnakan teks.",
         components: [
           {
             name: "topic",
@@ -8801,7 +12287,7 @@ Email 3: Studi kasus pengguna`,
           "Kontrol output ringkasan dengan memberikan batasan yang jelas pada panjang, format, dan fokus.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Spesialis Ringkasan. AI akan meringkas teks dengan menerapkan batasan yang ketat pada panjang, format, dan fokus, memastikan output ringkasan yang presisi dan sesuai kebutuhan pengguna.",
+          "Persona AI: Anda adalah seorang Spesialis Ringkasan yang akan meringkas teks dengan menerapkan batasan yang ketat.",
         components: [
           {
             name: "textToSummarize",
@@ -8843,7 +12329,7 @@ Email 3: Studi kasus pengguna`,
           "Ubah data tidak terstruktur atau teks biasa menjadi format JSON yang bersih dan valid.",
         toolType: "code",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pemformat Data. AI akan mengonversi data tidak terstruktur menjadi format JSON yang bersih dan valid, dengan mempertimbangkan petunjuk skema yang diberikan untuk memastikan struktur output yang akurat.",
+          "Persona AI: Anda adalah seorang Pemformat Data yang akan mengonversi data menjadi format JSON yang valid.",
         components: [
           {
             name: "unstructuredData",
@@ -8876,7 +12362,7 @@ Email 3: Studi kasus pengguna`,
           "Ekstrak informasi dari teks dan sajikan dalam format tabel yang rapi.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Konverter Data. AI akan mengekstrak informasi dari teks sumber dan menyajikannya dalam format tabel yang rapi, dengan mengidentifikasi kolom yang diminta dan memformat data sesuai kebutuhan.",
+          "Persona AI: Anda adalah seorang Konverter Data yang akan mengekstrak informasi dari teks dan menyajikannya dalam format tabel.",
         components: [
           {
             name: "sourceText",
@@ -8916,7 +12402,7 @@ Email 3: Studi kasus pengguna`,
           "Buat template teks dengan bagian kosong, lalu minta AI untuk mengisinya berdasarkan konteks.",
         toolType: "text",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pengisi Template. AI akan mengisi bagian kosong dalam template teks berdasarkan konteks yang diberikan, menghasilkan teks yang kohesif dan relevan dengan informasi yang disisipkan.",
+          "Persona AI: Anda adalah seorang Pengisi Template yang akan mengisi bagian kosong dalam template teks.",
         components: [
           {
             name: "templateText",
@@ -8943,6 +12429,349 @@ Email 3: Studi kasus pengguna`,
             info: "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI.",
           },
         ],
+      },
+    },
+    "Persiapan Wawancara": {
+      "Asisten Persiapan Wawancara": {
+        id_kerangka: "TEKS-WWC-001",
+        nama_kerangka: "Asisten Persiapan Wawancara",
+        version: "1.0.0",
+        kategori: ["Teks & Konten", "Persiapan Wawancara"],
+        description:
+          "Kerangka kerja ini membantu Anda mempersiapkan diri untuk berbagai jenis wawancara, mulai dari wawancara kerja hingga wawancara riset, dengan menyediakan pertanyaan, tips, dan strategi yang relevan.",
+        perspektif_user:
+          "Sebagai kandidat pekerjaan, peneliti, atau jurnalis, saya membutuhkan panduan komprehensif untuk menghadapi wawancara. Saya ingin berlatih menjawab pertanyaan, memahami jenis wawancara yang berbeda, dan mendapatkan tips untuk tampil percaya diri dan efektif.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Pelatih Wawancara yang akan memberikan panduan, pertanyaan, dan strategi untuk persiapan wawancara.",
+        components: [
+          {
+            name: "jenis_wawancara",
+            label: "Jenis Wawancara",
+            type: "select",
+            description: "Pilih jenis wawancara yang ingin Anda persiapkan.",
+            default: "Wawancara Kerja",
+            optional: false,
+            options: [
+              { label: "Wawancara Kerja", value: "Wawancara Kerja" },
+              {
+                label: "Wawancara Riset/Akademis",
+                value: "Wawancara Riset/Akademis",
+              },
+              {
+                label: "Wawancara Berita/Jurnalistik",
+                value: "Wawancara Berita/Jurnalistik",
+              },
+              {
+                label: "Wawancara Penilaian Kinerja",
+                value: "Wawancara Penilaian Kinerja",
+              },
+              { label: "Lainnya...", value: "Lainnya" },
+            ],
+            info: "Pilih jenis wawancara untuk mendapatkan persiapan yang paling relevan.",
+          },
+          {
+            name: "peran_anda",
+            label: "Peran Anda dalam Wawancara",
+            type: "select",
+            description: "Pilih peran Anda dalam wawancara ini.",
+            default: "Diwawancarai (Kandidat)",
+            optional: false,
+            options: [
+              {
+                label: "Diwawancarai (Kandidat)",
+                value: "Diwawancarai (Kandidat)",
+              },
+              { label: "Pewawancara", value: "Pewawancara" },
+            ],
+            info: "Apakah Anda yang akan diwawancarai atau yang akan mewawancarai?",
+          },
+          {
+            name: "topik_wawancara",
+            label: "Topik/Posisi Wawancara",
+            type: "text",
+            description:
+              "Sebutkan topik utama wawancara atau posisi yang dilamar.",
+            default: "",
+            optional: false,
+            placeholder:
+              "Contoh: Manajer Pemasaran, Dampak AI pada Pendidikan, Krisis Iklim",
+            info: "Topik atau posisi akan membantu AI menyusun pertanyaan atau panduan yang spesifik.",
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "konteks_tambahan",
+            label: "Konteks Tambahan (Opsional)",
+            type: "textarea",
+            description:
+              "Berikan detail tambahan yang relevan, seperti nama perusahaan, latar belakang kandidat/narasumber, atau tujuan spesifik wawancara.",
+            default: "",
+            optional: true,
+            placeholder:
+              "Contoh: Perusahaan X adalah startup teknologi yang fokus pada edutech. Kandidat memiliki pengalaman 5 tahun di bidang yang sama.",
+            info: "Semakin banyak konteks, semakin personal dan akurat bantuan yang diberikan AI.",
+            validation: {
+              min_length: 10,
+            },
+          },
+          {
+            name: "fokus_bantuan",
+            label: "Fokus Bantuan",
+            type: "multiselect",
+            description: "Pilih jenis bantuan yang Anda butuhkan.",
+            default: ["Pertanyaan Wawancara"],
+            optional: false,
+            options: [
+              { label: "Pertanyaan Wawancara", value: "Pertanyaan Wawancara" },
+              { label: "Tips & Strategi", value: "Tips & Strategi" },
+              { label: "Struktur Wawancara", value: "Struktur Wawancara" },
+              {
+                label: "Latihan Jawaban (Metode STAR)",
+                value: "Latihan Jawaban (Metode STAR)",
+              },
+              {
+                label: "Pertanyaan untuk Pewawancara",
+                value: "Pertanyaan untuk Pewawancara",
+              },
+              { label: "Lainnya...", value: "Lainnya" },
+            ],
+            info: "Pilih area spesifik di mana Anda membutuhkan bantuan persiapan.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Pelatih Wawancara yang sangat berpengalaman dan berpengetahuan luas dalam berbagai jenis wawancara.",
+          KONTEKS:
+            "Pengguna ingin mempersiapkan diri untuk wawancara. Berikut adalah detail yang diberikan:\n\nJenis Wawancara: {{jenis_wawancara}}{{#if jenis_wawancara_lainnya}} ({{jenis_wawancara_lainnya}}){{/if}}\nPeran Anda: {{peran_anda}}\nTopik/Posisi Wawancara: {{topik_wawancara}}\nKonteks Tambahan: {{konteks_tambahan || 'Tidak ada konteks tambahan.'}}\nFokus Bantuan: {{fokus_bantuan}}{{#if fokus_bantuan_lainnya}}, {{fokus_bantuan_lainnya}}{{/if}}",
+          TUGAS:
+            "Berdasarkan informasi di atas, berikan bantuan persiapan wawancara yang terperinci sesuai dengan fokus yang dipilih. Sajikan informasi dengan jelas dan mudah dipahami.\n\n**Jika 'Pertanyaan Wawancara' dipilih:**\n- Hasilkan daftar pertanyaan wawancara yang relevan dan spesifik untuk jenis wawancara dan topik/posisi yang disebutkan. Sertakan campuran pertanyaan umum, perilaku, dan situasional (jika relevan).\n\n**Jika 'Tips & Strategi' dipilih:**\n- Berikan tips dan strategi praktis untuk menghadapi wawancara, termasuk persiapan mental, bahasa tubuh, cara berkomunikasi, dan hal-hal yang harus dihindari.\n\n**Jika 'Struktur Wawancara' dipilih:**\n- Jelaskan struktur umum dari jenis wawancara yang dipilih, termasuk tahapan-tahapan dan apa yang diharapkan di setiap tahapan.\n\n**Jika 'Latihan Jawaban (Metode STAR)' dipilih:**\n- Berikan contoh pertanyaan perilaku dan panduan langkah demi langkah tentang cara menyusun jawaban menggunakan metode STAR (Situation, Task, Action, Result).\n\n**Jika 'Pertanyaan untuk Pewawancara' dipilih:**\n- Hasilkan daftar pertanyaan cerdas yang dapat diajukan oleh pengguna kepada pewawancara untuk menunjukkan minat dan mendapatkan informasi lebih lanjut.\n\n**Jika 'Lainnya...' dipilih untuk Fokus Bantuan:**\n- Berikan bantuan sesuai dengan 'Fokus Bantuan Lainnya' yang disebutkan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format Markdown yang terstruktur dengan baik, menggunakan heading, bullet points, dan bold untuk keterbacaan yang maksimal. Pisahkan setiap bagian bantuan dengan jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "jenis_wawancara",
+            options: {
+              Lainnya: [
+                {
+                  name: "jenis_wawancara_lainnya",
+                  label: "Jenis Wawancara Lainnya",
+                  type: "text",
+                  description:
+                    "Sebutkan jenis wawancara spesifik Anda jika memilih 'Lainnya'.",
+                  default: "",
+                  optional: false,
+                  placeholder:
+                    "Contoh: Wawancara Beasiswa, Wawancara Penjualan",
+                  info: "Jelaskan jenis wawancara tambahan yang ingin Anda persiapkan.",
+                  validation: {
+                    min_length: 5,
+                  },
+                },
+              ],
+            },
+          },
+          {
+            trigger: "fokus_bantuan",
+            options: {
+              Lainnya: [
+                {
+                  name: "fokus_bantuan_lainnya",
+                  label: "Fokus Bantuan Lainnya",
+                  type: "textarea",
+                  description:
+                    "Sebutkan fokus bantuan spesifik Anda jika memilih 'Lainnya'.",
+                  default: "",
+                  optional: false,
+                  placeholder:
+                    "Contoh: Cara negosiasi gaji, Etika wawancara online",
+                  info: "Jelaskan area bantuan spesifik yang Anda butuhkan.",
+                  validation: {
+                    min_length: 5,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Pastikan semua saran dan pertanyaan relevan dengan jenis wawancara dan peran pengguna. Gunakan bahasa yang profesional, mendukung, dan mudah dipahami. Jika peran pengguna adalah 'Pewawancara', fokus pada cara menyusun pertanyaan yang efektif dan mengevaluasi jawaban. Jika 'Diwawancarai', fokus pada cara memberikan jawaban terbaik dan strategi untuk sukses.",
+        contoh_kalimat:
+          "Bantu saya mempersiapkan wawancara kerja untuk posisi Manajer Pemasaran.",
+        output: "natural_language_prompt",
+        crossValidationRules: [
+          {
+            triggerField: "jenis_wawancara",
+            triggerValue: "Lainnya",
+            dependentField: "jenis_wawancara_lainnya",
+            validationType: "required",
+            errorMessage:
+              "Harap isi 'Jenis Wawancara Lainnya' jika Anda memilih 'Lainnya'.",
+          },
+          {
+            triggerField: "fokus_bantuan",
+            triggerValue: "Lainnya",
+            dependentField: "fokus_bantuan_lainnya",
+            validationType: "required",
+            errorMessage:
+              "Harap isi 'Fokus Bantuan Lainnya' jika Anda memilih 'Lainnya'.",
+          },
+        ],
+      },
+    },
+    "Personalisasi Dinamis": {
+      "Generator Konten Personalisasi": {
+        id_kerangka: "TEKS-GKP-001",
+        nama_kerangka: "Generator Konten Personalisasi",
+        version: "1.0.0",
+        kategori: ["Teks & Konten", "Personalisasi Dinamis"],
+        description:
+          "Membuat konten (seperti email, artikel, atau postingan media sosial) yang disesuaikan secara dinamis dengan audiens atau persona target tertentu.",
+        perspektif_user:
+          "Saya ingin membuat konten yang pesannya tepat sasaran. Saya perlu menyesuaikan gaya bahasa, tingkat kedalaman materi, dan tujuan konten agar sesuai dengan profil pembaca saya, sehingga hasilnya lebih efektif dan menarik.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Copywriter dan Ahli Strategi Konten yang akan membuat teks yang relevan dengan profil audiens.",
+        components: [
+          {
+            name: "KONTEN_UTAMA",
+            label: "Draf Konten Utama",
+            type: "textarea",
+            description:
+              "Masukkan ide utama, poin-poin, atau draf kasar dari konten yang ingin Anda buat.",
+            default: "",
+            optional: false,
+            placeholder:
+              "Contoh: Peluncuran fitur baru kami, 'Analitik Cerdas', yang membantu pengguna melacak metrik secara real-time...",
+            info: "Ini adalah inti dari pesan yang ingin Anda sampaikan. AI akan mengembangkan dan memolesnya.",
+          },
+          {
+            name: "TARGET_AUDIENS_KEAHLIAN",
+            label: "Tingkat Keahlian Audiens",
+            type: "select",
+            description:
+              "Pilih tingkat pemahaman atau keahlian audiens target Anda.",
+            default: "Menengah",
+            optional: false,
+            options: ["Pemula", "Menengah", "Ahli"],
+            info: "Ini akan menentukan kedalaman teknis dan kompleksitas bahasa yang digunakan.",
+          },
+          {
+            name: "TARGET_AUDIENS_GAYA",
+            label: "Gaya Bahasa",
+            type: "select",
+            description:
+              "Pilih gaya atau nada bahasa yang paling sesuai untuk audiens Anda.",
+            default: "Informatif",
+            optional: false,
+            options: ["Formal", "Kasual", "Humoris", "Informatif", "Persuasif"],
+            info: "Gaya bahasa akan memengaruhi cara AI menyusun kalimat dan memilih kata.",
+          },
+          {
+            name: "TARGET_AUDIENS_TUJUAN",
+            label: "Tujuan Utama Audiens",
+            type: "text",
+            description:
+              "Apa yang ingin dicapai oleh audiens setelah membaca konten ini?",
+            default: "",
+            optional: false,
+            placeholder:
+              "Contoh: Memahami manfaat fitur baru, mendapatkan panduan langkah demi langkah, dll.",
+            info: "Mengetahui tujuan audiens akan membantu AI fokus pada pesan yang paling relevan.",
+          },
+          {
+            name: "JENIS_OUTPUT",
+            label: "Format Output Konten",
+            type: "select",
+            description: "Pilih format akhir dari konten yang akan dihasilkan.",
+            default: "Artikel Blog",
+            optional: false,
+            options: [
+              "Email",
+              "Artikel Blog",
+              "Postingan Media Sosial (Singkat)",
+              "Postingan Media Sosial (Panjang)",
+              "Naskah Video (Intro)",
+            ],
+            info: "AI akan menyesuaikan struktur dan panjang konten sesuai format yang dipilih.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang Copywriter dan Ahli Strategi Konten yang sangat terampil. Tugas Anda adalah mengubah draf konten mentah menjadi sebuah tulisan yang dipoles dan disesuaikan secara presisi untuk audiens target yang spesifik.",
+          KONTEKS:
+            "Konteks Pembuatan Konten:\n- Draf Konten Utama: {KONTEN_UTAMA}\n- Profil Audiens Target:\n  - Tingkat Keahlian: {TARGET_AUDIENS_KEAHLIAN}\n  - Gaya Bahasa yang Disukai: {TARGET_AUDIENS_GAYA}\n  - Tujuan Utama Mereka: {TARGET_AUDIENS_TUJUAN}",
+          TUGAS:
+            "Berdasarkan draf dan profil audiens yang diberikan, hasilkan versi final dari konten tersebut dalam format '{JENIS_OUTPUT}'. Pastikan nada, kedalaman teknis, dan struktur tulisan selaras sempurna dengan kebutuhan dan preferensi audiens. Fokus pada kejelasan, keterbacaan, dan pencapaian tujuan audiens.",
+          "FORMAT OUTPUT":
+            "Hasilkan teks final dalam format '{JENIS_OUTPUT}'. Jangan menyertakan judul atau header tambahan kecuali jika itu adalah bagian standar dari format tersebut (misalnya, subjek untuk email). Langsung berikan kontennya.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buatkan saya email pemasaran dari draf ini untuk audiens pemula dengan gaya kasual.",
+        konteks_tambahan_instruksi_khusus:
+          "Selalu prioritaskan kejelasan dan relevansi pesan untuk audiens yang dituju.",
+        crossValidationRules: [],
+        dynamicSubcomponents: null,
+      },
+    },
+    "Analisis & Refinement": {
+      "Generator Konten dengan Koreksi Mandiri": {
+        id_kerangka: "TK-AR-001",
+        nama_kerangka: "Generator Konten dengan Koreksi Mandiri",
+        version: "1.0.0",
+        kategori: ["Teks & Konten", "Analisis & Refinement"],
+        description:
+          "Menciptakan konten berkualitas tinggi dengan meminta AI untuk membuat draf awal, mengkritiknya secara objektif, lalu merevisinya menjadi versi final yang lebih baik.",
+        perspektif_user:
+          "Saya perlu membuat teks (misalnya artikel blog, esai, atau laporan) yang berkualitas tinggi. Saya ingin AI tidak hanya menulis, tetapi juga bertindak sebagai editornya sendiri untuk menyempurnakan hasil akhir.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang penulis ahli sekaligus editor yang akan menulis, mengkritik, dan merevisi konten.",
+        components: [
+          {
+            name: "TOPIK_KONTEN",
+            label: "Topik Utama Konten",
+            type: "textarea",
+            description:
+              "Jelaskan secara detail topik atau draf awal dari konten yang ingin Anda buat.",
+            default: "",
+            optional: false,
+            placeholder:
+              "Contoh: Tuliskan artikel blog tentang 5 manfaat utama meditasi untuk para profesional yang sibuk.",
+            info: "Ini adalah titik awal untuk AI. Semakin jelas instruksi Anda, semakin baik draf awalnya.",
+          },
+          {
+            name: "SUDUT_PANDANG_KRITIK",
+            label: "Sudut Pandang untuk Kritik",
+            type: "text",
+            description:
+              "Dari sudut pandang apa AI harus mengkritik drafnya sendiri?",
+            optional: false,
+            placeholder:
+              "Contoh: Seorang ahli di bidang tersebut, seorang pemula, seorang editor majalah.",
+            info: "Ini akan mengarahkan fokus kritik AI, misalnya pada kejelasan, kedalaman teknis, atau gaya penulisan.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah seorang penulis konten dan editor yang sangat teliti. Tujuan Anda adalah menghasilkan konten terbaik melalui proses penulisan, kritik, dan revisi.",
+          KONTEKS:
+            "Pengguna membutuhkan sebuah tulisan yang tidak hanya informatif tetapi juga terstruktur dengan baik, persuasif, dan bebas dari kesalahan. Anda akan menggunakan metode 'self-correction' untuk mencapai ini. Topik utamanya adalah: {TOPIK_KONTEN}.",
+          TUGAS:
+            "Lakukan tiga langkah berikut secara berurutan:\n\n1.  **LANGKAH 1: BUAT DRAF AWAL**\n    Tulis draf pertama dari konten berdasarkan topik yang diberikan. Fokus pada penyampaian ide utama.\n\n2.  **LANGKAH 2: KRITIK DRAF**\n    Setelah draf selesai, berikan kritik yang tajam dan membangun terhadap tulisan Anda sendiri. Tinjau dari sudut pandang '{SUDUT_PANDANG_KRITIK}'. Evaluasi aspek-aspek seperti: kejelasan argumen, alur tulisan, kekuatan bukti, dan gaya bahasa. Sajikan kritik dalam format poin-poin.\n\n3.  **LANGKAH 3: TULIS VERSI FINAL**\n    Berdasarkan poin-poin kritik dari Langkah 2, tulis ulang dan sempurnakan draf tersebut menjadi sebuah versi final yang poles dan berkualitas tinggi.",
+          "FORMAT OUTPUT":
+            "Sajikan output Anda dengan jelas dalam tiga bagian terpisah:\n\n### DRAF AWAL\n[Teks draf awal Anda di sini]\n\n### KRITIK\n[Poin-poin kritik Anda di sini]\n\n### VERSI FINAL\n[Teks versi final yang sudah direvisi di sini]",
+        },
+        dynamicSubcomponents: {},
+        toolType: "text",
+        konteks_tambahan_instruksi_khusus:
+          "Pastikan kritik yang Anda berikan spesifik dan dapat ditindaklanjuti. Versi final harus secara nyata menunjukkan perbaikan dari draf awal.",
+        contoh_kalimat:
+          "Buatkan saya esai tentang dampak AI pada pasar kerja, lalu lakukan koreksi mandiri dari sudut pandang seorang ekonom.",
+        output: "natural_language_prompt",
+        crossValidationRules: [],
       },
     },
   },
@@ -9130,21 +12959,25 @@ export const AI_PLATFORMS: AiPlatformsType = {
     { name: "Gemini (Google)", url: "https://gemini.google.com/" },
     { name: "Copilot (Microsoft)", url: "https://copilot.microsoft.com/" },
   ],
-  music: [
+  "music-composition": [],
+  "music-generation": [
     { name: "Suno AI", url: "https://suno.com/" },
     { name: "Udio", url: "https://www.udio.com/" },
   ],
-  image: [
+  "audio-generation": [],
+  "image-generation": [
     { name: "Midjourney", url: "https://www.midjourney.com/" },
     { name: "DALL-E 3 (via ChatGPT)", url: "https://chat.openai.com/" },
     { name: "Stable Diffusion", url: "https://stablediffusionweb.com/" },
   ],
+  "image-editing": [],
   planning: [
     { name: "Miro", url: "https://miro.com/" },
     { name: "FigJam", url: "https://www.figma.com/figjam/" },
     { name: "ChatGPT (OpenAI)", url: "https://chat.openai.com/" },
     { name: "Gemini (Google)", url: "https://gemini.google.com/" },
   ],
+  video: [],
 };
 
 export const CATEGORY_ORDER = [

@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Catatan Rilis",
+    "file": "release.md"
+  },
+  {
+    "title": "Daftar Kerangka Kerja",
+    "file": "DaftarKerangkaKerja.md"
+  },
+  {
+    "title": "FAQ",
+    "file": "FAQ.md"
+  },
+  {
+    "title": "FAQ & Troubleshooting",
+    "file": "FAQ_Troubleshooting.md"
+  },
+  {
+    "title": "Panduan Kontribusi",
+    "file": "CONTRIBUTING.md"
+  },
+  {
+    "title": "Panduan Penggunaan Interaktif",
+    "file": "PanduanPenggunaanInteraktif.md"
+  },
+  {
+    "title": "README",
+    "file": "README.md"
+  }
+]

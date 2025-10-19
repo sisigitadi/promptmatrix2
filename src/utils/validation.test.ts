@@ -35,7 +35,7 @@ describe("validateInput", () => {
       description: "Test Field",
     };
     expect(validateInput("test", "", details)).toBe(
-      "Input ini membutuhkan minimal 5 karakter.",
+      "Bidang 'test' membutuhkan minimal 5 karakter.",
     );
   });
 

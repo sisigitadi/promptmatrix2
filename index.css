@@ -7,11 +7,11 @@
   --accent-color: #00FFFF; /* Electric blue */
   --secondary-accent-color: #FF00FF; /* Vibrant magenta */
   --text-color: #F0F0F0; /* Brighter white/light gray for better readability */
-  --secondary-text-color: #A8A8A8; /* Slightly brighter secondary text */
+  --secondary-text-color: #C0C0C0; /* Brighter secondary text for better contrast */
   --border-color: #333344; /* Darker blue-violet border */
   --hover-color: #2A2A3A; /* Slightly lighter for hover effects */
   --active-color: #00BFFF; /* Sky blue for active states */
-  --placeholder-color: #6C757D; /* Placeholder text color */
+  --placeholder-color: #A0A0A0; /* Lighter placeholder for better contrast */
   --danger-color: #DC3545; /* Standard danger color */
   --warning-color: #FFEA00; /* Neon yellow for warning/toggle */
   --dev-mode-active-background: #1A1A30; /* Subtle dark blue-grey for active Dev Mode */
@@ -75,11 +75,11 @@
   --accent-color: #007BFF; /* Standard blue accent */
   --secondary-accent-color: #6C757D; /* Muted gray */
   --text-color: #212529; /* Dark text */
-  --secondary-text-color: #6C757D; /* Muted text */
+  --secondary-text-color: #666666; /* Darker secondary text for better contrast */
   --border-color: #DEE2E6; /* Light border */
   --hover-color: #E9ECEF; /* Light hover */
   --active-color: #0056B3; /* Darker blue for active */
-  --placeholder-color: #ADB5BD; /* Lighter placeholder */
+  --placeholder-color: #999999; /* Darker placeholder for better contrast */
   --danger-color: #DC3545; /* Standard danger */
   --warning-color: #FFC107; /* Standard warning */
   --dev-mode-active-background: #E0E0E0; /* Light grey for dev mode */
@@ -151,21 +151,28 @@
 
 .btn:hover {
   background-color: var(--button-hover-bg-color);
-  box-shadow: 0 var(--button-3d-depth) 0 var(--button-border-color), 0 0 15px var(--button-glow-color), 0 0 25px rgba(0, 255, 255, 0.3);
-  transform: translateY(-2px);
+  transform: translateY(-3px); /* Slightly more pronounced lift */
+  box-shadow: 0 var(--button-3d-depth) 0 var(--button-border-color), 0 0 20px var(--button-glow-color), 0 0 30px var(--button-intense-glow-color); /* More intense glow */
   z-index: 2;
 }
 
 .btn:active {
   background-color: var(--button-active-bg-color);
   box-shadow: 0 1px 0 var(--button-border-color), 0 2px 4px var(--button-shadow-color);
-  transform: translateY(var(--button-3d-depth));
+  transform: translateY(var(--button-3d-depth) + 1px); /* Deeper press */
   z-index: 1;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
 .btn:focus {
   outline: none;
-  box-shadow: 0 var(--button-3d-depth) 0 var(--button-border-color), 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
 }
 
 .glow-on-hover {
@@ -532,20 +539,13 @@
   border-color: var(--accent-color);
 }
 
-/* New Category Grid Styles */
-.category-grid {
-  display: flex;
-  flex-direction: column; /* Arrange items vertically */
-  gap: 0.5rem;
-  flex-grow: 1;
-  overflow-y: auto;
-}
+
 
 .category-card {
   padding: 0.75rem 1rem; /* Adjusted padding for vertical layout */
   border-radius: 0.5rem;
-  flex: 0 0 auto; /* Do not grow or shrink, take content width */
-  width: 100%; /* Take full width */
+  /* flex: 0 0 auto; */ /* Removed */
+  /* width: 100%; */ /* Removed */
   text-align: left; /* Align text to the left */
   font-weight: 400; /* Adjusted font weight */
   font-size: 0.95rem; /* Adjusted font size */
@@ -615,7 +615,7 @@
   background-color: var(--background-color);
   color: var(--text-color);
   border-color: var(--border-color);
-  border-radius: 0.25rem;
+  border-radius: 0.5rem; /* Updated for consistency */
   padding: 0.5rem 0.75rem;
   line-height: 1.7;
   letter-spacing: 0.75px;
@@ -629,7 +629,7 @@
   background-color: var(--background-color);
   color: var(--text-color);
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 0.25rem var(--accent-color), 0 0 8px var(--accent-color); /* Updated for better glow */
 }
 
 /* Validation Feedback */
@@ -1194,17 +1194,24 @@ p, li, span, div {
   flex-direction: column;
   height: 100%;
   max-height: 100%;
+  border-radius: 0.75rem; /* Slightly larger radius for main panes */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Consistent shadow */
 }
 
 /* Card Styles */
 .card {
   background-color: var(--panel-card-color);
-  border: 1px solid var(--border-color);
+  border: none; /* Remove direct border */
   color: var(--text-color);
   border-radius: 0.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4), 0 0 5px var(--border-color); /* Softer shadow with subtle border-like glow */
   overflow: hidden;
   min-height: auto; /* Allow height to adjust based on content */
+  transition: all 0.3s ease; /* Add transition for hover/focus */
+}
+
+.card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px var(--accent-color); /* More pronounced shadow and glow on hover */
 }
 
 .card-header {
@@ -1442,4 +1449,24 @@ p, li, span, div {
 
 .light-theme .category-button-dynamic.koleksi {
   color: var(--category-koleksi-text-light);
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px; /* Lebar scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color); /* Warna track */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-color); /* Warna thumb */
+  border-radius: 10px;
+  border: 2px solid var(--background-color); /* Border agar terlihat terpisah dari track */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--active-color); /* Warna thumb saat hover */
 }
