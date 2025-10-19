@@ -137,13 +137,13 @@ const App = () => {
     setLogoClickCount((prevCount) => {
       const newCount = prevCount + 1;
       if (newCount >= 9) {
-        setShowDevMode(true);
-        setIsApiKeyEnabled(true);
+        setShowDevMode((prevShowDevMode) => !prevShowDevMode);
+        setIsApiKeyEnabled((prevIsApiKeyEnabled) => !prevIsApiKeyEnabled);
         setLogoClickCount(0);
       }
       return newCount;
     });
-  }, []);
+  }, [setShowDevMode, setIsApiKeyEnabled]);
 
   // Theme and local storage effects
   useEffect(() => {
