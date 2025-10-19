@@ -139,13 +139,15 @@ export function useFrameworkNavigation(dispatch: (action: any) => void) {
 
       for (const [name, details] of inputs) {
         if (details.type === "select" && details.options?.length) {
+          const firstOption = details.options[0];
           if (
-            details.options[0].startsWith("Pilih") ||
-            details.options[0].startsWith("Select")
+            typeof firstOption === "string" &&
+            (firstOption.startsWith("Pilih") ||
+              firstOption.startsWith("Select"))
           ) {
             initialFormData[name] = details.options[1] || "";
           } else {
-            initialFormData[name] = details.options[0];
+            initialFormData[name] = firstOption;
           }
         } else {
           initialFormData[name] = details.default ?? "";
