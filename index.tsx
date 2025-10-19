@@ -187,10 +187,7 @@ const App = () => {
         setIsLightTheme={setIsLightTheme}
         onShowFrameworkBuilder={() => setShowFrameworkBuilderModal(true)}
       />
-      <Container
-        fluid
-        className={`main-container p-4 ${showDevMode ? "dev-mode-glow" : ""}`}
-      >
+      <Container fluid className={`main-container p-4`}>
         {activeView === "generator" ? (
           <GeneratorView
             showDevMode={showDevMode}
