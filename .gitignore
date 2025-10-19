@@ -22,9 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-.env
-GEMINI.md
-PROMPT_MATRIX_SOP.md
+# GEMINI.md
+# PROMPT_MATRIX_SOP.md
 
 .gemini/
 gha-creds-*.json

@@ -44,15 +44,9 @@ export default tseslint.config(
         // Define global variables available in browser and Node.js environments
         ...globals.browser,
         ...globals.node,
-        jest: true, // Enable Jest global variables for test files
+                jest: true, // Enable Jest global variables for test files
       },
     },
   },
   configPrettier,
-  {
-    files: ["scripts/**/*.js"],
-    rules: {
-      "@typescript-eslint/no-require-imports": "off",
-    },
-  },
 );

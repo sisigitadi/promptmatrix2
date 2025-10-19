@@ -25,6 +25,7 @@ const DevModeSwitch: React.FC<DevModeSwitchProps> = ({
       <Form.Check
         type="switch"
         id="dev-mode-toggle"
+        label="Dev Mode"
         checked={isApiKeyEnabled} // Reflects API Key status
         onChange={onToggle} // This will trigger the logic in index.tsx
         className={`me-3 ${toggleClass}`}

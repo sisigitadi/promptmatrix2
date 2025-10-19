@@ -133,6 +133,17 @@ const App = () => {
   const handleNavigate = (view: string) => setActiveView(view);
 
   // Dev mode logic
+  const handleLogoClick = useCallback(() => {
+    setLogoClickCount((prevCount) => {
+      const newCount = prevCount + 1;
+      if (newCount >= 9) {
+        setShowDevMode(true);
+        setIsApiKeyEnabled(true);
+        setLogoClickCount(0);
+      }
+      return newCount;
+    });
+  }, []);
 
   // Theme and local storage effects
   useEffect(() => {
@@ -167,6 +178,7 @@ const App = () => {
       <Header
         onNavigate={handleNavigate}
         onShowSavedPrompts={() => setShowSavedPrompts(true)}
+        onLogoClick={handleLogoClick}
         showDevMode={showDevMode}
         showNavigation={showNavigation}
         setShowNavigation={setShowNavigation}
@@ -175,7 +187,10 @@ const App = () => {
         setIsLightTheme={setIsLightTheme}
         onShowFrameworkBuilder={() => setShowFrameworkBuilderModal(true)}
       />
-      <Container fluid className={`main-container p-4`}>
+      <Container
+        fluid
+        className={`main-container p-4 ${showDevMode ? "dev-mode-glow" : ""}`}
+      >
         {activeView === "generator" ? (
           <GeneratorView
             showDevMode={showDevMode}
