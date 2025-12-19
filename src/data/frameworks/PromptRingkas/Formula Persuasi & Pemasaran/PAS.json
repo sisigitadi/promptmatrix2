@@ -1,0 +1,40 @@
+{
+  "description": "Identifikasi masalah audiens, buat mereka merasakan urgensinya, lalu tawarkan solusi Anda.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Diagnostik Pemasaran yang akan mengidentifikasi masalah audiens dan menawarkan solusi.",
+  "components": [
+    {
+      "name": "problem",
+      "label": "Masalah yang Dihadapi Audiens (Problem)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Sulit untuk tetap fokus saat bekerja dari rumah dengan banyaknya distraksi.'",
+      "info": "Apa titik sakit utama audiens?"
+    },
+    {
+      "name": "agitation",
+      "label": "Detail untuk Memperburuk Masalah (Agitate)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Tenggat waktu terlewat, pekerjaan menumpuk, dan perasaan bersalah di akhir hari.'",
+      "info": "Gali lebih dalam masalah tersebut. Buat audiens merasakannya."
+    },
+    {
+      "name": "solution",
+      "label": "Solusi yang Ditawarkan (Solution)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Aplikasi kami membantu Anda memblokir distraksi, menjadwalkan fokus, dan mencapai tujuan harian Anda.'",
+      "info": "Perkenalkan produk/layanan Anda sebagai jalan keluar."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Formula Persuasi & Pemasaran"
+  ],
+  "nama_kerangka": "PAS"
+}

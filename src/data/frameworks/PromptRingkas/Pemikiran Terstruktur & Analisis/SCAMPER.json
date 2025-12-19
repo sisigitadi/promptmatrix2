@@ -1,0 +1,75 @@
+{
+  "description": "Gunakan 7 pemicu pemikiran untuk melakukan brainstorming dan inovasi pada ide atau produk yang sudah ada.",
+  "toolType": "planning",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Inovator Kreatif yang akan menerapkan kerangka SCAMPER.",
+  "components": [
+    {
+      "name": "subject",
+      "label": "Produk/Ide yang Akan Di-SCAMPER",
+      "type": "text",
+      "placeholder": "e.g., 'Payung', 'Aplikasi catatan'",
+      "info": "Fokus dari sesi brainstorming."
+    },
+    {
+      "name": "substitute",
+      "label": "Ganti (Substitute)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Apa yang bisa diganti? Materialnya? Sumber energinya? Orangnya?'",
+      "info": "Pikirkan tentang penggantian komponen, material, atau proses."
+    },
+    {
+      "name": "combine",
+      "label": "Kombinasikan (Combine)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Apa yang bisa digabungkan? Payung dengan senter? Aplikasi catatan dengan pelacak kebiasaan?'",
+      "info": "Pikirkan tentang menggabungkan dua atau lebih ide/fitur."
+    },
+    {
+      "name": "adapt",
+      "label": "Adaptasi (Adapt)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Ide apa yang bisa diadaptasi? Bagaimana cara kerja di industri lain yang bisa diterapkan di sini?'",
+      "info": "Pikirkan tentang mengadaptasi fungsi dari konteks lain."
+    },
+    {
+      "name": "modify",
+      "label": "Modifikasi (Modify)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Apa yang bisa diperbesar atau diperkecil? Ubah bentuknya? Warnanya?'",
+      "info": "Pikirkan tentang mengubah atribut produk."
+    },
+    {
+      "name": "putToAnotherUse",
+      "label": "Gunakan untuk Tujuan Lain (Put to another use)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Bisakah ini digunakan oleh orang lain? Di industri lain? Apa kegunaan lainnya jika dimodifikasi?'",
+      "info": "Pikirkan tentang penggunaan alternatif."
+    },
+    {
+      "name": "eliminate",
+      "label": "Hilangkan (Eliminate)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Apa yang bisa disederhanakan atau dihilangkan? Fitur apa yang paling jarang dipakai?'",
+      "info": "Pikirkan tentang mengurangi kompleksitas."
+    },
+    {
+      "name": "reverse",
+      "label": "Balikkan/Susun Ulang (Reverse/Rearrange)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Bagaimana jika prosesnya dibalik? Bagaimana jika komponennya disusun ulang?'",
+      "info": "Pikirkan tentang membalikkan urutan atau tata letak."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Pemikiran Terstruktur & Analisis"
+  ],
+  "nama_kerangka": "SCAMPER"
+}

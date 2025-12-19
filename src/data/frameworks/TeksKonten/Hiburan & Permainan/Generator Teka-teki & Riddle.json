@@ -1,0 +1,58 @@
+{
+  "description": "Buat teka-teki, riddle, atau puzzle logika yang orisinal berdasarkan sebuah tema atau jawaban.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Perancang Teka-Teki yang akan membuat teka-teki, riddle, atau puzzle logika.",
+  "components": [
+    {
+      "name": "puzzleType",
+      "label": "Jenis Teka-teki",
+      "type": "select",
+      "options": [
+        "Riddle (Teka-teki kiasan)",
+        "Puzzle Logika",
+        "Teka-teki Kata",
+        "Lainnya..."
+      ],
+      "info": "Pilih jenis tantangan yang ingin Anda buat."
+    },
+    {
+      "name": "answer",
+      "label": "Jawaban Teka-teki",
+      "type": "text",
+      "placeholder": "e.g., 'Sebuah gema', 'Waktu', 'Papan catur'",
+      "info": "Apa jawaban dari teka-teki yang akan dibuat?"
+    },
+    {
+      "name": "difficultyLevel",
+      "label": "Tingkat Kesulitan",
+      "type": "select",
+      "options": [
+        "Mudah (untuk anak-anak)",
+        "Menengah",
+        "Sulit",
+        "Sangat Sulit (Kriptik)",
+        "Lainnya..."
+      ],
+      "info": "Seberapa menantang teka-teki yang Anda inginkan?"
+    },
+    {
+      "name": "theme",
+      "label": "Tema (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Alam', 'Teknologi', 'Fantasi Abad Pertengahan'",
+      "info": "Tema akan mempengaruhi pilihan kata dan kiasan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Teka-teki harus berima. Buat dalam bentuk dialog. Jawaban tidak boleh disebutkan secara langsung di dalam teka-teki. Sertakan satu petunjuk palsu.",
+      "info": "Aturan atau batasan spesifik untuk pembuatan teka-teki."
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Hiburan & Permainan"
+  ],
+  "nama_kerangka": "Generator Teka-teki & Riddle"
+}

@@ -1,0 +1,64 @@
+{
+  "description": "Rencanakan strategi konten SEO dengan mengidentifikasi satu topik pilar utama dan beberapa klaster topik pendukungnya.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Arsitek Konten SEO yang akan merencanakan strategi konten.",
+  "components": [
+    {
+      "name": "mainTheme",
+      "label": "Tema Utama Bisnis/Website",
+      "type": "text",
+      "placeholder": "e.g., 'Hidup Sehat Organik'",
+      "info": "Topik luas yang menjadi payung dari semua konten Anda.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Audiens",
+      "type": "text",
+      "placeholder": "e.g., 'Ibu muda yang peduli kesehatan keluarga'",
+      "info": "Siapa yang ingin Anda jangkau dengan konten ini?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "pillarTopic",
+      "label": "Ide Topik Pilar",
+      "type": "text",
+      "placeholder": "e.g., 'Panduan Lengkap Memulai Diet Organik'",
+      "info": "Satu konten yang sangat komprehensif yang bisa dipecah menjadi banyak artikel kecil.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "clusterCount",
+      "label": "Jumlah Klaster Topik yang Diinginkan",
+      "type": "number",
+      "placeholder": "e.g., 10",
+      "info": "Berapa banyak ide artikel pendukung yang ingin Anda hasilkan?",
+      "validation": {
+        "min_value": 1,
+        "max_value": 20
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Fokus pada topik untuk pemula. Hindari topik yang membutuhkan biaya mahal. Setiap klaster topik harus bisa menjadi judul artikel blog.",
+      "info": "Panduan untuk AI agar ide yang dihasilkan lebih sesuai dengan strategi Anda.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Pemasaran & Penjualan"
+  ],
+  "nama_kerangka": "Generator Konten Pilar & Klaster Topik"
+}

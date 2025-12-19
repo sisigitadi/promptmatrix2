@@ -1,0 +1,40 @@
+{
+  "description": "Gambarkan dunia audiens sebelum dan sesudah menggunakan produk Anda, lalu posisikan produk sebagai jembatannya.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Narator Transformasi yang akan menggambarkan kondisi audiens sebelum dan sesudah menggunakan produk.",
+  "components": [
+    {
+      "name": "beforeState",
+      "label": "Kondisi Audiens Saat Ini (Before)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Menghabiskan berjam-jam setiap minggu untuk membuat laporan manual yang membosankan dan rentan kesalahan.'",
+      "info": "Gambarkan dunia yang penuh masalah tanpa produk Anda."
+    },
+    {
+      "name": "afterState",
+      "label": "Kondisi Ideal yang Diinginkan (After)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Bayangkan laporan dibuat secara otomatis dalam hitungan detik, memberi Anda waktu untuk fokus pada strategi.'",
+      "info": "Gambarkan dunia yang lebih baik dengan produk Anda."
+    },
+    {
+      "name": "bridge",
+      "label": "Produk/Layanan sebagai Jembatan (Bridge)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Software kami adalah jembatan yang membawa Anda dari kerumitan ke efisiensi dengan satu klik.'",
+      "info": "Jelaskan bagaimana produk Anda adalah solusi yang menghubungkan 'Before' dan 'After'."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Formula Persuasi & Pemasaran"
+  ],
+  "nama_kerangka": "BAB"
+}

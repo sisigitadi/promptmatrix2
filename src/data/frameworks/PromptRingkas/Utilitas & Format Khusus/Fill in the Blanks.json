@@ -1,0 +1,33 @@
+{
+  "description": "Buat template teks dengan bagian kosong, lalu minta AI untuk mengisinya berdasarkan konteks.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pengisi Template yang akan mengisi bagian kosong dalam template teks.",
+  "components": [
+    {
+      "name": "templateText",
+      "label": "Teks Template dengan Bagian Kosong",
+      "type": "textarea",
+      "placeholder": "e.g., 'Hari ini saya merasa [PERASAAN] karena saya baru saja menyelesaikan [TUGAS]. Rencana saya selanjutnya adalah [RENCANA].'",
+      "info": "Gunakan tanda kurung siku atau simbol lain untuk menandai bagian yang kosong."
+    },
+    {
+      "name": "context",
+      "label": "Konteks untuk Mengisi Bagian Kosong",
+      "type": "textarea",
+      "placeholder": "e.g., 'Konteks: Saya seorang programmer yang baru saja berhasil men-debug kode yang sulit selama 3 hari. Saya ingin merayakaninya dengan bersantai.'",
+      "info": "Berikan informasi latar belakang agar AI dapat mengisi bagian kosong secara relevan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Utilitas & Format Khusus"
+  ],
+  "nama_kerangka": "Fill in the Blanks"
+}

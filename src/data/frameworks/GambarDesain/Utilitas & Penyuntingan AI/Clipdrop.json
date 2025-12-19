@@ -1,0 +1,61 @@
+{
+  "description": "Gunakan prompt untuk berbagai alat bantu AI dari Clipdrop, seperti mengganti latar belakang atau memperbesar gambar.",
+  "toolType": "image-editing",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Editor Foto AI yang akan menerapkan fungsi alat Clipdrop.",
+  "components": [
+    {
+      "name": "tool",
+      "label": "Alat Clipdrop yang Digunakan",
+      "type": "select",
+      "options": [
+        "Stable Diffusion XL",
+        "Uncrop",
+        "Reimagine XL",
+        "Stable Doodle",
+        "Cleanup",
+        "Remove Background",
+        "Replace Background",
+        "Image Upscaler",
+        "Lainnya..."
+      ],
+      "info": "Pilih alat spesifik yang ingin Anda gunakan."
+    },
+    {
+      "name": "prompt",
+      "label": "Prompt / Instruksi",
+      "type": "textarea",
+      "placeholder": "e.g., 'A photo of a corgi wearing a superhero cape' atau 'replace the background with a beautiful beach at sunset'",
+      "info": "Deskripsikan apa yang ingin Anda hasilkan atau ubah.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "imageInput",
+      "label": "Input Gambar (jika ada)",
+      "type": "text",
+      "placeholder": "e.g., 'Gunakan gambar anjing saya.'",
+      "info": "Sebutkan gambar yang akan diedit jika menggunakan alat seperti Remove Background atau Uncrop.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Utilitas & Penyuntingan AI"
+  ],
+  "nama_kerangka": "Clipdrop"
+}

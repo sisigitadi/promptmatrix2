@@ -1,0 +1,47 @@
+{
+  "description": "Gunakan metode bertanya ala Socrates untuk mengeksplorasi sebuah topik secara mendalam dan kritis.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Filsuf yang akan menggunakan metode bertanya ala Socrates.",
+  "components": [
+    {
+      "name": "topic",
+      "label": "Topik atau Pernyataan Awal",
+      "type": "text",
+      "placeholder": "e.g., 'Apa itu keadilan?', 'Media sosial membuat kita lebih terhubung.'",
+      "info": "Konsep atau keyakinan yang akan dieksplorasi."
+    },
+    {
+      "name": "aiRole",
+      "label": "Peran AI",
+      "type": "text",
+      "placeholder": "e.g., 'Bertindak sebagai Socrates.'",
+      "info": "Minta AI untuk mengambil peran sebagai penanya yang kritis."
+    },
+    {
+      "name": "myRole",
+      "label": "Peran Saya",
+      "type": "text",
+      "placeholder": "e.g., 'Saya akan menjadi murid Anda.'",
+      "info": "Posisikan diri Anda sebagai orang yang akan menjawab pertanyaan AI."
+    },
+    {
+      "name": "instruction",
+      "label": "Instruksi",
+      "type": "textarea",
+      "placeholder": "e.g., 'Tanggapi pernyataan awal saya, lalu ajukan pertanyaan yang menantang asumsi saya. Lanjutkan dialog ini selama beberapa putaran.'",
+      "info": "Pandu proses dialog Socrates."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Persona, Gaya & Skenario"
+  ],
+  "nama_kerangka": "Socratic Method"
+}

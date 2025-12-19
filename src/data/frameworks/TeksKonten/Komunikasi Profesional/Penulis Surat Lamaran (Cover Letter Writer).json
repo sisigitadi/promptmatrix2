@@ -1,0 +1,84 @@
+{
+  "description": "Buat surat lamaran kerja yang personal dan meyakinkan untuk posisi spesifik.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis Lamaran Kerja yang akan membuat surat lamaran.",
+  "components": [
+    {
+      "name": "jobTitle",
+      "label": "Posisi yang Dilamar",
+      "type": "text",
+      "placeholder": "e.g., 'Digital Marketing Specialist'",
+      "info": "Nama jabatan persis seperti yang tertulis di lowongan.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "companyName",
+      "label": "Nama Perusahaan",
+      "type": "text",
+      "placeholder": "e.g., 'PT Inovasi Digital'",
+      "info": "Perusahaan yang Anda tuju.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "keyRequirements",
+      "label": "Kualifikasi Utama dari Lowongan",
+      "type": "textarea",
+      "placeholder": "Salin-tempel poin-poin kualifikasi utama dari iklan lowongan kerja di sini. Contoh: 'Pengalaman 3 tahun di SEO', 'Menguasai Google Analytics'.",
+      "info": "Ini adalah bagian terpenting. AI akan menggunakan ini untuk menyesuaikan surat Anda.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "mySkillsAndExperience",
+      "label": "Pengalaman & Keterampilan Relevan Saya",
+      "type": "textarea",
+      "placeholder": "e.g., 'Saya telah mengelola kampanye SEO untuk klien e-commerce selama 4 tahun dan berhasil meningkatkan trafik organik sebesar 150%.'",
+      "info": "Hubungkan pengalaman Anda secara langsung dengan apa yang dicari perusahaan.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "companyKnowledge",
+      "label": "Pengetahuan Tentang Perusahaan (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Saya terkesan dengan peluncuran produk X baru-baru ini.'",
+      "info": "Tunjukkan bahwa Anda melakukan riset. Sebutkan proyek, nilai, atau berita terbaru tentang perusahaan.",
+      "optional": true
+    },
+    {
+      "name": "tone",
+      "label": "Gaya Bahasa Surat",
+      "type": "select",
+      "options": [
+        "Profesional & Langsung",
+        "Antusias & Penuh Semangat",
+        "Kreatif & Menonjol",
+        "Formal & Hormat",
+        "Lainnya..."
+      ],
+      "info": "Sesuaikan dengan budaya perusahaan yang Anda persepsikan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Tonjolkan pengalaman saya dalam memimpin tim. Sebutkan bahwa saya adalah seorang pembelajar yang cepat. Buat agar surat tidak lebih dari 4 paragraf.",
+      "info": "Instruksi lain yang relevan, seperti panjang surat atau aspek tertentu yang ingin ditonjolkan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Penulis Surat Lamaran (Cover Letter Writer)"
+}

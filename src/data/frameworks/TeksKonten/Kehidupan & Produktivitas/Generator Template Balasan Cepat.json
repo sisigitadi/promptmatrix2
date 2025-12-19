@@ -1,0 +1,66 @@
+{
+  "description": "Buat template balasan email atau pesan untuk situasi yang sering terjadi untuk menghemat waktu.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Asisten Komunikasi Cepat yang akan membuat template balasan cepat.",
+  "components": [
+    {
+      "name": "scenario",
+      "label": "Skenario Komunikasi",
+      "type": "text",
+      "placeholder": "e.g., 'Menjawab pertanyaan umum tentang harga', 'Mengatakan tidak pada sebuah permintaan'",
+      "info": "Jelaskan situasi spesifik di mana Anda memerlukan template balasan.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "myRole",
+      "label": "Peran Saya",
+      "type": "text",
+      "placeholder": "e.g., 'Freelancer', 'Customer Service', 'Manajer Tim'",
+      "info": "Dari sudut pandang siapa balasan ini akan dikirim?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "keyMessage",
+      "label": "Pesan Kunci yang Harus Disampaikan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Terima kasih atas pertanyaannya. Harga kami adalah X. Berikut link ke detailnya.'",
+      "info": "Informasi inti yang harus ada dalam balasan.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "tone",
+      "label": "Gaya Bahasa Template",
+      "type": "select",
+      "options": [
+        "Efisien & Langsung",
+        "Ramah & Hangat",
+        "Formal & Profesional",
+        "Empatik & Membantu",
+        "Lainnya..."
+      ],
+      "info": "Pilih nada yang sesuai dengan peran dan audiens Anda."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Buat placeholder seperti [Nama Klien] agar mudah diganti. Sertakan kalimat pembuka dan penutup yang sopan. Buat agar template bisa digunakan di WhatsApp.",
+      "info": "Instruksi untuk membuat template lebih fleksibel dan mudah digunakan.",
+      "optional": true,
+      "validation": {
+        "min_length": 20
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Kehidupan & Produktivitas"
+  ],
+  "nama_kerangka": "Generator Template Balasan Cepat"
+}

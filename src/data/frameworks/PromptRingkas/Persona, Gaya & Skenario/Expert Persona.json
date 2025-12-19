@@ -1,0 +1,33 @@
+{
+  "description": "Minta AI untuk mengadopsi persona seorang ahli di bidang tertentu untuk mendapatkan jawaban yang lebih mendalam dan berwibawa.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Ahli Persona yang akan mengadopsi persona seorang ahli.",
+  "components": [
+    {
+      "name": "expertRole",
+      "label": "Peran Ahli",
+      "type": "text",
+      "placeholder": "e.g., 'Seorang ahli biologi kelautan dengan pengalaman 20 tahun', 'Seorang sejarawan yang berspesialisasi dalam Kekaisaran Romawi'",
+      "info": "Jelaskan persona ahli secara spesifik. Sebutkan bidang, pengalaman, dan bahkan gaya komunikasinya."
+    },
+    {
+      "name": "task",
+      "label": "Tugas untuk Ahli",
+      "type": "textarea",
+      "placeholder": "e.g., 'Jelaskan dampak perubahan iklim terhadap terumbu karang.'",
+      "info": "Pertanyaan atau tugas yang ingin Anda berikan kepada persona ahli ini."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Jelaskan seolah-olah Anda sedang berbicara kepada mahasiswa tingkat pertama. Gunakan analogi yang mudah dipahami.'",
+      "info": "Instruksi untuk menjaga keaslian persona."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Persona, Gaya & Skenario"
+  ],
+  "nama_kerangka": "Expert Persona"
+}

@@ -1,0 +1,53 @@
+{
+  "description": "Proses puluhan ulasan pelanggan untuk mengidentifikasi sentimen umum dan tema yang sering dibicarakan.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Analis Sentimen yang akan menganalisis data umpan balik dan mengidentifikasi sentimen dan tema.",
+  "components": [
+    {
+      "name": "feedbackData",
+      "label": "Data Umpan Balik/Ulasan",
+      "type": "textarea",
+      "placeholder": "Tempelkan semua ulasan di sini, pisahkan setiap ulasan dengan baris baru atau sebuah simbol (e.g., '---').",
+      "info": "Semakin banyak data yang Anda berikan, semakin akurat analisisnya.",
+      "validation": {
+        "min_length": 50
+      }
+    },
+    {
+      "name": "analysisType",
+      "label": "Jenis Analisis",
+      "type": "select",
+      "options": [
+        "Analisis Sentimen (Positif/Negatif/Netral)",
+        "Identifikasi Tema Utama",
+        "Keduanya",
+        "Lainnya..."
+      ],
+      "info": "Pilih apa yang ingin Anda ketahui dari data ini."
+    },
+    {
+      "name": "outputFormat",
+      "label": "Format Laporan",
+      "type": "select",
+      "options": [
+        "Ringkasan Paragraf",
+        "Poin-poin per Tema",
+        "Tabel dengan Persentase Sentimen",
+        "Lainnya..."
+      ],
+      "info": "Pilih cara penyajian hasil analisis."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Kelompokkan tema ke dalam kategori 'Layanan', 'Produk', 'Harga'. Hitung berapa kali setiap tema disebutkan. Abaikan ulasan yang kurang dari 5 kata.",
+      "info": "Instruksi spesifik untuk proses analisis dan pelaporan."
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Analisis & Ekstraksi Data"
+  ],
+  "nama_kerangka": "Analis Sentimen & Tema Umpan Balik"
+}

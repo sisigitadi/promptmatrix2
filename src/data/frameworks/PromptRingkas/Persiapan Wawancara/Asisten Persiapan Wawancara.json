@@ -1,0 +1,195 @@
+{
+  "id_kerangka": "TEKS-WWC-001",
+  "nama_kerangka": "Asisten Persiapan Wawancara",
+  "version": "1.0.0",
+  "kategori": [
+    "Prompt Ringkas",
+    "Persiapan Wawancara"
+  ],
+  "description": "Kerangka kerja ini membantu Anda mempersiapkan diri untuk berbagai jenis wawancara, mulai dari wawancara kerja hingga wawancara riset, dengan menyediakan pertanyaan, tips, dan strategi yang relevan.",
+  "perspektif_user": "Sebagai kandidat pekerjaan, peneliti, atau jurnalis, saya membutuhkan panduan komprehensif untuk menghadapi wawancara. Saya ingin berlatih menjawab pertanyaan, memahami jenis wawancara yang berbeda, dan mendapatkan tips untuk tampil percaya diri dan efektif.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pelatih Wawancara yang akan memberikan panduan, pertanyaan, dan strategi untuk persiapan wawancara.",
+  "components": [
+    {
+      "name": "jenis_wawancara",
+      "label": "Jenis Wawancara",
+      "type": "select",
+      "description": "Pilih jenis wawancara yang ingin Anda persiapkan.",
+      "default": "Wawancara Kerja",
+      "optional": false,
+      "options": [
+        {
+          "label": "Wawancara Kerja",
+          "value": "Wawancara Kerja"
+        },
+        {
+          "label": "Wawancara Riset/Akademis",
+          "value": "Wawancara Riset/Akademis"
+        },
+        {
+          "label": "Wawancara Berita/Jurnalistik",
+          "value": "Wawancara Berita/Jurnalistik"
+        },
+        {
+          "label": "Wawancara Penilaian Kinerja",
+          "value": "Wawancara Penilaian Kinerja"
+        },
+        {
+          "label": "Lainnya...",
+          "value": "Lainnya"
+        }
+      ],
+      "info": "Pilih jenis wawancara untuk mendapatkan persiapan yang paling relevan."
+    },
+    {
+      "name": "peran_anda",
+      "label": "Peran Anda dalam Wawancara",
+      "type": "select",
+      "description": "Pilih peran Anda dalam wawancara ini.",
+      "default": "Diwawancarai (Kandidat)",
+      "optional": false,
+      "options": [
+        {
+          "label": "Diwawancarai (Kandidat)",
+          "value": "Diwawancarai (Kandidat)"
+        },
+        {
+          "label": "Pewawancara",
+          "value": "Pewawancara"
+        }
+      ],
+      "info": "Apakah Anda yang akan diwawancarai atau yang akan mewawancarai?"
+    },
+    {
+      "name": "topik_wawancara",
+      "label": "Topik/Posisi Wawancara",
+      "type": "text",
+      "description": "Sebutkan topik utama wawancara atau posisi yang dilamar.",
+      "default": "",
+      "optional": false,
+      "placeholder": "Contoh: Manajer Pemasaran, Dampak AI pada Pendidikan, Krisis Iklim",
+      "info": "Topik atau posisi akan membantu AI menyusun pertanyaan atau panduan yang spesifik.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "konteks_tambahan",
+      "label": "Konteks Tambahan (Opsional)",
+      "type": "textarea",
+      "description": "Berikan detail tambahan yang relevan, seperti nama perusahaan, latar belakang kandidat/narasumber, atau tujuan spesifik wawancara.",
+      "default": "",
+      "optional": true,
+      "placeholder": "Contoh: Perusahaan X adalah startup teknologi yang fokus pada edutech. Kandidat memiliki pengalaman 5 tahun di bidang yang sama.",
+      "info": "Semakin banyak konteks, semakin personal dan akurat bantuan yang diberikan AI.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "fokus_bantuan",
+      "label": "Fokus Bantuan",
+      "type": "multiselect",
+      "description": "Pilih jenis bantuan yang Anda butuhkan.",
+      "default": [
+        "Pertanyaan Wawancara"
+      ],
+      "optional": false,
+      "options": [
+        {
+          "label": "Pertanyaan Wawancara",
+          "value": "Pertanyaan Wawancara"
+        },
+        {
+          "label": "Tips & Strategi",
+          "value": "Tips & Strategi"
+        },
+        {
+          "label": "Struktur Wawancara",
+          "value": "Struktur Wawancara"
+        },
+        {
+          "label": "Latihan Jawaban (Metode STAR)",
+          "value": "Latihan Jawaban (Metode STAR)"
+        },
+        {
+          "label": "Pertanyaan untuk Pewawancara",
+          "value": "Pertanyaan untuk Pewawancara"
+        },
+        {
+          "label": "Lainnya...",
+          "value": "Lainnya"
+        }
+      ],
+      "info": "Pilih area spesifik di mana Anda membutuhkan bantuan persiapan."
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Pelatih Wawancara yang sangat berpengalaman dan berpengetahuan luas dalam berbagai jenis wawancara.",
+    "KONTEKS": "Pengguna ingin mempersiapkan diri untuk wawancara. Berikut adalah detail yang diberikan:\n\nJenis Wawancara: {{jenis_wawancara}}{{#if jenis_wawancara_lainnya}} ({{jenis_wawancara_lainnya}}){{/if}}\nPeran Anda: {{peran_anda}}\nTopik/Posisi Wawancara: {{topik_wawancara}}\nKonteks Tambahan: {{konteks_tambahan || 'Tidak ada konteks tambahan.'}}\nFokus Bantuan: {{fokus_bantuan}}{{#if fokus_bantuan_lainnya}}, {{fokus_bantuan_lainnya}}{{/if}}",
+    "TUGAS": "Berdasarkan informasi di atas, berikan bantuan persiapan wawancara yang terperinci sesuai dengan fokus yang dipilih. Sajikan informasi dengan jelas dan mudah dipahami.\n\n**Jika 'Pertanyaan Wawancara' dipilih:**\n- Hasilkan daftar pertanyaan wawancara yang relevan dan spesifik untuk jenis wawancara dan topik/posisi yang disebutkan. Sertakan campuran pertanyaan umum, perilaku, dan situasional (jika relevan).\n\n**Jika 'Tips & Strategi' dipilih:**\n- Berikan tips dan strategi praktis untuk menghadapi wawancara, termasuk persiapan mental, bahasa tubuh, cara berkomunikasi, dan hal-hal yang harus dihindari.\n\n**Jika 'Struktur Wawancara' dipilih:**\n- Jelaskan struktur umum dari jenis wawancara yang dipilih, termasuk tahapan-tahapan dan apa yang diharapkan di setiap tahapan.\n\n**Jika 'Latihan Jawaban (Metode STAR)' dipilih:**\n- Berikan contoh pertanyaan perilaku dan panduan langkah demi langkah tentang cara menyusun jawaban menggunakan metode STAR (Situation, Task, Action, Result).\n\n**Jika 'Pertanyaan untuk Pewawancara' dipilih:**\n- Hasilkan daftar pertanyaan cerdas yang dapat diajukan oleh pengguna kepada pewawancara untuk menunjukkan minat dan mendapatkan informasi lebih lanjut.\n\n**Jika 'Lainnya...' dipilih untuk Fokus Bantuan:**\n- Berikan bantuan sesuai dengan 'Fokus Bantuan Lainnya' yang disebutkan.",
+    "FORMAT_OUTPUT": "Sajikan output dalam format Markdown yang terstruktur dengan baik, menggunakan heading, bullet points, dan bold untuk keterbacaan yang maksimal. Pisahkan setiap bagian bantuan dengan jelas."
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "jenis_wawancara",
+      "options": {
+        "Lainnya": [
+          {
+            "name": "jenis_wawancara_lainnya",
+            "label": "Jenis Wawancara Lainnya",
+            "type": "text",
+            "description": "Sebutkan jenis wawancara spesifik Anda jika memilih 'Lainnya'.",
+            "default": "",
+            "optional": false,
+            "placeholder": "Contoh: Wawancara Beasiswa, Wawancara Penjualan",
+            "info": "Jelaskan jenis wawancara tambahan yang ingin Anda persiapkan.",
+            "validation": {
+              "min_length": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "fokus_bantuan",
+      "options": {
+        "Lainnya": [
+          {
+            "name": "fokus_bantuan_lainnya",
+            "label": "Fokus Bantuan Lainnya",
+            "type": "textarea",
+            "description": "Sebutkan fokus bantuan spesifik Anda jika memilih 'Lainnya'.",
+            "default": "",
+            "optional": false,
+            "placeholder": "Contoh: Cara negosiasi gaji, Etika wawancara online",
+            "info": "Jelaskan area bantuan spesifik yang Anda butuhkan.",
+            "validation": {
+              "min_length": 5
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "toolType": "text",
+  "konteks_tambahan_instruksi_khusus": "Pastikan semua saran dan pertanyaan relevan dengan jenis wawancara dan peran pengguna. Gunakan bahasa yang profesional, mendukung, dan mudah dipahami. Jika peran pengguna adalah 'Pewawancara', fokus pada cara menyusun pertanyaan yang efektif dan mengevaluasi jawaban. Jika 'Diwawancarai', fokus pada cara memberikan jawaban terbaik dan strategi untuk sukses.",
+  "contoh_kalimat": "Bantu saya mempersiapkan wawancara kerja untuk posisi Manajer Pemasaran.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": [
+    {
+      "triggerField": "jenis_wawancara",
+      "triggerValue": "Lainnya",
+      "dependentField": "jenis_wawancara_lainnya",
+      "validationType": "required",
+      "errorMessage": "Harap isi 'Jenis Wawancara Lainnya' jika Anda memilih 'Lainnya'."
+    },
+    {
+      "triggerField": "fokus_bantuan",
+      "triggerValue": "Lainnya",
+      "dependentField": "fokus_bantuan_lainnya",
+      "validationType": "required",
+      "errorMessage": "Harap isi 'Fokus Bantuan Lainnya' jika Anda memilih 'Lainnya'."
+    }
+  ]
+}

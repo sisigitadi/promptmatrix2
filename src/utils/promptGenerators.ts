@@ -1,13 +1,13 @@
 import { Part } from "@google/generative-ai";
-import { Framework } from "../data/frameworks";
+import { Framework, FrameworkComponent } from "../data/frameworks"; // Keep FrameworkComponent for type guards
 import { SPECIAL_FRAMEWORKS } from "../config";
-import { PromptBlock } from "../components/VisualPromptBuilder";
+import { FormData, CustomInputs, PromptBlock } from "../types";
 
 // Helper function to replace placeholders in a string
 const replacePlaceholders = (
   template: string,
-  values: { [key: string]: any },
-  customInputs: { [key: string]: string },
+  values: FormData,
+  customInputs: CustomInputs,
 ) => {
   let result = template;
   for (const key in values) {
@@ -39,8 +39,8 @@ const replacePlaceholders = (
 // This is the primary function for generating the final AI prompt.
 export const generatePrompt = (
   framework: Framework,
-  params: { [key: string]: any },
-  customInputs: { [key: string]: string },
+  params: FormData,
+  customInputs: CustomInputs,
 ): string => {
   // If the modern 'komponen_prompt' structure doesn't exist, fallback to the old generator.
   if (!framework || !framework.komponen_prompt) {
@@ -55,7 +55,7 @@ export const generatePrompt = (
   const { PERAN, KONTEKS, TUGAS } = framework.komponen_prompt;
 
   // Combine static and active dynamic components to get all possible inputs.
-  const allComponents = [...(framework.components || [])];
+  const allComponents: FrameworkComponent[] = [...(framework.components || [])];
   const subcomponents = Array.isArray(framework.dynamicSubcomponents)
     ? framework.dynamicSubcomponents
     : framework.dynamicSubcomponents
@@ -66,7 +66,20 @@ export const generatePrompt = (
     if (sub && sub.trigger) {
       const triggerValue = params[sub.trigger];
       if (triggerValue && sub.options[triggerValue]) {
-        allComponents.push(...sub.options[triggerValue]);
+        const optionValue = sub.options[triggerValue];
+        if (optionValue) {
+          // New super-framework structure: optionValue is { components: [...] }
+          if (
+            "components" in optionValue &&
+            Array.isArray(optionValue.components)
+          ) {
+            allComponents.push(...optionValue.components);
+          }
+          // Old structure: optionValue is FrameworkComponent[]
+          else if (Array.isArray(optionValue)) {
+            allComponents.push(...(optionValue as FrameworkComponent[]));
+          }
+        }
       }
     }
   });
@@ -86,25 +99,33 @@ export const generatePrompt = (
     allValues,
     customInputs,
   );
-  let processedTugas = TUGAS || "";
-  if (framework.id_kerangka === "IMG-GEN-001" && TUGAS) {
-    const modeOperasi = allValues.mode_operasi;
-    if (modeOperasi === "deskripsikan_gambar") {
-      const inputGambar = allValues.input_gambar_deskripsi || "";
-      processedTugas = `Deskripsikan gambar berikut secara detail dan komprehensif, fokus pada objek, warna, suasana, dan gaya visual: ${inputGambar}`;
-    } else if (modeOperasi === "hasilkan_gambar") {
-      const deskripsiTeksGambar =
-        allValues.deskripsi_teks_gambar_generasi || "";
-      let gayaVisual = allValues.gaya_visual_generasi || "";
-      if (gayaVisual === "lainnya") {
-        gayaVisual = allValues.gaya_visual_lainnya || "";
+
+  // Super-framework logic: Check for nested TUGAS in dynamic subcomponents
+  let tugasTemplate = TUGAS || ""; // Default to top-level TUGAS
+  if (
+    framework.dynamicSubcomponents &&
+    !Array.isArray(framework.dynamicSubcomponents)
+  ) {
+    const trigger = framework.dynamicSubcomponents.trigger;
+    const triggerValue = allValues[trigger];
+    if (triggerValue) {
+      const dynamicOption =
+        framework.dynamicSubcomponents.options[triggerValue];
+      // Check if dynamicOption is the object structure and has komponen_prompt
+      if (
+        dynamicOption &&
+        !Array.isArray(dynamicOption) &&
+        typeof dynamicOption === "object" &&
+        "komponen_prompt" in dynamicOption &&
+        (dynamicOption as any).komponen_prompt?.TUGAS
+      ) {
+        tugasTemplate = (dynamicOption as any).komponen_prompt.TUGAS;
       }
-      const rasioAspek = allValues.rasio_aspek_generasi || "";
-      processedTugas = `Hasilkan gambar berdasarkan deskripsi berikut: "${deskripsiTeksGambar}". Gunakan gaya visual: "${gayaVisual}" dan rasio aspek: "${rasioAspek}".`;
     }
   }
+
   const finalTugas = replacePlaceholders(
-    processedTugas,
+    tugasTemplate,
     allValues,
     customInputs,
   );
@@ -121,7 +142,7 @@ export const generatePrompt = (
   }
 
   // Handle FORMAT_OUTPUT.
-  const formatOutput = framework.komponen_prompt["FORMAT OUTPUT"];
+  const formatOutput = framework.komponen_prompt?.["FORMAT OUTPUT"];
   if (formatOutput) {
     prompt += `**Format Output:**\n${replacePlaceholders(formatOutput, allValues, customInputs)}\n`;
   }
@@ -132,8 +153,8 @@ export const generatePrompt = (
 // Function for the user-facing preview, showing AI logic and filled inputs in plain text.
 export const generateUserPreviewPrompt = (
   framework: Framework,
-  params: { [key: string]: any },
-  customInputs: { [key: string]: string },
+  params: FormData,
+  customInputs: CustomInputs,
 ): string => {
   if (!framework) {
     return "Pilih kerangka kerja untuk melihat pratinjau.";
@@ -145,7 +166,7 @@ export const generateUserPreviewPrompt = (
     previewContent += `${framework.ai_logic_description.replace(/\*\*/g, "")}\n\n`; // Remove bold markdown
   }
 
-  const allComponents = [...(framework.components || [])];
+  const allComponents: FrameworkComponent[] = [...(framework.components || [])];
   const subcomponents = Array.isArray(framework.dynamicSubcomponents)
     ? framework.dynamicSubcomponents
     : framework.dynamicSubcomponents
@@ -156,7 +177,20 @@ export const generateUserPreviewPrompt = (
     if (sub && sub.trigger) {
       const triggerValue = params[sub.trigger];
       if (triggerValue && sub.options[triggerValue]) {
-        allComponents.push(...sub.options[triggerValue]);
+        const optionValue = sub.options[triggerValue];
+        if (optionValue) {
+          // New super-framework structure
+          if (
+            "components" in optionValue &&
+            Array.isArray(optionValue.components)
+          ) {
+            allComponents.push(...optionValue.components);
+          }
+          // Old structure
+          else if (Array.isArray(optionValue)) {
+            allComponents.push(...(optionValue as FrameworkComponent[]));
+          }
+        }
       }
     }
   });
@@ -253,8 +287,8 @@ export const generateFileName = (
 // Fallback for older frameworks
 export const generateNaturalLanguagePrompt = (
   framework: Framework,
-  params: { [key: string]: any },
-  customInputs: { [key: string]: string },
+  params: FormData,
+  customInputs: CustomInputs,
 ) => {
   let promptContent = "";
 
@@ -262,7 +296,7 @@ export const generateNaturalLanguagePrompt = (
     promptContent += `${framework.ai_logic_description}\n\n`;
   }
 
-  const allComponents = [...(framework.components || [])];
+  const allComponents: FrameworkComponent[] = [...(framework.components || [])];
   const subcomponents = Array.isArray(framework.dynamicSubcomponents)
     ? framework.dynamicSubcomponents
     : framework.dynamicSubcomponents
@@ -273,7 +307,12 @@ export const generateNaturalLanguagePrompt = (
     if (sub && sub.trigger) {
       const triggerValue = params[sub.trigger];
       if (triggerValue && sub.options[triggerValue]) {
-        allComponents.push(...sub.options[triggerValue]);
+        const optionValue = sub.options[triggerValue];
+        if (Array.isArray(optionValue)) {
+          allComponents.push(...(optionValue as FrameworkComponent[]));
+        } else if ("components" in optionValue) {
+          allComponents.push(...optionValue.components);
+        }
       }
     }
   });
@@ -312,10 +351,10 @@ export const generateNaturalLanguagePrompt = (
 export const generateJsonPrompt = (
   framework: Framework,
   frameworkName: string,
-  params: { [key: string]: any },
-  customInputs: { [key: string]: string },
+  params: FormData,
+  customInputs: CustomInputs,
 ): string => {
-  const allComponents = [...(framework.components || [])];
+  const allComponents: FrameworkComponent[] = [...(framework.components || [])];
   const subcomponents = Array.isArray(framework.dynamicSubcomponents)
     ? framework.dynamicSubcomponents
     : framework.dynamicSubcomponents
@@ -326,7 +365,20 @@ export const generateJsonPrompt = (
     if (sub && sub.trigger) {
       const triggerValue = params[sub.trigger];
       if (triggerValue && sub.options[triggerValue]) {
-        allComponents.push(...sub.options[triggerValue]);
+        const optionValue = sub.options[triggerValue];
+        if (optionValue) {
+          // New super-framework structure
+          if (
+            "components" in optionValue &&
+            Array.isArray(optionValue.components)
+          ) {
+            allComponents.push(...optionValue.components);
+          }
+          // Old structure
+          else if (Array.isArray(optionValue)) {
+            allComponents.push(...(optionValue as FrameworkComponent[]));
+          }
+        }
       }
     }
   });
@@ -340,7 +392,7 @@ export const generateJsonPrompt = (
 
   const formatOutputKey = "FORMAT OUTPUT"; // Define variable for the key
 
-  const jsonOutput: { [key: string]: any } = {
+  const jsonOutput: Record<string, unknown> = {
     id_kerangka: framework.id_kerangka || "",
     nama_kerangka: framework.nama_kerangka || frameworkName,
     perspektif_user: framework.perspektif_user || framework.description || "",
@@ -374,19 +426,22 @@ export const generateJsonPrompt = (
     ),
     contoh_kalimat: framework.contoh_kalimat || "",
     output: framework.output || "natural_language_prompt or json_prompt",
-    input_komponen: allComponents.reduce((acc, comp) => {
-      let value = params[comp.name];
-      if (value === "Lainnya...") {
-        value = customInputs[comp.name] || "";
-      } else if (Array.isArray(value)) {
-        value = value.map((item) =>
-          item === "Lainnya..." ? customInputs[comp.name] || "" : item,
-        );
-      }
-      // Include all components, even if their value is empty, for a complete schema representation
-      acc[comp.name] = value !== undefined && value !== null ? value : "";
-      return acc;
-    }, {}),
+    input_komponen: allComponents.reduce(
+      (acc, comp) => {
+        let value = params[comp.name];
+        if (value === "Lainnya...") {
+          value = customInputs[comp.name] || "";
+        } else if (Array.isArray(value)) {
+          value = value.map((item) =>
+            item === "Lainnya..." ? customInputs[comp.name] || "" : item,
+          );
+        }
+        // Include all components, even if their value is empty, for a complete schema representation
+        acc[comp.name] = value !== undefined && value !== null ? value : "";
+        return acc;
+      },
+      {} as Record<string, any>,
+    ),
   };
 
   return JSON.stringify(jsonOutput, null, 2);
@@ -395,12 +450,13 @@ export const generateJsonPrompt = (
 export const generateFinalPrompt = (
   framework: Framework,
   frameworkName: string,
-  params: { [key: string]: any },
-  customInputs: { [key: string]: string },
+  params: FormData,
+  customInputs: CustomInputs,
 ): string => {
   if (frameworkName === SPECIAL_FRAMEWORKS.MIDJOURNEY) {
     const subject = params.subject || "";
     const style = params.style || "";
+    if (!framework.components) return "";
     const parameters = framework.components
       .map((comp) => {
         const value = params[comp.name];
@@ -434,18 +490,20 @@ export const generateFinalPrompt = (
   }
   if (SPECIAL_FRAMEWORKS.GENERIC_IMAGE_VIDEO.includes(frameworkName)) {
     const parts: string[] = [];
-    framework.components.forEach((comp) => {
-      const value = params[comp.name];
-      if (value) {
-        const displayValue =
-          value === "Lainnya..." ? customInputs[comp.name] || "" : value;
-        if (displayValue) {
-          parts.push(
-            `${comp.label.replace(/\(.+\)/, "").trim()}: ${displayValue}`,
-          );
+    if (framework.components) {
+      framework.components.forEach((comp) => {
+        const value = params[comp.name];
+        if (value) {
+          const displayValue =
+            value === "Lainnya..." ? customInputs[comp.name] || "" : value;
+          if (displayValue) {
+            parts.push(
+              `${comp.label.replace(/\(.+\)/, "").trim()}: ${displayValue}`,
+            );
+          }
         }
-      }
-    });
+      });
+    }
     return `A ${framework.toolType} of ${params.subject || frameworkName}. ${parts.join(", ")}.`;
   }
   return generateNaturalLanguagePrompt(framework, params, customInputs);

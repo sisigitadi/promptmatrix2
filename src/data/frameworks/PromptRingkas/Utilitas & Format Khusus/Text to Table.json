@@ -1,0 +1,40 @@
+{
+  "description": "Ekstrak informasi dari teks dan sajikan dalam format tabel yang rapi.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Konverter Data yang akan mengekstrak informasi dari teks dan menyajikannya dalam format tabel.",
+  "components": [
+    {
+      "name": "sourceText",
+      "label": "Teks Sumber",
+      "type": "textarea",
+      "placeholder": "Tempelkan paragraf atau teks yang berisi data di sini.",
+      "info": "Teks yang akan dianalisis."
+    },
+    {
+      "name": "columns",
+      "label": "Nama Kolom Tabel (pisahkan koma)",
+      "type": "text",
+      "placeholder": "e.g., 'Nama Produk, Harga, Ketersediaan'",
+      "info": "Definikan kolom-kolom yang Anda inginkan untuk tabel."
+    },
+    {
+      "name": "extractionInstruction",
+      "label": "Instruksi Ekstraksi",
+      "type": "textarea",
+      "placeholder": "e.g., 'Ekstrak semua produk yang disebutkan beserta harga dan status ketersediaan.'",
+      "info": "Panduan untuk AI tentang cara menemukan dan memformat data."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Utilitas & Format Khusus"
+  ],
+  "nama_kerangka": "Text to Table"
+}

@@ -1,0 +1,77 @@
+{
+  "description": "Rancang serangkaian email (misal: welcome series, nurture sequence) untuk memandu pelanggan.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis Otomatisasi Email yang akan merancang serangkaian email otomatis.",
+  "components": [
+    {
+      "name": "sequenceType",
+      "label": "Jenis Urutan Email",
+      "type": "select",
+      "options": [
+        "Welcome Series (untuk pelanggan baru)",
+        "Nurture Sequence (untuk prospek)",
+        "Re-engagement (untuk pengguna tidak aktif)",
+        "Lainnya..."
+      ],
+      "info": "Pilih tujuan utama dari rangkaian email ini."
+    },
+    {
+      "name": "product",
+      "label": "Produk/Layanan Terkait",
+      "type": "text",
+      "placeholder": "e.g., 'Aplikasi produktivitas 'Fokus''",
+      "info": "Fokus dari konten email.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "numberOfEmails",
+      "label": "Jumlah Email dalam Urutan",
+      "type": "number",
+      "placeholder": "e.g., 5",
+      "info": "Berapa banyak email yang akan ada dalam rangkaian ini?",
+      "validation": {
+        "min_value": 1,
+        "max_value": 10
+      }
+    },
+    {
+      "name": "sequenceGoal",
+      "label": "Tujuan Akhir Urutan Email",
+      "type": "text",
+      "placeholder": "e.g., 'Mendorong pengguna untuk upgrade ke versi Pro'",
+      "info": "Apa hasil yang Anda harapkan setelah email terakhir terkirim?",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "emailTopics",
+      "label": "Topik untuk Setiap Email (Opsional)",
+      "type": "textarea",
+      "placeholder": "Email 1: Cerita di balik produk\nEmail 2: Tips menggunakan fitur X\nEmail 3: Studi kasus pengguna",
+      "info": "Jika Anda punya ide, jabarkan alur konten dari email ke email.",
+      "optional": true,
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Jarak antar email adalah 2 hari. Nada harus semakin persuasif seiring berjalannya urutan. Setiap email harus memiliki satu CTA yang jelas.",
+      "info": "Instruksi tentang waktu, nada, atau struktur setiap email.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Pemasaran & Penjualan"
+  ],
+  "nama_kerangka": "Pembuat Urutan Email Otomatis"
+}

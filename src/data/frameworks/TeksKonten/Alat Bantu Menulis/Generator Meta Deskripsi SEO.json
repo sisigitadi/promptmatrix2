@@ -1,0 +1,63 @@
+{
+  "description": "Buat meta deskripsi yang menarik dan kaya kata kunci (<160 karakter) untuk halaman web.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis SEO On-Page yang akan membuat meta deskripsi.",
+  "components": [
+    {
+      "name": "pageTitle",
+      "label": "Judul Halaman",
+      "type": "text",
+      "placeholder": "e.g., 'Panduan Lengkap Teh Hijau untuk Kesehatan'",
+      "info": "Judul halaman web Anda.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "mainKeyword",
+      "label": "Kata Kunci Utama Halaman",
+      "type": "text",
+      "placeholder": "e.g., 'manfaat teh hijau'",
+      "info": "Kata kunci yang paling ingin Anda rangking di Google.",
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "pageSummary",
+      "label": "Ringkasan Singkat Isi Halaman",
+      "type": "textarea",
+      "placeholder": "Jelaskan secara singkat apa isi halaman ini. Apa yang akan didapatkan pengunjung?",
+      "info": "Berikan AI konteks tentang isi halaman agar deskripsi relevan.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "callToAction",
+      "label": "Ajakan Bertindak (Call-to-Action)",
+      "type": "text",
+      "placeholder": "e.g., 'Pelajari lebih lanjut!', 'Temukan faktanya di sini!'",
+      "info": "Dorong pengguna untuk mengklik hasil pencarian Anda.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan nada yang membangkitkan rasa penasaran. Pastikan kata kunci utama ada di awal kalimat. Jangan lebih dari 155 karakter.",
+      "info": "Batasan teknis atau gaya penulisan yang spesifik.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Alat Bantu Menulis"
+  ],
+  "nama_kerangka": "Generator Meta Deskripsi SEO"
+}

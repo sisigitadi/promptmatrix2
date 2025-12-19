@@ -1,0 +1,79 @@
+{
+  "description": "Buat daftar pertanyaan yang sering diajukan (FAQ) secara otomatis dari sebuah blok teks atau deskripsi.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis FAQ yang akan menghasilkan pertanyaan dan jawaban.",
+  "components": [
+    {
+      "name": "sourceText",
+      "label": "Teks Sumber atau Deskripsi Produk",
+      "type": "textarea",
+      "placeholder": "Tempelkan teks lengkap, deskripsi produk, atau artikel di sini...",
+      "info": "AI akan menganalisis teks ini untuk membuat pertanyaan dan jawaban yang relevan.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Audiens FAQ",
+      "type": "text",
+      "placeholder": "e.g., 'Pelanggan baru, developer, pengguna non-teknis'",
+      "info": "Siapa yang akan membaca FAQ ini? Ini mempengaruhi kompleksitas jawaban.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "questionStyle",
+      "label": "Gaya Pertanyaan",
+      "type": "select",
+      "options": [
+        "Langsung & Jelas",
+        "Berbasis Masalah Pengguna",
+        "Membangkitkan Rasa Ingin Tahu",
+        "Lainnya..."
+      ],
+      "info": "Pilih bagaimana pertanyaan harus dirumuskan."
+    },
+    {
+      "name": "answerStyle",
+      "label": "Gaya Jawaban",
+      "type": "select",
+      "options": [
+        "Singkat & Langsung ke Poin",
+        "Detail & Langkah-demi-Langkah",
+        "Ramah & Percakapan",
+        "Lainnya..."
+      ],
+      "info": "Pilih bagaimana jawaban harus disampaikan."
+    },
+    {
+      "name": "faqCount",
+      "label": "Jumlah Pertanyaan (Opsional)",
+      "type": "number",
+      "placeholder": "e.g., 5",
+      "info": "Jumlah pasangan tanya-jawab yang ingin Anda hasilkan.",
+      "optional": true,
+      "validation": {
+        "min_value": 1,
+        "max_value": 20
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Fokus pada pertanyaan tentang kebijakan pengembalian dan garansi. Hindari jawaban yang terlalu teknis. Pastikan satu pertanyaan tentang kompatibilitas.",
+      "info": "Berikan instruksi spesifik untuk memandu pembuatan FAQ.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Alat Bantu Menulis"
+  ],
+  "nama_kerangka": "Generator FAQ (Frequently Asked Questions)"
+}

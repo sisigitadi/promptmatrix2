@@ -1,0 +1,65 @@
+{
+  "description": "Buat prompt untuk Kaiber, yang dikenal dengan gaya visual artistik dan transformasi video.",
+  "toolType": "video",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Transformator Visual yang akan menghasilkan video dengan gaya visual artistik.",
+  "components": [
+    {
+      "name": "subject",
+      "label": "Subjek Video",
+      "type": "text",
+      "placeholder": "e.g., 'A dancing silhouette'",
+      "info": "Fokus utama dari video Anda.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "style",
+      "label": "Gaya Visual",
+      "type": "textarea",
+      "placeholder": "e.g., 'in the style of a psychedelic painting, vibrant, abstract'",
+      "info": "Deskripsi gaya artistik yang Anda inginkan.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "transformation",
+      "label": "Transformasi (untuk video-ke-video)",
+      "type": "text",
+      "placeholder": "e.g., 'Transform my video into an anime scene'",
+      "info": "Jelaskan bagaimana video input harus diubah.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "aspectRatio",
+      "label": "Aspect Ratio",
+      "type": "select",
+      "options": [
+        "9:16 (Portrait)",
+        "16:9 (Landscape)",
+        "1:1 (Square)"
+      ],
+      "info": "Pilih orientasi video Anda."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Video (Text-to-Video)"
+  ],
+  "nama_kerangka": "Kaiber"
+}

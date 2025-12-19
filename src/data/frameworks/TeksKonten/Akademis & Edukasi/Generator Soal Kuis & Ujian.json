@@ -1,0 +1,70 @@
+{
+  "description": "Buat berbagai jenis soal (pilihan ganda, esai singkat) berdasarkan materi pelajaran yang diberikan.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pembuat Soal Ujian yang akan membuat soal kuis dan ujian.",
+  "components": [
+    {
+      "name": "subjectMatter",
+      "label": "Materi Pelajaran",
+      "type": "textarea",
+      "placeholder": "Tempelkan teks atau poin-poin materi pelajaran di sini. Semakin detail, semakin baik.",
+      "info": "AI akan menggunakan teks ini sebagai dasar untuk membuat soal.",
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "questionType",
+      "label": "Jenis Soal",
+      "type": "select",
+      "options": [
+        "Pilihan Ganda",
+        "Esai Singkat",
+        "Benar/Salah",
+        "Isian Singkat",
+        "Campuran",
+        "Lainnya..."
+      ],
+      "info": "Pilih format soal yang Anda butuhkan."
+    },
+    {
+      "name": "numberOfQuestions",
+      "label": "Jumlah Soal",
+      "type": "number",
+      "placeholder": "e.g., 10",
+      "info": "Berapa banyak soal yang ingin Anda buat?",
+      "validation": {
+        "min_value": 1,
+        "max_value": 20
+      }
+    },
+    {
+      "name": "difficultyLevel",
+      "label": "Tingkat Kesulitan",
+      "type": "select",
+      "options": [
+        "Mudah (Pemahaman Dasar)",
+        "Menengah (Aplikasi Konsep)",
+        "Sulit (Analisis & Evaluasi)",
+        "Lainnya..."
+      ],
+      "info": "Tingkat kesulitan akan mempengaruhi kompleksitas soal."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Untuk pilihan ganda, buat pengecoh yang masuk akal. Sertakan kunci jawaban. Soal harus berbasis studi kasus.",
+      "info": "Instruksi spesifik untuk pembuatan soal dan kunci jawaban.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Akademis & Edukasi"
+  ],
+  "nama_kerangka": "Generator Soal Kuis & Ujian"
+}

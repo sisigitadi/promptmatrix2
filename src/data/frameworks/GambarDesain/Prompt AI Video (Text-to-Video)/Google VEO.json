@@ -1,0 +1,153 @@
+{
+  "description": "Buat prompt yang sangat deskriptif dan sinematik untuk menghasilkan video berkualitas tinggi dengan Google VEO.",
+  "toolType": "video",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Sinematografer AI yang akan menghasilkan video berkualitas tinggi.",
+  "components": [
+    {
+      "name": "prompt",
+      "label": "Prompt Deskriptif",
+      "type": "textarea",
+      "placeholder": "e.g., 'Several majestic elephants stride toward a watering hole at sunset, their wrinkled skin catching the golden light. The African savanna stretches out behind them.'",
+      "info": "Tulis prompt yang kaya detail, seolah-olah mendeskripsikan adegan film.",
+      "validation": {
+        "min_length": 50
+      }
+    },
+    {
+      "name": "aspectRatio",
+      "label": "Aspect Ratio",
+      "type": "select",
+      "options": [
+        "16:9",
+        "9:16",
+        "1:1"
+      ],
+      "info": "Nilai yang didukung adalah \"16:9\" (layar lebar, bagus untuk lanskap), \"9:16\" (potret/vertikal, bagus untuk objek tinggi), dan \"1:1\" (persegi). Default adalah \"16:9\"."
+    },
+    {
+      "name": "personGeneration",
+      "label": "Generasi Orang",
+      "type": "select",
+      "options": [
+        "allow",
+        "dont_allow",
+        "allow_adult"
+      ],
+      "info": "Kontrol penyertaan orang dengan \"dont_allow\" atau \"allow_adult\"."
+    },
+    {
+      "name": "negativePrompt",
+      "label": "Negative Prompt",
+      "type": "textarea",
+      "placeholder": "e.g., 'wall, frame'",
+      "info": "Tentukan elemen yang akan dikecualikan dari video. Jelaskan apa yang tidak Anda inginkan (misalnya, \"dinding, bingkai\") daripada menggunakan bahasa instruktif seperti \"tidak\" atau \"jangan\".",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "generateAudio",
+      "label": "Generate Audio",
+      "type": "select",
+      "options": [
+        "true",
+        "false"
+      ],
+      "info": "Kontrol apakah audio dihasilkan untuk video."
+    },
+    {
+      "name": "image",
+      "label": "Image (First Frame)",
+      "type": "text",
+      "placeholder": "e.g., 'URL_gambar'",
+      "info": "Gunakan gambar sebagai bingkai pertama untuk generasi gambar-ke-video.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "durationSeconds",
+      "label": "Durasi (detik)",
+      "type": "number",
+      "placeholder": "e.g., 8",
+      "info": "Klip video yang dihasilkan biasanya berdurasi 8 detik, tetapi dapat diperpanjang hingga 60 detik.",
+      "validation": {
+        "min_value": 1,
+        "max_value": 60
+      }
+    },
+    {
+      "name": "resolution",
+      "label": "Resolusi",
+      "type": "text",
+      "placeholder": "e.g., '1280x720px'",
+      "info": "Veo 2 menghasilkan 1280x720px (720p), dengan potensi resolusi 4K.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "model",
+      "label": "Model",
+      "type": "text",
+      "placeholder": "e.g., 'veo-2.0-generate-001'",
+      "info": "Tentukan versi model, misalnya, \"veo-2.0-generate-001\" atau \"veo-3.0-generate-preview\".",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "cinematicTerms",
+      "label": "Istilah Sinematik",
+      "type": "text",
+      "placeholder": "e.g., 'time-lapse of a blooming flower', 'aerial shot of a coastline'",
+      "info": "Gunakan istilah teknis perfilman untuk mengarahkan hasil.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "styleModifier",
+      "label": "Pengubah Gaya",
+      "type": "text",
+      "placeholder": "e.g., 'in a surreal, dreamlike style', 'as a black and white film noir'",
+      "info": "Tambahkan frasa untuk menentukan gaya visual secara keseluruhan.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "dialog",
+      "label": "Dialog",
+      "type": "textarea",
+      "placeholder": "e.g., 'Narator: Selamat datang di masa depan. Karakter A: Ini luar biasa!'",
+      "info": "Sertakan dialog yang akan diucapkan dalam video.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Veo 3 adalah versi terbaru, menawarkan realisme yang ditingkatkan, simulasi fisika, dan kemampuan audio asli. Klip biasanya berdurasi 8 detik, tetapi dapat diperpanjang hingga 60 detik. Filter keamanan diterapkan pada konten yang dihasilkan. Veo memiliki pemahaman yang kuat tentang bahasa sinematik, memungkinkan kontrol yang tepat atas output video. Titik Akses: Veo dapat diakses melalui Gemini API, Vertex AI, dan aplikasi Flow. Paket Google One AI Premium mungkin termasuk akses. Harga: Veo adalah fitur berbayar; periksa halaman harga resmi Google untuk detailnya. Hindari Pencampuran Gaya: Jangan mencampur gaya yang bertentangan (misalnya, kartun dan fotorealistik) dalam satu prompt. Subtitle: Untuk menghindari subtitle yang tidak diinginkan, tambahkan \"(tanpa subtitle)\" ke prompt atau gunakan metode prompt dialog tertentu. Watermark: Video yang dihasilkan mungkin menyertakan watermark.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Video (Text-to-Video)"
+  ],
+  "nama_kerangka": "Google VEO"
+}

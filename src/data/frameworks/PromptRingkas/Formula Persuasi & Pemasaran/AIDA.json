@@ -1,0 +1,61 @@
+{
+  "description": "Buat teks persuasif yang menarik perhatian, membangun minat, menciptakan keinginan, dan mendorong tindakan.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Ahli Persuasi yang akan menghasilkan teks persuasif.",
+  "components": [
+    {
+      "name": "productOrService",
+      "label": "Produk/Layanan",
+      "type": "text",
+      "placeholder": "e.g., 'Aplikasi manajemen waktu'",
+      "info": "Apa yang Anda tawarkan?"
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Audiens",
+      "type": "text",
+      "placeholder": "e.g., 'Profesional sibuk, pelajar'",
+      "info": "Siapa yang Anda sasar?"
+    },
+    {
+      "name": "attentionHook",
+      "label": "Poin untuk Menarik Perhatian (Attention)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Berhenti membuang-buang waktu. Dapatkan kembali kendali hari Anda.'",
+      "info": "Bagaimana cara Anda menghentikan scroll audiens?"
+    },
+    {
+      "name": "interestPoints",
+      "label": "Poin untuk Membangun Minat (Interest)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Fitur pelacakan otomatis, integrasi kalender, laporan produktivitas mingguan.'",
+      "info": "Informasi menarik atau relevan yang membuat mereka terus membaca."
+    },
+    {
+      "name": "desireDrivers",
+      "label": "Poin untuk Menciptakan Keinginan (Desire)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Bayangkan menyelesaikan semua tugas Anda sebelum jam 3 sore. Rasakan kebebasan dan ketenangan pikiran.'",
+      "info": "Bagaimana produk Anda membuat hidup mereka lebih baik? Fokus pada manfaat emosional."
+    },
+    {
+      "name": "callToAction",
+      "label": "Ajakan Bertindak (Action)",
+      "type": "text",
+      "placeholder": "e.g., 'Unduh sekarang dan coba gratis selama 7 hari!'",
+      "info": "Apa langkah selanjutnya yang harus diambil audiens?"
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Formula Persuasi & Pemasaran"
+  ],
+  "nama_kerangka": "AIDA"
+}

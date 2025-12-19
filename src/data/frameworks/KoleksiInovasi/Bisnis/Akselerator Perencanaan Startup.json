@@ -1,0 +1,109 @@
+{
+  "id_kerangka": "BIS-STP-001",
+  "nama_kerangka": "Akselerator Perencanaan Startup",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
+  "description": "Co-founder AI strategis untuk memandu wirausahawan melalui tahapan krusial membangun bisnis, dari ide hingga pitch deck.",
+  "perspektif_user": "Saya butuh bantuan terstruktur untuk setiap tahap memulai bisnis, mulai dari mencari ide, menganalisis pasar, hingga membuat materi untuk investor.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang ahli strategi startup yang akan merencanakan dan mengembangkan startup.",
+  "components": [
+    {
+      "name": "TUGAS_PERENCANAAN_STARTUP",
+      "label": "Tugas Perencanaan Startup",
+      "type": "select",
+      "options": [
+        "Generator Ide Bisnis",
+        "Penyusun Model Bisnis Kanvas",
+        "Analisis Persaingan dan Pasar",
+        "Pembuat Draf Konten Pitch Deck"
+      ],
+      "default": "Generator Ide Bisnis",
+      "info": "Pilih tugas yang paling relevan dengan tahap Anda saat ini."
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "TUGAS_PERENCANAAN_STARTUP",
+      "options": {
+        "Generator Ide Bisnis": [
+          {
+            "name": "INDUSTRI_STARTUP",
+            "label": "Industri atau Sektor",
+            "type": "text",
+            "placeholder": "Contoh: Teknologi Pendidikan, Makanan & Minuman",
+            "info": "Sebutkan industri yang Anda minati."
+          },
+          {
+            "name": "MASALAH_STARTUP",
+            "label": "Masalah Spesifik yang Ingin Dipecahkan",
+            "type": "text",
+            "placeholder": "Contoh: Sulitnya mencari mentor berkualitas",
+            "info": "Masalah apa yang ingin Anda selesaikan dengan bisnis ini?"
+          }
+        ],
+        "Penyusun Model Bisnis Kanvas": [
+          {
+            "name": "BMC_PROPOSISI_NILAI",
+            "label": "Proposisi Nilai (Value Propositions)",
+            "type": "textarea",
+            "placeholder": "Contoh: Platform mentor on-demand yang terjangkau dan terverifikasi.",
+            "info": "Apa nilai unik yang Anda tawarkan kepada pelanggan?"
+          },
+          {
+            "name": "BMC_SEGMEN_PELANGGAN",
+            "label": "Segmen Pelanggan (Customer Segments)",
+            "type": "textarea",
+            "placeholder": "Contoh: Mahasiswa tingkat akhir dan profesional muda.",
+            "info": "Siapa target pelanggan utama Anda?"
+          }
+        ],
+        "Analisis Persaingan dan Pasar": [
+          {
+            "name": "ANALISIS_DESKRIPSI_BISNIS",
+            "label": "Deskripsi Singkat Bisnis Anda",
+            "type": "textarea",
+            "placeholder": "Contoh: Platform marketplace untuk menghubungkan mentor dengan mentee.",
+            "info": "Jelaskan bisnis Anda secara singkat untuk analisis."
+          },
+          {
+            "name": "ANALISIS_KOMPETITOR",
+            "label": "Nama 2-3 Kompetitor Utama",
+            "type": "text",
+            "placeholder": "Contoh: Top-Mentor, Mentor.io",
+            "info": "Sebutkan pemain utama lain di pasar Anda."
+          }
+        ],
+        "Pembuat Draf Konten Pitch Deck": [
+          {
+            "name": "PITCH_NAMA_STARTUP",
+            "label": "Nama Startup",
+            "type": "text",
+            "placeholder": "Contoh: MentorConnect",
+            "info": "Nama startup Anda untuk pitch deck."
+          },
+          {
+            "name": "PITCH_MASALAH_SOLUSI",
+            "label": "Masalah dan Solusi",
+            "type": "textarea",
+            "placeholder": "Masalah: Mahasiswa sulit menemukan mentor yang sesuai. Solusi: Aplikasi kami menggunakan AI untuk mencocokkan mereka secara instan.",
+            "info": "Jelaskan masalah yang ada dan bagaimana startup Anda menyelesaikannya."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang ahli strategi startup dan co-founder AI.",
+    "KONTEKS": "Pengguna memerlukan bantuan untuk tahap '{TUGAS_PERENCANAAN_STARTUP}' dari perjalanan startup mereka.",
+    "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Generator Ide Bisnis'**: Berikan 3 ide startup unik di industri '{INDUSTRI_STARTUP}' yang menyelesaikan masalah '{MASALAH_STARTUP}'. Sertakan usulan nama, proposisi nilai, dan langkah validasi awal.\n- **Jika 'Penyusun Model Bisnis Kanvas'**: Buat draf Business Model Canvas berdasarkan proposisi nilai '{BMC_PROPOSISI_NILAI}' dan segmen pelanggan '{BMC_SEGMEN_PELANGGAN}'. Isi blok lainnya dengan asumsi yang cerdas dan berikan saran perbaikan.\n- **Jika 'Analisis Persaingan dan Pasar'**: Lakukan analisis SWOT untuk bisnis '{ANALISIS_DESKRIPSI_BISNIS}' dan analisis singkat kompetitor '{ANALISIS_KOMPETITOR}'.\n- **Jika 'Pembuat Draf Konten Pitch Deck'**: Buat draf konten terstruktur untuk 10 slide pitch deck untuk startup '{PITCH_NAMA_STARTUP}' yang menyelesaikan '{PITCH_MASALAH_SOLUSI}'.",
+    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan dalam bentuk laporan atau dokumen yang terstruktur dengan judul dan sub-judul yang jelas."
+  },
+  "toolType": "text",
+  "konteks_tambahan_instruksi_khusus": "Selalu gunakan pendekatan yang praktis dan berorientasi pada tindakan. Berikan saran yang realistis untuk startup tahap awal.",
+  "contoh_kalimat": "Bantu saya membuat model bisnis kanvas untuk ide startup saya.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

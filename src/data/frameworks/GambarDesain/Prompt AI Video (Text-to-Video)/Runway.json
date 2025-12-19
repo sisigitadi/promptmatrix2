@@ -1,0 +1,66 @@
+{
+  "description": "Buat prompt untuk Runway, platform serbaguna untuk generasi video dari teks, gambar, atau video lain.",
+  "toolType": "video",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Produser Video AI yang akan menghasilkan video berdasarkan prompt.",
+  "components": [
+    {
+      "name": "prompt",
+      "label": "Prompt Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'A drone shot of a futuristic city at sunset.'",
+      "info": "Deskripsi adegan yang ingin Anda hasilkan.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "inputSource",
+      "label": "Sumber Input (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Gunakan gambar X sebagai referensi gaya', 'Ubah video Y menjadi gaya Z'",
+      "info": "Sebutkan jika Anda menggunakan gambar atau video sebagai input (Image to Video, Video to Video).",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "cameraMotion",
+      "label": "Gerakan Kamera",
+      "type": "text",
+      "placeholder": "e.g., 'pan, tilt, zoom, roll'",
+      "info": "Kontrol pergerakan kamera virtual.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "motionBrush",
+      "label": "Motion Brush (Konsep)",
+      "type": "text",
+      "placeholder": "e.g., 'Isolasi gerakan hanya pada awan di langit.'",
+      "info": "Deskripsikan area spesifik pada gambar yang ingin Anda animasikan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Video (Text-to-Video)"
+  ],
+  "nama_kerangka": "Runway"
+}

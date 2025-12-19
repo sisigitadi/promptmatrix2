@@ -1,0 +1,72 @@
+{
+  "description": "Temukan nama yang unik, berkesan, dan relevan untuk bisnis atau produk Anda.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Ahli Penamaan yang akan menghasilkan nama brand atau produk.",
+  "components": [
+    {
+      "name": "coreConcept",
+      "label": "Deskripsi Konsep/Produk",
+      "type": "textarea",
+      "placeholder": "e.g., 'Aplikasi pengelola keuangan pribadi yang menggunakan AI untuk memberikan saran hemat.'",
+      "info": "Jelaskan apa yang Anda buat dalam 1-2 kalimat.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "coreValues",
+      "label": "Nilai Inti Brand (pisahkan koma)",
+      "type": "text",
+      "placeholder": "e.g., 'Kepercayaan, kesederhanaan, pemberdayaan'",
+      "info": "Kata-kata yang merepresentasikan jiwa dari brand atau produk Anda.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "nameStyle",
+      "label": "Gaya Nama yang Diinginkan",
+      "type": "select",
+      "options": [
+        "Modern & Singkat (e.g., Google, X)",
+        "Klasik & Dapat Dipercaya (e.g., General Electric)",
+        "Evokatif & Imajinatif (e.g., Patagonia)",
+        "Deskriptif (e.g., The Weather Channel)",
+        "Lainnya..."
+      ],
+      "info": "Pilih jenis nuansa nama yang Anda cari."
+    },
+    {
+      "name": "keywordsToInclude",
+      "label": "Kata atau Akar Kata untuk Disertakan (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Zen, Nova, Eco, Tech'",
+      "info": "Kata spesifik yang mungkin ingin Anda masukkan ke dalam nama.",
+      "optional": true
+    },
+    {
+      "name": "keywordsToAvoid",
+      "label": "Kata atau Konsep untuk Dihindari",
+      "type": "text",
+      "placeholder": "e.g., 'Cloud, Sync, Global'",
+      "info": "Kata-words yang terlalu umum atau tidak sesuai dengan brand Anda.",
+      "optional": true
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Nama harus mudah diucapkan. Harus tersedia sebagai domain .com. Tidak boleh lebih dari 3 suku kata. Hindari nama yang terdengar seperti brand yang sudah ada.",
+      "info": "Batasan teknis atau kreatif lainnya yang sangat penting.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Kreatif & Ideasi"
+  ],
+  "nama_kerangka": "Generator Nama Brand/Produk"
+}

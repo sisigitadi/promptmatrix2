@@ -1,0 +1,282 @@
+{
+  "id_kerangka": "PROJ-LG-001",
+  "nama_kerangka": "Strategi Lead Generation",
+  "version": "1.0.0",
+  "kategori": [
+    "Prompt Proyek",
+    "Lead Generation"
+  ],
+  "description": "Kerangka kerja ini membantu Anda merancang strategi dan konten yang efektif untuk menghasilkan prospek (leads) berkualitas tinggi.",
+  "perspektif_user": "Sebagai pemasar, pemilik bisnis, atau profesional penjualan, saya membutuhkan bantuan untuk membuat rencana yang komprehensif untuk menarik calon pelanggan, mengumpulkan informasi mereka, dan membimbing mereka melalui saluran penjualan.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang ahli strategi pemasaran digital yang akan membantu pengguna merancang rencana Lead Generation yang efektif.",
+  "components": [
+    {
+      "name": "nama_produk_layanan",
+      "label": "Nama Produk/Layanan",
+      "type": "text",
+      "description": "Sebutkan nama produk atau layanan yang ingin Anda promosikan.",
+      "default": "",
+      "optional": false,
+      "placeholder": "Contoh: Aplikasi Manajemen Proyek 'TaskFlow'",
+      "info": "Nama produk atau layanan yang akan menjadi fokus strategi Lead Generation ini.",
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "deskripsi_produk_layanan",
+      "label": "Deskripsi Singkat Produk/Layanan",
+      "type": "textarea",
+      "description": "Jelaskan secara singkat apa itu produk/layanan Anda dan apa manfaat utamanya.",
+      "default": "",
+      "optional": false,
+      "placeholder": "Contoh: TaskFlow adalah aplikasi SaaS yang membantu tim mengelola proyek, melacak tugas, dan berkolaborasi secara efisien, meningkatkan produktivitas hingga 30%.",
+      "info": "Penjelasan singkat tentang produk atau layanan Anda, termasuk nilai jual uniknya.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "target_audiens",
+      "label": "Target Audiens Utama",
+      "type": "textarea",
+      "description": "Jelaskan siapa target audiens utama Anda (demografi, psikografi, masalah yang mereka hadapi).",
+      "default": "",
+      "optional": false,
+      "placeholder": "Contoh: Manajer proyek di perusahaan teknologi skala menengah (50-500 karyawan) yang kesulitan dengan koordinasi tim dan tenggat waktu yang ketat.",
+      "info": "Detail tentang siapa calon pelanggan ideal Anda, termasuk karakteristik demografi, minat, dan tantangan yang mereka hadapi.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "tujuan_leadgen",
+      "label": "Tujuan Utama Lead Generation",
+                  "type": "select",      "description": "Pilih tujuan utama dari kampanye Lead Generation ini.",
+      "default": "Meningkatkan jumlah prospek berkualitas (MQL/SQL)",
+      "optional": false,
+      "options": [
+        {
+          "label": "Meningkatkan jumlah prospek berkualitas (MQL/SQL)",
+          "value": "Meningkatkan jumlah prospek berkualitas (MQL/SQL)"
+        },
+        {
+          "label": "Meningkatkan brand awareness",
+          "value": "Meningkatkan brand awareness"
+        },
+        {
+          "label": "Mengumpulkan data kontak untuk email marketing",
+          "value": "Mengumpulkan data kontak untuk email marketing"
+        },
+        {
+          "label": "Mendorong pendaftaran uji coba gratis",
+          "value": "Mendorong pendaftaran uji coba gratis"
+        },
+        {
+          "label": "Lainnya...",
+          "value": "Lainnya"
+        }
+      ],
+      "info": "Tujuan spesifik yang ingin Anda capai dengan strategi Lead Generation ini."
+    },
+    {
+      "name": "saluran_pemasaran",
+      "label": "Saluran Pemasaran yang Dipertimbangkan",
+      "type": "multiselect",
+      "description": "Pilih saluran pemasaran yang ingin Anda gunakan untuk menjangkau audiens.",
+      "default": [],
+      "optional": false,
+      "options": [
+        {
+          "label": "Iklan Media Sosial (Facebook, Instagram, LinkedIn)",
+          "value": "Iklan Media Sosial"
+        },
+        {
+          "label": "SEO (Optimasi Mesin Pencari)",
+          "value": "SEO"
+        },
+        {
+          "label": "Content Marketing (Blog, Artikel)",
+          "value": "Content Marketing"
+        },
+        {
+          "label": "Email Marketing",
+          "value": "Email Marketing"
+        },
+        {
+          "label": "Webinar/Event Online",
+          "value": "Webinar/Event Online"
+        },
+        {
+          "label": "Iklan Berbayar (Google Ads)",
+          "value": "Google Ads"
+        },
+        {
+          "label": "Lainnya...",
+          "value": "Lainnya"
+        }
+      ],
+      "info": "Pilih platform atau metode yang akan Anda gunakan untuk mendistribusikan konten dan menarik prospek."
+    },
+    {
+      "name": "jenis_konten_penawaran",
+      "label": "Jenis Konten/Penawaran untuk Menarik Leads",
+      "type": "multiselect",
+      "description": "Pilih jenis konten atau penawaran yang akan digunakan untuk menarik prospek.",
+      "default": [],
+      "optional": false,
+      "options": [
+        {
+          "label": "E-book/Whitepaper",
+          "value": "E-book/Whitepaper"
+        },
+        {
+          "label": "Webinar/Workshop Gratis",
+          "value": "Webinar/Workshop Gratis"
+        },
+        {
+          "label": "Uji Coba Gratis (Free Trial)",
+          "value": "Uji Coba Gratis"
+        },
+        {
+          "label": "Template/Checklist Gratis",
+          "value": "Template/Checklist Gratis"
+        },
+        {
+          "label": "Studi Kasus/Laporan Industri",
+          "value": "Studi Kasus/Laporan Industri"
+        },
+        {
+          "label": "Konsultasi Gratis",
+          "value": "Konsultasi Gratis"
+        },
+        {
+          "label": "Lainnya...",
+          "value": "Lainnya"
+        }
+      ],
+      "info": "Pilih jenis 'lead magnet' atau penawaran nilai yang akan Anda gunakan untuk mendapatkan informasi kontak prospek."
+    },
+    {
+      "name": "metrik_keberhasilan",
+      "label": "Metrik Keberhasilan",
+      "type": "textarea",
+      "description": "Sebutkan metrik spesifik yang akan Anda gunakan untuk mengukur keberhasilan kampanye Lead Generation ini.",
+      "default": "",
+      "optional": true,
+      "placeholder": "Contoh: Jumlah MQL, tingkat konversi dari MQL ke SQL, biaya per lead (CPL).",
+      "info": "Indikator Kinerja Utama (KPI) yang akan digunakan untuk mengevaluasi efektivitas strategi.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "kriteria_pencarian_prospek",
+      "label": "Kriteria Pencarian Prospek (Opsional)",
+      "type": "textarea",
+      "description": "Jelaskan kriteria spesifik untuk mencari data prospek (perusahaan atau perorangan) yang relevan dengan strategi ini. Contoh: 'Daftar perusahaan SaaS di Indonesia dengan lebih dari 50 karyawan', atau 'Email kontak manajer pemasaran di industri e-commerce'.",
+      "default": "",
+      "optional": true,
+      "placeholder": "Contoh: Daftar perusahaan manufaktur di Jawa Barat dengan omset > 10M USD, atau profil LinkedIn direktur HRD di perusahaan multinasional.",
+      "info": "Definisikan kriteria untuk mencari data prospek yang spesifik, baik itu informasi perusahaan atau individu, yang akan digunakan dalam strategi Lead Generation Anda.",
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang ahli strategi pemasaran digital yang akan membantu pengguna merancang rencana Lead Generation yang efektif.",
+    "KONTEKS": "Saya ingin Anda membantu saya merancang strategi Lead Generation yang komprehensif untuk produk/layanan saya. Berikut adalah detailnya:\n\nNama Produk/Layanan: {{nama_produk_layanan}}\nDeskripsi Produk/Layanan: {{deskripsi_produk_layanan}}\nTarget Audiens Utama: {{target_audiens}}\nTujuan Utama Lead Generation: {{tujuan_leadgen}}{{#if tujuan_leadgen_lainnya}} ({{tujuan_leadgen_lainnya}}){{/if}}\nSaluran Pemasaran yang Dipertimbangkan: {{saluran_pemasaran}}{{#if saluran_pemasaran_lainnya}}, {{saluran_pemasaran_lainnya}}{{/if}}\nJenis Konten/Penawaran untuk Menarik Leads: {{jenis_konten_penawaran}}{{#if jenis_konten_penawaran_lainnya}}, {{jenis_konten_penawaran_lainnya}}{{/if}}\nMetrik Keberhasilan: {{metrik_keberhasilan}}\n{{#if kriteria_pencarian_prospek}}Kriteria Pencarian Prospek: {{kriteria_pencarian_prospek}}{{/if}}",
+    "TUGAS": "Berdasarkan informasi di atas, buatkan saya strategi Lead Generation yang terperinci. Strategi ini harus mencakup:\n\n1.  **Ringkasan Eksekutif:** Gambaran umum singkat tentang strategi.\n2.  **Analisis Target Audiens:** Penjelasan lebih lanjut tentang persona target dan bagaimana produk/layanan Anda menyelesaikan masalah mereka.\n3.  **Tujuan SMART:** Tujuan spesifik, terukur, dapat dicapai, relevan, dan terikat waktu untuk kampanye Lead Generation ini.\n4.  **Strategi Konten & Penawaran:** Ide-ide konten spesifik dan 'lead magnet' yang relevan untuk setiap saluran yang dipilih, serta bagaimana mereka akan menarik prospek.\n5.  **Rencana Distribusi & Promosi:** Bagaimana konten dan penawaran akan didistribusikan melalui saluran pemasaran yang dipilih.\n6.  **Proses Pengumpulan & Kualifikasi Lead:** Langkah-langkah untuk mengumpulkan informasi prospek dan bagaimana mereka akan dikualifikasi (misalnya, MQL, SQL).\n7.  **Metrik & Pengukuran:** Bagaimana keberhasilan akan diukur berdasarkan metrik yang diberikan, dan saran untuk alat pelacakan.\n8.  **Timeline (Opsional):** Saran timeline umum untuk implementasi strategi.\n9.  **Rekomendasi Pencarian Data Prospek:** Berdasarkan kriteria yang diberikan (jika ada), sarankan metode, alat, atau sumber daya yang efektif untuk mencari dan mengumpulkan data prospek (perusahaan atau perorangan) yang relevan.",
+    "FORMAT_OUTPUT": "Sajikan strategi dalam format Markdown yang terstruktur dengan baik, menggunakan heading, bullet points, dan bold untuk keterbacaan yang maksimal."
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "tujuan_leadgen",
+      "options": {
+        "Lainnya": [
+          {
+            "name": "tujuan_leadgen_lainnya",
+            "label": "Tujuan Lead Generation Lainnya",
+            "type": "text",
+            "description": "Sebutkan tujuan Lead Generation spesifik Anda jika memilih 'Lainnya'.",
+            "default": "",
+            "optional": false,
+            "placeholder": "Contoh: Mendapatkan 1000 pendaftar webinar dalam 1 bulan.",
+            "info": "Jelaskan tujuan Lead Generation Anda secara spesifik jika tidak ada dalam pilihan yang tersedia.",
+            "validation": {
+              "min_length": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "saluran_pemasaran",
+      "options": {
+        "Lainnya": [
+          {
+            "name": "saluran_pemasaran_lainnya",
+            "label": "Saluran Pemasaran Lainnya",
+            "type": "textarea",
+            "description": "Sebutkan saluran pemasaran spesifik Anda jika memilih 'Lainnya'.",
+            "default": "",
+            "optional": false,
+            "placeholder": "Contoh: Kemitraan dengan influencer industri, podcast.",
+            "info": "Jelaskan saluran pemasaran tambahan yang ingin Anda pertimbangkan.",
+            "validation": {
+              "min_length": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "jenis_konten_penawaran",
+      "options": {
+        "Lainnya": [
+          {
+            "name": "jenis_konten_penawaran_lainnya",
+            "label": "Jenis Konten/Penawaran Lainnya",
+            "type": "textarea",
+            "description": "Sebutkan jenis konten/penawaran spesifik Anda jika memilih 'Lainnya'.",
+            "default": "",
+            "optional": false,
+            "placeholder": "Contoh: Kuis interaktif, demo produk personal.",
+            "info": "Jelaskan jenis konten atau penawaran tambahan yang ingin Anda gunakan.",
+            "validation": {
+              "min_length": 5
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "toolType": "text",
+  "konteks_tambahan_instruksi_khusus": "Pastikan strategi yang dihasilkan relevan dengan industri dan target audiens yang disebutkan. Berikan saran yang praktis dan dapat ditindaklanjuti. Hindari jargon yang tidak perlu dan fokus pada kejelasan.",
+  "contoh_kalimat": "Buatkan saya strategi lead generation untuk produk SaaS baru.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": [
+    {
+      "triggerField": "tujuan_leadgen",
+      "triggerValue": "Lainnya",
+      "dependentField": "tujuan_leadgen_lainnya",
+      "validationType": "required",
+      "errorMessage": "Harap isi 'Tujuan Lead Generation Lainnya' jika Anda memilih 'Lainnya'."
+    },
+    {
+      "triggerField": "saluran_pemasaran",
+      "triggerValue": "Lainnya",
+      "dependentField": "saluran_pemasaran_lainnya",
+      "validationType": "required",
+      "errorMessage": "Harap isi 'Saluran Pemasaran Lainnya' jika Anda memilih 'Lainnya'."
+    },
+    {
+      "triggerField": "jenis_konten_penawaran",
+      "triggerValue": "Lainnya",
+      "dependentField": "jenis_konten_penawaran_lainnya",
+      "validationType": "required",
+      "errorMessage": "Harap isi 'Jenis Konten/Penawaran Lainnya' jika Anda memilih 'Lainnya'."
+    }
+  ]
+}

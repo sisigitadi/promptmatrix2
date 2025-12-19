@@ -1,0 +1,76 @@
+{
+  "description": "Buat jadwal perjalanan harian yang detail dan logis berdasarkan preferensi Anda.",
+  "toolType": "planning",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Perencana Perjalanan yang akan membuat jadwal perjalanan harian.",
+  "components": [
+    {
+      "name": "destination",
+      "label": "Tujuan (Kota/Negara)",
+      "type": "text",
+      "placeholder": "e.g., 'Kyoto, Jepang'",
+      "info": "Lokasi utama dari perjalanan Anda.",
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "duration",
+      "label": "Jumlah Hari Perjalanan",
+      "type": "number",
+      "placeholder": "e.g., 5",
+      "info": "Berapa lama Anda akan berada di sana?",
+      "validation": {
+        "min_value": 1,
+        "max_value": 30
+      }
+    },
+    {
+      "name": "interests",
+      "label": "Minat Utama (pisahkan koma)",
+      "type": "text",
+      "placeholder": "e.g., 'Kuliner, Kuil & Sejarah, Alam, Belanja, Seni Kontemporer'",
+      "info": "Jenis aktivitas apa yang paling Anda nikmati.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "travelStyle",
+      "label": "Gaya Perjalanan",
+      "type": "select",
+      "options": [
+        "Santai & Fleksibel",
+        "Padat & Efisien",
+        "Ramah Anggaran (Budget)",
+        "Mewah & Nyaman",
+        "Petualangan",
+        "Lainnya..."
+      ],
+      "info": "Pilih pendekatan umum untuk perjalanan Anda."
+    },
+    {
+      "name": "mustVisit",
+      "label": "Tempat yang Wajib Dikunjungi (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Kuil Fushimi Inari, Hutan Bambu Arashiyama'",
+      "info": "Sebutkan tempat spesifik yang tidak boleh terlewatkan.",
+      "optional": true
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Saya tidak suka keramaian, cari waktu kunjungan yang sepi. Saya bepergian dengan anak-anak. Sertakan setidaknya satu kafe unik setiap hari. Alokasikan waktu untuk istirahat siang.",
+      "info": "Preferensi personal atau batasan yang perlu diperhatikan oleh AI.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Kehidupan & Produktivitas"
+  ],
+  "nama_kerangka": "Perencana Perjalanan (Itinerary Planner)"
+}

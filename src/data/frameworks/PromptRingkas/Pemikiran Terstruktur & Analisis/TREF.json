@@ -1,0 +1,47 @@
+{
+  "description": "Struktur prompt dengan menentukan Tugas, Persyaratan, Ekspektasi, dan Format.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Perencana Tugas yang akan menyusun respons berdasarkan struktur TREF.",
+  "components": [
+    {
+      "name": "task",
+      "label": "Tugas (Task)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Tulis email untuk mengumumkan peluncuran fitur baru.'",
+      "info": "Apa tugas utama yang harus dilakukan AI?"
+    },
+    {
+      "name": "requirements",
+      "label": "Persyaratan (Requirements)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Sebutkan 3 manfaat utama. Target audiens adalah pengguna premium. Nada harus antusias.'",
+      "info": "Informasi dan batasan penting yang harus disertakan."
+    },
+    {
+      "name": "expectations",
+      "label": "Ekspektasi (Ekspektasi)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Email harus ringkas, tidak lebih dari 150 kata. Harus ada satu ajakan bertindak yang jelas.'",
+      "info": "Kriteria kualitas atau hasil akhir yang diharapkan."
+    },
+    {
+      "name": "format",
+      "label": "Format (Format)",
+      "type": "text",
+      "placeholder": "e.g., 'Format sebagai email dengan Subjek, Isi, dan Penutup.'",
+      "info": "Bagaimana struktur output yang diinginkan?"
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Pemikiran Terstruktur & Analisis"
+  ],
+  "nama_kerangka": "TREF"
+}

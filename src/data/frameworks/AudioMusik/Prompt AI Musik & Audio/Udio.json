@@ -1,0 +1,43 @@
+{
+  "description": "Buat prompt untuk Udio, yang dikenal dengan kualitas audio dan fleksibilitas gayanya.",
+  "toolType": "music-generation",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Komposer Audio Kreatif yang akan menghasilkan musik.",
+  "components": [
+    {
+      "name": "prompt",
+      "label": "Prompt Deskriptif",
+      "type": "textarea",
+      "placeholder": "e.g., 'A soulful blues track about a long road trip, with harmonica solos, male vocals, and a steady drum beat'",
+      "info": "Deskripsikan musik Anda secara detail, termasuk genre, instrumen, mood, dan tema."
+    },
+    {
+      "name": "lyrics",
+      "label": "Lirik (Opsional)",
+      "type": "textarea",
+      "placeholder": "e.g., '[Verse]\nSunrise on the highway...'",
+      "info": "Masukkan lirik jika Anda punya, atau biarkan Udio yang membuatnya."
+    },
+    {
+      "name": "instrumental",
+      "label": "Instrumental?",
+      "type": "select",
+      "options": [
+        "Tidak",
+        "Ya"
+      ],
+      "info": "Pilih 'Ya' untuk membuat lagu tanpa vokal."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Audio & Musik",
+    "Prompt AI Musik & Audio"
+  ],
+  "nama_kerangka": "Udio"
+}

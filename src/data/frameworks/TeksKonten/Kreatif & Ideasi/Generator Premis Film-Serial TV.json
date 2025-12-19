@@ -1,0 +1,58 @@
+{
+  "description": "Kembangkan ide premis satu kalimat (logline) yang menarik untuk film atau serial TV.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penulis Premis Sinematik yang akan mengembangkan ide premis satu kalimat.",
+  "components": [
+    {
+      "name": "genre",
+      "label": "Genre Utama",
+      "type": "text",
+      "placeholder": "e.g., 'Fiksi Ilmiah, Komedi Romantis'",
+      "info": "Genre utama akan menentukan nada dan ekspektasi."
+    },
+    {
+      "name": "mainCharacter",
+      "label": "Tokoh Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'Seorang pustakawan pemalu yang menemukan buku ajaib'",
+      "info": "Siapa protagonis cerita Anda dan apa ciri khasnya?"
+    },
+    {
+      "name": "goal",
+      "label": "Tujuan Tokoh Utama",
+      "type": "textarea",
+      "placeholder": "e.g., '...harus menggunakan buku itu untuk menyelamatkan dunianya dari kehampaan.'",
+      "info": "Apa yang ingin dicapai oleh tokoh utama?"
+    },
+    {
+      "name": "obstacle",
+      "label": "Rintangan Utama",
+      "type": "textarea",
+      "placeholder": "e.g., '...sambil diburu oleh perkumpulan rahasia yang ingin merebut buku itu.'",
+      "info": "Apa atau siapa yang menghalangi tujuan tokoh utama?"
+    },
+    {
+      "name": "twist",
+      "label": "Elemen Unik/Twist (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Ternyata buku itu menulis dirinya sendiri.'",
+      "info": "Apa yang membuat cerita Anda berbeda dan tidak klise?"
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Buat beberapa variasi logline. Gabungkan dua genre yang tidak biasa. Premis harus cocok untuk serial animasi.",
+      "info": "Instruksi kreatif lainnya.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Kreatif & Ideasi"
+  ],
+  "nama_kerangka": "Generator Premis Film/Serial TV"
+}

@@ -1,0 +1,87 @@
+{
+  "description": "Hasilkan naskah email untuk kampanye pemasaran.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis Pemasaran Email yang akan menghasilkan naskah email.",
+  "components": [
+    {
+      "name": "objective",
+      "label": "Tujuan Email",
+      "type": "text",
+      "placeholder": "e.g., 'promo produk baru, newsletter bulanan'",
+      "info": "Apa hasil yang diharapkan dari email ini?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "productName",
+      "label": "Nama Produk/Layanan",
+      "type": "text",
+      "placeholder": "e.g., 'Langganan Premium Aplikasi X'",
+      "info": "Fokus utama yang ditawarkan dalam email.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "recipientSegment",
+      "label": "Segmen Penerima",
+      "type": "text",
+      "placeholder": "e.g., 'pelanggan setia, pengguna baru'",
+      "info": "Jelaskan segmen penerima untuk personalisasi. (Contoh: pengguna yang belum membeli, pelanggan VIP).",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "senderPersona",
+      "label": "Persona Pengirim",
+      "type": "text",
+      "placeholder": "e.g., 'CEO, Tim Marketing, Sahabat Brand'",
+      "info": "Dari sudut pandang siapa email ini ditulis.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "callToAction",
+      "label": "Call To Action (CTA)",
+      "type": "text",
+      "placeholder": "e.g., 'Beli Sekarang, Pelajari Lebih Lanjut'",
+      "info": "Tindakan spesifik yang Anda ingin penerima lakukan.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "tone",
+      "label": "Gaya Bahasa Email",
+      "type": "select",
+      "options": [
+        "Profesional",
+        "Ramah",
+        "Mendesak",
+        "Antusias",
+        "Inspiratif",
+        "Lainnya..."
+      ],
+      "info": "Nuansa pesan yang ingin disampaikan dalam email."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Ciptakan rasa urgensi tapi jangan terkesan memaksa. Sebutkan bahwa penawaran ini eksklusif untuk segmen penerima ini. Jangan gunakan emoji.",
+      "info": "Instruksi khusus untuk AI. Misalnya, target emosi tertentu, atau hal yang harus dihindari.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Email Marketing"
+}

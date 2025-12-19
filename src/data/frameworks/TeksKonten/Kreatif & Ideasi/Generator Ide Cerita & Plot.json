@@ -1,0 +1,81 @@
+{
+  "description": "Kembangkan ide cerita atau kerangka plot yang kreatif untuk novel, skenario, atau cerita pendek.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penulis Cerita Kreatif yang akan mengembangkan ide cerita dan kerangka plot.",
+  "components": [
+    {
+      "name": "genre",
+      "label": "Genre Cerita",
+      "type": "select",
+      "options": [
+        "Fiksi Ilmiah",
+        "Fantasi",
+        "Misteri",
+        "Thriller",
+        "Horor",
+        "Romantis",
+        "Petualangan",
+        "Drama",
+        "Lainnya..."
+      ],
+      "info": "Genre akan menentukan konvensi dan ekspektasi pembaca."
+    },
+    {
+      "name": "mainCharacter",
+      "label": "Deskripsi Tokoh Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'Seorang detektif tua yang sinis di ambang pensiun, dihantui oleh kasus yang belum terpecahkan.'",
+      "info": "Jelaskan latar belakang, motivasi, dan kelemahan karakter untuk membuatnya 'hidup'.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "setting",
+      "label": "Setting (Waktu & Tempat)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Kota neo-noir yang selalu hujan di tahun 2077, di mana teknologi dan kesenjangan sosial mencapai puncaknya.'",
+      "info": "Setting bisa menjadi karakter tersendiri dalam cerita.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "mainConflict",
+      "label": "Konflik Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'Harus menemukan seorang peretas misterius yang membocorkan rahasia korporasi terbesar sebelum kota jatuh ke dalam kekacauan.'",
+      "info": "Apa masalah utama yang harus dihadapi dan diatasi oleh tokoh utama?",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "twist",
+      "label": "Elemen Unik/Twist (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Ternyata tokoh pahlawan adalah dalangnya.'",
+      "info": "Elemen kejutan yang ingin Anda sertakan dalam cerita untuk mengubah perspektif pembaca.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Cerita harus memiliki akhir yang ambigu. Fokus pada dialog antar karakter. Sertakan elemen magis yang halus, bukan yang mencolok.",
+      "info": "Instruksi tentang tema, mood, atau elemen naratif spesifik yang harus dimasukkan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Kreatif & Ideasi"
+  ],
+  "nama_kerangka": "Generator Ide Cerita & Plot"
+}

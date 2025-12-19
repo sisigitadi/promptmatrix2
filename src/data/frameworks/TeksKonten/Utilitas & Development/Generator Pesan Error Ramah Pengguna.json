@@ -1,0 +1,47 @@
+{
+  "description": "Ubah pesan error teknis menjadi penjelasan yang mudah dipahami oleh pengguna non-teknis.",
+  "toolType": "code",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penerjemah Error yang akan mengubah pesan error teknis menjadi penjelasan yang mudah dipahami.",
+  "components": [
+    {
+      "name": "technicalError",
+      "label": "Pesan Error Teknis",
+      "type": "text",
+      "placeholder": "e.g., 'Error 500: Internal Server Error', 'TypeError: Cannot read property 'name' of undefined'",
+      "info": "Pesan error asli dari sistem atau log."
+    },
+    {
+      "name": "userContext",
+      "label": "Konteks Tindakan Pengguna",
+      "type": "textarea",
+      "placeholder": "e.g., 'Pengguna sedang mencoba mengunggah foto profil.'",
+      "info": "Apa yang sedang dilakukan pengguna saat error ini terjadi?"
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Audiens Pesan",
+      "type": "text",
+      "placeholder": "e.g., 'Pengguna umum aplikasi kami'",
+      "info": "Siapa yang akan melihat pesan error yang baru?"
+    },
+    {
+      "name": "suggestedAction",
+      "label": "Saran Tindakan untuk Pengguna",
+      "type": "text",
+      "placeholder": "e.g., 'Coba lagi beberapa saat, periksa koneksi internet Anda'",
+      "info": "Langkah apa yang bisa dicoba pengguna untuk menyelesaikan masalah?"
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan nada yang menenangkan dan jangan menyalahkan pengguna. Sertakan nomor ID error untuk referensi dukungan pelanggan. Buat pesan se-singkat mungkin.",
+      "info": "Instruksi tentang gaya bahasa, nada, atau informasi tambahan."
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Utilitas & Development"
+  ],
+  "nama_kerangka": "Generator Pesan Error Ramah Pengguna"
+}

@@ -1,0 +1,33 @@
+{
+  "description": "Hasilkan musik fungsional bebas royalti berdasarkan durasi, mood, atau aktivitas.",
+  "toolType": "music-generation",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Kurator Musik Fungsional yang akan menghasilkan musik fungsional bebas royalti.",
+  "components": [
+    {
+      "name": "prompt",
+      "label": "Prompt (Genre, Mood, atau Aktivitas)",
+      "type": "text",
+      "placeholder": "e.g., 'techno', 'melancholic', 'workout', 'gaming'",
+      "info": "Deskripsikan jenis musik yang Anda butuhkan dalam satu kata atau frasa singkat."
+    },
+    {
+      "name": "duration",
+      "label": "Durasi (menit)",
+      "type": "number",
+      "placeholder": "e.g., 5",
+      "info": "Tentukan panjang trek musik yang Anda inginkan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Audio & Musik",
+    "Prompt AI Musik & Audio"
+  ],
+  "nama_kerangka": "Mubert"
+}

@@ -24,8 +24,7 @@ const Header: React.FC<HeaderProps> = ({
   onNavigate,
 }) => {
   const handleLogoClick = () => {
-    onNavigate("generator");
-    onLogoClick(); // Keep the easter egg logic
+    onLogoClick(); // Tetap jalankan counter untuk Dev Mode rahasia
   };
 
   return (

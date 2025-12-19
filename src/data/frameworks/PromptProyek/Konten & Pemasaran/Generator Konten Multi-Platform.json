@@ -1,0 +1,419 @@
+{
+  "description": "Buat konten untuk berbagai platform—artikel blog yang SEO-friendly, postingan media sosial yang menarik, deskripsi produk yang menjual, skrip video pendek, bahkan lirik lagu.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Kepala Strategi Konten yang akan menghasilkan konten untuk berbagai platform.",
+  "components": [
+    {
+      "name": "contentType",
+      "label": "Jenis Konten",
+      "type": "select",
+      "options": [
+        "Artikel Blog",
+        "Post Media Sosial",
+        "Deskripsi Produk",
+        "Skrip Video Pendek",
+        "Resensi",
+        "Lirik Lagu",
+        "Naskah Iklan"
+      ],
+      "info": "Pilih jenis konten yang ingin Anda hasilkan."
+    }
+  ],
+  "dynamicSubcomponents": {
+    "trigger": "contentType",
+    "options": {
+      "Artikel Blog": [
+        {
+          "name": "topic",
+          "label": "Topik/Judul Utama",
+          "type": "text",
+          "placeholder": "e.g., 'Manfaat Kopi Organik'",
+          "info": "Inti dari konten yang akan dibuat.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "targetAudience",
+          "label": "Target Audiens",
+          "type": "text",
+          "placeholder": "e.g., 'Profesional muda, Ibu rumah tangga'",
+          "info": "Siapa yang akan mengonsumsi konten ini?",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "keywords",
+          "label": "Kata Kunci SEO",
+          "type": "text",
+          "placeholder": "e.g., 'kopi organik, kesehatan, produktivitas'",
+          "info": "Kata kunci untuk optimasi mesin pencari.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "tone",
+          "label": "Gaya & Nada",
+          "type": "select",
+          "options": [
+            "Informatif",
+            "Profesional",
+            "Kasual",
+            "Persuasif"
+          ],
+          "info": "Pilih nuansa yang diinginkan untuk artikel Anda."
+        },
+        {
+          "name": "cta",
+          "label": "Tujuan/Call to Action (CTA)",
+          "type": "text",
+          "placeholder": "e.g., 'Kunjungi website kami untuk info lebih lanjut'",
+          "info": "Tindakan apa yang Anda ingin pembaca lakukan?",
+          "validation": {
+            "min_length": 5
+          }
+        }
+      ],
+      "Post Media Sosial": [
+        {
+          "name": "platform",
+          "label": "Platform Spesifik",
+          "type": "select",
+          "options": [
+            "Instagram",
+            "Facebook",
+            "Twitter/X",
+            "LinkedIn",
+            "TikTok"
+          ],
+          "info": "Pilih platform media sosial yang dituju."
+        },
+        {
+          "name": "topic",
+          "label": "Pesan Utama Postingan",
+          "type": "text",
+          "placeholder": "e.g., 'Diskon 50% untuk produk baru kami!'",
+          "info": "Inti dari pesan yang ingin disampaikan.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "visualIdea",
+          "label": "Ide Visual",
+          "type": "text",
+          "placeholder": "e.g., 'Foto produk dengan latar belakang cerah'",
+          "info": "Deskripsikan gambar atau video yang akan menyertai teks.",
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "tone",
+          "label": "Gaya & Nada",
+          "type": "select",
+          "options": [
+            "Menarik & Singkat",
+            "Humoris",
+            "Inspiratif",
+            "Informatif"
+          ],
+          "info": "Pilih nuansa yang sesuai dengan platform."
+        },
+        {
+          "name": "hashtagSuggestions",
+          "label": "Saran Hashtag",
+          "type": "text",
+          "placeholder": "e.g., '#promo #diskon #produkkecantikan'",
+          "info": "Saran hashtag untuk meningkatkan jangkauan.",
+          "validation": {
+            "min_length": 3
+          }
+        }
+      ],
+      "Deskripsi Produk": [
+        {
+          "name": "productName",
+          "label": "Nama Produk",
+          "type": "text",
+          "placeholder": "e.g., 'Sepatu Lari Cepat X2000'",
+          "info": "Nama lengkap produk.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "features",
+          "label": "Fitur-Fitur Utama",
+          "type": "textarea",
+          "placeholder": "e.g., 'Sol responsif, bahan ringan, desain aerodinamis'",
+          "info": "Sebutkan fitur-fitur utama produk.",
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "benefits",
+          "label": "Manfaat untuk Pelanggan",
+          "type": "textarea",
+          "placeholder": "e.g., 'Lari lebih cepat, mengurangi risiko cedera, nyaman dipakai seharian'",
+          "info": "Jelaskan bagaimana fitur tersebut menguntungkan pelanggan.",
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "targetAudience",
+          "label": "Target Pelanggan",
+          "type": "text",
+          "placeholder": "e.g., 'Pelari profesional, penggemar olahraga'",
+          "info": "Siapa target pasar utama produk ini?",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "tone",
+          "label": "Gaya & Nada",
+          "type": "select",
+          "options": [
+            "Persuasif & Menjual",
+            "Teknis & Detail",
+            "Mewah & Eksklusif"
+          ],
+          "info": "Pilih nuansa yang sesuai dengan citra merek Anda."
+        }
+      ],
+      "Skrip Video Pendek": [
+        {
+          "name": "videoTopic",
+          "label": "Topik Video",
+          "type": "text",
+          "placeholder": "e.g., 'Tutorial makeup 5 menit'",
+          "info": "Judul atau ide utama video.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "hook",
+          "label": "Hook (3 Detik Pertama)",
+          "type": "text",
+          "placeholder": "e.g., 'Tampil cantik dalam 5 menit? Bisa!'",
+          "info": "Kalimat pembuka yang menarik perhatian.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "keyScenes",
+          "label": "Adegan-Adegan Kunci",
+          "type": "textarea",
+          "placeholder": "e.g., 'Scene 1: Tampilkan semua produk. Scene 2: Langkah pertama. Scene 3: Hasil akhir.'",
+          "info": "Urutan adegan utama dalam video.",
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "duration",
+          "label": "Target Durasi (detik)",
+          "type": "number",
+          "placeholder": "e.g., 60",
+          "info": "Perkiraan panjang video.",
+          "validation": {
+            "min_value": 5,
+            "max_value": 300
+          }
+        },
+        {
+          "name": "cta",
+          "label": "Call to Action di Akhir",
+          "type": "text",
+          "placeholder": "e.g., 'Jangan lupa like dan follow!'",
+          "info": "Ajak penonton untuk berinteraksi.",
+          "validation": {
+            "min_length": 5
+          }
+        }
+      ],
+      "Resensi": [
+        {
+          "name": "itemToReview",
+          "label": "Item yang Diresensi",
+          "type": "text",
+          "placeholder": "e.g., 'Buku 'Filosofi Teras', Film 'Parasite', Smartphone XYZ'",
+          "info": "Produk, buku, film, atau layanan yang akan diresensi.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "reviewType",
+          "label": "Jenis Resensi",
+          "type": "select",
+          "options": [
+            "Positif",
+            "Negatif",
+            "Seimbang",
+            "Perbandingan"
+          ],
+          "info": "Fokus resensi (misal: menyoroti kelebihan, kekurangan, atau perbandingan)."
+        },
+        {
+          "name": "keyPoints",
+          "label": "Poin-Poin Kunci yang Ingin Disampaikan",
+          "type": "textarea",
+          "placeholder": "e.g., 'Kelebihan: plot twist tak terduga, akting memukau. Kekurangan: pacing lambat di awal.'",
+          "info": "Sebutkan aspek-aspek utama yang ingin Anda bahas.",
+          "validation": {
+            "min_length": 20
+          }
+        },
+        {
+          "name": "rating",
+          "label": "Rating (Opsional)",
+          "type": "text",
+          "placeholder": "e.g., '4/5 bintang', 'Sangat Direkomendasikan'",
+          "info": "Penilaian keseluruhan jika ada.",
+          "optional": true,
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "targetAudience",
+          "label": "Target Pembaca Resensi",
+          "type": "text",
+          "placeholder": "e.g., 'Penggemar film horor, calon pembeli gadget'",
+          "info": "Siapa yang akan membaca resensi ini?",
+          "validation": {
+            "min_length": 5
+          }
+        }
+      ],
+      "Lirik Lagu": [
+        {
+          "name": "songTitle",
+          "label": "Judul Lagu (Opsional)",
+          "type": "text",
+          "placeholder": "e.g., 'Senja di Batas Kota'",
+          "info": "Judul lagu jika sudah ada.",
+          "optional": true,
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "genre",
+          "label": "Genre Musik",
+          "type": "select",
+          "options": [
+            "Pop",
+            "Rock",
+            "R&B",
+            "Folk",
+            "Hip-Hop",
+            "Electronic",
+            "Lainnya..."
+          ],
+          "info": "Genre akan mempengaruhi gaya bahasa dan struktur lirik."
+        },
+        {
+          "name": "theme",
+          "label": "Tema Lagu",
+          "type": "text",
+          "placeholder": "e.g., 'cinta pertama, patah hati, perjalanan hidup'",
+          "info": "Gagasan atau cerita utama di balik lagu.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "mood",
+          "label": "Suasana Hati Lagu",
+          "type": "select",
+          "options": [
+            "Senang & Ceria",
+            "Sedih & Melankolis",
+            "Energik & Memotivasi",
+            "Romantis & Intim"
+          ],
+          "info": "Emosi utama yang ingin disampaikan melalui lirik."
+        },
+        {
+          "name": "keyElements",
+          "label": "Elemen/Kata Kunci Wajib",
+          "type": "textarea",
+          "placeholder": "e.g., 'sebutkan kata 'bintang', 'malam', 'harapan'",
+          "info": "Gambar, kata, atau frasa spesifik yang harus ada dalam lirik.",
+          "validation": {
+            "min_length": 5
+          }
+        }
+      ],
+      "Naskah Iklan": [
+        {
+          "name": "adPlatform",
+          "label": "Platform Iklan",
+          "type": "select",
+          "options": [
+            "Google Ads",
+            "Facebook/Instagram Ads",
+            "TikTok Ads",
+            "YouTube Ads",
+            "Lainnya..."
+          ],
+          "info": "Platform akan mempengaruhi batasan karakter dan format."
+        },
+        {
+          "name": "productService",
+          "label": "Produk/Layanan yang Diiklankan",
+          "type": "text",
+          "placeholder": "e.g., 'Kursus Online Bahasa Inggris'",
+          "info": "Apa yang Anda promosikan?"
+        },
+        {
+          "name": "targetAudience",
+          "label": "Target Audiens Iklan",
+          "type": "text",
+          "placeholder": "e.g., 'Pelajar SMA, Profesional Muda'",
+          "info": "Siapa yang ingin Anda jangkau dengan iklan ini?"
+        },
+        {
+          "name": "uniqueSellingPoint",
+          "label": "Unique Selling Point (USP)",
+          "type": "textarea",
+          "placeholder": "e.g., 'Metode belajar interaktif, garansi mahir dalam 3 bulan.'",
+          "info": "Apa yang membuat produk/layanan Anda unik dan lebih baik?"
+        },
+        {
+          "name": "callToAction",
+          "label": "Call to Action (CTA)",
+          "type": "text",
+          "placeholder": "e.g., 'Daftar Sekarang!', 'Unduh Aplikasi Gratis!'",
+          "info": "Tindakan spesifik yang Anda ingin audiens lakukan."
+        },
+        {
+          "name": "adLength",
+          "label": "Panjang Iklan",
+          "type": "select",
+          "options": [
+            "Sangat Singkat (Headline & Deskripsi)",
+            "Singkat (Beberapa Kalimat)",
+            "Sedang (Paragraf Singkat)"
+          ],
+          "info": "Pilih panjang teks iklan yang diinginkan."
+        }
+      ]
+    }
+  },
+  "konteks_tambahan_instruksi_khusus": "AI harus proaktif. Jika pengguna meminta 'Post Media Sosial' tanpa menyebut platform, buat versi untuk Instagram sebagai default. Jika tidak ada 'Gaya & Nada', pilih yang paling umum untuk 'Jenis Konten' (misal: 'Informatif' untuk Blog, 'Persuasif' untuk Deskripsi Produk). Selalu prioritaskan kejelasan, keringkasan, dan dampak sesuai dengan tujuan akhir konten (menjual, mengedukasi, atau menghibur). Untuk konten kreatif seperti lirik, jangan takut untuk menjadi lebih puitis dan abstrak.",
+  "kategori": [
+    "Prompt Proyek",
+    "Konten & Pemasaran"
+  ],
+  "nama_kerangka": "Generator Konten Multi-Platform"
+}

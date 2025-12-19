@@ -1,0 +1,79 @@
+{
+  "description": "Hasilkan ide progresi kord berdasarkan genre dan mood.",
+  "toolType": "music-composition",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Komposer Musik yang akan menghasilkan ide progresi kord.",
+  "components": [
+    {
+      "name": "genre",
+      "label": "Genre Musik",
+      "type": "select",
+      "options": [
+        "Blues",
+        "Jazz",
+        "Pop Ballad",
+        "Rock Alternatif",
+        "Sinematik",
+        "Lainnya..."
+      ],
+      "info": "Genre seringkali memiliki progresi kord yang khas."
+    },
+    {
+      "name": "mood",
+      "label": "Mood yang Diinginkan",
+      "type": "select",
+      "options": [
+        "Ceria & Terang",
+        "Sedih & Minor",
+        "Misterius & Tegang",
+        "Tenang & Damai",
+        "Epik & Megah",
+        "Lainnya..."
+      ],
+      "info": "Pilihan kord (mayor/minor/dll) akan sangat dipengaruhi oleh mood."
+    },
+    {
+      "name": "key",
+      "label": "Kunci Nada (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'C Major, A minor'",
+      "info": "Menentukan 'rumah' atau pusat tonal dari progresi."
+    },
+    {
+      "name": "complexity",
+      "label": "Tingkat Kompleksitas Kord",
+      "type": "select",
+      "options": [
+        "Sederhana (3-4 kord dasar)",
+        "Menengah (dengan kord ke-7)",
+        "Kompleks (dengan kord ekstensi/substitusi)",
+        "Lainnya..."
+      ],
+      "info": "'Sederhana' untuk lagu pop, 'Kompleks' mungkin menyertakan kord 7, 9, atau substitusi."
+    },
+    {
+      "name": "partOfSong",
+      "label": "Untuk Bagian Lagu Mana?",
+      "type": "select",
+      "options": [
+        "Verse",
+        "Chorus",
+        "Bridge",
+        "Semua Bagian",
+        "Lainnya..."
+      ],
+      "info": "Progresi untuk chorus biasanya lebih kuat dan 'catchy' daripada verse."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Sertakan setidaknya satu kord pinjaman dari minor paralel. Progresi harus cocok untuk dimainkan dengan gitar akustik. Buat bagian bridge yang terasa 'mengawang'.",
+      "info": "Instruksi teknis atau artistik tambahan untuk progresi kord yang dihasilkan."
+    }
+  ],
+  "kategori": [
+    "Audio & Musik",
+    "Alat Bantu Komposisi"
+  ],
+  "nama_kerangka": "Ide Progresi Kord"
+}

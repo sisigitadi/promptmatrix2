@@ -1,0 +1,48 @@
+{
+  "description": "Tarik keluar informasi spesifik dari blok teks tidak terstruktur (nama orang, organisasi, lokasi, dll.).",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Ekstraktor Data yang akan menganalisis teks tidak terstruktur dan mengekstrak entitas.",
+  "components": [
+    {
+      "name": "sourceText",
+      "label": "Teks Sumber",
+      "type": "textarea",
+      "placeholder": "Tempelkan artikel, laporan, atau email di sini. AI akan memindai teks ini.",
+      "info": "Teks yang akan dianalisis untuk diekstrak informasinya.",
+      "validation": {
+        "min_length": 50
+      }
+    },
+    {
+      "name": "entitiesToExtract",
+      "label": "Entitas yang Akan Diekstrak (pisahkan koma)",
+      "type": "text",
+      "placeholder": "e.g., 'Nama Orang, Nama Organisasi, Lokasi, Tanggal, Produk, Uang'",
+      "info": "Jenis informasi apa yang Anda cari di dalam teks?"
+    },
+    {
+      "name": "outputFormat",
+      "label": "Format Output",
+      "type": "select",
+      "options": [
+        "Daftar Sederhana per Kategori",
+        "JSON dengan Kategori",
+        "Tabel",
+        "Lainnya..."
+      ],
+      "info": "Pilih cara penyajian data yang diekstrak."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Abaikan nama orang yang hanya disebutkan sekali. Kelompokkan semua lokasi berdasarkan negara. Pastikan format tanggal konsisten (YYYY-MM-DD).",
+      "info": "Aturan spesifik untuk proses ekstraksi dan pemformatan."
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Analisis & Ekstraksi Data"
+  ],
+  "nama_kerangka": "Ekstraktor Entitas dari Teks"
+}

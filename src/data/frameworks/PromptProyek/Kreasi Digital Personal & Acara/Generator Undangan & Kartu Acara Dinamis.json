@@ -1,0 +1,514 @@
+{
+  "description": "Buat undangan atau kartu ucapan untuk berbagai keperluan, dari pernikahan hingga bisnis.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Perancang Undangan yang akan menyusun teks undangan atau kartu ucapan untuk acara.",
+  "components": [
+    {
+      "name": "eventType",
+      "label": "Jenis Acara",
+      "type": "select",
+      "options": [
+        "Pernikahan",
+        "Bisnis/Resmi",
+        "Ulang Tahun/Personal",
+        "Workshop/Komunitas",
+        "Terima Kasih"
+      ],
+      "info": "Pilih jenis acara untuk menentukan format dan nada.",
+      "validation": {
+        "regex": "^(?!Pilih Jenis Acara...).*$"
+      }
+    }
+  ],
+  "dynamicSubcomponents": {
+    "trigger": "eventType",
+    "options": {
+      "Pernikahan": [
+        {
+          "name": "coupleNames",
+          "label": "Nama Pasangan",
+          "type": "text",
+          "placeholder": "e.g., 'Sarah & David'",
+          "info": "Nama kedua mempelai.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "hosting_info",
+          "label": "Penyelenggara Acara",
+          "type": "text",
+          "placeholder": "e.g., 'Bersama kedua orang tua'",
+          "info": "Siapa yang mengundang? (misal: 'Mr. & Mrs. Budiman mengundang...')",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "weddingStyle",
+          "label": "Gaya Pernikahan",
+          "type": "select",
+          "options": [
+            "Formal & Tradisional",
+            "Modern & Minimalis",
+            "Rustic & Santai",
+            "Bohemian & Unik"
+          ],
+          "info": "Gaya keseluruhan akan mempengaruhi pilihan kata."
+        },
+        {
+          "name": "ceremonyDateTime",
+          "label": "Tanggal & Waktu Akad/Pemberkatan",
+          "type": "text",
+          "placeholder": "e.g., 'Sabtu, 28 Desember 2025, Pukul 09:00'",
+          "info": "Waktu untuk acara inti.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "ceremonyLocation",
+          "label": "Lokasi Akad/Pemberkatan",
+          "type": "text",
+          "placeholder": "e.g., 'Masjid Istiqlal, Jakarta'",
+          "info": "Tempat acara inti.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "receptionDateTime",
+          "label": "Tanggal & Waktu Resepsi",
+          "type": "text",
+          "placeholder": "e.g., 'Sabtu, 28 Desember 2025, Pukul 19:00'",
+          "info": "Waktu untuk perayaan.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "receptionLocation",
+          "label": "Lokasi Resepsi",
+          "type": "text",
+          "placeholder": "e.g., 'Gedung Serbaguna ABC, Jl. Merdeka No. 123'",
+          "info": "Tempat perayaan.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "dressCode",
+          "label": "Aturan Berpakaian (Dress Code)",
+          "type": "text",
+          "placeholder": "e.g., 'Batik, Jas Formal'",
+          "info": "Pakaian yang disarankan untuk tamu.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "rsvpInfo",
+          "label": "Informasi RSVP",
+          "type": "text",
+          "placeholder": "e.g., 'Mohon konfirmasi ke 0812-3456-7890 (WhatsApp) sebelum 1 Desember'",
+          "info": "Cara dan batas waktu konfirmasi kehadiran.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "googleMapsLink",
+          "label": "Tautan Google Maps",
+          "type": "text",
+          "placeholder": "e.g., 'https://maps.app.goo.gl/xyz'",
+          "info": "Tautan Google Maps untuk lokasi acara."
+        }
+      ],
+      "Bisnis/Resmi": [
+        {
+          "name": "eventName",
+          "label": "Nama Acara",
+          "type": "text",
+          "placeholder": "e.g., 'Konferensi Pers Tahunan'",
+          "info": "Judul resmi acara.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "organizer",
+          "label": "Penyelenggara",
+          "type": "text",
+          "placeholder": "e.g., 'PT Jaya Abadi'",
+          "info": "Organisasi atau departemen yang bertanggung jawab.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "objective",
+          "label": "Tujuan Acara",
+          "type": "text",
+          "placeholder": "e.g., 'Meluncurkan produk baru'",
+          "info": "Apa tujuan utama dari acara ini?",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "keySpeaker",
+          "label": "Pembicara Utama",
+          "type": "text",
+          "placeholder": "e.g., 'Dr. Budi Santoso, CEO'",
+          "info": "Tokoh penting yang akan berbicara.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "dateTime",
+          "label": "Tanggal & Waktu",
+          "type": "text",
+          "placeholder": "e.g., 'Senin, 20 Oktober 2025, 10:00 - 12:00 WIB'",
+          "info": "Waktu pelaksanaan acara.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "location",
+          "label": "Lokasi/Platform",
+          "type": "text",
+          "placeholder": "e.g., 'Ballroom Hotel Indonesia / Zoom Webinar'",
+          "info": "Tempat fisik atau platform virtual.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "agenda",
+          "label": "Agenda Singkat",
+          "type": "textarea",
+          "placeholder": "e.g., '10:00 - Pembukaan\n10:15 - Sambutan CEO\n10:30 - Demo Produk'",
+          "info": "Rundown singkat acara.",
+          "validation": {
+            "min_length": 20
+          }
+        },
+        {
+          "name": "registrationLink",
+          "label": "Tautan Pendaftaran/RSVP",
+          "type": "text",
+          "placeholder": "e.g., 'bit.ly/DaftarAcaraXYZ'",
+          "info": "Link untuk konfirmasi atau pendaftaran.",
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "googleMapsLink",
+          "label": "Tautan Google Maps",
+          "type": "text",
+          "placeholder": "e.g., 'https://maps.app.goo.gl/xyz'",
+          "info": "Tautan Google Maps untuk lokasi acara."
+        }
+      ],
+      "Ulang Tahun/Personal": [
+        {
+          "name": "personBeingCelebrated",
+          "label": "Nama yang Berulang Tahun",
+          "type": "text",
+          "placeholder": "e.g., 'Andi'",
+          "info": "Siapa yang merayakan?",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "age",
+          "label": "Ulang Tahun ke- (Opsional)",
+          "type": "number",
+          "placeholder": "e.g., 30",
+          "info": "Perayaan ulang tahun yang ke berapa.",
+          "validation": {
+            "min_value": 1,
+            "max_value": 120
+          }
+        },
+        {
+          "name": "theme",
+          "label": "Tema Pesta",
+          "type": "text",
+          "placeholder": "e.g., 'Pesta Topeng, 90-an, Superhero'",
+          "info": "Tema spesifik untuk kostum atau dekorasi.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "dateTime",
+          "label": "Tanggal & Waktu",
+          "type": "text",
+          "placeholder": "e.g., 'Sabtu, 15 November 2025, Pukul 19:00'",
+          "info": "Kapan pesta akan diadakan?",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "location",
+          "label": "Lokasi Pesta",
+          "type": "text",
+          "placeholder": "e.g., 'Rumah Andi, Jl. Bahagia No. 5'",
+          "info": "Di mana pesta akan diadakan?",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "dressCode",
+          "label": "Aturan Berpakaian (Dress Code)",
+          "type": "text",
+          "placeholder": "e.g., 'Santai, Sesuai tema'",
+          "info": "Pakaian yang disarankan.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "rsvpContact",
+          "label": "Kontak RSVP",
+          "type": "text",
+          "placeholder": "e.g., 'Hubungi Budi di 0811-2233-4455'",
+          "info": "Siapa yang harus dihubungi untuk konfirmasi.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "giftInfo",
+          "label": "Informasi Kado (Opsional)",
+          "type": "text",
+          "placeholder": "e.g., 'Tidak perlu membawa kado, kehadiranmu adalah hadiah terbaik!'",
+          "info": "Petunjuk mengenai hadiah.",
+          "optional": true,
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "googleMapsLink",
+          "label": "Tautan Google Maps",
+          "type": "text",
+          "placeholder": "e.g., 'https://maps.app.goo.gl/xyz'",
+          "info": "Tautan Google Maps untuk lokasi acara.",
+          "optional": true,
+          "validation": {
+            "min_length": 10
+          }
+        }
+      ],
+      "Workshop/Komunitas": [
+        {
+          "name": "eventName",
+          "label": "Nama Workshop/Acara",
+          "type": "text",
+          "placeholder": "e.g., 'Workshop Desain UI/UX Dasar'",
+          "info": "Judul lengkap workshop atau acara komunitas.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "organizer",
+          "label": "Penyelenggara",
+          "type": "text",
+          "placeholder": "e.g., 'Komunitas Developer Jakarta'",
+          "info": "Nama organisasi atau individu yang menyelenggarakan acara.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "shortDescription",
+          "label": "Deskripsi Singkat Acara",
+          "type": "textarea",
+          "placeholder": "e.g., 'Pelajari dasar-dasar desain antarmuka pengguna dan pengalaman pengguna dalam workshop interaktif ini.'",
+          "info": "Ringkasan singkat tentang apa yang akan dipelajari atau dilakukan peserta.",
+          "validation": {
+            "min_length": 20
+          }
+        },
+        {
+          "name": "dateTime",
+          "label": "Tanggal & Waktu",
+          "type": "text",
+          "placeholder": "e.g., 'Sabtu, 10 Agustus 2025, Pukul 09:00 - 16:00 WIB'",
+          "info": "Waktu pelaksanaan acara.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "location",
+          "label": "Lokasi/Platform",
+          "type": "text",
+          "placeholder": "e.g., 'Co-working Space X, Jl. Sudirman No. 10 / Zoom Webinar'",
+          "info": "Tempat fisik atau platform virtual.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "speakers",
+          "label": "Pembicara/Fasilitator (Opsional)",
+          "type": "textarea",
+          "placeholder": "e.g., 'Andi Wijaya (Desainer Senior), Budi Santoso (Praktisi UX)'",
+          "info": "Nama dan peran pembicara atau fasilitator.",
+          "optional": true,
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "agenda",
+          "label": "Agenda/Materi Kunci (Opsional)",
+          "type": "textarea",
+          "placeholder": "e.g., 'Sesi 1: Pengantar UI/UX. Sesi 2: Prinsip Desain. Sesi 3: Studi Kasus & Praktik.'",
+          "info": "Poin-poin utama atau jadwal singkat acara.",
+          "optional": true,
+          "validation": {
+            "min_length": 20
+          }
+        },
+        {
+          "name": "targetAudience",
+          "label": "Target Audiens",
+          "type": "text",
+          "placeholder": "e.g., 'Mahasiswa desain, pemula di bidang IT, anggota komunitas umum'",
+          "info": "Siapa yang dituju oleh workshop/acara ini?",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "registrationFee",
+          "label": "Biaya Pendaftaran (Opsional)",
+          "type": "text",
+          "placeholder": "e.g., 'Gratis', 'Rp 50.000 (termasuk sertifikat)'",
+          "info": "Informasi biaya dan apa yang didapatkan peserta.",
+          "optional": true,
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "registrationLink",
+          "label": "Tautan Pendaftaran/RSVP",
+          "type": "text",
+          "placeholder": "e.g., 'bit.ly/DaftarWorkshopUIUX'",
+          "info": "Link untuk pendaftaran atau konfirmasi kehadiran.",
+          "optional": true,
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "contactInfo",
+          "label": "Kontak Informasi",
+          "type": "text",
+          "placeholder": "e.g., 'admin@komunitas.com / 0812-3456-7890'",
+          "info": "Informasi kontak untuk pertanyaan lebih lanjut.",
+          "optional": true,
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "googleMapsLink",
+          "label": "Tautan Google Maps (Opsional)",
+          "type": "text",
+          "placeholder": "e.g., 'https://maps.app.goo.gl/xyz'",
+          "info": "Tautan Google Maps untuk lokasi acara fisik.",
+          "optional": true,
+          "validation": {
+            "min_length": 10
+          }
+        }
+      ],
+      "Terima Kasih": [
+        {
+          "name": "senderName",
+          "label": "Nama Pengirim",
+          "type": "text",
+          "placeholder": "e.g., 'Sarah & David', 'Tim XYZ'",
+          "info": "Siapa yang mengucapkan terima kasih.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "recipientName",
+          "label": "Nama Penerima (Opsional)",
+          "type": "text",
+          "placeholder": "e.g., 'Bapak/Ibu Budi', 'Para Tamu Undangan'",
+          "info": "Jika ingin personalisasi, sebutkan nama penerima.",
+          "optional": true,
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "reason",
+          "label": "Alasan Ucapan Terima Kasih",
+          "type": "textarea",
+          "placeholder": "e.g., 'atas kehadiran Anda di pernikahan kami', 'atas dukungan Anda pada proyek ini', 'atas hadiah yang indah'",
+          "info": "Jelaskan secara spesifik mengapa Anda berterima kasih.",
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "eventReference",
+          "label": "Referensi Acara (Opsional)",
+          "type": "text",
+          "placeholder": "e.g., 'Pernikahan kami pada 28 Desember', 'Acara peluncuran produk'",
+          "info": "Jika ucapan terima kasih terkait acara tertentu.",
+          "optional": true,
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "messageTone",
+          "label": "Gaya & Nada Pesan",
+          "type": "select",
+          "options": [
+            "Tulus & Hangat",
+            "Formal & Profesional",
+            "Singkat & Efisien",
+            "Penuh Sukacita"
+          ],
+          "info": "Pilih nuansa pesan yang ingin disampaikan."
+        },
+        {
+          "name": "additionalDetails",
+          "label": "Detail Tambahan (Opsional)",
+          "type": "textarea",
+          "placeholder": "e.g., 'Sertakan foto kami berdua.', 'Sebutkan harapan untuk kolaborasi di masa depan.'",
+          "info": "Informasi atau instruksi spesifik lainnya.",
+          "optional": true,
+          "validation": {
+            "min_length": 10
+          }
+        }
+      ]
+    }
+  },
+  "konteks_tambahan_instruksi_khusus": "AI harus sangat peka terhadap `Jenis Acara`. Jika pengguna tidak memberikan `Gaya & Nada`, AI harus memilih yang paling sesuai secara default (misal: 'Elegan' untuk Pernikahan, 'Profesional' untuk Bisnis). Tujuan utamanya adalah menghasilkan output yang terasa otentik dan dibuat khusus untuk acara tersebut, bukan hasil dari template generik.",
+  "kategori": [
+    "Prompt Proyek",
+    "Kreasi Digital Personal & Acara"
+  ],
+  "nama_kerangka": "Generator Undangan & Kartu Acara Dinamis"
+}

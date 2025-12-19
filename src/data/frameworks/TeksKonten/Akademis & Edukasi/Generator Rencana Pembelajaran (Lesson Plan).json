@@ -1,0 +1,94 @@
+{
+  "description": "Bantu guru dan instruktur membuat rencana pembelajaran (RPP) yang terstruktur dan efektif.",
+  "toolType": "planning",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Perencana Pembelajaran yang akan menyusun rencana pembelajaran.",
+  "components": [
+    {
+      "name": "subject",
+      "label": "Mata Pelajaran",
+      "type": "text",
+      "placeholder": "e.g., 'Sejarah, Matematika, Biologi'",
+      "info": "Bidang studi yang akan diajarkan.",
+      "validation": {
+        "min_length": 2
+      }
+    },
+    {
+      "name": "gradeLevel",
+      "label": "Tingkat Kelas",
+      "type": "text",
+      "placeholder": "e.g., 'Kelas 10 SMA, Kelas 5 SD'",
+      "info": "Tingkat pendidikan dari siswa.",
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "topic",
+      "label": "Topik Spesifik Pelajaran",
+      "type": "text",
+      "placeholder": "e.g., 'Perang Dunia II, Fotosintesis, Aljabar Dasar'",
+      "info": "Materi utama yang akan dibahas dalam sesi ini.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "duration",
+      "label": "Durasi Pelajaran (menit)",
+      "type": "number",
+      "placeholder": "e.g., 90",
+      "info": "Total waktu yang tersedia untuk pelajaran.",
+      "validation": {
+        "min_value": 15,
+        "max_value": 240
+      }
+    },
+    {
+      "name": "learningObjectives",
+      "label": "Tujuan Pembelajaran",
+      "type": "textarea",
+      "placeholder": "e.g., 'Siswa mampu menjelaskan 3 penyebab utama PD II. Siswa dapat mengidentifikasi klorofil dalam diagram sel tumbuhan.'",
+      "info": "Apa yang harus bisa dilakukan siswa setelah pelajaran selesai? Gunakan kata kerja yang terukur.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "activities",
+      "label": "Ide Aktivitas Pembelajaran",
+      "type": "textarea",
+      "placeholder": "e.g., 'Diskusi kelompok, eksperimen sederhana, menonton video pendek, kuis.'",
+      "info": "Bagaimana cara Anda akan menyampaikan materi?",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "assessment",
+      "label": "Metode Penilaian/Evaluasi",
+      "type": "text",
+      "placeholder": "e.g., 'Lembar kerja, presentasi kelompok, esai singkat'",
+      "info": "Bagaimana Anda akan mengukur pemahaman siswa?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Fokus pada pembelajaran berbasis proyek. Sertakan satu aktivitas yang melibatkan gerakan fisik. Pelajaran ini dilakukan secara online.",
+      "info": "Kebutuhan khusus atau batasan yang perlu diperhatikan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Akademis & Edukasi"
+  ],
+  "nama_kerangka": "Generator Rencana Pembelajaran (Lesson Plan)"
+}

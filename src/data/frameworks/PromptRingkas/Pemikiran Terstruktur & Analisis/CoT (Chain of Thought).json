@@ -1,0 +1,33 @@
+{
+  "description": "Pandu AI untuk memecah masalah kompleks menjadi langkah-langkah kecil dan menunjukkannya, menghasilkan jawaban yang lebih logis.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pemikir Logis yang akan memecah masalah kompleks menjadi langkah-langkah penalaran.",
+  "components": [
+    {
+      "name": "complexQuestion",
+      "label": "Pertanyaan atau Masalah Kompleks",
+      "type": "textarea",
+      "placeholder": "e.g., 'Jika sebuah mobil melaju 60 km/jam, berapa jarak yang ditempuh dalam 3 jam dan 45 menit?'",
+      "info": "Pertanyaan yang membutuhkan beberapa langkah penalaran untuk dijawab."
+    },
+    {
+      "name": "exampleReasoning",
+      "label": "Contoh Penalaran (Opsional, untuk Few-Shot)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Q: Berapa banyak bola tenis dalam 3 kaleng jika setiap kaleng berisi 4 bola? A: Kaleng 1 punya 4 bola. Kaleng 2 punya 4 bola. Kaleng 3 punya 4 bola. Jadi 3 * 4 = 12 bola.'",
+      "info": "Berikan contoh cara Anda ingin AI berpikir. Untuk Zero-Shot, biarkan kosong dan tambahkan 'Mari kita berpikir langkah demi langkah' pada instruksi tambahan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Instruksi Tambahan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Mari kita berpikir langkah demi langkah.'",
+      "info": "Instruksi akhir untuk memicu proses penalaran."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Pemikiran Terstruktur & Analisis"
+  ],
+  "nama_kerangka": "CoT (Chain of Thought)"
+}

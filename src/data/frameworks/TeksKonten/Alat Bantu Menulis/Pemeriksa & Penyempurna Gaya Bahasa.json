@@ -1,0 +1,56 @@
+{
+  "description": "Perbaiki tulisan yang ada agar lebih jelas, ringkas, kuat, dan berdampak.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Editor Gaya Bahasa yang akan menganalisis dan menyempurnakan tulisan.",
+  "components": [
+    {
+      "name": "originalText",
+      "label": "Teks Asli",
+      "type": "textarea",
+      "placeholder": "Tempelkan paragraf atau tulisan yang ingin disempurnakan di sini.",
+      "info": "AI akan menganalisis dan memberikan saran perbaikan, bukan menulis ulang total.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "improvementGoal",
+      "label": "Fokus Penyempurnaan",
+      "type": "select",
+      "options": [
+        "Meningkatkan Kejelasan & Keringkasan",
+        "Membuat Lebih Persuasif",
+        "Menguatkan Gaya Bahasa",
+        "Memeriksa Alur & Logika",
+        "Lainnya..."
+      ],
+      "info": "Pilih aspek utama yang ingin Anda perbaiki dari tulisan ini."
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Pembaca",
+      "type": "text",
+      "placeholder": "e.g., 'Tim internal, klien potensial, pembaca umum'",
+      "info": "Mengetahui audiens membantu AI memberikan saran yang lebih relevan.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Pertahankan nada yang ramah. Ganti semua kalimat pasif menjadi aktif. Tawarkan alternatif untuk kata-kata yang terlalu sering digunakan.",
+      "info": "Instruksi spesifik tentang jenis perbaikan yang Anda cari.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Alat Bantu Menulis"
+  ],
+  "nama_kerangka": "Pemeriksa & Penyempurna Gaya Bahasa"
+}

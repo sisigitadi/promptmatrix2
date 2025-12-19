@@ -1,0 +1,114 @@
+{
+  "id_kerangka": "BIS-HR-001",
+  "nama_kerangka": "Asisten Rekrutmen & SDM",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
+  "description": "Asisten personalia untuk menyederhanakan tugas rekrutmen dan SDM, dari deskripsi pekerjaan hingga rencana onboarding.",
+  "perspektif_user": "Saya perlu bantuan untuk tugas-tugas HR seperti membuat lowongan kerja yang menarik, menyiapkan pertanyaan wawancara yang bagus, dan merancang proses orientasi untuk karyawan baru.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis SDM yang akan merekrut dan mengelola sumber daya manusia.",
+  "components": [
+    {
+      "name": "TUGAS_SDM",
+      "label": "Tugas Rekrutmen atau SDM",
+      "type": "select",
+      "options": [
+        "Pembuat Deskripsi Pekerjaan",
+        "Generator Pertanyaan Wawancara",
+        "Penyusun Rencana Onboarding",
+        "Pembuat Draf Email Rekrutmen"
+      ],
+      "default": "Pembuat Deskripsi Pekerjaan",
+      "info": "Pilih tugas SDM yang ingin Anda kerjakan."
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "TUGAS_SDM",
+      "options": {
+        "Pembuat Deskripsi Pekerjaan": [
+          {
+            "name": "HR_POSISI_JABATAN",
+            "label": "Posisi Jabatan dan Level",
+            "type": "text",
+            "placeholder": "Contoh: Senior Graphic Designer",
+            "info": "Sebutkan jabatan yang sedang dibuka."
+          },
+          {
+            "name": "HR_TANGGUNG_JAWAB",
+            "label": "3-5 Tanggung Jawab Utama",
+            "type": "textarea",
+            "placeholder": "- Membuat desain untuk media sosial\n- Mengembangkan konsep visual untuk kampanye",
+            "info": "Sebutkan poin-poin tanggung jawab terpenting."
+          }
+        ],
+        "Generator Pertanyaan Wawancara": [
+          {
+            "name": "HR_POSISI_WAWANCARA",
+            "label": "Posisi Jabatan",
+            "type": "text",
+            "placeholder": "Contoh: Customer Service, Software Engineer",
+            "info": "Posisi yang akan diwawancarai."
+          },
+          {
+            "name": "HR_SOFT_SKILL",
+            "label": "Soft Skill yang Dicari",
+            "type": "text",
+            "placeholder": "Contoh: Kemampuan memecahkan masalah, kolaborasi tim",
+            "info": "Karakteristik perilaku yang penting untuk posisi ini."
+          }
+        ],
+        "Penyusun Rencana Onboarding": [
+          {
+            "name": "HR_POSISI_ONBOARDING",
+            "label": "Posisi Jabatan Karyawan Baru",
+            "type": "text",
+            "placeholder": "Contoh: Junior Accountant",
+            "info": "Posisi karyawan yang akan menjalani orientasi."
+          },
+          {
+            "name": "HR_TUJUAN_30_HARI",
+            "label": "Tujuan Utama untuk 30 Hari Pertama",
+            "type": "text",
+            "placeholder": "Contoh: Memahami alur kerja tim dan berhasil menangani 5 klien kecil.",
+            "info": "Apa target utama yang harus dicapai karyawan baru di bulan pertama?"
+          }
+        ],
+        "Pembuat Draf Email Rekrutmen": [
+          {
+            "name": "HR_JENIS_EMAIL",
+            "label": "Jenis Email",
+            "type": "select",
+            "options": [
+              "Undangan Wawancara",
+              "Surat Penolakan Kandidat",
+              "Surat Penawaran Kerja"
+            ],
+            "default": "Undangan Wawancara",
+            "info": "Pilih templat email yang Anda butuhkan."
+          },
+          {
+            "name": "HR_NAMA_KANDIDAT",
+            "label": "Nama Kandidat",
+            "type": "text",
+            "placeholder": "Contoh: Budi Santoso",
+            "info": "Nama kandidat untuk personalisasi email."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Spesialis SDM (Human Resources) yang berpengalaman.",
+    "KONTEKS": "Pengguna memerlukan bantuan untuk tugas '{TUGAS_SDM}'.",
+    "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Pembuat Deskripsi Pekerjaan'**: Buat draf deskripsi pekerjaan yang lengkap untuk posisi '{HR_POSISI_JABATAN}' dengan tanggung jawab utama '{HR_TANGGUNG_JAWAB}'. Sertakan bagian Kualifikasi dan paragraf 'Tentang Kami' yang menarik.\n- **Jika 'Generator Pertanyaan Wawancara'**: Buat daftar pertanyaan wawancara yang terstruktur untuk posisi '{HR_POSISI_WAWANCARA}' yang menguji soft skill '{HR_SOFT_SKILL}'. Kategorikan pertanyaan menjadi Perilaku, Teknis/Studi Kasus, dan Kecocokan Budaya.\n- **Jika 'Penyusun Rencana Onboarding'**: Buat checklist rencana onboarding 30 hari untuk posisi '{HR_POSISI_ONBOARDING}' dengan tujuan '{HR_TUJUAN_30_HARI}'. Pisahkan rencana per Hari ke-1, Minggu ke-1, dan 30 Hari Pertama.\n- **Jika 'Pembuat Draf Email Rekrutmen'**: Buat draf '{HR_JENIS_EMAIL}' yang ditujukan kepada '{HR_NAMA_KANDIDAT}'. Pastikan email penolakan tetap sopan dan email penawaran jelas serta profesional.",
+    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan output dalam format dokumen yang sesuai (misalnya, deskripsi pekerjaan atau checklist) yang rapi dan mudah digunakan."
+  },
+  "toolType": "text",
+  "konteks_tambahan_instruksi_khusus": "Gunakan bahasa yang inklusif dan profesional. Untuk email, selalu gunakan nada yang sopan dan menghargai kandidat.",
+  "contoh_kalimat": "Buatkan saya templat email untuk menanggapi keluhan produk rusak.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

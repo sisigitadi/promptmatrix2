@@ -1,0 +1,73 @@
+{
+  "description": "Buat pengumuman internal perusahaan yang jelas, ringkas, dan profesional untuk berbagai keperluan.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis Komunikasi Internal yang akan membuat pengumuman.",
+  "components": [
+    {
+      "name": "subject",
+      "label": "Subjek Memo/Pengumuman",
+      "type": "text",
+      "placeholder": "e.g., 'Perubahan Kebijakan Kerja Jarak Jauh'",
+      "info": "Judul yang jelas dan langsung ke intinya.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "targetAudience",
+      "label": "Ditujukan Kepada",
+      "type": "text",
+      "placeholder": "e.g., 'Semua Karyawan', 'Tim Pemasaran'",
+      "info": "Siapa penerima pesan ini?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "keyInformation",
+      "label": "Informasi Kunci yang Disampaikan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Mulai 1 Agustus, kebijakan WFH menjadi 3 hari di kantor, 2 hari di rumah. Alasan: meningkatkan kolaborasi.'",
+      "info": "Sebutkan poin-poin utama pengumuman secara jelas.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "effectiveDate",
+      "label": "Tanggal Efektif",
+      "type": "text",
+      "placeholder": "e.g., 'Senin, 1 Agustus 2024'",
+      "info": "Kapan perubahan atau pengumuman ini mulai berlaku?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "sender",
+      "label": "Pengirim/Departemen",
+      "type": "text",
+      "placeholder": "e.g., 'Departemen HR', 'Manajemen'",
+      "info": "Siapa yang bertanggung jawab atas pengumuman ini?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan nada yang formal namun suportif. Sertakan link ke dokumen kebijakan lengkap. Sediakan kontak person untuk pertanyaan lebih lanjut.",
+      "info": "Detail tambahan untuk memastikan pesan tersampaikan dengan baik.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Penulis Memo & Pengumuman Internal"
+}

@@ -1,0 +1,78 @@
+{
+  "description": "Susun kerangka atau naskah lengkap untuk pidato yang terstruktur dan meyakinkan.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Konsultan Pidato yang akan menyusun naskah.",
+  "components": [
+    {
+      "name": "audienceProfile",
+      "label": "Profil Audiens",
+      "type": "text",
+      "placeholder": "e.g., 'Investor teknologi, mahasiswa baru, kolega internal'",
+      "info": "Memahami audiens adalah kunci. Apa latar belakang dan tingkat pengetahuan mereka?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "coreMessage",
+      "label": "Pesan Inti (Satu Kalimat)",
+      "type": "text",
+      "placeholder": "e.g., 'Inovasi berkelanjutan adalah kunci untuk relevansi pasar.'",
+      "info": "Jika audiens hanya boleh mengingat satu hal, apa itu?",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "deliveryStyle",
+      "label": "Gaya Penyampaian",
+      "type": "select",
+      "options": [
+        "Inspiratif & Penuh Semangat",
+        "Informatif & Berbasis Data",
+        "Persuasif & Meyakinkan",
+        "Santai & Bercerita",
+        "Lainnya..."
+      ],
+      "info": "Pilih nuansa yang paling sesuai dengan pesan dan audiens Anda."
+    },
+    {
+      "name": "duration",
+      "label": "Target Durasi (menit)",
+      "type": "number",
+      "placeholder": "e.g., 15",
+      "info": "Perkiraan waktu akan menentukan tingkat kedalaman dan jumlah poin.",
+      "validation": {
+        "min_value": 1,
+        "max_value": 60
+      }
+    },
+    {
+      "name": "keyPoints",
+      "label": "Poin-Poin Utama (Opsional)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Poin 1: Masalah saat ini.\nPoin 2: Solusi yang kami tawarkan.\nPoin 3: Visi masa depan.'",
+      "info": "Sebutkan poin-poin kunci yang harus ada dalam struktur pidato.",
+      "optional": true,
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Mulai dengan sebuah cerita pribadi. Sertakan satu kutipan dari tokoh terkenal. Akhiri dengan ajakan bertindak yang jelas. Hindari jargon teknis.",
+      "info": "Instruksi spesifik tentang elemen pembuka, penutup, atau gaya bahasa.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Generator Naskah Pidato/Presentasi"
+}

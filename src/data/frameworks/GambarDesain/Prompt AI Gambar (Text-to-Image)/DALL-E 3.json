@@ -1,0 +1,73 @@
+{
+  "description": "Tulis prompt naratif dan deskriptif yang kaya untuk DALL-E 3, yang unggul dalam memahami bahasa alami.",
+  "toolType": "image-generation",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pelukis Digital AI yang akan menghasilkan gambar yang kreatif dan akurat.",
+  "components": [
+    {
+      "name": "subject",
+      "label": "Subjek & Aksi",
+      "type": "textarea",
+      "placeholder": "e.g., 'Seekor rubah oranye terang dengan pakaian astronot sedang duduk di bulan, memandangi bumi.'",
+      "info": "Jelaskan subjek utama dan apa yang sedang dilakukannya secara detail.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "style",
+      "label": "Gaya Visual",
+      "type": "text",
+      "placeholder": "e.g., 'gaya lukisan cat minyak digital', 'seni piksel (pixel art)', 'foto sinematik'",
+      "info": "Medium atau gaya artistik dari gambar.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "composition",
+      "label": "Komposisi & Sudut Pandang",
+      "type": "text",
+      "placeholder": "e.g., 'close-up shot', 'wide-angle view', 'dari bawah'",
+      "info": "Bagaimana adegan dibingkai?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "lightingAndMood",
+      "label": "Pencahayaan & Suasana",
+      "type": "text",
+      "placeholder": "e.g., 'pencahayaan dramatis saat senja', 'suasana misterius dan berkabut'",
+      "info": "Bagaimana pencahayaan dan emosi yang ingin Anda tangkap?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "colorPalette",
+      "label": "Palet Warna",
+      "type": "text",
+      "placeholder": "e.g., 'warna-warna pastel yang lembut', 'monokromatik dengan aksen merah'",
+      "info": "Warna dominan yang Anda inginkan.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
+  "nama_kerangka": "DALL-E 3"
+}

@@ -1,0 +1,65 @@
+{
+  "description": "Buat latar belakang, kepribadian, dan penampilan untuk karakter dalam permainan role-playing (e.g., D&D).",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pencipta Karakter RPG yang akan menghasilkan latar belakang, kepribadian, dan penampilan untuk karakter.",
+  "components": [
+    {
+      "name": "gameSystem",
+      "label": "Sistem Permainan (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Dungeons & Dragons 5e', 'Pathfinder'",
+      "info": "Sistem permainan dapat mempengaruhi terminologi."
+    },
+    {
+      "name": "characterClass",
+      "label": "Kelas Karakter",
+      "type": "text",
+      "placeholder": "e.g., 'Rogue', 'Wizard', 'Paladin'",
+      "info": "Profesi atau peran karakter dalam petualangan."
+    },
+    {
+      "name": "characterRace",
+      "label": "Ras Karakter",
+      "type": "text",
+      "placeholder": "e.g., 'Elf', 'Dwarf', 'Human'",
+      "info": "Asal-usul atau spesies dari karakter."
+    },
+    {
+      "name": "alignment",
+      "label": "Alignment (Watak)",
+      "type": "select",
+      "options": [
+        "Lawful Good",
+        "Neutral Good",
+        "Chaotic Good",
+        "Lawful Neutral",
+        "True Neutral",
+        "Chaotic Neutral",
+        "Lawful Evil",
+        "Neutral Evil",
+        "Chaotic Evil",
+        "Lainnya..."
+      ],
+      "info": "Kompas moral dari karakter Anda."
+    },
+    {
+      "name": "keyTraits",
+      "label": "Sifat Kunci/Keunikan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Sangat takut pada laba-labar, memiliki bekas luka di mata kiri, selalu berbicara dengan sarkasme.'",
+      "info": "Berikan 2-3 detail unik untuk membuat karakter menonjol."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Buat latar belakang yang tragis. Hubungkan cerita karakter dengan sebuah artefak kuno. Karakternya harus berasal dari kota di padang pasir.",
+      "info": "Instruksi kreatif untuk memperkaya narasi karakter."
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Hiburan & Permainan"
+  ],
+  "nama_kerangka": "Generator Deskripsi Karakter RPG"
+}

@@ -1,0 +1,47 @@
+{
+  "description": "Strukturkan jawaban untuk pertanyaan wawancara berbasis perilaku atau jelaskan sebuah pencapaian.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Narator Pencapaian yang akan menyusun jawaban atau deskripsi pencapaian.",
+  "components": [
+    {
+      "name": "situation",
+      "label": "Situasi (Situation)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Saat peluncuran produk baru, kami menemukan bug kritis beberapa jam sebelum live.'",
+      "info": "Berikan konteks dan latar belakang dari cerita Anda."
+    },
+    {
+      "name": "task",
+      "label": "Tugas (Task)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Tugas saya adalah mengkoordinasikan tim developer dan QA untuk memperbaiki bug tanpa menunda peluncuran.'",
+      "info": "Apa tanggung jawab spesifik Anda dalam situasi tersebut?"
+    },
+    {
+      "name": "action",
+      "label": "Tindakan (Action)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Saya segera membuat ruang perang virtual, mendelegasikan tugas investigasi, dan mengatur komunikasi setiap 30 menit.'",
+      "info": "Langkah-langkah konkret yang Anda ambil."
+    },
+    {
+      "name": "result",
+      "label": "Hasil (Result)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Kami berhasil mengisolasi dan memperbaiki bug dalam 2 jam, dan produk diluncurkan tepat waktu dengan sukses.'",
+      "info": "Apa hasil dari tindakan Anda? Kuantifikasi jika memungkinkan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Pemikiran Terstruktur & Analisis"
+  ],
+  "nama_kerangka": "STAR"
+}

@@ -1,0 +1,33 @@
+{
+  "description": "Versi sederhana dari Chain of Thought, cukup dengan menambahkan frasa ajaib untuk memicu penalaran langkah-demi-langkah.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penalaran Cepat yang akan menerapkan penalaran langkah-demi-langkah.",
+  "components": [
+    {
+      "name": "question",
+      "label": "Pertanyaan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Jelaskan mengapa langit berwarna biru.'",
+      "info": "Pertanyaan yang ingin Anda ajukan ke AI."
+    },
+    {
+      "name": "magicPhrase",
+      "label": "Frasa Pemicu",
+      "type": "text",
+      "placeholder": "e.g., 'Mari kita berpikir langkah demi langkah.'",
+      "info": "Frasa sederhana yang ditambahkan di akhir prompt untuk mendorong penalaran terstruktur."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Pemikiran Terstruktur & Analisis"
+  ],
+  "nama_kerangka": "Zero-shot CoT"
+}

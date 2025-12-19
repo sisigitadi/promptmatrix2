@@ -1,0 +1,66 @@
+{
+  "description": "Ambil satu ide sentral dan hasilkan cabang-cabang ide terkait untuk mind mapping atau eksplorasi kreatif.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Fasilitator Ide yang akan menghasilkan cabang-cabang ide terkait dari ide sentral.",
+  "components": [
+    {
+      "name": "centralIdea",
+      "label": "Ide Sentral",
+      "type": "text",
+      "placeholder": "e.g., 'Membuka kedai kopi ramah lingkungan'",
+      "info": "Topik utama yang ingin Anda eksplorasi lebih dalam.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "brainstormingFocus",
+      "label": "Fokus Brainstorming",
+      "type": "select",
+      "options": [
+        "Ide Pemasaran",
+        "Fitur Produk/Layanan",
+        "Potensi Masalah & Solusi",
+        "Nama & Tagline",
+        "Semua Aspek",
+        "Lainnya..."
+      ],
+      "info": "Pilih area spesifik yang ingin Anda gali idenya."
+    },
+    {
+      "name": "numberOfIdeas",
+      "label": "Jumlah Ide yang Diinginkan",
+      "type": "number",
+      "placeholder": "e.g., 10",
+      "info": "Berapa banyak ide cabang yang ingin Anda hasilkan?",
+      "validation": {
+        "min_value": 1,
+        "max_value": 20
+      }
+    },
+    {
+      "name": "constraints",
+      "label": "Batasan (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Anggaran rendah, hanya untuk pasar lokal'",
+      "info": "Batasan akan membuat ide yang dihasilkan lebih realistis dan relevan.",
+      "optional": true
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Pikirkan ide yang paling tidak biasa dan 'out-of-the-box'. Kategorikan ide-ide yang dihasilkan. Setiap ide harus dijelaskan dalam satu kalimat.",
+      "info": "Instruksi tentang bagaimana AI harus melakukan brainstorming.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Kreatif & Ideasi"
+  ],
+  "nama_kerangka": "Asisten Brainstorming"
+}

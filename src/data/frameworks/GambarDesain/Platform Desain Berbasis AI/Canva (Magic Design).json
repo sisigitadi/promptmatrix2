@@ -1,0 +1,57 @@
+{
+  "description": "Gunakan deskripsi teks untuk menghasilkan template desain yang dapat disesuaikan secara instan di Canva.",
+  "toolType": "image-editing",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Desainer Grafis AI yang akan menghasilkan template desain yang dapat disesuaikan di Canva.",
+  "components": [
+    {
+      "name": "designType",
+      "label": "Jenis Desain",
+      "type": "select",
+      "options": [
+        "Presentasi",
+        "Postingan Instagram",
+        "Poster",
+        "Logo",
+        "Selebaran (Flyer)",
+        "Lainnya..."
+      ],
+      "info": "Pilih jenis dokumen atau format desain yang Anda butuhkan."
+    },
+    {
+      "name": "description",
+      "label": "Deskripsi Desain Anda",
+      "type": "textarea",
+      "placeholder": "e.g., 'Sebuah postingan Instagram untuk mempromosikan workshop tentang berkebun di perkotaan. Gunakan gaya yang modern dan organik dengan warna hijau dan krem.'",
+      "info": "Jelaskan secara singkat (5+ kata) tentang ide, gaya, dan konten desain Anda.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "contentToInclude",
+      "label": "Teks & Konten Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'Judul: Urban Gardening 101. Tanggal: 25 Juli. Pembicara: Jane Doe.'",
+      "info": "Sebutkan teks, judul, atau informasi penting yang harus ada di dalam desain.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Platform Desain Berbasis AI"
+  ],
+  "nama_kerangka": "Canva (Magic Design)"
+}

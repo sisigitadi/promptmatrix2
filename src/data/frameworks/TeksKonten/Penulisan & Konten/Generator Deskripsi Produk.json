@@ -1,0 +1,88 @@
+{
+  "description": "Buat deskripsi produk yang menarik dan persuasif untuk e-commerce.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis Copywriting Produk yang akan membuat deskripsi produk.",
+  "components": [
+    {
+      "name": "productName",
+      "label": "Nama Produk",
+      "type": "text",
+      "placeholder": "e.g., 'Sepatu Lari Ultra-Light X1'",
+      "info": "Nama lengkap dan spesifik produk Anda.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Pengguna Produk",
+      "type": "text",
+      "placeholder": "e.g., 'Pelari maraton, penggemar kebugaran'",
+      "info": "Siapa pembeli ideal untuk produk ini?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "usp",
+      "label": "Unique Selling Proposition (USP)",
+      "type": "text",
+      "placeholder": "e.g., 'Satu-satunya sepatu lari dengan sol grafena'",
+      "info": "Apa yang membuat produk ini unik dan lebih baik dari kompetitor?",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "keyFeatures",
+      "label": "Fitur & Manfaat Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'Bahan jaring berpori untuk sirkulasi udara maksimal, sol busa responsif yang mengembalikan energi, desain aerodinamis untuk kecepatan.'",
+      "info": "Jelaskan fitur dan terjemahkan menjadi manfaat bagi pengguna. Pisahkan dengan koma atau baris baru.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "brandVoice",
+      "label": "Gaya Bahasa Brand",
+      "type": "select",
+      "options": [
+        "Mewah & Eksklusif",
+        "Teknis & Detail",
+        "Santai & Ramah",
+        "Minimalis & Modern",
+        "Lainnya..."
+      ],
+      "info": "Pilih suara brand yang konsisten dengan produk Anda."
+    },
+    {
+      "name": "length",
+      "label": "Panjang Deskripsi",
+      "type": "select",
+      "options": [
+        "Singkat (1 paragraf)",
+        "Sedang (2-3 paragraf)",
+        "Detail (lebih dari 3 paragraf)",
+        "Lainnya..."
+      ],
+      "info": "Pilih panjang deskripsi sesuai kebutuhan platform e-commerce."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Tonjolkan aspek 'ramah lingkungan' dari material yang digunakan. Sebutkan ada garansi 2 tahun. Hindari penggunaan superlatif seperti 'terbaik'.",
+      "info": "Informasi penting lainnya. Misalnya, detail garansi, material, atau hal yang perlu ditonjolkan secara implisit.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Penulisan & Konten"
+  ],
+  "nama_kerangka": "Generator Deskripsi Produk"
+}

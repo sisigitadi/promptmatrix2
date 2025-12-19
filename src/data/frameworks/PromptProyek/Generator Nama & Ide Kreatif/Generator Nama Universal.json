@@ -1,0 +1,351 @@
+{
+  "description": "Dapatkan nama kreatif untuk bayi, bisnis, tim, karakter fiksi, dan lainnya.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Nomenclaturist & Onomastika Kreatif yang akan memberikan opsi nama.",
+  "components": [
+    {
+      "name": "category",
+      "label": "Kategori Penamaan",
+      "type": "select",
+      "options": [
+        "Nama Bayi",
+        "Nama Hewan Peliharaan",
+        "Nama Bisnis/Produk",
+        "Nama Tim/Komunitas",
+        "Nama Karakter Fiksi",
+        "Judul Acara/Karya",
+        "Nama Domain/Hashtag"
+      ],
+      "info": "Pilih untuk apa nama ini akan digunakan."
+    }
+  ],
+  "dynamicSubcomponents": {
+    "trigger": "category",
+    "options": {
+      "Nama Bayi": [
+        {
+          "name": "gender",
+          "label": "Jenis Kelamin",
+          "type": "select",
+          "options": [
+            "Laki-laki",
+            "Perempuan",
+            "Unisex"
+          ],
+          "info": "Pilih jenis kelamin."
+        },
+        {
+          "name": "origin",
+          "label": "Asal Bahasa/Budaya (Opsional)",
+          "type": "text",
+          "placeholder": "e.g., 'Sansekerta, Latin, Jepang'",
+          "info": "Sebutkan asal nama yang Anda inginkan.",
+          "optional": true,
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "meaning",
+          "label": "Makna yang Diinginkan",
+          "type": "text",
+          "placeholder": "e.g., 'Cahaya, bijaksana, kuat'",
+          "info": "Sebutkan makna atau harapan yang terkandung dalam nama.",
+          "optional": true,
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "nameStyle",
+          "label": "Gaya Nama",
+          "type": "select",
+          "options": [
+            "Klasik & Populer",
+            "Modern & Unik",
+            "Singkat & Manis"
+          ],
+          "info": "Pilih gaya nama yang Anda inginkan."
+        }
+      ],
+      "Nama Bisnis/Produk": [
+        {
+          "name": "industry",
+          "label": "Industri/Bidang Usaha",
+          "type": "text",
+          "placeholder": "e.g., 'Teknologi, kuliner, fashion'",
+          "info": "Sebutkan industri tempat bisnis Anda beroperasi.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "coreConcept",
+          "label": "Konsep Inti",
+          "type": "text",
+          "placeholder": "e.g., 'Aplikasi untuk belajar investasi saham'",
+          "info": "Jelaskan secara singkat apa yang dilakukan bisnis/produk Anda.",
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "brandPersonality",
+          "label": "Kepribadian Brand",
+          "type": "text",
+          "placeholder": "e.g., 'Modern, tepercaya, mudah diakses'",
+          "info": "Sebutkan 3-5 kata yang mendeskripsikan brand Anda.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "keywords",
+          "label": "Kata Kunci untuk Disertakan",
+          "type": "text",
+          "placeholder": "e.g., 'Invest, dana, cerdas'",
+          "info": "Kata atau ide yang ingin Anda sertakan dalam nama.",
+          "optional": true,
+          "validation": {
+            "min_length": 3
+          }
+        }
+      ],
+      "Nama Karakter Fiksi": [
+        {
+          "name": "genre",
+          "label": "Genre Cerita",
+          "type": "text",
+          "placeholder": "e.g., 'Fantasi, fiksi ilmiah, misteri'",
+          "info": "Sebutkan genre cerita karakter Anda.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "role",
+          "label": "Peran Karakter",
+          "type": "select",
+          "options": [
+            "Protagonis",
+            "Antagonis",
+            "Pendukung"
+          ],
+          "info": "Pilih peran karakter dalam cerita."
+        },
+        {
+          "name": "traits",
+          "label": "Sifat & Ciri Khas",
+          "type": "text",
+          "placeholder": "e.g., 'Pemberani, misterius, memiliki kekuatan sihir'",
+          "info": "Sebutkan sifat-sifat utama karakter.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "origin",
+          "label": "Asal-usul/Ras Karakter",
+          "type": "text",
+          "placeholder": "e.g., 'Elf dari hutan kuno, manusia dari kota metropolitan'",
+          "info": "Sebutkan latar belakang karakter.",
+          "validation": {
+            "min_length": 5
+          }
+        }
+      ],
+      "Nama Hewan Peliharaan": [
+        {
+          "name": "animalType",
+          "label": "Jenis Hewan",
+          "type": "text",
+          "placeholder": "e.g., 'Kucing, Anjing, Burung'",
+          "info": "Jenis hewan peliharaan Anda.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "gender",
+          "label": "Jenis Kelamin (Opsional)",
+          "type": "select",
+          "options": [
+            "Jantan",
+            "Betina",
+            "Tidak Tahu"
+          ],
+          "info": "Jenis kelamin hewan peliharaan."
+        },
+        {
+          "name": "personalityTraits",
+          "label": "Sifat/Ciri Khas",
+          "type": "textarea",
+          "placeholder": "e.g., 'Lucu, Pemberani, Tenang, Aktif'",
+          "info": "Sifat atau ciri khas yang menonjol dari hewan peliharaan Anda.",
+          "optional": true,
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "nameStyle",
+          "label": "Gaya Nama",
+          "type": "select",
+          "options": [
+            "Klasik",
+            "Modern",
+            "Unik",
+            "Lucu",
+            "Berdasarkan Makanan"
+          ],
+          "info": "Pilih gaya nama yang Anda inginkan."
+        }
+      ],
+      "Nama Tim/Komunitas": [
+        {
+          "name": "teamPurpose",
+          "label": "Tujuan Tim/Komunitas",
+          "type": "text",
+          "placeholder": "e.g., 'Tim Olahraga, Proyek IT, Komunitas Hobi'",
+          "info": "Tujuan utama dari tim atau komunitas ini.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "teamVibe",
+          "label": "Suasana/Vibe Tim",
+          "type": "select",
+          "options": [
+            "Profesional",
+            "Santai & Kreatif",
+            "Kompetitif",
+            "Inklusif"
+          ],
+          "info": "Nuansa atau atmosfer yang ingin dibangun dalam tim/komunitas."
+        },
+        {
+          "name": "keywords",
+          "label": "Kata Kunci untuk Disertakan (Opsional)",
+          "type": "text",
+          "placeholder": "e.g., 'Inovasi, Juara, Bersama, Solidaritas'",
+          "info": "Kata atau ide yang ingin Anda sertakan dalam nama tim/komunitas.",
+          "optional": true,
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "memberCount",
+          "label": "Jumlah Anggota (Opsional)",
+          "type": "number",
+          "placeholder": "e.g., 5, 20, 100+",
+          "info": "Perkiraan jumlah anggota tim atau komunitas.",
+          "optional": true,
+          "validation": {
+            "min_value": 1
+          }
+        }
+      ],
+      "Judul Acara/Karya": [
+        {
+          "name": "eventType",
+          "label": "Jenis Acara/Karya",
+          "type": "select",
+          "options": [
+            "Seminar",
+            "Workshop",
+            "Konser Musik",
+            "Pameran Seni",
+            "Buku",
+            "Film",
+            "Podcast"
+          ],
+          "info": "Pilih jenis acara atau karya yang akan diberi judul."
+        },
+        {
+          "name": "mainTopic",
+          "label": "Topik Utama",
+          "type": "text",
+          "placeholder": "e.g., 'Masa Depan AI', 'Seni Melukis Abstrak', 'Perjalanan Kuliner Indonesia'",
+          "info": "Inti dari acara atau karya tersebut.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "targetAudience",
+          "label": "Target Audiens",
+          "type": "text",
+          "placeholder": "e.g., 'Developer, Seniman, Pecinta Kuliner'",
+          "info": "Siapa target audiens utama untuk judul ini?",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "mood",
+          "label": "Suasana/Mood",
+          "type": "select",
+          "options": [
+            "Inspiratif",
+            "Edukatif",
+            "Menghibur",
+            "Misterius",
+            "Serius"
+          ],
+          "info": "Suasana atau emosi yang ingin disampaikan oleh judul."
+        }
+      ],
+      "Nama Domain/Hashtag": [
+        {
+          "name": "purpose",
+          "label": "Tujuan",
+          "type": "text",
+          "placeholder": "e.g., 'Website Pribadi, Kampanye Pemasaran, Toko Online'",
+          "info": "Untuk apa nama domain atau hashtag ini akan digunakan?",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "keywords",
+          "label": "Kata Kunci Utama",
+          "type": "text",
+          "placeholder": "e.g., 'fotografi, jakarta, kuliner'",
+          "info": "Kata kunci yang relevan dengan tujuan Anda.",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "lengthPreference",
+          "label": "Preferensi Panjang",
+          "type": "select",
+          "options": [
+            "Singkat",
+            "Sedang",
+            "Panjang"
+          ],
+          "info": "Apakah Anda menginginkan nama yang singkat, sedang, atau panjang?"
+        },
+        {
+          "name": "callToAction",
+          "label": "Saran untuk Cek Ketersediaan",
+          "type": "text",
+          "placeholder": "e.g., 'Pastikan untuk memeriksa ketersediaan domain (.com, .id) dan handle media sosial (Instagram, Twitter) sebelum memutuskan.'",
+          "info": "Penting untuk selalu memeriksa ketersediaan nama yang dihasilkan.",
+          "validation": {
+            "min_length": 10
+          }
+        }
+      ]
+    }
+  },
+  "konteks_tambahan_instruksi_khusus": "AI harus selalu memberikan variasi nama yang luas, dari yang aman hingga yang lebih berani. Untuk nama bisnis/produk, sertakan saran untuk memeriksa ketersediaan domain dan media sosial. Untuk nama personal, pertimbangkan kemudahan pengucapan. Disclaimer wajib: 'Nama yang dihasilkan adalah saran kreatif. Pastikan untuk memeriksa ketersediaan merek dagang, domain, dan handle media sosial secara mandiri sebelum mengadopsi sebuah nama.'",
+  "kategori": [
+    "Prompt Proyek",
+    "Generator Nama & Ide Kreatif"
+  ],
+  "nama_kerangka": "Generator Nama Universal"
+}

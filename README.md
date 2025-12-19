@@ -1,40 +1,97 @@
-# Prompt Matrix 2.0
+# Prompt Matrix 2.0 - Professional Prompt Engineering Suites
 
-Prompt Matrix 2.0 adalah aplikasi canggih yang dirancang untuk membantu Anda membuat, mengelola, dan mengoptimalkan prompt untuk berbagai kebutuhan. Aplikasi ini bertujuan untuk menstandardisasi rekayasa prompt, memastikan setiap prompt yang dihasilkan memiliki kualitas tertinggi.
+Prompt Matrix 2.0 is a state-of-the-art web application designed to revolutionize the way you create, curate, and optimize AI prompts. Built with a focus on structured prompt engineering, it provides a powerful toolkit for AI power users, developers, and creative professionals to achieve high-quality, predictable outputs from any Large Language Model (LLM).
 
-## Fitur Utama
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://sisigitadi.github.io/promptmatrix2/)
+![Version](https://img.shields.io/badge/Version-2.0.2-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-orange?style=for-the-badge)
 
-*   **Kerangka Kerja Terstruktur**: Aplikasi ini menyediakan berbagai kerangka kerja (frameworks) yang telah ditentukan sebelumnya untuk berbagai kasus penggunaan, seperti penulisan, perencanaan, dan kreativitas.
-*   **Manajemen Prompt**: Simpan, muat, ekspor, dan impor prompt favorit Anda untuk digunakan kembali di masa mendatang. Kelola dan kategorikan prompt yang disimpan agar mudah ditemukan.
-*   **Pencarian Cepat**: Cari prompt atau kerangka kerja tertentu dengan cepat menggunakan fungsi pencarian yang ditingkatkan, mencakup nama, ID, deskripsi, dan detail komponen input.
-*   **Antarmuka Pengguna Intuitif**: Desain yang bersih dan navigasi yang jelas membuat aplikasi ini mudah digunakan oleh siapa saja.
-*   **Kustomisasi Input**: Pilih dari berbagai jenis input untuk prompt Anda, memberikan fleksibilitas maksimum dalam menyesuaikan output, termasuk dukungan untuk tipe input gambar dan file.
-*   **Chaining Prompt**: Gunakan output dari satu prompt sebagai input untuk prompt berikutnya, memungkinkan alur kerja yang kompleks dan efisien.
-*   **Peningkatan Penanganan Kesalahan**: Pesan kesalahan yang lebih spesifik dan ramah pengguna untuk pengalaman yang lebih baik, didukung oleh `react-toastify`.
-*   **Peningkatan Kinerja**: Implementasi code splitting dan lazy loading untuk waktu muat awal yang lebih cepat.
-*   **Keamanan Tipe**: Peningkatan keamanan tipe di seluruh codebase untuk mengurangi potensi bug.
-*   **Akses Dokumentasi Terpusat**: Semua dokumen bantuan (FAQ, panduan, catatan rilis) kini terintegrasi dan mudah diakses melalui menu bantuan.
+---
 
+## 🚀 Key Features
 
-## Penggunaan
+### 1. Structured Framework Engine
+Access hundreds of pre-defined frameworks across multiple domains like **Coding, Creative, Business, and Strategy**. Each framework is built on proven prompt engineering principles (Role, Context, Task, Format Output).
 
-Prompt Matrix 2.0 dirancang untuk menyederhanakan proses pembuatan prompt AI. Berikut adalah alur kerja dasarnya:
+### 2. Intelligent Prompt Management
+- **Local Persistence:** Save and manage your prompts locally with version history.
+- **Multi-format Export:** Export your prompt libraries in **JSON, MD, or CSV** for backup or sharing.
+- **Smart Chaining:** Seamlessly use the output of one prompt as the input for another to build complex AI workflows.
 
-1.  **Pilih Kategori:** Di panel navigasi kiri, jelajahi berbagai kategori prompt yang tersedia (misalnya, Penulisan, Pemasaran, Kreatif).
-2.  **Pilih Kerangka Kerja:** Setelah memilih kategori, pilih kerangka kerja spesifik yang paling sesuai dengan kebutuhan Anda. Setiap kerangka kerja dirancang untuk tujuan tertentu dan akan menampilkan serangkaian input yang relevan.
-3.  **Isi Formulir:** Lengkapi semua bidang input yang diperlukan di panel tengah. Perhatikan tooltip dan pesan validasi untuk panduan. Beberapa bidang mungkin memiliki opsi kustom atau bantuan AI.
-4.  **Pratinjau Prompt:** Saat Anda mengisi formulir, prompt yang dihasilkan akan diperbarui secara real-time di panel kanan. Anda dapat beralih antara tampilan bahasa alami dan JSON.
-5.  **Gunakan Prompt:** Salin prompt yang dihasilkan dan gunakan di model AI pilihan Anda.
-6.  **Fitur Tambahan:**
-    *   **Simpan Prompt:** Simpan prompt yang sering Anda gunakan untuk akses cepat di masa mendatang.
-    *   **Output -> Input:** Gunakan output dari satu prompt sebagai input untuk prompt lain, memungkinkan alur kerja yang kompleks.
- 
+### 3. Advanced Input System
+- **Dynamic Forms:** Responsive input fields tailored to each blueprint.
+- **Validation Engine:** Real-time validation ensures your inputs are optimized for AI consumption.
+- **Visual Builder:** A dedicated visual mode for building prompts with attachments and structured blocks.
 
+### 4. Premium User Interface
+- **Cyber-Spacious Design:** A modern 3D interface with Glassmorphism accents.
+- **Dark/Light Mode:** Full theme support for comfortable long-session usage.
+- **Lazy-Loaded Performance:** Optimized for speed with component-level splitting.
 
-## Lisensi
+---
 
-Proyek ini dilisensikan di bawah Lisensi MIT. Lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
+## 🛠 Technology Stack
 
+- **Core:** React 19 (TypeScript), Vite 7
+- **UI Framework:** React Bootstrap 5
+- **Icons:** React Icons (Fa, Lucide)
+- **Notifications:** React Toastify
+- **Prompt Generation:** Custom-built Generator Utility
+- **Build System:** Vite-powered Bundler
 
+---
 
-# promptmatrix20
+## ⚙️ Installation & Setup
+
+To run this project locally, follow these steps:
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/sisigitadi.github.io/promptmatrix2/
+   cd PromptMatrixV20
+   ```
+
+2. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Start Development Server:**
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🌐 Deployment
+
+This application is ready for deployment to GitHub Pages.
+
+1. **Build the Application:**
+   ```bash
+   npm run build
+   ```
+
+2. **Deploy to GitHub Pages:**
+   ```bash
+   npm run deploy
+   ```
+   *Note: Ensure the `homepage` field in `package.json` matches your GitHub Pages URL.*
+
+---
+
+## 🛡️ Security & Privacy
+
+- **No Server Storage:** All prompts and configurations are stored in your browser's local storage. Your data never leaves your device unless you choose to export it.
+- **API Protection:** The application is configured to handle API keys via browser session storage or local storage. **Always ensure your `.env` files and sensitive credentials are added to `.gitignore` before pushing to public repositories.**
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+Built with ❤️ for the AI Community. 
+Repository: [https://github.com/sisigitadi/promptmatrix2/](https://github.com/sisigitadi/promptmatrix2/)

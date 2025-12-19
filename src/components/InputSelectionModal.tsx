@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { FaTimesCircle } from "react-icons/fa";
+import { FaTimesCircle, FaSearch, FaArrowRight, FaLink } from "react-icons/fa";
 import {
   Modal,
   Button,
@@ -7,6 +7,9 @@ import {
   ListGroup,
   Accordion,
   InputGroup,
+  Row,
+  Col,
+  Badge,
 } from "react-bootstrap";
 import { PROMPT_FRAMEWORKS, Framework } from "../data/frameworks";
 import { categoryCssNameMap } from "../utils/categoryUtils";
@@ -86,9 +89,7 @@ const InputSelectionModal: React.FC<InputSelectionModalProps> = ({
 
   const searchResults = useMemo(() => {
     const searchTerm = searchQuery.toLowerCase();
-    if (!searchTerm) {
-      return [];
-    }
+    if (!searchTerm) return [];
     return flatFrameworks.filter(
       (fw) =>
         fw.name.toLowerCase().includes(searchTerm) ||
@@ -99,22 +100,7 @@ const InputSelectionModal: React.FC<InputSelectionModalProps> = ({
           (comp) =>
             comp.name.toLowerCase().includes(searchTerm) ||
             comp.label.toLowerCase().includes(searchTerm),
-        ) ||
-        (fw.details.komponen_prompt?.["VARIABEL INPUT"] &&
-          Object.values(fw.details.komponen_prompt["VARIABEL INPUT"]).some(
-            (input) =>
-              input.name.toLowerCase().includes(searchTerm) ||
-              input.label.toLowerCase().includes(searchTerm),
-          )) ||
-        (fw.details.dynamicSubcomponents &&
-          Object.values(fw.details.dynamicSubcomponents.options).some(
-            (subcomps) =>
-              subcomps.some(
-                (comp) =>
-                  comp.name.toLowerCase().includes(searchTerm) ||
-                  comp.label.toLowerCase().includes(searchTerm),
-              ),
-          )),
+        ),
     );
   }, [searchQuery, flatFrameworks]);
 
@@ -133,80 +119,99 @@ const InputSelectionModal: React.FC<InputSelectionModalProps> = ({
       size="xl"
       centered
       dialogClassName="modal-themed"
+      scrollable
     >
-      <Modal.Header closeButton className="modal-header-themed">
-        <Modal.Title>Gunakan Output sebagai Input</Modal.Title>
+      <Modal.Header closeButton className="modal-header-themed border-bottom-0">
+        <Modal.Title className="d-flex align-items-center gap-2 text-info">
+          <FaLink /> Hubungkan Output ke Input
+        </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="modal-body-themed text-start">
-        <InputGroup className="mb-3">
-          <Form.Control
-            type="text"
-            placeholder="Cari kerangka kerja..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            aria-label="Cari kerangka kerja target"
-          />
-          {searchQuery && (
-            <Button
-              variant="outline-secondary"
-              onClick={() => setSearchQuery("")}
-              title="Hapus Pencarian"
-            >
-              <FaTimesCircle />
-            </Button>
-          )}
-        </InputGroup>
 
-        <div className="d-flex" style={{ height: "60vh" }}>
-          <div className="flex-grow-1 overflow-auto pe-3">
-            <h5>Pilih Kerangka Kerja Target:</h5>
-            {searchQuery.length > 0 ? (
-              <ListGroup>
-                {searchResults.map((fw) => (
-                  <ListGroup.Item
-                    key={fw.name}
-                    action
-                    active={selectedFrameworkName === fw.name}
-                    onClick={() => handleFrameworkSelect(fw.name)}
-                    className="ms-3 list-group-item-themed"
-                    role="button"
-                    aria-current={
-                      selectedFrameworkName === fw.name ? "true" : undefined
-                    }
-                  >
-                    <strong>{fw.name}</strong>
-                    <br />
-                    <small>
-                      {fw.category} &gt; {fw.subcategory}
-                    </small>
-                  </ListGroup.Item>
-                ))}
-              </ListGroup>
-            ) : (
-              <Accordion alwaysOpen>
-                {Object.entries(PROMPT_FRAMEWORKS)
-                  .sort((a, b) => a[0].localeCompare(b[0]))
-                  .map(([categoryName, subcategories]) => (
-                    <Accordion.Item eventKey={categoryName} key={categoryName}>
-                      <Accordion.Header
-                        className={`accordion-header-themed category-button-dynamic ${categoryCssNameMap[categoryName]}`}
+      <Modal.Body className="modal-body-themed p-0">
+        <div className="p-3 bg-dark border-bottom border-secondary">
+          <InputGroup>
+            <InputGroup.Text className="bg-dark text-info border-secondary border-end-0">
+              <FaSearch />
+            </InputGroup.Text>
+            <Form.Control
+              type="text"
+              placeholder="Cari kerangka kerja target..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="bg-dark text-light border-secondary border-start-0 ps-0"
+            />
+            {searchQuery && (
+              <Button
+                variant="outline-secondary"
+                className="border-secondary"
+                onClick={() => setSearchQuery("")}
+              >
+                <FaTimesCircle />
+              </Button>
+            )}
+          </InputGroup>
+        </div>
+
+        <Row className="g-0" style={{ height: "65vh" }}>
+          {/* LEFT PANE: FRAMEWORK SELECTION */}
+          <Col
+            md={6}
+            className="border-end border-secondary d-flex flex-column h-100"
+          >
+            <div className="p-3 bg-dark-subtle border-bottom border-secondary">
+              <h6 className="mb-0 small text-uppercase letter-spacing-1 text-muted">
+                1. Pilih Kerangka Kerja
+              </h6>
+            </div>
+            <div className="flex-grow-1 overflow-auto p-3 custom-scrollbar">
+              {searchQuery.length > 0 ? (
+                <ListGroup variant="flush">
+                  {searchResults.map((fw) => (
+                    <ListGroup.Item
+                      key={fw.name}
+                      action
+                      active={selectedFrameworkName === fw.name}
+                      onClick={() => handleFrameworkSelect(fw.name)}
+                      className="bg-transparent border-0 rounded mb-1 p-3 list-item-chain"
+                    >
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div>
+                          <div className="fw-bold text-light">{fw.name}</div>
+                          <div className="small text-muted">
+                            {fw.category} &rsaquo; {fw.subcategory}
+                          </div>
+                        </div>
+                        {selectedFrameworkName === fw.name && (
+                          <FaArrowRight className="text-info" />
+                        )}
+                      </div>
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              ) : (
+                <Accordion className="chain-accordion" flush>
+                  {Object.entries(PROMPT_FRAMEWORKS)
+                    .sort((a, b) => a[0].localeCompare(b[0]))
+                    .map(([categoryName, subcategories]) => (
+                      <Accordion.Item
+                        eventKey={categoryName}
+                        key={categoryName}
+                        className="bg-transparent border-0"
                       >
-                        {categoryName}
-                      </Accordion.Header>
-                      <Accordion.Body className="p-0">
-                        <ListGroup variant="flush">
-                          {Object.entries(subcategories)
-                            .sort((a, b) => a[0].localeCompare(b[0]))
-                            .map(([subcategoryName, frameworks]) => (
+                        <Accordion.Header
+                          className={`category-link ${categoryCssNameMap[categoryName]}`}
+                        >
+                          {categoryName}
+                        </Accordion.Header>
+                        <Accordion.Body className="p-0">
+                          {Object.entries(subcategories).map(
+                            ([subcategoryName, frameworks]) => (
                               <div key={subcategoryName}>
-                                <ListGroup.Item
-                                  className={`subcategory-header list-group-item-themed category-button-dynamic ${categoryCssNameMap[categoryName]}`}
-                                >
+                                <div className="px-4 py-2 bg-dark text-muted small text-uppercase fw-bold border-bottom border-secondary opacity-50">
                                   {subcategoryName}
-                                </ListGroup.Item>
-                                {Object.entries(frameworks)
-                                  .sort((a, b) => a[0].localeCompare(b[0]))
-                                  .map(([frameworkName, details]) => (
+                                </div>
+                                {Object.entries(frameworks).map(
+                                  ([frameworkName]) => (
                                     <ListGroup.Item
                                       key={frameworkName}
                                       action
@@ -216,105 +221,93 @@ const InputSelectionModal: React.FC<InputSelectionModalProps> = ({
                                       onClick={() =>
                                         handleFrameworkSelect(frameworkName)
                                       }
-                                      className="ms-3 list-group-item-themed"
-                                      role="button"
-                                      aria-current={
-                                        selectedFrameworkName === frameworkName
-                                          ? "true"
-                                          : undefined
-                                      }
+                                      className="ps-5 bg-transparent border-0 list-item-chain"
                                     >
                                       {frameworkName}
                                     </ListGroup.Item>
-                                  ))}
+                                  ),
+                                )}
                               </div>
-                            ))}
-                        </ListGroup>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  ))}
-              </Accordion>
-            )}
-          </div>
+                            ),
+                          )}
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    ))}
+                </Accordion>
+              )}
+            </div>
+          </Col>
 
-          {selectedFrameworkName && currentFrameworkDetails && (
-            <div className="flex-grow-1 overflow-auto ps-3">
-              <h5>Pilih Input untuk {selectedFrameworkName}:</h5>
-              <ListGroup>
-                {currentFrameworkDetails.components
-                  ?.sort((a, b) => a.label.localeCompare(b.label))
-                  .map((comp) => (
+          {/* RIGHT PANE: INPUT FIELD SELECTION */}
+          <Col md={6} className="d-flex flex-column h-100 bg-dark-subtle">
+            <div className="p-3 bg-dark border-bottom border-secondary">
+              <h6 className="mb-0 small text-uppercase letter-spacing-1 text-muted">
+                2. Pilih Input Tujuan
+              </h6>
+            </div>
+            <div className="flex-grow-1 overflow-auto p-3 custom-scrollbar">
+              {!selectedFrameworkName ? (
+                <div className="h-100 d-flex flex-column justify-content-center align-items-center text-muted opacity-50 p-5 text-center">
+                  <FaLink size={40} className="mb-3" />
+                  <p>
+                    Silakan pilih kerangka kerja di panel kiri untuk melihat
+                    daftar input yang tersedia.
+                  </p>
+                </div>
+              ) : (
+                <ListGroup variant="flush">
+                  {currentFrameworkDetails?.components?.map((comp) => (
                     <ListGroup.Item
                       key={comp.name}
                       action
                       active={selectedInputName === comp.name}
                       onClick={() => handleInputSelect(comp.name)}
-                      className="list-group-item-themed"
-                      role="button"
-                      aria-current={
-                        selectedInputName === comp.name ? "true" : undefined
-                      }
+                      className="bg-dark border border-secondary rounded mb-2 p-3 list-item-field"
                     >
-                      {comp.label} ({comp.type})
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div>
+                          <div className="fw-bold text-info">{comp.label}</div>
+                          <code className="small text-secondary">
+                            {comp.name}
+                          </code>
+                          <div className="small text-muted mt-1">
+                            {comp.type} input
+                          </div>
+                        </div>
+                        {selectedInputName === comp.name && (
+                          <Badge bg="info" pill>
+                            Terpilih
+                          </Badge>
+                        )}
+                      </div>
                     </ListGroup.Item>
                   ))}
-                {currentFrameworkDetails.komponen_prompt?.["VARIABEL INPUT"] &&
-                  Object.entries(
-                    currentFrameworkDetails.komponen_prompt["VARIABEL INPUT"],
-                  )
-                    .sort(([, a], [, b]) => a.label.localeCompare(b.label))
-                    .map(([name, details]) => (
-                      <ListGroup.Item
-                        key={name}
-                        action
-                        active={selectedInputName === name}
-                        onClick={() => handleInputSelect(name)}
-                        className="list-group-item-themed"
-                        role="button"
-                        aria-current={
-                          selectedInputName === name ? "true" : undefined
-                        }
-                      >
-                        {details.label || name} ({details.type})
-                      </ListGroup.Item>
-                    ))}
-                {currentFrameworkDetails.dynamicSubcomponents &&
-                  Object.values(
-                    currentFrameworkDetails.dynamicSubcomponents.options,
-                  ).flatMap((comps) =>
-                    comps
-                      .sort((a, b) => a.label.localeCompare(b.label))
-                      .map((comp) => (
-                        <ListGroup.Item
-                          key={comp.name}
-                          action
-                          active={selectedInputName === comp.name}
-                          onClick={() => handleInputSelect(comp.name)}
-                          className="list-group-item-themed"
-                          role="button"
-                          aria-current={
-                            selectedInputName === comp.name ? "true" : undefined
-                          }
-                        >
-                          {comp.label} ({comp.type}) (Dynamic)
-                        </ListGroup.Item>
-                      )),
-                  )}
-              </ListGroup>
+                </ListGroup>
+              )}
             </div>
+          </Col>
+        </Row>
+      </Modal.Body>
+
+      <Modal.Footer className="modal-footer-themed border-top border-secondary bg-dark">
+        <div className="me-auto text-muted small d-none d-md-block">
+          {selectedFrameworkName && selectedInputName && (
+            <span>
+              Menghubungkan ke: <strong>{selectedFrameworkName}</strong>{" "}
+              &rsaquo; <strong>{selectedInputName}</strong>
+            </span>
           )}
         </div>
-      </Modal.Body>
-      <Modal.Footer className="modal-footer-themed">
-        <Button variant="secondary" onClick={onHide}>
+        <Button variant="outline-secondary" onClick={onHide}>
           Batal
         </Button>
         <Button
           variant="primary"
           onClick={handleConfirm}
           disabled={!selectedFrameworkName || !selectedInputName}
+          className="px-4"
         >
-          Konfirmasi
+          Terapkan Koneksi
         </Button>
       </Modal.Footer>
     </Modal>

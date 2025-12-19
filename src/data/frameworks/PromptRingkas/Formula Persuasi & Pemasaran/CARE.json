@@ -1,0 +1,47 @@
+{
+  "description": "Struktur umpan balik atau studi kasus dengan memberikan konteks, tindakan yang diambil, hasil yang dicapai, dan contoh nyata.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pencerita Dampak yang akan menyusun umpan balik atau studi kasus.",
+  "components": [
+    {
+      "name": "context",
+      "label": "Konteks Situasi (Context)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Tim penjualan kami kesulitan mengelola data prospek yang masuk dari berbagai kanal.'",
+      "info": "Latar belakang atau situasi awal."
+    },
+    {
+      "name": "action",
+      "label": "Tindakan yang Diambil (Action)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Kami mengimplementasikan CRM baru dan melatih seluruh tim dalam waktu 2 minggu.'",
+      "info": "Langkah-langkah spesifik yang dilakukan."
+    },
+    {
+      "name": "result",
+      "label": "Hasil yang Dicapai (Result)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Tingkat konversi meningkat 25% dan waktu respons terhadap prospek berkurang 50%.'",
+      "info": "Dampak kuantitatif atau kualitatif dari tindakan tersebut."
+    },
+    {
+      "name": "example",
+      "label": "Contoh Spesifik (Example)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Sebagai contoh, seorang anggota tim berhasil menutup 5 kesepakatan besar bulan lalu, naik dari rata-rata 2 kesepakatan.'",
+      "info": "Ilustrasi atau cerita singkat yang mendukung hasil."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Formula Persuasi & Pemasaran"
+  ],
+  "nama_kerangka": "CARE"
+}

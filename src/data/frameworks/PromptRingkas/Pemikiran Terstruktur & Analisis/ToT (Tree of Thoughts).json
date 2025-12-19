@@ -1,0 +1,40 @@
+{
+  "description": "Minta AI untuk mengeksplorasi beberapa jalur pemikiran yang berbeda secara bersamaan dan mengevaluasinya untuk menemukan solusi terbaik.",
+  "toolType": "planning",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pemikir Strategis yang akan mengeksplorasi beberapa jalur pemikiran.",
+  "components": [
+    {
+      "name": "problem",
+      "label": "Masalah Kompleks",
+      "type": "textarea",
+      "placeholder": "e.g., 'Bagaimana cara merancang sistem transportasi yang efisien untuk kota metropolitan baru?'",
+      "info": "Masalah yang memiliki banyak kemungkinan solusi dan variabel."
+    },
+    {
+      "name": "thoughtPaths",
+      "label": "Jumlah Jalur Pemikiran untuk Dieksplorasi",
+      "type": "number",
+      "placeholder": "e.g., 3",
+      "info": "Berapa banyak ide atau pendekatan awal yang harus dipertimbangkan AI?"
+    },
+    {
+      "name": "evaluationCriteria",
+      "label": "Kriteria Evaluasi",
+      "type": "textarea",
+      "placeholder": "e.g., 'Biaya, dampak lingkungan, kecepatan implementasi, skalabilitas.'",
+      "info": "Bagaimana setiap jalur pemikiran akan dinilai dan dibandingkan?"
+    },
+    {
+      "name": "additionalContext",
+      "label": "Instruksi Tambahan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Untuk setiap jalur pemikiran, pertimbangkan pro dan kontranya. Di akhir, berikan rekomendasi jalur terbaik berdasarkan kriteria.'",
+      "info": "Panduan untuk proses eksplorasi dan evaluasi."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Pemikiran Terstruktur & Analisis"
+  ],
+  "nama_kerangka": "ToT (Tree of Thoughts)"
+}

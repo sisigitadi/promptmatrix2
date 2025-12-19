@@ -1,9 +1,14 @@
 import React from "react";
-import { Modal, Button, Spinner } from "react-bootstrap";
+import { Modal, Button, Spinner, Alert } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-
-import { FaCopy, FaRobot } from "react-icons/fa";
+import {
+  FaCopy,
+  FaRobot,
+  FaDownload,
+  FaExclamationTriangle,
+} from "react-icons/fa";
+import { toast } from "react-toastify";
 
 interface AiResponseModalProps {
   show: boolean;
@@ -21,10 +26,10 @@ const AiResponseModal: React.FC<AiResponseModalProps> = ({
   isGenerating,
 }) => {
   const handleCopy = () => {
+    if (!aiResponse) return;
     const textToCopy = aiResponse.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
-
     navigator.clipboard.writeText(textToCopy);
-    // Optionally, add a visual feedback like a tooltip or temporary text change
+    toast.info("Respons AI disalin!");
   };
 
   return (
@@ -33,43 +38,54 @@ const AiResponseModal: React.FC<AiResponseModalProps> = ({
       onHide={onHide}
       centered
       size="lg"
+      scrollable
       dialogClassName="modal-themed"
-      animation={true}
     >
-      <Modal.Header closeButton className="modal-header-themed">
-        <Modal.Title>
-          <FaRobot className="me-2" /> Respons AI
+      <Modal.Header closeButton className="modal-header-themed border-bottom-0">
+        <Modal.Title className="d-flex align-items-center gap-2 text-info">
+          <FaRobot /> Respons AI
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="modal-body-themed text-start">
-        <div aria-live="polite">
+
+      <Modal.Body className="modal-body-themed p-0">
+        <div className="p-4">
           {isGenerating ? (
-            <div className="text-center my-5">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">AI sedang berpikir...</span>
-              </Spinner>
-              <p className="mt-2">AI sedang berpikir...</p>
+            <div className="text-center py-5">
+              <Spinner animation="grow" variant="info" className="mb-3" />
+              <h5 className="text-info">AI Sedang Berpikir...</h5>
+              <p className="text-muted small">
+                Harap tunggu sebentar, kami sedang menyusun prompt Anda.
+              </p>
             </div>
           ) : aiError ? (
-            <div
-              className="mt-3 p-3 border rounded text-danger"
-              style={{
-                backgroundColor: "rgba(220, 53, 69, 0.1)",
-                borderColor: "var(--danger-color)",
-              }}
+            <Alert
+              variant="danger"
+              className="d-flex align-items-start gap-3 bg-dark border-danger text-danger"
             >
-              <strong>Error:</strong> {aiError}
-            </div>
+              <FaExclamationTriangle size={24} className="mt-1" />
+              <div>
+                <h6 className="fw-bold">Terjadi Kesalahan</h6>
+                <p className="mb-0 small">{aiError}</p>
+              </div>
+            </Alert>
           ) : aiResponse ? (
-            <>
+            <div className="ai-response-wrapper border border-secondary rounded overflow-hidden">
+              <div className="p-3 bg-dark-subtle border-bottom border-secondary d-flex justify-content-between align-items-center">
+                <span className="small text-muted text-uppercase fw-bold letter-spacing-1">
+                  Markdown Output
+                </span>
+                <Button
+                  variant="outline-info"
+                  size="sm"
+                  onClick={handleCopy}
+                  className="py-1"
+                >
+                  <FaCopy className="me-1" /> Salin
+                </Button>
+              </div>
               <div
-                className="p-3 border rounded ai-response-container"
-                style={{
-                  backgroundColor: "var(--panel-card-color)",
-                  color: "var(--text-color)",
-                  maxHeight: "clamp(300px, 60vh, 800px)", // Responsive max-height
-                  overflowY: "auto",
-                }}
+                className="p-4 bg-dark custom-scrollbar"
+                style={{ maxHeight: "65vh", overflowY: "auto" }}
               >
                 <ReactMarkdown
                   components={{
@@ -79,94 +95,44 @@ const AiResponseModal: React.FC<AiResponseModalProps> = ({
                         <SyntaxHighlighter
                           language={match[1]}
                           PreTag="div"
+                          style={{}} // Custom style if needed
                           {...props}
                         >
                           {String(children).replace(/\n$/, "")}
                         </SyntaxHighlighter>
                       ) : (
-                        <code className={className} {...props}>
+                        <code
+                          className={`${className} bg-secondary px-1 rounded text-info`}
+                          {...props}
+                        >
                           {children}
                         </code>
                       );
                     },
-                    blockquote({ node, children, ...props }) {
+                    blockquote({ children }) {
                       return (
-                        <blockquote
-                          style={{
-                            borderLeft: "4px solid #ccc",
-                            margin: "1.5em 10px",
-                            padding: "0.5em 10px",
-                            color: "#666",
-                          }}
-                          {...props}
-                        >
+                        <blockquote className="border-start border-4 border-info ps-3 my-3 text-muted fst-italic">
                           {children}
                         </blockquote>
                       );
                     },
-                    // Handle images (URLs)
-                    img({ node, ...props }) {
-                      // Check if the src is a data URL (Base64) or a regular URL
-                      const isBase64 =
-                        props.src && props.src.startsWith("data:");
+                    img({ ...props }) {
                       return (
-                        <div style={{ textAlign: "center", margin: "10px 0" }}>
+                        <div className="text-center my-4">
                           <img
                             {...props}
-                            style={{ maxWidth: "100%", height: "auto" }}
+                            className="img-fluid rounded border border-secondary shadow-lg"
+                            alt={props.alt || "AI Content"}
                           />
-                          {/* Add download button for regular URLs */}
-                          {!isBase64 && props.src && (
+                          {!props.src?.startsWith("data:") && (
                             <Button
-                              variant="outline-secondary"
+                              variant="link"
                               size="sm"
-                              className="mt-2"
+                              className="text-info mt-2"
                               href={props.src}
                               download
                             >
-                              Download Image
-                            </Button>
-                          )}
-                        </div>
-                      );
-                    },
-                    // Handle audio
-                    audio({ node, ...props }) {
-                      return (
-                        <div style={{ margin: "10px 0" }}>
-                          <audio controls {...props} style={{ width: "100%" }}>
-                            Your browser does not support the audio element.
-                          </audio>
-                          {props.src && (
-                            <Button
-                              variant="outline-secondary"
-                              size="sm"
-                              className="mt-2"
-                              href={props.src}
-                              download
-                            >
-                              Download Audio
-                            </Button>
-                          )}
-                        </div>
-                      );
-                    },
-                    // Handle video
-                    video({ node, ...props }) {
-                      return (
-                        <div style={{ margin: "10px 0" }}>
-                          <video controls {...props} style={{ width: "100%" }}>
-                            Your browser does not support the video tag.
-                          </video>
-                          {props.src && (
-                            <Button
-                              variant="outline-secondary"
-                              size="sm"
-                              className="mt-2"
-                              href={props.src}
-                              download
-                            >
-                              Download Video
+                              <FaDownload className="me-1" /> Unduh Gambar
                             </Button>
                           )}
                         </div>
@@ -177,21 +143,25 @@ const AiResponseModal: React.FC<AiResponseModalProps> = ({
                   {aiResponse}
                 </ReactMarkdown>
               </div>
-              <div className="d-flex justify-content-end mt-3">
-                <Button variant="primary" onClick={handleCopy}>
-                  <FaCopy className="me-2" /> Copy Response
-                </Button>
-              </div>
-            </>
+            </div>
           ) : (
-            <p>No AI response to display yet.</p>
+            <div className="text-center py-5 text-muted opacity-50">
+              <FaRobot size={48} className="mb-3" />
+              <p>Belum ada respons untuk ditampilkan.</p>
+            </div>
           )}
         </div>
       </Modal.Body>
-      <Modal.Footer className="modal-footer-themed">
-        <Button variant="secondary" onClick={onHide}>
+
+      <Modal.Footer className="modal-footer-themed bg-dark border-top border-secondary">
+        <Button variant="outline-secondary" onClick={onHide} className="px-4">
           Tutup
         </Button>
+        {aiResponse && !isGenerating && (
+          <Button variant="primary" onClick={handleCopy} className="px-4">
+            <FaCopy className="me-2" /> Salin Hasil Lengkap
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );

@@ -1,0 +1,93 @@
+{
+  "description": "Buat skrip video penjualan yang mengikuti formula copywriting terbukti untuk memaksimalkan konversi.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Ahli Skrip Penjualan yang akan membuat skrip VSL.",
+  "components": [
+    {
+      "name": "productName",
+      "label": "Nama Produk/Layanan",
+      "type": "text",
+      "placeholder": "e.g., 'Kursus Online 'Master of Code''",
+      "info": "Produk yang Anda jual.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Penonton VSL",
+      "type": "text",
+      "placeholder": "e.g., 'Orang yang ingin beralih karir menjadi programmer'",
+      "info": "Siapa audiens ideal yang akan menonton video ini?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "hook",
+      "label": "Hook (Pembuka yang Menarik)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Sebuah statistik mengejutkan, pertanyaan retoris yang provokatif, atau sebuah janji besar.'",
+      "info": "Bagaimana cara Anda merebut perhatian penonton dalam 5 detik pertama?",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "problem",
+      "label": "Masalah & Penderitaan Audiens",
+      "type": "textarea",
+      "placeholder": "e.g., 'Merasa terjebak di pekerjaan yang tidak memuaskan? Khawatir dengan masa depan karir?'",
+      "info": "Jelaskan masalah yang dihadapi audiens yang bisa diselesaikan oleh produk Anda.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "solution",
+      "label": "Produk Anda sebagai Solusi",
+      "type": "textarea",
+      "placeholder": "e.g., 'Kursus kami adalah jembatan menuju karir impian Anda, memberikan peta jalan yang jelas...'",
+      "info": "Perkenalkan produk Anda sebagai solusi dari masalah mereka.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "offer",
+      "label": "Penawaran Spesifik",
+      "type": "textarea",
+      "placeholder": "e.g., 'Akses seumur hidup ke semua modul, bonus e-book, komunitas eksklusif. Harga diskon 50% hanya untuk 24 jam.'",
+      "info": "Jelaskan secara detail apa yang akan mereka dapatkan dan urgensinya.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "callToAction",
+      "label": "Call to Action (CTA)",
+      "type": "text",
+      "placeholder": "e.g., 'Klik tombol di bawah ini sekarang juga!'",
+      "info": "Perintah akhir yang spesifik dan mendesak.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan nada yang sangat empatik di bagian 'masalah'. Buat penawaran terasa sangat bernilai. Ulangi CTA sebanyak 3 kali di akhir.",
+      "info": "Instruksi tentang gaya penyampaian, emosi yang ditargetkan, atau struktur VSL.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Pemasaran & Penjualan"
+  ],
+  "nama_kerangka": "Generator Skrip Video Sales Letter (VSL)"
+}

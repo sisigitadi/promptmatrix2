@@ -1,0 +1,54 @@
+{
+  "description": "Buat prompt positif dan negatif yang terstruktur untuk kontrol mendetail pada model Stable Diffusion.",
+  "toolType": "image-generation",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pengendali Gambar yang akan menghasilkan gambar yang sesuai.",
+  "components": [
+    {
+      "name": "positivePrompt",
+      "label": "Positive Prompt",
+      "type": "textarea",
+      "placeholder": "e.g., '(best quality:1.2), ultra-detailed, masterpiece, a majestic lion on a rock, cinematic lighting, (photorealistic:1.3)'",
+      "info": "Deskripsi detail dari apa yang Anda inginkan. Gunakan bobot (word:1.2) untuk penekanan.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "negativePrompt",
+      "label": "Negative Prompt",
+      "type": "textarea",
+      "placeholder": "e.g., '(worst quality, low quality:1.4), blurry, ugly, deformed, text, watermark, extra limbs'",
+      "info": "Deskripsi detail dari apa yang TIDAK Anda inginkan. Sangat penting untuk hasil yang bersih.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "technicalParameters",
+      "label": "Parameter Teknis (untuk referensi)",
+      "type": "text",
+      "placeholder": "e.g., 'Sampler: DPM++ 2M Karras, CFG Scale: 7, Steps: 25, Seed: 12345'",
+      "info": "Catat parameter teknis yang Anda gunakan di luar prompt untuk replikasi.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
+  "nama_kerangka": "Stable Diffusion"
+}

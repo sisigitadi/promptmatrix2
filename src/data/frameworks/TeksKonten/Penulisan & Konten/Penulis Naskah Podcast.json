@@ -1,0 +1,77 @@
+{
+  "description": "Ubah ide atau poin-poin menjadi naskah podcast yang terstruktur, lengkap dengan intro, segmen, dan outro.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penulis Naskah Podcast yang akan menyusun naskah.",
+  "components": [
+    {
+      "name": "podcastTitle",
+      "label": "Judul Episode Podcast",
+      "type": "text",
+      "placeholder": "e.g., 'Episode 5: Seni Berkata Tidak'",
+      "info": "Judul yang menarik dan informatif untuk episode Anda.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "hostPersona",
+      "label": "Persona Host",
+      "type": "text",
+      "placeholder": "e.g., 'Seorang ahli yang ramah, dua sahabat yang bercanda'",
+      "info": "Siapa yang berbicara dalam podcast ini?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "podcastFormat",
+      "label": "Format Podcast",
+      "type": "select",
+      "options": [
+        "Monolog (Solo)",
+        "Wawancara",
+        "Diskusi Panel",
+        "Storytelling Naratif",
+        "Lainnya..."
+      ],
+      "info": "Struktur umum dari episode podcast Anda."
+    },
+    {
+      "name": "keySegments",
+      "label": "Segmen-segmen Kunci",
+      "type": "textarea",
+      "placeholder": "e.g., 'Intro & Hook\nSegmen 1: Mengapa sulit berkata tidak\nSegmen 2: Teknik praktis\nOutro & CTA'",
+      "info": "Pecah episode menjadi beberapa bagian atau topik bahasan.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "targetDuration",
+      "label": "Target Durasi (menit)",
+      "type": "number",
+      "placeholder": "e.g., 20",
+      "info": "Perkiraan panjang naskah yang dibutuhkan.",
+      "validation": {
+        "min_value": 1,
+        "max_value": 120
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Sertakan jeda musik di antara segmen. Naskah harus terasa seperti percakapan, bukan membaca. Akhiri dengan pertanyaan untuk pendengar.",
+      "info": "Instruksi tentang gaya bahasa, musik, atau elemen audio lainnya.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Penulisan & Konten"
+  ],
+  "nama_kerangka": "Penulis Naskah Podcast"
+}

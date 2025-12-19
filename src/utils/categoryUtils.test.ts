@@ -3,12 +3,17 @@ import { categoryCssNameMap } from "./categoryUtils";
 describe("categoryCssNameMap", () => {
   it("should contain expected category to CSS name mappings", () => {
     expect(categoryCssNameMap).toEqual({
-      "Audio & Musik": "audio",
-      "Gambar & Desain": "gambar",
-      "Teks & Konten": "teks",
-      "Prompt Ringkas": "ringkas",
-      "Prompt Proyek": "proyek",
-      "Koleksi & Inovasi": "koleksi",
+      "Audio & Musik": "category-audio",
+      "Bisnis & Profesional": "category-business",
+      "Edukasi & Pembelajaran": "category-education",
+      "Gambar & Desain": "category-image",
+      "Game & Narasi": "category-game",
+      "Koleksi & Inovasi": "category-collection",
+      Programming: "category-code",
+      "Prompt Proyek": "category-project",
+      "Prompt Ringkas": "category-concise",
+      "Teks & Konten": "category-text",
+      default: "category-default",
     });
   });
 
@@ -17,7 +22,7 @@ describe("categoryCssNameMap", () => {
   });
 
   it("should have a consistent number of entries", () => {
-    const expectedNumberOfEntries = 6; // Based on the current map
+    const expectedNumberOfEntries = 11; // Based on the current map
     expect(Object.keys(categoryCssNameMap).length).toBe(
       expectedNumberOfEntries,
     );

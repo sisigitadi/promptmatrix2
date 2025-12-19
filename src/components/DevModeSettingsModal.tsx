@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, InputGroup } from "react-bootstrap";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
+import { Modal, Button, Form, InputGroup, Row, Col } from "react-bootstrap";
+import { FaEye, FaEyeSlash, FaCog, FaKey, FaSlidersH } from "react-icons/fa";
 
 interface DevModeSettingsModalProps {
   show: boolean;
@@ -33,176 +33,184 @@ const DevModeSettingsModal: React.FC<DevModeSettingsModalProps> = ({
   handleInputChangeWithValidation,
   validationErrors,
 }) => {
-  const [showApiKey, setShowApiKey] = useState(false); // State for toggling API Key visibility
+  const [showApiKey, setShowApiKey] = useState(false);
 
   return (
-    <Modal show={show} onHide={onHide} centered dialogClassName="modal-themed">
-      <Modal.Header closeButton className="modal-header-themed">
-        <Modal.Title>Pengaturan Mode Pengembang</Modal.Title>
+    <Modal
+      show={show}
+      onHide={onHide}
+      centered
+      dialogClassName="modal-themed"
+      size="lg"
+    >
+      <Modal.Header closeButton className="modal-header-themed border-bottom-0">
+        <Modal.Title className="d-flex align-items-center gap-2 text-info">
+          <FaCog /> Pengaturan Mode Pengembang
+        </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="modal-body-themed text-start">
-        <Form.Group className="mb-3" controlId="geminiModelSelect">
-          <Form.Label
-            className="small mb-1"
-            style={{ fontSize: "clamp(0.85rem, 1.5vw, 1rem)" }}
-          >
-            Pilih Model Gemini:
-          </Form.Label>
-          <Form.Select
-            name="geminiModel"
-            value={selectedModel}
-            onChange={(e) => onModelSelect(e.target.value)}
-            className="form-select"
-            style={{
-              padding: "clamp(0.5rem, 1vw, 0.75rem)",
-              fontSize: "clamp(0.9rem, 1.5vw, 1rem)",
-            }}
-          >
-            <option value="gemini-2.5-pro">gemini-2.5-pro</option>
-            <option value="gemini-2.5-flash">gemini-2.5-flash</option>
-          </Form.Select>
-        </Form.Group>
 
-        <Form.Group className="mb-3" controlId="apiKeyInput">
-          <Form.Label
-            className="small mb-1"
-            style={{ fontSize: "clamp(0.85rem, 1.5vw, 1rem)" }}
-          >
-            API Key Gemini:
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              type={showApiKey ? "text" : "password"}
-              placeholder="Masukkan API Key Anda"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              style={{
-                padding: "clamp(0.5rem, 1vw, 0.75rem)",
-                fontSize: "clamp(0.9rem, 1.5vw, 1rem)",
-              }}
-            />
-            <Button
-              variant="outline-secondary"
-              onClick={() => setShowApiKey((prev) => !prev)}
-              aria-label={
-                showApiKey ? "Sembunyikan API Key" : "Tampilkan API Key"
-              }
-            >
-              {showApiKey ? <FaEyeSlash /> : <FaEye />}
-            </Button>
-          </InputGroup>
-          <Form.Text className="text-muted mt-2">
-            <small className="text-warning">
-              Peringatan: API Key disimpan secara lokal di browser Anda. Jangan
-              gunakan API Key yang memiliki akses ke data sensitif atau berbayar
-              tinggi untuk tujuan pengembangan.
-            </small>
-          </Form.Text>
-        </Form.Group>
+      <Modal.Body className="modal-body-themed p-4">
+        <Form>
+          {/* SECTION: API CONFIGURATION */}
+          <div className="mb-4 p-3 bg-dark-subtle rounded border border-secondary">
+            <h6 className="text-info mb-3 d-flex align-items-center gap-2 small text-uppercase fw-bold">
+              <FaKey size={14} /> Konfigurasi API
+            </h6>
 
-        <Form.Group className="mb-3" controlId="temperatureInput">
-          <Form.Label
-            className="small mb-1"
-            style={{ fontSize: "clamp(0.85rem, 1.5vw, 1rem)" }}
-          >
-            Temperature (0-1):
-          </Form.Label>
-          <Form.Control
-            type="number"
-            step="0.1"
-            min="0"
-            max="1"
-            placeholder="0.7"
-            value={formData.temperature || ""}
-            onChange={(e) =>
-              handleInputChangeWithValidation(
-                "temperature",
-                parseFloat(e.target.value),
-                { validation: { min_value: 0, max_value: 1 } },
-              )
-            }
-            isInvalid={!!validationErrors.temperature}
-            style={{
-              padding: "clamp(0.5rem, 1vw, 0.75rem)",
-              fontSize: "clamp(0.9rem, 1.5vw, 1rem)",
-            }}
-          />
-          {validationErrors.temperature && (
-            <Form.Control.Feedback type="invalid">
-              {validationErrors.temperature}
-            </Form.Control.Feedback>
-          )}
-        </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="small text-muted mb-1">
+                Model Gemini Target
+              </Form.Label>
+              <Form.Select
+                value={selectedModel}
+                onChange={(e) => onModelSelect(e.target.value)}
+                className="bg-dark text-light border-secondary"
+              >
+                <option value="gemini-3.0-pro">gemini-3.0-pro</option>
+                <option value="gemini-2.0-flash-exp">
+                  gemini-2.0-flash-exp
+                </option>
+                <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+                <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+                <option value="gemini-1.5-pro-002">gemini-1.5-pro-002</option>
+                <option value="gemini-1.5-flash-002">
+                  gemini-1.5-flash-002
+                </option>
+                <option value="gemini-1.5-flash-8b">gemini-1.5-flash-8b</option>
+                <option value="gemini-1.0-pro">gemini-1.0-pro</option>
+              </Form.Select>
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="topPInput">
-          <Form.Label
-            className="small mb-1"
-            style={{ fontSize: "clamp(0.85rem, 1.5vw, 1rem)" }}
-          >
-            Top P (0-1):
-          </Form.Label>
-          <Form.Control
-            type="number"
-            step="0.1"
-            min="0"
-            max="1"
-            placeholder="0.9"
-            value={formData.top_p || ""}
-            onChange={(e) =>
-              handleInputChangeWithValidation(
-                "top_p",
-                parseFloat(e.target.value),
-                { validation: { min_value: 0, max_value: 1 } },
-              )
-            }
-            isInvalid={!!validationErrors.top_p}
-            style={{
-              padding: "clamp(0.5rem, 1vw, 0.75rem)",
-              fontSize: "clamp(0.9rem, 1.5vw, 1rem)",
-            }}
-          />
-          {validationErrors.top_p && (
-            <Form.Control.Feedback type="invalid">
-              {validationErrors.top_p}
-            </Form.Control.Feedback>
-          )}
-        </Form.Group>
+            <Form.Group>
+              <Form.Label className="small text-muted mb-1">
+                Google API Key
+              </Form.Label>
+              <InputGroup>
+                <Form.Control
+                  type={showApiKey ? "text" : "password"}
+                  placeholder="Masukkan API Key Anda..."
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  className="bg-dark text-light border-secondary"
+                />
+                <Button
+                  variant="outline-secondary"
+                  className="border-secondary"
+                  onClick={() => setShowApiKey((prev) => !prev)}
+                >
+                  {showApiKey ? <FaEyeSlash /> : <FaEye />}
+                </Button>
+              </InputGroup>
+              <div className="mt-2 p-2 bg-dark rounded border border-warning border-opacity-25">
+                <p
+                  className="small text-warning mb-0"
+                  style={{ fontSize: "0.75rem" }}
+                >
+                  <strong>Keamanan:</strong> API Key disimpan di{" "}
+                  <code>sessionStorage</code>. Kunci akan dihapus saat tab
+                  browser ditutup. Jangan gunakan kunci produksi dengan kuota
+                  tinggi.
+                </p>
+              </div>
+            </Form.Group>
+          </div>
 
-        <Form.Group className="mb-3" controlId="topKInput">
-          <Form.Label
-            className="small mb-1"
-            style={{ fontSize: "clamp(0.85rem, 1.5vw, 1rem)" }}
-          >
-            Top K (&gt;=1):
-          </Form.Label>
-          <Form.Control
-            type="number"
-            min="1"
-            placeholder="40"
-            value={formData.top_k || ""}
-            onChange={(e) =>
-              handleInputChangeWithValidation(
-                "top_k",
-                parseInt(e.target.value),
-                { validation: { min_value: 1 } },
-              )
-            }
-            isInvalid={!!validationErrors.top_k}
-            style={{
-              padding: "clamp(0.5rem, 1vw, 0.75rem)",
-              fontSize: "clamp(0.9rem, 1.5vw, 1rem)",
-            }}
-          />
-          {validationErrors.top_k && (
-            <Form.Control.Feedback type="invalid">
-              {validationErrors.top_k}
-            </Form.Control.Feedback>
-          )}
-        </Form.Group>
+          {/* SECTION: PARAMETERS */}
+          <div className="p-3 bg-dark-subtle rounded border border-secondary">
+            <h6 className="text-info mb-3 d-flex align-items-center gap-2 small text-uppercase fw-bold">
+              <FaSlidersH size={14} /> Parameter Generasi
+            </h6>
+
+            <Row className="g-3">
+              <Col md={4}>
+                <Form.Group>
+                  <Form.Label className="small text-muted mb-1">
+                    Temperature
+                  </Form.Label>
+                  <Form.Control
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    max="1"
+                    placeholder="0.7"
+                    value={formData.temperature || ""}
+                    onChange={(e) =>
+                      handleInputChangeWithValidation(
+                        "temperature",
+                        parseFloat(e.target.value),
+                        { validation: { min_value: 0, max_value: 1 } },
+                      )
+                    }
+                    isInvalid={!!validationErrors.temperature}
+                    className="bg-dark text-light border-secondary"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {validationErrors.temperature}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+
+              <Col md={4}>
+                <Form.Group>
+                  <Form.Label className="small text-muted mb-1">
+                    Top P
+                  </Form.Label>
+                  <Form.Control
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    max="1"
+                    placeholder="0.9"
+                    value={formData.top_p || ""}
+                    onChange={(e) =>
+                      handleInputChangeWithValidation(
+                        "top_p",
+                        parseFloat(e.target.value),
+                        { validation: { min_value: 0, max_value: 1 } },
+                      )
+                    }
+                    isInvalid={!!validationErrors.top_p}
+                    className="bg-dark text-light border-secondary"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {validationErrors.top_p}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+
+              <Col md={4}>
+                <Form.Group>
+                  <Form.Label className="small text-muted mb-1">
+                    Top K
+                  </Form.Label>
+                  <Form.Control
+                    type="number"
+                    min="1"
+                    placeholder="40"
+                    value={formData.top_k || ""}
+                    onChange={(e) =>
+                      handleInputChangeWithValidation(
+                        "top_k",
+                        parseInt(e.target.value),
+                        { validation: { min_value: 1 } },
+                      )
+                    }
+                    isInvalid={!!validationErrors.top_k}
+                    className="bg-dark text-light border-secondary"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {validationErrors.top_k}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+          </div>
+        </Form>
       </Modal.Body>
-      <Modal.Footer className="modal-footer-themed">
-        <Button variant="secondary" onClick={onHide}>
-          Tutup
+
+      <Modal.Footer className="modal-footer-themed bg-dark border-top border-secondary mt-0">
+        <Button variant="primary" onClick={onHide} className="px-5">
+          Simpan & Tutup
         </Button>
       </Modal.Footer>
     </Modal>

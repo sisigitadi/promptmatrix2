@@ -1,0 +1,115 @@
+{
+  "id_kerangka": "BIS-UIX-001",
+  "nama_kerangka": "Studio Desain UI/UX",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
+  "description": "Konsultan desain produk digital untuk merencanakan pengalaman dan antarmuka pengguna yang efektif, dari alur pengguna hingga konsep visual.",
+  "perspektif_user": "Saya perlu bantuan untuk merancang aplikasi saya, mulai dari bagaimana pengguna akan memakainya, seperti apa tampilan halamannya, hingga teks yang harus ditulis di tombol.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Konsultan Desain UI/UX yang akan merancang pengalaman dan antarmuka pengguna.",
+  "components": [
+    {
+      "name": "TUGAS_DESAIN_UIUX",
+      "label": "Tugas Desain UI/UX",
+      "type": "select",
+      "options": [
+        "Perancangan Alur Pengguna (User Flow)",
+        "Generator Konsep Tata Letak (Wireframe)",
+        "Analisis & Umpan Balik Desain",
+        "Generator Teks Antarmuka (UX Writing)"
+      ],
+      "default": "Perancangan Alur Pengguna (User Flow)",
+      "info": "Pilih jenis bantuan desain yang Anda perlukan."
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "TUGAS_DESAIN_UIUX",
+      "options": {
+        "Perancangan Alur Pengguna (User Flow)": [
+          {
+            "name": "FLOW_TUGAS_PENGGUNA",
+            "label": "Tugas Utama Pengguna",
+            "type": "text",
+            "placeholder": "Contoh: Melakukan pendaftaran akun baru",
+            "info": "Jelaskan tugas yang ingin Anda petakan alurnya."
+          },
+          {
+            "name": "FLOW_TITIK_AWAL_AKHIR",
+            "label": "Titik Awal dan Akhir Alur",
+            "type": "text",
+            "placeholder": "Contoh: Dari halaman utama hingga halaman 'selamat datang'",
+            "info": "Sebutkan dari mana alur dimulai dan di mana berakhir."
+          }
+        ],
+        "Generator Konsep Tata Letak (Wireframe)": [
+          {
+            "name": "WIREFRAME_JENIS_HALAMAN",
+            "label": "Jenis Halaman/Layar",
+            "type": "text",
+            "placeholder": "Contoh: Halaman Beranda, Layar Login",
+            "info": "Sebutkan halaman yang ingin dibuatkan konsep tata letaknya."
+          },
+          {
+            "name": "WIREFRAME_ELEMEN_KUNCI",
+            "label": "Elemen-elemen Kunci",
+            "type": "textarea",
+            "placeholder": "Contoh: Logo, Tombol Login, Banner Promo, Daftar Produk",
+            "info": "Sebutkan semua elemen yang wajib ada di halaman tersebut."
+          }
+        ],
+        "Analisis & Umpan Balik Desain": [
+          {
+            "name": "ANALISIS_DESKRIPSI_DESAIN",
+            "label": "Deskripsi atau Link ke Desain Anda",
+            "type": "textarea",
+            "placeholder": "Jelaskan desain Anda saat ini atau tempelkan link ke gambar (misal: Imgur).",
+            "info": "Berikan konteks sebanyak mungkin tentang desain yang ingin dianalisis."
+          },
+          {
+            "name": "ANALISIS_TUJUAN_DESAIN",
+            "label": "Tujuan Utama Halaman/Desain",
+            "type": "text",
+            "placeholder": "Contoh: Meyakinkan pengguna untuk menekan tombol 'Daftar Gratis'",
+            "info": "Apa aksi terpenting yang diharapkan dari pengguna di halaman ini?"
+          }
+        ],
+        "Generator Teks Antarmuka (UX Writing)": [
+          {
+            "name": "UXWRITING_KONTEKS",
+            "label": "Konteks dan Elemen UI",
+            "type": "text",
+            "placeholder": "Contoh: Pesan error untuk form login, Teks untuk tombol konfirmasi",
+            "info": "Jelaskan di mana teks ini akan muncul."
+          },
+          {
+            "name": "UXWRITING_TONE",
+            "label": "Nada Suara (Tone of Voice)",
+            "type": "select",
+            "options": [
+              "Formal",
+              "Ramah",
+              "Jenaka",
+              "Profesional"
+            ],
+            "default": "Ramah",
+            "info": "Pilih gaya bahasa yang sesuai dengan brand Anda."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Konsultan Desain Produk Digital (UI/UX)",
+    "KONTEKS": "Pengguna memerlukan bantuan dengan '{TUGAS_DESAIN_UIUX}' untuk produk digital mereka.",
+    "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Perancangan Alur Pengguna (User Flow)'**: Petakan alur langkah-demi-langkah untuk tugas '{FLOW_TUGAS_PENGGUNA}' dari '{FLOW_TITIK_AWAL_AKHIR}'. Identifikasi potensi masalah dan berikan saran penyederhanaan.\n- **Jika 'Generator Konsep Tata Letak (Wireframe)'**: Buat deskripsi tekstual konsep wireframe untuk '{WIREFRAME_JENIS_HALAMAN}' yang mengandung elemen '{WIREFRAME_ELEMEN_KUNCI}'. Jelaskan alasan di balik penempatan elemen.\n- **Jika 'Analisis & Umpan Balik Desain'**: Berikan kritik membangun untuk desain '{ANALISIS_DESKRIPSI_DESAIN}' yang bertujuan untuk '{ANALISIS_TUJUAN_DESAIN}'. Gunakan prinsip usability sebagai dasar analisis.\n- **Jika 'Generator Teks Antarmuka (UX Writing)'**: Buat 3 alternatif teks untuk '{UXWRITING_KONTEKS}' dengan nada '{UXWRITING_TONE}'. Jelaskan kelebihan masing-masing alternatif.",
+    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan output secara terstruktur, jelas, dan mudah ditindaklanjuti. Gunakan daftar berpoin atau bernomor untuk alur dan analisis."
+  },
+  "toolType": "text",
+  "konteks_tambahan_instruksi_khusus": "Fokus pada pengguna. Semua saran dan output harus bertujuan untuk membuat pengalaman pengguna lebih mudah, lebih jelas, dan lebih menyenangkan.",
+  "contoh_kalimat": "Bantu saya membuat konsep tata letak untuk halaman beranda website saya.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

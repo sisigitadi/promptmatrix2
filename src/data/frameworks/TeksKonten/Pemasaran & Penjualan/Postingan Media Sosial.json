@@ -1,0 +1,279 @@
+{
+  "description": "Buat postingan yang menarik dan ringkas untuk berbagai platform.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis Konten Media Sosial yang akan membuat postingan.",
+  "components": [
+    {
+      "name": "platform",
+      "label": "Platform",
+      "type": "select",
+      "options": [
+        "LinkedIn",
+        "Instagram",
+        "Twitter (X)",
+        "Facebook",
+        "TikTok"
+      ],
+      "info": "Setiap platform memiliki format dan ekspektasi audiens yang berbeda.",
+      "validation": {
+        "regex": "^(?!Pilih Platform...).*$"
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "dynamicSubcomponents": {
+    "trigger": "platform",
+    "options": {
+      "LinkedIn": [
+        {
+          "name": "postType",
+          "label": "Jenis Postingan LinkedIn",
+          "type": "select",
+          "options": [
+            "Teks Saja",
+            "Artikel",
+            "Polling",
+            "Berbagi Link",
+            "Gambar/Video",
+            "Lainnya..."
+          ],
+          "info": "Pilih format konten yang akan dibuat.",
+          "validation": {
+            "regex": "^(?!Lainnya).*$"
+          }
+        },
+        {
+          "name": "topic",
+          "label": "Topik Pembahasan",
+          "type": "text",
+          "placeholder": "e.g., 'Tren terbaru dalam AI generatif'",
+          "info": "Inti dari pesan yang ingin Anda sampaikan.",
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "objective",
+          "label": "Tujuan Postingan",
+          "type": "select",
+          "options": [
+            "Thought Leadership",
+            "Networking",
+            "Promosi Layanan",
+            "Merekrut Talenta",
+            "Berbagi Berita",
+            "Lainnya..."
+          ],
+          "info": "Apa yang ingin Anda capai dengan postingan ini?",
+          "validation": {
+            "regex": "^(?!Lainnya).*$"
+          }
+        },
+        {
+          "name": "hashtags",
+          "label": "Hashtag Relevan (pisahkan koma)",
+          "type": "text",
+          "placeholder": "e.g., '#AI, #FutureOfWork, #Innovation'",
+          "info": "Membantu postingan Anda ditemukan oleh audiens yang lebih luas.",
+          "validation": {
+            "min_length": 3
+          }
+        }
+      ],
+      "Instagram": [
+        {
+          "name": "visualDescription",
+          "label": "Deskripsi Visual Foto/Reel",
+          "type": "textarea",
+          "placeholder": "e.g., 'Sebuah foto flat-lay meja kerja yang rapi dengan laptop, secangkir kopi, dan tanaman hias.'",
+          "info": "Jelaskan elemen visual agar AI bisa membuat caption yang relevan.",
+          "validation": {
+            "min_length": 20
+          }
+        },
+        {
+          "name": "captionStyle",
+          "label": "Gaya Caption Instagram",
+          "type": "select",
+          "options": [
+            "Informatif",
+            "Inspiratif",
+            "Storytelling",
+            "Singkat & Tajam",
+            "Humoris",
+            "Lainnya..."
+          ],
+          "info": "Pilih nuansa teks yang cocok dengan visual Anda."
+        },
+        {
+          "name": "callToAction",
+          "label": "Call To Action",
+          "type": "text",
+          "placeholder": "e.g., 'Simpan postingan ini!', 'Komentari pendapatmu!'",
+          "info": "Ajak audiens untuk berinteraksi.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "hashtags",
+          "label": "Hashtag (pisahkan koma)",
+          "type": "text",
+          "placeholder": "e.g., '#workfromhome, #productivity, #desksetup'",
+          "info": "Gunakan campuran hashtag populer dan niche.",
+          "validation": {
+            "min_length": 3
+          }
+        }
+      ],
+      "Twitter (X)": [
+        {
+          "name": "tweetFormat",
+          "label": "Format Tweet",
+          "type": "select",
+          "options": [
+            "Single Tweet",
+            "Thread (Rangkaian Tweet)",
+            "Lainnya..."
+          ],
+          "info": "Apakah ini tweet tunggal atau rangkaian bersambung?"
+        },
+        {
+          "name": "topic",
+          "label": "Topik Utama",
+          "type": "text",
+          "placeholder": "e.g., 'Kesan pertama menggunakan produk Y'",
+          "info": "Poin utama dari tweet atau thread Anda.",
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "hook",
+          "label": "Kalimat Pembuka (Hook)",
+          "type": "text",
+          "placeholder": "e.g., 'Saya baru saja mencoba Y dan ini hasilnya...'",
+          "info": "Kalimat pertama yang membuat orang berhenti scrolling.",
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "tone",
+          "label": "Gaya Bahasa Twitter",
+          "type": "select",
+          "options": [
+            "Santai",
+            "Profesional",
+            "Humoris",
+            "Provokatif",
+            "Informatif",
+            "Lainnya..."
+          ],
+          "info": "Sesuaikan gaya bahasa dengan audiens Twitter."
+        }
+      ],
+      "Facebook": [
+        {
+          "name": "postType",
+          "label": "Jenis Postingan Facebook",
+          "type": "select",
+          "options": [
+            "Berbagi Cerita",
+            "Update Produk",
+            "Bertanya",
+            "Berbagi Link/Artikel",
+            "Event",
+            "Lainnya..."
+          ],
+          "info": "Pilih format yang paling sesuai dengan pesan Anda."
+        },
+        {
+          "name": "targetAudience",
+          "label": "Target Audiens Facebook",
+          "type": "text",
+          "placeholder": "e.g., 'Anggota grup Komunitas Z', 'Pengikut Halaman'",
+          "info": "Siapa audiens spesifik yang Anda sapa?",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "visualIdea",
+          "label": "Ide Visual Pendamping",
+          "type": "text",
+          "placeholder": "e.g., 'Album foto acara kemarin, infografis sederhana'",
+          "info": "Deskripsikan gambar atau video yang akan menyertai teks.",
+          "validation": {
+            "min_length": 10
+          }
+        },
+        {
+          "name": "interactionGoal",
+          "label": "Tujuan Interaksi",
+          "type": "text",
+          "placeholder": "e.g., 'Memicu diskusi di kolom komentar'",
+          "info": "Jenis respons apa yang Anda harapkan?",
+          "validation": {
+            "min_length": 5
+          }
+        }
+      ],
+      "TikTok": [
+        {
+          "name": "videoConcept",
+          "label": "Konsep Video Singkat",
+          "type": "textarea",
+          "placeholder": "e.g., 'Transisi sebelum dan sesudah menggunakan produk X dengan lagu yang sedang tren.'",
+          "info": "Jelaskan alur cerita atau konsep visual video Anda.",
+          "validation": {
+            "min_length": 20
+          }
+        },
+        {
+          "name": "trendingSound",
+          "label": "Saran Suara/Lagu Tren",
+          "type": "text",
+          "placeholder": "e.g., 'Gunakan lagu 'xyz' yang sedang viral'",
+          "info": "Sebutkan nama lagu atau jenis suara untuk meningkatkan jangkauan.",
+          "optional": true
+        },
+        {
+          "name": "caption",
+          "label": "Teks Caption TikTok",
+          "type": "text",
+          "placeholder": "e.g., 'Jangan kaget sama hasilnya! ✨'",
+          "info": "Buat caption yang singkat, menarik, dan relevan dengan video.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "hashtags",
+          "label": "Hashtag FYP (pisahkan koma)",
+          "type": "text",
+          "placeholder": "e.g., '#fyp, #productreview, #lifehack'",
+          "info": "Gunakan hashtag yang sedang tren untuk masuk For You Page.",
+          "validation": {
+            "min_length": 3
+          }
+        }
+      ]
+    }
+  },
+  "kategori": [
+    "Teks & Konten",
+    "Pemasaran & Penjualan"
+  ],
+  "nama_kerangka": "Postingan Media Sosial"
+}

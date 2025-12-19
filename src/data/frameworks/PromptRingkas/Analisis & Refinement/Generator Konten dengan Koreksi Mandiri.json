@@ -1,0 +1,44 @@
+{
+  "id_kerangka": "TK-AR-001",
+  "nama_kerangka": "Generator Konten dengan Koreksi Mandiri",
+  "version": "1.0.0",
+  "kategori": [
+    "Prompt Ringkas",
+    "Analisis & Refinement"
+  ],
+  "description": "Menciptakan konten berkualitas tinggi dengan meminta AI untuk membuat draf awal, mengkritiknya secara objektif, lalu merevisinya menjadi versi final yang lebih baik.",
+  "perspektif_user": "Saya perlu membuat teks (misalnya artikel blog, esai, atau laporan) yang berkualitas tinggi. Saya ingin AI tidak hanya menulis, tetapi juga bertindak sebagai editornya sendiri untuk menyempurnakan hasil akhir.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang penulis ahli sekaligus editor yang akan menulis, mengkritik, dan merevisi konten.",
+  "components": [
+    {
+      "name": "TOPIK_KONTEN",
+      "label": "Topik Utama Konten",
+      "type": "textarea",
+      "description": "Jelaskan secara detail topik atau draf awal dari konten yang ingin Anda buat.",
+      "default": "",
+      "optional": false,
+      "placeholder": "Contoh: Tuliskan artikel blog tentang 5 manfaat utama meditasi untuk para profesional yang sibuk.",
+      "info": "Ini adalah titik awal untuk AI. Semakin jelas instruksi Anda, semakin baik draf awalnya."
+    },
+    {
+      "name": "SUDUT_PANDANG_KRITIK",
+      "label": "Sudut Pandang untuk Kritik",
+      "type": "text",
+      "description": "Dari sudut pandang apa AI harus mengkritik drafnya sendiri?",
+      "optional": false,
+      "placeholder": "Contoh: Seorang ahli di bidang tersebut, seorang pemula, seorang editor majalah.",
+      "info": "Ini akan mengarahkan fokus kritik AI, misalnya pada kejelasan, kedalaman teknis, atau gaya penulisan."
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang penulis konten dan editor yang sangat teliti. Tujuan Anda adalah menghasilkan konten terbaik melalui proses penulisan, kritik, dan revisi.",
+    "KONTEKS": "Pengguna membutuhkan sebuah tulisan yang tidak hanya informatif tetapi juga terstruktur dengan baik, persuasif, dan bebas dari kesalahan. Anda akan menggunakan metode 'self-correction' untuk mencapai ini. Topik utamanya adalah: {TOPIK_KONTEN}.",
+    "TUGAS": "Lakukan tiga langkah berikut secara berurutan:\n\n1.  **LANGKAH 1: BUAT DRAF AWAL**\n    Tulis draf pertama dari konten berdasarkan topik yang diberikan. Fokus pada penyampaian ide utama.\n\n2.  **LANGKAH 2: KRITIK DRAF**\n    Setelah draf selesai, berikan kritik yang tajam dan membangun terhadap tulisan Anda sendiri. Tinjau dari sudut pandang '{SUDUT_PANDANG_KRITIK}'. Evaluasi aspek-aspek seperti: kejelasan argumen, alur tulisan, kekuatan bukti, dan gaya bahasa. Sajikan kritik dalam format poin-poin.\n\n3.  **LANGKAH 3: TULIS VERSI FINAL**\n    Berdasarkan poin-poin kritik dari Langkah 2, tulis ulang dan sempurnakan draf tersebut menjadi sebuah versi final yang poles dan berkualitas tinggi.",
+    "FORMAT OUTPUT": "Sajikan output Anda dengan jelas dalam tiga bagian terpisah:\n\n### DRAF AWAL\n[Teks draf awal Anda di sini]\n\n### KRITIK\n[Poin-poin kritik Anda di sini]\n\n### VERSI FINAL\n[Teks versi final yang sudah direvisi di sini]"
+  },
+  "toolType": "text",
+  "konteks_tambahan_instruksi_khusus": "Pastikan kritik yang Anda berikan spesifik dan dapat ditindaklanjuti. Versi final harus secara nyata menunjukkan perbaikan dari draf awal.",
+  "contoh_kalimat": "Buatkan saya esai tentang dampak AI pada pasar kerja, lalu lakukan koreksi mandiri dari sudut pandang seorang ekonom.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

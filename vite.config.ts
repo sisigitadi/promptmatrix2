@@ -42,7 +42,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       visualizer({
-        filename: "./dist/bundle-analyzer.html",
+        filename: "./bundle-analyzer.html",
         open: false, // Set to true to open the report automatically
         gzipSize: true,
         brotliSize: true,

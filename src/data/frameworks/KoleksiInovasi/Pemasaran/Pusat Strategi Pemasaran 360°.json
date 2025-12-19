@@ -1,0 +1,315 @@
+{
+  "id_kerangka": "KI-PEM-001",
+  "nama_kerangka": "Pusat Strategi Pemasaran 360°",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Pemasaran"
+  ],
+  "description": "Dasbor komprehensif untuk merancang, mengimplementasikan, dan menganalisis berbagai aspek kampanye pemasaran, dari SEO hingga peluncuran produk.",
+  "perspektif_user": "Sebagai seorang profesional pemasaran, saya memerlukan satu alat terpusat yang dapat membantu saya dengan berbagai tugas pemasaran sehari-hari tanpa harus berpindah-pindah kerangka kerja.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Ahli Strategi Pemasaran 360° yang akan merancang kampanye pemasaran.",
+  "components": [
+    {
+      "name": "TUGAS_PEMASARAN_UTAMA",
+      "label": "Tugas Pemasaran Utama",
+      "type": "select",
+      "options": [
+        "Strategi SEO & SEM",
+        "Pengembangan Konten & Blog",
+        "Manajemen Media Sosial",
+        "Kampanye Pemasaran Email",
+        "Peluncuran Produk & Kampanye",
+        "Riset Pasar & Analisis Kompetitor",
+        "Branding & Hubungan Masyarakat (PR)",
+        "Optimasi Penjualan & Konversi"
+      ],
+      "default": "Strategi SEO & SEM",
+      "info": "Pilihan Anda akan menampilkan serangkaian input yang dirancang khusus untuk area tersebut."
+    }
+  ],
+  "dynamicSubcomponents": {
+    "trigger": "TUGAS_PEMASARAN_UTAMA",
+    "options": {
+      "Strategi SEO & SEM": [
+        {
+          "name": "TOPIK_UTAMA",
+          "label": "Topik Utama / Kata Kunci Target",
+          "type": "text",
+          "placeholder": "Contoh: software akuntansi untuk UMKM",
+          "info": "Masukkan topik inti atau kata kunci utama yang ingin Anda targetkan."
+        },
+        {
+          "name": "TARGET_AUDIENS_SEO",
+          "label": "Deskripsi Target Audiens",
+          "type": "textarea",
+          "placeholder": "Contoh: Pemilik bisnis kecil yang tidak punya latar belakang akuntansi",
+          "info": "Siapa target audiens untuk strategi SEO/SEM ini?"
+        },
+        {
+          "name": "FOKUS_STRATEGI_SEO",
+          "label": "Fokus Strategi",
+          "type": "multiselect",
+          "options": [
+            "Riset Kata Kunci",
+            "Analisis SERP",
+            "Outline Konten SEO",
+            "Ide Iklan SEM"
+          ],
+          "default": [
+            "Riset Kata Kunci",
+            "Outline Konten SEO"
+          ],
+          "info": "Pilih aspek yang ingin Anda dalami."
+        }
+      ],
+      "Pengembangan Konten & Blog": [
+        {
+          "name": "JENIS_KONTEN",
+          "label": "Jenis Konten yang Diinginkan",
+          "type": "select",
+          "options": [
+            "Artikel Blog",
+            "Naskah Video",
+            "Utas Media Sosial"
+          ],
+          "default": "Artikel Blog",
+          "info": "Pilih format konten yang ingin dibuat."
+        },
+        {
+          "name": "JUDUL_KONTEN",
+          "label": "Judul atau Ide Utama Konten",
+          "type": "text",
+          "placeholder": "Contoh: 5 Cara Mengelola Keuangan Bisnis",
+          "info": "Apa topik utama konten Anda?"
+        },
+        {
+          "name": "POIN_KUNCI_KONTEN",
+          "label": "Poin-Poin Kunci",
+          "type": "textarea",
+          "placeholder": "1. Pisahkan rekening pribadi & bisnis\n2. Gunakan software akuntansi\n3. ...",
+          "info": "Sebutkan poin-poin utama yang harus ada dalam konten."
+        },
+        {
+          "name": "GAYA_BAHASA_KONTEN",
+          "label": "Gaya Bahasa dan Nada",
+          "type": "select",
+          "options": [
+            "Profesional",
+            "Santai & Ramah",
+            "Edukasi & Informatif",
+            "Menghibur"
+          ],
+          "default": "Profesional",
+          "info": "Pilih tone yang sesuai dengan brand Anda."
+        }
+      ],
+      "Manajemen Media Sosial": [
+        {
+          "name": "PLATFORM_TARGET",
+          "label": "Platform Media Sosial",
+          "type": "multiselect",
+          "options": [
+            "Instagram",
+            "TikTok",
+            "LinkedIn",
+            "X/Twitter",
+            "Facebook"
+          ],
+          "default": [
+            "Instagram",
+            "LinkedIn"
+          ],
+          "info": "Pilih platform di mana Anda ingin aktif."
+        },
+        {
+          "name": "TUJUAN_POSTING",
+          "label": "Tujuan Utama Posting",
+          "type": "select",
+          "options": [
+            "Meningkatkan Awareness",
+            "Mendorong Engagement",
+            "Memicu Konversi"
+          ],
+          "default": "Meningkatkan Awareness",
+          "info": "Apa gol dari aktivitas media sosial Anda?"
+        },
+        {
+          "name": "DESKRIPSI_BRAND_MEDSOS",
+          "label": "Deskripsi Singkat Brand/Produk",
+          "type": "textarea",
+          "placeholder": "Contoh: Kami adalah brand kopi spesialti yang fokus pada biji lokal.",
+          "info": "Berikan konteks tentang brand Anda untuk pembuatan konten."
+        }
+      ],
+      "Kampanye Pemasaran Email": [
+        {
+          "name": "JENIS_KAMPANYE_EMAIL",
+          "label": "Jenis Kampanye Email",
+          "type": "select",
+          "options": [
+            "Welcome Email Series",
+            "Newsletter Bulanan",
+            "Email Promosi",
+            "Email Re-engagement"
+          ],
+          "default": "Welcome Email Series",
+          "info": "Pilih jenis kampanye email yang ingin Anda buat."
+        },
+        {
+          "name": "NAMA_BRAND_EMAIL",
+          "label": "Nama Brand Anda",
+          "type": "text",
+          "placeholder": "Contoh: Kopi Aroma Pagi",
+          "info": "Nama brand untuk personalisasi email."
+        },
+        {
+          "name": "PENAWARAN_UTAMA_EMAIL",
+          "label": "Penawaran Utama (jika ada)",
+          "type": "text",
+          "placeholder": "Contoh: Diskon 20% untuk pembelian pertama",
+          "info": "Sebutkan insentif yang ingin ditawarkan.",
+          "optional": true
+        }
+      ],
+      "Peluncuran Produk & Kampanye": [
+        {
+          "name": "NAMA_PRODUK_BARU",
+          "label": "Nama Produk/Kampanye Baru",
+          "type": "text",
+          "placeholder": "Contoh: Aplikasi TaskMaster Pro",
+          "info": "Nama resmi produk atau kampanye Anda."
+        },
+        {
+          "name": "USP_PRODUK",
+          "label": "Unique Selling Proposition (USP)",
+          "type": "textarea",
+          "placeholder": "Contoh: Satu-satunya aplikasi to-do-list dengan prediksi waktu selesai tugas.",
+          "info": "Apa yang membuat produk Anda unik dan lebih baik dari yang lain?"
+        },
+        {
+          "name": "ASET_KAMPANYE",
+          "label": "Aset Kampanye yang Dibutuhkan",
+          "type": "multiselect",
+          "options": [
+            "Siaran Pers (Press Release)",
+            "Email Pengumuman",
+            "Paket Konten Media Sosial",
+            "Draf Iklan Digital"
+          ],
+          "default": [
+            "Email Pengumuman",
+            "Paket Konten Media Sosial"
+          ],
+          "info": "Pilih materi komunikasi yang ingin Anda hasilkan."
+        }
+      ],
+      "Riset Pasar & Analisis Kompetitor": [
+        {
+          "name": "NAMA_BISNIS_RISET",
+          "label": "Nama Bisnis/Produk Anda",
+          "type": "text",
+          "placeholder": "Contoh: Kedai Kopi 'Aroma Pagi'",
+          "info": "Bisnis yang akan menjadi subjek analisis."
+        },
+        {
+          "name": "DESKRIPSI_BISNIS_RISET",
+          "label": "Deskripsi Singkat Bisnis",
+          "type": "textarea",
+          "placeholder": "Contoh: Kedai kopi di Jakarta Selatan yang fokus pada biji lokal dan suasana kerja nyaman.",
+          "info": "Berikan konteks untuk analisis SWOT."
+        },
+        {
+          "name": "URL_KOMPETITOR_RISET",
+          "label": "URL atau Nama Kompetitor Utama",
+          "type": "textarea",
+          "placeholder": "https://www.kompetitor.com\nKopi Kenangan",
+          "info": "Sebutkan pemain utama lain di pasar Anda.",
+          "optional": true
+        },
+        {
+          "name": "FOKUS_RISET",
+          "label": "Fokus Riset",
+          "type": "multiselect",
+          "options": [
+            "Analisis SWOT",
+            "Analisis Kompetitor",
+            "Pembuatan Buyer Persona"
+          ],
+          "default": [
+            "Analisis SWOT",
+            "Analisis Kompetitor"
+          ],
+          "info": "Pilih jenis analisis yang Anda butuhkan."
+        }
+      ],
+      "Branding & Hubungan Masyarakat (PR)": [
+        {
+          "name": "NAMA_BRAND_PR",
+          "label": "Nama Brand",
+          "type": "text",
+          "placeholder": "Contoh: EcoRun Shoes",
+          "info": "Brand yang akan dibangun citranya."
+        },
+        {
+          "name": "NILAI_INTI_BRAND",
+          "label": "3 Nilai Inti Brand",
+          "type": "text",
+          "placeholder": "Contoh: Keberlanjutan, Performa, Komunitas",
+          "info": "Sebutkan 3 pilar utama brand Anda."
+        },
+        {
+          "name": "TUGAS_BRANDING_PR",
+          "label": "Tugas Branding/PR",
+          "type": "select",
+          "options": [
+            "Platform Identitas Merek",
+            "Draf Siaran Pers",
+            "Rencana Komunikasi Krisis"
+          ],
+          "default": "Platform Identitas Merek",
+          "info": "Pilih output yang Anda butuhkan."
+        }
+      ],
+      "Optimasi Penjualan & Konversi": [
+        {
+          "name": "PRODUK_DIJUAL",
+          "label": "Produk/Layanan yang Dijual",
+          "type": "text",
+          "placeholder": "Contoh: Langganan software SaaS",
+          "info": "Apa yang Anda tawarkan kepada pelanggan?"
+        },
+        {
+          "name": "TARGET_PROSPEK",
+          "label": "Deskripsi Target Prospek",
+          "type": "textarea",
+          "placeholder": "Contoh: Manajer marketing di perusahaan startup teknologi.",
+          "info": "Siapa yang ingin Anda jangkau dengan pesan penjualan ini?"
+        },
+        {
+          "name": "FOKUS_OPTIMASI_PENJUALAN",
+          "label": "Fokus Optimasi",
+          "type": "select",
+          "options": [
+            "Naskah Penjualan (Sales Script)",
+            "Copy Halaman Arahan (Landing Page)",
+            "Ide Lead Magnet"
+          ],
+          "default": "Copy Halaman Arahan (Landing Page)",
+          "info": "Pilih aset penjualan yang ingin Anda buat."
+        }
+      ]
+    }
+  },
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Ahli Strategi Pemasaran 360° yang serbaguna.",
+    "KONTEKS": "Pengguna memerlukan bantuan untuk tugas pemasaran: '{TUGAS_PEMASARAN_UTAMA}'. Anda harus memandu mereka untuk memberikan input yang relevan dan menghasilkan output yang dapat ditindaklanjuti.",
+    "TUGAS": "Berdasarkan tugas yang dipilih, gunakan input yang diberikan untuk menghasilkan output yang komprehensif dan profesional. Sesuaikan respons Anda dengan setiap sub-tugas yang dipilih pengguna.",
+    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, laporan, draf konten, rencana, atau tabel). Pastikan output jelas, terstruktur, dan mudah dipahami."
+  },
+  "toolType": "planning",
+  "konteks_tambahan_instruksi_khusus": "Selalu prioritaskan strategi yang berpusat pada pelanggan. Berikan saran yang praktis dan dapat diimplementasikan. Jika ada ambiguitas, berikan asumsi yang cerdas atau ajukan pertanyaan klarifikasi.",
+  "contoh_kalimat": "Bantu saya membuat strategi SEO untuk website e-commerce saya.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

@@ -1,0 +1,83 @@
+{
+  "description": "Buat draf blog post lengkap dengan fokus pada narasi dan storytelling, lebih dari sekadar SEO.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Storyteller Konten yang akan menyusun blog post.",
+  "components": [
+    {
+      "name": "topic",
+      "label": "Topik Utama Blog",
+      "type": "text",
+      "placeholder": "e.g., 'Perjalanan saya mengatasi burnout sebagai developer'",
+      "info": "Judul atau ide utama yang ingin Anda eksplorasi.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "uniqueAngle",
+      "label": "Sudut Pandang Unik",
+      "type": "text",
+      "placeholder": "e.g., 'Bukan tips biasa, tapi cerita kegagalan & pembelajaran'",
+      "info": "Apa yang membuat blog post Anda berbeda dari yang lain?",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "writerPersona",
+      "label": "Persona Penulis",
+      "type": "text",
+      "placeholder": "e.g., 'Seorang mentor yang berpengalaman, teman yang berbagi cerita'",
+      "info": "Dari sudut pandang siapa cerita ini ditulis?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Pembaca",
+      "type": "text",
+      "placeholder": "e.g., 'Developer junior, pekerja kreatif'",
+      "info": "Siapa yang ingin Anda ajak bicara melalui tulisan ini?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "keyTakeaway",
+      "label": "Pesan Kunci untuk Pembaca",
+      "type": "text",
+      "placeholder": "e.g., 'Beristirahat bukanlah kemunduran, melainkan bagian dari proses'",
+      "info": "Satu hal yang harus diingat pembaca setelah selesai membaca.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "interactionPrompt",
+      "label": "Ajakan Interaksi di Akhir",
+      "type": "text",
+      "placeholder": "e.g., 'Bagikan pengalaman burnout Anda di komentar!'",
+      "info": "Pertanyaan atau ajakan untuk memancing diskusi.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Penulisan & Konten"
+  ],
+  "nama_kerangka": "Penulis Blog Post"
+}

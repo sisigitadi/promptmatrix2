@@ -1,0 +1,54 @@
+{
+  "description": "Lakukan analisis strategis dengan mengidentifikasi Kekuatan, Kelemahan, Peluang, dan Ancaman.",
+  "toolType": "planning",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Analis Strategis yang akan melakukan analisis SWOT.",
+  "components": [
+    {
+      "name": "subject",
+      "label": "Subjek Analisis",
+      "type": "text",
+      "placeholder": "e.g., 'Kedai Kopi Lokal Saya', 'Proyek Peluncuran Aplikasi Mobile'",
+      "info": "Apa yang sedang Anda analisis?"
+    },
+    {
+      "name": "strengths",
+      "label": "Kekuatan (Strengths)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Lokasi strategis, biji kopi unik, barista berpengalaman.'",
+      "info": "Faktor internal positif yang memberi Anda keunggulan."
+    },
+    {
+      "name": "weaknesses",
+      "label": "Kelemahan (Weaknesses)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Kapasitas tempat duduk terbatas, belum ada layanan pesan antar.'",
+      "info": "Faktor internal negatif yang menghambat Anda."
+    },
+    {
+      "name": "opportunities",
+      "label": "Peluang (Opportunities)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Tren kerja dari kafe, meningkatnya permintaan kopi spesialti di area tersebut.'",
+      "info": "Faktor eksternal yang dapat Anda manfaatkan."
+    },
+    {
+      "name": "threats",
+      "label": "Ancaman (Threats)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Munculnya kedai kopi waralaba besar di dekat lokasi, kenaikan harga sewa.'",
+      "info": "Faktor eksternal yang dapat merugikan Anda."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Pemikiran Terstruktur & Analisis"
+  ],
+  "nama_kerangka": "SWOT"
+}

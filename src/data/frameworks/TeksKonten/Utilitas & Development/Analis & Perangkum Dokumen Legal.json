@@ -1,0 +1,62 @@
+{
+  "description": "Rangkum dokumen hukum yang panjang (misal: Ketentuan Layanan) ke dalam bahasa yang mudah dipahami.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Analis Hukum yang akan menganalisis dokumen hukum dan mengekstrak poin-poin penting.",
+  "components": [
+    {
+      "name": "legalDocument",
+      "label": "Teks Dokumen Legal",
+      "type": "textarea",
+      "placeholder": "Tempelkan seluruh teks dari dokumen legal seperti Ketentuan Layanan atau Kebijakan Privasi di sini.",
+      "info": "AI akan menganalisis teks ini untuk menemukan poin-poin terpentipenting.",
+      "validation": {
+        "min_length": 50
+      }
+    },
+    {
+      "name": "myRole",
+      "label": "Peran Saya",
+      "type": "select",
+      "options": [
+        "Sebagai Konsumen/Pengguna",
+        "Sebagai Pemilik Bisnis",
+        "Lainnya..."
+      ],
+      "info": "Dari sudut pandang mana AI harus menganalisis dokumen ini?"
+    },
+    {
+      "name": "focus",
+      "label": "Fokus Analisis",
+      "type": "text",
+      "placeholder": "e.g., 'Kewajiban saya', 'Hak saya atas data', 'Klausul pembatalan'",
+      "info": "Aspek apa dari dokumen yang paling ingin Anda pahami?"
+    },
+    {
+      "name": "outputFormat",
+      "label": "Format Output",
+      "type": "select",
+      "options": [
+        "Poin-poin Ringkasan",
+        "Tanya Jawab (FAQ)",
+        "Tabel Hak & Kewajiban",
+        "Lainnya..."
+      ],
+      "info": "Pilih cara penyajian ringkasan yang paling mudah Anda pahami."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Cari 'red flags' atau klausa yang tidak biasa. Terjemahkan jargon hukum ke bahasa sehari-hari. Abaikan bagian definisi.",
+      "info": "Instruksi spesifik tentang apa yang harus dicari atau diabaikan oleh AI.",
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Utilitas & Development"
+  ],
+  "nama_kerangka": "Analis & Perangkum Dokumen Legal"
+}

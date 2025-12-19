@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import { ToastContainer, toast } from "react-toastify";
 import { generateFileName } from "@/utils/promptGenerators";
+import { useSavedPrompts } from "@/hooks/useSavedPrompts";
 import "react-toastify/dist/ReactToastify.css";
 
 // Lazy load main components
@@ -18,16 +19,24 @@ const HelpModal = React.lazy(() => import("@/components/HelpModal"));
 const FrameworkBuilderModal = React.lazy(
   () => import("@/components/FrameworkBuilderModal"),
 );
+const InputSelectionModal = React.lazy(
+  () => import("@/components/InputSelectionModal"),
+);
 const ErrorBoundary = React.lazy(() => import("@/components/ErrorBoundary"));
 const Footer = React.lazy(() => import("@/components/Footer"));
 const FeedbackModal = React.lazy(() => import("@/components/FeedbackModal"));
 const CookieConsent = React.lazy(() => import("@/components/CookieConsent"));
 
+import { PROMPT_FRAMEWORKS } from "@/data/frameworks";
+
 const App = () => {
   // Top-level state
   const [activeView, setActiveView] = useState("generator");
   const [promptToLoad, setPromptToLoad] = useState<any | null>(null);
-  const [logoClickCount, setLogoClickCount] = useState(0);
+  const [logoClickCount, setLogoClickCount] = useState<number>(() => {
+    const saved = localStorage.getItem("logoClickCount");
+    return saved ? parseInt(saved, 10) : 0;
+  });
   const [showDevMode, setShowDevMode] = useState<boolean>(
     () => localStorage.getItem("showDevMode") === "true",
   );
@@ -35,7 +44,7 @@ const App = () => {
     () => localStorage.getItem("isApiKeyEnabled") === "true",
   );
   const [apiKey, setApiKey] = useState<string>(
-    () => localStorage.getItem("apiKey") || "",
+    () => sessionStorage.getItem("apiKey") || "",
   );
   const [showSavedPrompts, setShowSavedPrompts] = useState(false);
   const [showNavigation, setShowNavigation] = useState(true);
@@ -49,36 +58,17 @@ const App = () => {
   const [showOnboardingTour, setShowOnboardingTour] = useState<boolean>(
     () => localStorage.getItem("hasCompletedOnboarding") !== "true",
   );
+  const [showInputSelectionModal, setShowInputSelectionModal] = useState(false);
+  const [outputToChain, setOutputToChain] = useState("");
 
-  // Saved prompts state and handlers
-  const [savedPrompts, setSavedPrompts] = useState<any[]>(() => {
-    const localData = localStorage.getItem("savedPrompts");
-    return localData ? JSON.parse(localData) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("savedPrompts", JSON.stringify(savedPrompts));
-  }, [savedPrompts]);
-
-  const handleSavePrompt = useCallback((promptData: any) => {
-    const newPrompt = {
-      id: Date.now().toString() + Math.random().toString(36).substring(2, 9),
-      frameworkName: promptData.frameworkName,
-      category: promptData.category,
-      subcategory: promptData.subcategory,
-      versions: [
-        {
-          timestamp: Date.now(),
-          formData: promptData.formData,
-          customInputs: promptData.customInputs,
-          naturalLanguageOutput: promptData.naturalLanguageOutput,
-          jsonOutput: promptData.jsonOutput,
-        },
-      ],
-    };
-    setSavedPrompts((prev) => [...prev, newPrompt]);
-    toast.success("Prompt berhasil disimpan!");
-  }, []);
+  const {
+    savedPrompts,
+    handleSavePrompt,
+    handleExportPrompts,
+    handleImportPrompts,
+    handleDeletePrompt,
+    toggleFavorite,
+  } = useSavedPrompts();
 
   const handleLoadPrompt = useCallback(
     (versionData: any, parentPrompt: any) => {
@@ -93,40 +83,42 @@ const App = () => {
     setPromptToLoad(null);
   }, []);
 
-  const handleDeletePrompt = useCallback((id: number) => {
-    setSavedPrompts((prev) => prev.filter((p) => p.id !== id));
-    toast.info("Prompt berhasil dihapus!");
+  // Chaining logic
+  const handleUseAsInput = useCallback((outputContent: string) => {
+    setOutputToChain(outputContent);
+    setShowInputSelectionModal(true);
   }, []);
 
-  const handleExportPrompts = useCallback((prompts: any[]) => {
-    const dataStr = JSON.stringify(prompts, null, 2);
-    const dataUri =
-      "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
-    const exportFileDefaultName = generateFileName("all_saved_prompts", "json");
-    const linkElement = document.createElement("a");
-    linkElement.setAttribute("href", dataUri);
-    linkElement.setAttribute("download", exportFileDefaultName);
-    linkElement.click();
-    toast.info("Prompt berhasil diekspor!");
-  }, []);
+  const handleSelectInputForChaining = useCallback(
+    (frameworkName: string, inputName: string, inputValue: string) => {
+      // Find category for the selected framework
+      let foundCategory = "";
+      Object.entries(PROMPT_FRAMEWORKS).forEach(([cat, subs]) => {
+        Object.values(subs).forEach((fws) => {
+          if (Object.keys(fws).includes(frameworkName)) {
+            foundCategory = cat;
+          }
+        });
+      });
 
-  const handleImportPrompts = useCallback(
-    (importedPrompts: any[]) => {
-      if (
-        !Array.isArray(importedPrompts) ||
-        !importedPrompts.every(
-          (p) => typeof p === "object" && p !== null && "id" in p,
-        )
-      ) {
-        toast.error("Format file impor tidak valid.");
-        return;
+      if (foundCategory) {
+        setPromptToLoad({
+          versionData: {
+            formData: { [inputName]: inputValue },
+          },
+          parentPrompt: {
+            category: foundCategory,
+            frameworkName: frameworkName,
+          },
+        });
+        setShowInputSelectionModal(false);
+        setActiveView("generator");
+        toast.success(`Chaining ke ${frameworkName} berhasil!`);
+      } else {
+        toast.error("Gagal menemukan kategori untuk kerangka kerja tersebut.");
       }
-      const existingIds = new Set(savedPrompts.map((p) => p.id));
-      const newPrompts = importedPrompts.filter((p) => !existingIds.has(p.id));
-      setSavedPrompts((prev) => [...prev, ...newPrompts]);
-      toast.success(`${newPrompts.length} prompt berhasil diimpor!`);
     },
-    [savedPrompts],
+    [],
   );
 
   // Navigation handler
@@ -139,8 +131,10 @@ const App = () => {
       if (newCount >= 9) {
         setShowDevMode((prevShowDevMode) => !prevShowDevMode);
         setIsApiKeyEnabled((prevIsApiKeyEnabled) => !prevIsApiKeyEnabled);
-        setLogoClickCount(0);
+        localStorage.setItem("logoClickCount", "0");
+        return 0;
       }
+      localStorage.setItem("logoClickCount", String(newCount));
       return newCount;
     });
   }, [setShowDevMode, setIsApiKeyEnabled]);
@@ -152,11 +146,15 @@ const App = () => {
 
   useEffect(() => {
     document.body.classList.toggle("light-theme", isLightTheme);
+    document.documentElement.setAttribute(
+      "data-bs-theme",
+      isLightTheme ? "light" : "dark",
+    );
     localStorage.setItem("isLightTheme", String(isLightTheme));
   }, [isLightTheme]);
 
   useEffect(() => {
-    localStorage.setItem("apiKey", apiKey);
+    sessionStorage.setItem("apiKey", apiKey);
   }, [apiKey]);
 
   useEffect(() => {
@@ -187,7 +185,7 @@ const App = () => {
         setIsLightTheme={setIsLightTheme}
         onShowFrameworkBuilder={() => setShowFrameworkBuilderModal(true)}
       />
-      <Container fluid className={`main-container p-4`}>
+      <Container fluid className={`main-container`}>
         {activeView === "generator" ? (
           <GeneratorView
             showDevMode={showDevMode}
@@ -200,7 +198,7 @@ const App = () => {
             onShowSavedPrompts={() => setShowSavedPrompts(true)}
             promptToLoad={promptToLoad}
             onLoadComplete={handleLoadComplete}
-            handleUseAsInput={() => {}} // Placeholder
+            handleUseAsInput={handleUseAsInput}
             onNavigate={handleNavigate} // Pass onNavigate prop
           />
         ) : (
@@ -231,11 +229,19 @@ const App = () => {
         onExportPrompts={handleExportPrompts}
         onImportPrompts={handleImportPrompts}
         onRenamePrompt={() => {}} // Placeholder
+        toggleFavorite={toggleFavorite}
+      />
+      <InputSelectionModal
+        show={showInputSelectionModal}
+        onHide={() => setShowInputSelectionModal(false)}
+        outputToChain={outputToChain}
+        onSelectInput={handleSelectInputForChaining}
       />
       <Footer
         showDevMode={showDevMode}
         isApiKeyEnabled={isApiKeyEnabled}
         onShowFeedback={() => setShowFeedbackModal(true)}
+        onNavigate={handleNavigate}
       />
       <HelpModal show={showHelpModal} onHide={() => setShowHelpModal(false)} />
       <FrameworkBuilderModal

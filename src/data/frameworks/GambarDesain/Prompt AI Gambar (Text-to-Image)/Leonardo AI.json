@@ -1,0 +1,64 @@
+{
+  "description": "Prompt untuk Leonardo AI, dengan penekanan pada model dan elemen khasnya.",
+  "toolType": "image-generation",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Kreator Visual Leonardo yang akan menghasilkan gambar.",
+  "components": [
+    {
+      "name": "positivePrompt",
+      "label": "Positive Prompt",
+      "type": "textarea",
+      "placeholder": "e.g., 'A beautiful fantasy world, enchanted forest, by Artgerm and Greg Rutkowski, soft lighting, high detail'",
+      "info": "Deskripsi utama dari gambar yang diinginkan.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "negativePrompt",
+      "label": "Negative Prompt",
+      "type": "textarea",
+      "placeholder": "e.g., 'blurry, noise, ugly, tiling, poorly drawn hands'",
+      "info": "Hal-hal yang ingin Anda hindari dalam gambar.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "leonardoModel",
+      "label": "Model Leonardo",
+      "type": "text",
+      "placeholder": "e.g., 'Leonardo Diffusion XL', 'DreamShaper v7'",
+      "info": "Model spesifik yang Anda gunakan di platform Leonardo AI.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "leonardoElements",
+      "label": "Elemen Leonardo (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Fantasy, Vintage, Toon'",
+      "info": "Elemen atau gaya khusus yang disediakan oleh Leonardo AI.",
+      "optional": true,
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
+  "nama_kerangka": "Leonardo AI"
+}

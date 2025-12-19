@@ -1,0 +1,47 @@
+{
+  "description": "Jelaskan fitur produk, keunggulannya dibanding yang lain, dan manfaatnya bagi pelanggan.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penjelas Produk yang akan menjelaskan fitur produk, keunggulannya, dan manfaatnya.",
+  "components": [
+    {
+      "name": "productOrService",
+      "label": "Produk/Layanan",
+      "type": "text",
+      "placeholder": "e.g., 'Botol minum pintar'",
+      "info": "Produk atau layanan yang akan dijelaskan."
+    },
+    {
+      "name": "features",
+      "label": "Fitur-fitur (Features)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Sensor pelacak hidrasi, terbuat dari stainless steel vakum, terhubung ke aplikasi via Bluetooth.'",
+      "info": "Apa saja karakteristik teknis atau fungsional dari produk Anda?"
+    },
+    {
+      "name": "advantages",
+      "label": "Keunggulan (Advantages)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Satu-satunya botol yang secara aktif mengingatkan Anda untuk minum, menjaga suhu 24 jam.'",
+      "info": "Apa yang membuat fitur Anda lebih baik dari kompetitor?"
+    },
+    {
+      "name": "benefits",
+      "label": "Manfaat bagi Pelanggan (Benefits)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Anda akan tetap terhidrasi sepanjang hari, meningkatkan energi dan fokus, serta memiliki minuman dingin/panas kapan saja.'",
+      "info": "Apa hasil positif yang didapat pelanggan dari penggunaan produk?"
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Formula Persuasi & Pemasaran"
+  ],
+  "nama_kerangka": "FAB"
+}

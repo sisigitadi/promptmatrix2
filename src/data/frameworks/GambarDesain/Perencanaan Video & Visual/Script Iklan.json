@@ -1,0 +1,60 @@
+{
+  "description": "Buat naskah singkat untuk iklan video atau audio.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penulis Naskah Iklan yang akan membuat naskah iklan.",
+  "components": [
+    {
+      "name": "product",
+      "label": "Produk/Jasa yang Diiklankan",
+      "type": "text",
+      "placeholder": "e.g., 'Aplikasi Belajar Bahasa Asing'",
+      "info": "Produk yang menjadi fokus utama iklan."
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Audiens Iklan",
+      "type": "text",
+      "placeholder": "e.g., 'mahasiswa, profesional muda, orang tua'",
+      "info": "Siapa yang ingin Anda jangkau dengan iklan ini?"
+    },
+    {
+      "name": "duration",
+      "label": "Durasi Iklan (detik)",
+      "type": "number",
+      "placeholder": "e.g., 30",
+      "info": "Durasi akan sangat mempengaruhi kepadatan naskah."
+    },
+    {
+      "name": "keyMessage",
+      "label": "Pesan Kunci Iklan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Belajar bahasa jadi mudah dan menyenangkan di mana saja.'",
+      "info": "Satu hal terpenting yang harus diingat audiens setelah melihat iklan."
+    },
+    {
+      "name": "platform",
+      "label": "Platform Penayangan",
+      "type": "select",
+      "options": [
+        "TV",
+        "Radio",
+        "YouTube (Pre-roll)",
+        "TikTok/Reels/Shorts",
+        "Lainnya..."
+      ],
+      "info": "Platform akan mempengaruhi gaya dan kecepatan naskah."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Tempo harus cepat dan energik. Sertakan anjuran untuk sound effect 'swoosh' saat produk muncul. Aktor harus terdengar antusias dan percaya diri.",
+      "info": "Instruksi tentang nuansa, tempo, atau elemen audio/visual yang harus dibayangkan oleh AI."
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Perencanaan Video & Visual"
+  ],
+  "nama_kerangka": "Script Iklan"
+}

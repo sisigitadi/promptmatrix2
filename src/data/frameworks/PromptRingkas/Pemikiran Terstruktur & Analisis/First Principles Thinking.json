@@ -1,0 +1,47 @@
+{
+  "description": "Pecah masalah kompleks menjadi kebenaran-kebenaran fundamentalnya untuk membangun solusi dari dasar.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pemikir Fundamental yang akan memecah masalah kompleks menjadi kebenaran-kebenaran fundamentalnya.",
+  "components": [
+    {
+      "name": "problem",
+      "label": "Masalah atau Konsep",
+      "type": "text",
+      "placeholder": "e.g., 'Meningkatkan efisiensi baterai', 'Apa itu bisnis?'",
+      "info": "Masalah yang ingin Anda dekonstruksi."
+    },
+    {
+      "name": "assumptions",
+      "label": "Asumsi yang Ada Saat Ini",
+      "type": "textarea",
+      "placeholder": "e.g., 'Baterai harus terbuat dari lithium-ion. Bisnis harus punya kantor fisik.'",
+      "info": "Apa saja keyakinan umum atau 'cara lama' dalam memandang masalah ini?"
+    },
+    {
+      "name": "firstPrinciples",
+      "label": "Identifikasi Prinsip Pertama",
+      "type": "textarea",
+      "placeholder": "e.g., 'Apa fungsi dasar baterai? Menyimpan and melepaskan energi. Apa hukum fisika yang mengaturnya? Apa esensi dari bisnis? Pertukaran nilai.'",
+      "info": "Ajukan pertanyaan 'mengapa' berulang kali untuk menemukan kebenaran yang tidak dapat dipecah lagi."
+    },
+    {
+      "name": "rebuildSolution",
+      "label": "Bangun Solusi Baru dari Dasar",
+      "type": "textarea",
+      "placeholder": "e.g., 'Dari prinsip pertama, bisakah kita menyimpan energi dengan cara lain? Bisakah pertukaran nilai terjadi tanpa kantor?'",
+      "info": "Gunakan kebenaran fundamental untuk merakit pendekatan atau solusi baru yang inovatif."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Pemikiran Terstruktur & Analisis"
+  ],
+  "nama_kerangka": "First Principles Thinking"
+}

@@ -1,0 +1,47 @@
+{
+  "description": "Bangun sebuah adegan untuk cerita atau skenario dengan mendeskripsikan lingkungan, karakter, dan dialog.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Perancang Adegan yang akan membangun sebuah adegan yang detail untuk cerita atau skenario.",
+  "components": [
+    {
+      "name": "setting",
+      "label": "Latar (Setting)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Sebuah kafe remang-remang di Paris saat hujan. Bau kopi dan roti panggang terasa di udara.'",
+      "info": "Deskripsikan tempat, waktu, dan suasana adegan."
+    },
+    {
+      "name": "characters",
+      "label": "Karakter dalam Adegan",
+      "type": "textarea",
+      "placeholder": "e.g., 'ELARA (30-an), seorang seniman yang cemas, memegang cangkir teh. JAVIER (40-an), tenang dan misterius, membaca buku.'",
+      "info": "Siapa saja yang ada di adegan itu dan apa yang mereka lakukan?"
+    },
+    {
+      "name": "plotPoint",
+      "label": "Poin Plot atau Tujuan Adegan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Elara harus memberanikan diri untuk berbicara dengan Javier dan menanyakan tentang simbol misterius yang terus muncul dalam mimpinya.'",
+      "info": "Apa tujuan atau peristiwa penting yang harus terjadi dalam adegan ini?"
+    },
+    {
+      "name": "dialoguePrompt",
+      "label": "Pemicu Dialog",
+      "type": "textarea",
+      "placeholder": "e.g., 'Mulai dengan Elara yang menjatuhkan sendoknya, menarik perhatian Javier.'",
+      "info": "Bagaimana percakapan atau interaksi dimulai?"
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Persona, Gaya & Skenario"
+  ],
+  "nama_kerangka": "SceneCraft"
+}

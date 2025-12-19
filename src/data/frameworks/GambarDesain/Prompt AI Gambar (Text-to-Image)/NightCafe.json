@@ -1,0 +1,64 @@
+{
+  "description": "Buat prompt untuk NightCafe Creator, dengan mempertimbangkan model dan preset gayanya.",
+  "toolType": "image-generation",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Kurator Seni AI yang akan menghasilkan karya seni berdasarkan prompt utama.",
+  "components": [
+    {
+      "name": "mainPrompt",
+      "label": "Prompt Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'The celestial wolf, cosmic dust, stars, nebula, vibrant colors'",
+      "info": "Deskripsi utama dari karya seni Anda.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "stylePreset",
+      "label": "Preset Gaya",
+      "type": "text",
+      "placeholder": "e.g., 'Cosmic', 'Oil Painting', 'Cyberpunk'",
+      "info": "Gaya preset yang Anda pilih di NightCafe.",
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "model",
+      "label": "Model AI",
+      "type": "text",
+      "placeholder": "e.g., 'SDXL 1.0', 'DALL-E 3'",
+      "info": "Model dasar yang digunakan untuk generasi.",
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "negativePrompt",
+      "label": "Prompt Negatif",
+      "type": "text",
+      "placeholder": "e.g., 'low resolution, dull colors'",
+      "info": "Elemen yang ingin dihindari.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
+  "nama_kerangka": "NightCafe"
+}

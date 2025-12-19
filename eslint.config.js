@@ -7,6 +7,9 @@ import prettierPlugin from "eslint-plugin-prettier";
 import configPrettier from "eslint-config-prettier";
 
 export default tseslint.config(
+  {
+    ignores: ["scripts/**", "*.config.js", "*.cjs", "dist/**"],
+  },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -44,7 +47,7 @@ export default tseslint.config(
         // Define global variables available in browser and Node.js environments
         ...globals.browser,
         ...globals.node,
-                jest: true, // Enable Jest global variables for test files
+        jest: true, // Enable Jest global variables for test files
       },
     },
   },

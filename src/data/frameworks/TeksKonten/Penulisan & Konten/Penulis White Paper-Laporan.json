@@ -1,0 +1,77 @@
+{
+  "description": "Hasilkan dokumen laporan atau white paper yang informatif dan berwibawa berdasarkan data atau riset.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penulis Laporan Korporat yang akan menyusun dokumen informatif.",
+  "components": [
+    {
+      "name": "reportTitle",
+      "label": "Judul Laporan/White Paper",
+      "type": "text",
+      "placeholder": "e.g., 'Masa Depan AI dalam Industri Keuangan'",
+      "info": "Judul yang jelas dan profesional.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "mainThesis",
+      "label": "Tesis atau Argumen Utama",
+      "type": "text",
+      "placeholder": "e.g., 'AI akan secara fundamental mengubah manajemen risiko dan layanan pelanggan di sektor perbankan.'",
+      "info": "Satu kalimat yang merangkum poin utama dari laporan Anda.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Pembaca",
+      "type": "select",
+      "options": [
+        "Eksekutif C-Level",
+        "Manajer Teknis",
+        "Akademisi/Peneliti",
+        "Publik Umum",
+        "Lainnya..."
+      ],
+      "info": "Siapa audiens utama dokumen ini? Ini akan menentukan tingkat kedalaman teknis."
+    },
+    {
+      "name": "supportingData",
+      "label": "Poin Data & Bukti Pendukung",
+      "type": "textarea",
+      "placeholder": "Tempelkan poin-poin data, hasil survei, statistik, atau kutipan riset di sini. Pisahkan dengan baris baru.",
+      "info": "Inti dari laporan Anda. Semakin banyak data konkret, semakin baik.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "structure",
+      "label": "Struktur Laporan (Opsional)",
+      "type": "textarea",
+      "placeholder": "e.g., '1. Ringkasan Eksekutif\n2. Pendahuluan\n3. Analisis Pasar\n4. Kesimpulan & Rekomendasi'",
+      "info": "Berikan kerangka yang diinginkan jika Anda punya.",
+      "optional": true,
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan bahasa yang formal dan objektif. Sertakan bagian 'Rekomendasi' di akhir. Hindari spekulasi yang tidak didukung data.",
+      "info": "Instruksi tentang gaya, nada, atau bagian spesifik yang harus disertakan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Penulisan & Konten"
+  ],
+  "nama_kerangka": "Penulis White Paper/Laporan"
+}

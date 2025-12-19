@@ -1,0 +1,53 @@
+{
+  "description": "Buat penjelasan (docstring) yang jelas untuk fungsi atau kelas dalam kode pemrograman.",
+  "toolType": "code",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penulis Dokumentasi Kode yang akan menganalisis dan mendokumentasikan kode.",
+  "components": [
+    {
+      "name": "codeSnippet",
+      "label": "Potongan Kode (Code Snippet)",
+      "type": "textarea",
+      "placeholder": "Tempelkan fungsi, kelas, atau metode Anda di sini.",
+      "info": "AI akan menganalisis kode untuk menghasilkan dokumentasi yang relevan."
+    },
+    {
+      "name": "language",
+      "label": "Bahasa Pemrograman",
+      "type": "select",
+      "options": [
+        "Python",
+        "JavaScript",
+        "TypeScript",
+        "Java",
+        "PHP",
+        "Lainnya..."
+      ],
+      "info": "Bahasa pemrograman akan menentukan format docstring (e.g., reST, JSDoc)."
+    },
+    {
+      "name": "documentationStyle",
+      "label": "Gaya Dokumentasi",
+      "type": "select",
+      "options": [
+        "Google Style",
+        "NumPy/SciPy Style",
+        "JSDoc",
+        "Standar",
+        "Lainnya..."
+      ],
+      "info": "Pilih format komentar dokumentasi yang umum digunakan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Jelaskan parameter 'user_id' secara lebih detail. Sertakan satu contoh penggunaan. Jelaskan apa yang di-return oleh fungsi ini.",
+      "info": "Informasi tambahan yang tidak bisa disimpulkan hanya dari kode."
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Utilitas & Development"
+  ],
+  "nama_kerangka": "Penulis Dokumentasi Kode"
+}

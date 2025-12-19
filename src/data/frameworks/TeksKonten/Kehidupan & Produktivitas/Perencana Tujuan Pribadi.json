@@ -1,0 +1,65 @@
+{
+  "description": "Pecah tujuan besar Anda menjadi langkah-langkah kecil yang dapat ditindaklanjuti dan terukur.",
+  "toolType": "planning",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pelatih Tujuan Pribadi yang akan memecah tujuan besar menjadi langkah-langkah kecil.",
+  "components": [
+    {
+      "name": "mainGoal",
+      "label": "Tujuan Utama",
+      "type": "text",
+      "placeholder": "e.g., 'Belajar bermain gitar', 'Menurunkan berat badan 5 kg'",
+      "info": "Tuliskan satu tujuan besar yang ingin Anda capai.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "timeframe",
+      "label": "Jangka Waktu",
+      "type": "text",
+      "placeholder": "e.g., '3 bulan', 'Tahun ini'",
+      "info": "Kapan Anda ingin tujuan ini tercapai?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "currentSituation",
+      "label": "Situasi Saat Ini",
+      "type": "textarea",
+      "placeholder": "e.g., 'Belum pernah memegang gitar sama sekali', 'Berolahraga tidak teratur'",
+      "info": "Jelaskan titik awal Anda secara jujur. Ini membantu AI membuat langkah yang realistis.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "planningFramework",
+      "label": "Kerangka Perencanaan",
+      "type": "select",
+      "options": [
+        "SMART (Specific, Measurable, Achievable, Relevant, Time-bound)",
+        "WOOP (Wish, Outcome, Obstacle, Plan)",
+        "Langkah-langkah Mingguan",
+        "Lainnya..."
+      ],
+      "info": "Pilih metode perencanaan yang ingin digunakan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Saya hanya punya waktu 30 menit setiap hari. Saya butuh rencana yang sangat detail. Sertakan cara untuk melacak kemajuan.",
+      "info": "Berikan batasan atau preferensi personal Anda.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Kehidupan & Produktivitas"
+  ],
+  "nama_kerangka": "Perencana Tujuan Pribadi"
+}

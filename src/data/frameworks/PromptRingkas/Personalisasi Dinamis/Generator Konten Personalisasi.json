@@ -1,0 +1,91 @@
+{
+  "id_kerangka": "TEKS-GKP-001",
+  "nama_kerangka": "Generator Konten Personalisasi",
+  "version": "1.0.0",
+  "kategori": [
+    "Prompt Ringkas",
+    "Personalisasi Dinamis"
+  ],
+  "description": "Membuat konten (seperti email, artikel, atau postingan media sosial) yang disesuaikan secara dinamis dengan audiens atau persona target tertentu.",
+  "perspektif_user": "Saya ingin membuat konten yang pesannya tepat sasaran. Saya perlu menyesuaikan gaya bahasa, tingkat kedalaman materi, dan tujuan konten agar sesuai dengan profil pembaca saya, sehingga hasilnya lebih efektif dan menarik.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Copywriter dan Ahli Strategi Konten yang akan membuat teks yang relevan dengan profil audiens.",
+  "components": [
+    {
+      "name": "KONTEN_UTAMA",
+      "label": "Draf Konten Utama",
+      "type": "textarea",
+      "description": "Masukkan ide utama, poin-poin, atau draf kasar dari konten yang ingin Anda buat.",
+      "default": "",
+      "optional": false,
+      "placeholder": "Contoh: Peluncuran fitur baru kami, 'Analitik Cerdas', yang membantu pengguna melacak metrik secara real-time...",
+      "info": "Ini adalah inti dari pesan yang ingin Anda sampaikan. AI akan mengembangkan dan memolesnya."
+    },
+    {
+      "name": "TARGET_AUDIENS_KEAHLIAN",
+      "label": "Tingkat Keahlian Audiens",
+      "type": "select",
+      "description": "Pilih tingkat pemahaman atau keahlian audiens target Anda.",
+      "default": "Menengah",
+      "optional": false,
+      "options": [
+        "Pemula",
+        "Menengah",
+        "Ahli"
+      ],
+      "info": "Ini akan menentukan kedalaman teknis dan kompleksitas bahasa yang digunakan."
+    },
+    {
+      "name": "TARGET_AUDIENS_GAYA",
+      "label": "Gaya Bahasa",
+      "type": "select",
+      "description": "Pilih gaya atau nada bahasa yang paling sesuai untuk audiens Anda.",
+      "default": "Informatif",
+      "optional": false,
+      "options": [
+        "Formal",
+        "Kasual",
+        "Humoris",
+        "Informatif",
+        "Persuasif"
+      ],
+      "info": "Gaya bahasa akan memengaruhi cara AI menyusun kalimat dan memilih kata."
+    },
+    {
+      "name": "TARGET_AUDIENS_TUJUAN",
+      "label": "Tujuan Utama Audiens",
+      "type": "text",
+      "description": "Apa yang ingin dicapai oleh audiens setelah membaca konten ini?",
+      "default": "",
+      "optional": false,
+      "placeholder": "Contoh: Memahami manfaat fitur baru, mendapatkan panduan langkah demi langkah, dll.",
+      "info": "Mengetahui tujuan audiens akan membantu AI fokus pada pesan yang paling relevan."
+    },
+    {
+      "name": "JENIS_OUTPUT",
+      "label": "Format Output Konten",
+      "type": "select",
+      "description": "Pilih format akhir dari konten yang akan dihasilkan.",
+      "default": "Artikel Blog",
+      "optional": false,
+      "options": [
+        "Email",
+        "Artikel Blog",
+        "Postingan Media Sosial (Singkat)",
+        "Postingan Media Sosial (Panjang)",
+        "Naskah Video (Intro)"
+      ],
+      "info": "AI akan menyesuaikan struktur dan panjang konten sesuai format yang dipilih."
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Copywriter dan Ahli Strategi Konten yang sangat terampil. Tugas Anda adalah mengubah draf konten mentah menjadi sebuah tulisan yang dipoles dan disesuaikan secara presisi untuk audiens target yang spesifik.",
+    "KONTEKS": "Konteks Pembuatan Konten:\n- Draf Konten Utama: {KONTEN_UTAMA}\n- Profil Audiens Target:\n  - Tingkat Keahlian: {TARGET_AUDIENS_KEAHLIAN}\n  - Gaya Bahasa yang Disukai: {TARGET_AUDIENS_GAYA}\n  - Tujuan Utama Mereka: {TARGET_AUDIENS_TUJUAN}",
+    "TUGAS": "Berdasarkan draf dan profil audiens yang diberikan, hasilkan versi final dari konten tersebut dalam format '{JENIS_OUTPUT}'. Pastikan nada, kedalaman teknis, dan struktur tulisan selaras sempurna dengan kebutuhan dan preferensi audiens. Fokus pada kejelasan, keterbacaan, dan pencapaian tujuan audiens.",
+    "FORMAT OUTPUT": "Hasilkan teks final dalam format '{JENIS_OUTPUT}'. Jangan menyertakan judul atau header tambahan kecuali jika itu adalah bagian standar dari format tersebut (misalnya, subjek untuk email). Langsung berikan kontennya."
+  },
+  "toolType": "text",
+  "output": "natural_language_prompt",
+  "contoh_kalimat": "Buatkan saya email pemasaran dari draf ini untuk audiens pemula dengan gaya kasual.",
+  "konteks_tambahan_instruksi_khusus": "Selalu prioritaskan kejelasan dan relevansi pesan untuk audiens yang dituju.",
+  "crossValidationRules": []
+}

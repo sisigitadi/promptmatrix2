@@ -1,0 +1,61 @@
+{
+  "description": "Hasilkan ide-ide video yang menarik untuk platform media sosial.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Strategis Konten Video yang akan menghasilkan ide-ide video.",
+  "components": [
+    {
+      "name": "platform",
+      "label": "Platform Video",
+      "type": "select",
+      "options": [
+        "YouTube",
+        "TikTok",
+        "Instagram Reels",
+        "LinkedIn Video",
+        "Lainnya..."
+      ],
+      "info": "Platform menentukan format, durasi, dan gaya konten."
+    },
+    {
+      "name": "niche",
+      "label": "Niche / Tema Channel",
+      "type": "text",
+      "placeholder": "e.g., 'memasak untuk pemula, review gadget, keuangan pribadi'",
+      "info": "Fokus utama dari channel atau akun Anda."
+    },
+    {
+      "name": "videoFormat",
+      "label": "Format Video",
+      "type": "select",
+      "options": [
+        "Tutorial / How-to",
+        "Vlog Harian/Mingguan",
+        "Review Produk/Jasa",
+        "Listicle (e.g., Top 5...)",
+        "Edukasi Singkat / Explainer",
+        "Wawancara",
+        "Lainnya..."
+      ],
+      "info": "Pilih jenis struktur video yang diinginkan."
+    },
+    {
+      "name": "desiredOutcome",
+      "label": "Tujuan Video",
+      "type": "textarea",
+      "placeholder": "e.g., 'meningkatkan subscriber, mendapatkan engagement tinggi, mengarahkan trafik ke website'",
+      "info": "Apa hasil yang ingin Anda capai dengan video ini?"
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Saya ingin ide yang bisa dikolaborasikan dengan kreator lain. Fokus pada budget produksi rendah. Hindari topik politik.",
+      "info": "Detail tambahan yang bisa mengarahkan ide AI menjadi lebih unik dan sesuai dengan channel Anda."
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Perencanaan Video & Visual"
+  ],
+  "nama_kerangka": "Ide Konten Video"
+}

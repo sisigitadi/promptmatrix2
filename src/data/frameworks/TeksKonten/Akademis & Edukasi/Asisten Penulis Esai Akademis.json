@@ -1,0 +1,79 @@
+{
+  "description": "Bantu membuat kerangka, argumen, dan kalimat tesis yang kuat untuk esai akademis.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penulis Esai Akademis yang akan menyusun kerangka, argumen, dan kalimat tesis.",
+  "components": [
+    {
+      "name": "essayQuestion",
+      "label": "Pertanyaan atau Topik Esai",
+      "type": "text",
+      "placeholder": "e.g., 'Diskusikan dampak Revolusi Industri terhadap masyarakat urban.'",
+      "info": "Tuliskan pertanyaan esai persis seperti yang diberikan.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "myStance",
+      "label": "Posisi/Argumen Utama Saya",
+      "type": "text",
+      "placeholder": "e.g., 'Revolusi Industri memiliki dampak ganda: kemajuan ekonomi dan kemunduran sosial.'",
+      "info": "Apa jawaban atau argumen utama Anda terhadap pertanyaan tersebut?",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "supportingPoints",
+      "label": "Poin-Poin Pendukung (Opsional)",
+      "type": "textarea",
+      "placeholder": "Poin 1: Munculnya kelas pekerja baru.\nPoin 2: Kondisi hidup yang buruk di kota.\nPoin 3: Teknologi baru meningkatkan produksi.",
+      "info": "Sebutkan 2-3 argumen utama yang akan mendukung posisi Anda.",
+      "optional": true,
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "essayType",
+      "label": "Jenis Esai",
+      "type": "select",
+      "options": [
+        "Argumentatif",
+        "Komparatif (Bandingkan & Kontraskan)",
+        "Analitis",
+        "Ekspositori",
+        "Lainnya..."
+      ],
+      "info": "Jenis esai akan menentukan struktur dan pendekatan."
+    },
+    {
+      "name": "outputToGenerate",
+      "label": "Output yang Diinginkan",
+      "type": "select",
+      "options": [
+        "Hanya Kalimat Tesis",
+        "Kerangka Esai Lengkap (Outline)",
+        "Paragraf Pembuka",
+        "Lainnya..."
+      ],
+      "info": "Pilih bagian mana dari esai yang Anda perlukan bantuannya."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan bahasa akademis yang formal. Sertakan satu argumen tandingan (counter-argument) dalam kerangka. Tesis harus jelas dan dapat diperdebatkan.",
+      "info": "Instruksi spesifik tentang gaya penulisan atau struktur esai.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Akademis & Edukasi"
+  ],
+  "nama_kerangka": "Asisten Penulis Esai Akademis"
+}

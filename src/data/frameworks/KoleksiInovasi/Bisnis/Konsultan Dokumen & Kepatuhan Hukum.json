@@ -1,0 +1,120 @@
+{
+  "id_kerangka": "BIS-LGL-001",
+  "nama_kerangka": "Konsultan Dokumen & Kepatuhan Hukum",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
+  "description": "Asisten legal virtual untuk kebutuhan bisnis sehari-hari, dari draf perjanjian hingga checklist kepatuhan.",
+  "perspektif_user": "Saya butuh bantuan untuk membuat draf dokumen legal umum atau memahami istilah hukum tanpa harus langsung ke pengacara untuk draf pertama.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang asisten legal virtual yang akan menyusun dokumen dan memahami hukum bisnis.",
+  "components": [
+    {
+      "name": "TUGAS_BANTUAN_HUKUM",
+      "label": "Jenis Bantuan Hukum",
+      "type": "select",
+      "options": [
+        "Pembuat Draf Perjanjian Dasar",
+        "Generator Kebijakan Privasi & Syarat Layanan",
+        "Penerjemah Istilah Hukum",
+        "Checklist Kepatuhan Bisnis"
+      ],
+      "default": "Pembuat Draf Perjanjian Dasar",
+      "info": "Pilih tugas legal yang Anda butuhkan."
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "TUGAS_BANTUAN_HUKUM",
+      "options": {
+        "Pembuat Draf Perjanjian Dasar": [
+          {
+            "name": "JENIS_PERJANJIAN",
+            "label": "Jenis Perjanjian",
+            "type": "select",
+            "options": [
+              "Perjanjian Kerja (PKWT)",
+              "Perjanjian Kerahasiaan (NDA)",
+              "Surat Perjanjian Kerja Sama (MoU)"
+            ],
+            "default": "Perjanjian Kerja (PKWT)",
+            "info": "Pilih jenis dokumen yang ingin Anda buat drafnya."
+          },
+          {
+            "name": "PIHAK_PERTAMA",
+            "label": "Nama Pihak Pertama",
+            "type": "text",
+            "placeholder": "Contoh: PT Jaya Abadi",
+            "info": "Nama perusahaan atau individu pihak pertama."
+          },
+          {
+            "name": "PIHAK_KEDUA",
+            "label": "Nama Pihak Kedua",
+            "type": "text",
+            "placeholder": "Contoh: John Doe",
+            "info": "Nama perusahaan atau individu pihak kedua."
+          }
+        ],
+        "Generator Kebijakan Privasi & Syarat Layanan": [
+          {
+            "name": "NAMA_WEBSITE_APP",
+            "label": "Nama Website atau Aplikasi Anda",
+            "type": "text",
+            "placeholder": "Contoh: Aplikasi 'BelajarKuy'",
+            "info": "Nama layanan Anda untuk dicantumkan dalam kebijakan."
+          },
+          {
+            "name": "JENIS_DATA_PENGGUNA",
+            "label": "Jenis Data Pengguna yang Dikumpulkan",
+            "type": "textarea",
+            "placeholder": "Contoh: Nama, email, nomor telepon, data lokasi, riwayat pembelian.",
+            "info": "Sebutkan semua jenis data pribadi yang Anda kumpulkan dari pengguna."
+          }
+        ],
+        "Penerjemah Istilah Hukum": [
+          {
+            "name": "ISTILAH_HUKUM",
+            "label": "Istilah atau Klausul Hukum",
+            "type": "textarea",
+            "placeholder": "Contoh: Apa arti dari klausul 'force majeure'? atau salin-tempel satu klausul penuh di sini.",
+            "info": "Masukkan istilah atau klausul yang ingin Anda pahami."
+          }
+        ],
+        "Checklist Kepatuhan Bisnis": [
+          {
+            "name": "BENTUK_BADAN_USAHA",
+            "label": "Bentuk Badan Usaha",
+            "type": "select",
+            "options": [
+              "PT Perorangan",
+              "CV",
+              "Firma",
+              "UMKM Perorangan"
+            ],
+            "default": "UMKM Perorangan",
+            "info": "Pilih bentuk badan usaha Anda."
+          },
+          {
+            "name": "BIDANG_USAHA",
+            "label": "Bidang Usaha",
+            "type": "text",
+            "placeholder": "Contoh: Kafe, Toko Online, Jasa Konsultasi IT",
+            "info": "Sebutkan bidang usaha spesifik Anda."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang asisten legal virtual yang terampil dalam penyusunan dokumen.",
+    "KONTEKS": "Pengguna memerlukan bantuan untuk tugas '{TUGAS_BANTUAN_HUKUM}'. Penting untuk diingat bahwa output yang Anda berikan adalah draf awal dan bukan nasihat hukum formal.",
+    "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Pembuat Draf Perjanjian Dasar'**: Buat draf '{JENIS_PERJANJIAN}' antara '{PIHAK_PERTAMA}' dan '{PIHAK_KEDUA}'. Gunakan klausul-klausul standar yang umum dan sertakan placeholder untuk detail spesifik.\n- **Jika 'Generator Kebijakan Privasi & Syarat Layanan'**: Buat draf Kebijakan Privasi dan Syarat & Ketentuan untuk '{NAMA_WEBSITE_APP}' yang mengumpulkan data seperti '{JENIS_DATA_PENGGUNA}'.\n- **Jika 'Penerjemah Istilah Hukum'**: Jelaskan istilah atau klausul '{ISTILAH_HUKUM}' dalam bahasa bisnis yang sederhana dan berikan contoh implikasi praktisnya.\n- **Jika 'Checklist Kepatuhan Bisnis'**: Buat checklist umum mengenai izin dan pendaftaran yang mungkin diperlukan untuk '{BENTUK_BADAN_USAHA}' di bidang '{BIDANG_USAHA}' di Indonesia.",
+    "FORMAT OUTPUT": "Gunakan format Markdown. Untuk draf dokumen, gunakan struktur yang jelas dengan judul, pasal, dan ayat. Selalu awali output dengan disclaimer bahwa ini adalah draf dan perlu ditinjau oleh ahli hukum."
+  },
+  "toolType": "text",
+  "konteks_tambahan_instruksi_khusus": "Disclaimer hukum adalah yang paling penting. Pastikan setiap output menekankan bahwa ini bukan pengganti nasihat pengacara profesional.",
+  "contoh_kalimat": "Bantu saya membuat draf Perjanjian Kerahasiaan (NDA).",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

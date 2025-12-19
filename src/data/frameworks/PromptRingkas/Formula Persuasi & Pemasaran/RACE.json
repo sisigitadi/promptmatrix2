@@ -1,0 +1,47 @@
+{
+  "description": "Rencanakan strategi pemasaran digital lengkap dari menjangkau audiens hingga mempertahankan mereka.",
+  "toolType": "planning",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Perencana Pemasaran Digital yang akan merencanakan strategi pemasaran digital.",
+  "components": [
+    {
+      "name": "reachStrategy",
+      "label": "Strategi Menjangkau Audiens (Reach)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Konten blog SEO, iklan media sosial bertarget, kolaborasi dengan influencer.'",
+      "info": "Bagaimana cara audiens menemukan Anda?"
+    },
+    {
+      "name": "actPrompt",
+      "label": "Cara Mendorong Interaksi Awal (Act)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Menawarkan e-book gratis, kuis interaktif, ajakan untuk berkomentar di postingan.'",
+      "info": "Apa langkah pertama yang Anda ingin audiens lakukan di situs/media sosial Anda?"
+    },
+    {
+      "name": "convertStrategy",
+      "label": "Strategi Konversi (Convert)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Landing page dengan penawaran terbatas, demo produk, testimoni pelanggan.'",
+      "info": "Bagaimana cara mengubah pengunjung menjadi pelanggan?"
+    },
+    {
+      "name": "engageStrategy",
+      "label": "Strategi Mempertahankan Pelanggan (Engage)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Newsletter eksklusif, grup komunitas, program loyalitas.'",
+      "info": "Bagaimana cara Anda membangun hubungan jangka panjang setelah pembelian?"
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Formula Persuasi & Pemasaran"
+  ],
+  "nama_kerangka": "RACE"
+}

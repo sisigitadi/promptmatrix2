@@ -1,0 +1,106 @@
+{
+  "id_kerangka": "BIS-PRD-001",
+  "nama_kerangka": "Manajer Produk Virtual",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
+  "description": "Partner strategis AI untuk manajer produk, membantu dalam penulisan PRD, penyusunan roadmap, dan prioritas fitur.",
+  "perspektif_user": "Sebagai manajer produk, saya butuh bantuan untuk menyusun dokumen persyaratan, membuat roadmap, dan memprioritaskan pekerjaan tim secara efisien.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Manajer Produk yang akan mengelola dan memprioritaskan produk.",
+  "components": [
+    {
+      "name": "TUGAS_MANAJEMEN_PRODUK",
+      "label": "Tugas Manajemen Produk",
+      "type": "select",
+      "options": [
+        "Penulis Dokumen Persyaratan Produk (PRD)",
+        "Generator Peta Jalan Produk (Roadmap)",
+        "Asisten Prioritas Fitur",
+        "Penulis Cerita Pengguna (User Story)"
+      ],
+      "default": "Penulis Dokumen Persyaratan Produk (PRD)",
+      "info": "Pilih tugas manajemen produk yang ingin Anda selesaikan."
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "TUGAS_MANAJEMEN_PRODUK",
+      "options": {
+        "Penulis Dokumen Persyaratan Produk (PRD)": [
+          {
+            "name": "PRD_NAMA_FITUR",
+            "label": "Nama Fitur atau Produk",
+            "type": "text",
+            "placeholder": "Contoh: Fitur 'Kolaborasi Tim Real-time'",
+            "info": "Fitur yang akan dibuatkan dokumen persyaratannya."
+          },
+          {
+            "name": "PRD_MASALAH_PENGGUNA",
+            "label": "Masalah Pengguna yang Diselesaikan",
+            "type": "textarea",
+            "placeholder": "Contoh: Tim yang bekerja remote kesulitan untuk berdiskusi secara sinkron.",
+            "info": "Jelaskan masalah yang ingin Anda pecahkan dengan fitur ini."
+          }
+        ],
+        "Generator Peta Jalan Produk (Roadmap)": [
+          {
+            "name": "ROADMAP_VISI_PRODUK",
+            "label": "Visi Produk (Jangka Panjang)",
+            "type": "text",
+            "placeholder": "Contoh: Menjadi platform kolaborasi nomor satu untuk tim kreatif.",
+            "info": "Apa tujuan besar dari produk Anda?"
+          },
+          {
+            "name": "ROADMAP_TUJUAN_BISNIS",
+            "label": "Tujuan Bisnis untuk 3-6 Bulan ke Depan",
+            "type": "textarea",
+            "placeholder": "Contoh: Meningkatkan retensi pengguna sebesar 15%",
+            "info": "Apa target bisnis yang ingin dicapai dalam waktu dekat?"
+          }
+        ],
+        "Asisten Prioritas Fitur": [
+          {
+            "name": "PRIORITAS_DAFTAR_FITUR",
+            "label": "Daftar Fitur (pisahkan dengan koma)",
+            "type": "textarea",
+            "placeholder": "Contoh: Fitur A, Fitur B, Fitur C",
+            "info": "Masukkan daftar fitur yang perlu diprioritaskan."
+          },
+          {
+            "name": "PRIORITAS_KERANGKA",
+            "label": "Kerangka Prioritas",
+            "type": "select",
+            "options": [
+              "RICE (Reach, Impact, Confidence, Effort)",
+              "MoSCoW (Must, Should, Could, Won't)"
+            ],
+            "default": "RICE (Reach, Impact, Confidence, Effort)",
+            "info": "Pilih metode untuk membantu prioritas."
+          }
+        ],
+        "Penulis Cerita Pengguna (User Story)": [
+          {
+            "name": "USERSTORY_DESKRIPSI_FITUR",
+            "label": "Deskripsi Singkat Fitur",
+            "type": "textarea",
+            "placeholder": "Contoh: Pengguna ingin bisa memfilter produk berdasarkan warna agar lebih cepat menemukan barang.",
+            "info": "Jelaskan kebutuhan dari sudut pandang pengguna."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Manajer Produk (Product Manager) AI yang strategis.",
+    "KONTEKS": "Pengguna memerlukan bantuan dengan tugas '{TUGAS_MANAJEMEN_PRODUK}'.",
+    "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Penulis Dokumen Persyaratan Produk (PRD)'**: Buat draf PRD untuk fitur '{PRD_NAMA_FITUR}' yang menyelesaikan masalah '{PRD_MASALAH_PENGGUNA}'. Sertakan bagian Latar Belakang, Tujuan, Target Pengguna, dan Persyaratan Fungsional.\n- **Jika 'Generator Peta Jalan Produk (Roadmap)'**: Buat draf roadmap berbasis teks per kuartal berdasarkan visi '{ROADMAP_VISI_PRODUK}' dan tujuan '{ROADMAP_TUJUAN_BISNIS}'.\n- **Jika 'Asisten Prioritas Fitur'**: Prioritaskan daftar fitur '{PRIORITAS_DAFTAR_FITUR}' menggunakan kerangka '{PRIORITAS_KERANGKA}' dan sajikan dalam bentuk tabel dengan justifikasi.\n- **Jika 'Penulis Cerita Pengguna (User Story)'**: Ubah deskripsi '{USERSTORY_DESKRIPSI_FITUR}' menjadi format User Story yang benar ('Sebagai seorang..., saya ingin..., agar...') lengkap dengan beberapa contoh Kriteria Penerimaan (Acceptance Criteria).",
+    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan output dalam format dokumen yang terstruktur, profesional, dan mudah ditindaklanjuti."
+  },
+  "toolType": "text",
+  "konteks_tambahan_instruksi_khusus": "Fokus pada kejelasan, kelengkapan informasi, dan keselarasan antara masalah pengguna dengan solusi yang diusulkan.",
+  "contoh_kalimat": "Bantu saya membuat PRD untuk fitur kolaborasi baru.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

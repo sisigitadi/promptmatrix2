@@ -1,0 +1,78 @@
+{
+  "description": "Buat balasan yang profesional dan empatik untuk ulasan pelanggan (positif maupun negatif).",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Manajer Hubungan Pelanggan yang akan menghasilkan balasan.",
+  "components": [
+    {
+      "name": "originalReview",
+      "label": "Teks Ulasan Pelanggan",
+      "type": "textarea",
+      "placeholder": "Tempelkan ulasan lengkap dari pelanggan di sini.",
+      "info": "AI akan menganalisis teks ini untuk membuat balasan yang relevan.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "sentiment",
+      "label": "Sentimen Ulasan",
+      "type": "select",
+      "options": [
+        "Sangat Positif",
+        "Positif",
+        "Netral",
+        "Negatif",
+        "Sangat Negatif",
+        "Lainnya..."
+      ],
+      "info": "Bagaimana perasaan pelanggan dalam ulasan tersebut?"
+    },
+    {
+      "name": "businessName",
+      "label": "Nama Bisnis/Produk Anda",
+      "type": "text",
+      "placeholder": "e.g., 'Restoran Lezat'",
+      "info": "Nama yang akan digunakan dalam balasan (misal, 'Terima kasih telah berkunjung ke...').",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "solutionOffered",
+      "label": "Solusi yang Ditawarkan (jika ulasan negatif)",
+      "type": "text",
+      "placeholder": "e.g., 'Menawarkan voucher, mengundang kembali, menghubungi via email'",
+      "info": "Langkah konkret apa yang Anda ambil untuk menyelesaikan masalah pelanggan?",
+      "optional": true
+    },
+    {
+      "name": "tone",
+      "label": "Gaya Bahasa Balasan",
+      "type": "select",
+      "options": [
+        "Profesional & Korporat",
+        "Hangat & Personal",
+        "Cepat & Efisien",
+        "Penuh Empati & Pengertian",
+        "Lainnya..."
+      ],
+      "info": "Pilih nada yang paling sesuai dengan citra brand Anda."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Sebutkan nama pelanggan jika ada. Ajak pelanggan untuk menghubungi layanan pelanggan secara pribadi. Jangan terdengar defensif. Untuk ulasan positif, tanyakan apa hidangan favorit mereka.",
+      "info": "Instruksi spesifik tentang apa yang harus atau tidak boleh dikatakan dalam balasan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Generator Respon Ulasan Pelanggan"
+}

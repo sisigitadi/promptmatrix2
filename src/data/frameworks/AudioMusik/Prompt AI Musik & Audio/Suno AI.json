@@ -1,0 +1,65 @@
+{
+  "description": "Buat lagu lengkap dengan vokal dari deskripsi teks menggunakan Suno AI.",
+  "toolType": "music-generation",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Produser Musik AI yang akan menghasilkan lagu.",
+  "components": [
+    {
+      "name": "lyrics",
+      "label": "Lirik Lagu",
+      "type": "textarea",
+      "placeholder": "e.g., '[Verse 1]\nWalking through the city lights\n[Chorus]\nOh, I feel so alive tonight'",
+      "info": "Masukkan lirik lengkap dengan penanda bagian seperti [Verse] dan [Chorus]. Atau biarkan kosong dan jelaskan di deskripsi gaya."
+    },
+    {
+      "name": "model",
+      "label": "Model",
+      "type": "select",
+      "options": [
+        "v3.5",
+        "v3.5-turbo",
+        "v4-alpha",
+        "chirp-v3"
+      ],
+      "info": "Pilih versi model Suno AI yang akan digunakan."
+    },
+    {
+      "name": "instrumental",
+      "label": "Instrumental?",
+      "type": "select",
+      "options": [
+        "Tidak",
+        "Ya"
+      ],
+      "info": "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal."
+    },
+    {
+      "name": "styleOfMusic",
+      "label": "Gaya Musik",
+      "type": "text",
+      "placeholder": "e.g., 'acoustic pop', '80s synthwave with female vocal', 'epic cinematic orchestral'",
+      "info": "Deskripsikan genre, mood, instrumen, dan tipe vokal yang Anda inginkan."
+    },
+    {
+      "name": "makeInstrumental",
+      "label": "Buat Versi Instrumental?",
+      "type": "select",
+      "options": [
+        "Tidak",
+        "Ya"
+      ],
+      "info": "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan. Untuk hasil terbaik, gunakan model v3.5 atau v3.5-turbo.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada."
+    }
+  ],
+  "kategori": [
+    "Audio & Musik",
+    "Prompt AI Musik & Audio"
+  ],
+  "nama_kerangka": "Suno AI"
+}

@@ -1,0 +1,40 @@
+{
+  "description": "Kontrol output ringkasan dengan memberikan batasan yang jelas pada panjang, format, dan fokus.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis Ringkasan yang akan meringkas teks dengan menerapkan batasan yang ketat.",
+  "components": [
+    {
+      "name": "textToSummarize",
+      "label": "Teks yang Akan Diringkas",
+      "type": "textarea",
+      "placeholder": "Tempelkan artikel atau dokumen panjang di sini.",
+      "info": "Sumber konten yang akan diringkas."
+    },
+    {
+      "name": "lengthConstraint",
+      "label": "Batasan Panjang",
+      "type": "text",
+      "placeholder": "e.g., 'Tidak lebih dari 100 kata', 'Dalam 3 poin utama', 'Tepat 1 kalimat'",
+      "info": "Seberapa panjang atau pendek ringkasan yang Anda inginkan?"
+    },
+    {
+      "name": "formatConstraint",
+      "label": "Batasan Format",
+      "type": "text",
+      "placeholder": "e.g., 'Format sebagai daftar bernomor', 'Harus berupa paragraf'",
+      "info": "Bagaimana struktur output yang diinginkan?"
+    },
+    {
+      "name": "focusConstraint",
+      "label": "Batasan Fokus",
+      "type": "textarea",
+      "placeholder": "e.g., 'Hanya fokus pada dampak ekonomi. Abaikan aspek sejarah.'",
+      "info": "Bagian atau tema apa dari teks asli yang harus diprioritaskan atau diabaikan?"
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Refleksi & Peningkatan Prompt"
+  ],
+  "nama_kerangka": "Summarization Constraints"
+}

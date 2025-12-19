@@ -28,7 +28,22 @@
           ]
         },
         "placeholder": { "type": "string" },
-        "options": { "type": "array", "items": { "type": "string" } },
+        "options": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "required": ["label", "value"],
+                "properties": {
+                  "label": { "type": "string" },
+                  "value": { "type": "string" }
+                }
+              }
+            ]
+          }
+        },
         "info": { "type": "string" },
         "min": { "type": "number" },
         "max": { "type": "number" },
@@ -58,11 +73,36 @@
         "options": {
           "type": "object",
           "patternProperties": {
-            "^[a-zA-Z0-9_\\s&/()-]+$": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/FrameworkComponent"
-              }
+            "^[a-zA-Z0-9_\\s&/()\\-.]+$": {
+              "oneOf": [
+                {
+                  "description": "Legacy structure: Direct array of components.",
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/FrameworkComponent" }
+                },
+                {
+                  "description": "New Super-Framework structure: Object containing components and optional prompt overrides.",
+                  "type": "object",
+                  "required": ["components"],
+                  "properties": {
+                    "components": {
+                      "type": "array",
+                      "items": { "$ref": "#/definitions/FrameworkComponent" }
+                    },
+                    "komponen_prompt": {
+                      "type": "object",
+                      "properties": {
+                        "PERAN": { "type": "string" },
+                        "KONTEKS": { "type": "string" },
+                        "TUGAS": { "type": "string" },
+                        "FORMAT OUTPUT": { "type": "string" }
+                      },
+                      "additionalProperties": true
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              ]
             }
           },
           "additionalProperties": false
@@ -72,17 +112,7 @@
   },
   "required": [
     "description",
-    "toolType",
-    "id_kerangka",
-    "nama_kerangka",
-    "version",
-    "kategori",
-    "perspektif_user",
-    "ai_logic_description",
-    "komponen_prompt",
-    "konteks_tambahan_instruksi_khusus",
-    "contoh_kalimat",
-    "output"
+    "toolType"
   ],
   "properties": {
     "temperature": {
@@ -155,68 +185,15 @@
       "required": [
         "PERAN",
         "KONTEKS",
-        "TUGAS",
-        "FORMAT_OUTPUT"
+        "TUGAS"
       ],
       "properties": {
         "PERAN": { "type": "string" },
         "KONTEKS": { "type": "string" },
         "TUGAS": { "type": "string" },
-        "VARIABEL_INPUT": {
-          "type": "object",
-          "patternProperties": {
-            "^[a-zA-Z_][a-zA-Z0-9_]*$": {
-              "type": "object",
-              "required": ["description", "type"],
-              "properties": {
-                "description": { "type": "string" },
-                "type": {
-                  "type": "string",
-                  "enum": [
-                    "text",
-                    "textarea",
-                    "number",
-                    "options",
-                    "multiselect",
-                    "boolean",
-                    "code",
-                    "slider",
-                    "date",
-                    "datetime",
-                    "image",
-                    "file"
-                  ]
-                },
-                "default": {},
-                "options": { "type": "array", "items": { "type": "string" } },
-                "optional": { "type": "boolean" },
-                "placeholder": { "type": "string" },
-                "min": { "type": "number" },
-                "max": { "type": "number" },
-                "step": { "type": "number" },
-                "unit": { "type": "string" },
-                "validation": {
-                  "type": "object",
-                  "properties": {
-                    "min_length": { "type": "number" },
-                    "max_length": { "type": "number" },
-                    "regex": { "type": "string" },
-                    "min_value": { "type": "number" },
-                    "max_value": { "type": "number" },
-                    "min_date": { "type": "string", "format": "date-time" },
-                    "max_date": { "type": "string", "format": "date-time" }
-                  },
-                  "additionalProperties": false
-                }
-              },
-              "additionalProperties": false
-            }
-          },
-          "additionalProperties": false
-        },
         "FORMAT_OUTPUT": { "type": "string" }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "konteks_tambahan_instruksi_khusus": {
       "type": "string",

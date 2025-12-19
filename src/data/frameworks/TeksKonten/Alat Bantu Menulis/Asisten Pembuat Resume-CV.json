@@ -1,0 +1,79 @@
+{
+  "description": "Buat poin-poin pencapaian yang kuat untuk resume atau CV Anda.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Konsultan Karir yang akan menghasilkan poin-poin pencapaian untuk resume.",
+  "components": [
+    {
+      "name": "jobTitle",
+      "label": "Posisi yang Dilamar",
+      "type": "text",
+      "placeholder": "e.g., 'Senior Software Engineer'",
+      "info": "Posisi spesifik yang Anda tuju akan menentukan fokus dari poin yang dibuat.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "experienceLevel",
+      "label": "Tingkat Pengalaman",
+      "type": "select",
+      "options": [
+        "Fresh Graduate",
+        "Junior",
+        "Mid-level",
+        "Senior",
+        "Manager",
+        "Lainnya..."
+      ],
+      "info": "Tingkat pengalaman Anda saat ini."
+    },
+    {
+      "name": "sectionToGenerate",
+      "label": "Bagian yang Akan Dibuat",
+      "type": "select",
+      "options": [
+        "Ringkasan Profesional",
+        "Poin Pengalaman Kerja",
+        "Deskripsi Proyek",
+        "Lainnya..."
+      ],
+      "info": "Pilih bagian CV yang ingin Anda tulis atau perbaiki."
+    },
+    {
+      "name": "keySkills",
+      "label": "Keterampilan Utama (pisahkan koma)",
+      "type": "text",
+      "placeholder": "e.g., 'React, Node.js, Agile'",
+      "info": "Skill teknis atau non-teknis yang paling relevan dengan posisi yang dilamar.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "achievements",
+      "label": "Deskripsi Tugas & Pencapaian",
+      "type": "textarea",
+      "placeholder": "e.g., 'Mengembangkan fitur X yang meningkatkan efisiensi sebesar 20%. Memimpin tim proyek Y.'",
+      "info": "Gunakan metrik dan angka untuk mengukur dampak. Gunakan metode STAR (Situation, Task, Action, Result) jika memungkinkan.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan kata kerja aksi yang kuat (e.g., spearheaded, orchestrated, executed). Kuantifikasi semua pencapaian jika memungkinkan. Tulis dalam sudut pandang orang pertama.",
+      "info": "Instruksi spesifik tentang bagaimana AI harus menyusun kalimat atau kata-kata yang digunakan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Alat Bantu Menulis"
+  ],
+  "nama_kerangka": "Asisten Pembuat Resume/CV"
+}

@@ -1,0 +1,54 @@
+{
+  "description": "Kerangka kerja untuk pembuatan konten: Peran, Aksi, Konteks, Contoh, Format.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Komunikator Efektif yang akan menghasilkan konten berdasarkan kerangka RACEF.",
+  "components": [
+    {
+      "name": "role",
+      "label": "Peran (Role)",
+      "type": "text",
+      "placeholder": "e.g., 'Bertindak sebagai seorang ahli pemasaran digital.'",
+      "info": "Berikan AI sebuah persona."
+    },
+    {
+      "name": "action",
+      "label": "Aksi (Action)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Buat 5 ide judul untuk postingan blog tentang SEO.'",
+      "info": "Tugas spesifik yang harus dilakukan."
+    },
+    {
+      "name": "context",
+      "label": "Konteks (Context)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Target audiens adalah pemilik usaha kecil yang baru memulai.'",
+      "info": "Informasi latar belakang yang relevan."
+    },
+    {
+      "name": "example",
+      "label": "Contoh (Example)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Contoh judul yang bagus: '5 Kesalahan SEO yang Harus Dihindari Pemula'.'",
+      "info": "Berikan contoh output yang Anda suka."
+    },
+    {
+      "name": "format",
+      "label": "Format (Format)",
+      "type": "text",
+      "placeholder": "e.g., 'Sajikan dalam bentuk daftar bernomor.'",
+      "info": "Struktur output yang diinginkan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Pemikiran Terstruktur & Analisis"
+  ],
+  "nama_kerangka": "RACEF"
+}

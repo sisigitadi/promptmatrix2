@@ -1,0 +1,66 @@
+{
+  "description": "Buat prompt untuk Pika, dengan opsi untuk menganimasikan gambar atau menghasilkan video dari teks.",
+  "toolType": "video",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Animator AI yang akan menganimasikan gambar atau menghasilkan video dari teks.",
+  "components": [
+    {
+      "name": "mainPrompt",
+      "label": "Prompt Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'A robot surfing on a giant wave, cinematic, epic'",
+      "info": "Deskripsi utama dari video yang ingin Anda buat.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "negativePrompt",
+      "label": "Prompt Negatif",
+      "type": "text",
+      "placeholder": "e.g., 'blurry, low quality, watermark'",
+      "info": "Elemen yang ingin Anda hindari.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "motionControl",
+      "label": "Kontrol Gerakan",
+      "type": "text",
+      "placeholder": "e.g., 'camera zooming in', 'panning left', 'high motion'",
+      "info": "Deskripsikan intensitas atau arah gerakan yang diinginkan.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "imageInput",
+      "label": "Input Gambar (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Gunakan gambar seekor kucing untuk dianimasikan.'",
+      "info": "Sebutkan jika Anda ingin menganimasikan gambar yang sudah ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Video (Text-to-Video)"
+  ],
+  "nama_kerangka": "Pika"
+}

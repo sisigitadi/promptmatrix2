@@ -44,14 +44,14 @@ export const AI_PLATFORMS: AiPlatformConfig[] = [
       },
     ],
     models: [
-      { id: "gemini-pro", name: "gemini-pro" },
-      { id: "gemini-pro-vision", name: "gemini-pro-vision" },
-      { id: "gemini-2.5-pro", name: "gemini-2.5-pro" },
-      { id: "gemini-2.5-flash", name: "gemini-2.5-flash" },
-      {
-        id: "gemini-2.5-flash-lite-preview",
-        name: "gemini-2.5-flash-lite-preview",
-      },
+      { id: "gemini-3.0-pro", name: "gemini-3.0-pro" },
+      { id: "gemini-2.0-flash-exp", name: "gemini-2.0-flash-exp" },
+      { id: "gemini-1.5-pro", name: "gemini-1.5-pro" },
+      { id: "gemini-1.5-flash", name: "gemini-1.5-flash" },
+      { id: "gemini-1.5-pro-002", name: "gemini-1.5-pro-002" },
+      { id: "gemini-1.5-flash-002", name: "gemini-1.5-flash-002" },
+      { id: "gemini-1.5-flash-8b", name: "gemini-1.5-flash-8b" },
+      { id: "gemini-1.0-pro", name: "gemini-1.0-pro" },
     ],
   },
   {

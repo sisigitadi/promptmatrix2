@@ -1,0 +1,33 @@
+{
+  "description": "Minta AI untuk menghasilkan respons awal, lalu mengkritik dan memperbaikinya sendiri dalam satu prompt.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pelatih AI yang akan melakukan self-correction.",
+  "components": [
+    {
+      "name": "task",
+      "label": "Tugas Awal",
+      "type": "textarea",
+      "placeholder": "e.g., 'Buat paragraf pembuka untuk cerita fantasi tentang naga.'",
+      "info": "Tugas utama yang harus diselesaikan."
+    },
+    {
+      "name": "correctionInstruction",
+      "label": "Instruksi untuk Koreksi Diri",
+      "type": "textarea",
+      "placeholder": "e.g., 'Setelah Anda menulis draf pertama, identifikasi 3 kelemahan (misalnya, klise, kurang deskriptif) dan tulis ulang paragraf tersebut untuk memperbaikinya.'",
+      "info": "Pandu AI tentang bagaimana cara mengevaluasi dan memperbaiki pekerjaannya sendiri."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Refleksi & Peningkatan Prompt"
+  ],
+  "nama_kerangka": "Self-Correction"
+}

@@ -1,0 +1,64 @@
+{
+  "description": "Buat prompt yang sangat deskriptif dan sinematik untuk menghasilkan video berkualitas tinggi dengan Sora.",
+  "toolType": "video",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Sutradara AI yang akan menghasilkan video sinematik.",
+  "components": [
+    {
+      "name": "sceneDescription",
+      "label": "Deskripsi Adegan Detail",
+      "type": "textarea",
+      "placeholder": "e.g., 'A stylish woman walks through a Tokyo street filled with warm glowing neon and animated city signage. She wears a black leather jacket, a long red dress, and black boots. The street is damp and reflective, creating a mirror effect of the colorful lights.'",
+      "info": "Jelaskan adegan, subjek, latar belakang, dan atmosfer secara naratif dan mendetail.",
+      "validation": {
+        "min_length": 50
+      }
+    },
+    {
+      "name": "cameraWork",
+      "label": "Gerakan & Sudut Kamera",
+      "type": "text",
+      "placeholder": "e.g., 'Extreme close-up, tracking shot, drone footage flying over a landscape'",
+      "info": "Deskripsikan bagaimana kamera harus bergerak atau membingkai adegan.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "visualStyle",
+      "label": "Gaya Visual",
+      "type": "text",
+      "placeholder": "e.g., 'cinematic, 35mm film, photorealistic, anime, black and white'",
+      "info": "Gaya keseluruhan dari video.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "durationHint",
+      "label": "Petunjuk Durasi (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'a short clip', 'a looping video'",
+      "info": "Berikan petunjuk tentang panjang atau sifat video.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Video (Text-to-Video)"
+  ],
+  "nama_kerangka": "Sora (OpenAI)"
+}

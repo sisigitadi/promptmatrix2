@@ -1,0 +1,49 @@
+{
+  "description": "Struktur prompt dengan menentukan Goal, Role, Audience, Desired format, and Extra details.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Perancang Respons yang akan menghasilkan respons yang terstruktur berdasarkan kerangka GRADE.",
+  "components": [
+    {
+      "name": "goal",
+      "label": "Goal",
+      "type": "textarea",
+      "placeholder": "Apa tujuan utama dari prompt ini?"
+    },
+    {
+      "name": "role",
+      "label": "Role",
+      "type": "textarea",
+      "placeholder": "Peran apa yang harus diambil oleh AI?"
+    },
+    {
+      "name": "audience",
+      "label": "Audience",
+      "type": "textarea",
+      "placeholder": "Siapa target audiens untuk outputnya?"
+    },
+    {
+      "name": "desiredFormat",
+      "label": "Desired Format",
+      "type": "textarea",
+      "placeholder": "Bagaimana format output yang diinginkan?"
+    },
+    {
+      "name": "extraDetails",
+      "label": "Extra Details",
+      "type": "textarea",
+      "placeholder": "Detail atau batasan tambahan lainnya."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Pemikiran Terstruktur & Analisis"
+  ],
+  "nama_kerangka": "GRADE"
+}

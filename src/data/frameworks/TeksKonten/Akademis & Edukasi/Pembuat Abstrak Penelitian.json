@@ -1,0 +1,73 @@
+{
+  "description": "Bantu peneliti merangkum makalah atau penelitian yang kompleks menjadi abstrak yang padat dan informatif.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penulis Abstrak Penelitian yang akan merangkum makalah atau penelitian.",
+  "components": [
+    {
+      "name": "researchTitle",
+      "label": "Judul Penelitian",
+      "type": "text",
+      "placeholder": "e.g., 'Pengaruh Tidur Cukup Terhadap Produktivitas Kerja'",
+      "info": "Judul lengkap dari makalah atau penelitian Anda.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "background",
+      "label": "Latar Belakang/Konteks",
+      "type": "textarea",
+      "placeholder": "Jelaskan secara singkat masalah atau celah pengetahuan yang mendorong penelitian ini.",
+      "info": "Satu atau dua kalimat untuk memberikan konteks.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "methods",
+      "label": "Metodologi",
+      "type": "textarea",
+      "placeholder": "e.g., 'Survei kuantitatif terhadap 200 karyawan di industri teknologi.'",
+      "info": "Jelaskan secara singkat bagaimana Anda melakukan penelitian.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "keyFindings",
+      "label": "Temuan Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'Ditemukan korelasi positif yang signifikan. Karyawan yang tidur 7-8 jam 30% lebih produktif.'",
+      "info": "Sebutkan hasil terpenting dari penelitian Anda.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "conclusion",
+      "label": "Kesimpulan & Implikasi",
+      "type": "textarea",
+      "placeholder": "e.g., 'Kebijakan kerja yang mendukung keseimbangan hidup-kerja dapat meningkatkan kinerja perusahaan.'",
+      "info": "Apa arti dari temuan Anda? Apa implikasinya?",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Buat abstrak tidak lebih dari 250 kata. Gunakan bahasa yang sesuai untuk jurnal akademis. Sertakan 3-5 kata kunci di akhir.",
+      "info": "Batasan atau persyaratan format yang spesifik.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Akademis & Edukasi"
+  ],
+  "nama_kerangka": "Pembuat Abstrak Penelitian"
+}

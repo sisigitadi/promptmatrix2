@@ -1,0 +1,83 @@
+{
+  "id_kerangka": "GD-AMCS-001",
+  "nama_kerangka": "Analis Multimodal Cerdas",
+  "version": "1.0.0",
+  "kategori": [
+    "Gambar & Desain",
+    "Analisis Multimodal"
+  ],
+  "description": "Kerangka kerja terpadu untuk menganalisis dan memproses berbagai jenis input media, seperti gambar dan audio, untuk menghasilkan deskripsi, transkripsi, atau analisis.",
+  "perspektif_user": "Saya memiliki file gambar atau audio dan saya ingin AI memahaminya. Saya mungkin ingin mendapatkan deskripsi detail dari sebuah gambar, mentranskripsikan audio, atau bahkan menggabungkan informasi dari keduanya untuk mendapatkan wawasan baru.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Analis Media Digital yang akan memahami dan menafsirkan konten visual dan audio.",
+  "components": [
+    {
+      "name": "TUGAS_MULTIMODAL",
+      "label": "Pilih Tugas Analisis",
+      "type": "select",
+      "description": "Pilih jenis analisis yang ingin Anda lakukan pada media Anda.",
+      "default": "Deskripsikan Gambar",
+      "optional": false,
+      "options": [
+        "Deskripsikan Gambar",
+        "Transkripsikan Audio",
+        "Analisis Gambar dengan Konteks Teks"
+      ],
+      "info": "Pilihan Anda akan menampilkan kolom input yang sesuai untuk tugas tersebut."
+    }
+  ],
+  "dynamicSubcomponents": {
+    "trigger": "TUGAS_MULTIMODAL",
+    "options": {
+      "Deskripsikan Gambar": [
+        {
+          "name": "GAMBAR_INPUT",
+          "label": "Unggah Gambar",
+          "type": "image",
+          "description": "Unggah gambar yang ingin Anda analisis.",
+          "optional": false,
+          "info": "AI akan menganalisis konten visual dari gambar ini."
+        }
+      ],
+      "Transkripsikan Audio": [
+        {
+          "name": "AUDIO_INPUT",
+          "label": "Unggah File Audio",
+          "type": "file",
+          "description": "Unggah file audio (misalnya, .mp3, .wav) yang ingin Anda transkripsikan.",
+          "optional": false,
+          "info": "AI akan mencoba mentranskripsikan ucapan dari file audio ini."
+        }
+      ],
+      "Analisis Gambar dengan Konteks Teks": [
+        {
+          "name": "GAMBAR_INPUT_ANALISIS",
+          "label": "Unggah Gambar untuk Dianalisis",
+          "type": "image",
+          "description": "Unggah gambar yang ingin Anda analisis.",
+          "optional": false,
+          "info": "Gambar yang akan menjadi subjek utama analisis."
+        },
+        {
+          "name": "TEKS_KONTEKS",
+          "label": "Teks Kontekstual",
+          "type": "textarea",
+          "description": "Berikan teks atau pertanyaan yang berhubungan dengan gambar.",
+          "optional": false,
+          "placeholder": "Contoh: Apa hubungan antara objek di latar depan dengan tulisan di latar belakang gambar ini?",
+          "info": "Teks ini akan memberikan konteks kepada AI untuk menganalisis gambar lebih dalam."
+        }
+      ]
+    }
+  },
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Analis Media Digital dengan kemampuan pemahaman multimodal (gambar dan audio) yang canggih.",
+    "KONTEKS": "Pengguna ingin melakukan tugas analisis media: '{TUGAS_MULTIMODAL}'.",
+    "TUGAS": "Berdasarkan tugas yang dipilih, lakukan analisis berikut:\n\n- **Jika tugasnya 'Deskripsikan Gambar'**: Analisis gambar yang diunggah (`{GAMBAR_INPUT}`). Berikan deskripsi yang sangat detail mencakup: objek utama, latar belakang, komposisi, warna, gaya, dan kemungkinan makna atau konteks dari gambar tersebut.\n\n- **Jika tugasnya 'Transkripsikan Audio'**: Transkripsikan konten audio dari file yang diunggah (`{AUDIO_INPUT}`). Pastikan transkripsi akurat, termasuk identifikasi pembicara jika memungkinkan. Setelah transkripsi, berikan ringkasan 3 poin utama dari isi pembicaraan.\n\n- **Jika tugasnya 'Analisis Gambar dengan Konteks Teks'**: Analisis gambar yang diunggah (`{GAMBAR_INPUT_ANALISIS}`) dalam konteks teks yang diberikan: '{TEKS_KONTEKS}'. Jelaskan bagaimana gambar dan teks saling berhubungan. Apa wawasan gabungan yang bisa didapat dari keduanya?",
+    "FORMAT OUTPUT": "Sajikan output dalam format Markdown yang terstruktur. Gunakan heading dan bullet points untuk kejelasan."
+  },
+  "toolType": "text",
+  "output": "natural_language_prompt",
+  "contoh_kalimat": "Deskripsikan gambar pemandangan kota ini untuk saya.",
+  "konteks_tambahan_instruksi_khusus": "Saat menganalisis, berikan interpretasi yang cerdas dan jangan hanya menyebutkan apa yang terlihat atau terdengar secara harfiah. Cari makna yang lebih dalam jika memungkinkan.",
+  "crossValidationRules": []
+}

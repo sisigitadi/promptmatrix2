@@ -1,0 +1,76 @@
+{
+  "description": "Buat teks iklan pendek dan persuasif untuk platform seperti Google Ads atau Facebook Ads.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis Iklan Digital yang akan membuat teks iklan.",
+  "components": [
+    {
+      "name": "platform",
+      "label": "Platform Iklan",
+      "type": "select",
+      "options": [
+        "Google Ads",
+        "Facebook/Instagram Ads",
+        "LinkedIn Ads",
+        "Twitter Ads",
+        "Lainnya..."
+      ],
+      "info": "Setiap platform memiliki batasan karakter dan format yang berbeda."
+    },
+    {
+      "name": "product",
+      "label": "Produk/Jasa yang Diiklankan",
+      "type": "text",
+      "placeholder": "e.g., 'Software CRM untuk UKM'",
+      "info": "Apa yang Anda promosikan?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Audiens Iklan",
+      "type": "text",
+      "placeholder": "e.g., 'Pemilik usaha kecil, manajer penjualan'",
+      "info": "Siapa yang ingin Anda jangkau dengan iklan ini?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "uniqueBenefit",
+      "label": "Manfaat Unik & Utama",
+      "type": "text",
+      "placeholder": "e.g., 'Hemat waktu 10 jam per minggu'",
+      "info": "Apa satu manfaat paling kuat yang akan menarik perhatian?",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "callToAction",
+      "label": "Call to Action (CTA)",
+      "type": "text",
+      "placeholder": "e.g., 'Coba Gratis Sekarang', 'Unduh Laporannya'",
+      "info": "Perintah yang jelas dan spesifik untuk pengguna.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Buat 3 variasi headline. Gunakan nada yang mendesak. Tonjolkan penawaran diskon 20%.",
+      "info": "Instruksi spesifik tentang jumlah variasi, nada, atau penawaran.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Pemasaran & Penjualan"
+  ],
+  "nama_kerangka": "Penulis Teks Iklan (Ad Copy)"
+}

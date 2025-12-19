@@ -1,0 +1,212 @@
+{
+  "id_kerangka": "KOL-PP-102",
+  "nama_kerangka": "Tutor Pemrograman & Konsep Lanjutan",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Pengembangan Perangkat Lunak"
+  ],
+  "description": "Pusat pembelajaran terintegrasi untuk pemula hingga ahli, mencakup pemilihan bahasa, dasar-dasar pemrograman, debugging, dan konsep lanjutan seperti AI, keamanan siber, dan blockchain.",
+  "perspektif_user": "Sebagai seseorang yang ingin belajar atau memperdalam ilmu pemrograman, saya memerlukan satu tempat untuk mendapatkan bimbingan, mulai dari memilih bahasa pertama, memahami dasar-dasarnya, hingga menjelajahi topik-topik canggih seperti AI dan keamanan siber.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Tutor Pemrograman yang akan mengajarkan konsep pemrograman dan teknologi.",
+  "components": [
+    {
+      "name": "TOPIK_PEMBELAJARAN",
+      "label": "Topik Pembelajaran",
+      "type": "select",
+      "options": [
+        "Pilih Bahasa Pemrograman Pertama",
+        "Dasar-Dasar Pemrograman",
+        "Visualisasi Algoritma & Struktur Data",
+        "Dasar-Dasar Keamanan Siber",
+        "Dasar-Dasar AI/Machine Learning",
+        "Dasar-Dasar Web3 & Blockchain",
+        "Panduan Debugging",
+        "Lainnya..."
+      ],
+      "description": "Pilih topik pembelajaran yang ingin Anda jelajahi.",
+      "default": "Dasar-Dasar Pemrograman",
+      "info": "Pilih topik utama yang ingin Anda pelajari. Pilihan Anda akan menampilkan opsi-opsi yang relevan di bawah."
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "TOPIK_PEMBELAJARAN",
+      "options": {
+        "Pilih Bahasa Pemrograman Pertama": [
+          {
+            "name": "userInterests",
+            "label": "Minat Anda",
+            "type": "text",
+            "placeholder": "e.g., 'Pengembangan web, game, analisis data'",
+            "info": "Sebutkan area minat Anda dalam pemrograman."
+          },
+          {
+            "name": "careerGoals",
+            "label": "Tujuan Karir",
+            "type": "text",
+            "placeholder": "e.g., 'Menjadi full-stack developer, ilmuwan data'",
+            "info": "Sebutkan tujuan karir jangka panjang Anda."
+          }
+        ],
+        "Dasar-Dasar Pemrograman": [
+          {
+            "name": "programmingLanguage",
+            "label": "Bahasa Pemrograman",
+            "type": "select",
+            "options": [
+              "Python",
+              "JavaScript",
+              "Java",
+              "C++",
+              "Lainnya..."
+            ],
+            "default": "Python",
+            "info": "Pilih bahasa pemrograman yang ingin Anda pelajari."
+          },
+          {
+            "name": "focusConcepts",
+            "label": "Konsep yang Ingin Dipelajari",
+            "type": "multiselect",
+            "options": [
+              "Variabel",
+              "Tipe Data",
+              "Kondisi (if/else)",
+              "Loop (for/while)",
+              "Fungsi"
+            ],
+            "default": [
+              "Variabel",
+              "Kondisi (if/else)"
+            ],
+            "info": "Pilih konsep dasar yang ingin Anda fokuskan."
+          }
+        ],
+        "Visualisasi Algoritma & Struktur Data": [
+          {
+            "name": "specificConcept",
+            "label": "Konsep Spesifik",
+            "type": "text",
+            "placeholder": "e.g., 'Bubble Sort', 'Linked List', 'Binary Tree'",
+            "info": "Sebutkan algoritma atau struktur data yang ingin divisualisasikan."
+          },
+          {
+            "name": "inputData",
+            "label": "Data Input (Opsional)",
+            "type": "text",
+            "placeholder": "e.g., '5, 2, 8, 1, 9'",
+            "optional": true,
+            "info": "Masukkan data yang akan digunakan untuk visualisasi (pisahkan dengan koma)."
+          }
+        ],
+        "Dasar-Dasar Keamanan Siber": [
+          {
+            "name": "securityTopic",
+            "label": "Topik Keamanan",
+            "type": "select",
+            "options": [
+              "Pencegahan Injeksi SQL",
+              "Cross-Site Scripting (XSS)",
+              "Manajemen Kata Sandi yang Aman",
+              "Lainnya..."
+            ],
+            "default": "Pencegahan Injeksi SQL",
+            "info": "Pilih topik keamanan siber yang ingin Anda pelajari."
+          },
+          {
+            "name": "codeSnippet",
+            "label": "Contoh Kode Rentan (Opsional)",
+            "type": "code",
+            "placeholder": "Tempelkan contoh kode yang mungkin rentan...",
+            "optional": true,
+            "info": "Jika Anda memiliki contoh kode, tempelkan di sini untuk dianalisis."
+          }
+        ],
+        "Dasar-Dasar AI/Machine Learning": [
+          {
+            "name": "mlConcept",
+            "label": "Konsep AI/ML",
+            "type": "select",
+            "options": [
+              "Regresi Linear",
+              "Klasifikasi",
+              "Clustering",
+              "Jaringan Saraf Tiruan",
+              "Lainnya..."
+            ],
+            "default": "Regresi Linear",
+            "info": "Pilih konsep AI/ML yang ingin Anda pelajari."
+          },
+          {
+            "name": "datasetDescription",
+            "label": "Deskripsi Dataset (Opsional)",
+            "type": "textarea",
+            "placeholder": "e.g., 'Dataset harga rumah dengan fitur luas tanah dan jumlah kamar.'",
+            "optional": true,
+            "info": "Jelaskan dataset yang ingin Anda gunakan untuk membangun model."
+          }
+        ],
+        "Dasar-Dasar Web3 & Blockchain": [
+          {
+            "name": "blockchainConcept",
+            "label": "Konsep Web3/Blockchain",
+            "type": "select",
+            "options": [
+              "Apa itu Blockchain?",
+              "Smart Contract",
+              "Decentralized Applications (dApps)",
+              "NFT",
+              "Lainnya..."
+            ],
+            "default": "Apa itu Blockchain?",
+            "info": "Pilih konsep Web3/Blockchain yang ingin Anda pelajari."
+          }
+        ],
+        "Panduan Debugging": [
+          {
+            "name": "problemDescription",
+            "label": "Jelaskan Masalah Debugging",
+            "type": "textarea",
+            "placeholder": "e.g., 'Aplikasi saya crash saat mencoba menyimpan data, dengan pesan error 'NullPointerException'.",
+            "info": "Jelaskan masalah atau error yang Anda hadapi."
+          },
+          {
+            "name": "programmingLanguage",
+            "label": "Bahasa Pemrograman",
+            "type": "select",
+            "options": [
+              "Python",
+              "JavaScript",
+              "Java",
+              "C++",
+              "Lainnya..."
+            ],
+            "default": "Python",
+            "info": "Pilih bahasa pemrograman yang relevan."
+          }
+        ],
+        "Lainnya...": [
+          {
+            "name": "customLearningTopic",
+            "label": "Sebutkan Topik Pembelajaran Lainnya",
+            "type": "textarea",
+            "description": "Jelaskan secara rinci topik pembelajaran spesifik yang ingin Anda jelajahi.",
+            "placeholder": "e.g., 'Pengantar Komputasi Kuantum', 'Praktik Terbaik untuk Arsitektur Mikroservis'",
+            "info": "Jelaskan topik kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Tutor Pemrograman serbaguna dan ahli dalam konsep-konsep teknologi canggih.",
+    "KONTEKS": "Pengguna telah memilih topik pembelajaran: '{TOPIK_PEMBELAJARAN}'. Anda akan bertindak sebagai tutor atau ahli di bidang tersebut.",
+    "TUGAS": "Berdasarkan topik '{TOPIK_PEMBELAJARAN}', berikan penjelasan, panduan, atau contoh kode yang relevan. Gunakan variabel input dari sub-komponen yang sesuai untuk menyusun respons Anda.",
+    "FORMAT OUTPUT": "Sajikan output dalam format yang paling sesuai dengan topik pembelajaran (misalnya, panduan langkah demi langkah, penjelasan konsep dengan contoh, atau visualisasi teks). Gunakan Markdown untuk keterbacaan yang baik."
+  },
+  "toolType": "text",
+  "konteks_tambahan_instruksi_khusus": "Sesuaikan kedalaman penjelasan dengan topik yang dipilih. Untuk pemula, gunakan analogi dan bahasa yang sederhana. Untuk topik lanjutan, berikan detail teknis yang akurat.",
+  "contoh_kalimat": "Bantu saya memahami dasar-dasar pemrograman Python, khususnya tentang loop.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

@@ -1,0 +1,61 @@
+{
+  "description": "Rancang narasi atau cerita brand menggunakan struktur klasik Perjalanan Pahlawan (Monomyth).",
+  "toolType": "planning",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pencerita Brand yang akan merancang narasi atau cerita brand.",
+  "components": [
+    {
+      "name": "hero",
+      "label": "Sang Pahlawan (Pelanggan Anda)",
+      "type": "text",
+      "placeholder": "e.g., 'Seorang pemilik usaha kecil yang berjuang.'",
+      "info": "Siapa protagonis dari cerita ini?"
+    },
+    {
+      "name": "ordinaryWorld",
+      "label": "Dunia Biasa (The Ordinary World)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Dia terjebak dalam pekerjaan administratif yang memakan waktu.'",
+      "info": "Kehidupan normal sang pahlawan sebelum petualangan dimulai."
+    },
+    {
+      "name": "callToAdventure",
+      "label": "Panggilan untuk Bertualang (Call to Adventure)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Dia menyadari bahwa dia kehilangan peluang besar karena tidak efisien.'",
+      "info": "Masalah atau peluang yang mengganggu status quo."
+    },
+    {
+      "name": "mentorAndTalisman",
+      "label": "Mentor & Benda Ajaib (Produk Anda)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Dia menemukan software otomatisasi kami (mentor/benda ajaib) yang menjanjikan solusi.'",
+      "info": "Bagaimana produk Anda muncul untuk membantu sang pahlawan?"
+    },
+    {
+      "name": "trialsAndTriumphs",
+      "label": "Ujian & Kemenangan (Trials & Triumphs)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Dia belajar menggunakan software, mengatasi keraguan, dan mulai melihat hasil positif.'",
+      "info": "Tantangan yang dihadapi dan diatasi dengan bantuan produk Anda."
+    },
+    {
+      "name": "returnWithElixir",
+      "label": "Kembali dengan Ramuan (Return with the Elixir)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Bisnisnya sekarang berkembang pesat, dan dia memiliki kebebasan untuk menjadi strategis.'",
+      "info": "Transformasi akhir dan kesuksesan yang dicapai oleh pahlawan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Persona, Gaya & Skenario"
+  ],
+  "nama_kerangka": "Hero's Journey"
+}

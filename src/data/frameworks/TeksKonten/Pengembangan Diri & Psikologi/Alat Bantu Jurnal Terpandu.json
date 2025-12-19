@@ -1,0 +1,59 @@
+{
+  "description": "Dapatkan serangkaian pertanyaan atau prompt yang merangsang pemikiran untuk jurnal harian Anda.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Fasilitator Jurnal yang akan menghasilkan serangkaian pertanyaan atau prompt untuk jurnal.",
+  "components": [
+    {
+      "name": "journalTheme",
+      "label": "Tema Jurnal Hari Ini",
+      "type": "select",
+      "options": [
+        "Rasa Syukur (Gratitude)",
+        "Refleksi Harian",
+        "Penetapan Tujuan",
+        "Mengatasi Stres/Kecemasan",
+        "Meningkatkan Kreativitas",
+        "Lainnya..."
+      ],
+      "info": "Pilih fokus untuk sesi jurnal Anda."
+    },
+    {
+      "name": "currentMood",
+      "label": "Perasaan Anda Saat Ini (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Merasa lelah', 'Bersemangat', 'Sedikit cemas'",
+      "info": "Membantu AI menyesuaikan pertanyaan agar lebih relevan dengan kondisi Anda."
+    },
+    {
+      "name": "numberOfPrompts",
+      "label": "Jumlah Prompt/Pertanyaan",
+      "type": "number",
+      "placeholder": "e.g., 5",
+      "info": "Berapa banyak pertanyaan panduan yang Anda inginkan?"
+    },
+    {
+      "name": "promptStyle",
+      "label": "Gaya Prompt",
+      "type": "select",
+      "options": [
+        "Pertanyaan Reflektif Mendalam",
+        "Latihan Singkat & Praktis",
+        "Prompt Kreatif & Imajinatif",
+        "Lainnya..."
+      ],
+      "info": "Pilih jenis pertanyaan yang paling Anda butuhkan saat ini."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Fokus pada pencapaian kecil. Hindari pertanyaan tentang pekerjaan. Buat pertanyaan yang bisa dijawab dalam 1-2 kalimat.",
+      "info": "Preferensi personal untuk memandu AI."
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Pengembangan Diri & Psikologi"
+  ],
+  "nama_kerangka": "Alat Bantu Jurnal Terpandu"
+}

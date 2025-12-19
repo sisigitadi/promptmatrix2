@@ -1,0 +1,33 @@
+{
+  "description": "Ubah data tidak terstruktur atau teks biasa menjadi format JSON yang bersih dan valid.",
+  "toolType": "code",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pemformat Data yang akan mengonversi data menjadi format JSON yang valid.",
+  "components": [
+    {
+      "name": "unstructuredData",
+      "label": "Data Tidak Terstruktur",
+      "type": "textarea",
+      "placeholder": "e.g., 'Nama: John Doe, Usia: 30, Pekerjaan: Developer. Kontak - Email: john@example.com, Telepon: 12345.'",
+      "info": "Tempelkan teks, daftar, atau data mentah yang ingin Anda konversi."
+    },
+    {
+      "name": "schemaHint",
+      "label": "Petunjuk Skema (Opsional)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Buat objek utama dengan kunci: nama, usia, pekerjaan. Kontak harus menjadi objek bersarang.'",
+      "info": "Berikan petunjuk tentang bagaimana struktur JSON yang Anda inginkan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Utilitas & Format Khusus"
+  ],
+  "nama_kerangka": "JSON Formatter"
+}

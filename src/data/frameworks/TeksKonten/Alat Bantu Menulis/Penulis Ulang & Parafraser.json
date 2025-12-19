@@ -1,0 +1,73 @@
+{
+  "description": "Ubah tulisan yang ada menjadi versi baru untuk menyederhanakan, mengubah gaya, atau menghindari plagiarisme.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Ahli Parafrase yang akan menulis ulang teks.",
+  "components": [
+    {
+      "name": "originalText",
+      "label": "Teks Asli",
+      "type": "textarea",
+      "placeholder": "Tempelkan teks yang ingin Anda tulis ulang di sini...",
+      "info": "Semakin lengkap teks asli, semakin baik hasil parafrasenya.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "rewriteGoal",
+      "label": "Tujuan Penulisan Ulang",
+      "type": "select",
+      "options": [
+        "Menyederhanakan Bahasa",
+        "Membuat Lebih Formal",
+        "Membuat Lebih Kasual",
+        "Memperpanjang Teks",
+        "Meringkas Teks",
+        "Lainnya..."
+      ],
+      "info": "Pilih hasil akhir yang Anda inginkan dari teks baru."
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Audiens Baru",
+      "type": "text",
+      "placeholder": "e.g., 'Anak-anak usia 10-12 tahun, eksekutif bisnis'",
+      "info": "Siapa yang akan membaca teks baru ini? This will affect word choice.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "keywordsToKeep",
+      "label": "Kata Kunci yang Harus Dipertahankan",
+      "type": "text",
+      "placeholder": "e.g., 'fotosintesis, klorofil'",
+      "info": "Istilah penting atau nama brand yang tidak boleh diubah atau dihilangkan.",
+      "optional": true
+    },
+    {
+      "name": "styleToEmulate",
+      "label": "Tiru Gaya Penulisan (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Seperti artikel di Harvard Business Review'",
+      "info": "Sebutkan contoh penulis atau publikasi yang gayanya ingin ditiru.",
+      "optional": true
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Hindari kalimat pasif. Pertahankan struktur paragraf asli. Ganti jargon teknis dengan analogi yang mudah dipahami.",
+      "info": "Instruksi tentang perubahan spesifik yang diinginkan pada struktur, gaya, atau konten.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Alat Bantu Menulis"
+  ],
+  "nama_kerangka": "Penulis Ulang & Parafraser"
+}

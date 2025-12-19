@@ -1,0 +1,37 @@
+{
+  "description": "Eksplorasi ide musik dengan cepat menggunakan model MusicLM from Google.",
+  "toolType": "music-generation",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Eksplorator Musik Cepat yang akan menghasilkan ide musik.",
+  "components": [
+    {
+      "name": "prompt",
+      "label": "Prompt Deskriptif",
+      "type": "textarea",
+      "placeholder": "e.g., 'lo-fi chill beat for studying', 'reggae song with a catchy bassline', 'epic rock anthem with electric guitar solos'",
+      "info": "Deskripsikan musik yang ingin Anda buat dengan fokus pada mood, genre, dan instrumen."
+    },
+    {
+      "name": "duration",
+      "label": "Durasi (detik)",
+      "type": "select",
+      "options": [
+        "30",
+        "50",
+        "70"
+      ],
+      "info": "Pilih panjang loop musik yang akan dihasilkan."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Audio & Musik",
+    "Prompt AI Musik & Audio"
+  ],
+  "nama_kerangka": "MusicFX (Google)"
+}

@@ -18,13 +18,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-
-// Define the structure of a prompt block
-export interface PromptBlock {
-  id: string;
-  type: "text" | "image";
-  content: string | null;
-}
+import { PromptBlock } from "../types";
 
 interface VisualPromptBuilderProps {
   blocks: PromptBlock[];
@@ -171,6 +165,12 @@ const VisualPromptBuilder: React.FC<VisualPromptBuilderProps> = ({
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
+        accessibility={{
+          screenReaderInstructions: {
+            draggable:
+              "Untuk mengambil item, tekan spasi. Saat menyeret, gunakan tombol panah untuk memindahkan item. Tekan spasi lagi untuk meletakkan item di posisi baru, atau tekan escape untuk membatalkan.",
+          },
+        }}
       >
         <SortableContext items={blocks} strategy={verticalListSortingStrategy}>
           {blocks.map((block, index) => (

@@ -1,0 +1,88 @@
+{
+  "id_kerangka": "KOL-APT-002",
+  "nama_kerangka": "RAG-Enhanced Content Generator",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Advanced Prompting Techniques"
+  ],
+  "description": "Hasilkan konten yang akurat dan berbasis fakta dengan menyediakan sumber informasi eksternal (dokumen, URL) yang akan digunakan AI sebagai referensi.",
+  "perspektif_user": "Saya ingin membuat konten yang tidak hanya kreatif tetapi juga faktual. Saya perlu AI untuk merujuk pada dokumen atau sumber web yang saya sediakan untuk memastikan akurasi dan kedalaman informasi.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Peneliti dan Penulis Konten yang akan menghasilkan konten yang akurat dan terverifikasi berdasarkan sumber eksternal.",
+  "components": [
+    {
+      "name": "TOPIK_UTAMA_KONTEN",
+      "label": "Topik Utama Konten",
+      "type": "text",
+      "placeholder": "Contoh: 'Sejarah dan Dampak Revolusi Industri 4.0'",
+      "info": "Topik utama yang ingin Anda bahas dalam konten.",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "SUMBER_EKSTERNAL",
+      "label": "Sumber Informasi Eksternal (Dokumen/URL)",
+      "type": "textarea",
+      "placeholder": "Tempelkan teks dokumen, atau daftar URL (pisahkan dengan baris baru) yang relevan di sini. AI akan menggunakan ini sebagai referensi.",
+      "info": "Sediakan sumber yang relevan agar AI dapat menghasilkan konten yang akurat dan terverifikasi.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "FORMAT_OUTPUT_KONTEN",
+      "label": "Format Output Konten",
+      "type": "select",
+      "options": [
+        "Artikel Blog",
+        "Ringkasan Laporan",
+        "FAQ",
+        "Lainnya..."
+      ],
+      "default": "Artikel Blog",
+      "info": "Pilih format konten yang Anda inginkan."
+    },
+    {
+      "name": "NADA_BAHASA",
+      "label": "Nada Bahasa",
+      "type": "select",
+      "options": [
+        "Formal",
+        "Informatif",
+        "Persuasif",
+        "Akademis",
+        "Lainnya..."
+      ],
+      "default": "Informatif",
+      "info": "Pilih nada yang sesuai untuk konten Anda."
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "FORMAT_OUTPUT_KONTEN",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "FORMAT_OUTPUT_KONTEN_LAINNYA",
+            "label": "Sebutkan Format Output Lainnya",
+            "type": "text",
+            "placeholder": "Contoh: 'Naskah presentasi', 'Brosur'",
+            "info": "Sebutkan format kustom yang Anda inginkan."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Peneliti dan Penulis Konten yang sangat teliti dan akurat.",
+    "KONTEKS": "Pengguna ingin menghasilkan konten tentang '{TOPIK_UTAMA_KONTEN}'. Anda harus menggunakan sumber informasi eksternal yang disediakan untuk memastikan akurasi dan kedalaman konten. Sumber-sumber yang diberikan adalah: {SUMBER_EKSTERNAL}.",
+    "TUGAS": "Hasilkan konten dalam format '{FORMAT_OUTPUT_KONTEN}' (jika 'FORMAT_OUTPUT_KONTEN' adalah 'Lainnya...' gunakan '{FORMAT_OUTPUT_KONTEN_LAINNYA}') tentang '{TOPIK_UTAMA_KONTEN}'. Pastikan semua informasi yang disajikan didukung oleh 'SUMBER_EKSTERNAL' yang diberikan. Gunakan nada bahasa '{NADA_BAHASA}'. Jika ada informasi yang tidak dapat diverifikasi dari sumber yang diberikan, nyatakan dengan jelas atau hindari.",
+    "FORMAT OUTPUT": "Sajikan output dalam format Markdown yang terstruktur, dengan kutipan atau referensi yang jelas ke sumber eksternal jika memungkinkan. Untuk 'Artikel Blog', gunakan judul, sub-judul, dan paragraf yang mudah dibaca. Untuk 'Ringkasan Laporan', gunakan poin-poin utama. Untuk 'FAQ', gunakan format tanya-jawab."
+  },
+  "toolType": "text",
+  "konteks_tambahan_instruksi_khusus": "Prioritaskan akurasi dan verifikasi fakta dari sumber yang diberikan. Hindari spekulasi atau informasi yang tidak didukung. Jika sumber adalah URL, coba ekstrak informasi relevan dari sana. Jika sumber adalah teks, analisis teks tersebut secara mendalam.",
+  "contoh_kalimat": "Buatkan saya artikel blog tentang AI generatif menggunakan dokumen PDF ini sebagai referensi.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

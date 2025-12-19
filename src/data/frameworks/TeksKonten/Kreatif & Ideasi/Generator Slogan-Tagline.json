@@ -1,0 +1,78 @@
+{
+  "description": "Ciptakan slogan atau tagline yang singkat, menarik, dan berkesan untuk brand atau kampanye Anda.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pakar Slogan yang akan menciptakan slogan atau tagline.",
+  "components": [
+    {
+      "name": "brandName",
+      "label": "Nama Brand/Produk",
+      "type": "text",
+      "placeholder": "e.g., 'Kopi Kenangan'",
+      "info": "Nama yang akan diasosiasikan dengan slogan ini.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "coreBenefit",
+      "label": "Manfaat atau Perasaan Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'Menyediakan kopi berkualitas tinggi dengan cepat untuk menemani setiap momen.'",
+      "info": "Apa satu hal terpenting yang harus dirasakan audiens dari slogan ini?",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Audiens",
+      "type": "text",
+      "placeholder": "e.g., 'Pekerja muda, mahasiswa'",
+      "info": "Siapa yang ingin Anda sapa dengan slogan ini?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "sloganStyle",
+      "label": "Gaya Slogan",
+      "type": "select",
+      "options": [
+        "Cerdas & Canggih",
+        "Singkat & Berkesan",
+        "Deskriptif & Jelas",
+        "Mewah & Premium",
+        "Humoris & Unik",
+        "Lainnya..."
+      ],
+      "info": "Pilih nuansa atau jenis slogan yang Anda inginkan."
+    },
+    {
+      "name": "keywordsToInclude",
+      "label": "Kata Kunci Wajib (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Cepat, Momen, Rasa'",
+      "info": "Kata spesifik yang ingin Anda coba masukkan ke dalam slogan.",
+      "optional": true,
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Slogan harus terdiri dari 3-5 kata. Harus berima. Hindari kata 'terbaik'. Harus terdengar modern dan energik.",
+      "info": "Berikan batasan panjang, gaya, atau kata-kata yang harus dihindari.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Kreatif & Ideasi"
+  ],
+  "nama_kerangka": "Generator Slogan/Tagline"
+}

@@ -1,0 +1,79 @@
+{
+  "description": "Buat resep masakan baru dan kreatif berdasarkan bahan-bahan yang Anda miliki.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Koki AI yang akan membuat resep masakan baru dan kreatif.",
+  "components": [
+    {
+      "name": "mainIngredients",
+      "label": "Bahan Utama yang Tersedia",
+      "type": "text",
+      "placeholder": "e.g., 'dada ayam, brokoli, bawang putih'",
+      "info": "Bahan protein dan sayuran utama yang Anda punya.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "pantryStaples",
+      "label": "Bahan Dapur Lainnya (pisahkan koma)",
+      "type": "text",
+      "placeholder": "e.g., 'nasi, telur, saus tiram, minyak wijen'",
+      "info": "Bahan umum yang biasanya ada di dapur Anda.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "cuisineType",
+      "label": "Jenis Masakan yang Diinginkan",
+      "type": "select",
+      "options": [
+        "Apa Saja",
+        "Asia (Umum)",
+        "Italia",
+        "Meksiko",
+        "Indonesia",
+        "Sehat & Cepat",
+        "Lainnya..."
+      ],
+      "info": "Pilih profil rasa yang Anda inginkan."
+    },
+    {
+      "name": "dietaryRestrictions",
+      "label": "Pantangan/Preferensi Diet (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Rendah karbohidrat, tanpa susu, vegetarian'",
+      "info": "Sebutkan batasan diet yang perlu diikuti.",
+      "optional": true
+    },
+    {
+      "name": "difficultyLevel",
+      "label": "Tingkat Kesulitan",
+      "type": "select",
+      "options": [
+        "Sangat Mudah (di bawah 20 menit)",
+        "Mudah (sekitar 30 menit)",
+        "Menengah",
+        "Lainnya..."
+      ],
+      "info": "Berapa banyak waktu dan usaha yang ingin Anda curahkan?"
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Buat resep untuk satu porsi saja. Saya tidak punya oven. Resep harus ramah untuk anak-anak.",
+      "info": "Batasan alat masak atau preferensi lain yang penting.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Kehidupan & Produktivitas"
+  ],
+  "nama_kerangka": "Generator Resep Masakan"
+}

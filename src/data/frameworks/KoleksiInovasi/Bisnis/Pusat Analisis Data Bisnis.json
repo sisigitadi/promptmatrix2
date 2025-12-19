@@ -1,0 +1,102 @@
+{
+  "id_kerangka": "BIS-DAT-001",
+  "nama_kerangka": "Pusat Analisis Data Bisnis",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
+  "description": "Analis data virtual untuk mengekstrak wawasan bisnis berharga dari data mentah, dari eksplorasi hingga visualisasi.",
+  "perspektif_user": "Saya punya data penjualan tapi tidak tahu harus mulai dari mana untuk menganalisisnya. Saya butuh bantuan untuk memahami data, menemukan tren, dan mendapatkan saran visualisasi.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Analis Data yang akan menganalisis data bisnis.",
+  "components": [
+    {
+      "name": "TUGAS_ANALISIS_DATA",
+      "label": "Tugas Analisis Data",
+      "type": "select",
+      "options": [
+        "Eksplorasi & Pembersihan Data",
+        "Analisis Statistik Deskriptif",
+        "Identifikasi Tren dan Pola",
+        "Rekomendasi Visualisasi Data"
+      ],
+      "default": "Identifikasi Tren dan Pola",
+      "info": "Pilih jenis analisis yang ingin Anda lakukan."
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "TUGAS_ANALISIS_DATA",
+      "options": {
+        "Eksplorasi & Pembersihan Data": [
+          {
+            "name": "DATA_SAMPEL_EKSPLORASI",
+            "label": "Tempelkan Sampel Data Anda",
+            "type": "textarea",
+            "placeholder": "Contoh: salin beberapa baris dari file CSV atau Excel Anda di sini.",
+            "info": "Berikan sampel data untuk dianalisis kesehatannya."
+          }
+        ],
+        "Analisis Statistik Deskriptif": [
+          {
+            "name": "DATA_SAMPEL_STATISTIK",
+            "label": "Tempelkan Sampel Data Anda",
+            "type": "textarea",
+            "placeholder": "Contoh: salin data numerik Anda di sini.",
+            "info": "Data untuk dihitung statistik dasarnya."
+          },
+          {
+            "name": "KOLOM_STATISTIK",
+            "label": "Nama Kolom yang Dianalisis",
+            "type": "text",
+            "placeholder": "Contoh: Kolom 'Pendapatan' dan 'Usia Pelanggan'",
+            "info": "Sebutkan kolom mana yang ingin Anda hitung statistiknya."
+          }
+        ],
+        "Identifikasi Tren dan Pola": [
+          {
+            "name": "DATA_SAMPEL_TREN",
+            "label": "Tempelkan Sampel Data Anda",
+            "type": "textarea",
+            "placeholder": "Contoh: salin data time-series atau data kategorikal Anda.",
+            "info": "Data yang akan dianalisis untuk menemukan pola."
+          },
+          {
+            "name": "PERTANYAAN_BISNIS_TREN",
+            "label": "Pertanyaan Bisnis yang Ingin Dijawab",
+            "type": "text",
+            "placeholder": "Contoh: Bagaimana tren penjualan produk A selama 6 bulan terakhir?",
+            "info": "Pertanyaan spesifik akan mengarahkan analisis."
+          }
+        ],
+        "Rekomendasi Visualisasi Data": [
+          {
+            "name": "DATA_VISUALISASI",
+            "label": "Jelaskan Data yang Ingin Divisualisasikan",
+            "type": "textarea",
+            "placeholder": "Contoh: Saya punya data penjualan bulanan per kategori produk.",
+            "info": "Deskripsi data Anda."
+          },
+          {
+            "name": "PESAN_VISUALISASI",
+            "label": "Pesan Utama yang Ingin Disampaikan",
+            "type": "text",
+            "placeholder": "Contoh: Saya ingin menunjukkan kategori produk mana yang paling cepat bertumbuh.",
+            "info": "Apa cerita yang ingin Anda sampaikan dengan data ini?"
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Analis Data Bisnis yang terampil.",
+    "KONTEKS": "Pengguna ingin menganalisis data mereka dan telah memilih tugas: '{TUGAS_ANALISIS_DATA}'.",
+    "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Eksplorasi & Pembersihan Data'**: Analisis sampel data '{DATA_SAMPEL_EKSPLORASI}'. Berikan ringkasan profil data, identifikasi masalah (data hilang, duplikat), dan sarankan langkah pembersihan.\n- **Jika 'Analisis Statistik Deskriptif'**: Hitung statistik dasar (rata-rata, median, min, max) dari kolom '{KOLOM_STATISTIK}' pada data '{DATA_SAMPEL_STATISTIK}' dan berikan interpretasi bisnisnya.\n- **Jika 'Identifikasi Tren dan Pola'**: Jawab pertanyaan bisnis '{PERTANYAAN_BISNIS_TREN}' dengan menganalisis data '{DATA_SAMPEL_TREN}'. Soroti tren, pola, atau korelasi yang signifikan.\n- **Jika 'Rekomendasi Visualisasi Data'**: Berdasarkan deskripsi data '{DATA_VISUALISASI}' dan pesan '{PESAN_VISUALISASI}', rekomendasikan 2-3 jenis grafik yang paling efektif dan jelaskan alasannya.",
+    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan analisis dalam format laporan yang jelas dengan poin-poin dan penjelasan yang mudah dimengerti."
+  },
+  "toolType": "text",
+  "konteks_tambahan_instruksi_khusus": "Fokus pada penyajian wawasan dalam bahasa bisnis yang sederhana, bukan jargon teknis data science.",
+  "contoh_kalimat": "Bantu saya menemukan tren dari data penjualan bulanan saya.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

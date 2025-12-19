@@ -1,0 +1,63 @@
+{
+  "description": "Demonstrasi input interaktif: color picker, date picker, dan slider.",
+  "toolType": "image-generation",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Demonstrator Input yang akan menampilkan bagaimana berbagai jenis input interaktif dapat digunakan.",
+  "components": [
+    {
+      "name": "mainSubject",
+      "label": "Subjek Utama",
+      "type": "text",
+      "placeholder": "e.g., 'Pemandangan gunung'",
+      "info": "Deskripsi subjek gambar.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "primaryColor",
+      "label": "Warna Utama",
+      "type": "color",
+      "info": "Pilih warna dominan untuk gambar."
+    },
+    {
+      "name": "creationDate",
+      "label": "Tanggal Kreasi",
+      "type": "date",
+      "info": "Tanggal gambar dibuat."
+    },
+    {
+      "name": "detailLevel",
+      "label": "Tingkat Detail",
+      "type": "slider",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "info": "Sesuaikan tingkat detail gambar (0-100)."
+    },
+    {
+      "name": "contrast",
+      "label": "Kontras",
+      "type": "slider",
+      "min": -50,
+      "max": 50,
+      "step": 5,
+      "info": "Sesuaikan kontras gambar (-50 hingga 50)."
+    },
+    {
+      "name": "additionalNotes",
+      "label": "Catatan Tambahan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Gaya realistis, pencahayaan dramatis.'",
+      "info": "Catatan atau instruksi tambahan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
+  "nama_kerangka": "Custom Image Generator"
+}

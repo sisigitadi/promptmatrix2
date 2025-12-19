@@ -1,0 +1,69 @@
+{
+  "description": "Buat lirik untuk lagu dengan struktur dan nuansa tertentu.",
+  "toolType": "music-composition",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penulis Lirik Profesional yang akan menulis lirik lagu.",
+  "components": [
+    {
+      "name": "genre",
+      "label": "Genre Musik",
+      "type": "select",
+      "options": [
+        "Pop",
+        "Rock",
+        "R&B",
+        "Folk",
+        "Hip-Hop",
+        "Electronic",
+        "Lainnya..."
+      ],
+      "info": "Genre akan mempengaruhi gaya bahasa dan struktur lirik."
+    },
+    {
+      "name": "theme",
+      "label": "Tema Lagu",
+      "type": "text",
+      "placeholder": "e.g., 'cinta pertama, patah hati, perjalanan hidup, protes sosial'",
+      "info": "Gagasan atau cerita utama di balik lagu."
+    },
+    {
+      "name": "mood",
+      "label": "Suasana Hati Lagu",
+      "type": "select",
+      "options": [
+        "Senang & Ceria",
+        "Sedih & Melankolis",
+        "Energik & Memotivasi",
+        "Marah & Frustrasi",
+        "Romantis & Intim",
+        "Lainnya..."
+      ],
+      "info": "Emosi utama yang ingin disampaikan melalui lirik."
+    },
+    {
+      "name": "structure",
+      "label": "Struktur Lagu (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Verse-Chorus-Verse-Chorus-Bridge-Chorus'",
+      "info": "Tentukan urutan bagian-bagian lagu jika Anda punya preferensi."
+    },
+    {
+      "name": "keyElements",
+      "label": "Elemen/Kata Kunci Wajib",
+      "type": "textarea",
+      "placeholder": "e.g., 'sebutkan kata 'bintang', 'malam', 'harapan''",
+      "info": "Gambar, kata, atau frasa spesifik yang harus ada dalam lirik."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan banyak metafora alam (laut, gunung, hutan). Hindari rima yang terlalu klise. Cerita harus berkembang dari sedih menjadi penuh harapan di bagian akhir.",
+      "info": "Detail artistik atau batasan kreatif untuk AI. Misalnya, penggunaan metafora atau majas tertentu."
+    }
+  ],
+  "kategori": [
+    "Audio & Musik",
+    "Alat Bantu Komposisi"
+  ],
+  "nama_kerangka": "Penulisan Lirik Lagu"
+}

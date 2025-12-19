@@ -1,0 +1,51 @@
+{
+  "description": "Buat data palsu (dummy data) yang terstruktur untuk keperluan testing, prototyping, atau mengisi desain mockup.",
+  "toolType": "code",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Generator Data yang akan menghasilkan data palsu.",
+  "components": [
+    {
+      "name": "schemaName",
+      "label": "Nama Skema Data",
+      "type": "text",
+      "placeholder": "e.g., 'Daftar Pengguna'",
+      "info": "Nama objek data yang akan dibuat."
+    },
+    {
+      "name": "schemaFields",
+      "label": "Spesifikasi Field (nama:tipe)",
+      "type": "textarea",
+      "placeholder": "e.g., 'nama:nama_lengkap\nemail:email\nusia:angka(18-65)\nstatus:pilihan(aktif|tidak aktif)'",
+      "info": "Definisikan setiap field dan tipenya (nama_lengkap, email, angka, teks, pilihan, dll.). Gunakan format 'nama:tipe(opsi)'."
+    },
+    {
+      "name": "recordCount",
+      "label": "Jumlah Record",
+      "type": "number",
+      "placeholder": "e.g., 10",
+      "info": "Berapa banyak baris data yang ingin Anda hasilkan?"
+    },
+    {
+      "name": "outputFormat",
+      "label": "Format Output",
+      "type": "select",
+      "options": [
+        "JSON Array",
+        "CSV",
+        "Lainnya..."
+      ],
+      "info": "Pilih format output yang diinginkan (misalnya, JSON Array, CSV)."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Pastikan email unik untuk setiap record. Buat data terlihat realistis. Usia harus berdistribusi normal.",
+      "info": "Instruksi spesifik tentang batasan data, relasi antar field, atau tingkat kerandoman."
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Utilitas & Development"
+  ],
+  "nama_kerangka": "Generator Data Dummy"
+}

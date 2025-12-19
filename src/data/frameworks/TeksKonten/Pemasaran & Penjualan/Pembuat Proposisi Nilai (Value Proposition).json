@@ -1,0 +1,73 @@
+{
+  "description": "Rumuskan pernyataan yang jelas dan ringkas tentang mengapa pelanggan harus memilih produk Anda.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Strategis Nilai Produk yang akan merumuskan proposisi nilai.",
+  "components": [
+    {
+      "name": "productName",
+      "label": "Nama Produk/Layanan",
+      "type": "text",
+      "placeholder": "e.g., 'Aplikasi FinTrack'",
+      "info": "Fokus dari proposisi nilai ini.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "targetCustomer",
+      "label": "Segmen Pelanggan Target",
+      "type": "text",
+      "placeholder": "e.g., 'Freelancer, pemilik usaha kecil'",
+      "info": "Untuk siapa produk ini diciptakan?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "customerProblem",
+      "label": "Masalah yang Diselesaikan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Kesulitan melacak pengeluaran bisnis dan pribadi secara terpisah, membuang waktu saat musim pajak.'",
+      "info": "Jelaskan 'penderitaan' yang dialami pelanggan.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "mainBenefit",
+      "label": "Manfaat Utama yang Ditawarkan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Memberikan kejelasan finansial dan menghemat waktu berjam-jam dengan pelaporan otomatis.'",
+      "info": "Bagaimana produk Anda membuat hidup mereka lebih baik?",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "differentiator",
+      "label": "Pembeda dari Kompetitor",
+      "type": "text",
+      "placeholder": "e.g., 'Satu-satunya aplikasi dengan integrasi AI untuk prediksi arus kas.'",
+      "info": "Apa yang membuat Anda unik dan lebih baik dari yang lain?",
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Buat dalam format: 'Untuk [pelanggan], yang [masalah], produk kami [solusi] tidak seperti [kompetitor].' Fokus pada kesederhanaan.",
+      "info": "Instruksi tentang format atau kata-kata kunci yang ingin digunakan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Pemasaran & Penjualan"
+  ],
+  "nama_kerangka": "Pembuat Proposisi Nilai (Value Proposition)"
+}

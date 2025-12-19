@@ -1,0 +1,54 @@
+{
+  "description": "Eksplorasi ide atau jelaskan konsep kompleks melalui dialog antara dua atau lebih karakter fiksi.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Penulis Dialog yang akan menghasilkan dialog fiksi antara karakter.",
+  "components": [
+    {
+      "name": "topic",
+      "label": "Topik Dialog",
+      "type": "text",
+      "placeholder": "e.g., 'Konsep black hole', 'Perdebatan antara etika dan keuntungan'",
+      "info": "Topik utama yang akan didiskusikan dalam dialog."
+    },
+    {
+      "name": "character1",
+      "label": "Karakter 1",
+      "type": "textarea",
+      "placeholder": "e.g., 'Skeptis: Seorang jurnalis yang selalu bertanya dan mencari bukti.'",
+      "info": "Deskripsikan nama, peran, dan sudut pandang karakter pertama."
+    },
+    {
+      "name": "character2",
+      "label": "Karakter 2",
+      "type": "textarea",
+      "placeholder": "e.g., 'Optimis: Seorang ilmuwan yang antusias dan visioner.'",
+      "info": "Deskripsikan nama, peran, dan sudut pandang karakter kedua."
+    },
+    {
+      "name": "setting",
+      "label": "Latar (Setting)",
+      "type": "text",
+      "placeholder": "e.g., 'Di sebuah observatorium pada malam hari.'",
+      "info": "Di mana dan kapan dialog ini terjadi?"
+    },
+    {
+      "name": "keyPoints",
+      "label": "Poin Kunci yang Harus Muncul",
+      "type": "textarea",
+      "placeholder": "e.g., 'Singularitas, gravitasi, cakrawala peristiwa (event horizon)..'",
+      "info": "Konsep atau argumen penting yang harus dibahas dalam dialog."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Persona, Gaya & Skenario"
+  ],
+  "nama_kerangka": "Fictional Dialogue"
+}

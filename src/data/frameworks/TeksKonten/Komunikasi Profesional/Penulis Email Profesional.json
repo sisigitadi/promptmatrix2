@@ -1,0 +1,80 @@
+{
+  "description": "Buat draf email yang jelas dan efektif untuk berbagai skenario bisnis sehari-hari.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Asisten Komunikasi Profesional yang akan menyusun draf email.",
+  "components": [
+    {
+      "name": "scenario",
+      "label": "Skenario Email",
+      "type": "select",
+      "options": [
+        "Permintaan Informasi",
+        "Follow-up Setelah Rapat",
+        "Perkenalan Diri/Jaringan",
+        "Mengajukan Pertemuan",
+        "Ucapan Terima Kasih",
+        "Lainnya..."
+      ],
+      "info": "Pilih tujuan utama dari email Anda."
+    },
+    {
+      "name": "recipient",
+      "label": "Penerima Email",
+      "type": "text",
+      "placeholder": "e.g., 'Manajer Pemasaran, Calon Klien, Kolega dari departemen lain'",
+      "info": "Jelaskan siapa penerima dan apa hubungan Anda dengan mereka.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "keyInfo",
+      "label": "Informasi Kunci yang Harus Disampaikan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Meminta data penjualan Q3. Mengusulkan jadwal rapat hari Selasa atau Rabu sore. Melampirkan presentasi yang dibahas.'",
+      "info": "Sebutkan semua poin penting yang harus ada dalam isi email.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "tone",
+      "label": "Tingkat Formalitas",
+      "type": "select",
+      "options": [
+        "Sangat Formal",
+        "Profesional Standar",
+        "Semi-Formal",
+        "Santai & Ramah",
+        "Lainnya..."
+      ],
+      "info": "Sesuaikan nada email dengan budaya perusahaan dan hubungan Anda dengan penerima."
+    },
+    {
+      "name": "desiredAction",
+      "label": "Tindakan yang Diharapkan dari Penerima",
+      "type": "text",
+      "placeholder": "e.g., 'Memberikan feedback pada dokumen terlampir'",
+      "info": "Apa yang Anda ingin penerima lakukan setelah membaca email ini?",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Buat email se-ringkas mungkin. Tawarkan untuk menjelaskan lebih lanjut melalui telepon. Sebutkan bahwa tenggat waktu untuk ini adalah hari Jumat.",
+      "info": "Instruksi lain yang relevan, seperti urgensi atau informasi latar belakang.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Penulis Email Profesional"
+}

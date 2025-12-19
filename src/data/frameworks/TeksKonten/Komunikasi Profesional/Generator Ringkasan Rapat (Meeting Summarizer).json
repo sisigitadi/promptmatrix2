@@ -1,0 +1,73 @@
+{
+  "description": "Ubah transkrip atau catatan rapat yang panjang menjadi ringkasan yang padat dan berisi daftar tindakan.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Notulis Rapat yang akan menghasilkan ringkasan.",
+  "components": [
+    {
+      "name": "meetingTranscript",
+      "label": "Transkrip atau Catatan Rapat",
+      "type": "textarea",
+      "placeholder": "Tempelkan seluruh transkrip atau catatan detail rapat di sini...",
+      "info": "Semakin detail inputnya, semakin akurat ringkasannya.",
+      "validation": {
+        "min_length": 50
+      }
+    },
+    {
+      "name": "attendees",
+      "label": "Daftar Peserta (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Andi, Budi (Marketing), Citra (Teknik)'",
+      "info": "Membantu AI mengidentifikasi siapa mengatakan apa dan siapa yang bertanggung jawab.",
+      "optional": true
+    },
+    {
+      "name": "summaryStyle",
+      "label": "Gaya Ringkasan",
+      "type": "select",
+      "options": [
+        "Poin-Poin Utama",
+        "Paragraf Naratif",
+        "Tabel Keputusan & Tindakan",
+        "Lainnya..."
+      ],
+      "info": "Pilih format output yang paling sesuai dengan kebutuhan Anda."
+    },
+    {
+      "name": "keyTopics",
+      "label": "Topik Utama yang Dibahas (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Anggaran Q4, Peluncuran Produk Baru, Umpan Balik Klien'",
+      "info": "Bantu AI untuk fokus pada bagian terpenting dari diskusi.",
+      "optional": true
+    },
+    {
+      "name": "actionItemsToExtract",
+      "label": "Fokus Ekstraksi 'Action Items'",
+      "type": "select",
+      "options": [
+        "Ya, ekstrak dengan detail",
+        "Tidak perlu",
+        "Lainnya..."
+      ],
+      "info": "Minta AI untuk secara khusus mencari, mengumpulkan, dan mendaftar semua tugas, penanggung jawab, dan tenggat waktu.",
+      "optional": true
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Abaikan bagian obrolan santai di awal rapat. Fokus hanya pada keputusan yang dibuat setelah menit ke-10. Tulis ringkasan dalam sudut pandang orang ketiga.",
+      "info": "Instruksi spesifik tentang bagian mana yang harus difokuskan atau diabaikan oleh AI.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Generator Ringkasan Rapat (Meeting Summarizer)"
+}

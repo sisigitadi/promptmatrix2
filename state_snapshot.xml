@@ -1,0 +1,59 @@
+<state_snapshot>
+    <overall_goal>
+        Refine the application's UI/UX, improve responsiveness and cross-device compatibility, add a "favorite prompts" feature, and ensure theme consistency with high readability.
+    </overall_goal>
+
+    <key_knowledge>
+        - **Theme**: "Cyber Gradient" (dark mode by default) with specific neon accents for categories, featuring blurred transparent headers/footers, strong text shadows for contrast, and 3D button effects.
+        - **Responsiveness**: Layout is stacked on mobile/tablet/small laptops (screens &lt; 1200px) and columnar on larger screens. Optimized for touch targets and text wrapping.
+        - **API Key Handling**: Stored in `sessionStorage` (not `localStorage`) for reduced exposure; sensitive `console.log` statements removed.
+        - **Gemini Models**: Updated to include latest models (e.g., gemini-3.0-pro, gemini-1.5-pro/flash-002) and configurable via a Developer Mode modal. `gemini-1.5-flash` is the new default.
+        - **Footer Content**: Includes dynamic copyright, navigation links, and social media links (Email, GitHub, LinkedIn).
+        - **Text Contrast**: Achieved using bright text on dark backgrounds and black text on bright/neon backgrounds for active states.
+        - **Code Quality**: Aimed to reduce `!important` usage for better maintainability.
+        - **`index.tsx` (root) location**: The main application entry point is at the project root, not `src/index.tsx`.
+        - **`useSavedPrompts` hook**: Located in `src/hooks/useSavedPrompts.ts` and used in `index.tsx`.
+        - **`SavedPromptsDisplay` component**: Renders saved prompts, accepts `toggleFavorite` prop, now includes tab navigation ("All Prompts", "Favorites"), version badges, and improved layout.
+        - **Copy-Paste Cerdas (Smart Copy-Paste)**: Implemented in `OutputDisplay.tsx` with a dropdown offering options to copy as Plain Text, JSON, Markdown, or Midjourney format.
+    </key_knowledge>
+
+    <file_system_state>
+        - **MODIFIED**: `SECURITY_AUDIT_REPORT.md` - Updated with OWASP analysis, fixes (API Key storage, logging), and recommendations.
+        - **MODIFIED**: `.env` - Created/Updated with `GEMINI_API_KEY`.
+        - **MODIFIED**: `src/types/index.ts` - Added `isFavorite?: boolean` to `SavedPrompt` interface.
+        - **MODIFIED**: `src/hooks/useSavedPrompts.ts` - Added `toggleFavorite` function to manage prompt favorites.
+        - **MODIFIED**: `src/components/SavedPromptsDisplay.tsx` - Updated to display favorite buttons (star icons), utilize `toggleFavorite` prop, sort prompts by favorite status, and added tab navigation, version badges, and improved list item layout.
+        - **MODIFIED**: `src/components/Footer.tsx` - Content revised for copyright, navigation, contact details (Email, GitHub, LinkedIn), and `FaLinkedinIn` import added. Removed unused `FaCommentDots` import.
+        - **MODIFIED**: `src/components/OnboardingTour.tsx` - Removed unused `useEffect` import.
+        - **MODIFIED**: `src/utils/categoryUtils.ts` - Updated with comprehensive category CSS name mappings.
+        - **MODIFIED**: `index.css` (root) - Extensively modified for theme (Cyber Gradient), responsiveness, header/footer consistency, category color differentiation, text contrast, and layout fixes for mobile/tablet.
+        - **MODIFIED**: `src/components/DevModeSettingsModal.tsx` - Updated Gemini model options to include newer models (gemini-3.0-pro, 1.5-pro/flash-002, etc.).
+        - **MODIFIED**: `src/data/aiPlatforms.ts` - Updated Gemini model list to match Dev Mode options.
+        - **MODIFIED**: `src/components/GeneratorView.tsx` - Adjusted Bootstrap grid breakpoints (`xl={4}`) for improved tablet/small laptop responsiveness and updated default Gemini model to `gemini-1.5-flash`.
+        - **MODIFIED**: `src/components/OutputDisplay.tsx` - Added specific classes (`output-section-preview`, `output-section-save`) for better CSS targeting on mobile/tablet, removed `console.log` statements for API key exposure, implemented Smart Copy-Paste (DropdownButton with various formats), and fixed "Adjacent JSX Elements" error by wrapping content of Card.Body with React.Fragment.
+        - **MODIFIED**: `src/components/FrameworkPane.tsx` - Removed `console.log` statements for API key exposure.
+        - **MODIFIED**: `index.tsx` (root) - Destructured `toggleFavorite` from `useSavedPrompts` and passed to `SavedPromptsDisplay`, restored `handleLoadPrompt` and `handleLoadComplete` functions, and imported `useSavedPrompts`.
+        - **CREATED**: `.gemini_temp/full_frameworks_content.ts` - Temporary file to hold the full content of `src/data/frameworks.ts`.
+        - **CREATED**: `.gemini_temp/` directory inside project root.
+    </file_system_state>
+
+    <recent_actions>
+        - Successfully implemented the "Favorite" feature, including type, hook, and UI updates in `src/types/index.ts`, `src/hooks/useSavedPrompts.ts`, `src/components/SavedPromptsDisplay.tsx`, and `index.tsx`.
+        - Successfully implemented "Smart Copy-Paste" in `src/components/OutputDisplay.tsx`, providing options to copy as Plain Text, JSON, Markdown, or Midjourney format.
+        - Successfully enhanced "Saved Prompts" display (`src/components/SavedPromptsDisplay.tsx`) with tab navigation (All/Favorites), version badges, and an improved layout.
+        - Resolved a `ReferenceError: handleLoadComplete is not defined` in `index.tsx` by re-introducing the missing functions.
+        - Resolved a `TypeError: Failed to fetch dynamically imported module: .../OutputDisplay.tsx` and subsequent `Adjacent JSX elements` errors in `OutputDisplay.tsx` by wrapping child elements within `Card.Body` with `React.Fragment`.
+        - Addressed unused imports in `src/components/Footer.tsx` and `src/components/OnboardingTour.tsx`.
+        - Identified `src/data/frameworks.ts` as being too large (662KB) and planned to refactor it by splitting it into smaller, category-specific files.
+        - Created a temporary directory `.gemini_temp` inside the project root at `D:\Projects\Ai\PromptMatrix v2.0\PromptMatrixV20\.gemini_temp`.
+        - Successfully wrote the full content of `src/data/frameworks.ts` to `D:\Projects\Ai\PromptMatrix v2.0\PromptMatrixV20\.gemini_temp\full_frameworks_content.ts`.
+    </recent_actions>
+
+    <current_plan>
+        1. [TODO] Create the Node.js script for splitting the frameworks and write it to a temporary file in `.gemini_temp`.
+        2. [TODO] Execute the Node.js script to split the `full_frameworks_content.ts` into category-specific files within `src/data/frameworks/`.
+        3. [TODO] Update the original `src/data/frameworks.ts` to import and combine these new category files.
+        4. [TODO] Run lint:fix and build to verify all changes.
+        5. [TODO] Address remaining lint warnings for `SavedPromptsDisplay.tsx` if any.
+    </current_plan>
+</state_snapshot>

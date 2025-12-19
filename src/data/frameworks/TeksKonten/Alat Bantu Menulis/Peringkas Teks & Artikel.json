@@ -1,0 +1,62 @@
+{
+  "description": "Ambil teks panjang (artikel, laporan, email) dan rangkum menjadi poin-poin kunci atau paragraf singkat.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Ahli Ringkasan yang akan mengekstrak ide-ide utama dari teks.",
+  "components": [
+    {
+      "name": "originalText",
+      "label": "Teks Asli yang Akan Diringkas",
+      "type": "textarea",
+      "placeholder": "Tempelkan seluruh teks di sini. Semakin panjang dan terstruktur, semakin baik hasilnya.",
+      "info": "AI akan membaca dan mengekstrak ide-ide utama dari teks ini.",
+      "validation": {
+        "min_length": 50
+      }
+    },
+    {
+      "name": "summaryLength",
+      "label": "Panjang Ringkasan yang Diinginkan",
+      "type": "select",
+      "options": [
+        "Sangat Singkat (1-2 kalimat)",
+        "Ringkasan Poin-poin",
+        "Paragraf Singkat",
+        "Lainnya..."
+      ],
+      "info": "Pilih format dan panjang output yang paling sesuai kebutuhan Anda."
+    },
+    {
+      "name": "focus",
+      "label": "Fokus Ringkasan (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Fokus pada dampak finansial', 'Hanya rangkum bagian kesimpulan'",
+      "info": "Beri tahu AI jika ada bagian atau aspek tertentu dari teks yang lebih penting.",
+      "optional": true
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Tulis ringkasan untuk audiens non-teknis. Pertahankan semua angka dan statistik. Jangan menyertakan opini dari teks asli, hanya fakta.",
+      "info": "Instruksi spesifik tentang gaya atau konten dari ringkasan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "crossValidationRules": [
+    {
+      "triggerField": "aspectRatio",
+      "triggerValue": "Lainnya...",
+      "dependentField": "customAspectRatio",
+      "validationType": "required",
+      "errorMessage": "'Rasio Aspek Kustom' wajib diisi jika 'Rasio Aspek' adalah 'Lainnya...'."
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Alat Bantu Menulis"
+  ],
+  "nama_kerangka": "Peringkas Teks & Artikel"
+}

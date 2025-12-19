@@ -1,0 +1,210 @@
+{
+  "description": "Dapatkan bantuan untuk membuat rencana belajar, kuis, RPP, dan materi edukasi lainnya.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pelatih Akademik & Desainer Instruksional yang akan membuat materi edukasi.",
+  "components": [
+    {
+      "name": "assistanceType",
+      "label": "Jenis Bantuan Akademik",
+      "type": "select",
+      "options": [
+        "Rencana Belajar",
+        "Materi Belajar (Kuis/Flashcard)",
+        "Rencana Mengajar (RPP)",
+        "Ide Topik Diskusi"
+      ],
+      "info": "Pilih jenis bantuan yang Anda butuhkan.",
+      "validation": {
+        "regex": "^(?!Pilih Jenis Bantuan Akademik...).*$"
+      }
+    }
+  ],
+  "dynamicSubcomponents": {
+    "trigger": "assistanceType",
+    "options": {
+      "Rencana Belajar": [
+        {
+          "name": "subject",
+          "label": "Mata Pelajaran/Ujian",
+          "type": "text",
+          "placeholder": "e.g., 'Ujian Akhir Semester Matematika'",
+          "info": "Sebutkan subjek atau ujian yang akan dihadapi.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "timeframe",
+          "label": "Jangka Waktu Belajar",
+          "type": "text",
+          "placeholder": "e.g., '2 minggu'",
+          "info": "Berapa lama waktu yang Anda miliki untuk belajar?",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "studyHoursPerDay",
+          "label": "Jam Belajar per Hari",
+          "type": "number",
+          "placeholder": "e.g., 2",
+          "info": "Berapa jam sehari Anda bisa fokus belajar?",
+          "validation": {
+            "min_value": 1,
+            "max_value": 24
+          }
+        },
+        {
+          "name": "topicsToCover",
+          "label": "Topik-topik yang Harus Dipelajari",
+          "type": "textarea",
+          "placeholder": "e.g., 'Aljabar, Geometri, Kalkulus Dasar'",
+          "info": "Sebutkan semua materi yang perlu dipelajari.",
+          "validation": {
+            "min_length": 10
+          }
+        }
+      ],
+      "Materi Belajar (Kuis/Flashcard)": [
+        {
+          "name": "sourceMaterial",
+          "label": "Materi Sumber",
+          "type": "textarea",
+          "placeholder": "Tempelkan teks atau poin-poin materi di sini",
+          "info": "AI akan menggunakan ini untuk membuat materi belajar.",
+          "validation": {
+            "min_length": 20
+          }
+        },
+        {
+          "name": "materialType",
+          "label": "Jenis Materi",
+          "type": "select",
+          "options": [
+            "Soal Pilihan Ganda",
+            "Flashcard (Tanya-Jawab)",
+            "Soal Esai Singkat"
+          ],
+          "info": "Pilih jenis materi belajar yang ingin dibuat."
+        },
+        {
+          "name": "numberOfItems",
+          "label": "Jumlah Soal/Kartu",
+          "type": "number",
+          "placeholder": "e.g., 10",
+          "info": "Berapa banyak soal atau kartu yang ingin dibuat?",
+          "validation": {
+            "min_value": 1,
+            "max_value": 50
+          }
+        }
+      ],
+      "Rencana Mengajar (RPP)": [
+        {
+          "name": "subject",
+          "label": "Mata Pelajaran",
+          "type": "text",
+          "placeholder": "e.g., 'Biologi'",
+          "info": "Sebutkan mata pelajaran yang akan diajarkan.",
+          "validation": {
+            "min_length": 2
+          }
+        },
+        {
+          "name": "gradeLevel",
+          "label": "Tingkat Kelas",
+          "type": "text",
+          "placeholder": "e.g., 'Kelas 10 SMA'",
+          "info": "Untuk kelas berapa RPP ini dibuat?",
+          "validation": {
+            "min_length": 3
+          }
+        },
+        {
+          "name": "topic",
+          "label": "Topik Spesifik",
+          "type": "text",
+          "placeholder": "e.g., 'Fotosintesis'",
+          "info": "Sebutkan topik spesifik yang akan dibahas.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "duration",
+          "label": "Alokasi Waktu (menit)",
+          "type": "number",
+          "placeholder": "e.g., 90",
+          "info": "Berapa lama sesi pengajaran akan berlangsung?",
+          "validation": {
+            "min_value": 15,
+            "max_value": 240
+          }
+        }
+      ],
+      "Ide Topik Diskusi": [
+        {
+          "name": "discussionSubject",
+          "label": "Subjek Diskusi",
+          "type": "text",
+          "placeholder": "e.g., 'Etika AI, Perubahan Iklim, Dampak Media Sosial'",
+          "info": "Topik utama yang ingin didiskusikan.",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "discussionGoal",
+          "label": "Tujuan Diskusi",
+          "type": "select",
+          "options": [
+            "Membangun Pemahaman",
+            "Mencari Solusi",
+            "Debat/Perdebatan",
+            "Brainstorming Ide"
+          ],
+          "info": "Apa yang ingin dicapai dari diskusi ini?"
+        },
+        {
+          "name": "targetAudience",
+          "label": "Target Audiens Diskusi",
+          "type": "text",
+          "placeholder": "e.g., 'Mahasiswa, Profesional, Komunitas Umum'",
+          "info": "Siapa peserta diskusi ini?",
+          "validation": {
+            "min_length": 5
+          }
+        },
+        {
+          "name": "discussionFormat",
+          "label": "Format Diskusi",
+          "type": "select",
+          "options": [
+            "Terbuka",
+            "Terstruktur",
+            "Panel",
+            "Debat"
+          ],
+          "info": "Bagaimana diskusi akan dijalankan?"
+        },
+        {
+          "name": "keyQuestions",
+          "label": "Pertanyaan Kunci (Opsional)",
+          "type": "textarea",
+          "placeholder": "e.g., 'Bagaimana AI mempengaruhi pekerjaan di masa depan? Apa peran individu dalam mengatasi perubahan iklim?'",
+          "info": "Pertanyaan-pertanyaan pemicu untuk memulai atau memandu diskusi.",
+          "optional": true,
+          "validation": {
+            "min_length": 10
+          }
+        }
+      ]
+    }
+  },
+  "konteks_tambahan_instruksi_khusus": "AI harus selalu menekankan pentingnya pemahaman konsep di atas hafalan. Untuk pembuatan soal, pastikan tingkat kesulitan sesuai dengan tingkat audiens yang diberikan. Untuk RPP, sarankan variasi aktivitas untuk menjaga keterlibatan siswa. Wajib sertakan disclaimer: 'Materi yang dihasilkan adalah alat bantu. Guru/pelajar disarankan untuk memverifikasi informasi dan menyesuaikannya dengan kurikulum atau kebutuhan belajar yang spesifik.'",
+  "kategori": [
+    "Prompt Proyek",
+    "Pendidikan & Pembelajaran"
+  ],
+  "nama_kerangka": "Asisten Akademik & Pembelajaran"
+}

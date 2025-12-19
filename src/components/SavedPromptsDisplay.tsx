@@ -7,17 +7,36 @@ import {
   Form,
   InputGroup,
   Collapse,
+  Row,
+  Col,
+  Badge,
 } from "react-bootstrap";
+import {
+  FaStar,
+  FaRegStar,
+  FaHistory,
+  FaPlay,
+  FaEdit,
+  FaTrash,
+  FaDownload,
+  FaFileCsv,
+  FaFileImport,
+  FaFolderOpen,
+  FaSortAmountDown,
+  FaCalendarAlt,
+} from "react-icons/fa";
+import { toast } from "react-toastify";
 
 interface SavedPromptsDisplayProps {
   show: boolean;
   onHide: () => void;
   savedPrompts: any[];
-  onLoadPrompt: (promptData: any) => void;
+  onLoadPrompt: (versionData: any, parentPrompt: any) => void;
   onDeletePrompt: (id: number) => void;
   onExportPrompts: (prompts: any[]) => void;
   onImportPrompts: (prompts: any[]) => void;
   onRenamePrompt: (id: number, newName: string) => void;
+  toggleFavorite: (id: string) => void;
 }
 
 const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
@@ -29,6 +48,7 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
   onExportPrompts,
   onImportPrompts,
   onRenamePrompt,
+  toggleFavorite,
 }) => {
   const [sortBy, setSortBy] = useState("dateDesc");
   const [promptToRename, setPromptToRename] = useState<any>(null);
@@ -49,12 +69,8 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
       onRenamePrompt(promptToRename.id, newPromptName.trim());
       setPromptToRename(null);
       setNewPromptName("");
+      toast.success("Nama prompt diperbarui!");
     }
-  };
-
-  const handleCancelRename = () => {
-    setPromptToRename(null);
-    setNewPromptName("");
   };
 
   const handleExportIndividualPrompt = (prompt: any) => {
@@ -69,10 +85,9 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
     const a = document.createElement("a");
     a.href = url;
     a.download = filename;
-    document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    toast.info("Prompt diekspor!");
   };
 
   const handleExportCsv = () => {
@@ -83,29 +98,12 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
       "subcategory",
       "latestTimestamp",
       "formData",
-      "customInputs",
-      "naturalLanguageOutput",
-      "jsonOutput",
     ];
-
     const csvRows = [headers.join(",")];
-
-    const escapeCsvCell = (cellData: any) => {
-      if (cellData === null || cellData === undefined) {
-        return "";
-      }
+    const escapeCsvCell = (data: any) => {
       const stringData =
-        typeof cellData === "object"
-          ? JSON.stringify(cellData)
-          : String(cellData);
-      if (
-        stringData.includes(",") ||
-        stringData.includes('"') ||
-        stringData.includes("\n")
-      ) {
-        return `"${stringData.replace(/"/g, '""')}"`;
-      }
-      return stringData;
+        typeof data === "object" ? JSON.stringify(data) : String(data);
+      return `"${stringData.replace(/"/g, '""')}"`;
     };
 
     savedPrompts.forEach((prompt) => {
@@ -117,9 +115,6 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
         prompt.subcategory,
         new Date(latestVersion.timestamp).toISOString(),
         escapeCsvCell(latestVersion.formData),
-        escapeCsvCell(latestVersion.customInputs),
-        escapeCsvCell(latestVersion.naturalLanguageOutput),
-        escapeCsvCell(latestVersion.jsonOutput),
       ];
       csvRows.push(row.join(","));
     });
@@ -131,10 +126,9 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
     const a = document.createElement("a");
     a.href = url;
     a.download = generateFileName("saved_prompts", "csv");
-    document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    toast.info("Database diekspor ke CSV!");
   };
 
   const handleImport = () => {
@@ -149,11 +143,10 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
           try {
             const importedData = JSON.parse(e.target?.result as string);
             onImportPrompts(importedData);
+            toast.success("Data berhasil diimpor!");
           } catch (error) {
-            console.error("Error parsing imported file:", error);
-            alert(
-              "Gagal mengimpor prompt. Pastikan file adalah JSON yang valid.",
-            );
+            console.error("Import error:", error);
+            toast.error("Format file tidak valid.");
           }
         };
         reader.readAsText(file);
@@ -163,204 +156,238 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
   };
 
   const sortedPrompts = [...savedPrompts].sort((a, b) => {
-    if (sortBy === "nameAsc") {
+    if (a.isFavorite && !b.isFavorite) return -1;
+    if (!a.isFavorite && b.isFavorite) return 1;
+    if (sortBy === "nameAsc")
       return a.frameworkName.localeCompare(b.frameworkName);
-    } else if (sortBy === "dateDesc") {
-      const lastVersionA = a.versions?.[a.versions.length - 1]?.timestamp || 0;
-      const lastVersionB = b.versions?.[b.versions.length - 1]?.timestamp || 0;
-      return lastVersionB - lastVersionA;
-    }
-    return 0;
+    const lastVersionA = a.versions?.[a.versions?.length - 1]?.timestamp ?? 0;
+    const lastVersionB = b.versions?.[b.versions?.length - 1]?.timestamp ?? 0;
+    return lastVersionB - lastVersionA;
   });
 
   return (
-    <Modal show={show} onHide={onHide} centered dialogClassName="modal-themed">
-      <Modal.Header closeButton className="modal-header-themed">
-        <Modal.Title>📚 Prompt Tersimpan & Riwayat</Modal.Title>
+    <Modal
+      show={show}
+      onHide={onHide}
+      centered
+      size="xl"
+      scrollable
+      dialogClassName="modal-themed"
+    >
+      <Modal.Header closeButton className="modal-header-themed border-bottom-0">
+        <Modal.Title className="d-flex align-items-center gap-2 text-info">
+          <FaFolderOpen /> Prompt Tersimpan & Riwayat
+        </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="modal-body-themed text-start">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <div className="d-flex">
+
+      <Modal.Body className="modal-body-themed p-0">
+        {/* ACTION BAR */}
+        <div className="p-3 bg-dark border-bottom border-secondary d-flex flex-wrap justify-content-between align-items-center gap-3">
+          <div className="d-flex gap-2">
             <Button
-              variant="success"
-              className="me-2"
+              variant="outline-info"
+              size="sm"
               onClick={() => onExportPrompts(savedPrompts)}
-              aria-label="Ekspor Semua Prompt Tersimpan ke JSON"
             >
-              ⬇️ Ekspor JSON
+              <FaDownload className="me-1" /> Ekspor JSON
             </Button>
             <Button
-              variant="success"
-              className="me-2"
+              variant="outline-success"
+              size="sm"
               onClick={handleExportCsv}
-              aria-label="Ekspor Semua Prompt Tersimpan ke CSV"
             >
-              ⬇️ Ekspor CSV
+              <FaFileCsv className="me-1" /> Ekspor CSV
             </Button>
-            <Button
-              variant="info"
-              onClick={handleImport}
-              aria-label="Impor Prompt dari File"
-            >
-              ⬆️ Impor
+            <Button variant="outline-primary" size="sm" onClick={handleImport}>
+              <FaFileImport className="me-1" /> Impor
             </Button>
           </div>
-          <Form.Group controlId="sortBySelect" className="mb-0 ms-3">
+
+          <div className="d-flex align-items-center gap-2">
+            <FaSortAmountDown className="text-muted small" />
             <Form.Select
               size="sm"
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as string)}
-              className="form-select-themed"
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-dark text-light border-secondary"
+              style={{ width: "160px" }}
             >
-              <option value="dateDesc">Urutkan: Terbaru</option>
-              <option value="nameAsc">Urutkan: Nama (A-Z)</option>
+              <option value="dateDesc">Terbaru</option>
+              <option value="nameAsc">Nama (A-Z)</option>
             </Form.Select>
-          </Form.Group>
+          </div>
         </div>
-        {savedPrompts.length === 0 ? (
-          <p className="text-center">Belum ada prompt yang disimpan.</p>
-        ) : (
-          <ListGroup className="saved-prompts-list">
-            {sortedPrompts.map((prompt) => (
-              <ListGroup.Item
-                key={prompt.id}
-                className="list-group-item-themed"
-              >
-                {promptToRename?.id === prompt.id ? (
-                  <InputGroup className="flex-grow-1">
-                    <Form.Control
-                      type="text"
-                      value={newPromptName}
-                      onChange={(e) => setNewPromptName(e.target.value)}
-                      onKeyPress={(e) =>
-                        e.key === "Enter" && handleSaveRename()
-                      }
-                      autoFocus
-                    />
-                    <Button variant="success" onClick={handleSaveRename}>
-                      Simpan
-                    </Button>
-                    <Button variant="secondary" onClick={handleCancelRename}>
-                      Batal
-                    </Button>
-                  </InputGroup>
-                ) : (
-                  <div className="d-flex justify-content-between w-100">
-                    <div
-                      className="flex-grow-1 me-2"
-                      style={{
-                        whiteSpace: "normal",
-                        overflowWrap: "break-word",
-                      }}
-                    >
-                      <strong
-                        style={{
-                          fontSize: "1em",
-                          marginBottom: "0.1em",
-                          display: "block",
-                        }}
-                      >
-                        {prompt.frameworkName}
-                      </strong>
-                      <small style={{ fontSize: "0.75em", display: "block" }}>
-                        {new Date(
-                          prompt.versions[prompt.versions.length - 1].timestamp,
-                        ).toLocaleDateString()}{" "}
-                        {new Date(
-                          prompt.versions[prompt.versions.length - 1].timestamp,
-                        ).toLocaleTimeString()}
-                      </small>
-                      <div className="prompt-actions d-flex flex-wrap gap-1 mt-2">
-                        <Button
-                          variant="info"
-                          size="sm"
-                          onClick={() => handleToggleExpand(prompt.id)}
-                          title="Lihat Riwayat Versi"
-                          aria-label="Lihat Riwayat Versi"
-                        >
-                          {expandedPromptId === prompt.id
-                            ? "⬆️ Sembunyikan"
-                            : "⬇️ Riwayat"}
+
+        <div className="p-4">
+          {savedPrompts.length === 0 ? (
+            <div className="text-center py-5 text-muted opacity-50">
+              <FaFolderOpen size={48} className="mb-3" />
+              <p>Belum ada prompt yang disimpan.</p>
+            </div>
+          ) : (
+            <Row className="g-3">
+              {sortedPrompts.map((prompt) => (
+                <Col key={prompt.id} xs={12}>
+                  <div
+                    className={`prompt-history-card border rounded p-3 bg-dark-subtle hover-lift ${prompt.isFavorite ? "border-warning" : "border-secondary"}`}
+                  >
+                    {promptToRename?.id === prompt.id ? (
+                      <InputGroup size="sm">
+                        <Form.Control
+                          value={newPromptName}
+                          onChange={(e) => setNewPromptName(e.target.value)}
+                          className="bg-dark text-light border-info"
+                          autoFocus
+                        />
+                        <Button variant="success" onClick={handleSaveRename}>
+                          Simpan
                         </Button>
                         <Button
-                          variant="primary"
-                          size="sm"
-                          onClick={() =>
-                            onLoadPrompt(
-                              prompt.versions[prompt.versions.length - 1],
-                              prompt,
-                            )
-                          }
-                          title="Muat Versi Terbaru"
-                          aria-label="Muat Versi Terbaru"
+                          variant="outline-secondary"
+                          onClick={() => setPromptToRename(null)}
                         >
-                          ▶️
+                          Batal
                         </Button>
+                      </InputGroup>
+                    ) : (
+                      <div className="d-flex flex-wrap align-items-center gap-3">
+                        {/* FAVORITE TOGGLE */}
                         <Button
-                          variant="warning"
-                          size="sm"
-                          onClick={() => handleRenameClick(prompt)}
-                          title="Ganti Nama"
-                          aria-label="Ganti Nama Prompt"
+                          variant="link"
+                          className={`p-0 fs-5 ${prompt.isFavorite ? "text-warning" : "text-muted opacity-50"}`}
+                          onClick={() => toggleFavorite(prompt.id)}
                         >
-                          ✏️
+                          {prompt.isFavorite ? <FaStar /> : <FaRegStar />}
                         </Button>
-                        <Button
-                          variant="danger"
-                          size="sm"
-                          onClick={() => onDeletePrompt(prompt.id)}
-                          title="Hapus Prompt"
-                          aria-label="Hapus Prompt"
-                        >
-                          🗑️
-                        </Button>
-                        <Button
-                          variant="outline-success"
-                          size="sm"
-                          onClick={() => handleExportIndividualPrompt(prompt)}
-                          title="Ekspor Prompt Ini"
-                          aria-label="Ekspor Prompt Ini"
-                        >
-                          ⬇️ JSON
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <Collapse in={expandedPromptId === prompt.id}>
-                  <div className="mt-3 pt-2 border-top">
-                    <h6>Riwayat Versi:</h6>
-                    <ListGroup variant="flush">
-                      {prompt.versions.map((version: any, index: number) => (
-                        <ListGroup.Item
-                          key={index}
-                          className="d-flex justify-content-between align-items-center small list-group-item-themed"
-                        >
-                          <span>
-                            Versi {index + 1} -{" "}
-                            {new Date(version.timestamp).toLocaleString()}
-                          </span>
+
+                        {/* CONTENT */}
+                        <div className="flex-grow-1 min-w-0">
+                          <div className="d-flex align-items-center gap-2 mb-1">
+                            <h6 className="mb-0 text-light fw-bold text-truncate">
+                              {prompt.frameworkName}
+                            </h6>
+                            <Badge bg="secondary" className="opacity-75">
+                              {prompt.category}
+                            </Badge>
+                          </div>
+                          <div className="d-flex align-items-center gap-3 text-muted small">
+                            <span className="d-flex align-items-center gap-1">
+                              <FaCalendarAlt size={10} />
+                              {new Date(
+                                prompt.versions?.[prompt.versions?.length - 1]
+                                  ?.timestamp ?? 0,
+                              ).toLocaleString()}
+                            </span>
+                            <span className="d-flex align-items-center gap-1">
+                              <FaHistory size={10} />
+                              {prompt.versions?.length || 0} Versi
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* ACTIONS */}
+                        <div className="d-flex gap-2 ms-auto">
                           <Button
-                            variant="outline-primary"
+                            variant="primary"
                             size="sm"
-                            onClick={() => onLoadPrompt(version, prompt)}
-                            title="Muat Versi Ini"
-                            aria-label={`Muat Versi ${index + 1}`}
+                            onClick={() =>
+                              onLoadPrompt(
+                                prompt.versions?.[prompt.versions?.length - 1],
+                                prompt,
+                              )
+                            }
+                            title="Muat Versi Terbaru"
+                            className="px-3"
                           >
-                            ▶️
+                            <FaPlay size={10} className="me-1" /> Load
                           </Button>
-                        </ListGroup.Item>
-                      ))}
-                    </ListGroup>
+                          <Button
+                            variant="outline-info"
+                            size="sm"
+                            onClick={() => handleToggleExpand(prompt.id)}
+                            title="Lihat Riwayat"
+                          >
+                            <FaHistory size={12} />
+                          </Button>
+                          <Button
+                            variant="outline-light"
+                            size="sm"
+                            onClick={() => handleRenameClick(prompt)}
+                            title="Ganti Nama"
+                          >
+                            <FaEdit size={12} />
+                          </Button>
+                          <Button
+                            variant="outline-success"
+                            size="sm"
+                            onClick={() => handleExportIndividualPrompt(prompt)}
+                            title="Ekspor JSON"
+                          >
+                            <FaDownload size={12} />
+                          </Button>
+                          <Button
+                            variant="outline-danger"
+                            size="sm"
+                            onClick={() => onDeletePrompt(prompt.id)}
+                            title="Hapus"
+                          >
+                            <FaTrash size={12} />
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* VERSION HISTORY COLLAPSE */}
+                    <Collapse in={expandedPromptId === prompt.id}>
+                      <div className="mt-3 pt-3 border-top border-secondary border-opacity-25">
+                        <div className="small text-muted text-uppercase fw-bold mb-2">
+                          Riwayat Iterasi
+                        </div>
+                        <ListGroup variant="flush">
+                          {prompt.versions?.map(
+                            (version: any, index: number) => (
+                              <ListGroup.Item
+                                key={index}
+                                className="bg-transparent border-0 d-flex justify-content-between align-items-center py-2 px-0 text-light small border-bottom border-secondary border-opacity-10"
+                              >
+                                <div>
+                                  <Badge
+                                    bg="dark"
+                                    className="me-2 text-info border border-info border-opacity-25"
+                                  >
+                                    v{index + 1}
+                                  </Badge>
+                                  <span className="opacity-75">
+                                    {new Date(
+                                      version.timestamp,
+                                    ).toLocaleString()}
+                                  </span>
+                                </div>
+                                <Button
+                                  variant="link"
+                                  size="sm"
+                                  className="text-info p-0 text-decoration-none"
+                                  onClick={() => onLoadPrompt(version, prompt)}
+                                >
+                                  <FaPlay size={10} className="me-1" /> Muat
+                                  Versi Ini
+                                </Button>
+                              </ListGroup.Item>
+                            ),
+                          )}
+                        </ListGroup>
+                      </div>
+                    </Collapse>
                   </div>
-                </Collapse>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        )}
+                </Col>
+              ))}
+            </Row>
+          )}
+        </div>
       </Modal.Body>
-      <Modal.Footer className="modal-footer-themed">
-        <Button variant="secondary" onClick={onHide}>
+
+      <Modal.Footer className="modal-footer-themed bg-dark border-top border-secondary">
+        <Button variant="outline-secondary" onClick={onHide} className="px-4">
           Tutup
         </Button>
       </Modal.Footer>

@@ -1,0 +1,40 @@
+{
+  "description": "Minta AI untuk menganalisis dan memberikan umpan balik tentang prompt Anda sendiri untuk memperbaikinya.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Kritikus Prompt yang akan menganalisis prompt dan memberikan umpan balik konstruktif.",
+  "components": [
+    {
+      "name": "originalPrompt",
+      "label": "Prompt yang Akan Dikritik",
+      "type": "textarea",
+      "placeholder": "e.g., 'Tulis tentang anjing.'",
+      "info": "Tempelkan prompt awal Anda di sini."
+    },
+    {
+      "name": "goal",
+      "label": "Tujuan Awal Prompt",
+      "type": "textarea",
+      "placeholder": "e.g., 'Saya ingin mendapatkan artikel blog yang menarik tentang sejarah anjing domestik.'",
+      "info": "Apa hasil yang sebenarnya Anda harapkan dari prompt tersebut?"
+    },
+    {
+      "name": "critiqueCriteria",
+      "label": "Kriteria Kritik",
+      "type": "textarea",
+      "placeholder": "e.g., 'Analisis kejelasan, kekhususan, dan informasi konteks yang hilang. Berikan saran untuk perbaikan.'",
+      "info": "Aspek apa dari prompt yang harus dievaluasi oleh AI?"
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Refleksi & Peningkatan Prompt"
+  ],
+  "nama_kerangka": "Prompt Critique"
+}

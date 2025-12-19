@@ -143,7 +143,7 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
 
   return (
     <Card className="flex-grow-1 h-100">
-      <Card.Body className="d-flex flex-column p-4 text-start">
+      <Card.Body className="d-flex flex-column p-3 text-start">
         <h5 className="h5 pb-3 mb-3 border-bottom">
           1. Pilih Kategori / Cari Kerangka Kerja:
         </h5>

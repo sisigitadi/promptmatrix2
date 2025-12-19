@@ -1,0 +1,76 @@
+{
+  "id_kerangka": "PROJ-PLAN-001",
+  "nama_kerangka": "Project Planning & Breakdown",
+  "version": "1.0.0",
+  "kategori": [
+    "Prompt Proyek",
+    "Perencanaan & Manajemen"
+  ],
+  "description": "Memecah tujuan proyek besar menjadi tugas-tugas yang lebih kecil, mengidentifikasi dependensi, dan memperkirakan waktu.",
+  "perspektif_user": "Sebagai manajer proyek atau individu yang mengerjakan proyek kompleks, saya membutuhkan bantuan untuk merencanakan dan memecah proyek menjadi langkah-langkah yang dapat dikelola.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Manajer Proyek yang akan memecah tujuan proyek menjadi langkah-langkah yang dapat ditindaklanjuti.",
+  "components": [
+    {
+      "name": "tujuan_proyek",
+      "label": "Tujuan Proyek Utama",
+      "type": "textarea",
+      "description": "Jelaskan tujuan utama proyek Anda secara detail.",
+      "default": "",
+      "optional": false,
+      "placeholder": "Contoh: 'Meluncurkan aplikasi mobile e-commerce baru dalam 6 bulan.'",
+      "info": "Tujuan yang jelas akan membantu AI membuat rencana yang lebih akurat."
+    },
+    {
+      "name": "deadline_proyek",
+      "label": "Tenggat Waktu Proyek",
+      "type": "date",
+      "description": "Pilih tanggal tenggat waktu untuk proyek ini.",
+      "default": "",
+      "optional": true,
+      "info": "Tanggal tenggat waktu akan membantu AI dalam estimasi waktu."
+    },
+    {
+      "name": "sumber_daya_tersedia",
+      "label": "Sumber Daya yang Tersedia",
+      "type": "textarea",
+      "description": "Sebutkan tim, anggaran, atau alat yang tersedia untuk proyek.",
+      "default": "",
+      "optional": true,
+      "placeholder": "Contoh: 'Tim 5 developer, anggaran Rp 100 juta, menggunakan React Native.'",
+      "info": "Informasi sumber daya akan membantu AI membuat rencana yang realistis."
+    },
+    {
+      "name": "output_detail_level",
+      "label": "Tingkat Detail Output",
+                  "type": "select",      "description": "Pilih seberapa detail rencana proyek yang Anda inginkan.",
+      "default": "tinggi",
+      "optional": false,
+      "options": [
+        {
+          "label": "Ringkasan (Tahapan Utama)",
+          "value": "ringkasan"
+        },
+        {
+          "label": "Menengah (Tugas & Sub-tugas)",
+          "value": "menengah"
+        },
+        {
+          "label": "Tinggi (Tugas, Sub-tugas, Estimasi Waktu)",
+          "value": "tinggi"
+        }
+      ],
+      "info": "Pilih tingkat detail yang sesuai dengan kebutuhan perencanaan Anda."
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Manajer Proyek yang sangat terorganisir dan berpengalaman dalam perencanaan proyek.",
+    "KONTEKS": "Pengguna membutuhkan bantuan untuk memecah proyek mereka. Tujuan proyek utama adalah: {{tujuan_proyek}}. Tenggat waktu yang diberikan adalah: {{deadline_proyek || 'Tidak ditentukan'}}. Sumber daya yang tersedia: {{sumber_daya_tersedia || 'Tidak disebutkan'}}.",
+    "TUGAS": "Buat rencana proyek yang terstruktur untuk mencapai tujuan: {{tujuan_proyek}}. Pecah proyek ini menjadi tahapan-tahapan utama, lalu setiap tahapan menjadi tugas-tugas yang lebih kecil. Jika tingkat detail output adalah 'tinggi', sertakan juga estimasi waktu untuk setiap tugas. Pertimbangkan tenggat waktu {{deadline_proyek || 'yang fleksibel'}} dan sumber daya {{sumber_daya_tersedia || 'standar'}}. Sajikan rencana dengan tingkat detail: {{output_detail_level}}.",
+    "FORMAT_OUTPUT": "Sajikan rencana proyek dalam format Markdown yang jelas dan terstruktur, menggunakan daftar berpoin atau bernomor untuk tahapan dan tugas. Gunakan judul dan sub-judul yang sesuai. Jika tingkat detail 'tinggi', gunakan format: '- [Tahapan Utama]\n  - [Tugas Kecil] (Estimasi Waktu: X hari/minggu)'."
+  },
+  "toolType": "planning",
+  "konteks_tambahan_instruksi_khusus": "Fokus pada pendekatan yang realistis dan dapat ditindaklanjuti. Jika ada ambiguitas, buat asumsi yang masuk akal dan nyatakan asumsi tersebut. Prioritaskan langkah-langkah yang paling kritis untuk mencapai tujuan proyek.",
+  "contoh_kalimat": "Bantu saya merencanakan peluncuran aplikasi mobile e-commerce baru dalam 6 bulan.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

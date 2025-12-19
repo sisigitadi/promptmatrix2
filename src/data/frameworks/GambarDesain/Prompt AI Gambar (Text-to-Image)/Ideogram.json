@@ -1,0 +1,53 @@
+{
+  "description": "Buat prompt untuk Ideogram, dengan fokus khusus pada kemampuannya merender teks di dalam gambar.",
+  "toolType": "image-generation",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Perancang Tipografi Visual yang akan merender teks yang akurat di dalam gambar.",
+  "components": [
+    {
+      "name": "textToRender",
+      "label": "Teks untuk Ditampilkan di Gambar",
+      "type": "text",
+      "placeholder": "e.g., 'Selamat Datang!', 'KOPI'",
+      "info": "Tuliskan teks persis seperti yang Anda ingin muncul di gambar.",
+      "validation": {
+        "min_length": 1
+      }
+    },
+    {
+      "name": "subjectAndScene",
+      "label": "Deskripsi Adegan & Subjek",
+      "type": "textarea",
+      "placeholder": "e.g., 'Sebuah tanda neon menyala dengan tulisan [Teks Anda] di atas pintu masuk sebuah kafe cyberpunk.'",
+      "info": "Jelaskan gambar yang akan menjadi latar belakang teks Anda.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "style",
+      "label": "Gaya Visual",
+      "type": "text",
+      "placeholder": "e.g., 'typography, 3d render, cinematic, photo'",
+      "info": "Gaya keseluruhan dari gambar dan teks.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
+  "nama_kerangka": "Ideogram"
+}

@@ -1,0 +1,153 @@
+{
+  "id_kerangka": "IMG-GEN-001",
+  "nama_kerangka": "Image Description & Generation",
+  "version": "2.0.0",
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
+  "description": "Menghasilkan deskripsi tekstual dari gambar yang diunggah atau membuat gambar baru dari deskripsi teks dan gaya visual.",
+  "perspektif_user": "Sebagai seorang desainer, pemasar, atau kreator konten, saya membutuhkan alat untuk dengan cepat mendapatkan deskripsi akurat dari gambar yang ada atau untuk menghasilkan visual baru yang sesuai dengan visi saya.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang seniman digital dan deskriptor visual yang akan menganalisis atau menciptakan visual.",
+  "components": [
+    {
+      "name": "mode_operasi",
+      "label": "Pilih Mode Operasi",
+      "type": "select",
+      "description": "Pilih apakah Anda ingin mendeskripsikan gambar atau menghasilkan gambar.",
+      "default": "deskripsikan_gambar",
+      "optional": false,
+      "options": [
+        {
+          "label": "Deskripsikan Gambar",
+          "value": "deskripsikan_gambar"
+        },
+        {
+          "label": "Hasilkan Gambar",
+          "value": "hasilkan_gambar"
+        }
+      ],
+      "info": "Pilih 'Deskripsikan Gambar' untuk mendapatkan deskripsi dari gambar yang Anda unggah, atau 'Hasilkan Gambar' untuk membuat gambar baru dari teks."
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang seniman digital dan deskriptor visual.",
+    "KONTEKS": "Pengguna ingin melakukan operasi visual.",
+    "TUGAS": "Pilih mode operasi untuk melihat tugas spesifik."
+  },
+  "dynamicSubcomponents": {
+    "trigger": "mode_operasi",
+    "options": {
+      "deskripsikan_gambar": {
+        "komponen_prompt": {
+          "TUGAS": "Deskripsikan gambar berikut secara detail dan komprehensif, fokus pada objek, warna, suasana, dan gaya visual: {input_gambar_deskripsi}",
+          "FORMAT OUTPUT": "Berikan deskripsi dalam format Markdown dengan poin-poin utama."
+        },
+        "components": [
+          {
+            "name": "input_gambar_deskripsi",
+            "label": "Unggah Gambar untuk Deskripsi",
+            "type": "image",
+            "description": "Unggah gambar yang ingin Anda deskripsikan.",
+            "default": "",
+            "optional": false,
+            "placeholder": "Pilih file gambar...",
+            "info": "Unggah gambar dalam format JPG, PNG, atau WEBP. Maksimal ukuran file 5MB."
+          }
+        ]
+      },
+      "hasilkan_gambar": {
+        "komponen_prompt": {
+          "TUGAS": "Hasilkan gambar berdasarkan deskripsi berikut: \"{deskripsi_teks_gambar_generasi}\". Gunakan gaya visual: \"{gaya_visual_generasi}\" dan rasio aspek: \"{rasio_aspek_generasi}\".",
+          "FORMAT OUTPUT": "Sajikan output sebagai URL gambar yang dihasilkan atau instruksi untuk mengaksesnya."
+        },
+        "components": [
+          {
+            "name": "deskripsi_teks_gambar_generasi",
+            "label": "Deskripsi Teks Gambar",
+            "type": "textarea",
+            "description": "Masukkan deskripsi detail untuk gambar yang ingin Anda hasilkan.",
+            "default": "",
+            "optional": false,
+            "placeholder": "Contoh: 'Pemandangan kota futuristik saat matahari terbenam, dengan mobil terbang dan gedung pencakar langit yang berkilauan.'",
+            "info": "Berikan deskripsi yang jelas dan spesifik untuk hasil terbaik."
+          },
+          {
+            "name": "gaya_visual_generasi",
+            "label": "Gaya Visual",
+            "type": "select",
+            "description": "Pilih gaya visual untuk gambar yang dihasilkan.",
+            "default": "fotorealistik",
+            "optional": false,
+            "options": [
+              {
+                "label": "Fotorealistik",
+                "value": "fotorealistik"
+              },
+              {
+                "label": "Kartun",
+                "value": "kartun"
+              },
+              {
+                "label": "Abstrak",
+                "value": "abstrak"
+              },
+              {
+                "label": "Seni Digital",
+                "value": "seni_digital"
+              },
+              {
+                "label": "Lainnya...",
+                "value": "Lainnya..."
+              }
+            ],
+            "info": "Pilih gaya yang paling sesuai dengan kebutuhan visual Anda."
+          },
+          {
+            "name": "rasio_aspek_generasi",
+            "label": "Rasio Aspek",
+            "type": "select",
+            "description": "Pilih rasio aspek untuk gambar yang dihasilkan.",
+            "default": "1:1",
+            "optional": false,
+            "options": [
+              {
+                "label": "1:1 (Persegi)",
+                "value": "1:1"
+              },
+              {
+                "label": "16:9 (Lanskap)",
+                "value": "16:9"
+              },
+              {
+                "label": "9:16 (Potret)",
+                "value": "9:16"
+              }
+            ],
+            "info": "Rasio aspek menentukan orientasi dan proporsi gambar."
+          }
+        ]
+      }
+    }
+  },
+  "toolType": "image-generation",
+  "konteks_tambahan_instruksi_khusus": "Untuk mode 'Deskripsikan Gambar', pastikan deskripsi sangat detail dan komprehensif. Untuk mode 'Hasilkan Gambar', fokus pada interpretasi kreatif dari deskripsi dan gaya yang diberikan.",
+  "contoh_kalimat": "Hasilkan gambar pemandangan pegunungan dengan gaya seni digital.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": [
+    {
+      "triggerField": "mode_operasi",
+      "triggerValue": "deskripsikan_gambar",
+      "dependentField": "input_gambar_deskripsi",
+      "validationType": "required",
+      "errorMessage": "Gambar harus diunggah untuk mode 'Deskripsikan Gambar'."
+    },
+    {
+      "triggerField": "mode_operasi",
+      "triggerValue": "hasilkan_gambar",
+      "dependentField": "deskripsi_teks_gambar_generasi",
+      "validationType": "required",
+      "errorMessage": "Deskripsi teks gambar harus diisi untuk mode 'Hasilkan Gambar'."
+    }
+  ]
+}

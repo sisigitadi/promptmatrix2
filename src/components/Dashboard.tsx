@@ -23,8 +23,8 @@ const Dashboard: React.FC<DashboardProps> = ({
 }) => {
   const recentPrompts = [...savedPrompts]
     .sort((a, b) => {
-      const lastVersionA = a.versions[a.versions.length - 1]?.timestamp || 0;
-      const lastVersionB = b.versions[b.versions.length - 1]?.timestamp || 0;
+      const lastVersionA = a.versions?.[a.versions?.length - 1]?.timestamp ?? 0;
+      const lastVersionB = b.versions?.[b.versions?.length - 1]?.timestamp ?? 0;
       return lastVersionB - lastVersionA;
     })
     .slice(0, 5);
@@ -64,7 +64,8 @@ const Dashboard: React.FC<DashboardProps> = ({
                 <ListGroup variant="flush">
                   {recentPrompts.map((prompt) => {
                     const lastTimestamp =
-                      prompt.versions[prompt.versions.length - 1]?.timestamp;
+                      prompt.versions?.[prompt.versions?.length - 1]
+                        ?.timestamp ?? 0;
                     const formattedDateTime = new Date(
                       lastTimestamp,
                     ).toLocaleString();
@@ -87,7 +88,8 @@ const Dashboard: React.FC<DashboardProps> = ({
                           size="sm"
                           onClick={() =>
                             onLoadPrompt(
-                              prompt.versions[prompt.versions.length - 1],
+                              prompt.versions?.[prompt.versions?.length - 1] ??
+                                {},
                               prompt,
                             )
                           }

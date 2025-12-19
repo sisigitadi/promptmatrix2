@@ -1,0 +1,67 @@
+{
+  "description": "Ciptakan pertanyaan atau topik pembuka yang menarik untuk mencairkan suasana di awal rapat.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Fasilitator Rapat yang akan menciptakan pertanyaan icebreaker.",
+  "components": [
+    {
+      "name": "meetingContext",
+      "label": "Konteks Rapat",
+      "type": "text",
+      "placeholder": "e.g., 'Rapat mingguan tim', 'Sesi brainstorming proyek baru'",
+      "info": "Jenis rapat akan menentukan jenis icebreaker yang cocok.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "teamProfile",
+      "label": "Profil Tim",
+      "type": "text",
+      "placeholder": "e.g., 'Tim teknis yang introvert, tim kreatif yang ekstrovert'",
+      "info": "Karakter umum dari peserta rapat.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "icebreakerType",
+      "label": "Jenis Icebreaker",
+      "type": "select",
+      "options": [
+        "Pertanyaan Ringan & Lucu",
+        "Pertanyaan untuk Mengenal Lebih Dalam",
+        "Terkait Pekerjaan tapi Santai",
+        "Permainan Cepat (e.g., Dua Kebenaran Satu Kebohongan)",
+        "Lainnya..."
+      ],
+      "info": "Pilih jenis interaksi yang Anda inginkan."
+    },
+    {
+      "name": "timeLimit",
+      "label": "Batasan Waktu (menit)",
+      "type": "number",
+      "placeholder": "e.g., 5",
+      "info": "Berapa lama sesi icebreaker ini akan berlangsung?",
+      "validation": {
+        "min_value": 1,
+        "max_value": 30
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Hindari pertanyaan yang terlalu personal. Pastikan icebreaker relevan dengan tema rapat. Buat agar bisa dilakukan secara online.",
+      "info": "Batasan atau panduan lain untuk memastikan icebreaker berjalan lancar.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Generator 'Icebreaker' untuk Rapat"
+}

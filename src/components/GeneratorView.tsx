@@ -91,7 +91,7 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
     { id: `block-${Date.now()}`, type: "text", content: "" },
   ]);
   const [selectedModel, setSelectedModel] = useState<string>(() => {
-    return sessionStorage.getItem("selectedModel") || "gemini-1.0-pro";
+    return sessionStorage.getItem("selectedModel") || "gemini-1.5-flash";
   });
   const [validationErrors, setValidationErrors] = useState<{
     [key: string]: string;
@@ -261,8 +261,7 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
     <Row className="flex-grow-1 g-4 align-items-stretch">
       <Col
         xs={12}
-        md={4}
-        lg={4}
+        xl={4}
         className={`navigation-pane h-100`}
         id="navigation-pane"
       >
@@ -290,7 +289,7 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
         />
       </Col>
 
-      <Col xs={12} md={4} lg={4} className="d-flex flex-column h-100">
+      <Col xs={12} xl={4} className="d-flex flex-column h-100">
         <FrameworkPane
           currentFrameworkDetails={currentFrameworkDetails}
           selectedFramework={selectedFramework}
@@ -314,7 +313,7 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
         />
       </Col>
 
-      <Col xs={12} md={4} lg={4} className="d-flex flex-column h-100">
+      <Col xs={12} xl={4} className="d-flex flex-column h-100">
         <OutputDisplay
           naturalLanguageOutput={naturalLanguageOutput}
           jsonOutput={jsonOutput}

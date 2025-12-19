@@ -4,8 +4,11 @@ import {
   Framework,
   PromptFrameworksType,
 } from "../data/frameworks";
+import { FormData } from "../types";
 
-export function useFrameworkNavigation(dispatch: (action: any) => void) {
+export function useFrameworkNavigation(
+  dispatch: (action: { type: string; payload?: any }) => void,
+) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedFramework, setSelectedFramework] = useState<string | null>(
     null,
@@ -131,26 +134,26 @@ export function useFrameworkNavigation(dispatch: (action: any) => void) {
         [frameworkDetails.subcategory]: true,
       });
 
-      const initialFormData: { [key: string]: any } = {};
-      const inputs = frameworkDetails.framework.components.map((c) => [
-        c.name,
-        c,
-      ]);
+      const initialFormData: FormData = {};
+      const inputs =
+        frameworkDetails.framework.components?.map((c) => [c.name, c]) || []; // Add null check for components
 
       for (const [name, details] of inputs) {
-        if (details.type === "select" && details.options?.length) {
-          const firstOption = details.options[0];
+        // Safe access to properties with type guards if needed, but here structure is known
+        const compDetails = details as any; // Cast to access properties easily if FrameworkComponent is complex
+        if (compDetails.type === "select" && compDetails.options?.length) {
+          const firstOption = compDetails.options[0];
           if (
             typeof firstOption === "string" &&
             (firstOption.startsWith("Pilih") ||
               firstOption.startsWith("Select"))
           ) {
-            initialFormData[name] = details.options[1] || "";
+            initialFormData[name] = compDetails.options[1] || "";
           } else {
             initialFormData[name] = firstOption;
           }
         } else {
-          initialFormData[name] = details.default ?? "";
+          initialFormData[name] = compDetails.default ?? "";
         }
       }
 

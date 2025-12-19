@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, Alert } from "react-bootstrap";
+import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 
 interface FeedbackModalProps {
   show: boolean;
@@ -14,18 +14,16 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ show, onHide }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real application, you would handle the form data here (e.g., send to an API).
     const feedbackData = {
       rating,
       selectedFeatures,
       feedbackText,
     };
     console.log("Feedback Submitted:", feedbackData);
-    // Simulate API call success
     setSubmitted(true);
     setTimeout(() => {
       handleClose();
-    }, 2000); // Close modal after 2 seconds
+    }, 2500);
   };
 
   const handleClose = () => {
@@ -49,96 +47,107 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ show, onHide }) => {
       show={show}
       onHide={handleClose}
       centered
+      size="lg"
       dialogClassName="modal-themed"
     >
       <Modal.Header closeButton className="modal-header-themed">
         <Modal.Title>Beri Kami Umpan Balik</Modal.Title>
       </Modal.Header>
-      <Modal.Body className="modal-body-themed">
+
+      <Modal.Body className="modal-body-themed p-4">
         {submitted ? (
-          <Alert variant="success">
-            Terima kasih! Umpan balik Anda sangat berharga bagi kami.
-          </Alert>
+          <div className="text-center py-5">
+            <div className="mb-3" style={{ fontSize: "3rem" }}>
+              🎉
+            </div>
+            <h4 className="text-success mb-3">Terima Kasih!</h4>
+            <p className="text-muted">
+              Masukan Anda sangat berharga untuk pengembangan Prompt Matrix
+              selanjutnya.
+            </p>
+          </div>
         ) : (
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="feedbackRating">
-              <Form.Label>
-                Seberapa puaskah Anda dengan PromptMatrix 2.0?
-              </Form.Label>
-              <div className="d-flex justify-content-around">
-                {"🙁 😠 😐 🙂 😄".split(" ").map((emoji, index) => (
-                  <Form.Check
-                    key={index}
-                    type="radio"
-                    name="rating"
-                    id={`rating-${index}`}
-                    label={emoji}
-                    style={{ fontSize: "1.5rem" }}
-                    value={emoji}
-                    checked={rating === emoji}
-                    onChange={(e) => setRating(e.target.value)}
-                  />
-                ))}
-              </div>
-            </Form.Group>
+            <Row className="mb-4">
+              <Col>
+                <Form.Label className="h6 mb-3 text-light">
+                  Seberapa puaskah Anda dengan aplikasi ini?
+                </Form.Label>
+                <div className="d-flex justify-content-between px-3 py-3 bg-dark-subtle rounded border border-secondary">
+                  {["🙁", "😠", "😐", "🙂", "😄"].map((emoji, index) => (
+                    <Form.Check
+                      key={index}
+                      type="radio"
+                      name="rating"
+                      id={`rating-${index}`}
+                      label={
+                        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
+                          {emoji}
+                        </span>
+                      }
+                      value={emoji}
+                      checked={rating === emoji}
+                      onChange={(e) => setRating(e.target.value)}
+                      className="d-flex flex-column align-items-center gap-2"
+                    />
+                  ))}
+                </div>
+              </Col>
+            </Row>
 
-            <Form.Group className="mb-3" controlId="feedbackFeature">
-              <Form.Label>
-                Fitur apa yang paling Anda inginkan selanjutnya?
-              </Form.Label>
-              <Form.Check
-                type="checkbox"
-                label="Kolaborasi Tim & Berbagi Prompt"
-                id="feature-collab"
-                value="Kolaborasi Tim & Berbagi Prompt"
-                checked={selectedFeatures.includes(
-                  "Kolaborasi Tim & Berbagi Prompt",
-                )}
-                onChange={() =>
-                  handleFeatureChange("Kolaborasi Tim & Berbagi Prompt")
-                }
-              />
-              <Form.Check
-                type="checkbox"
-                label="Integrasi dengan API Eksternal (Zapier, dll.)"
-                id="feature-api"
-                value="Integrasi dengan API Eksternal (Zapier, dll.)"
-                checked={selectedFeatures.includes(
-                  "Integrasi dengan API Eksternal (Zapier, dll.)",
-                )}
-                onChange={() =>
-                  handleFeatureChange(
-                    "Integrasi dengan API Eksternal (Zapier, dll.)",
-                  )
-                }
-              />
-              <Form.Check
-                type="checkbox"
-                label="Analitik & Performa Prompt"
-                id="feature-analytics"
-                value="Analitik & Performa Prompt"
-                checked={selectedFeatures.includes(
-                  "Analitik & Performa Prompt",
-                )}
-                onChange={() =>
-                  handleFeatureChange("Analitik & Performa Prompt")
-                }
-              />
-            </Form.Group>
+            <Row className="mb-4">
+              <Col>
+                <Form.Label className="h6 mb-3 text-light">
+                  Fitur apa yang Anda harapkan?
+                </Form.Label>
+                <div className="d-flex flex-column gap-3">
+                  {[
+                    "Kolaborasi Tim & Berbagi Prompt",
+                    "Integrasi API (Zapier, dll.)",
+                    "Analitik Performa Prompt",
+                    "Mode Gelap Otomatis (System Theme)",
+                  ].map((feature) => (
+                    <div
+                      key={feature}
+                      className="form-check-custom p-3 border border-secondary rounded hover-bg-dark"
+                    >
+                      <Form.Check
+                        type="checkbox"
+                        label={feature}
+                        id={`feature-${feature}`}
+                        value={feature}
+                        checked={selectedFeatures.includes(feature)}
+                        onChange={() => handleFeatureChange(feature)}
+                        className="mb-0"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </Col>
+            </Row>
 
-            <Form.Group className="mb-3" controlId="feedbackText">
-              <Form.Label>Apakah ada masukan lain?</Form.Label>
+            <Form.Group className="mb-4" controlId="feedbackText">
+              <Form.Label className="h6 mb-2 text-light">
+                Masukan Tambahan
+              </Form.Label>
               <Form.Control
                 as="textarea"
                 rows={4}
-                placeholder="Saran, kritik, atau ide Anda..."
+                placeholder="Ceritakan pengalaman Anda atau bagikan ide..."
                 value={feedbackText}
                 onChange={(e) => setFeedbackText(e.target.value)}
+                className="bg-dark text-light border-secondary"
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Kirim Umpan Balik
-            </Button>
+
+            <div className="d-flex justify-content-end gap-2">
+              <Button variant="outline-secondary" onClick={handleClose}>
+                Batal
+              </Button>
+              <Button variant="primary" type="submit" disabled={!rating}>
+                Kirim Umpan Balik
+              </Button>
+            </div>
           </Form>
         )}
       </Modal.Body>

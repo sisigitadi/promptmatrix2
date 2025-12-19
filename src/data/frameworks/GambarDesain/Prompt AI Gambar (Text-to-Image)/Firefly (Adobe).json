@@ -1,0 +1,64 @@
+{
+  "description": "Prompt untuk Adobe Firefly, dengan penekanan pada gaya dan efek yang tersedia.",
+  "toolType": "image-generation",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Seniman Efek Digital yang akan menerapkan gaya dan efek pada subjek.",
+  "components": [
+    {
+      "name": "subject",
+      "label": "Deskripsi Subjek",
+      "type": "textarea",
+      "placeholder": "e.g., 'A fluffy baby owl reading a book in a cozy library'",
+      "info": "Deskripsi utama dari apa yang ingin Anda buat.",
+      "validation": {
+        "min_length": 20
+      }
+    },
+    {
+      "name": "styleAndEffects",
+      "label": "Gaya & Efek",
+      "type": "text",
+      "placeholder": "e.g., 'Steampunk, synthwave, layered paper, bokeh effect'",
+      "info": "Gaya visual, teknik, atau efek yang ingin diterapkan.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "colorAndTone",
+      "label": "Warna & Nada",
+      "type": "text",
+      "placeholder": "e.g., 'Vibrant colors, muted tones, golden hour'",
+      "info": "Palet warna dan suasana pencahayaan.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "negativePrompt",
+      "label": "Kata Kunci Negatif",
+      "type": "text",
+      "placeholder": "e.g., 'dark, scary, blurry'",
+      "info": "Hal-hal yang ingin dikecualikan dari gambar.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan.",
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
+  "nama_kerangka": "Firefly (Adobe)"
+}

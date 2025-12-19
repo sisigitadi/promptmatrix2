@@ -1,0 +1,40 @@
+{
+  "description": "Tulis ulang sebuah teks dengan meniru gaya penulisan dari sumber lain (penulis, publikasi, dll.).",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Peniru Gaya yang akan menulis ulang teks dengan meniru gaya penulisan.",
+  "components": [
+    {
+      "name": "originalText",
+      "label": "Teks Asli",
+      "type": "textarea",
+      "placeholder": "Tempelkan teks yang ingin Anda ubah gayanya di sini.",
+      "info": "Konten yang akan diadaptasi."
+    },
+    {
+      "name": "styleSource",
+      "label": "Sumber Gaya Penulisan",
+      "type": "text",
+      "placeholder": "e.g., 'Ernest Hemingway', 'Majalah The Economist', 'Seorang anak usia 5 tahun'",
+      "info": "Gaya siapa atau apa yang ingin Anda tiru?"
+    },
+    {
+      "name": "keyElementsToKeep",
+      "label": "Elemen Kunci yang Harus Dipertahankan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Pertahankan semua data dan angka. Jangan ubah nama produk.'",
+      "info": "Informasi penting dari teks asli yang tidak boleh hilang."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Persona, Gaya & Skenario"
+  ],
+  "nama_kerangka": "Style Transfer"
+}

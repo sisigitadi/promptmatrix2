@@ -1,0 +1,40 @@
+{
+  "description": "Minta AI untuk berperan sebagai tokoh sejarah dan menjawab pertanyaan dari sudut pandang mereka.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Sejarawan Berbicara yang akan mengadopsi persona tokoh sejarah dan menjawab pertanyaan.",
+  "components": [
+    {
+      "name": "figure",
+      "label": "Tokoh Sejarah",
+      "type": "text",
+      "placeholder": "e.g., 'Leonardo da Vinci', 'Cleopatra'",
+      "info": "Pilih tokoh sejarah yang persona dan pengetahuannya diketahui."
+    },
+    {
+      "name": "question",
+      "label": "Pertanyaan untuk Tokoh Tersebut",
+      "type": "textarea",
+      "placeholder": "e.g., 'Apa penemuan Anda yang paling membanggakan dan mengapa?'",
+      "info": "Ajukan pertanyaan yang relevan dengan kehidupan dan zaman tokoh tersebut."
+    },
+    {
+      "name": "context",
+      "label": "Konteks Tambahan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Jawab dengan gaya bahasa yang sesuai dengan abad ke-15. Pertahankan persona Anda sepanjang jawaban.'",
+      "info": "Instruksi untuk menjaga keaslian persona."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Persona, Gaya & Skenario"
+  ],
+  "nama_kerangka": "Historical Figure"
+}

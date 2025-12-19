@@ -1,9 +1,18 @@
-const Ajv = require("ajv");
-const fs = require("fs");
-const path = require("path");
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Initialize AJV with all errors to get detailed reports
-const ajv = new Ajv({ allErrors: true, verbose: true });
+// Note: ajv exports a default class in some versions/configs, or named export in others.
+// Depending on how ajv is installed/bundled. Adjusting for typical ESM usage.
+const AjvClass = Ajv.default || Ajv;
+const ajv = new AjvClass({ allErrors: true, verbose: true });
+addFormats(ajv); // Apply formats plugin
 
 // Load the schema
 const schemaPath = path.resolve(

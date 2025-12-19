@@ -1,0 +1,174 @@
+{
+  "id_kerangka": "KOL-DOC-001",
+  "nama_kerangka": "Pusat Dokumen Strategis & Kreatif",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Dokumen Lanjutan"
+  ],
+  "description": "Satu alat terpusat untuk menghasilkan berbagai dokumen terstruktur yang kompleks, mulai dari Game Design Document, analisis keuangan mendalam, hingga persiapan debat.",
+  "perspektif_user": "Saya perlu membuat dokumen yang spesifik dan terstruktur, seperti GDD untuk ide game saya, menganalisis laporan keuangan bisnis, atau mempersiapkan argumen untuk debat penting. Saya ingin panduan yang jelas untuk setiap jenis dokumen.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang konsultan ahli multi-disiplin. Bergantung pada pilihan pengguna, Anda akan bertindak sebagai Game Designer, Analis Keuangan, atau Pelatih Debat untuk menghasilkan dokumen yang diminta.",
+  "components": [
+    {
+      "name": "JENIS_DOKUMEN",
+      "label": "Jenis Dokumen yang Ingin Dibuat",
+      "type": "select",
+      "options": [
+        "Dokumen Desain Game (GDD)",
+        "Analisis Laporan Keuangan",
+        "Perencanaan Argumen Debat"
+      ],
+      "default": "Dokumen Desain Game (GDD)",
+      "info": "Pilih jenis dokumen terstruktur yang ingin Anda hasilkan. Pilihan Anda akan menampilkan kolom input yang sesuai."
+    }
+  ],
+  "dynamicSubcomponents": {
+    "trigger": "JENIS_DOKUMEN",
+    "options": {
+      "Dokumen Desain Game (GDD)": [
+        {
+          "name": "NAMA_GAME",
+          "label": "Judul Game",
+          "type": "text",
+          "placeholder": "Contoh: Chrono Weavers",
+          "info": "Judul kerja atau judul final dari game Anda."
+        },
+        {
+          "name": "GENRE_GAME",
+          "label": "Genre Utama & Sub-genre",
+          "type": "text",
+          "placeholder": "Contoh: RPG, Platformer, Puzzle, Strategy",
+          "info": "Sebutkan genre utama dan sub-genre jika ada (misal: RPG Aksi)."
+        },
+        {
+          "name": "KONSEP_UTAMA",
+          "label": "Konsep Inti & Unique Selling Point (USP)",
+          "type": "textarea",
+          "placeholder": "Contoh: Sebuah game puzzle di mana pemain mengendalikan waktu untuk menyelesaikan rintangan, dengan narasi non-linear.",
+          "info": "Jelaskan dalam 1-2 kalimat apa yang membuat game Anda unik dan menarik."
+        },
+        {
+          "name": "MEKANIK_INTI",
+          "label": "Mekanik Gameplay Inti",
+          "type": "textarea",
+          "placeholder": "Contoh: Pemain bisa memundurkan waktu 5 detik. Ada sistem crafting sederhana. Pertarungan berbasis giliran.",
+          "info": "Sebutkan 2-3 mekanik utama yang menjadi dasar permainan."
+        },
+        {
+          "name": "NARASI_RINGKAS",
+          "label": "Ringkasan Cerita & Latar Belakang Dunia",
+          "type": "textarea",
+          "placeholder": "Contoh: Di sebuah dunia yang hancur, seorang pahlawan harus mengumpulkan artefak waktu untuk menyelamatkan peradaban.",
+          "info": "Berikan gambaran umum tentang plot dan dunia game."
+        },
+        {
+          "name": "GAYA_VISUAL",
+          "label": "Gaya Visual & Mood",
+          "type": "text",
+          "placeholder": "Contoh: Seni piksel (pixel art) dengan nuansa gelap, fantasi cat air (watercolor fantasy), 3D realistis.",
+          "info": "Jelaskan estetika visual dan suasana yang ingin Anda capai."
+        }
+      ],
+      "Analisis Laporan Keuangan": [
+        {
+          "name": "NAMA_PERUSAHAAN",
+          "label": "Nama Perusahaan",
+          "type": "text",
+          "placeholder": "Contoh: PT Sejahtera Abadi Tbk.",
+          "info": "Nama perusahaan yang laporan keuangannya akan dianalisis."
+        },
+        {
+          "name": "PERIODE_LAPORAN",
+          "label": "Periode Laporan",
+          "type": "text",
+          "placeholder": "Contoh: Laporan Tahunan 2024 atau Laporan Kuartal 3 2025",
+          "info": "Cakupan waktu dari laporan yang dianalisis."
+        },
+        {
+          "name": "DATA_LABA_RUGI",
+          "label": "Data Laba Rugi (Income Statement)",
+          "type": "textarea",
+          "placeholder": "Contoh: Pendapatan: 1 Miliar, HPP: 600 Juta, Laba Kotor: 400 Juta, Biaya Operasional: 250 Juta, Laba Bersih: 150 Juta.",
+          "info": "Masukkan poin-poin utama dari laporan laba rugi."
+        },
+        {
+          "name": "DATA_NERACA",
+          "label": "Data Neraca (Balance Sheet)",
+          "type": "textarea",
+          "placeholder": "Contoh: Aset Lancar: 500 Juta, Aset Tetap: 1.2 Miliar, Total Aset: 1.7 Miliar. Liabilitas Jangka Pendek: 300 Juta, Liabilitas Jangka Panjang: 700 Juta, Ekuitas: 700 Juta.",
+          "info": "Masukkan poin-poin utama dari neraca keuangan."
+        },
+        {
+          "name": "DATA_ARUS_KAS",
+          "label": "Data Arus Kas (Cash Flow Statement)",
+          "type": "textarea",
+          "placeholder": "Contoh: Arus Kas dari Operasi: 200 Juta, Arus Kas dari Investasi: -150 Juta, Arus Kas dari Pendanaan: -50 Juta.",
+          "info": "Masukkan poin-poin utama dari laporan arus kas."
+        },
+        {
+          "name": "FOKUS_ANALISIS",
+          "label": "Fokus Analisis",
+          "type": "multiselect",
+          "options": [
+            "Analisis Rasio Profitabilitas",
+            "Analisis Rasio Likuiditas",
+            "Analisis Rasio Solvabilitas",
+            "Identifikasi Red Flags"
+          ],
+          "default": [
+            "Analisis Rasio Profitabilitas",
+            "Analisis Rasio Likuiditas"
+          ],
+          "info": "Pilih aspek analisis yang paling penting bagi Anda."
+        }
+      ],
+      "Perencanaan Argumen Debat": [
+        {
+          "name": "MOSI_DEBAT",
+          "label": "Mosi atau Topik Debat",
+          "type": "text",
+          "placeholder": "Contoh: 'Kecerdasan Buatan Lebih Banyak Membawa Manfaat Daripada Mudarat'",
+          "info": "Tuliskan pernyataan atau topik yang akan diperdebatkan."
+        },
+        {
+          "name": "POSISI_SAYA",
+          "label": "Posisi Anda",
+          "type": "select",
+          "options": [
+            "Pro (Setuju)",
+            "Kontra (Tidak Setuju)"
+          ],
+          "default": "Pro (Setuju)",
+          "info": "Pilih sisi argumen yang akan Anda bela."
+        },
+        {
+          "name": "ARGUMEN_UTAMA_SAYA",
+          "label": "Poin-poin Argumen Utama Anda",
+          "type": "textarea",
+          "placeholder": "Contoh: 1. AI meningkatkan efisiensi di berbagai industri. 2. AI mempercepat penemuan ilmiah. 3. AI membuka lapangan kerja baru.",
+          "info": "Sebutkan 2-3 poin utama yang mendukung posisi Anda."
+        },
+        {
+          "name": "POTENSI_ARGUMEN_LAWAN",
+          "label": "Potensi Argumen Lawan (Opsional)",
+          "type": "textarea",
+          "placeholder": "Contoh: AI akan menyebabkan pengangguran massal. Ada risiko penyalahgunaan AI untuk tujuan jahat.",
+          "info": "Antisipasi argumen yang mungkin akan digunakan oleh pihak lawan.",
+          "optional": true
+        }
+      ]
+    }
+  },
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang konsultan ahli multi-disiplin. Bergantung pada pilihan pengguna, Anda akan bertindak sebagai Game Designer, Analis Keuangan, atau Pelatih Debat untuk menghasilkan dokumen yang diminta.",
+    "KONTEKS": "Pengguna ingin membuat sebuah dokumen terstruktur dengan jenis: '{{JENIS_DOKUMEN}}'. Anda harus memproses input yang diberikan untuk menghasilkan output yang komprehensif dan profesional sesuai dengan peran yang relevan.",
+    "TUGAS": "Berdasarkan jenis dokumen yang dipilih, lakukan tugas berikut:\n\n{{#if JENIS_DOKUMEN === 'Dokumen Desain Game (GDD)'}}**Tugas: Buat Draf Game Design Document**\nBuat draf GDD yang terstruktur untuk game berjudul **'{{NAMA_GAME}}'**. Elaborasikan setiap bagian berdasarkan detail berikut:\n- **Genre:** {{GENRE_GAME}}\n- **Konsep Inti & USP:** {{KONSEP_UTAMA}}\n- **Mekanik Gameplay:** {{MEKANIK_INTI}}\n- **Narasi & Dunia:** {{NARASI_RINGKAS}}\n- **Gaya Visual & Mood:** {{GAYA_VISUAL}}\nStruktur dokumen harus mencakup: 1. Ringkasan Eksekutif, 2. Konsep Inti, 3. Target Audiens, 4. Mekanik Gameplay (jelaskan mekanik inti), 5. Narasi & Dunia (cerita, karakter), 6. Gaya Visual & Audio.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Analisis Laporan Keuangan'}}**Tugas: Lakukan Analisis Laporan Keuangan**\nLakukan analisis kesehatan keuangan untuk **{{NAMA_PERUSAHAAN}}** periode **{{PERIODE_LAPORAN}}**. Berdasarkan data berikut:\n- **Laba Rugi:** {{DATA_LABA_RUGI}}\n- **Neraca:** {{DATA_NERACA}}\n- **Arus Kas:** {{DATA_ARUS_KAS}}\nFokuskan analisis Anda pada: **{{FOKUS_ANALISIS}}**. Hitung rasio-rasio yang relevan, berikan interpretasi dari setiap angka, dan berikan ringkasan eksekutif mengenai kesehatan keuangan perusahaan secara keseluruhan.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Perencanaan Argumen Debat'}}**Tugas: Siapkan Materi Debat**\nSiapkan materi untuk debat dengan mosi **'{{MOSI_DEBAT}}'**. Anda berada di posisi **{{POSISI_SAYA}}**. Bangun argumen yang kuat berdasarkan poin-poin berikut: {{ARGUMEN_UTAMA_SAYA}}. Untuk setiap poin, berikan elaborasi dan contoh. Jika disediakan, siapkan juga sanggahan (rebuttal) untuk potensi argumen lawan berikut: {{POTENSI_ARGUMEN_LAWAN}}. Susun materi ini menjadi sebuah kerangka pidato yang logis dan persuasif.\n{{/if}}",
+    "FORMAT OUTPUT": "Selalu gunakan format Markdown yang sangat terstruktur dengan heading, sub-heading, dan daftar berpoin untuk memastikan keterbacaan maksimal. Setiap dokumen harus memiliki judul yang jelas sesuai dengan jenisnya."
+  },
+  "toolType": "planning",
+  "konteks_tambahan_instruksi_khusus": "Untuk setiap tugas, berikan output yang mendalam dan profesional. Jika ada informasi yang kurang dari pengguna, buat asumsi yang cerdas dan nyatakan asumsi tersebut di awal laporan Anda. Contoh: 'Dengan asumsi target audiens adalah pemain kasual...'.",
+  "contoh_kalimat": "Bantu saya membuat GDD untuk game platformer.",
+  "output": "natural_language_prompt",
+  "crossValidationRules": []
+}

@@ -1,0 +1,47 @@
+{
+  "description": "Metode multi-langkah di mana AI berperan sebagai Penulis, Penerbit, dan Editor untuk menyempurnakan teks.",
+  "toolType": "planning",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Editor Multi-Tahap yang akan menerapkan metode APE untuk menyempurnakan teks.",
+  "components": [
+    {
+      "name": "topic",
+      "label": "Topik Teks",
+      "type": "text",
+      "placeholder": "e.g., 'Manfaat meditasi untuk produktivitas.'",
+      "info": "Topik utama yang akan ditulis."
+    },
+    {
+      "name": "authorPrompt",
+      "label": "Prompt untuk Penulis (Author)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Tulis draf artikel 500 kata tentang topik ini. Fokus pada aliran ide dan konten yang kaya.'",
+      "info": "Langkah 1: Minta AI untuk menghasilkan draf awal."
+    },
+    {
+      "name": "publisherPrompt",
+      "label": "Prompt untuk Penerbit (Publisher)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Tinjau draf. Apakah ini menarik untuk audiens target (profesional muda)? Buat judul yang menarik dan periksa keterbacaan.'",
+      "info": "Langkah 2: Minta AI untuk meninjau dari sudut pandang audiens dan daya tarik."
+    },
+    {
+      "name": "editorPrompt",
+      "label": "Prompt untuk Editor",
+      "type": "textarea",
+      "placeholder": "e.g., 'Periksa draf untuk kesalahan tata bahasa, ejaan, dan gaya. Pertajam kalimat dan pastikan alurnya logis.'",
+      "info": "Langkah 3: Minta AI untuk melakukan penyuntingan teknis."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+    }
+  ],
+  "kategori": [
+    "Prompt Ringkas",
+    "Refleksi & Peningkatan Prompt"
+  ],
+  "nama_kerangka": "APE (Author, Publisher, Editor)"
+}

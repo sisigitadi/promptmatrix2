@@ -1,0 +1,70 @@
+{
+  "description": "Dapatkan beberapa opsi judul yang menarik (click-worthy) untuk artikel, blog, email, atau video.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Kreator Headline yang akan menghasilkan berbagai opsi judul.",
+  "components": [
+    {
+      "name": "mainTopic",
+      "label": "Topik Utama Konten",
+      "type": "text",
+      "placeholder": "e.g., 'Tips produktivitas kerja dari rumah'",
+      "info": "Jelaskan secara singkat isi dari konten Anda.",
+      "validation": {
+        "min_length": 5,
+        "max_length": 50
+      }
+    },
+    {
+      "name": "keywords",
+      "label": "Kata Kunci yang Harus Ada",
+      "type": "text",
+      "placeholder": "e.g., 'WFH, produktivitas'",
+      "info": "Kata atau frasa yang wajib ada di dalam judul.",
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "headlineStyle",
+      "label": "Gaya Headline",
+      "type": "select",
+      "options": [
+        "Berbasis Angka (e.g., 7 Cara...)",
+        "Berbasis Manfaat (e.g., Dapatkan...)",
+        "Berbasis Pertanyaan (e.g., Apakah Anda...)",
+        "Membangkitkan Rasa Penasaran",
+        "Langsung & Jelas",
+        "Provokatif",
+        "Lainnya..."
+      ],
+      "info": "Pilih pendekatan psikologis yang ingin Anda gunakan."
+    },
+    {
+      "name": "numberOfOptions",
+      "label": "Jumlah Opsi Judul",
+      "type": "number",
+      "placeholder": "e.g., 5",
+      "info": "Berapa banyak alternatif judul yang ingin Anda hasilkan?",
+      "validation": {
+        "min_value": 1,
+        "max_value": 10
+      }
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Judul tidak boleh lebih dari 70 karakter. Target audiens adalah pemula. Hindari clickbait yang berlebihan.",
+      "info": "Batasan atau panduan spesifik lainnya untuk pembuatan judul.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Alat Bantu Menulis"
+  ],
+  "nama_kerangka": "Generator Judul & Headline"
+}

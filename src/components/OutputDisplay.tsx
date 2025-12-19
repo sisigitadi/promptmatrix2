@@ -412,188 +412,196 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
           </ButtonGroup>
         </Card.Header>
         <Card.Body className="d-flex flex-column text-start">
-          {/* Output Display Section (approx 75%) */}
-          <div
-            style={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
-          >
-            <Form.Control
-              as="textarea"
-              ref={textareaRef}
-              value={editableOutput}
-              onChange={(e) => {
-                setEditableOutput(e.target.value);
-                setIsDirty(true);
-              }}
-              rows={Math.max(10, (editableOutput || "").split("\n").length + 1)}
-              className={`flex-grow-1 mb-3 output-textarea ${isEditable ? "editable" : ""} ${
-                outputType === "json" ? "syntax-highlighted" : ""
-              }`}
-              placeholder="Prompt Anda yang terstruktur lengkap akan disusun dan ditampilkan di sini..."
-              aria-label="Output Prompt"
-              readOnly={!isEditable} // Control editability
-              style={{
-                padding: "clamp(1rem, 2vw, 1.5rem)",
-                fontSize: "clamp(0.85rem, 1.2vw, 1rem)",
-                maxHeight: "60vh", // Add a max height
-                overflowY: "auto", // Add scroll if content exceeds max height
-                whiteSpace: "pre-wrap",
-                wordBreak: "break-word",
-              }}
-            />
-            {outputType === "natural" && (
-              <div className="d-flex justify-content-end small mb-2">
-                <span>Karakter: {editableOutput.length}</span>
-                <span className="ms-3">
-                  Kata:{" "}
-                  {editableOutput.trim().split(/\s+/).filter(Boolean).length}
-                </span>
-              </div>
-            )}
-            <div className="d-flex justify-content-between mb-3">
-              <ButtonGroup className="flex-grow-1 me-2">
-                {" "}
-                {/* Grouping Copy and Edit */}
-                <Button variant="success" onClick={handleCopy}>
-                  📋 {copyButtonText}
-                </Button>
-                <Button variant="info" onClick={toggleEdit}>
-                  {isEditable ? "Selesai Edit" : "✏️ Edit"}
-                </Button>
-                {isDirty && (
+          <>
+            {/* Output Display Section (approx 75%) */}
+            <div
+              style={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
+            >
+              <Form.Control
+                as="textarea"
+                ref={textareaRef}
+                value={editableOutput}
+                onChange={(e) => {
+                  setEditableOutput(e.target.value);
+                  setIsDirty(true);
+                }}
+                rows={Math.max(
+                  10,
+                  (editableOutput || "").split("\n").length + 1,
+                )}
+                className={`flex-grow-1 mb-3 output-textarea ${isEditable ? "editable" : ""} ${
+                  outputType === "json" ? "syntax-highlighted" : ""
+                }`}
+                placeholder="Prompt Anda yang terstruktur lengkap akan disusun dan ditampilkan di sini..."
+                aria-label="Output Prompt"
+                readOnly={!isEditable} // Control editability
+                style={{
+                  padding: "clamp(1rem, 2vw, 1.5rem)",
+                  fontSize: "clamp(0.85rem, 1.2vw, 1rem)",
+                  maxHeight: "60vh", // Add a max height
+                  overflowY: "auto", // Add scroll if content exceeds max height
+                  whiteSpace: "pre-wrap",
+                  wordBreak: "break-word",
+                }}
+              />
+              {outputType === "natural" && (
+                <div className="d-flex justify-content-end small mb-2">
+                  <span>Karakter: {editableOutput.length}</span>
+                  <span className="ms-3">
+                    Kata:{" "}
+                    {editableOutput.trim().split(/\s+/).filter(Boolean).length}
+                  </span>
+                </div>
+              )}
+              <div className="d-flex justify-content-between mb-3">
+                <ButtonGroup className="flex-grow-1 me-2">
+                  {" "}
+                  {/* Grouping Copy and Edit */}
+                  <Button variant="success" onClick={handleCopy}>
+                    📋 {copyButtonText}
+                  </Button>
+                  <Button variant="info" onClick={toggleEdit}>
+                    {isEditable ? "Selesai Edit" : "✏️ Edit"}
+                  </Button>
+                  {isDirty && (
+                    <Button
+                      variant="outline-info"
+                      onClick={handleCompareOutput}
+                      className="ms-2"
+                    >
+                      ↔️ Bandingkan
+                    </Button>
+                  )}
+                </ButtonGroup>
+                <ButtonGroup className="flex-grow-1 me-2">
                   <Button
-                    variant="outline-info"
-                    onClick={handleCompareOutput}
-                    className="ms-2"
+                    variant="outline-secondary"
+                    onClick={handleExportMarkdown}
                   >
-                    ↔️ Bandingkan
+                    ⬇️ MD
+                  </Button>
+                  <Button
+                    variant="outline-secondary"
+                    onClick={handleExportJson}
+                  >
+                    ⬇️ JSON
+                  </Button>
+                  <Button variant="outline-secondary" onClick={handleExportCsv}>
+                    ⬇️ CSV
+                  </Button>
+                </ButtonGroup>
+                <Button
+                  variant="warning"
+                  onClick={() => onUseAsInput(currentOutput)}
+                  className="flex-grow-1" // Removed me-2 as it's now the last button
+                >
+                  ➡️ Output {`→`} Input
+                </Button>
+              </div>
+
+              <div className="d-flex justify-content-between mb-3">
+                {showDevMode && (
+                  <Button
+                    variant="info"
+                    onClick={handleGenerateClick}
+                    className="flex-grow-1 me-2"
+                    disabled={isGenerating || !isApiKeyEnabled || !apiKey} // Disable button when generating or API key is not enabled/empty
+                  >
+                    {isGenerating ? (
+                      <>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />{" "}
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <FaRocket /> Generate AI Response
+                      </>
+                    )}
                   </Button>
                 )}
-              </ButtonGroup>
-              <ButtonGroup className="flex-grow-1 me-2">
-                <Button
-                  variant="outline-secondary"
-                  onClick={handleExportMarkdown}
-                >
-                  ⬇️ MD
-                </Button>
-                <Button variant="outline-secondary" onClick={handleExportJson}>
-                  ⬇️ JSON
-                </Button>
-                <Button variant="outline-secondary" onClick={handleExportCsv}>
-                  ⬇️ CSV
-                </Button>
-              </ButtonGroup>
-              <Button
-                variant="warning"
-                onClick={() => onUseAsInput(currentOutput)}
-                className="flex-grow-1" // Removed me-2 as it's now the last button
-              >
-                ➡️ Output {`→`} Input
-              </Button>
-            </div>
 
-            <div className="d-flex justify-content-between mb-3">
-              {showDevMode && (
-                <Button
-                  variant="info"
-                  onClick={handleGenerateClick}
-                  className="flex-grow-1 me-2"
-                  disabled={isGenerating || !isApiKeyEnabled || !apiKey} // Disable button when generating or API key is not enabled/empty
-                >
-                  {isGenerating ? (
-                    <>
-                      <Spinner
-                        as="span"
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                      />{" "}
-                      Generating...
-                    </>
-                  ) : (
-                    <>
-                      <FaRocket /> Generate AI Response
-                    </>
-                  )}
-                </Button>
-              )}
-
-              {showDevMode && (
-                <Button
-                  variant="outline-secondary" // Changed variant
-                  onClick={() => setShowDevModeSettingsModal(true)}
-                  className="flex-grow-0"
-                  title="Pengaturan Mode Pengembang"
-                  aria-label="Pengaturan Mode Pengembang"
-                >
-                  <FaCog />
-                </Button>
-              )}
-            </div>
-          </div>
-
-          {/* Save Prompt Section (approx 25%) */}
-          <div
-            style={{
-              flexGrow: 1,
-              display: "flex",
-              flexDirection: "column",
-              paddingTop: "1rem",
-              borderTop: "1px solid var(--border-color)",
-            }}
-          >
-            <Card.Title className="mb-3">5. Simpan Prompt:</Card.Title>
-            <div className="d-flex justify-content-between">
-              <Button
-                variant="primary"
-                onClick={handleSave}
-                className="flex-grow-1 me-2"
-              >
-                💾 Simpan Prompt
-              </Button>
-              <Button
-                variant="info"
-                onClick={onShowSavedPrompts}
-                className="flex-grow-1"
-              >
-                📚 Prompt Tersimpan
-              </Button>
-            </div>
-          </div>
-
-          {recommendedFrameworks.length > 0 && (
-            <div
-              style={{
-                flexShrink: 0,
-                paddingTop: "1rem",
-                borderTop: "1px solid var(--border-color)",
-                marginTop: "1rem",
-              }}
-            >
-              <Card.Title className="mb-3">
-                Rekomendasi Kerangka Kerja Terkait:
-              </Card.Title>
-              <div className="d-flex flex-wrap gap-2">
-                {recommendedFrameworks.map((rec) => (
+                {showDevMode && (
                   <Button
-                    key={rec.name}
-                    variant="outline-secondary"
-                    size="sm"
-                    onClick={() => {
-                      onSelectRecommendedFramework(
-                        rec.name,
-                        rec.category,
-                        rec.subcategory,
-                      );
-                    }}
+                    variant="outline-secondary" // Changed variant
+                    onClick={() => setShowDevModeSettingsModal(true)}
+                    className="flex-grow-0"
+                    title="Pengaturan Mode Pengembang"
+                    aria-label="Pengaturan Mode Pengembang"
                   >
-                    {rec.name}
+                    <FaCog />
                   </Button>
-                ))}
+                )}
               </div>
             </div>
-          )}
+
+            {/* Save Prompt Section (approx 25%) */}
+            <div
+              style={{
+                flexGrow: 1,
+                display: "flex",
+                flexDirection: "column",
+                paddingTop: "1rem",
+                borderTop: "1px solid var(--border-color)",
+              }}
+            >
+              <Card.Title className="mb-3">5. Simpan Prompt:</Card.Title>
+              <div className="d-flex justify-content-between">
+                <Button
+                  variant="primary"
+                  onClick={handleSave}
+                  className="flex-grow-1 me-2"
+                >
+                  💾 Simpan Prompt
+                </Button>
+                <Button
+                  variant="info"
+                  onClick={onShowSavedPrompts}
+                  className="flex-grow-1"
+                >
+                  📚 Prompt Tersimpan
+                </Button>
+              </div>
+            </div>
+
+            {recommendedFrameworks.length > 0 && (
+              <div
+                style={{
+                  flexShrink: 0,
+                  paddingTop: "1rem",
+                  borderTop: "1px solid var(--border-color)",
+                  marginTop: "1rem",
+                }}
+              >
+                <Card.Title className="mb-3">
+                  Rekomendasi Kerangka Kerja Terkait:
+                </Card.Title>
+                <div className="d-flex flex-wrap gap-2">
+                  {recommendedFrameworks.map((rec) => (
+                    <Button
+                      key={rec.name}
+                      variant="outline-secondary"
+                      size="sm"
+                      onClick={() => {
+                        onSelectRecommendedFramework(
+                          rec.name,
+                          rec.category,
+                          rec.subcategory,
+                        );
+                      }}
+                    >
+                      {rec.name}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
         </Card.Body>
       </Card>
 

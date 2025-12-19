@@ -1,0 +1,47 @@
+{
+  "description": "Berlatih untuk percakapan sulit dengan AI yang berperan sebagai lawan bicara.",
+  "toolType": "text",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Pelatih Komunikasi yang akan mensimulasikan percakapan sulit.",
+  "components": [
+    {
+      "name": "scenario",
+      "label": "Skenario Percakapan",
+      "type": "text",
+      "placeholder": "e.g., 'Meminta kenaikan gaji', 'Memberikan umpan balik negatif kepada rekan kerja'",
+      "info": "Jelaskan situasi spesifik dari percakapan yang akan Anda latih."
+    },
+    {
+      "name": "myRole",
+      "label": "Peran Saya",
+      "type": "text",
+      "placeholder": "e.g., 'Karyawan', 'Manajer Proyek'",
+      "info": "Anda akan berperan sebagai siapa dalam simulasi ini?"
+    },
+    {
+      "name": "aiRole",
+      "label": "Peran AI (Lawan Bicara)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Seorang atasan yang sibuk dan fokus pada data.', 'Seorang rekan kerja yang defensif dan mudah tersinggung.'",
+      "info": "Berikan AI persona yang spesifik. Jelaskan kepribadian dan kemungkinan reaksinya."
+    },
+    {
+      "name": "myOpeningStatement",
+      "label": "Kalimat Pembuka Saya",
+      "type": "textarea",
+      "placeholder": "e.g., 'Pak/Bu, terima kasih atas waktunya. Saya ingin mendiskusikan tentang kompensasi saya.'",
+      "info": "Bagaimana Anda akan memulai percakapan ini? AI akan merespons dari sini."
+    },
+    {
+      "name": "additionalContext",
+      "label": "Konteks Tambahan & Instruksi Khusus",
+      "type": "textarea",
+      "placeholder": "Contoh: Tujuan saya adalah mendapatkan kenaikan 15%. AI harus mencoba untuk menolak permintaan saya setidaknya dua kali. Buat agar AI memberikan argumen balasan yang logis.",
+      "info": "Aturan main dan tujuan dari simulasi ini."
+    }
+  ],
+  "kategori": [
+    "Teks & Konten",
+    "Pengembangan Diri & Psikologi"
+  ],
+  "nama_kerangka": "Simulator Latihan Percakapan Sulit"
+}
