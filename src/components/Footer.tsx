@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Button, Badge } from "react-bootstrap";
-import { FaGithub, FaLinkedin, FaCode, FaHeart } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaCode } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
 interface FooterProps {
@@ -34,13 +34,9 @@ const Footer: React.FC<FooterProps> = ({
                 PromptMatrix 2.0
               </h1>
             </div>
-            <p className="copyright-text mb-2 d-flex align-items-center small">
-              Dibuat dengan{" "}
-              <FaHeart className="mx-1 heart-beat" color="#ff00ff" /> dan AI
-            </p>
+
             <p className="footer-description small opacity-75 mb-3">
-              Platform rekayasa prompt AI profesional untuk produktivitas
-              maksimal.
+              Built with ❤️ for the AI Community
             </p>
             <div className="d-flex gap-3 social-links mb-3">
               <a

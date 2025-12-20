@@ -33,7 +33,8 @@ const HelpModal: React.FC<HelpModalProps> = ({ show, onHide }) => {
       const fetchDocuments = async () => {
         setIsLoading(true);
         try {
-          const response = await fetch("/PromptMatrixV20/docs-manifest.json");
+          // Use relative path to load the manifest from the same directory as the index.html
+          const response = await fetch("./docs-manifest.json");
           if (!response.ok)
             throw new Error(`HTTP error! status: ${response.status}`);
           const data: Document[] = await response.json();
@@ -166,10 +167,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ show, onHide }) => {
                   <div
                     className={`help-card h-100 p-4 text-center cursor-pointer hover-lift ${getButtonClass(doc.title)}`}
                     onClick={() =>
-                      loadMarkdown(
-                        `/PromptMatrixV20/docs/${doc.file}`,
-                        doc.title,
-                      )
+                      loadMarkdown(`./docs/${doc.file}`, doc.title)
                     }
                     role="button"
                     tabIndex={0}

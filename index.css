@@ -41,23 +41,19 @@
   --category-image-bg: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
   --category-text-bg: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
   --category-code-bg: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
-  --category-business-bg: linear-gradient(
-    135deg,
-    #12c2e9 0%,
-    #c471ed 50%,
-    #f64f59 100%
-  );
+  --category-business-bg: linear-gradient(135deg,
+      #12c2e9 0%,
+      #c471ed 50%,
+      #f64f59 100%);
   --category-education-bg: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);
   --category-game-bg: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
   --category-concise-bg: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);
   --category-project-bg: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
   --category-collection-bg: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%);
-  --category-default-bg: linear-gradient(
-    135deg,
-    #833ab4 0%,
-    #fd1d1d 50%,
-    #fcb045 100%
-  );
+  --category-default-bg: linear-gradient(135deg,
+      #833ab4 0%,
+      #fd1d1d 50%,
+      #fcb045 100%);
 
   /* Static Colors for Solid Buttons */
   --category-audio-static: #7f00ff;
@@ -238,6 +234,7 @@ h6 {
   font-size: clamp(1.2rem, 3vw, 1.6rem);
   background: linear-gradient(135deg, var(--text-pure), var(--neon-cyan));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0;
 }
@@ -288,6 +285,7 @@ h6 {
 .footer-brand-title {
   background: linear-gradient(135deg, var(--text-pure), var(--neon-cyan));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
   display: inline-block;
@@ -421,11 +419,9 @@ h6 {
   right: 0;
   bottom: 0;
   pointer-events: none;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(239, 68, 68, 0.05) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle at 50% 50%,
+      rgba(239, 68, 68, 0.05) 0%,
+      transparent 70%);
   z-index: 9998;
   animation: pulse-glow 4s infinite ease-in-out;
 }
@@ -491,6 +487,7 @@ h6 {
 }
 
 @keyframes blink-caret {
+
   from,
   to {
     border-color: transparent;
@@ -518,12 +515,10 @@ h6 {
 
 /* Skeleton Loading Animation */
 .skeleton-loading {
-  background: linear-gradient(
-    90deg,
-    var(--bg-card) 25%,
-    var(--bg-input) 50%,
-    var(--bg-card) 75%
-  );
+  background: linear-gradient(90deg,
+      var(--bg-card) 25%,
+      var(--bg-input) 50%,
+      var(--bg-card) 75%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s infinite linear;
   border-radius: 4px;
@@ -537,4 +532,21 @@ h6 {
   100% {
     background-position: -200% 0;
   }
+}
+
+/* Search Highlight Styles */
+.search-highlight {
+  background-color: rgba(56, 189, 248, 0.4) !important;
+  /* Sky 400 with opacity */
+  color: inherit !important;
+  padding: 0 2px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.search-highlight:hover {
+  background-color: rgba(56, 189, 248, 0.8) !important;
+  transform: scale(1.05);
 }

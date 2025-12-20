@@ -6224,6 +6224,1869 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         crossValidationRules: [],
       },
     },
+    "Automation: Workflow & Logic": {
+      "n8n AI Agent Logic Builder": {
+        id_kerangka: "KOL-AWL-001",
+        nama_kerangka: "n8n AI Agent Logic Builder",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Workflow & Logic"],
+        description:
+          "Desain instruksi sistem, persona, dan batasan logika untuk AI Agent di n8n.",
+        perspektif_user:
+          "Saya ingin membuat workflow n8n dengan AI Agent yang cerdas dan patuh. Saya butuh System Prompt yang memastikan agent tahu peran, tools, dan batasannya.",
+        ai_logic_description:
+          "Persona AI: Anda adalah n8n Workflow Architect & Prompt Engineer. Tugas utama: Merancang System Prompt untuk AI Agent Node.",
+        components: [
+          {
+            name: "agentPersona",
+            label: "Persona Agent",
+            type: "text",
+            description: "Peran agent (e.g. Sales Support, Data Analyst)",
+            placeholder: "e.g. Senior Customer Success Specialist",
+          },
+          {
+            name: "coreTask",
+            label: "Tugas Utama Agent",
+            type: "textarea",
+            description: "Apa yang harus diselesaikan agent?",
+            placeholder:
+              "Menjawab pertanyaan user tentang pricing dan mengarahkan ke demo call.",
+          },
+          {
+            name: "availableTools",
+            label: "Tools yang Tersedia",
+            type: "textarea",
+            description: "Daftar tools yang terhubung di n8n",
+            placeholder:
+              "Google Sheets (Read/Write), Slack (Post Message), Calculator",
+          },
+          {
+            name: "constraints",
+            label: "Batasan & Aturan",
+            type: "textarea",
+            description: "Hal yang TIDAK BOLEH dilakukan agent",
+            placeholder:
+              "Jangan pernah memberikan diskon tanpa persetujuan manager.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah {{agentPersona}} dalam workflow otomatisasi n8n.",
+          KONTEKS:
+            "Tools aktif: {{availableTools}}. Gunakan hanya jika diperlukan.",
+          TUGAS:
+            "Eksekusi: {{coreTask}}. Berikan respons JSON jika diminta, atau teks natural jika untuk chat.",
+          BATASAN: "Aturan Keras: {{constraints}}.",
+          FORMAT_OUTPUT:
+            "Jika menggunakan tool, jelaskan alasan pemilihannya (thought process).",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat prompt sistem untuk agent support n8n yang bisa akses database user.",
+      },
+      "Zapier Automation Flow Designer": {
+        id_kerangka: "KOL-AWL-002",
+        nama_kerangka: "Zapier Automation Flow Designer",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Workflow & Logic"],
+        description:
+          "Merancang logika AI (ChatGPT/Claude) di tengah step Zapier untuk transformasi data.",
+        perspektif_user:
+          "Saya punya Zapier flow, tapi butuh step 'ChatGPT' di tengahnya untuk memformat data mentah menjadi sesuatu yang berguna sebelum dikirim ke app selanjutnya.",
+        ai_logic_description:
+          "Persona AI: Zapier Automation Expert. Fokus: Data Transformation Logic.",
+        components: [
+          {
+            name: "triggerApp",
+            label: "Aplikasi Pemicu (Trigger)",
+            type: "text",
+            placeholder: "e.g. Typeform (New Entry)",
+          },
+          {
+            name: "inputData",
+            label: "Data Input Mentah",
+            type: "textarea",
+            description: "Data apa yang masuk dari trigger?",
+            placeholder:
+              "Respons survei pelanggan yang panjang dan tidak terstruktur.",
+          },
+          {
+            name: "desiredAction",
+            label: "Transformasi yang Diinginkan",
+            type: "textarea",
+            description: "Apa yang harus dilakukan AI?",
+            placeholder:
+              "Ekstrak sentimen (Positif/Negatif) dan 3 poin kunci dari respons.",
+          },
+          {
+            name: "outputApp",
+            label: "Aplikasi Tujuan (Action)",
+            type: "text",
+            placeholder: "e.g. Google Sheets (Add Row)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah prosesor data otomatis dalam pipeline Zapier.",
+          KONTEKS: "Data mentah: {{inputData}} dari {{triggerApp}}.",
+          TUGAS: "Lakukan transformasi berikut: {{desiredAction}}.",
+          FORMAT_OUTPUT:
+            "Output harus bersih dan siap dikirim ke {{outputApp}}. Jangan ada teks pembuka/penutup. Contoh output: Sentimen: Positif | Poin: 1. Pelayanan cepat, 2. Harga wajar.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat prompt Zapier untuk ekstrak data dari email masuk ke Notion.",
+      },
+      "SaaS Churn Prediction Sentinel": {
+        id_kerangka: "KOL-AWL-003",
+        nama_kerangka: "SaaS Churn Prediction Sentinel",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Workflow & Logic"],
+        description:
+          "Analisis sinyal bahaya dari user behavior untuk mencegah churn (berhenti langganan).",
+        perspektif_user:
+          "Saya ingin AI menganalisis data login dan tiket support user untuk memberi tahu siapa yang berisiko churn, lalu membuatkan email retensi.",
+        ai_logic_description:
+          "Persona AI: Customer Retention Specialist & Data Analyst.",
+        components: [
+          {
+            name: "usageData",
+            label: "Pola Penggunaan",
+            type: "textarea",
+            description: "Tren login atau fitur yang dipakai",
+            placeholder:
+              "User A: Login turun 50% bulan ini, tidak pakai fitur utama.",
+          },
+          {
+            name: "supportTickets",
+            label: "Riwayat Tiket Support",
+            type: "textarea",
+            description: "Keluhan recent user",
+            placeholder: "2 tiket tentang bug export PDF, sentimen frustrasi.",
+          },
+          {
+            name: "planType",
+            label: "Jenis Paket",
+            type: "text",
+            placeholder: "Enterprise Plan ($500/mo)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Customer Retention Specialist.",
+          TUGAS:
+            "1. Analisis {{usageData}} dan {{supportTickets}} untuk hitung Skor Risiko Churn (0-100). 2. Identifikasi alasan risiko. 3. Buat draf email personal dari Founder.",
+          KONTEKS: "Nada: Empatik, proaktif, tidak putus asa.",
+          FORMAT_OUTPUT: "Format: Skor Risiko, Diagnosa Poin, Draf Email.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Analisis user yang jarang login dan sering komplain ini, buatkan email retensi.",
+      },
+      "AI Chatbot Architect": {
+        id_kerangka: "KOL-AWL-004",
+        nama_kerangka: "AI Chatbot Architect",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Workflow & Logic"],
+        description:
+          "Merancang struktur percakapan, tone, dan knowledge base untuk chatbot sales/support.",
+        perspektif_user:
+          "Saya mau bikin chatbot untuk toko online. Saya butuh struktur prompt utamanya agar dia ramah tapi jago jualan.",
+        ai_logic_description: "Persona AI: Conversational AI Designer.",
+        components: [
+          {
+            name: "botGoal",
+            label: "Tujuan Bot",
+            type: "select",
+            options: [
+              "Sales Conversion",
+              "Customer Support",
+              "Lead Generation",
+              "Booking Appointment",
+            ],
+            default: "Sales Conversion",
+          },
+          {
+            name: "businessData",
+            label: "Info Bisnis",
+            type: "textarea",
+            description: "Nama, Produk, USP",
+            placeholder: "Toko Sepatu Lokal, USP: Garansi seumur hidup.",
+          },
+          {
+            name: "botPersonality",
+            label: "Kepribadian Bot",
+            type: "text",
+            placeholder: "Ramah, gaul, suka emoji, membantu.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah asisten virtual untuk {{businessData}}. Kepribadian: {{botPersonality}}.",
+          TUGAS:
+            "Fokus utama: {{botGoal}}. Flow Percakapan: 1. Sapa user. 2. Identifikasi kebutuhan. 3. Rekomendasikan produk. 4. Arahkan ke checkout.",
+          KONTEKS:
+            "Batasan: Jangan bahas kompetitor. Jangan halusinasi harga. Handling: Jika tidak tahu jawabannya, arahkan ke admin manusia.",
+          FORMAT_OUTPUT: "Script percakapan natural.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Rancang persona chatbot untuk toko sepatu yang ramah dan sales-oriented.",
+      },
+    },
+    "Automation: Marketing & Sales": {
+      "Digital Marketing Funnel Automator": {
+        id_kerangka: "KOL-AMS-001",
+        nama_kerangka: "Digital Marketing Funnel Automator",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Marketing & Sales"],
+        description:
+          "Blueprint strategi pemasaran evergreen otomatis dari traffic source hingga konversi.",
+        perspektif_user:
+          "Saya ingin membangun sales funnel yang jalan sendiri 24/7. Saya butuh strategi lengkap: Lead Magnet, Email Sequence, dan Retargeting Ads.",
+        ai_logic_description:
+          "Persona AI: Digital Marketing Strategist expert in Funnel Hacking.",
+        components: [
+          {
+            name: "productName",
+            label: "Nama Produk",
+            type: "text",
+            placeholder: "E-Course Belajar Investasi Saham",
+          },
+          {
+            name: "targetPrice",
+            label: "Harga Produk",
+            type: "text",
+            placeholder: "Rp 500.000",
+          },
+          {
+            name: "trafficSource",
+            label: "Sumber Traffic Utama",
+            type: "select",
+            options: ["Facebook Ads", "TikTok Organic", "SEO/Blog", "LinkedIn"],
+            default: "Facebook Ads",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah Funnel Strategist.",
+          TUGAS:
+            "Rancang 3-Stage Funnel untuk {{productName}} ({{targetPrice}}).",
+          KONTEKS:
+            "Langkah-langkah: 1. TOFU: Lead Magnet Idea (sesuai traffic {{trafficSource}}). 2. MOFU: Nurture Sequence (3 email). 3. BOFU: Conversion Offer & Scarcity.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format tabel blueprint dengan KPI untuk setiap tahap.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat strategi marketing funnel untuk kursus online seharga 500rb dari traffic TikTok.",
+      },
+      "CRM Sales Pipeline Orchestrator": {
+        id_kerangka: "KOL-AMS-002",
+        nama_kerangka: "CRM Sales Pipeline Orchestrator",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Marketing & Sales"],
+        description:
+          "Logika otomatisasi untuk pembersihan, scoring, dan pemindahan lead di CRM (HubSpot/Salesforce).",
+        perspektif_user:
+          "CRM saya berantakan. Saya butuh aturan otomatis: jika lead baru masuk, validasi emailnya, beri skor, dan assign ke sales jika skor tinggi.",
+        ai_logic_description: "Persona AI: CRM Operations Specialist.",
+        components: [
+          {
+            name: "crmPlatform",
+            label: "Platform CRM",
+            type: "select",
+            options: ["HubSpot", "Salesforce", "Pipedrive", "Zoho"],
+            default: "HubSpot",
+          },
+          {
+            name: "dealStages",
+            label: "Tahapan Deal",
+            type: "textarea",
+            placeholder:
+              "New Lead -> Qualified -> Proposal -> Negotiation -> Closed Won",
+          },
+          {
+            name: "qualificationCriteria",
+            label: "Kriteria Kualifikasi",
+            type: "textarea",
+            placeholder: "Budget > $5000, Decision Maker, Urgent Need",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah arsitek otomatisasi {{crmPlatform}}.",
+          TUGAS:
+            "Rancang workflow untuk memindahkan deal melalui tahap: {{dealStages}}.",
+          KONTEKS:
+            "Lead Scoring Rule: Beri poin +10 jika memenuhi {{qualificationCriteria}}. Pindahkan ke 'Qualified' jika skor > 50.",
+          FORMAT_OUTPUT:
+            "Jelaskan cara otomatis validasi data sebelum masuk pipeline.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat aturan scoring otomatis di HubSpot untuk kualifikasi lead B2B.",
+      },
+      "Hyper-Personalized Cold Outreach": {
+        id_kerangka: "KOL-AMS-003",
+        nama_kerangka: "Hyper-Personalized Cold Outreach",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Marketing & Sales"],
+        description:
+          "Generate pesan outreach (Email/DM) yang sangat personal menggunakan data scraping.",
+        perspektif_user:
+          "Cold email biasa masuk spam. Saya mau AI membaca LinkedIn prospek dulu, lalu nulis email yang nyambung dengan postingan terakhir mereka.",
+        ai_logic_description:
+          "Persona AI: Expert Copywriter & Sales Development Rep (SDR).",
+        components: [
+          {
+            name: "prospectData",
+            label: "Data Prospek (Raw Text/LinkedIn)",
+            type: "textarea",
+            description: "Copy-paste bio atau latest post prospek",
+            placeholder:
+              "Bio: CTO at TechCorp. Postingan terakhir: Bangga tim kami rilis fitur baru AI.",
+          },
+          {
+            name: "myOffer",
+            label: "Penawaran Saya",
+            type: "textarea",
+            placeholder: "Jasa staff augmentation untuk tim developer.",
+          },
+          {
+            name: "outreachChannel",
+            label: "Channel",
+            type: "select",
+            options: ["Email", "LinkedIn DM", "Twitter DM"],
+            default: "Email",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Expert Copywriter & SDR.",
+          KONTEKS:
+            "Prospek: {{prospectData}}. Penawaran: {{myOffer}}. Tone: Profesional tapi santai (conversational).",
+          TUGAS: "Tulis pesan {{outreachChannel}} yang hyper-personalized.",
+          FORMAT_OUTPUT:
+            "Struktur: 1. Hook (Mulai dengan memuji/komen spesifik tentang data prospek). 2. Bridge (Hubungkan konteks mereka dengan solusi). 3. CTA (Soft Call to Action).",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buatkan cold email ke CTO yang baru posting tentang AI, tawarkan jasa dev shop.",
+      },
+      "E-com Dynamic Sales Scaler": {
+        id_kerangka: "KOL-AMS-004",
+        nama_kerangka: "E-com Dynamic Sales Scaler",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Marketing & Sales"],
+        description:
+          "Otomatisasi trigger untuk dynamic pricing, abandoned cart recovery, dan upsell.",
+        perspektif_user:
+          "Saya ingin toko online saya pintar. Kalau user ninggalin keranjang, kirim WA. Kalau stok menipis, naikkan harga sedikit (dynamic pricing).",
+        ai_logic_description: "Persona AI: E-commerce Growth Hacker.",
+        components: [
+          {
+            name: "storePlatform",
+            label: "Platform Toko",
+            type: "text",
+            placeholder: "Shopify / WooCommerce",
+          },
+          {
+            name: "scenario",
+            label: "Skenario Otomatisasi",
+            type: "select",
+            options: [
+              "Abandoned Cart Recovery",
+              "Post-Purchase Upsell",
+              "Win-Back Lapsed Customer",
+            ],
+            default: "Abandoned Cart Recovery",
+          },
+          {
+            name: "discountStrategy",
+            label: "Strategi Diskon",
+            type: "text",
+            placeholder: "Diskon 10% jika checkout dalam 1 jam.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "E-commerce Growth Hacker.",
+          TUGAS:
+            "Rancang flow otomatisasi {{scenario}} untuk {{storePlatform}}. Tulis naskah pesan (WA/Email) yang persuasif.",
+          KONTEKS:
+            "Strategi penawaran: {{discountStrategy}}. Timing: Tentukan delay waktu pengiriman pesan yang optimal (e.g. 1 jam setelah cart ditinggal).",
+          FORMAT_OUTPUT: "Flowchart langkah demi langkah + Naskah pesan.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Rancang flow abandoned cart via WhatsApp untuk Shopify dengan diskon bertingkat.",
+      },
+      "AI Lead Enrichment & Scoring": {
+        id_kerangka: "KOL-AMS-005",
+        nama_kerangka: "AI Lead Enrichment & Scoring",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Marketing & Sales"],
+        description:
+          "Bot peneliti otomatis yang melengkapi data lead (Enrichment) dan memberi skor prioritas.",
+        perspektif_user:
+          "Saya punya list email, tapi gak tau siapa mereka. Saya mau AI cari info jabatan, perusahaan, dan revenue mereka, lalu kasih skor mana yang 'Hot Lead'.",
+        ai_logic_description: "Persona AI: Data Enrichment Specialist.",
+        components: [
+          {
+            name: "leadInput",
+            label: "Data Lead Awal",
+            type: "textarea",
+            placeholder: "List email atau domain perusahaan.",
+          },
+          {
+            name: "icpCriteria",
+            label: "Kriteria Pelanggan Ideal (ICP)",
+            type: "textarea",
+            placeholder:
+              "Industri: Finance, Ukuran: >50 karyawan, Lokasi: Jakarta.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Data Enrichment Specialist.",
+          TUGAS:
+            "Lakukan simulasi pengayaan data (enrichment) untuk: {{leadInput}}.",
+          KONTEKS:
+            "Cari estimasi: Industri, Ukuran Perusahaan, Jabatan Contact Person.",
+          FORMAT_OUTPUT:
+            "Bandingkan dengan {{icpCriteria}} dan beri skor 1-10. Tabel Lead dengan kolom: Data Baru, Skor, Alasan Skor.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Enrich data email ini dan beri skor berdasarkan kriteria perusahaan finance Jakarta.",
+      },
+      "High-Ticket Appointment Setter": {
+        id_kerangka: "KOL-AMS-006",
+        nama_kerangka: "High-Ticket Appointment Setter",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Marketing & Sales"],
+        description:
+          "Script chatbot branching untuk kualifikasi klien mahal dan booking jadwal sales call.",
+        perspektif_user:
+          "Jasa saya mahal ($2000+). Saya gak mau call sama orang yang gak punya budget. Buatkan script bot yang bisa filter 'kier-kier' dan hanya loloskan 'sultan'.",
+        ai_logic_description: "Persona AI: Senior Sales Closer.",
+        components: [
+          {
+            name: "productPrice",
+            label: "Harga Produk/Jasa",
+            type: "text",
+            placeholder: "$3,000 Coaching Program",
+          },
+          {
+            name: "qualifyingQuestions",
+            label: "Pertanyaan Kualifikasi",
+            type: "textarea",
+            placeholder:
+              "1. Apa goal bisnis Anda? 2. Berapa budget marketing bulanan? 3. Kapan siap mulai?",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Senior Sales Closer.",
+          TUGAS:
+            "Filter prospek untuk {{productPrice}}. Hanya loloskan yang serius. Buat percakapan 2 arah.",
+          KONTEKS:
+            "Langkah 1: Tanyakan {{qualifyingQuestions}} satu per satu natural. Logika: Jika tidak memenuhi syarat, tolak sopan. Jika lolos, berikan link kalender. Tone: Premium, eksklusif, tegas.",
+          FORMAT_OUTPUT: "Script percakapan dengan branching logic.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat script bot untuk filter klien coaching seharga $3000.",
+      },
+      "Automated Webinar Funnel Architect": {
+        id_kerangka: "KOL-AMS-007",
+        nama_kerangka: "Automated Webinar Funnel Architect",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Marketing & Sales"],
+        description:
+          "Merancang struktur webinar evergreen (rekaman otomatis) dengan email sequence pemanasan dan penjualan.",
+        perspektif_user:
+          "Saya mau jualan kursus lewat webinar otomatis. Bantu saya rancang topiknya, isi email pengingat sebelum webinar, dan email jualan setelah webinar.",
+        ai_logic_description: "Persona AI: Webinar Marketing Expert.",
+        components: [
+          {
+            name: "webinarTopic",
+            label: "Topik Webinar",
+            type: "text",
+            placeholder: "Cara Memulai Bisnis Ekspor dari Rumah",
+          },
+          {
+            name: "offerName",
+            label: "Penawaran di Akhir",
+            type: "text",
+            placeholder: "Mentoring Ekspor Premium",
+          },
+          {
+            name: "targetAudience",
+            label: "Target Audiens",
+            type: "text",
+            placeholder: "Karyawan yang ingin resign & bisnis",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Webinar Marketing Expert.",
+          TUGAS:
+            "Rancang Automated Webinar Funnel untuk topik {{webinarTopic}}. 1. Pre-Webinar: Outline 3 email pengingat. 2. Webinar: Outline materi 45 menit + Pitch {{offerName}}. 3. Post-Webinar: Sequence 4 email follow-up.",
+          KONTEKS: "Fokus pada transformasi yang didapat audiens.",
+          FORMAT_OUTPUT: "Outline lengkap dengan timeline.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Rancang struktur webinar otomatis tentang bisnis ekspor untuk karyawan.",
+      },
+    },
+    "Automation: Agency Operations": {
+      "AI Agency Fulfillment Engine": {
+        id_kerangka: "KOL-AAO-001",
+        nama_kerangka: "AI Agency Fulfillment Engine",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Agency Operations"],
+        description:
+          "Bot pekerja yang mengerjakan tugas repetitif agensi (SEO audit, Content scheduling) secara otomatis.",
+        perspektif_user:
+          "Saya punya agensi. Karyawan saya habis waktu buat hal teknis membosankan. Saya mau AI yang kerjain audit SEO dan posting sosmed, karyawan fokus strategi.",
+        ai_logic_description: "Persona AI: AI Operations Manager.",
+        components: [
+          {
+            name: "serviceType",
+            label: "Jenis Layanan",
+            type: "select",
+            options: ["SEO Audit", "Social Media Posting", "Lead Gen Research"],
+            default: "SEO Audit",
+          },
+          {
+            name: "clientData",
+            label: "Data Klien",
+            type: "textarea",
+            placeholder: "URL Website, Target Keyword, Akun Sosmed.",
+          },
+          {
+            name: "sop",
+            label: "SOP Pengerjaan",
+            type: "textarea",
+            placeholder:
+              "1. Cek kecepatan web. 2. Cek broken link. 3. Buat report PDF.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah mesin fulfillment otomatis untuk layanan {{serviceType}}.",
+          KONTEKS:
+            "Data Klien: {{clientData}}. Standar Kualitas: Pastikan setara Senior Staff.",
+          TUGAS: "Ikuti SOP ini langkah demi langkah: {{sop}}.",
+          FORMAT_OUTPUT: "Berikan hasil kerja akhir siap kirim ke klien.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Lakukan audit SEO otomatis untuk website klien baru sesuai SOP agensi.",
+      },
+      "A2A Service Pack Automator": {
+        id_kerangka: "KOL-AAO-002",
+        nama_kerangka: "A2A Service Pack Automator",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Agency Operations"],
+        description:
+          "Merancang paket layanan 'Agency to Agency' (White Label) untuk dijual ke agensi lain.",
+        perspektif_user:
+          "Saya mau pivot jadi 'Wholesaler'. Saya mau jual jasa AI saya ke agensi lain biar mereka yang jual ke klien akhir. Buatkan paket harganya.",
+        ai_logic_description: "Persona AI: B2B Product Developer.",
+        components: [
+          {
+            name: "myService",
+            label: "Layanan Inti",
+            type: "text",
+            placeholder: "Chatbot Development",
+          },
+          {
+            name: "targetPartner",
+            label: "Target Mitra Agensi",
+            type: "text",
+            placeholder: "Agensi Marketing Tradisional (yang gak ngerti AI)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "B2B Product Developer.",
+          TUGAS:
+            "Rancang paket White-Label untuk {{myService}} yang dijual ke {{targetPartner}}.",
+          KONTEKS:
+            "1. Packaging: Buat 3 tier harga (Basic / Pro / Enterprise). 2. Assets: List aset marketing. 3. Pitch: Tulis email penawaran B2B.",
+          FORMAT_OUTPUT: "Format proposal bisnis.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat paket white-label jasa pembuatan chatbot untuk ditawarkan ke agensi marketing.",
+      },
+      "Client Onboarding & KYC Bot": {
+        id_kerangka: "KOL-AAO-003",
+        nama_kerangka: "Client Onboarding & KYC Bot",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Agency Operations"],
+        description:
+          "Bot otomatis yang mengejar klien baru untuk kelengkapan data (aset, akses, kontrak) sebelum project mulai.",
+        perspektif_user:
+          "Project sering molor karena klien lama kirim logo/akses login. Saya butuh bot yang 'cerewet' tapi sopan buat nagih data itu di awal.",
+        ai_logic_description: "Persona AI: Client Onboarding Specialist.",
+        components: [
+          {
+            name: "projectType",
+            label: "Jenis Project",
+            type: "text",
+            placeholder: "Website Development",
+          },
+          {
+            name: "requiredAssets",
+            label: "Aset yang Dibutuhkan",
+            type: "textarea",
+            placeholder:
+              "1. Logo (PNG), 2. Teks Profil, 3. Akses Hosting, 4. Bukti Transfer DP.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah asisten onboarding.",
+          TUGAS:
+            "Sapa klien baru untuk project {{projectType}}. Minta data: {{requiredAssets}} secara bertahap. Buat script follow-up (H+1, H+3).",
+          KONTEKS: "Tone: Helpful, Professional, Organized.",
+          FORMAT_OUTPUT: "Script percakapan.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat script onboarding untuk minta data logo dan hosting ke klien website.",
+      },
+      "White-Label Report Generator": {
+        id_kerangka: "KOL-AAO-004",
+        nama_kerangka: "White-Label Report Generator",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Agency Operations"],
+        description:
+          "Mengubah data mentah (CSV/Ads Manager) menjadi narasi laporan performa yang cantik dan 'Branded' agensi.",
+        perspektif_user:
+          "Klien benci lihat tabel Excel. Saya mau AI baca data CSV ini, lalu tulis laporan naratif yang memuji hasil kerja agensi kita, siap di-copy ke PDF.",
+        ai_logic_description: "Persona AI: Data Storyteller & Account Manager.",
+        components: [
+          {
+            name: "rawData",
+            label: "Data Mentah (Summary)",
+            type: "textarea",
+            placeholder:
+              "Spend: 5jt, Leads: 50, CPL: 100rb (Target CPL: 150rb).",
+          },
+          {
+            name: "clientName",
+            label: "Nama Klien",
+            type: "text",
+            placeholder: "Klinik Kecantikan A",
+          },
+          {
+            name: "agencyName",
+            label: "Nama Agensi Kita",
+            type: "text",
+            placeholder: "GrowthDigital",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Account Manager.",
+          TUGAS:
+            "Tulis Executive Summary laporan bulanan untuk {{clientName}} dari {{agencyName}}.",
+          KONTEKS:
+            "Data: {{rawData}}. Highlight KPI tercapai. Narrative: Gunakan bahasa bisnis. Usulkan strategi bulan depan.",
+          FORMAT_OUTPUT: "Laporan Naratif.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat narasi laporan bulanan dari data ads expenses dan leads ini.",
+      },
+      "AI Voice Agent Scripter": {
+        id_kerangka: "KOL-AAO-005",
+        nama_kerangka: "AI Voice Agent Scripter",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Agency Operations"],
+        description:
+          "Menulis naskah dialog dinamis (Vapi.ai/Bland AI) yang terdengar manusiawi (ada jeda, 'hmm', intonasi) untuk Telemarketing/CS.",
+        perspektif_user:
+          "Saya mau setup tim CS robot suara. Tapi kalau scriptnya kaku, orang tutup telpon. Buatkan script yang luwes, ada basa-basi, dan bisa handle penolakan.",
+        ai_logic_description:
+          "Persona AI: Voice User Interface (VUI) Designer.",
+        components: [
+          {
+            name: "callGoal",
+            label: "Tujuan Call",
+            type: "text",
+            placeholder: "Konfirmasi kehadiran webinar",
+          },
+          {
+            name: "persona",
+            label: "Persona Suara",
+            type: "text",
+            placeholder: "Wanita muda, ramah, logat Jakarta Selatan.",
+          },
+          {
+            name: "objections",
+            label: "Kemungkinan Penolakan",
+            type: "textarea",
+            placeholder: "'Saya sibuk', 'Gak tertarik', 'Siapa ini?'",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Scriptwriter untuk Voice AI (Vapi.ai). Persona: {{persona}}.",
+          TUGAS:
+            "Buat script outbound call untuk: {{callGoal}}. Flow: 1. Greeting. 2. Hook. 3. Value. 4. Pertanyaan.",
+          KONTEKS:
+            "Aturan: Kalimat pendek, ada filler words. Handling penolakan: {{objections}}.",
+          FORMAT_OUTPUT: "Script dialog.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Tulis script telpon AI untuk konfirmasi kehadiran webinar yang terdengar natural.",
+      },
+    },
+    "Automation: Content & Creative": {
+      "Social Media Automation Hub": {
+        id_kerangka: "KOL-ACC-001",
+        nama_kerangka: "Social Media Automation Hub",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Content & Creative"],
+        description:
+          "Merencanakan dan menjadwalkan konten massal (batching) untuk multi-platform sekaligus.",
+        perspektif_user:
+          "Saya capek posting tiap hari. Saya mau bikin 30 konten sekaligus dalam 1 jam untuk IG, TikTok, dan LinkedIn. Buatkan kalendernya.",
+        ai_logic_description: "Persona AI: Social Media Manager Advisor.",
+        components: [
+          {
+            name: "niche",
+            label: "Niche Akun",
+            type: "text",
+            placeholder: "Tips Keuangan Pribadi",
+          },
+          {
+            name: "contentPillars",
+            label: "Pilar Konten",
+            type: "textarea",
+            placeholder: "Edukasi, Hiburan, Soft Selling, Testimoni",
+          },
+          {
+            name: "platforms",
+            label: "Platform Target",
+            type: "text",
+            placeholder: "Instagram, LinkedIn, Twitter",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Social Media Manager.",
+          TUGAS: "Buat Kalender Konten 1 Bulan (30 Ide) untuk {{niche}}.",
+          KONTEKS:
+            "Distribusikan ide untuk {{platforms}}. Gunakan rasio seimbang {{contentPillars}}. Pastikan viral/shareable.",
+          FORMAT_OUTPUT:
+            "Tabel: Hari | Judul/Hook | Format (Reels/Carousel/Text) | Caption Singkat.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buatkan kalender konten 30 hari untuk akun tips keuangan di IG dan LinkedIn.",
+      },
+      "Multi-Channel Content Repurposer": {
+        id_kerangka: "KOL-ACC-002",
+        nama_kerangka: "Multi-Channel Content Repurposer",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Content & Creative"],
+        description:
+          "Mengubah satu konten utama (Video Youtube/Artikel) menjadi lusinan format aset sosmed (Tweet, Reels Script, Blog) secara otomatis.",
+        perspektif_user:
+          "Saya punya 1 video Youtube panjang. Saya mau AI potong-potong idenya jadi 10 Twitter thread, 5 ide TikTok, dan 1 artikel blog.",
+        ai_logic_description: "Persona AI: Content Repurposing Specialist.",
+        components: [
+          {
+            name: "sourceContent",
+            label: "Konten Sumber (Transkrip/Teks)",
+            type: "textarea",
+            placeholder: "Paste transkrip video atau artikel di sini.",
+          },
+          {
+            name: "targetFormats",
+            label: "Format Tujuan",
+            type: "multiselect",
+            options: [
+              "Twitter Thread",
+              "LinkedIn Post",
+              "Instagram Carousel",
+              "TikTok Script",
+              "Email Newsletter",
+            ],
+            default: ["Twitter Thread", "Instagram Carousel"],
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Content Repurposing Specialist.",
+          KONTEKS:
+            "Analisis konten sumber ini: {{sourceContent}}. Adaptasi gaya bahasa tiap platform.",
+          TUGAS: "Repurpose (daur ulang) menjadi format: {{targetFormats}}.",
+          FORMAT_OUTPUT:
+            "Sajikan setiap aset secara terpisah dengan batasan karakter yang sesuai.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Ubah transkrip video ini menjadi Thread Twitter dan Postingan LinkedIn.",
+      },
+      "Automated Faceless Channel": {
+        id_kerangka: "KOL-ACC-003",
+        nama_kerangka: "Automated Faceless Channel",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Content & Creative"],
+        description:
+          "Paket lengkap membangun channel 'Faceless' (tanpa wajah): Niche, Script, dan Prompt Visual.",
+        perspektif_user:
+          "Saya mau punya penghasilan dari YouTube tapi malu tampil di kamera. Buatkan rencana channel 'Faceless' yang bisa full AI (suara robot, stok footage).",
+        ai_logic_description: "Persona AI: YouTube Automation Strategist.",
+        components: [
+          {
+            name: "interest",
+            label: "Minat/Topik",
+            type: "text",
+            placeholder: "Misteri / Kriminal / Fakta Unik",
+          },
+          {
+            name: "targetRevenue",
+            label: "Target",
+            type: "select",
+            options: ["AdSense (Views)", "Affiliate Marketing", "Brand Deal"],
+            default: "AdSense (Views)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "YouTube Strategist.",
+          TUGAS:
+            "Kembangkan konsep Faceless Channel seputar {{interest}} untuk {{targetRevenue}}.",
+          KONTEKS:
+            "1. 5 Ide Nama Channel. 2. 10 Ide Video Pertama (Clickbait). 3. Saran Tools AI (Voice/Edit).",
+          FORMAT_OUTPUT: "Termasuk Template Script Intro.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Rancang channel YouTube Faceless tentang fakta unik dunia hewan.",
+      },
+      "Podcast Production Automator": {
+        id_kerangka: "KOL-ACC-004",
+        nama_kerangka: "Podcast Production Automator",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Content & Creative"],
+        description:
+          "Upload 1 file audio/transkrip, otomatis jadi: Show Notes, Tweet Thread, Newsletter, dan ide Audiogram Clip.",
+        perspektif_user:
+          "Saya baru rekam podcast. Males banget bikin deskripsinya, cari timestamp, dan promosi di sosmed. Tolong AI kerjain semua aset promosinya.",
+        ai_logic_description: "Persona AI: Podcast Producer & Marketer.",
+        components: [
+          {
+            name: "transcript",
+            label: "Transkrip Podcast",
+            type: "textarea",
+            placeholder: "Teks percakapan podcast...",
+          },
+          {
+            name: "episodeTitle",
+            label: "Judul Episode (Opsional)",
+            type: "text",
+            placeholder: "#45: Rahasia Produktivitas",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Produser Podcast.",
+          KONTEKS: "Transkrip: {{transcript}}. Tone: Engaging.",
+          TUGAS:
+            "Buat Deliverables: 1. Show Notes (Ringkasan + Timestamps). 2. 3 Ide Judul. 3. 5 Tweet Quote. 4. Ide Audiogram. 5. Draft Email Newsletter.",
+          FORMAT_OUTPUT: "Teks siap pakai untuk masing-masing platform.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat show notes dan konten promosi sosmed dari transkrip podcast ini.",
+      },
+    },
+    "Automation: Professional Services": {
+      "Legal Compliance & Contract Auditor": {
+        id_kerangka: "KOL-APS-001",
+        nama_kerangka: "Legal Compliance & Contract Auditor",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Professional Services"],
+        description:
+          "AI 'Lawyer' yang membaca draft kontrak dan menandai pasal berbahaya/risiko (Red Flags).",
+        perspektif_user:
+          "Saya mau tanda tangan kontrak kerja sama. Tapi bahasanya hukum banget. Tolong AI baca, dan kasih tau saya: mana pasal yang merugikan saya?",
+        ai_logic_description: "Persona AI: Senior Legal Counsel.",
+        components: [
+          {
+            name: "contractText",
+            label: "Teks Kontrak",
+            type: "textarea",
+            placeholder: "Pasal 1... Pasal 2...",
+          },
+          {
+            name: "myPosition",
+            label: "Posisi Saya",
+            type: "select",
+            options: [
+              "Freelancer/Vendor",
+              "Klien/Pemberi Kerja",
+              "Tenant/Penyewa",
+            ],
+            default: "Freelancer/Vendor",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Reviewer Kontrak Legal untuk {{myPosition}}.",
+          TUGAS:
+            "Audit teks kontrak ini: {{contractText}}. Identifikasi 'Red Flags' (risiko hukum/finansial). Contoh: Denda keterlambatan tidak wajar, Hak cipta diambil penuh.",
+          KONTEKS:
+            "Berikan saran perbaikan kalimat (redlining) agar lebih adil. Disclaimer: Ingatkan user bahwa ini bukan nasihat hukum resmi.",
+          FORMAT_OUTPUT: "Laporan audit kontrak.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Audit draft kontrak ini, saya sebagai freelancer, cari pasal yang merugikan.",
+      },
+      "Financial Report & Risk Automator": {
+        id_kerangka: "KOL-APS-002",
+        nama_kerangka: "Financial Report & Risk Automator",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Professional Services"],
+        description:
+          "Membaca mutasi bank/laporan keuangan, lalu membuat narasi kesehatan finansial dan peringatan risiko cashflow.",
+        perspektif_user:
+          "Saya kirim data mutasi rekening. AI tolong kasih tau: 'Saya boros dimana?' dan 'Apakah cashflow saya aman buat 3 bulan ke depan?'",
+        ai_logic_description: "Persona AI: Financial Analyst / CFO Virtual.",
+        components: [
+          {
+            name: "financialData",
+            label: "Data Mutasi/Laporan (Text)",
+            type: "textarea",
+            placeholder:
+              "Pemasukan: 100jt, Gaji: 40jt, Sewa: 10jt, Hiburan: 20jt.",
+          },
+          {
+            name: "businessProyection",
+            label: "Proyeksi Bisnis",
+            type: "text",
+            placeholder: "Bulan depan ada project besar masuk (DP 50%)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Financial Analyst.",
+          TUGAS:
+            "Analisis kesehatan finansial dari data: {{financialData}}. Hitung Burn Rate/Runway. Deteksi pemborosan. Prediksi cashflow bulan depan (asumsi: {{businessProyection}}).",
+          KONTEKS: "Tone: Objektif dan hati-hati.",
+          FORMAT_OUTPUT: "Saran taktis untuk penghematan.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Analisis cashflow dari data pengeluaran ini dan beri peringatan risiko.",
+      },
+      "Healthcare RCM & Patient Admin Bot": {
+        id_kerangka: "KOL-APS-003",
+        nama_kerangka: "Healthcare RCM & Patient Admin Bot",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Professional Services"],
+        description:
+          "Otomatisasi administrasi klinik: Verifikasi asuransi, coding diagnosis (ICD-10), dan follow-up pasien.",
+        perspektif_user:
+          "Admin klinik kewalahan cek kartu asuransi dan telepon pasien. Saya butuh bot yang otomatis cek eligibilitas asuransi dan ingatkan jadwal kontrol.",
+        ai_logic_description: "Persona AI: Healthcare Administrator.",
+        components: [
+          {
+            name: "taskType",
+            label: "Tugas Admin",
+            type: "select",
+            options: [
+              "Verifikasi Asuransi",
+              "Patient Follow-up",
+              "ICD-10 Coding Assistant",
+            ],
+            default: "Verifikasi Asuransi",
+          },
+          {
+            name: "patientInfo",
+            label: "Info Pasien (Anonymized)",
+            type: "textarea",
+            placeholder: "Gejala: Demam berdarah, Rawat inap 3 hari.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Admin Kesehatan Digital tugas {{taskType}}.",
+          KONTEKS: "Info Pasien: {{patientInfo}}.",
+          TUGAS:
+            "Jika Verifikasi: Cek dokumen apa yang kurang. Jika Coding: Sarankan kode ICD-10 yang relevan. Jika Follow-up: Buat pesan WA pengingat kontrol yang empatik.",
+          FORMAT_OUTPUT:
+            "Patuhi privasi pasien (HIPAA/GDPR compliant instructions).",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buatkan pesan follow-up pasien pasca rawat inap demam berdarah.",
+      },
+      "AI Coaching Success Manager": {
+        id_kerangka: "KOL-APS-004",
+        nama_kerangka: "AI Coaching Success Manager",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Professional Services"],
+        description:
+          "Bot pendamping untuk klien coaching yang mengirim check-in harian, motivasi, dan tracking tugas.",
+        perspektif_user:
+          "Saya Business Coach. Klien saya sering hilang semangat di tengah jalan. Saya butuh 'Accountability Bot' yang menyapa mereka tiap pagi sesuai program saya.",
+        ai_logic_description:
+          "Persona AI: Accountability Partner & Junior Coach.",
+        components: [
+          {
+            name: "programName",
+            label: "Nama Program",
+            type: "text",
+            placeholder: "90 Days Weight Loss Challenge",
+          },
+          {
+            name: "clientGoal",
+            label: "Goal Klien",
+            type: "text",
+            placeholder: "Turun 10kg",
+          },
+          {
+            name: "communicationStyle",
+            label: "Gaya Bahasa",
+            type: "select",
+            options: [
+              "Tough Love (Tegas)",
+              "Supportive (Lembut)",
+              "Analytical (Data)",
+            ],
+            default: "Supportive (Lembut)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Coaching Success Manager (Bot).",
+          KONTEKS:
+            "Program: {{programName}}. Goal: {{clientGoal}}. Style: {{communicationStyle}}.",
+          TUGAS:
+            "Buat 5 variasi pesan check-in harian (Senin-Jumat). Tanya progress, minta bukti tugas, dan kasih kutipan motivasi yang relevan.",
+          FORMAT_OUTPUT: "Script pesan.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat pesan check-in harian untuk klien program diet dengan gaya supportive.",
+      },
+      "Real Estate Lead-to-Viewing Bot": {
+        id_kerangka: "KOL-APS-005",
+        nama_kerangka: "Real Estate Lead-to-Viewing Bot",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Professional Services"],
+        description:
+          "Bot agen properti yang mengkualifikasi pembeli dan langsung mengarahkan untuk booking jadwal viewing rumah.",
+        perspektif_user:
+          "Banyak yang tanya harga rumah tapi cuma iseng. Saya mau bot yang tanya budget & KPR dulu. Kalau lolos, langsung suruh pilih jam viewing.",
+        ai_logic_description: "Persona AI: Real Estate Agent Assistant.",
+        components: [
+          {
+            name: "propertyDetails",
+            label: "Detail Properti",
+            type: "textarea",
+            placeholder: "Rumah 2KT 1KM, BSD, Harga 1.5M",
+          },
+          {
+            name: "minRequirements",
+            label: "Syarat Minimal Prospek",
+            type: "text",
+            placeholder: "Penghasilan 3x Cicilan, DP Siap 20%",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Real Estate Agent.",
+          KONTEKS:
+            "Jual properti: {{propertyDetails}}. Filter Lolos: {{minRequirements}}. Tone: Profesional, Trustworthy.",
+          TUGAS:
+            "Kualifikasi: Tanyakan sopan: Budget, Kesiapan DP, Status KPR. Conversion: Jika lolos, berikan 3 slot waktu viewing minggu ini dan minta konfirmasi.",
+          FORMAT_OUTPUT: "Script bot percakapan.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat script bot agen properti untuk kualifikasi pembeli rumah di BSD.",
+      },
+      "Supply Chain Risk Sentinel": {
+        id_kerangka: "KOL-APS-006",
+        nama_kerangka: "Supply Chain Risk Sentinel",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Professional Services"],
+        description:
+          "Memantau level stok dan berita vendor untuk memprediksi keterlambatan pengiriman atau kekurangan stok.",
+        perspektif_user:
+          "Saya importir. Kalau vendor di China telat kirim, saya rugi. Saya butuh AI yang hitung 'Safety Stock' dan kasih alert kalau ada risiko delay.",
+        ai_logic_description: "Persona AI: Supply Chain Analyst.",
+        components: [
+          {
+            name: "inventoryData",
+            label: "Data Stok & Sales",
+            type: "textarea",
+            placeholder: "Stok: 100, Sales/Week: 20, Lead Time: 4 Minggu.",
+          },
+          {
+            name: "vendorNews",
+            label: "Berita/Kondisi Vendor",
+            type: "text",
+            placeholder:
+              "Ada badai di pelabuhan pengirim, atau vendor sedang libur panjang.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Supply Chain Analyst.",
+          TUGAS:
+            "1. Hitung Reorder Point berdasarkan {{inventoryData}}. 2. Analisis risiko dampak {{vendorNews}}. 3. Rekomendasi order (jumlah/vendor cadangan).",
+          KONTEKS: "Tujuan: Mencegah stockout.",
+          FORMAT_OUTPUT: "Laporan status stok dan rekomendasi.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Hitung kapan harus restock barang jika lead time 4 minggu dan ada risiko delay pengiriman.",
+      },
+      "Legal Case Outcome Predictor": {
+        id_kerangka: "KOL-APS-007",
+        nama_kerangka: "Legal Case Outcome Predictor",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Professional Services"],
+        description:
+          "Menganalisis fakta kasus hukum dan membandingkannya dengan preseden untuk memprediksi probabilitas kemenangan.",
+        perspektif_user:
+          "Klien datang bawa kasus sengketa tanah. Sebelum saya ambil, saya mau AI cek seberapa kuat posisi hukumnya berdasarkan fakta yang ada.",
+        ai_logic_description: "Persona AI: Legal Strategist & Researcher.",
+        components: [
+          {
+            name: "caseFacts",
+            label: "Fakta Kasus",
+            type: "textarea",
+            placeholder:
+              "Kronologi sengketa, bukti kepemilikan, surat perjanjian.",
+          },
+          {
+            name: "jurisdiction",
+            label: "Yurisdiksi/Hukum",
+            type: "text",
+            placeholder: "Hukum Perdata Indonesia",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Prediktor Hasil Kasus Hukum {{jurisdiction}}.",
+          KONTEKS: "Fakta: {{caseFacts}}.",
+          TUGAS:
+            "Identifikasi argumen kuat/lemah. Prediksi % peluang menang. Saran langkah strategis.",
+          FORMAT_OUTPUT: "Analisis probabilitas.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Analisis peluang menang kasus sengketa tanah ini berdasarkan fakta sertifikat ganda.",
+      },
+      "AI Recruitment Talent Scout": {
+        id_kerangka: "KOL-APS-008",
+        nama_kerangka: "AI Recruitment Talent Scout",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Professional Services"],
+        description:
+          "Otomatisasi screening CV massal dan ranking kandidat berdasarkan kecocokan skill dengan Job Desc.",
+        perspektif_user:
+          "Ada 500 pelamar kerja. Saya gak kuat baca satu-satu. Tolong AI baca semua CV, bandingkan dengan syarat lowongan, dan kasih saya Top 10 kandidat terbaik.",
+        ai_logic_description: "Persona AI: HR Recruiter Expert.",
+        components: [
+          {
+            name: "jobDescription",
+            label: "Job Description",
+            type: "textarea",
+            placeholder:
+              "Syarat: Bisa React, pengalaman 3 tahun, bahasa Inggris aktif.",
+          },
+          {
+            name: "candidateData",
+            label: "Data Kandidat (Resume Text)",
+            type: "textarea",
+            placeholder:
+              "Paste teks dari beberapa CV kandidat di sini (anonymized).",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "HR Recruiter.",
+          TUGAS: "Screening CV kandidat. Nilai setiap kandidat (0-100).",
+          KONTEKS:
+            "Kriteria: {{jobDescription}}. Data: {{candidateData}}. Tandai over/underqualified.",
+          FORMAT_OUTPUT: "Daftar Ranking Kandidat (Top 3 dengan alasan).",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Screening 5 CV ini untuk posisi Senior React Developer.",
+      },
+    },
+    "Automation: DevOps & Software": {
+      "CI/CD Pipeline Architect": {
+        id_kerangka: "KOL-ADS-001",
+        nama_kerangka: "CI/CD Pipeline Architect",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: DevOps & Software"],
+        description:
+          "Merancang konfigurasi pipeline CI/CD (GitHub Actions/GitLab CI) yang efisien dan aman.",
+        perspektif_user:
+          "Saya mau deploy aplikasi React otomatis ke AWS. Tapi bingung bikin file YAML-nya. Buatkan script pipeline yang test dulu, build, baru deploy.",
+        ai_logic_description: "Persona AI: DevOps Engineer.",
+        components: [
+          {
+            name: "techStack",
+            label: "Tech Stack",
+            type: "text",
+            placeholder: "React, Node.js, AWS S3",
+          },
+          {
+            name: "ciPlatform",
+            label: "Platform CI/CD",
+            type: "select",
+            options: ["GitHub Actions", "GitLab CI", "Jenkins"],
+            default: "GitHub Actions",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "DevOps Engineer.",
+          TUGAS:
+            "Generate konfigurasi pipeline {{ciPlatform}} untuk stack: {{techStack}}. Stages: 1. Install Dependencies. 2. Run Unit Tests. 3. Build Production. 4. Deploy to AWS.",
+          KONTEKS: "Security: Pastikan secrets tidak di-hardcode.",
+          FORMAT_OUTPUT:
+            "Tuliskan kode YAML lengkap dengan komentar penjelasan.",
+        },
+        toolType: "code",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buatkan file GitHub Actions untuk deploy React app ke AWS S3.",
+      },
+      "Automated Code Refactoring Agent": {
+        id_kerangka: "KOL-ADS-002",
+        nama_kerangka: "Automated Code Refactoring Agent",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: DevOps & Software"],
+        description:
+          "Menganalisis kode legacy yang berantakan (spaghetti code) dan menulis ulang agar bersih, modular, dan sesuai prinsip SOLID.",
+        perspektif_user:
+          "Ada fungsi Python 200 baris yang susah dibaca. Tolong pecah jadi fungsi-fungsi kecil yang rapi dan kasih type hinting.",
+        ai_logic_description: "Persona AI: Senior Software Architect.",
+        components: [
+          {
+            name: "codeSnippet",
+            label: "Kode Lama",
+            type: "code",
+            placeholder: "Paste kode di sini...",
+          },
+          {
+            name: "refactorGoal",
+            label: "Tujuan Refactor",
+            type: "select",
+            options: [
+              "Clean Code (Readable)",
+              "Performance (Faster)",
+              "Security (Safe)",
+            ],
+            default: "Clean Code (Readable)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Refactoring Expert.",
+          KONTEKS:
+            "Kode: {{codeSnippet}}. Rules: Terapkan prinsip SOLID dan DRY. Tambahkan type definitions.",
+          TUGAS: "Refactor kode untuk tujuan: {{refactorGoal}}.",
+          FORMAT_OUTPUT: "Kode versi baru + Penjelasan apa yang diubah.",
+        },
+        toolType: "code",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Refactor fungsi Python ini agar lebih modular dan mudah dibaca.",
+      },
+      "Bug Triaging & Root Cause Analyzer": {
+        id_kerangka: "KOL-ADS-003",
+        nama_kerangka: "Bug Triaging & Root Cause Analyzer",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: DevOps & Software"],
+        description:
+          "Menganalisis stack trace error atau log server untuk menemukan akar masalah (Root Cause) dan menyarankan perbaikan.",
+        perspektif_user:
+          "Server error 500. Ini log error-nya panjang banget. Tolong cari tau ini error kenapa dan baris mana yang salah.",
+        ai_logic_description: "Persona AI: Debugging Specialist.",
+        components: [
+          {
+            name: "errorLog",
+            label: "Log Error / Stack Trace",
+            type: "textarea",
+            placeholder: "Error: Cannot read property 'id' of undefined at...",
+          },
+          {
+            name: "context",
+            label: "Konteks (Apa yang dilakukan saat error)",
+            type: "text",
+            placeholder: "User klik tombol Checkout",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Debugging Specialist.",
+          TUGAS: "Analisis log error: {{errorLog}}.",
+          KONTEKS: "Context saat kejadian: {{context}}.",
+          FORMAT_OUTPUT:
+            "Jelaskan Root Cause (bahasa manusia). Sarankan perbaikan kode. Estimasi Severity.",
+        },
+        toolType: "code",
+        output: "natural_language_prompt",
+        contoh_kalimat: "Analisis error log ini dan kasih tau cara fix-nya.",
+      },
+    },
+    "Automation: EdTech & Course Creation": {
+      "AI Course Curriculum Designer": {
+        id_kerangka: "KOL-AEC-001",
+        nama_kerangka: "AI Course Curriculum Designer",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: EdTech & Course Creation"],
+        description:
+          "Merancang silabus kursus lengkap dengan objektif pembelajaran, modul, dan ide proyek siswa.",
+        perspektif_user:
+          "Saya mau bikin kursus 'Data Science untuk Pemula'. Tolong buatkan silabus 8 minggu yang terstruktur dari nol sampai bisa bikin proyek prediksi harga rumah.",
+        ai_logic_description: "Persona AI: Instructional Designer.",
+        components: [
+          {
+            name: "topic",
+            label: "Topik Kursus",
+            type: "text",
+            placeholder: "Data Science with Python",
+          },
+          {
+            name: "targetLevel",
+            label: "Level Siswa",
+            type: "select",
+            options: ["Beginner", "Intermediate", "Advanced"],
+            default: "Beginner",
+          },
+          {
+            name: "duration",
+            label: "Durasi",
+            type: "text",
+            placeholder: "8 Minggu",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Instructional Designer.",
+          TUGAS:
+            "Desain Kurikulum Kursus: {{topic}} untuk level {{targetLevel}} selama {{duration}}.",
+          KONTEKS:
+            "Struktur: Modul Mingguan (Topik, Sub-topik, Latihan). Project: Capstone di akhir.",
+          FORMAT_OUTPUT: "Learning Outcomes.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buatkan silabus kursus Data Science untuk pemula selama 8 minggu.",
+      },
+      "Quiz & Assessment Generator": {
+        id_kerangka: "KOL-AEC-002",
+        nama_kerangka: "Quiz & Assessment Generator",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: EdTech & Course Creation"],
+        description:
+          "Membuat soal kuis (pilihan ganda/essay) beserta kunci jawaban berdasarkan materi teks yang diberikan.",
+        perspektif_user:
+          "Ini materi pelajaran Biologi Bab Sel. Buatkan 10 soal pilihan ganda yang susah (Level HOTS) beserta kunci jawabannya.",
+        ai_logic_description: "Persona AI: Exam Creator / Teacher Assistant.",
+        components: [
+          {
+            name: "materialText",
+            label: "Materi Pelajaran",
+            type: "textarea",
+            placeholder: "Paste rangkuman materi di sini...",
+          },
+          {
+            name: "questionType",
+            label: "Tipe Soal",
+            type: "select",
+            options: ["Multiple Choice", "Essay", "True/False"],
+            default: "Multiple Choice",
+          },
+          {
+            name: "difficulty",
+            label: "Tingkat Kesulitan",
+            type: "select",
+            options: ["Easy (Recall)", "Medium (Apply)", "Hard (Analyze/HOTS)"],
+            default: "Medium (Apply)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Exam Creator.",
+          KONTEKS:
+            "Materi: {{materialText}}. Requirement: Hindari hafalan, fokus konsep.",
+          TUGAS: "Buat 10 soal {{questionType}} tingkat {{difficulty}}.",
+          FORMAT_OUTPUT: "Soal, Opsi, Kunci Jawaban, Pembahasan.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buatkan 10 soal pilihan ganda HOTS dari materi Biologi ini.",
+      },
+      "Student Feedback Analyzer": {
+        id_kerangka: "KOL-AEC-003",
+        nama_kerangka: "Student Feedback Analyzer",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: EdTech & Course Creation"],
+        description:
+          "Menganalisis ratusan umpan balik siswa untuk menemukan pola keluhan atau area yang perlu ditingkatkan.",
+        perspektif_user:
+          "Saya dapat 200 feedback dari siswa setelah kelas selesai. Tolong rangkum: apa yang mereka suka dan apa yang mereka benci? Jangan suruh saya baca satu-satu.",
+        ai_logic_description: "Persona AI: Education Quality Assurance.",
+        components: [
+          {
+            name: "feedbackData",
+            label: "Data Feedback Siswa",
+            type: "textarea",
+            placeholder:
+              "Siswa A: Materinya kecepetan. Siswa B: Seru banget. Siswa C: Suaranya kecil...",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Education Quality Assurance.",
+          TUGAS: "Analisis sentimen dari {{feedbackData}}.",
+          KONTEKS: "Analisis objektif berdasarkan data feedback.",
+          FORMAT_OUTPUT:
+            "Kelompokkan tema (Materi/Teknis). Summary 3 keluhan/pujian utama. Saran perbaikan konkret.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Analisis feedback siswa ini dan berikan saran perbaikan kelas.",
+      },
+    },
+    "Automation: Data Analytics & BI": {
+      "SQL Query Generator & Optimizer": {
+        id_kerangka: "KOL-ADA-001",
+        nama_kerangka: "SQL Query Generator & Optimizer",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Data Analytics & BI"],
+        description:
+          "Menerjemahkan pertanyaan bahasa manusia menjadi SQL Query, atau mengoptimalkan query yang lambat.",
+        perspektif_user:
+          "Saya mau ambil data 'Top 10 Customer yang belanja paling banyak bulan lalu', tapi lupa sintaks SQL JOIN-nya. Buatkan query-nya.",
+        ai_logic_description: "Persona AI: Senior Database Administrator.",
+        components: [
+          {
+            name: "intent",
+            label: "Pertanyaan Data",
+            type: "text",
+            placeholder:
+              "Siapa 10 user dengan total transaksi tertinggi bulan Juni?",
+          },
+          {
+            name: "schemaInfo",
+            label: "Skema Tabel (Nama Kolom)",
+            type: "textarea",
+            placeholder:
+              "Table Users (id, name), Table Orders (user_id, amount, date)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "SQL Expert (PostgreSQL/MySQL).",
+          TUGAS: "Terjemahkan '{{intent}}' menjadi SQL Query.",
+          KONTEKS:
+            "Schema: {{schemaInfo}}. Optimization: Pastikan efisien (Index).",
+          FORMAT_OUTPUT: "SQL Query + Penjelasan logika.",
+        },
+        toolType: "code",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buatkan query SQL untuk cari top 10 customer dari tabel Users dan Orders.",
+      },
+      "Automated Data Cleaning Script": {
+        id_kerangka: "KOL-ADA-002",
+        nama_kerangka: "Automated Data Cleaning Script",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Data Analytics & BI"],
+        description:
+          "Membuat skrip Python (Pandas) untuk membersihkan dataset yang kotor (missing values, duplikat, format salah).",
+        perspektif_user:
+          "Saya punya file CSV data penjualan, tapi banyak tanggal yang formatnya beda-beda dan ada baris kosong. Buatkan script Python buat benerin ini.",
+        ai_logic_description: "Persona AI: Data Engineer.",
+        components: [
+          {
+            name: "issueDescription",
+            label: "Masalah Data",
+            type: "textarea",
+            placeholder:
+              "Kolom 'Date' formatnya campur (DD/MM/YYYY dan YYYY-MM-DD). Kolom 'Price' ada mata uangnya ('Rp'). Ada Null values.",
+          },
+          {
+            name: "library",
+            label: "Library",
+            type: "text",
+            default: "Pandas (Python)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Data Engineer.",
+          TUGAS:
+            "Tulis script Python cleaning data menggunakan {{library}}. Steps: 1. Load CSV. 2. Standardize Date. 3. Clean numeric. 4. Handle Missing Values.",
+          KONTEKS: "Masalah Data: {{issueDescription}}.",
+          FORMAT_OUTPUT: "Kode Python siap run.",
+        },
+        toolType: "code",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat script Pandas untuk bersihkan format tanggal dan hapus simbol mata uang di kolom harga.",
+      },
+      "Business Intelligence Dashboard Planner": {
+        id_kerangka: "KOL-ADA-003",
+        nama_kerangka: "Business Intelligence Dashboard Planner",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Data Analytics & BI"],
+        description:
+          "Merancang layout dan metrik visualisasi untuk dashboard (Tableau/PowerBI/Looker Studio).",
+        perspektif_user:
+          "Saya harus presentasi kinerja marketing ke Boss. Layout dashboard yang bagus gimana ya? Grafik apa yang harus saya pasang biar mudah dibaca?",
+        ai_logic_description: "Persona AI: BI Dashboard Designer.",
+        components: [
+          {
+            name: "audience",
+            label: "Audiens Dashboard",
+            type: "text",
+            placeholder: "CEO / Manager Marketing / Tim Operasional",
+          },
+          {
+            name: "keyMetrics",
+            label: "Metrik Kunci (KPI)",
+            type: "textarea",
+            placeholder:
+              "Total Revenue, Conversion Rate, CPC, ROI per Channel.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "BI Dashboard Designer.",
+          TUGAS: "Desain konsep Dashboard BI untuk {{audience}}.",
+          KONTEKS: "KPI Utama: {{keyMetrics}}. Story: Alur pembacaan data.",
+          FORMAT_OUTPUT:
+            "Usulkan 3 Bagian Utama (Layout). Saran jenis chart untuk setiap metrik.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Rancang layout dashboard PowerBI untuk laporan marketing ke CEO.",
+      },
+    },
+    "Automation: Personal Productivity": {
+      "Daily Task Prioritizer (Eisenhower Matrix)": {
+        id_kerangka: "KOL-APP-001",
+        nama_kerangka: "Daily Task Prioritizer (Eisenhower Matrix)",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Personal Productivity"],
+        description:
+          "Mengurutkan to-do list yang berantakan menjadi matriks prioritas (Do First, Schedule, Delegate, Delete).",
+        perspektif_user:
+          "Saya punya 20 tugas hari ini dan bingung mulai dari mana. Tolong urutkan berdasarkan urgensi dan pentingnya pakai metode Eisenhower.",
+        ai_logic_description: "Persona AI: Productivity Coach.",
+        components: [
+          {
+            name: "taskList",
+            label: "Daftar Tugas",
+            type: "textarea",
+            placeholder:
+              "1. Bikin laporan. 2. Beli kopi. 3. Meeting klien (penting). 4. Cek email...",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Productivity Coach.",
+          KONTEKS: "Daftar Tugas: {{taskList}}. Method: Eisenhower Matrix.",
+          TUGAS:
+            "Kelompokkan tugas ke 4 Kuadran: 1. Do First. 2. Schedule. 3. Delegate. 4. Delete.",
+          FORMAT_OUTPUT: "Matriks Prioritas + Jadwal pengerjaan hari ini.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Prioritaskan to-do list saya ini menggunakan Eisenhower Matrix.",
+      },
+      "Meeting Notes to Action Items": {
+        id_kerangka: "KOL-APP-002",
+        nama_kerangka: "Meeting Notes to Action Items",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Personal Productivity"],
+        description:
+          "Mengekstrak poin tindakan (Action Items) konkret, penanggung jawab, dan tenggat waktu dari catatan rapat yang panjang.",
+        perspektif_user:
+          "Ini transkrip meeting 1 jam. Saya males baca ulang. Tolong kasih tau: Siapa harus ngerjain apa sebelum kapan?",
+        ai_logic_description: "Persona AI: Executive Assistant.",
+        components: [
+          {
+            name: "meetingNotes",
+            label: "Catatan/Transkrip Rapat",
+            type: "textarea",
+            placeholder: "Andi bilang dia akan...",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Executive Assistant.",
+          TUGAS: "Ekstrak Action Items dari: {{meetingNotes}}.",
+          KONTEKS: "Fokus: Cari kalimat komitmen.",
+          FORMAT_OUTPUT:
+            "Tabel: Task | PIC | Deadline. Ringkasan keputusan strategis.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat: "Ekstrak action items dari notulen rapat ini.",
+      },
+      "Knowledge Base Organizer (Obsidian/Notion)": {
+        id_kerangka: "KOL-APP-003",
+        nama_kerangka: "Knowledge Base Organizer (Obsidian/Notion)",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Personal Productivity"],
+        description:
+          "Meresum artikel/buku menjadi catatan terstruktur (Zettelkasten/PARA method) yang siap masuk ke Personal Knowledge Management (PKM).",
+        perspektif_user:
+          "Saya baca artikel bagus tentang AI. Tolong buatkan ringkasannya dalam format Markdown yang cocok buat Obsidian saya, lengkap dengan tags dan backlink.",
+        ai_logic_description: "Persona AI: Knowledge Manager.",
+        components: [
+          {
+            name: "sourceText",
+            label: "Teks Sumber",
+            type: "textarea",
+            placeholder: "Artikel...",
+          },
+          {
+            name: "pkmMethod",
+            label: "Metode PKM",
+            type: "select",
+            options: [
+              "Zettelkasten (Atomic)",
+              "PARA (Projects/Areas/Resources)",
+              "Standard Summary",
+            ],
+            default: "Zettelkasten (Atomic)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Knowledge Manager.",
+          KONTEKS:
+            "Teks: {{sourceText}}. Metode: {{pkmMethod}}. Format Zettelkasten: Atomic ideas + [[WikiLinks]].",
+          TUGAS: "Ringkas menjadi catatan terstruktur.",
+          FORMAT_OUTPUT: "Markdown siap copy-paste.",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Ringkas artikel ini untuk Obsidian dengan format Zettelkasten.",
+      },
+    },
+    "Automation: Cyber Security": {
+      "Vulnerability Scanner Report Analyzer": {
+        id_kerangka: "KOL-ACS-001",
+        nama_kerangka: "Vulnerability Scanner Report Analyzer",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Cyber Security"],
+        description:
+          "Menerjemahkan laporan teknis (Nmap/Burp Suite) menjadi langkah mitigasi yang dapat dipahami.",
+        perspektif_user:
+          "Saya scan web pakai Nmap, hasilnya banyak port open dan istilah aneh. Tolong jelaskan mana yang bahaya dan cara tutup celahnya.",
+        ai_logic_description: "Persona AI: Cyber Security Analyst.",
+        components: [
+          {
+            name: "scanReport",
+            label: "Laporan Scan (Raw Text)",
+            type: "textarea",
+            placeholder: "Nmap scan report for... Port 22/tcp open...",
+          },
+          {
+            name: "systemType",
+            label: "Sistem Target",
+            type: "text",
+            placeholder: "Web Server (Linux/Apache)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Cyber Security Analyst.",
+          TUGAS: "Analisis log scan: {{scanReport}}.",
+          KONTEKS: "Laporan scan keamanan teknis.",
+          FORMAT_OUTPUT:
+            "Identifikasi Risiko High/Critical. Jelaskan dampak bisnis. Panduan mitigasi step-by-step untuk {{systemType}}.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Analisis hasil scan Nmap ini dan berikan langkah perbaikan keamanan.",
+      },
+      "Phishing Simulation Email Generator": {
+        id_kerangka: "KOL-ACS-002",
+        nama_kerangka: "Phishing Simulation Email Generator",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Cyber Security"],
+        description:
+          "Membuat template email phishing yang realistis untuk menguji kesadaran keamanan karyawan (Security Awareness Training).",
+        perspektif_user:
+          "Saya mau tes kewaspadaan karyawan. Buatkan email palsu seolah-olah dari HRD tentang 'Bonus Tahunan', tapi link-nya jebakan edukasi.",
+        ai_logic_description: "Persona AI: Ethical Hacker / Social Engineer.",
+        components: [
+          {
+            name: "scenario",
+            label: "Skenario Phishing",
+            type: "select",
+            options: [
+              "HR Bonus/Payroll",
+              "IT Password Reset",
+              "Urgent CEO Request",
+              "Package Delivery",
+            ],
+            default: "HR Bonus/Payroll",
+          },
+          {
+            name: "targetAudience",
+            label: "Target Karyawan",
+            type: "text",
+            placeholder: "Staff Finance",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Ethical Hacker / Social Engineer.",
+          TUGAS: "Buat email simulasi phishing (Goal: White Hat Edukasi).",
+          KONTEKS: "Skenario: {{scenario}} untuk {{targetAudience}}.",
+          FORMAT_OUTPUT:
+            "Subject & Body Email (gunakan teknik urgensi/otoritas, sertakan 1-2 clue kesalahan untuk dideteksi).",
+        },
+        toolType: "text",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat email simulasi phishing dari HRD tentang bonus untuk tes security awareness.",
+      },
+      "Incident Response Playbook Generator": {
+        id_kerangka: "KOL-ACS-003",
+        nama_kerangka: "Incident Response Playbook Generator",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Cyber Security"],
+        description:
+          "Menghasilkan SOP penanganan insiden (Playbook) langkah demi langkah saat terjadi serangan siber (Ransomware/DDoS).",
+        perspektif_user:
+          "Kalau kantor kena Ransomware jam 2 pagi, kita harus ngapain? Buatkan checklist langkah darurat dari isolasi sampai recovery.",
+        ai_logic_description: "Persona AI: Incident Response Commander.",
+        components: [
+          {
+            name: "incidentType",
+            label: "Jenis Insiden",
+            type: "select",
+            options: [
+              "Ransomware Infection",
+              "DDoS Attack",
+              "Data Breach (Leak)",
+              "Malware Outbreak",
+            ],
+            default: "Ransomware Infection",
+          },
+          {
+            name: "organizationScale",
+            label: "Skala Organisasi",
+            type: "text",
+            placeholder: "SME (50 karyawan, 10 server)",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Incident Response Commander.",
+          KONTEKS: "Insiden: {{incidentType}} (Skala: {{organizationScale}}).",
+          TUGAS:
+            "Buat Playbook Incident Response (NIST/SANS). Phases: Preparation, Identification, Containment, Eradication, Recovery, Lessons Learned.",
+          FORMAT_OUTPUT: "Checklist langkah teknis konkret.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buatkan SOP penanganan insiden Ransomware untuk perusahaan kecil.",
+      },
+      "SOC Alert Triage Assistant": {
+        id_kerangka: "KOL-ACS-004",
+        nama_kerangka: "SOC Alert Triage Assistant",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Cyber Security"],
+        description:
+          "Membantu analis SOC memvalidasi apakah alert keamanan itu 'True Positive' (serangan nyata) atau 'False Positive'.",
+        perspektif_user:
+          "SIEM saya bunyi terus karena ada IP asing coba login. Tolong analisis apakah ini serangan Brute Force atau cuma karyawan yang lagi liburan di luar negeri?",
+        ai_logic_description: "Persona AI: L1 SOC Analyst.",
+        components: [
+          {
+            name: "alertData",
+            label: "Data Alert",
+            type: "textarea",
+            placeholder:
+              "Event: Failed Login, IP: 203.x.x.x, Time: 02:00 AM, User: admin, Count: 50x in 1 min.",
+          },
+          {
+            name: "contextInfo",
+            label: "Info Tambahan",
+            type: "text",
+            placeholder:
+              "User admin emang lagi dinas di IP range tersebut? Tidak.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "L1 SOC Analyst.",
+          TUGAS: "Investigasi Alert: {{alertData}}.",
+          KONTEKS:
+            "Info Tambahan: {{contextInfo}}. Analisis pola waktu/lokasi.",
+          FORMAT_OUTPUT:
+            "Verdict (True/False Positive) + Reasoning + Rekomendasi Tindakan.",
+        },
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Analisis alert failed login ini, apakah brute force attack atau bukan?",
+      },
+      "Secure Code Review Automator": {
+        id_kerangka: "KOL-ACS-005",
+        nama_kerangka: "Secure Code Review Automator",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation: Cyber Security"],
+        description:
+          "Reviewer kode khusus keamanan yang mencari celah seperti SQL Injection, XSS, dan Hardcoded Secrets.",
+        perspektif_user:
+          "Saya mau deploy fitur login baru. Tolong cek kodenya, ada celah keamanan yang bisa ditembus hacker gak?",
+        ai_logic_description: "Persona AI: Application Security Engineer.",
+        components: [
+          {
+            name: "sourceCode",
+            label: "Source Code",
+            type: "code",
+            placeholder: "Paste function login/input handling di sini...",
+          },
+          {
+            name: "language",
+            label: "Bahasa",
+            type: "text",
+            placeholder: "PHP / Javascript / Python",
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Application Security Engineer.",
+          TUGAS: "Audit keamanan kode {{language}}: {{sourceCode}}.",
+          KONTEKS: "Standar: OWASP Top 10.",
+          FORMAT_OUTPUT:
+            "Tabel Temuan: Baris kode rentan, Penjelasan Exploit, Patch/Fix Code.",
+        },
+        toolType: "code",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Cek kode login PHP ini apakah aman dari SQL Injection.",
+      },
+    },
   },
   "Prompt Proyek": {
     "Bisnis & Profesional": {

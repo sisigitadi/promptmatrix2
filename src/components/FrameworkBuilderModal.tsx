@@ -688,6 +688,7 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
                                         onClick={() =>
                                           removeOption(index, optIndex)
                                         }
+                                        title="Hapus opsi pilihan ini"
                                       >
                                         <FaTrash />
                                       </Button>
@@ -699,6 +700,7 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
                                   size="sm"
                                   onClick={() => addOption(index)}
                                   className="w-100"
+                                  title="Tambah opsi pilihan baru untuk dropdown"
                                 >
                                   <FaPlus className="me-1" /> Tambah Opsi
                                 </Button>
@@ -714,6 +716,7 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
                     variant="success"
                     onClick={addComponent}
                     className="py-2"
+                    title="Tambahkan komponen input baru ke dalam kerangka kerja"
                   >
                     <FaPlus className="me-2" /> Tambah Komponen Baru
                   </Button>
@@ -733,6 +736,7 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
                 variant="outline-light"
                 size="sm"
                 onClick={handleCopyJson}
+                title="Salin kode JSON kerangka kerja ke clipboard"
               >
                 <FaCopy className="me-1" /> Salin JSON
               </Button>
@@ -758,6 +762,7 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
             variant="primary"
             onClick={handleGenerateJson}
             disabled={!framework.nama_kerangka}
+            title="Generate struktur JSON lengkap berdasarkan data yang diinput"
           >
             Generate Framework JSON
           </Button>

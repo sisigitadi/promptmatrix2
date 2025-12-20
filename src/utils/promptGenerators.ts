@@ -270,6 +270,32 @@ export const generateVisualPromptParts = (blocks: PromptBlock[]): Part[] => {
     .filter((part): part is Part => part !== null);
 };
 
+/**
+ * Generates a prompt containing its original placeholders (e.g., {{TOPIK}}).
+ * Useful for developers creating AI application templates.
+ */
+export const generatePlaceholderPrompt = (framework: Framework): string => {
+  if (!framework || !framework.komponen_prompt) return "";
+
+  const { PERAN, KONTEKS, TUGAS } = framework.komponen_prompt;
+  let prompt = "";
+
+  if (PERAN) prompt += `**Peran:**\n${PERAN}\n\n`;
+  if (KONTEKS) prompt += `**Konteks:**\n${KONTEKS}\n\n`;
+  if (TUGAS) prompt += `**Tugas:**\n${TUGAS}\n\n`;
+
+  if (framework.konteks_tambahan_instruksi_khusus) {
+    prompt += `**Instruksi Tambahan:**\n${framework.konteks_tambahan_instruksi_khusus}\n\n`;
+  }
+
+  const formatOutput = framework.komponen_prompt?.["FORMAT OUTPUT"];
+  if (formatOutput) {
+    prompt += `**Format Output:**\n${formatOutput}\n`;
+  }
+
+  return prompt.trim();
+};
+
 export const generateFileName = (
   baseName: string,
   extension: string,

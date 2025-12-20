@@ -12,7 +12,10 @@ import { callGeminiApi } from "../utils/api"; // Import the API function
 import { FaCog, FaRocket } from "react-icons/fa"; // Import FaCog and FaRocket icons
 import DevModeSettingsModal from "./DevModeSettingsModal"; // Import DevModeSettingsModal
 import AiResponseModal from "./AiResponseModal"; // Import AiResponseModal
-import { generateFileName } from "../utils/promptGenerators";
+import {
+  generateFileName,
+  generatePlaceholderPrompt,
+} from "../utils/promptGenerators";
 import { diffLines } from "diff";
 
 import { Framework, PROMPT_FRAMEWORKS } from "../data/frameworks";
@@ -138,6 +141,20 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
 
     navigator.clipboard.writeText(textToCopy).then(() => {
       setCopyButtonText("Tersalin!");
+      setTimeout(() => setCopyButtonText("Salin"), 2000);
+    });
+  };
+
+  const handleCopyWithPlaceholders = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!currentFrameworkDetails?.framework) return;
+
+    const placeholderPrompt = generatePlaceholderPrompt(
+      currentFrameworkDetails.framework,
+    );
+    navigator.clipboard.writeText(placeholderPrompt).then(() => {
+      // Use the same copy animation/feedback mechanism
+      setCopyButtonText("Placeholder Tersalin!");
       setTimeout(() => setCopyButtonText("Salin"), 2000);
     });
   };
@@ -359,7 +376,6 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
 
   const handleExportPdf = () => {
     try {
-      // @ts-expect-error: jsPDF type mismatch
       const doc = new jsPDF();
 
       const pageWidth = doc.internal.pageSize.width;
@@ -414,24 +430,35 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
       });
 
       if (inputData.length > 0) {
-        doc.setFontSize(12);
-        doc.setTextColor(15, 23, 42);
-        doc.text("Input Parameters", margin, yPos);
-        yPos += 5;
+        doc.setFontSize(14);
+        doc.setTextColor(15, 23, 42); // Slate 900
+        doc.setFont("helvetica", "bold");
+        doc.text("1. Parameter Input", margin, yPos);
+        yPos += 6;
 
-        // @ts-expect-error: autoTable type mismatch
+        doc.setFontSize(9);
+        doc.setFont("helvetica", "italic");
+        doc.setTextColor(100, 116, 139); // Slate 500
+        doc.text(
+          "Daftar variabel dan nilai yang Anda masukkan untuk membangun prompt ini.",
+          margin,
+          yPos,
+        );
+        yPos += 8;
+
         autoTable(doc, {
           startY: yPos,
-          head: [["Parameter", "Value"]],
+          head: [["Komponen / Variabel", "Nilai Input"]],
           body: inputData,
           theme: "grid",
-          headStyles: { fillColor: [56, 189, 248], textColor: 255 }, // --neon-cyan
+          headStyles: { fillColor: [15, 23, 42], textColor: 255 }, // Dark Header
           styles: { fontSize: 9, cellPadding: 3 },
-          columnStyles: { 0: { fontStyle: "bold", cellWidth: 50 } },
+          columnStyles: {
+            0: { fontStyle: "bold", cellWidth: 50, fillColor: [248, 250, 252] },
+          },
           margin: { left: margin, right: margin },
         });
 
-        // @ts-expect-error: lastAutoTable is not in jsPDF definition
         const finalY = (doc as any).lastAutoTable?.finalY;
         if (finalY) {
           yPos = finalY + 15;
@@ -447,15 +474,28 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
         yPos = 30;
       }
 
-      doc.setFontSize(12);
+      doc.setFontSize(14);
       doc.setTextColor(15, 23, 42);
       doc.setFont("helvetica", "bold");
-      doc.text("Generated Prompt", margin, yPos);
+      doc.text("2. Hasil Prompt (Output)", margin, yPos);
+      yPos += 6;
+
+      doc.setFontSize(9);
+      doc.setFont("helvetica", "italic");
+      doc.setTextColor(100, 116, 139);
+      doc.text(
+        "Gunakan teks di bawah ini sebagai instruksi untuk model AI Anda (ChatGPT, Claude, Gemini, dll).",
+        margin,
+        yPos,
+      );
       yPos += 10;
+
+      doc.setFillColor(248, 250, 252); // Light Gray Background for the prompt box
+      // We'll draw a border around the prompt later if needed, for now just focus on text
 
       doc.setFont("courier", "normal");
       doc.setFontSize(10);
-      doc.setTextColor(0, 0, 0);
+      doc.setTextColor(30, 41, 59); // Slate 800
 
       const promptText =
         typeof naturalLanguageOutput === "string"
@@ -466,7 +506,6 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
       const splitText = doc.splitTextToSize(promptText, availableWidth);
 
       // Print text with pagination handling
-      // @ts-expect-error: splitText indexing
       for (let i = 0; i < splitText.length; i++) {
         if (yPos > pageHeight - 20) {
           doc.addPage();
@@ -560,12 +599,14 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
             <Button
               variant={outputType === "natural" ? "primary" : "outline-primary"}
               onClick={() => setOutputType("natural")}
+              title="Tampilkan output dalam format bahasa alami"
             >
               📝 Natural
             </Button>
             <Button
               variant={outputType === "json" ? "primary" : "outline-primary"}
               onClick={() => setOutputType("json")}
+              title="Tampilkan output dalam format JSON terstruktur"
             >
               📄 JSON
             </Button>
@@ -613,50 +654,82 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
                   </span>
                 </div>
               )}
-              <div className="d-flex justify-content-between mb-3">
-                <ButtonGroup className="flex-grow-1 me-2">
+              <div className="d-flex flex-wrap gap-2 mb-3">
+                <ButtonGroup className="flex-grow-1">
                   {" "}
                   {/* Grouping Copy and Edit */}
-                  <Button variant="success" onClick={handleCopy}>
+                  <Button
+                    variant="success"
+                    onClick={handleCopy}
+                    title="Salin hasil prompt ke clipboard"
+                  >
                     📋 {copyButtonText}
                   </Button>
-                  <Button variant="info" onClick={toggleEdit}>
+                  <Button
+                    variant="info"
+                    onClick={toggleEdit}
+                    title={
+                      isEditable
+                        ? "Selesai mengedit prompt"
+                        : "Edit isi prompt secara manual"
+                    }
+                  >
                     {isEditable ? "Selesai Edit" : "✏️ Edit"}
                   </Button>
                   {isDirty && (
                     <Button
                       variant="outline-info"
                       onClick={handleCompareOutput}
-                      className="ms-2"
+                      title="Bandingkan perubahan antara output asli dan hasil edit"
                     >
                       ↔️ Bandingkan
                     </Button>
                   )}
                 </ButtonGroup>
-                <ButtonGroup className="flex-grow-1 me-2">
+
+                <ButtonGroup className="flex-grow-1">
                   <Button
                     variant="outline-secondary"
                     onClick={handleExportMarkdown}
+                    title="Export Markdown"
                   >
                     ⬇️ MD
                   </Button>
                   <Button
                     variant="outline-secondary"
                     onClick={handleExportJson}
+                    title="Ekspor data prompt ke format JSON"
                   >
                     ⬇️ JSON
                   </Button>
-                  <Button variant="outline-secondary" onClick={handleExportCsv}>
+                  <Button
+                    variant="outline-secondary"
+                    onClick={handleExportCsv}
+                    title="Ekspor data prompt ke format CSV"
+                  >
                     ⬇️ CSV
                   </Button>
-                  <Button variant="outline-secondary" onClick={handleExportPdf}>
+                  <Button
+                    variant="outline-secondary"
+                    onClick={handleExportPdf}
+                    title="Ekspor prompt ke format PDF profesional"
+                  >
                     ⬇️ PDF
                   </Button>
+                  <Button
+                    variant="outline-info"
+                    onClick={handleCopyWithPlaceholders}
+                    title="Salin template prompt dengan placeholder asli ({{VAR}})"
+                  >
+                    🧩 Temp
+                  </Button>
                 </ButtonGroup>
+
                 <Button
                   variant="warning"
                   onClick={() => onUseAsInput(currentOutput)}
-                  className="flex-grow-1" // Removed me-2 as it's now the last button
+                  className="flex-grow-1"
+                  title="Gunakan output ini sebagai input untuk framework selanjutnya (Chaining)"
                 >
                   ➡️ Output {`→`} Input
                 </Button>
@@ -669,6 +742,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
                     onClick={handleGenerateClick}
                     className="flex-grow-1 me-2"
                     disabled={isGenerating || !isApiKeyEnabled || !apiKey} // Disable button when generating or API key is not enabled/empty
+                    title="Generate respon AI menggunakan prompt di atas"
                   >
                     {isGenerating ? (
                       <>
@@ -719,6 +793,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
                   variant="primary"
                   onClick={handleSave}
                   className="flex-grow-1 me-2"
+                  title="Simpan prompt ini ke koleksi pribadi Anda"
                 >
                   💾 Simpan Prompt
                 </Button>
@@ -726,6 +801,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
                   variant="info"
                   onClick={onShowSavedPrompts}
                   className="flex-grow-1"
+                  title="Buka galeri prompt yang telah Anda simpan"
                 >
                   📚 Prompt Tersimpan
                 </Button>

@@ -48,6 +48,33 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
   showInitialMessage,
   onNavigate,
 }) => {
+  const HighlightText = ({
+    text,
+    highlight,
+  }: {
+    text: string;
+    highlight: string;
+  }) => {
+    if (!highlight.trim()) return <span>{text}</span>;
+    const regex = new RegExp(
+      `(${highlight.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+      "gi",
+    );
+    const parts = text.split(regex);
+    return (
+      <span>
+        {parts.map((part, i) =>
+          part.toLowerCase() === highlight.toLowerCase() ? (
+            <mark key={i} className="search-highlight">
+              {part}
+            </mark>
+          ) : (
+            part
+          ),
+        )}
+      </span>
+    );
+  };
   const frameworkListContent = Object.entries(filteredFrameworks || {})
     .sort((a, b) => a[0].localeCompare(b[0])) // Sort categories alphabetically
     .map(([categoryName, subcategories]) => (
@@ -88,7 +115,10 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
                     color: "white", // For dark theme default
                   }}
                 >
-                  {subcategoryName}{" "}
+                  <HighlightText
+                    text={subcategoryName}
+                    highlight={debouncedSearchQuery}
+                  />{" "}
                   <span
                     className={`subcategory-icon ${
                       openSubcategories[subcategoryName] ||
@@ -127,7 +157,13 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
                               color: "white", // For dark theme default
                             }}
                           >
-                            <strong>📄 {name}</strong>
+                            <strong>
+                              📄{" "}
+                              <HighlightText
+                                text={name}
+                                highlight={debouncedSearchQuery}
+                              />
+                            </strong>
                           </Button>
                         ))
                     ) : (
@@ -170,6 +206,7 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
                   background: `var(--${categoryCssNameMap[categoryName]}-static)`,
                   borderColor: `var(--${categoryCssNameMap[categoryName]}-static)`,
                 }}
+                title={`Pilih kategori ${categoryName}`}
               >
                 {categoryName}
               </Button>

@@ -280,6 +280,19 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
     promptBlocks,
   ]);
 
+  // Auto-scroll to FrameworkPane on small screens when a framework is selected
+  useEffect(() => {
+    if (selectedFramework && window.innerWidth < 1200) {
+      const element = document.getElementById("framework-pane-container");
+      if (element) {
+        // Delay slightly to ensure content is rendered
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      }
+    }
+  }, [selectedFramework]);
+
   return (
     <Row className="flex-grow-1 g-4 align-items-stretch">
       <Col
@@ -310,7 +323,12 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
         />
       </Col>
 
-      <Col xs={12} xl={4} className="d-flex flex-column h-100">
+      <Col
+        xs={12}
+        xl={4}
+        className="d-flex flex-column h-100"
+        id="framework-pane-container"
+      >
         <FrameworkPane
           currentFrameworkDetails={currentFrameworkDetails}
           selectedFramework={selectedFramework}

@@ -1372,6 +1372,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                       variant="secondary"
                       onClick={handlePrevStep}
                       disabled={wizardStep === 0}
+                      title="Kembali ke langkah sebelumnya"
                     >
                       &larr; Sebelumnya
                     </Button>
@@ -1382,6 +1383,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                         wizardStep === allComponentsToRender.length - 1 ||
                         isNextDisabled
                       }
+                      title="Lanjut ke langkah berikutnya"
                     >
                       Berikutnya &rarr;
                     </Button>
