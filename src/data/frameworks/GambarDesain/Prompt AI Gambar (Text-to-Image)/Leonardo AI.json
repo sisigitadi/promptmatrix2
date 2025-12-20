@@ -56,9 +56,6 @@
       }
     }
   ],
-  "kategori": [
-    "Gambar & Desain",
-    "Prompt AI Gambar (Text-to-Image)"
-  ],
+  "kategori": ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
   "nama_kerangka": "Leonardo AI"
 }

@@ -39,9 +39,6 @@
       "info": "Aturan main dan tujuan dari simulasi ini."
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Pengembangan Diri & Psikologi"
-  ],
+  "kategori": ["Teks & Konten", "Pengembangan Diri & Psikologi"],
   "nama_kerangka": "Simulator Latihan Percakapan Sulit"
 }

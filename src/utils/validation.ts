@@ -16,7 +16,7 @@ interface InputDetails {
   description?: string;
   type?: string;
   placeholder?: string;
-  options?: string[];
+  options?: (string | { label: string; value: string })[];
   info?: string;
   min?: number;
   max?: number;

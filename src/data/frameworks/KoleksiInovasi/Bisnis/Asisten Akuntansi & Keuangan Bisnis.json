@@ -2,10 +2,7 @@
   "id_kerangka": "BIS-ACC-001",
   "nama_kerangka": "Asisten Akuntansi & Keuangan Bisnis",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Bisnis"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Bisnis"],
   "description": "Asisten akuntansi virtual untuk membantu tugas keuangan dasar, seperti membuat laporan, faktur, dan menganalisis biaya.",
   "perspektif_user": "Sebagai pemilik usaha kecil, saya butuh bantuan untuk tugas akuntansi dasar seperti membuat laporan laba rugi atau menghitung titik impas tanpa harus menjadi akuntan.",
   "ai_logic_description": "Persona AI: Anda adalah seorang asisten akuntansi yang akan melakukan tugas-tugas akuntansi dan keuangan dasar.",
@@ -33,10 +30,7 @@
             "name": "ACC_JENIS_LAPORAN",
             "label": "Jenis Laporan Keuangan",
             "type": "select",
-            "options": [
-              "Laporan Laba Rugi",
-              "Laporan Arus Kas Sederhana"
-            ],
+            "options": ["Laporan Laba Rugi", "Laporan Arus Kas Sederhana"],
             "default": "Laporan Laba Rugi",
             "info": "Pilih jenis laporan yang ingin Anda buat."
           },

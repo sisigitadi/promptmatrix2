@@ -254,7 +254,7 @@ export const generateVisualPromptParts = (blocks: PromptBlock[]): Part[] => {
   if (!blocks) return [];
 
   return blocks
-    .map((block) => {
+    .map((block): Part | null => {
       if (block.type === "text" && block.content) {
         return { text: block.content };
       } else if (block.type === "image" && block.content) {

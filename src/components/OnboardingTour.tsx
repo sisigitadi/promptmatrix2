@@ -21,7 +21,7 @@ const TOUR_STEPS = [
         </p>
       </div>
     ),
-    placement: "right",
+    placement: "right" as const,
     disableBeacon: true,
   },
   {
@@ -39,7 +39,7 @@ const TOUR_STEPS = [
         </p>
       </div>
     ),
-    placement: "left",
+    placement: "left" as const,
   },
   {
     target: "#output-display",
@@ -53,7 +53,7 @@ const TOUR_STEPS = [
         </p>
       </div>
     ),
-    placement: "left",
+    placement: "left" as const,
   },
   {
     target: "#dev-mode-switch",
@@ -67,7 +67,7 @@ const TOUR_STEPS = [
         </p>
       </div>
     ),
-    placement: "bottom",
+    placement: "bottom" as const,
   },
   {
     target: "#saved-prompts-button",
@@ -80,7 +80,7 @@ const TOUR_STEPS = [
         </p>
       </div>
     ),
-    placement: "top",
+    placement: "top" as const,
   },
 ];
 
@@ -102,13 +102,15 @@ const OnboardingTour: React.FC<OnboardingTourProps> = ({
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { action, status, index, type } = data;
 
-    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+    if (([STATUS.FINISHED, STATUS.SKIPPED] as string[]).includes(status)) {
       setRun(false);
 
       onComplete();
 
       onHide();
-    } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+    } else if (
+      ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND] as string[]).includes(type)
+    ) {
       setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
     }
 

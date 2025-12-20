@@ -39,9 +39,6 @@
       "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
     }
   ],
-  "kategori": [
-    "Prompt Ringkas",
-    "Formula Persuasi & Pemasaran"
-  ],
+  "kategori": ["Prompt Ringkas", "Formula Persuasi & Pemasaran"],
   "nama_kerangka": "CARE"
 }

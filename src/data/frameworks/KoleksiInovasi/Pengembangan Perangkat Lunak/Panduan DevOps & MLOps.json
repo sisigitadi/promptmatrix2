@@ -2,10 +2,7 @@
   "id_kerangka": "KOL-PP-101",
   "nama_kerangka": "Panduan DevOps & MLOps",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Pengembangan Perangkat Lunak"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
   "description": "Panduan terpusat untuk manajemen proyek, infrastruktur, dan operasional, mencakup siklus hidup DevOps dan MLOps dari perencanaan hingga pemantauan.",
   "perspektif_user": "Sebagai seorang insinyur DevOps, MLOps, atau manajer proyek, saya memerlukan alat terintegrasi untuk membantu saya dengan berbagai tugas operasional seperti perencanaan Agile, manajemen dependensi, containerization, CI/CD, pemantauan, IaC, dan alur kerja data science.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Ahli DevOps dan MLOps yang akan mengelola operasional dan infrastruktur.",
@@ -38,11 +35,7 @@
             "name": "agileFramework",
             "label": "Kerangka Kerja Agile",
             "type": "select",
-            "options": [
-              "Scrum",
-              "Kanban",
-              "Lainnya..."
-            ],
+            "options": ["Scrum", "Kanban", "Lainnya..."],
             "default": "Scrum",
             "info": "Pilih kerangka kerja Agile yang Anda gunakan."
           },
@@ -117,13 +110,7 @@
             "name": "programmingLanguage",
             "label": "Bahasa Pemrograman",
             "type": "select",
-            "options": [
-              "Node.js",
-              "Python",
-              "Java",
-              "Go",
-              "Lainnya..."
-            ],
+            "options": ["Node.js", "Python", "Java", "Go", "Lainnya..."],
             "default": "Node.js",
             "info": "Pilih bahasa pemrograman aplikasi Anda."
           }
@@ -162,12 +149,7 @@
               "Notifikasi",
               "Lainnya..."
             ],
-            "default": [
-              "Linting",
-              "Testing",
-              "Building",
-              "Deployment"
-            ],
+            "default": ["Linting", "Testing", "Building", "Deployment"],
             "info": "Pilih tahapan yang ingin Anda sertakan dalam pipeline."
           }
         ],
@@ -205,11 +187,7 @@
               "Trafik Jaringan",
               "Lainnya..."
             ],
-            "default": [
-              "Penggunaan CPU",
-              "Latensi Permintaan",
-              "Jumlah Error"
-            ],
+            "default": ["Penggunaan CPU", "Latensi Permintaan", "Jumlah Error"],
             "info": "Pilih metrik yang paling penting untuk Anda."
           }
         ],
@@ -253,10 +231,7 @@
               "Load Balancer",
               "Lainnya..."
             ],
-            "default": [
-              "Virtual Machine (VM)",
-              "Jaringan (VPC/VNet)"
-            ],
+            "default": ["Virtual Machine (VM)", "Jaringan (VPC/VNet)"],
             "info": "Pilih jenis sumber daya yang ingin Anda definisikan."
           }
         ],

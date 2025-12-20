@@ -45,9 +45,6 @@
       "info": "Informasi tambahan yang tidak bisa disimpulkan hanya dari kode."
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Utilitas & Development"
-  ],
+  "kategori": ["Teks & Konten", "Utilitas & Development"],
   "nama_kerangka": "Penulis Dokumentasi Kode"
 }

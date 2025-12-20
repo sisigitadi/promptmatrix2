@@ -70,9 +70,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Komunikasi Profesional"
-  ],
+  "kategori": ["Teks & Konten", "Komunikasi Profesional"],
   "nama_kerangka": "Generator Naskah Pidato/Presentasi"
 }

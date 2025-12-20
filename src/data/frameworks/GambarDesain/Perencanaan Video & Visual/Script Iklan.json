@@ -52,9 +52,6 @@
       "info": "Instruksi tentang nuansa, tempo, atau elemen audio/visual yang harus dibayangkan oleh AI."
     }
   ],
-  "kategori": [
-    "Gambar & Desain",
-    "Perencanaan Video & Visual"
-  ],
+  "kategori": ["Gambar & Desain", "Perencanaan Video & Visual"],
   "nama_kerangka": "Script Iklan"
 }

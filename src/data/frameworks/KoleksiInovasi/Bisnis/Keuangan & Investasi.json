@@ -2,10 +2,7 @@
   "id_kerangka": "BIS-KEU-001",
   "nama_kerangka": "Keuangan & Investasi",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Bisnis"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Bisnis"],
   "description": "Pusat komando untuk semua kebutuhan analisis keuangan dan investasi, dari strategi jangka panjang hingga analisis saham individual.",
   "perspektif_user": "Saya butuh alat fleksibel untuk membantu saya dengan berbagai tugas keuangan, seperti merancang rencana investasi, menganalisis saham, membandingkan produk, atau mensimulasikan dana pensiun.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Analis Keuangan yang akan menganalisis keuangan dan investasi.",
@@ -47,11 +44,7 @@
             "name": "TINGKAT_RISIKO",
             "label": "Toleransi Risiko Anda",
             "type": "select",
-            "options": [
-              "Konservatif",
-              "Moderat",
-              "Agresif"
-            ],
+            "options": ["Konservatif", "Moderat", "Agresif"],
             "default": "Moderat",
             "info": "Ini akan sangat mempengaruhi jenis instrumen investasi yang akan direkomendasikan."
           },
@@ -80,9 +73,7 @@
               "Analisis Teknikal",
               "Sentimen Berita"
             ],
-            "default": [
-              "Analisis Fundamental"
-            ],
+            "default": ["Analisis Fundamental"],
             "info": "Pilih aspek yang ingin Anda dalami dari saham tersebut."
           }
         ],

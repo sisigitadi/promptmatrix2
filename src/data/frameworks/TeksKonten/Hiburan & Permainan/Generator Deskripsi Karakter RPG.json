@@ -57,9 +57,6 @@
       "info": "Instruksi kreatif untuk memperkaya narasi karakter."
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Hiburan & Permainan"
-  ],
+  "kategori": ["Teks & Konten", "Hiburan & Permainan"],
   "nama_kerangka": "Generator Deskripsi Karakter RPG"
 }

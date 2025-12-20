@@ -27,11 +27,7 @@
           "name": "gender",
           "label": "Jenis Kelamin",
           "type": "select",
-          "options": [
-            "Laki-laki",
-            "Perempuan",
-            "Unisex"
-          ],
+          "options": ["Laki-laki", "Perempuan", "Unisex"],
           "info": "Pilih jenis kelamin."
         },
         {
@@ -60,11 +56,7 @@
           "name": "nameStyle",
           "label": "Gaya Nama",
           "type": "select",
-          "options": [
-            "Klasik & Populer",
-            "Modern & Unik",
-            "Singkat & Manis"
-          ],
+          "options": ["Klasik & Populer", "Modern & Unik", "Singkat & Manis"],
           "info": "Pilih gaya nama yang Anda inginkan."
         }
       ],
@@ -126,11 +118,7 @@
           "name": "role",
           "label": "Peran Karakter",
           "type": "select",
-          "options": [
-            "Protagonis",
-            "Antagonis",
-            "Pendukung"
-          ],
+          "options": ["Protagonis", "Antagonis", "Pendukung"],
           "info": "Pilih peran karakter dalam cerita."
         },
         {
@@ -169,11 +157,7 @@
           "name": "gender",
           "label": "Jenis Kelamin (Opsional)",
           "type": "select",
-          "options": [
-            "Jantan",
-            "Betina",
-            "Tidak Tahu"
-          ],
+          "options": ["Jantan", "Betina", "Tidak Tahu"],
           "info": "Jenis kelamin hewan peliharaan."
         },
         {
@@ -322,11 +306,7 @@
           "name": "lengthPreference",
           "label": "Preferensi Panjang",
           "type": "select",
-          "options": [
-            "Singkat",
-            "Sedang",
-            "Panjang"
-          ],
+          "options": ["Singkat", "Sedang", "Panjang"],
           "info": "Apakah Anda menginginkan nama yang singkat, sedang, atau panjang?"
         },
         {
@@ -343,9 +323,6 @@
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu memberikan variasi nama yang luas, dari yang aman hingga yang lebih berani. Untuk nama bisnis/produk, sertakan saran untuk memeriksa ketersediaan domain dan media sosial. Untuk nama personal, pertimbangkan kemudahan pengucapan. Disclaimer wajib: 'Nama yang dihasilkan adalah saran kreatif. Pastikan untuk memeriksa ketersediaan merek dagang, domain, dan handle media sosial secara mandiri sebelum mengadopsi sebuah nama.'",
-  "kategori": [
-    "Prompt Proyek",
-    "Generator Nama & Ide Kreatif"
-  ],
+  "kategori": ["Prompt Proyek", "Generator Nama & Ide Kreatif"],
   "nama_kerangka": "Generator Nama Universal"
 }

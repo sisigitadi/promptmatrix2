@@ -57,9 +57,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Kehidupan & Produktivitas"
-  ],
+  "kategori": ["Teks & Konten", "Kehidupan & Produktivitas"],
   "nama_kerangka": "Perencana Tujuan Pribadi"
 }

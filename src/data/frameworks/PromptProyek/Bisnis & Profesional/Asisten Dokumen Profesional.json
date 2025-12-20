@@ -343,9 +343,6 @@
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus sangat peka terhadap `Gaya & Nada` yang diminta. Untuk dokumen legal seperti kontrak, AI wajib menyertakan disclaimer tebal: '**PENTING: Ini adalah template sederhana dan bukan merupakan nasihat hukum. Selalu konsultasikan dengan profesional hukum untuk kebutuhan spesifik Anda.**' Untuk laporan, prioritaskan kejelasan data. Untuk email, prioritaskan keringkasan dan kejelasan tujuan.",
-  "kategori": [
-    "Prompt Proyek",
-    "Bisnis & Profesional"
-  ],
+  "kategori": ["Prompt Proyek", "Bisnis & Profesional"],
   "nama_kerangka": "Asisten Dokumen Profesional"
 }

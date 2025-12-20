@@ -2,10 +2,7 @@
   "id_kerangka": "IMG-GEN-001",
   "nama_kerangka": "Image Description & Generation",
   "version": "2.0.0",
-  "kategori": [
-    "Gambar & Desain",
-    "Prompt AI Gambar (Text-to-Image)"
-  ],
+  "kategori": ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
   "description": "Menghasilkan deskripsi tekstual dari gambar yang diunggah atau membuat gambar baru dari deskripsi teks dan gaya visual.",
   "perspektif_user": "Sebagai seorang desainer, pemasar, atau kreator konten, saya membutuhkan alat untuk dengan cepat mendapatkan deskripsi akurat dari gambar yang ada atau untuk menghasilkan visual baru yang sesuai dengan visi saya.",
   "ai_logic_description": "Persona AI: Anda adalah seorang seniman digital dan deskriptor visual yang akan menganalisis atau menciptakan visual.",

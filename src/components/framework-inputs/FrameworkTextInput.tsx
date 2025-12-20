@@ -85,7 +85,6 @@ export const FrameworkTextInput: React.FC<CommonInputProps> = ({
           value={value || min || 0}
           onChange={handleChange}
           onBlur={() => onBlur(name)}
-          isInvalid={isTouched && !!error}
         />
       );
     }
@@ -122,7 +121,7 @@ export const FrameworkTextInput: React.FC<CommonInputProps> = ({
           value={value || ""}
           onChange={handleChange}
           onBlur={() => onBlur(name)}
-          rows={rows}
+          {...(asType === "textarea" ? { rows } : {})}
           isInvalid={isTouched && !!error}
           aria-invalid={isTouched && !!error}
         />

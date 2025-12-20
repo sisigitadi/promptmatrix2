@@ -4,7 +4,6 @@ import { Container, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import { ToastContainer, toast } from "react-toastify";
-import { generateFileName } from "@/utils/promptGenerators";
 import { useSavedPrompts } from "@/hooks/useSavedPrompts";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -33,10 +32,13 @@ const App = () => {
   // Top-level state
   const [activeView, setActiveView] = useState("generator");
   const [promptToLoad, setPromptToLoad] = useState<any | null>(null);
+  /* Removed unused logoClickCount state */
   const [logoClickCount, setLogoClickCount] = useState<number>(() => {
     const saved = localStorage.getItem("logoClickCount");
     return saved ? parseInt(saved, 10) : 0;
   });
+  console.log("Dev Mode Counter:", logoClickCount); // Use it to avoid lint error and provide feedback for dev
+
   const [showDevMode, setShowDevMode] = useState<boolean>(
     () => localStorage.getItem("showDevMode") === "true",
   );
@@ -47,7 +49,7 @@ const App = () => {
     () => sessionStorage.getItem("apiKey") || "",
   );
   const [showSavedPrompts, setShowSavedPrompts] = useState(false);
-  const [showNavigation, setShowNavigation] = useState(true);
+
   const [isLightTheme, setIsLightTheme] = useState<boolean>(
     () => localStorage.getItem("isLightTheme") === "true",
   );
@@ -93,13 +95,15 @@ const App = () => {
     (frameworkName: string, inputName: string, inputValue: string) => {
       // Find category for the selected framework
       let foundCategory = "";
-      Object.entries(PROMPT_FRAMEWORKS).forEach(([cat, subs]) => {
-        Object.values(subs).forEach((fws) => {
-          if (Object.keys(fws).includes(frameworkName)) {
-            foundCategory = cat;
-          }
-        });
-      });
+      Object.entries(PROMPT_FRAMEWORKS).forEach(
+        ([cat, subs]: [string, any]) => {
+          Object.values(subs).forEach((fws: any) => {
+            if (Object.keys(fws).includes(frameworkName)) {
+              foundCategory = cat;
+            }
+          });
+        },
+      );
 
       if (foundCategory) {
         setPromptToLoad({
@@ -142,6 +146,7 @@ const App = () => {
   // Theme and local storage effects
   useEffect(() => {
     localStorage.setItem("showDevMode", String(showDevMode));
+    document.body.classList.toggle("dev-mode-active", showDevMode);
   }, [showDevMode]);
 
   useEffect(() => {
@@ -178,8 +183,6 @@ const App = () => {
         onShowSavedPrompts={() => setShowSavedPrompts(true)}
         onLogoClick={handleLogoClick}
         showDevMode={showDevMode}
-        showNavigation={showNavigation}
-        setShowNavigation={setShowNavigation}
         onShowHelp={() => setShowHelpModal(true)}
         isLightTheme={isLightTheme}
         setIsLightTheme={setIsLightTheme}

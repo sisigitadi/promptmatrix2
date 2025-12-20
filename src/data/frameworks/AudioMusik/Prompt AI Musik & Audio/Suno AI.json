@@ -14,22 +14,14 @@
       "name": "model",
       "label": "Model",
       "type": "select",
-      "options": [
-        "v3.5",
-        "v3.5-turbo",
-        "v4-alpha",
-        "chirp-v3"
-      ],
+      "options": ["v3.5", "v3.5-turbo", "v4-alpha", "chirp-v3"],
       "info": "Pilih versi model Suno AI yang akan digunakan."
     },
     {
       "name": "instrumental",
       "label": "Instrumental?",
       "type": "select",
-      "options": [
-        "Tidak",
-        "Ya"
-      ],
+      "options": ["Tidak", "Ya"],
       "info": "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal."
     },
     {
@@ -43,10 +35,7 @@
       "name": "makeInstrumental",
       "label": "Buat Versi Instrumental?",
       "type": "select",
-      "options": [
-        "Tidak",
-        "Ya"
-      ],
+      "options": ["Tidak", "Ya"],
       "info": "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal."
     },
     {
@@ -57,9 +46,6 @@
       "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada."
     }
   ],
-  "kategori": [
-    "Audio & Musik",
-    "Prompt AI Musik & Audio"
-  ],
+  "kategori": ["Audio & Musik", "Prompt AI Musik & Audio"],
   "nama_kerangka": "Suno AI"
 }

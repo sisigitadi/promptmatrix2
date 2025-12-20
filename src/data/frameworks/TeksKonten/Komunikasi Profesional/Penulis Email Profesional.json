@@ -72,9 +72,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Komunikasi Profesional"
-  ],
+  "kategori": ["Teks & Konten", "Komunikasi Profesional"],
   "nama_kerangka": "Penulis Email Profesional"
 }

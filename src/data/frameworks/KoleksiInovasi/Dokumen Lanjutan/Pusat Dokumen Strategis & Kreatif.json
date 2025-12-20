@@ -2,10 +2,7 @@
   "id_kerangka": "KOL-DOC-001",
   "nama_kerangka": "Pusat Dokumen Strategis & Kreatif",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Dokumen Lanjutan"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Dokumen Lanjutan"],
   "description": "Satu alat terpusat untuk menghasilkan berbagai dokumen terstruktur yang kompleks, mulai dari Game Design Document, analisis keuangan mendalam, hingga persiapan debat.",
   "perspektif_user": "Saya perlu membuat dokumen yang spesifik dan terstruktur, seperti GDD untuk ide game saya, menganalisis laporan keuangan bisnis, atau mempersiapkan argumen untuk debat penting. Saya ingin panduan yang jelas untuk setiap jenis dokumen.",
   "ai_logic_description": "Persona AI: Anda adalah seorang konsultan ahli multi-disiplin. Bergantung pada pilihan pengguna, Anda akan bertindak sebagai Game Designer, Analis Keuangan, atau Pelatih Debat untuk menghasilkan dokumen yang diminta.",
@@ -135,10 +132,7 @@
           "name": "POSISI_SAYA",
           "label": "Posisi Anda",
           "type": "select",
-          "options": [
-            "Pro (Setuju)",
-            "Kontra (Tidak Setuju)"
-          ],
+          "options": ["Pro (Setuju)", "Kontra (Tidak Setuju)"],
           "default": "Pro (Setuju)",
           "info": "Pilih sisi argumen yang akan Anda bela."
         },

@@ -25,7 +25,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
                 {subcategoryName} ({categoryName})
               </h5>
               <ListGroup>
-                {Object.entries(frameworks).map(([name, details]) => (
+                {Object.entries(frameworks).map(([name, _details]) => (
                   <ListGroup.Item
                     key={name}
                     action

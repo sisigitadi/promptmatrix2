@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import { Part } from "@google/generative-ai";
 import {
   Form,
   Button,
@@ -15,13 +16,19 @@ import { generateFileName } from "../utils/promptGenerators";
 import { diffLines } from "diff";
 
 import { Framework, PROMPT_FRAMEWORKS } from "../data/frameworks";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 interface OutputDisplayProps {
   naturalLanguageOutput: string | Part[];
   jsonOutput: string;
   previewNaturalLanguageOutput: string;
   previewJsonOutput: string;
-  currentFrameworkDetails: Framework | null;
+  currentFrameworkDetails: {
+    framework: Framework;
+    category: string;
+    subcategory: string;
+  } | null;
   formData: { [key: string]: any };
   customInputs: { [key: string]: string };
   selectedFramework: string | null;
@@ -192,10 +199,10 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
         generationConfig,
       );
 
-      if (apiResult.error) {
+      if (typeof apiResult === "object" && apiResult.error) {
         setAiError(apiResult.error);
         setAiResponse(null);
-      } else {
+      } else if (typeof apiResult === "string") {
         setAiResponse(apiResult);
         setAiError(null);
       }
@@ -350,6 +357,159 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
     URL.revokeObjectURL(url);
   };
 
+  const handleExportPdf = () => {
+    try {
+      // @ts-expect-error: jsPDF type mismatch
+      const doc = new jsPDF();
+
+      const pageWidth = doc.internal.pageSize.width;
+      const pageHeight = doc.internal.pageSize.height;
+      const margin = 20;
+
+      // Branding Header
+      doc.setFillColor(15, 23, 42); // --bg-main (Slate 900)
+      doc.rect(0, 0, pageWidth, 25, "F");
+
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(16);
+      doc.setFont("helvetica", "bold");
+      doc.text("PromptMatrix", margin, 17);
+
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text("Professional AI Prompt Builder", pageWidth - margin - 50, 17, {
+        align: "left",
+      });
+
+      // Metadata Section
+      let yPos = 40;
+      doc.setTextColor(51, 65, 85); // Slate 700
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text(selectedFramework || "Untitled Prompt", margin, yPos);
+      yPos += 8;
+
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(100, 116, 139); // Slate 500
+      doc.text(`Category: ${selectedCategory}`, margin, yPos);
+      doc.text(
+        `Date: ${new Date().toLocaleDateString("id-ID", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}`,
+        margin + 80,
+        yPos,
+      );
+      yPos += 15;
+
+      // Inputs Table
+      const inputData: string[][] = [];
+
+      // Add Framework Inputs
+      Object.entries(formData).forEach(([key, value]) => {
+        inputData.push([key, String(value)]);
+      });
+
+      // Add Custom Inputs
+      Object.entries(customInputs).forEach(([key, value]) => {
+        inputData.push([`Custom: ${key}`, String(value)]);
+      });
+
+      if (inputData.length > 0) {
+        doc.setFontSize(12);
+        doc.setTextColor(15, 23, 42);
+        doc.text("Input Parameters", margin, yPos);
+        yPos += 5;
+
+        // @ts-expect-error: autoTable type mismatch
+        autoTable(doc, {
+          startY: yPos,
+          head: [["Parameter", "Value"]],
+          body: inputData,
+          theme: "grid",
+          headStyles: { fillColor: [56, 189, 248], textColor: 255 }, // --neon-cyan
+          styles: { fontSize: 9, cellPadding: 3 },
+          columnStyles: { 0: { fontStyle: "bold", cellWidth: 50 } },
+          margin: { left: margin, right: margin },
+        });
+
+        // @ts-expect-error: lastAutoTable is not in jsPDF definition
+        const finalY = (doc as any).lastAutoTable?.finalY;
+        if (finalY) {
+          yPos = finalY + 15;
+        } else {
+          yPos += 20; // Fallback if finalY is missing
+        }
+      }
+
+      // Prompt Output
+      // Check if we have enough space, else new page
+      if (yPos > pageHeight - 60) {
+        doc.addPage();
+        yPos = 30;
+      }
+
+      doc.setFontSize(12);
+      doc.setTextColor(15, 23, 42);
+      doc.setFont("helvetica", "bold");
+      doc.text("Generated Prompt", margin, yPos);
+      yPos += 10;
+
+      doc.setFont("courier", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(0, 0, 0);
+
+      const promptText =
+        typeof naturalLanguageOutput === "string"
+          ? naturalLanguageOutput
+          : JSON.stringify(naturalLanguageOutput, null, 2);
+      // Split text to fit page width
+      const availableWidth = pageWidth - margin * 2;
+      const splitText = doc.splitTextToSize(promptText, availableWidth);
+
+      // Print text with pagination handling
+      // @ts-expect-error: splitText indexing
+      for (let i = 0; i < splitText.length; i++) {
+        if (yPos > pageHeight - 20) {
+          doc.addPage();
+          yPos = 20;
+        }
+        doc.text(splitText[i], margin, yPos);
+        yPos += 5;
+      }
+
+      // Footer with Portfolio Promotion
+      const pageCount = doc.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+
+        // Left side: Page Number
+        doc.setTextColor(148, 163, 184); // Slate 400
+        doc.text(`Page ${i} of ${pageCount}`, margin, pageHeight - 10);
+
+        // Center: Promotion
+        doc.setTextColor(56, 189, 248); // Neon Cyan for emphasis
+        doc.textWithLink(
+          "Built with PromptMatrix 2.0 by Sigit Adi©",
+          pageWidth / 2,
+          pageHeight - 10,
+          {
+            align: "center",
+            url: "https://sisigitadi.github.io/promptmatrix2/",
+          },
+        );
+
+        // Right side: Removed separate date
+        // doc.setTextColor(148, 163, 184);
+        // doc.text(`© ${new Date().getFullYear()}`, pageWidth - margin, pageHeight - 10, { align: "right" });
+      }
+
+      doc.save(generateFileName(selectedFramework || "prompt_matrix", "pdf"));
+    } catch (err) {
+      console.error("Failed to generate PDF:", err);
+      alert("Gagal membuat PDF. Pesan error: " + String(err));
+    }
+  };
+
   const recommendedFrameworks = useMemo(() => {
     if (!selectedCategory || !selectedFramework) return [];
 
@@ -488,6 +648,9 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
                   </Button>
                   <Button variant="outline-secondary" onClick={handleExportCsv}>
                     ⬇️ CSV
+                  </Button>
+                  <Button variant="outline-secondary" onClick={handleExportPdf}>
+                    ⬇️ PDF
                   </Button>
                 </ButtonGroup>
                 <Button
@@ -636,6 +799,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
           formData={formData}
           handleInputChangeWithValidation={handleInputChangeWithValidation}
           validationErrors={validationErrors}
+          isApiKeyEnabled={isApiKeyEnabled}
         />
       )}
 

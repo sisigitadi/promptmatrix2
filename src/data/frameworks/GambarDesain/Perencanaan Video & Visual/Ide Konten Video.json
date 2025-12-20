@@ -53,9 +53,6 @@
       "info": "Detail tambahan yang bisa mengarahkan ide AI menjadi lebih unik dan sesuai dengan channel Anda."
     }
   ],
-  "kategori": [
-    "Gambar & Desain",
-    "Perencanaan Video & Visual"
-  ],
+  "kategori": ["Gambar & Desain", "Perencanaan Video & Visual"],
   "nama_kerangka": "Ide Konten Video"
 }

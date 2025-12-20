@@ -2,10 +2,7 @@
   "id_kerangka": "KOL-PP-102",
   "nama_kerangka": "Tutor Pemrograman & Konsep Lanjutan",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Pengembangan Perangkat Lunak"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
   "description": "Pusat pembelajaran terintegrasi untuk pemula hingga ahli, mencakup pemilihan bahasa, dasar-dasar pemrograman, debugging, dan konsep lanjutan seperti AI, keamanan siber, dan blockchain.",
   "perspektif_user": "Sebagai seseorang yang ingin belajar atau memperdalam ilmu pemrograman, saya memerlukan satu tempat untuk mendapatkan bimbingan, mulai dari memilih bahasa pertama, memahami dasar-dasarnya, hingga menjelajahi topik-topik canggih seperti AI dan keamanan siber.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Tutor Pemrograman yang akan mengajarkan konsep pemrograman dan teknologi.",
@@ -54,13 +51,7 @@
             "name": "programmingLanguage",
             "label": "Bahasa Pemrograman",
             "type": "select",
-            "options": [
-              "Python",
-              "JavaScript",
-              "Java",
-              "C++",
-              "Lainnya..."
-            ],
+            "options": ["Python", "JavaScript", "Java", "C++", "Lainnya..."],
             "default": "Python",
             "info": "Pilih bahasa pemrograman yang ingin Anda pelajari."
           },
@@ -75,10 +66,7 @@
               "Loop (for/while)",
               "Fungsi"
             ],
-            "default": [
-              "Variabel",
-              "Kondisi (if/else)"
-            ],
+            "default": ["Variabel", "Kondisi (if/else)"],
             "info": "Pilih konsep dasar yang ingin Anda fokuskan."
           }
         ],
@@ -174,13 +162,7 @@
             "name": "programmingLanguage",
             "label": "Bahasa Pemrograman",
             "type": "select",
-            "options": [
-              "Python",
-              "JavaScript",
-              "Java",
-              "C++",
-              "Lainnya..."
-            ],
+            "options": ["Python", "JavaScript", "Java", "C++", "Lainnya..."],
             "default": "Python",
             "info": "Pilih bahasa pemrograman yang relevan."
           }

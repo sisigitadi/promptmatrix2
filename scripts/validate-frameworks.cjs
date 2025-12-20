@@ -1,20 +1,24 @@
-const Ajv = require('ajv');
-const fs = require('fs');
-const path = require('path');
-const addFormats = require('ajv-formats');
+const Ajv = require("ajv");
+const fs = require("fs");
+const path = require("path");
+const addFormats = require("ajv-formats");
 
-(async () => { // Wrap in async IIFE
+(async () => {
+  // Wrap in async IIFE
   // Initialize AJV with all errors to get detailed reports
   const ajv = new Ajv({ allErrors: true, verbose: true });
   addFormats(ajv);
 
   // Load the schema
-  const schemaPath = path.resolve(__dirname, '../src/schemas/framework.schema.json');
-  const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
+  const schemaPath = path.resolve(
+    __dirname,
+    "../src/schemas/framework.schema.json",
+  );
+  const schema = JSON.parse(fs.readFileSync(schemaPath, "utf8"));
   const validate = ajv.compile(schema);
 
   // Load the frameworks data directly using import()
-  const { PROMPT_FRAMEWORKS } = await import('../src/data/frameworks.ts');
+  const { PROMPT_FRAMEWORKS } = await import("../src/data/frameworks.ts");
 
   let hasErrors = false;
 
@@ -28,8 +32,10 @@ const addFormats = require('ajv-formats');
 
         const isValid = validate(framework);
         if (!isValid) {
-          console.error(`Validation errors for framework: ${categoryKey} > ${subcategoryKey} > ${frameworkKey}`);
-          validate.errors.forEach(err => {
+          console.error(
+            `Validation errors for framework: ${categoryKey} > ${subcategoryKey} > ${frameworkKey}`,
+          );
+          validate.errors.forEach((err) => {
             console.error(`  - ${err.instancePath}: ${err.message}`);
           });
           hasErrors = true;
@@ -39,10 +45,10 @@ const addFormats = require('ajv-formats');
   }
 
   if (hasErrors) {
-    console.error('\nFramework validation FAILED!');
+    console.error("\nFramework validation FAILED!");
     process.exit(1);
   } else {
-    console.log('\nFramework validation PASSED!');
+    console.log("\nFramework validation PASSED!");
     process.exit(0);
   }
 })(); // End of IIFE

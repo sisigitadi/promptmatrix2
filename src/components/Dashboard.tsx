@@ -3,12 +3,7 @@ import { Container, Row, Col, Card, Button, ListGroup } from "react-bootstrap";
 import { FaThLarge, FaHistory, FaPlusCircle } from "react-icons/fa";
 
 // This is a placeholder type. We will need to pass the actual saved prompts data later.
-interface SavedPrompt {
-  id: string | number;
-  frameworkName: string;
-  category: string;
-  versions: { timestamp: number; formData?: any }[];
-}
+import { SavedPrompt } from "@/types";
 
 interface DashboardProps {
   savedPrompts: SavedPrompt[];
@@ -34,15 +29,18 @@ const Dashboard: React.FC<DashboardProps> = ({
       <Row className="mb-4">
         <Col>
           <Card className="p-4 shadow-sm">
-            <h1 className="h3">Selamat Datang Kembali!</h1>
-            <p className="text-muted">
-              Ini adalah pusat kendali Anda untuk semua aktivitas rekayasa
-              prompt.
+            <h1 className="h3 fw-bold" style={{ color: "var(--neon-cyan)" }}>
+              Selamat Datang Kembali!
+            </h1>
+            <p className="text-muted mb-4">
+              Pusat kendali profesional Anda untuk arsitektur prompt tingkat
+              lanjut.
             </p>
             <Button
-              variant="primary"
+              variant="info"
               onClick={() => onNavigate("generator")}
-              style={{ maxWidth: "200px" }}
+              className="fw-bold text-white shadow-sm"
+              style={{ padding: "0.75rem 1.5rem" }}
             >
               <FaPlusCircle className="me-2" />
               Buat Prompt Baru
@@ -75,7 +73,8 @@ const Dashboard: React.FC<DashboardProps> = ({
                     return (
                       <ListGroup.Item
                         key={prompt.id}
-                        className="d-flex justify-content-between align-items-center p-3"
+                        className="d-flex justify-content-between align-items-center p-3 border-bottom-0 mb-2 rounded card"
+                        style={{ cursor: "pointer" }}
                       >
                         <div className="flex-grow-1 me-3">
                           <p className="fw-bold mb-1">{prompt.frameworkName}</p>
@@ -117,8 +116,15 @@ const Dashboard: React.FC<DashboardProps> = ({
           </h2>
           <Card className="text-center">
             <Card.Body>
-              <p className="text-muted mb-1">Total Prompt Disimpan</p>
-              <h3 className="display-6 fw-bold">{savedPrompts.length}</h3>
+              <p className="text-muted mb-1 text-uppercase small letter-spacing-1">
+                Total Prompt Disimpan
+              </p>
+              <h3
+                className="display-4 fw-bold"
+                style={{ color: "var(--neon-cyan)" }}
+              >
+                {savedPrompts.length}
+              </h3>
             </Card.Body>
           </Card>
         </Col>

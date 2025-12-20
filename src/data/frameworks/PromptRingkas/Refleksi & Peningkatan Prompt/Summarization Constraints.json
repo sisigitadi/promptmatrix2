@@ -32,9 +32,6 @@
       "info": "Bagian atau tema apa dari teks asli yang harus diprioritaskan atau diabaikan?"
     }
   ],
-  "kategori": [
-    "Prompt Ringkas",
-    "Refleksi & Peningkatan Prompt"
-  ],
+  "kategori": ["Prompt Ringkas", "Refleksi & Peningkatan Prompt"],
   "nama_kerangka": "Summarization Constraints"
 }

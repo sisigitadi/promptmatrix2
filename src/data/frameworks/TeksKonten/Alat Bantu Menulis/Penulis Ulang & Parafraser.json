@@ -65,9 +65,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Alat Bantu Menulis"
-  ],
+  "kategori": ["Teks & Konten", "Alat Bantu Menulis"],
   "nama_kerangka": "Penulis Ulang & Parafraser"
 }

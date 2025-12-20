@@ -54,9 +54,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Utilitas & Development"
-  ],
+  "kategori": ["Teks & Konten", "Utilitas & Development"],
   "nama_kerangka": "Analis & Perangkum Dokumen Legal"
 }

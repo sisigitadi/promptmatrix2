@@ -14,11 +14,7 @@
       "name": "duration",
       "label": "Durasi (detik)",
       "type": "select",
-      "options": [
-        "30",
-        "50",
-        "70"
-      ],
+      "options": ["30", "50", "70"],
       "info": "Pilih panjang loop musik yang akan dihasilkan."
     },
     {
@@ -29,9 +25,6 @@
       "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
     }
   ],
-  "kategori": [
-    "Audio & Musik",
-    "Prompt AI Musik & Audio"
-  ],
+  "kategori": ["Audio & Musik", "Prompt AI Musik & Audio"],
   "nama_kerangka": "MusicFX (Google)"
 }

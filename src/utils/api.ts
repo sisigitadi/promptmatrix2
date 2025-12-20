@@ -39,10 +39,13 @@ export const callGeminiApi = async (
       parts = prompt;
     }
 
-    const result = await geminiModel.generateContent({ contents: [{ parts }] });
+    const result = await geminiModel.generateContent({
+      contents: [{ role: "user", parts }],
+    });
     const response = await result.response;
     let fullResponse = "";
-    for (const part of response.candidates[0].content.parts) {
+    const responseParts = response.candidates?.[0]?.content?.parts || [];
+    for (const part of responseParts) {
       if (part.text) {
         fullResponse += part.text;
       } else if (part.inlineData) {
@@ -93,21 +96,12 @@ export const callGeminiApi = async (
   }
 };
 
-export const listGeminiModels = async (apiKey: string) => {
-  if (!apiKey) {
-    throw new Error("API key is missing.");
-  }
-
-  try {
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const { models } = await genAI.listModels();
-    return models.map((model) => model.name);
-  } catch (error: any) {
-    console.error("Error listing Gemini models:", error);
-    if (error.message) {
-      return { error: `Failed to list models: ${error.message}` };
-    } else {
-      return { error: "An unknown error occurred while listing models." };
-    }
-  }
+export const listGeminiModels = async (_apiKey: string) => {
+  // Hardcoded models as listModels is not directly available in client SDK easily without extra config
+  return [
+    "gemini-1.5-flash",
+    "gemini-1.5-pro",
+    "gemini-pro",
+    "gemini-pro-vision",
+  ];
 };

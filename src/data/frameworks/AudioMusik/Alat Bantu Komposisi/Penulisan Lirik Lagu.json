@@ -61,9 +61,6 @@
       "info": "Detail artistik atau batasan kreatif untuk AI. Misalnya, penggunaan metafora atau majas tertentu."
     }
   ],
-  "kategori": [
-    "Audio & Musik",
-    "Alat Bantu Komposisi"
-  ],
+  "kategori": ["Audio & Musik", "Alat Bantu Komposisi"],
   "nama_kerangka": "Penulisan Lirik Lagu"
 }

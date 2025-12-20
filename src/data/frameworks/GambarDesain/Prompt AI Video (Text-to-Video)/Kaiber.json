@@ -38,11 +38,7 @@
       "name": "aspectRatio",
       "label": "Aspect Ratio",
       "type": "select",
-      "options": [
-        "9:16 (Portrait)",
-        "16:9 (Landscape)",
-        "1:1 (Square)"
-      ],
+      "options": ["9:16 (Portrait)", "16:9 (Landscape)", "1:1 (Square)"],
       "info": "Pilih orientasi video Anda."
     },
     {
@@ -57,9 +53,6 @@
       }
     }
   ],
-  "kategori": [
-    "Gambar & Desain",
-    "Prompt AI Video (Text-to-Video)"
-  ],
+  "kategori": ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
   "nama_kerangka": "Kaiber"
 }

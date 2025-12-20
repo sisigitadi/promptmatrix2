@@ -2,10 +2,7 @@
   "id_kerangka": "BIS-DAT-001",
   "nama_kerangka": "Pusat Analisis Data Bisnis",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Bisnis"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Bisnis"],
   "description": "Analis data virtual untuk mengekstrak wawasan bisnis berharga dari data mentah, dari eksplorasi hingga visualisasi.",
   "perspektif_user": "Saya punya data penjualan tapi tidak tahu harus mulai dari mana untuk menganalisisnya. Saya butuh bantuan untuk memahami data, menemukan tren, dan mendapatkan saran visualisasi.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Analis Data yang akan menganalisis data bisnis.",

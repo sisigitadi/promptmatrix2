@@ -1,5 +1,16 @@
 # Prompt Matrix 2.0 - Catatan Rilis
 
+## Versi 2.4.0
+
+### Fitur & Peningkatan Utama
+
+*   **Sinkronisasi SOP Framework**: Seluruh kerangka kerja kini mengikuti standar kualitas tinggi sesuai `PROMPT_MATRIX_SOP.md`, mencakup logika AI yang lebih mendalam dan format output yang sangat terstruktur.
+*   **Peningkatan Suite Keamanan Siber**: Penambahan dan penyempurnaan playbook untuk operasi Red, Blue, dan Purple Team dengan integrasi framework MITRE ATT&CK.
+*   **Visual Prompt Builder v2**: Peningkatan stabilitas dan fitur pada drag-and-drop orchestrator, mendukung blok teks dan gambar dengan lebih lancar.
+*   **Eksperimen "Dice Roll"**: Implementasi pengisian input otomatis yang cerdas untuk membantu kreativitas pengguna.
+*   **Modernisasi Tech Stack**: Migrasi penuh ke React 19 dan Vite 7 untuk performa yang lebih optimal dan waktu build yang lebih cepat.
+*   **Penyempurnaan Eskpor PDF**: Format laporan yang lebih profesional dengan metadata yang lengkap dan penanganan multi-halaman yang lebih baik.
+
 ## Versi 2.0.2
 
 ### Perbaikan & Peningkatan

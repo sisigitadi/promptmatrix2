@@ -7,11 +7,7 @@
       "name": "assetType",
       "label": "Jenis Aset Branding",
       "type": "select",
-      "options": [
-        "Nama Brand",
-        "Slogan/Tagline",
-        "Konsep Logo"
-      ],
+      "options": ["Nama Brand", "Slogan/Tagline", "Konsep Logo"],
       "info": "Pilih aset branding yang Anda butuhkan.",
       "validation": {
         "regex": "^(?!Pilih Jenis Aset Branding...).*$"
@@ -166,9 +162,6 @@
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu memberikan beberapa opsi yang bervariasi dalam gaya dan pendekatan. Untuk nama, AI harus menyarankan nama yang terdengar baik saat diucapkan dan mudah dieja. Untuk slogan, prioritaskan keringkasan. Untuk konsep logo, fokus pada deskripsi yang bisa dipahami oleh desainer maupun non-desainer. Penting: Selalu sertakan disclaimer bahwa AI tidak dapat memeriksa ketersediaan merek dagang (trademark) atau domain, dan pengguna harus melakukan verifikasi sendiri.",
-  "kategori": [
-    "Prompt Proyek",
-    "Branding & Identitas"
-  ],
+  "kategori": ["Prompt Proyek", "Branding & Identitas"],
   "nama_kerangka": "Studio Branding & Identitas"
 }

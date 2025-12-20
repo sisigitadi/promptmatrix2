@@ -2,10 +2,7 @@
   "id_kerangka": "KI-PEM-001",
   "nama_kerangka": "Pusat Strategi Pemasaran 360°",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Pemasaran"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Pemasaran"],
   "description": "Dasbor komprehensif untuk merancang, mengimplementasikan, dan menganalisis berbagai aspek kampanye pemasaran, dari SEO hingga peluncuran produk.",
   "perspektif_user": "Sebagai seorang profesional pemasaran, saya memerlukan satu alat terpusat yang dapat membantu saya dengan berbagai tugas pemasaran sehari-hari tanpa harus berpindah-pindah kerangka kerja.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Ahli Strategi Pemasaran 360° yang akan merancang kampanye pemasaran.",
@@ -56,10 +53,7 @@
             "Outline Konten SEO",
             "Ide Iklan SEM"
           ],
-          "default": [
-            "Riset Kata Kunci",
-            "Outline Konten SEO"
-          ],
+          "default": ["Riset Kata Kunci", "Outline Konten SEO"],
           "info": "Pilih aspek yang ingin Anda dalami."
         }
       ],
@@ -68,11 +62,7 @@
           "name": "JENIS_KONTEN",
           "label": "Jenis Konten yang Diinginkan",
           "type": "select",
-          "options": [
-            "Artikel Blog",
-            "Naskah Video",
-            "Utas Media Sosial"
-          ],
+          "options": ["Artikel Blog", "Naskah Video", "Utas Media Sosial"],
           "default": "Artikel Blog",
           "info": "Pilih format konten yang ingin dibuat."
         },
@@ -116,10 +106,7 @@
             "X/Twitter",
             "Facebook"
           ],
-          "default": [
-            "Instagram",
-            "LinkedIn"
-          ],
+          "default": ["Instagram", "LinkedIn"],
           "info": "Pilih platform di mana Anda ingin aktif."
         },
         {
@@ -197,10 +184,7 @@
             "Paket Konten Media Sosial",
             "Draf Iklan Digital"
           ],
-          "default": [
-            "Email Pengumuman",
-            "Paket Konten Media Sosial"
-          ],
+          "default": ["Email Pengumuman", "Paket Konten Media Sosial"],
           "info": "Pilih materi komunikasi yang ingin Anda hasilkan."
         }
       ],
@@ -236,10 +220,7 @@
             "Analisis Kompetitor",
             "Pembuatan Buyer Persona"
           ],
-          "default": [
-            "Analisis SWOT",
-            "Analisis Kompetitor"
-          ],
+          "default": ["Analisis SWOT", "Analisis Kompetitor"],
           "info": "Pilih jenis analisis yang Anda butuhkan."
         }
       ],

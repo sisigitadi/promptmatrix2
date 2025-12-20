@@ -2,10 +2,7 @@
   "id_kerangka": "TEKS-WWC-001",
   "nama_kerangka": "Asisten Persiapan Wawancara",
   "version": "1.0.0",
-  "kategori": [
-    "Prompt Ringkas",
-    "Persiapan Wawancara"
-  ],
+  "kategori": ["Prompt Ringkas", "Persiapan Wawancara"],
   "description": "Kerangka kerja ini membantu Anda mempersiapkan diri untuk berbagai jenis wawancara, mulai dari wawancara kerja hingga wawancara riset, dengan menyediakan pertanyaan, tips, dan strategi yang relevan.",
   "perspektif_user": "Sebagai kandidat pekerjaan, peneliti, atau jurnalis, saya membutuhkan panduan komprehensif untuk menghadapi wawancara. Saya ingin berlatih menjawab pertanyaan, memahami jenis wawancara yang berbeda, dan mendapatkan tips untuk tampil percaya diri dan efektif.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Pelatih Wawancara yang akan memberikan panduan, pertanyaan, dan strategi untuk persiapan wawancara.",
@@ -91,9 +88,7 @@
       "label": "Fokus Bantuan",
       "type": "multiselect",
       "description": "Pilih jenis bantuan yang Anda butuhkan.",
-      "default": [
-        "Pertanyaan Wawancara"
-      ],
+      "default": ["Pertanyaan Wawancara"],
       "optional": false,
       "options": [
         {

@@ -32,9 +32,6 @@
       "info": "Panduan untuk proses eksplorasi dan evaluasi."
     }
   ],
-  "kategori": [
-    "Prompt Ringkas",
-    "Pemikiran Terstruktur & Analisis"
-  ],
+  "kategori": ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
   "nama_kerangka": "ToT (Tree of Thoughts)"
 }

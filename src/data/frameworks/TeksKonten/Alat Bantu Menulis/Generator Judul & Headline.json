@@ -62,9 +62,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Alat Bantu Menulis"
-  ],
+  "kategori": ["Teks & Konten", "Alat Bantu Menulis"],
   "nama_kerangka": "Generator Judul & Headline"
 }

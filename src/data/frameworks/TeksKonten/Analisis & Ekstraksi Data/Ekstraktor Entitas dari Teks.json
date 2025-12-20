@@ -40,9 +40,6 @@
       "info": "Aturan spesifik untuk proses ekstraksi dan pemformatan."
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Analisis & Ekstraksi Data"
-  ],
+  "kategori": ["Teks & Konten", "Analisis & Ekstraksi Data"],
   "nama_kerangka": "Ekstraktor Entitas dari Teks"
 }

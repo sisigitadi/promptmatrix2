@@ -2,10 +2,7 @@
   "id_kerangka": "PROJ-LG-001",
   "nama_kerangka": "Strategi Lead Generation",
   "version": "1.0.0",
-  "kategori": [
-    "Prompt Proyek",
-    "Lead Generation"
-  ],
+  "kategori": ["Prompt Proyek", "Lead Generation"],
   "description": "Kerangka kerja ini membantu Anda merancang strategi dan konten yang efektif untuk menghasilkan prospek (leads) berkualitas tinggi.",
   "perspektif_user": "Sebagai pemasar, pemilik bisnis, atau profesional penjualan, saya membutuhkan bantuan untuk membuat rencana yang komprehensif untuk menarik calon pelanggan, mengumpulkan informasi mereka, dan membimbing mereka melalui saluran penjualan.",
   "ai_logic_description": "Persona AI: Anda adalah seorang ahli strategi pemasaran digital yang akan membantu pengguna merancang rencana Lead Generation yang efektif.",
@@ -52,7 +49,8 @@
     {
       "name": "tujuan_leadgen",
       "label": "Tujuan Utama Lead Generation",
-                  "type": "select",      "description": "Pilih tujuan utama dari kampanye Lead Generation ini.",
+      "type": "select",
+      "description": "Pilih tujuan utama dari kampanye Lead Generation ini.",
       "default": "Meningkatkan jumlah prospek berkualitas (MQL/SQL)",
       "optional": false,
       "options": [

@@ -54,13 +54,7 @@
       "name": "partOfSong",
       "label": "Untuk Bagian Lagu Mana?",
       "type": "select",
-      "options": [
-        "Verse",
-        "Chorus",
-        "Bridge",
-        "Semua Bagian",
-        "Lainnya..."
-      ],
+      "options": ["Verse", "Chorus", "Bridge", "Semua Bagian", "Lainnya..."],
       "info": "Progresi untuk chorus biasanya lebih kuat dan 'catchy' daripada verse."
     },
     {
@@ -71,9 +65,6 @@
       "info": "Instruksi teknis atau artistik tambahan untuk progresi kord yang dihasilkan."
     }
   ],
-  "kategori": [
-    "Audio & Musik",
-    "Alat Bantu Komposisi"
-  ],
+  "kategori": ["Audio & Musik", "Alat Bantu Komposisi"],
   "nama_kerangka": "Ide Progresi Kord"
 }

@@ -2,10 +2,7 @@
   "id_kerangka": "KOL-PP-103",
   "nama_kerangka": "Generator Dokumentasi API",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Pengembangan Perangkat Lunak"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
   "description": "Buat dokumentasi teknis yang jelas dan terstruktur untuk sebuah endpoint API berdasarkan spesifikasi yang diberikan.",
   "perspektif_user": "Saya seorang developer dan saya sudah selesai membuat sebuah endpoint API. Sekarang saya butuh bantuan untuk menulis dokumentasi yang lengkap dan mudah dipahami untuk rekan tim atau pengguna eksternal.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Technical Writer ahli. Anda akan membuat dokumentasi untuk sebuah endpoint API, mencakup deskripsi, parameter, contoh request, dan contoh response sukses/error.",
@@ -24,13 +21,7 @@
       "name": "HTTP_METHOD",
       "label": "Metode HTTP",
       "type": "select",
-      "options": [
-        "GET",
-        "POST",
-        "PUT",
-        "DELETE",
-        "PATCH"
-      ],
+      "options": ["GET", "POST", "PUT", "DELETE", "PATCH"],
       "default": "GET",
       "info": "Pilih metode HTTP yang sesuai untuk endpoint ini."
     },

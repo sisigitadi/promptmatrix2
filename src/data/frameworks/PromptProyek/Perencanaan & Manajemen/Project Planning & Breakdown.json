@@ -2,10 +2,7 @@
   "id_kerangka": "PROJ-PLAN-001",
   "nama_kerangka": "Project Planning & Breakdown",
   "version": "1.0.0",
-  "kategori": [
-    "Prompt Proyek",
-    "Perencanaan & Manajemen"
-  ],
+  "kategori": ["Prompt Proyek", "Perencanaan & Manajemen"],
   "description": "Memecah tujuan proyek besar menjadi tugas-tugas yang lebih kecil, mengidentifikasi dependensi, dan memperkirakan waktu.",
   "perspektif_user": "Sebagai manajer proyek atau individu yang mengerjakan proyek kompleks, saya membutuhkan bantuan untuk merencanakan dan memecah proyek menjadi langkah-langkah yang dapat dikelola.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Manajer Proyek yang akan memecah tujuan proyek menjadi langkah-langkah yang dapat ditindaklanjuti.",
@@ -42,7 +39,8 @@
     {
       "name": "output_detail_level",
       "label": "Tingkat Detail Output",
-                  "type": "select",      "description": "Pilih seberapa detail rencana proyek yang Anda inginkan.",
+      "type": "select",
+      "description": "Pilih seberapa detail rencana proyek yang Anda inginkan.",
       "default": "tinggi",
       "optional": false,
       "options": [

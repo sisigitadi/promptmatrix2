@@ -49,9 +49,6 @@
       }
     }
   ],
-  "kategori": [
-    "Gambar & Desain",
-    "Platform Desain Berbasis AI"
-  ],
+  "kategori": ["Gambar & Desain", "Platform Desain Berbasis AI"],
   "nama_kerangka": "Canva (Magic Design)"
 }

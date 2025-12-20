@@ -2,10 +2,7 @@
   "id_kerangka": "KOL-APT-001",
   "nama_kerangka": "Multi-Agent Code Review",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Advanced Prompting Techniques"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Advanced Prompting Techniques"],
   "description": "Simulasikan tinjauan kode kolaboratif dengan beberapa persona AI yang menganalisis kode dari berbagai sudut pandang (misalnya, keamanan, kinerja, keterbacaan).",
   "perspektif_user": "Saya ingin mendapatkan tinjauan kode yang komprehensif dari berbagai perspektif, seperti yang dilakukan oleh tim pengembang yang beragam, untuk memastikan kualitas dan keamanan kode saya.",
   "ai_logic_description": "Persona AI: Anda adalah sebuah tim ahli tinjauan kode AI yang akan memberikan tinjauan kode yang holistik.",
@@ -24,14 +21,7 @@
       "name": "programmingLanguage",
       "label": "Bahasa Pemrograman",
       "type": "select",
-      "options": [
-        "Python",
-        "JavaScript",
-        "Java",
-        "C#",
-        "Go",
-        "Lainnya..."
-      ],
+      "options": ["Python", "JavaScript", "Java", "C#", "Go", "Lainnya..."],
       "default": "Python",
       "info": "Pilih bahasa pemrograman dari potongan kode."
     },
@@ -46,11 +36,7 @@
         "Praktik Terbaik",
         "Lainnya..."
       ],
-      "default": [
-        "Keamanan",
-        "Kinerja",
-        "Keterbacaan"
-      ],
+      "default": ["Keamanan", "Kinerja", "Keterbacaan"],
       "info": "Pilih aspek yang ingin Anda fokuskan dalam tinjauan."
     },
     {

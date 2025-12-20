@@ -9,8 +9,7 @@ import {
   generateVisualPromptParts,
 } from "@/utils/promptGenerators";
 import { validateInput } from "@/utils/validation";
-import { PromptBlock } from "@/components/VisualPromptBuilder";
-import { Part } from "@google/generative-ai";
+import { PromptBlock } from "@/types";
 import { useFrameworkNavigation } from "@/hooks/useFrameworkNavigation";
 
 const NavigationPane = React.lazy(() => import("@/components/NavigationPane"));
@@ -64,24 +63,27 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
 
   const {
     selectedCategory,
-    setSelectedCategory, // Re-adding for direct manipulation
+    setSelectedCategory,
     selectedFramework,
-    setSelectedFramework, // Re-adding for direct manipulation
+    setSelectedFramework,
     openSubcategories,
+    manualOpenSubcategories,
     searchQuery,
     debouncedSearchQuery,
     toolTypeFilter,
     handleToolTypeFilterChange,
     filteredFrameworks,
-    manualOpenSubcategories,
     currentFrameworkDetails,
     handleCategorySelect,
     handleFrameworkSelect,
     handleSearchChange,
     handleSubcategoryToggle,
     handleBackToCategories,
-    isLoading: isNavigationLoading,
+    isLoading,
   } = useFrameworkNavigation(dispatch);
+
+  // Renaming isLoading to isNavigationLoading for clarity in usage below
+  const isNavigationLoading = isLoading;
 
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
   const [customInputs, setCustomInputs] = useState<{ [key: string]: string }>(
@@ -91,18 +93,20 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
     { id: `block-${Date.now()}`, type: "text", content: "" },
   ]);
   const [selectedModel, setSelectedModel] = useState<string>(() => {
-    return sessionStorage.getItem("selectedModel") || "gemini-1.5-flash";
+    return sessionStorage.getItem("selectedModel") || "gemini-3.0-flash";
   });
+
   const [validationErrors, setValidationErrors] = useState<{
     [key: string]: string;
   }>({});
   const [touchedFields, setTouchedFields] = useState<{
     [key: string]: boolean;
   }>({});
+
+  const [jsonOutput, setJsonOutput] = useState<string>("");
   const [naturalLanguageOutput, setNaturalLanguageOutput] = useState<
-    string | Part[]
+    string | any[]
   >([]);
-  const [jsonOutput, setJsonOutput] = useState("");
   const [previewNaturalLanguageOutput, setPreviewNaturalLanguageOutput] =
     useState("");
   const [previewJsonOutput, setPreviewJsonOutput] = useState("");
@@ -110,25 +114,37 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
   // Effect to handle loading a prompt from parent
   useEffect(() => {
     if (promptToLoad) {
-      const { versionData, parentPrompt } = promptToLoad;
+      // Destructure correctly based on how handleLoadPrompt constructs the object in App.tsx
+      // setPromptToLoad({ versionData, parentPrompt });
+      const { parentPrompt, versionData } = promptToLoad;
+      const { category, frameworkName } = parentPrompt || {};
+      const { formData: loadedFormData, customInputs: loadedCustomInputs } =
+        versionData || {};
 
-      // Directly set the navigation state without causing side-effects like form clearing
-      setSelectedCategory(parentPrompt.category);
-      setSelectedFramework(parentPrompt.frameworkName);
+      if (category) setSelectedCategory(category);
+      if (frameworkName) setSelectedFramework(frameworkName);
 
-      // Then, set the data for that framework
-      setFormData(versionData.formData || {});
-      setCustomInputs(versionData.customInputs || {});
+      setFormData(loadedFormData || {});
+      setCustomInputs(loadedCustomInputs || {});
 
-      if (Array.isArray(versionData.naturalLanguageOutput)) {
-        setPromptBlocks(versionData.naturalLanguageOutput);
+      // Load blocks if available in versionData
+      if (versionData && Array.isArray(versionData.naturalLanguageOutput)) {
+        // If the saved output was block-based (Visual Builder), try to restore it if possible
+        // For now, we mainly support text/JSON framework restoration.
+        // If promptsBlocks logic is needed for visual builder restoration:
+        /* 
+        setPromptBlocks(versionData.naturalLanguageOutput); 
+        */
+        // Fallback to default for now to prevent errors if type mismatch
+        setPromptBlocks([
+          { id: `block-${Date.now()}`, type: "text", content: "" },
+        ]);
       } else {
         setPromptBlocks([
           { id: `block-${Date.now()}`, type: "text", content: "" },
         ]);
       }
 
-      // Signal completion to parent to clear the promptToLoad state
       onLoadComplete();
     }
   }, [promptToLoad, onLoadComplete, setSelectedCategory, setSelectedFramework]);
@@ -141,7 +157,11 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
     ) => {
       setFormData((prev) => {
         const newFormData = { ...prev, [name]: value };
-        const error = validateInput(name, value, inputDetails);
+        // Only validate string or number
+        let error = "";
+        if (typeof value === "string" || typeof value === "number") {
+          error = validateInput(name, value, inputDetails as any);
+        }
         setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
         return newFormData;
       });
@@ -181,10 +201,13 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
   ) => {
     const errors: { [key: string]: string } = {};
     if (!frameworkDetails) return errors;
-    const allInputs = {
+    const allInputs: { [key: string]: FrameworkComponent } = {
       ...(frameworkDetails.components
         ? Object.fromEntries(
-            frameworkDetails.components.map((c) => [c.name, c]),
+            frameworkDetails.components.map((c: FrameworkComponent) => [
+              c.name,
+              c,
+            ]),
           )
         : {}),
     };
@@ -195,7 +218,7 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
       if (error) errors[name] = error;
     }
     if (frameworkDetails.crossValidationRules) {
-      frameworkDetails.crossValidationRules.forEach((rule) => {
+      frameworkDetails.crossValidationRules.forEach((rule: any) => {
         if (
           data[rule.triggerField] === rule.triggerValue &&
           !data[rule.dependentField]
@@ -283,8 +306,6 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
           showInitialMessage={
             !selectedCategory && !debouncedSearchQuery && !toolTypeFilter
           }
-          showOnboardingTour={showOnboardingTour}
-          completeOnboardingTour={() => setShowOnboardingTour(false)}
           onNavigate={onNavigate}
         />
       </Col>
@@ -300,7 +321,6 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
           onModelSelect={handleModelSelect}
           selectedModel={selectedModel}
           showDevMode={showDevMode}
-          isApiKeyEnabled={isApiKeyEnabled}
           apiKey={apiKey}
           setApiKey={setApiKey}
           handleInputChangeWithValidation={handleInputChangeWithValidation}
@@ -332,12 +352,13 @@ const GeneratorView: React.FC<GeneratorViewProps> = ({
           setApiKey={setApiKey}
           selectedModel={selectedModel}
           onModelSelect={handleModelSelect}
+          isApiKeyEnabled={isApiKeyEnabled}
           handleInputChangeWithValidation={handleInputChangeWithValidation}
           validationErrors={validationErrors}
-          isApiKeyEnabled={isApiKeyEnabled}
           onSelectRecommendedFramework={handleFrameworkSelect}
         />
       </Col>
+
       <OnboardingTour
         show={showOnboardingTour}
         onHide={() => setShowOnboardingTour(false)}

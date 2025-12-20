@@ -25,9 +25,6 @@
       "info": "Instruksi untuk menjaga keaslian persona."
     }
   ],
-  "kategori": [
-    "Prompt Ringkas",
-    "Persona, Gaya & Skenario"
-  ],
+  "kategori": ["Prompt Ringkas", "Persona, Gaya & Skenario"],
   "nama_kerangka": "Expert Persona"
 }

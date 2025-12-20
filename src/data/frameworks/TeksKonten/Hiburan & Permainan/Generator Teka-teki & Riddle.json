@@ -50,9 +50,6 @@
       "info": "Aturan atau batasan spesifik untuk pembuatan teka-teki."
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Hiburan & Permainan"
-  ],
+  "kategori": ["Teks & Konten", "Hiburan & Permainan"],
   "nama_kerangka": "Generator Teka-teki & Riddle"
 }

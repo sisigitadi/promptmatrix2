@@ -75,9 +75,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Penulisan & Konten"
-  ],
+  "kategori": ["Teks & Konten", "Penulisan & Konten"],
   "nama_kerangka": "Penulis Blog Post"
 }

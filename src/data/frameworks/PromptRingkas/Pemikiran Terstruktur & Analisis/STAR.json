@@ -39,9 +39,6 @@
       "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
     }
   ],
-  "kategori": [
-    "Prompt Ringkas",
-    "Pemikiran Terstruktur & Analisis"
-  ],
+  "kategori": ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
   "nama_kerangka": "STAR"
 }

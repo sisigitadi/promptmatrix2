@@ -32,9 +32,6 @@
       "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
     }
   ],
-  "kategori": [
-    "Audio & Musik",
-    "Prompt AI Musik & Audio"
-  ],
+  "kategori": ["Audio & Musik", "Prompt AI Musik & Audio"],
   "nama_kerangka": "Stable Audio"
 }

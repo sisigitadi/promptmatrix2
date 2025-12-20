@@ -51,9 +51,6 @@
       "info": "Preferensi personal untuk memandu AI."
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Pengembangan Diri & Psikologi"
-  ],
+  "kategori": ["Teks & Konten", "Pengembangan Diri & Psikologi"],
   "nama_kerangka": "Alat Bantu Jurnal Terpandu"
 }

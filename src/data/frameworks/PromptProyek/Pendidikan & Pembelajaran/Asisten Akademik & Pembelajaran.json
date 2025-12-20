@@ -179,12 +179,7 @@
           "name": "discussionFormat",
           "label": "Format Diskusi",
           "type": "select",
-          "options": [
-            "Terbuka",
-            "Terstruktur",
-            "Panel",
-            "Debat"
-          ],
+          "options": ["Terbuka", "Terstruktur", "Panel", "Debat"],
           "info": "Bagaimana diskusi akan dijalankan?"
         },
         {
@@ -202,9 +197,6 @@
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu menekankan pentingnya pemahaman konsep di atas hafalan. Untuk pembuatan soal, pastikan tingkat kesulitan sesuai dengan tingkat audiens yang diberikan. Untuk RPP, sarankan variasi aktivitas untuk menjaga keterlibatan siswa. Wajib sertakan disclaimer: 'Materi yang dihasilkan adalah alat bantu. Guru/pelajar disarankan untuk memverifikasi informasi dan menyesuaikannya dengan kurikulum atau kebutuhan belajar yang spesifik.'",
-  "kategori": [
-    "Prompt Proyek",
-    "Pendidikan & Pembelajaran"
-  ],
+  "kategori": ["Prompt Proyek", "Pendidikan & Pembelajaran"],
   "nama_kerangka": "Asisten Akademik & Pembelajaran"
 }

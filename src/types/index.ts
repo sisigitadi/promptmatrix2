@@ -40,7 +40,12 @@ export interface FrameworkComponent {
 export type DynamicSubcomponents = {
   trigger: string;
   options: {
-    [key: string]: FrameworkComponent[] | { components: FrameworkComponent[] };
+    [key: string]:
+      | FrameworkComponent[]
+      | {
+          components: FrameworkComponent[];
+          komponen_prompt?: KomponenPromptType;
+        };
   };
 };
 

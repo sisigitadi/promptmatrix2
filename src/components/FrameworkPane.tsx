@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { getRandomSuggestion } from "../data/suggestions";
 import {
   Card,
   Form,
@@ -9,7 +10,8 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { Framework } from "../data/frameworks";
-import VisualPromptBuilder, { PromptBlock } from "./VisualPromptBuilder";
+import { PromptBlock } from "../types";
+import VisualPromptBuilder from "./VisualPromptBuilder";
 import {
   FaKeyboard,
   FaHashtag,
@@ -32,7 +34,11 @@ import { callGeminiApi } from "../utils/api"; // Import API functions
 import { toast } from "react-toastify";
 
 interface FrameworkPaneProps {
-  currentFrameworkDetails: Framework | null;
+  currentFrameworkDetails: {
+    framework: Framework;
+    category: string;
+    subcategory: string;
+  } | null;
   selectedFramework: string | null;
   formData: { [key: string]: any };
   customInputs: { [key: string]: string };
@@ -66,12 +72,12 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   formData,
   customInputs,
 
-  onModelSelect,
+  onModelSelect: _onModelSelect,
   selectedModel,
   showDevMode,
 
   apiKey,
-  setApiKey,
+  setApiKey: _setApiKey,
   handleInputChangeWithValidation,
   handleCustomInputChangeWithValidation,
   validationErrors,
@@ -99,7 +105,16 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
       if (!dynamicSubcomponent || !dynamicSubcomponent.trigger) return [];
       const triggerValue = formData[dynamicSubcomponent.trigger];
       if (triggerValue && dynamicSubcomponent.options[triggerValue]) {
-        return dynamicSubcomponent.options[triggerValue];
+        const optionValue = dynamicSubcomponent.options[triggerValue];
+        if (Array.isArray(optionValue)) {
+          return optionValue;
+        } else if (
+          optionValue &&
+          typeof optionValue === "object" &&
+          "components" in optionValue
+        ) {
+          return optionValue.components;
+        }
       }
       return [];
     });
@@ -189,13 +204,13 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
           imagePayload,
         );
 
-        if (apiResult.error) {
+        if (typeof apiResult === "object" && apiResult.error) {
           // Check for the error property
           showToast(
             `Gagal mendapatkan bantuan AI untuk ${compLabel}. ${apiResult.error}`,
             "error",
           );
-        } else {
+        } else if (typeof apiResult === "string") {
           handleInputChangeWithValidation(name, apiResult, details);
         }
       } catch (error: any) {
@@ -327,6 +342,32 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 <FaExclamationCircle className="me-1" />
                 {validationErrors[compName] || " "}
               </Form.Control.Feedback>
+              <Button
+                variant="outline-secondary"
+                onClick={() => {
+                  const suggestion = getRandomSuggestion(compName);
+                  console.log(
+                    `Dice clicked for ${compName}, suggestion: ${suggestion}`,
+                  );
+                  if (suggestion) {
+                    handleInputChangeWithValidation(
+                      compName,
+                      suggestion,
+                      inputDetails,
+                    );
+                  } else {
+                    showToast(
+                      "Maaf, belum ada saran untuk input ini.",
+                      "error",
+                    );
+                  }
+                }}
+                title="Klik untuk saran acak"
+                aria-label={`Saran acak untuk ${compLabel}`}
+                className="interactive-input ms-1"
+              >
+                🎲
+              </Button>
             </InputGroup>
             {showDevMode && (
               <Button
@@ -443,6 +484,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   3,
                   (formData[compName] || "").split("\n").length + 1,
                 )}
+                className="interactive-input"
                 isInvalid={
                   touchedFields[compName] && !!validationErrors[compName]
                 }
@@ -520,6 +562,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   2,
                   (formData[compName] || "").split("\n").length + 1,
                 )}
+                className="interactive-input"
                 isInvalid={
                   touchedFields[compName] && !!validationErrors[compName]
                 }
@@ -564,6 +607,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 }
                 disabled={isAiAssisting[compName]}
                 title="AI Assist"
+                aria-label={`Minta bantuan AI untuk ${compLabel}`}
               >
                 {isAiAssisting[compName] ? (
                   <Spinner as="span" animation="border" size="sm" />
@@ -591,6 +635,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   )
                 }
                 onBlur={() => handleInputBlur(compName)}
+                className="interactive-input"
                 isInvalid={
                   touchedFields[compName] && !!validationErrors[compName]
                 }
@@ -734,9 +779,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   )
                 }
                 onBlur={() => handleInputBlur(compName)}
-                isInvalid={
-                  touchedFields[compName] && !!validationErrors[compName]
-                }
                 aria-invalid={
                   touchedFields[compName] && !!validationErrors[compName]
                     ? "true"
@@ -1245,8 +1287,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                       aria-valuenow={
                         ((wizardStep + 1) / allComponentsToRender.length) * 100
                       }
-                      aria-valuemin="0"
-                      aria-valuemax="100"
+                      aria-valuemin={0}
+                      aria-valuemax={100}
                       style={{ height: "8px" }}
                     >
                       <div

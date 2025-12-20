@@ -2,10 +2,7 @@
   "id_kerangka": "BIS-HR-001",
   "nama_kerangka": "Asisten Rekrutmen & SDM",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Bisnis"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Bisnis"],
   "description": "Asisten personalia untuk menyederhanakan tugas rekrutmen dan SDM, dari deskripsi pekerjaan hingga rencana onboarding.",
   "perspektif_user": "Saya perlu bantuan untuk tugas-tugas HR seperti membuat lowongan kerja yang menarik, menyiapkan pertanyaan wawancara yang bagus, dan merancang proses orientasi untuk karyawan baru.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis SDM yang akan merekrut dan mengelola sumber daya manusia.",

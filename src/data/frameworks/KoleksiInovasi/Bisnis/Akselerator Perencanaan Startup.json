@@ -2,10 +2,7 @@
   "id_kerangka": "BIS-STP-001",
   "nama_kerangka": "Akselerator Perencanaan Startup",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Bisnis"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Bisnis"],
   "description": "Co-founder AI strategis untuk memandu wirausahawan melalui tahapan krusial membangun bisnis, dari ide hingga pitch deck.",
   "perspektif_user": "Saya butuh bantuan terstruktur untuk setiap tahap memulai bisnis, mulai dari mencari ide, menganalisis pasar, hingga membuat materi untuk investor.",
   "ai_logic_description": "Persona AI: Anda adalah seorang ahli strategi startup yang akan merencanakan dan mengembangkan startup.",

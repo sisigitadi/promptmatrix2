@@ -32,10 +32,10 @@ interface SavedPromptsDisplayProps {
   onHide: () => void;
   savedPrompts: any[];
   onLoadPrompt: (versionData: any, parentPrompt: any) => void;
-  onDeletePrompt: (id: number) => void;
+  onDeletePrompt: (id: string) => void;
   onExportPrompts: (prompts: any[]) => void;
   onImportPrompts: (prompts: any[]) => void;
-  onRenamePrompt: (id: number, newName: string) => void;
+  onRenamePrompt: (id: string, newName: string) => void;
   toggleFavorite: (id: string) => void;
 }
 
@@ -263,7 +263,7 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
                         {/* CONTENT */}
                         <div className="flex-grow-1 min-w-0">
                           <div className="d-flex align-items-center gap-2 mb-1">
-                            <h6 className="mb-0 text-light fw-bold text-truncate">
+                            <h6 className="mb-0 fw-bold text-truncate">
                               {prompt.frameworkName}
                             </h6>
                             <Badge bg="secondary" className="opacity-75">
@@ -348,7 +348,7 @@ const SavedPromptsDisplay: React.FC<SavedPromptsDisplayProps> = ({
                             (version: any, index: number) => (
                               <ListGroup.Item
                                 key={index}
-                                className="bg-transparent border-0 d-flex justify-content-between align-items-center py-2 px-0 text-light small border-bottom border-secondary border-opacity-10"
+                                className="bg-transparent border-0 d-flex justify-content-between align-items-center py-2 px-0 small border-bottom border-secondary border-opacity-10"
                               >
                                 <div>
                                   <Badge

@@ -3,55 +3,77 @@
 Prompt Matrix 2.0 is a state-of-the-art web application designed to revolutionize the way you create, curate, and optimize AI prompts. Built with a focus on structured prompt engineering, it provides a powerful toolkit for AI power users, developers, and creative professionals to achieve high-quality, predictable outputs from any Large Language Model (LLM).
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://sisigitadi.github.io/promptmatrix2/)
-![Version](https://img.shields.io/badge/Version-2.0.2-blue?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.4.0-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-orange?style=for-the-badge)
 
 ---
 
 ## 🚀 Key Features
 
-### 1. Structured Framework Engine
-Access hundreds of pre-defined frameworks across multiple domains like **Coding, Creative, Business, and Strategy**. Each framework is built on proven prompt engineering principles (Role, Context, Task, Format Output).
+### 1. 🧠 High-Fidelity Framework Engine (SOP Aligned)
 
-### 2. Intelligent Prompt Management
-- **Local Persistence:** Save and manage your prompts locally with version history.
-- **Multi-format Export:** Export your prompt libraries in **JSON, MD, or CSV** for backup or sharing.
-- **Smart Chaining:** Seamlessly use the output of one prompt as the input for another to build complex AI workflows.
+Experience a professional-grade prompt engine. Every framework is now aligned with a rigorous **Standard Operating Procedure (SOP)**, ensuring:
+- **Role-Based Logic:** Deep persona definitions for consistent AI behavior.
+- **Dynamic Variable Injection:** Hundreds of customizable fields with real-time validation.
+- **Strict Output Formatting:** Markdown, JSON, and technical schemas for downstream consumption.
+- **Multimodal Ready:** Support for image and file inputs across specialized categories.
 
-### 3. Advanced Input System
-- **Dynamic Forms:** Responsive input fields tailored to each blueprint.
-- **Validation Engine:** Real-time validation ensures your inputs are optimized for AI consumption.
-- **Visual Builder:** A dedicated visual mode for building prompts with attachments and structured blocks.
+### 2. 🛡️ Specialized Collections (Expanded)
 
-### 4. Premium User Interface
-- **Cyber-Spacious Design:** A modern 3D interface with Glassmorphism accents.
-- **Dark/Light Mode:** Full theme support for comfortable long-session usage.
-- **Lazy-Loaded Performance:** Optimized for speed with component-level splitting.
+Explore 6 major categories with specialized sub-suites:
+- **🛡️ Cyber Security Suite:** Advanced playbooks for Red Team Operations, Blue Team Analysis, and Purple Team Coordination.
+- **🏢 Enterprise Business Suite:** Optimized for MVP Planning, Startup Analysis, and Virtual Product Management.
+- **🤖 Tech & Development:** Multi-agent code reviews, RAG-enhanced generation, and technical documentation.
+- **🎨 Creative & Branding:** Scriptwriting, ad copywriting, and visual design orchestration.
+
+### 3. 🧩 Visual Prompt Orchestrator
+
+A drag-and-drop workspace for building complex, multi-step prompts.
+- **Drag-and-Drop:** Easily reorder prompt blocks.
+- **Multimodal Blocks:** Mix text and image inputs seamlessly.
+- **Smart suggestions:** Integrated "Dice Roll" for instant creative inspiration.
+
+### 4. 📄 Professional PDF Export
+
+Share your prompt architectures in a client-ready format.
+- **Branded Metadata:** Includes timestamps, categories, and system context.
+- **Auto-Formatting:** Polished tables and syntax-highlighted blocks.
+- **Version Tracking:** Locally persistent history for every prompt you build.
+
+### 5. ⚡ Next-Gen Performance
+
+Built on the latest stack for sub-second responsiveness:
+- **React 19 & Vite 7:** Cutting-edge core for maximum efficiency.
+- **Skeleton Loading:** Fluid, modern states during data transitions.
+- **Responsive "Professional Slate" Theme:** Premium glassmorphism aesthetics optimized for all devices.
 
 ---
 
 ## 🛠 Technology Stack
 
 - **Core:** React 19 (TypeScript), Vite 7
-- **UI Framework:** React Bootstrap 5
-- **Icons:** React Icons (Fa, Lucide)
-- **Notifications:** React Toastify
-- **Prompt Generation:** Custom-built Generator Utility
-- **Build System:** Vite-powered Bundler
+- **UI Framework:** React Bootstrap 5.3
+- **Styling:** Custom "Professional Slate" Theme with Glassmorphism
+- **PDF Engine:** jsPDF + autoTable
+- **Icons:** Lucide React & FontAwesome
+- **State Management:** React Hooks & Context API
+- **Tooling:** ESLint, Prettier, Husky, Lint-Staged
 
 ---
 
 ## ⚙️ Installation & Setup
 
-To run this project locally, follow these steps:
+To run this project locally:
 
 1. **Clone the Repository:**
+
    ```bash
-   git clone https://github.com/sisigitadi.github.io/promptmatrix2/
+   git clone https://github.com/sisigitadi/promptmatrix2/
    cd PromptMatrixV20
    ```
 
 2. **Install Dependencies:**
+
    ```bash
    npm install
    ```
@@ -63,27 +85,28 @@ To run this project locally, follow these steps:
 
 ---
 
-## 🌐 Deployment
+## 🌐 Deployment to GitHub Pages
 
-This application is ready for deployment to GitHub Pages.
+This application is configured for automated deployment.
 
 1. **Build the Application:**
+
    ```bash
    npm run build
    ```
 
-2. **Deploy to GitHub Pages:**
+2. **Deploy:**
    ```bash
    npm run deploy
    ```
-   *Note: Ensure the `homepage` field in `package.json` matches your GitHub Pages URL.*
+   _Note: This process validates frameworks, updates documentation lists, and publishes to the `gh-pages` branch._
 
 ---
 
 ## 🛡️ Security & Privacy
 
-- **No Server Storage:** All prompts and configurations are stored in your browser's local storage. Your data never leaves your device unless you choose to export it.
-- **API Protection:** The application is configured to handle API keys via browser session storage or local storage. **Always ensure your `.env` files and sensitive credentials are added to `.gitignore` before pushing to public repositories.**
+- **Client-Side Sovereignty:** All prompt data is stored locally in your browser (**Local Storage / Session Storage**).
+- **Zero Server Tracking:** No telemetry or input data is ever sent to our servers.
 
 ---
 
@@ -93,5 +116,6 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 ---
 
-Built with ❤️ for the AI Community. 
+Built with ❤️ for the AI Community.
 Repository: [https://github.com/sisigitadi/promptmatrix2/](https://github.com/sisigitadi/promptmatrix2/)
+

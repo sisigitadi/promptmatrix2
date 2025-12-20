@@ -71,9 +71,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Kehidupan & Produktivitas"
-  ],
+  "kategori": ["Teks & Konten", "Kehidupan & Produktivitas"],
   "nama_kerangka": "Generator Resep Masakan"
 }

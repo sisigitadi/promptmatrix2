@@ -3,6 +3,7 @@ import {
   PROMPT_FRAMEWORKS,
   Framework,
   PromptFrameworksType,
+  FrameworkComponent,
 } from "../data/frameworks";
 import { FormData } from "../types";
 
@@ -135,7 +136,7 @@ export function useFrameworkNavigation(
       });
 
       const initialFormData: FormData = {};
-      const inputs =
+      const inputs: [string, FrameworkComponent][] =
         frameworkDetails.framework.components?.map((c) => [c.name, c]) || []; // Add null check for components
 
       for (const [name, details] of inputs) {

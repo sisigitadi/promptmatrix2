@@ -14,14 +14,14 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
-  onShowSavedPrompts,
+  onShowSavedPrompts: _onShowSavedPrompts,
   onLogoClick,
   showDevMode,
   onShowHelp,
   isLightTheme,
   setIsLightTheme,
   onShowFrameworkBuilder,
-  onNavigate,
+  onNavigate: _onNavigate,
 }) => {
   const handleLogoClick = () => {
     onLogoClick(); // Tetap jalankan counter untuk Dev Mode rahasia

@@ -39,9 +39,6 @@
       "info": "Instruksi tentang gaya bahasa, nada, atau informasi tambahan."
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Utilitas & Development"
-  ],
+  "kategori": ["Teks & Konten", "Utilitas & Development"],
   "nama_kerangka": "Generator Pesan Error Ramah Pengguna"
 }

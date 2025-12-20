@@ -58,9 +58,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Kehidupan & Produktivitas"
-  ],
+  "kategori": ["Teks & Konten", "Kehidupan & Produktivitas"],
   "nama_kerangka": "Generator Template Balasan Cepat"
 }

@@ -66,9 +66,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Penulisan & Konten"
-  ],
+  "kategori": ["Teks & Konten", "Penulisan & Konten"],
   "nama_kerangka": "Pembuat Studi Kasus (Case Study)"
 }

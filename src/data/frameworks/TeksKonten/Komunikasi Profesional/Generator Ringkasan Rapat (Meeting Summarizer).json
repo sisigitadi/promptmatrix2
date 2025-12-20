@@ -45,11 +45,7 @@
       "name": "actionItemsToExtract",
       "label": "Fokus Ekstraksi 'Action Items'",
       "type": "select",
-      "options": [
-        "Ya, ekstrak dengan detail",
-        "Tidak perlu",
-        "Lainnya..."
-      ],
+      "options": ["Ya, ekstrak dengan detail", "Tidak perlu", "Lainnya..."],
       "info": "Minta AI untuk secara khusus mencari, mengumpulkan, dan mendaftar semua tugas, penanggung jawab, dan tenggat waktu.",
       "optional": true
     },
@@ -65,9 +61,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Komunikasi Profesional"
-  ],
+  "kategori": ["Teks & Konten", "Komunikasi Profesional"],
   "nama_kerangka": "Generator Ringkasan Rapat (Meeting Summarizer)"
 }

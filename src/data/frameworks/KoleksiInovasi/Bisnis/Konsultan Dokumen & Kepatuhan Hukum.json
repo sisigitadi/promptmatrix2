@@ -2,10 +2,7 @@
   "id_kerangka": "BIS-LGL-001",
   "nama_kerangka": "Konsultan Dokumen & Kepatuhan Hukum",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Bisnis"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Bisnis"],
   "description": "Asisten legal virtual untuk kebutuhan bisnis sehari-hari, dari draf perjanjian hingga checklist kepatuhan.",
   "perspektif_user": "Saya butuh bantuan untuk membuat draf dokumen legal umum atau memahami istilah hukum tanpa harus langsung ke pengacara untuk draf pertama.",
   "ai_logic_description": "Persona AI: Anda adalah seorang asisten legal virtual yang akan menyusun dokumen dan memahami hukum bisnis.",
@@ -86,12 +83,7 @@
             "name": "BENTUK_BADAN_USAHA",
             "label": "Bentuk Badan Usaha",
             "type": "select",
-            "options": [
-              "PT Perorangan",
-              "CV",
-              "Firma",
-              "UMKM Perorangan"
-            ],
+            "options": ["PT Perorangan", "CV", "Firma", "UMKM Perorangan"],
             "default": "UMKM Perorangan",
             "info": "Pilih bentuk badan usaha Anda."
           },

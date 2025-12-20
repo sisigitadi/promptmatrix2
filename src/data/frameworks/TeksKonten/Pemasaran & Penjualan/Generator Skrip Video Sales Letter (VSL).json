@@ -85,9 +85,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Pemasaran & Penjualan"
-  ],
+  "kategori": ["Teks & Konten", "Pemasaran & Penjualan"],
   "nama_kerangka": "Generator Skrip Video Sales Letter (VSL)"
 }

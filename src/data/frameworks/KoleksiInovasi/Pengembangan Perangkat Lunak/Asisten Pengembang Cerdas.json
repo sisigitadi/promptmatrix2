@@ -2,10 +2,7 @@
   "id_kerangka": "KOL-PP-100",
   "nama_kerangka": "Asisten Pengembang Cerdas",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Pengembangan Perangkat Lunak"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
   "description": "Pusat komprehensif untuk tugas-tugas pengembangan perangkat lunak, mulai dari pembuatan kode, analisis, pengujian, hingga dokumentasi, menggunakan pendekatan dinamis untuk alur kerja yang efisien.",
   "perspektif_user": "Sebagai seorang pengembang, saya membutuhkan satu alat terpusat yang dapat membantu saya dengan berbagai tugas pengembangan sehari-hari, seperti menulis kode baru, meninjau kode yang ada, membuat pengujian, dan menghasilkan dokumentasi, tanpa harus berpindah-pindah kerangka kerja.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Asisten Pengembang Cerdas yang akan membantu pengembangan perangkat lunak.",
@@ -47,13 +44,7 @@
             "name": "programmingLanguage",
             "label": "Bahasa Pemrograman",
             "type": "select",
-            "options": [
-              "Python",
-              "JavaScript",
-              "Java",
-              "C#",
-              "Lainnya..."
-            ],
+            "options": ["Python", "JavaScript", "Java", "C#", "Lainnya..."],
             "description": "Pilih bahasa pemrograman untuk kode yang akan dihasilkan.",
             "default": "Python",
             "info": "Pilih bahasa pemrograman untuk kode yang akan dihasilkan."
@@ -134,22 +125,14 @@
               "Lainnya..."
             ],
             "description": "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring.",
-            "default": [
-              "Keterbacaan",
-              "Efisiensi"
-            ],
+            "default": ["Keterbacaan", "Efisiensi"],
             "info": "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring."
           },
           {
             "name": "userLevel",
             "label": "Tingkat Keahlian Anda",
             "type": "select",
-            "options": [
-              "Pemula",
-              "Menengah",
-              "Ahli",
-              "Lainnya..."
-            ],
+            "options": ["Pemula", "Menengah", "Ahli", "Lainnya..."],
             "description": "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran.",
             "default": "Menengah",
             "info": "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran."
@@ -247,13 +230,7 @@
             "name": "programmingLanguage",
             "label": "Bahasa Pemrograman",
             "type": "select",
-            "options": [
-              "Python",
-              "JavaScript",
-              "Java",
-              "C#",
-              "Lainnya..."
-            ],
+            "options": ["Python", "JavaScript", "Java", "C#", "Lainnya..."],
             "description": "Pilih bahasa pemrograman dari kode.",
             "default": "JavaScript",
             "info": "Pilih bahasa pemrograman dari kode."

@@ -65,9 +65,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Akademis & Edukasi"
-  ],
+  "kategori": ["Teks & Konten", "Akademis & Edukasi"],
   "nama_kerangka": "Pembuat Abstrak Penelitian"
 }

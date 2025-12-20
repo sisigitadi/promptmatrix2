@@ -1,6 +1,6 @@
 import React from "react";
 import { FaChevronDown, FaTachometerAlt } from "react-icons/fa";
-import { Card, Button, Collapse, Spinner, Row, Col } from "react-bootstrap";
+import { Card, Button, Collapse, Row, Col } from "react-bootstrap";
 import { PromptFrameworksType, CATEGORY_ORDER } from "../data/frameworks";
 import SearchBar from "./SearchBar";
 
@@ -37,7 +37,7 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
   openSubcategories,
   manualOpenSubcategories,
   handleCategorySelect,
-  handleBackToCategories,
+  // handleBackToCategories,
   handleFrameworkSelect,
   handleSearchChange,
   handleSubcategoryToggle,
@@ -53,7 +53,13 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
     .map(([categoryName, subcategories]) => (
       <div key={categoryName}>
         {(selectedCategory || debouncedSearchQuery || toolTypeFilter) && (
-          <h6 className="h6 pb-2 mt-3 mb-2 border-bottom category-level-2-header">
+          <h6
+            className="h6 py-2 px-3 mt-3 mb-2 rounded category-level-2-header text-white"
+            style={{
+              background: `var(--${categoryCssNameMap[categoryName]}-static)`,
+              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+            }}
+          >
             {categoryName}
           </h6>
         )}
@@ -77,8 +83,9 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
                     manualOpenSubcategories[subcategoryName]
                   }
                   style={{
-                    background: `var(--category-${categoryCssNameMap[categoryName]}-static)`,
-                    borderColor: `var(--category-${categoryCssNameMap[categoryName]}-static)`,
+                    background: `var(--${categoryCssNameMap[categoryName]}-glow)`,
+                    borderColor: `var(--${categoryCssNameMap[categoryName]}-static)`,
+                    color: "white", // For dark theme default
                   }}
                 >
                   {subcategoryName}{" "}
@@ -103,7 +110,7 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
                     {Object.keys(frameworks || {}).length > 0 ? (
                       Object.entries(frameworks || {})
                         .sort((a, b) => a[0].localeCompare(b[0]))
-                        .map(([name, details]) => (
+                        .map(([name, _details]) => (
                           <Button
                             key={name}
                             className={`category-card w-100 text-center p-3 category-button-dynamic framework-text-single-line category-level-3 ${categoryCssNameMap[categoryName]}`}
@@ -115,14 +122,9 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
                               )
                             }
                             style={{
-                              background: `var(--category-${categoryName
-                                .toLowerCase()
-                                .replace(/ /g, "-")
-                                .replace(/&/g, "and")}-static)`,
-                              borderColor: `var(--category-${categoryName
-                                .toLowerCase()
-                                .replace(/ /g, "-")
-                                .replace(/&/g, "and")}-static)`,
+                              background: `var(--${categoryCssNameMap[categoryName]}-glow)`,
+                              borderColor: `var(--${categoryCssNameMap[categoryName]}-static)`,
+                              color: "white", // For dark theme default
                             }}
                           >
                             <strong>📄 {name}</strong>
@@ -156,7 +158,7 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
           <FaTachometerAlt className="me-2" /> Dashboard
         </Button>
         <Row className="mb-3 g-2">
-          {CATEGORY_ORDER.map((categoryName, index) => (
+          {CATEGORY_ORDER.map((categoryName, _index) => (
             <Col xs={12} md={6} key={categoryName}>
               <Button
                 onClick={() => handleCategorySelect(categoryName)}
@@ -165,8 +167,8 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
                 }${selectedCategory === categoryName ? " active" : ""}`}
                 aria-pressed={selectedCategory === categoryName}
                 style={{
-                  background: `var(--category-${categoryCssNameMap[categoryName]}-static)`,
-                  borderColor: `var(--category-${categoryCssNameMap[categoryName]}-static)`,
+                  background: `var(--${categoryCssNameMap[categoryName]}-static)`,
+                  borderColor: `var(--${categoryCssNameMap[categoryName]}-static)`,
                 }}
               >
                 {categoryName}
@@ -183,9 +185,39 @@ const NavigationPane: React.FC<NavigationPaneProps> = ({
 
         {isLoading ? (
           <div className="d-flex justify-content-center align-items-center flex-grow-1">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <div className="d-flex flex-column gap-3 w-100 mt-4 skeleton-container">
+              {/* Skeleton for Category Header */}
+              <div
+                className="skeleton-loading"
+                style={{ height: "40px", width: "100%" }}
+              ></div>
+              {/* Skeleton for Subcategory Button */}
+              <div
+                className="skeleton-loading"
+                style={{ height: "50px", width: "100%" }}
+              ></div>
+              {/* Skeleton for Framework Items Grid */}
+              <div className="row g-2">
+                <div className="col-12 col-md-4">
+                  <div
+                    className="skeleton-loading"
+                    style={{ height: "60px", width: "100%" }}
+                  ></div>
+                </div>
+                <div className="col-12 col-md-4">
+                  <div
+                    className="skeleton-loading"
+                    style={{ height: "60px", width: "100%" }}
+                  ></div>
+                </div>
+                <div className="col-12 col-md-4">
+                  <div
+                    className="skeleton-loading"
+                    style={{ height: "60px", width: "100%" }}
+                  ></div>
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           <div className="navigation-section flex-grow-1 d-flex flex-column">

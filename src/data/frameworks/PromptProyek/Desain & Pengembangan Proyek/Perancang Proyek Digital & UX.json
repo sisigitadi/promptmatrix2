@@ -24,11 +24,7 @@
           "name": "projectType",
           "label": "Jenis Proyek",
           "type": "select",
-          "options": [
-            "Website",
-            "Aplikasi Mobile",
-            "Aplikasi Web"
-          ],
+          "options": ["Website", "Aplikasi Mobile", "Aplikasi Web"],
           "info": "Pilih jenis proyek yang akan dirancang."
         },
         {
@@ -182,9 +178,6 @@
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu menekankan bahwa output ini adalah untuk tujuan perencanaan dan konseptual, bukan kode atau desain final. Untuk database, gunakan format yang mudah dibaca. Untuk user flow, gunakan penomoran dan panah (->) untuk menunjukkan alur. Selalu gunakan bahasa yang jelas dan hindari jargon teknis yang berlebihan.",
-  "kategori": [
-    "Prompt Proyek",
-    "Desain & Pengembangan Proyek"
-  ],
+  "kategori": ["Prompt Proyek", "Desain & Pengembangan Proyek"],
   "nama_kerangka": "Perancang Proyek Digital & UX"
 }

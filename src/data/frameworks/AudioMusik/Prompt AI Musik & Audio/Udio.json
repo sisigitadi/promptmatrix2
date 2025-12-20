@@ -21,10 +21,7 @@
       "name": "instrumental",
       "label": "Instrumental?",
       "type": "select",
-      "options": [
-        "Tidak",
-        "Ya"
-      ],
+      "options": ["Tidak", "Ya"],
       "info": "Pilih 'Ya' untuk membuat lagu tanpa vokal."
     },
     {
@@ -35,9 +32,6 @@
       "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
     }
   ],
-  "kategori": [
-    "Audio & Musik",
-    "Prompt AI Musik & Audio"
-  ],
+  "kategori": ["Audio & Musik", "Prompt AI Musik & Audio"],
   "nama_kerangka": "Udio"
 }

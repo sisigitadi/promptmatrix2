@@ -2,10 +2,7 @@
   "id_kerangka": "BIS-CS-001",
   "nama_kerangka": "Pusat Bantuan Layanan Pelanggan",
   "version": "1.0.0",
-  "kategori": [
-    "Koleksi & Inovasi",
-    "Bisnis"
-  ],
+  "kategori": ["Koleksi & Inovasi", "Bisnis"],
   "description": "Pusat komando untuk tim layanan pelanggan untuk meningkatkan kualitas, konsistensi, dan efisiensi interaksi.",
   "perspektif_user": "Tim saya butuh bantuan untuk membuat respons standar yang baik, menangani keluhan, dan menganalisis umpan balik pelanggan secara efisien.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Manajer Layanan Pelanggan yang akan meningkatkan kualitas layanan pelanggan.",

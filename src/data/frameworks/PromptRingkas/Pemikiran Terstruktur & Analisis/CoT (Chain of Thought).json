@@ -25,9 +25,6 @@
       "info": "Instruksi akhir untuk memicu proses penalaran."
     }
   ],
-  "kategori": [
-    "Prompt Ringkas",
-    "Pemikiran Terstruktur & Analisis"
-  ],
+  "kategori": ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
   "nama_kerangka": "CoT (Chain of Thought)"
 }

@@ -9,6 +9,7 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useTypewriter } from "../hooks/useTypewriter";
 
 interface AiResponseModalProps {
   show: boolean;
@@ -18,6 +19,12 @@ interface AiResponseModalProps {
   isGenerating: boolean;
 }
 
+// Custom component to handle typewriter effect for individual text blocks (if needed later)
+// const TypewriterText = ({ text }: { text: string }) => {
+//   const displayedText = useTypewriter(text, 5);
+//   return <p className="mb-3 typewriter-text">{displayedText}</p>;
+// };
+
 const AiResponseModal: React.FC<AiResponseModalProps> = ({
   show,
   onHide,
@@ -25,6 +32,9 @@ const AiResponseModal: React.FC<AiResponseModalProps> = ({
   aiError,
   isGenerating,
 }) => {
+  // We stream the entire Markdown content to simulate accurate real-time generation
+  const streamingResponse = useTypewriter(aiResponse || "", 5);
+
   const handleCopy = () => {
     if (!aiResponse) return;
     const textToCopy = aiResponse.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
@@ -89,13 +99,13 @@ const AiResponseModal: React.FC<AiResponseModalProps> = ({
               >
                 <ReactMarkdown
                   components={{
-                    code({ node, inline, className, children, ...props }) {
+                    code({ node, inline, className, children, ...props }: any) {
                       const match = /language-(\w+)/.exec(className || "");
                       return !inline && match ? (
                         <SyntaxHighlighter
                           language={match[1]}
                           PreTag="div"
-                          style={{}} // Custom style if needed
+                          style={{} as any}
                           {...props}
                         >
                           {String(children).replace(/\n$/, "")}
@@ -116,6 +126,15 @@ const AiResponseModal: React.FC<AiResponseModalProps> = ({
                         </blockquote>
                       );
                     },
+                    p({ children }) {
+                      // Only apply typewriter to plain strings to avoid double typing
+                      if (typeof children === "string") {
+                        return (
+                          <p className="mb-3 typewriter-text">{children}</p>
+                        );
+                      }
+                      return <p className="mb-3">{children}</p>;
+                    },
                     img({ ...props }) {
                       return (
                         <div className="text-center my-4">
@@ -125,22 +144,20 @@ const AiResponseModal: React.FC<AiResponseModalProps> = ({
                             alt={props.alt || "AI Content"}
                           />
                           {!props.src?.startsWith("data:") && (
-                            <Button
-                              variant="link"
-                              size="sm"
-                              className="text-info mt-2"
+                            <a
+                              className="btn btn-link btn-sm text-info mt-2"
                               href={props.src}
                               download
                             >
                               <FaDownload className="me-1" /> Unduh Gambar
-                            </Button>
+                            </a>
                           )}
                         </div>
                       );
                     },
                   }}
                 >
-                  {aiResponse}
+                  {streamingResponse}
                 </ReactMarkdown>
               </div>
             </div>

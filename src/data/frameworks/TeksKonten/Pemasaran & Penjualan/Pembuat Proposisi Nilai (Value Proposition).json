@@ -65,9 +65,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Pemasaran & Penjualan"
-  ],
+  "kategori": ["Teks & Konten", "Pemasaran & Penjualan"],
   "nama_kerangka": "Pembuat Proposisi Nilai (Value Proposition)"
 }

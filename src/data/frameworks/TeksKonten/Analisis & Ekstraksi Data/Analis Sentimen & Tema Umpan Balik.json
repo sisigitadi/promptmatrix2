@@ -45,9 +45,6 @@
       "info": "Instruksi spesifik untuk proses analisis dan pelaporan."
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Analisis & Ekstraksi Data"
-  ],
+  "kategori": ["Teks & Konten", "Analisis & Ekstraksi Data"],
   "nama_kerangka": "Analis Sentimen & Tema Umpan Balik"
 }

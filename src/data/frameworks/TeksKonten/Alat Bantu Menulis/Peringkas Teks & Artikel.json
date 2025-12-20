@@ -54,9 +54,6 @@
       "errorMessage": "'Rasio Aspek Kustom' wajib diisi jika 'Rasio Aspek' adalah 'Lainnya...'."
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Alat Bantu Menulis"
-  ],
+  "kategori": ["Teks & Konten", "Alat Bantu Menulis"],
   "nama_kerangka": "Peringkas Teks & Artikel"
 }

@@ -65,7 +65,6 @@ const initialFrameworkState: Partial<Framework> = {
 const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
   show,
   onHide,
-  isLightTheme,
 }) => {
   const [framework, setFramework] = useState<Partial<Framework>>(
     initialFrameworkState,
@@ -85,14 +84,14 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
     >,
   ) => {
     const { name, value } = e.target;
-    setFramework((prev) => ({ ...prev, [name]: value }));
+    setFramework((prev: Partial<Framework>) => ({ ...prev, [name]: value }));
   };
 
   const handlePromptComponentChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setFramework((prev) => ({
+    setFramework((prev: Partial<Framework>) => ({
       ...prev,
       komponen_prompt: {
         ...prev.komponen_prompt,
@@ -111,14 +110,14 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
       setSubCategoryOptions(subs);
     }
 
-    setFramework((prev) => ({
+    setFramework((prev: Partial<Framework>) => ({
       ...prev,
       kategori: newKategori as [string, string],
     }));
   };
 
   const addComponent = () => {
-    setFramework((prev) => ({
+    setFramework((prev: Partial<Framework>) => ({
       ...prev,
       components: [
         ...(prev.components || []),
@@ -128,9 +127,9 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
   };
 
   const removeComponent = (index: number) => {
-    setFramework((prev) => ({
+    setFramework((prev: Partial<Framework>) => ({
       ...prev,
-      components: prev.components?.filter((_, i) => i !== index),
+      components: prev.components?.filter((_: any, i: number) => i !== index),
     }));
   };
 
@@ -150,7 +149,10 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
       JSON.stringify(framework.components || []),
     );
     newComponents[index][name] = inputValue;
-    setFramework((prev) => ({ ...prev, components: newComponents }));
+    setFramework((prev: Partial<Framework>) => ({
+      ...prev,
+      components: newComponents,
+    }));
   };
 
   /* handleValidationChange was unused and causing a warning. Removed or commented out. */
@@ -167,7 +169,7 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
       newComponents[index].validation = {};
     }
     newComponents[index].validation[name] = value ? parseFloat(value) : null;
-    setFramework((prev) => ({ ...prev, components: newComponents }));
+    setFramework((prev: Partial<Framework>) => ({ ...prev, components: newComponents }));
   };
   */
 
@@ -179,7 +181,10 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
       newComponents[componentIndex].options = [];
     }
     newComponents[componentIndex].options.push("");
-    setFramework((prev) => ({ ...prev, components: newComponents }));
+    setFramework((prev: Partial<Framework>) => ({
+      ...prev,
+      components: newComponents,
+    }));
   };
 
   const removeOption = (componentIndex: number, optionIndex: number) => {
@@ -187,20 +192,26 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
       JSON.stringify(framework.components || []),
     );
     newComponents[componentIndex].options.splice(optionIndex, 1);
-    setFramework((prev) => ({ ...prev, components: newComponents }));
+    setFramework((prev: Partial<Framework>) => ({
+      ...prev,
+      components: newComponents,
+    }));
   };
 
   const handleOptionChange = (
     componentIndex: number,
     optionIndex: number,
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { value } = e.target;
     const newComponents = JSON.parse(
       JSON.stringify(framework.components || []),
     );
     newComponents[componentIndex].options[optionIndex] = value;
-    setFramework((prev) => ({ ...prev, components: newComponents }));
+    setFramework((prev: Partial<Framework>) => ({
+      ...prev,
+      components: newComponents,
+    }));
   };
 
   const cleanupFramework = (fw: Partial<Framework>): Partial<Framework> => {
@@ -219,11 +230,11 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
         } else if (comp.validation) {
           Object.keys(comp.validation).forEach((key) => {
             if (
-              comp.validation[key] === null ||
-              comp.validation[key] === "" ||
-              isNaN(comp.validation[key])
+              (comp.validation as any)[key] === null ||
+              (comp.validation as any)[key] === "" ||
+              isNaN((comp.validation as any)[key])
             ) {
-              delete comp.validation[key];
+              delete (comp.validation as any)[key];
             }
           });
           if (Object.keys(comp.validation).length === 0) {
@@ -339,7 +350,7 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
                         className="bg-dark text-light border-secondary"
                       >
                         <option value="">Pilih...</option>
-                        {CATEGORY_ORDER.map((cat) => (
+                        {CATEGORY_ORDER.map((cat: string) => (
                           <option key={cat} value={cat}>
                             {cat}
                           </option>
@@ -502,173 +513,202 @@ const FrameworkBuilderModal: React.FC<FrameworkBuilderModalProps> = ({
               </Accordion.Header>
               <Accordion.Body className="bg-dark-subtle">
                 <div className="d-flex flex-column gap-3">
-                  {framework.components?.map((component, index) => (
-                    <div
-                      key={index}
-                      className="border border-secondary rounded p-3 bg-dark"
-                    >
-                      <div className="d-flex justify-content-between align-items-center mb-3">
-                        <h6 className="mb-0 text-info">
-                          Komponen #{index + 1}
-                        </h6>
-                        <Button
-                          variant="outline-danger"
-                          size="sm"
-                          onClick={() => removeComponent(index)}
-                          title="Hapus Komponen"
-                        >
-                          <FaTrash />
-                        </Button>
-                      </div>
+                  {framework.components?.map(
+                    (component: FrameworkComponent, index: number) => (
+                      <div
+                        key={index}
+                        className="border border-secondary rounded p-3 bg-dark"
+                      >
+                        <div className="d-flex justify-content-between align-items-center mb-3">
+                          <h6 className="mb-0 text-info">
+                            Komponen #{index + 1}
+                          </h6>
+                          <Button
+                            variant="outline-danger"
+                            size="sm"
+                            onClick={() => removeComponent(index)}
+                            title="Hapus Komponen"
+                          >
+                            <FaTrash />
+                          </Button>
+                        </div>
 
-                      <Row className="g-3">
-                        <Col md={4}>
-                          <Form.Group>
-                            <Form.Label className="small text-muted mb-1">
-                              Tipe Input
-                            </Form.Label>
-                            <Form.Select
-                              name="type"
-                              value={component.type}
-                              onChange={(e) => handleComponentChange(index, e)}
-                              className="bg-secondary text-light border-0"
-                              size="sm"
-                            >
-                              <option value="text">Text (Singkat)</option>
-                              <option value="textarea">
-                                Textarea (Panjang)
-                              </option>
-                              <option value="number">Number (Angka)</option>
-                              <option value="select">Select (Dropdown)</option>
-                              <option value="multiselect">Multi-select</option>
-                              <option value="boolean">Boolean (Switch)</option>
-                              <option value="slider">Slider (Geser)</option>
-                              <option value="code">Code (Editor)</option>
-                            </Form.Select>
-                          </Form.Group>
-                        </Col>
-                        <Col md={4}>
-                          <Form.Group>
-                            <Form.Label className="small text-muted mb-1">
-                              Variable Name
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="name"
-                              value={component.name}
-                              onChange={(e) => handleComponentChange(index, e)}
-                              size="sm"
-                              className="bg-dark text-light border-secondary font-monospace"
-                              placeholder="MY_VARIABLE"
-                            />
-                          </Form.Group>
-                        </Col>
-                        <Col md={4}>
-                          <Form.Group>
-                            <Form.Label className="small text-muted mb-1">
-                              Label Tampilan
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="label"
-                              value={component.label}
-                              onChange={(e) => handleComponentChange(index, e)}
-                              size="sm"
-                              className="bg-dark text-light border-secondary"
-                            />
-                          </Form.Group>
-                        </Col>
-
-                        <Col md={12}>
-                          <Form.Group>
-                            <Form.Label className="small text-muted mb-1">
-                              Tooltip Info
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="info"
-                              value={component.info}
-                              onChange={(e) => handleComponentChange(index, e)}
-                              size="sm"
-                              className="bg-dark text-light border-secondary"
-                              placeholder="Penjelasan singkat saat user hover icon info..."
-                            />
-                          </Form.Group>
-                        </Col>
-
-                        <Col md={6}>
-                          <Form.Group>
-                            <Form.Label className="small text-muted mb-1">
-                              Placeholder
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="placeholder"
-                              value={component.placeholder}
-                              onChange={(e) => handleComponentChange(index, e)}
-                              size="sm"
-                              className="bg-dark text-light border-secondary"
-                            />
-                          </Form.Group>
-                        </Col>
-
-                        <Col md={6} className="d-flex align-items-end">
-                          <Form.Check
-                            type="switch"
-                            name="optional"
-                            label="Input ini opsional"
-                            checked={component.optional}
-                            onChange={(e) => handleComponentChange(index, e)}
-                            className="text-light"
-                          />
-                        </Col>
-
-                        {/* CONDITIONAL OPTIONS FOR SELECT */}
-                        {(component.type === "select" ||
-                          component.type === "multiselect") && (
-                          <Col md={12}>
-                            <div className="p-2 border border-secondary rounded bg-dark-subtle">
-                              <label className="small text-muted mb-2 d-block">
-                                Opsi Pilihan:
-                              </label>
-                              {component.options?.map((option, optIndex) => (
-                                <InputGroup
-                                  className="mb-2"
-                                  key={optIndex}
-                                  size="sm"
-                                >
-                                  <Form.Control
-                                    type="text"
-                                    value={option}
-                                    onChange={(e) =>
-                                      handleOptionChange(index, optIndex, e)
-                                    }
-                                    className="bg-dark text-light border-secondary"
-                                  />
-                                  <Button
-                                    variant="outline-danger"
-                                    onClick={() =>
-                                      removeOption(index, optIndex)
-                                    }
-                                  >
-                                    <FaTrash />
-                                  </Button>
-                                </InputGroup>
-                              ))}
-                              <Button
-                                variant="outline-info"
+                        <Row className="g-3">
+                          <Col md={4}>
+                            <Form.Group>
+                              <Form.Label className="small text-muted mb-1">
+                                Tipe Input
+                              </Form.Label>
+                              <Form.Select
+                                name="type"
+                                value={component.type}
+                                onChange={(e) =>
+                                  handleComponentChange(index, e)
+                                }
+                                className="bg-secondary text-light border-0"
                                 size="sm"
-                                onClick={() => addOption(index)}
-                                className="w-100"
                               >
-                                <FaPlus className="me-1" /> Tambah Opsi
-                              </Button>
-                            </div>
+                                <option value="text">Text (Singkat)</option>
+                                <option value="textarea">
+                                  Textarea (Panjang)
+                                </option>
+                                <option value="number">Number (Angka)</option>
+                                <option value="select">
+                                  Select (Dropdown)
+                                </option>
+                                <option value="multiselect">
+                                  Multi-select
+                                </option>
+                                <option value="boolean">
+                                  Boolean (Switch)
+                                </option>
+                                <option value="slider">Slider (Geser)</option>
+                                <option value="code">Code (Editor)</option>
+                              </Form.Select>
+                            </Form.Group>
                           </Col>
-                        )}
-                      </Row>
-                    </div>
-                  ))}
+                          <Col md={4}>
+                            <Form.Group>
+                              <Form.Label className="small text-muted mb-1">
+                                Variable Name
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="name"
+                                value={component.name}
+                                onChange={(e) =>
+                                  handleComponentChange(index, e)
+                                }
+                                size="sm"
+                                className="bg-dark text-light border-secondary font-monospace"
+                                placeholder="MY_VARIABLE"
+                              />
+                            </Form.Group>
+                          </Col>
+                          <Col md={4}>
+                            <Form.Group>
+                              <Form.Label className="small text-muted mb-1">
+                                Label Tampilan
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="label"
+                                value={component.label}
+                                onChange={(e) =>
+                                  handleComponentChange(index, e)
+                                }
+                                size="sm"
+                                className="bg-dark text-light border-secondary"
+                              />
+                            </Form.Group>
+                          </Col>
+
+                          <Col md={12}>
+                            <Form.Group>
+                              <Form.Label className="small text-muted mb-1">
+                                Tooltip Info
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="info"
+                                value={component.info}
+                                onChange={(e) =>
+                                  handleComponentChange(index, e)
+                                }
+                                size="sm"
+                                className="bg-dark text-light border-secondary"
+                                placeholder="Penjelasan singkat saat user hover icon info..."
+                              />
+                            </Form.Group>
+                          </Col>
+
+                          <Col md={6}>
+                            <Form.Group>
+                              <Form.Label className="small text-muted mb-1">
+                                Placeholder
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="placeholder"
+                                value={component.placeholder}
+                                onChange={(e) =>
+                                  handleComponentChange(index, e)
+                                }
+                                size="sm"
+                                className="bg-dark text-light border-secondary"
+                              />
+                            </Form.Group>
+                          </Col>
+
+                          <Col md={6} className="d-flex align-items-end">
+                            <Form.Check
+                              type="switch"
+                              name="optional"
+                              label="Input ini opsional"
+                              checked={component.optional}
+                              onChange={(e) => handleComponentChange(index, e)}
+                              className=""
+                            />
+                          </Col>
+
+                          {/* CONDITIONAL OPTIONS FOR SELECT */}
+                          {(component.type === "select" ||
+                            component.type === "multiselect") && (
+                            <Col md={12}>
+                              <div className="p-2 border border-secondary rounded bg-dark-subtle">
+                                <label className="small text-muted mb-2 d-block">
+                                  Opsi Pilihan:
+                                </label>
+                                {component.options?.map(
+                                  (
+                                    option:
+                                      | string
+                                      | { label: string; value: string },
+                                    optIndex: number,
+                                  ) => (
+                                    <InputGroup
+                                      className="mb-2"
+                                      key={optIndex}
+                                      size="sm"
+                                    >
+                                      <Form.Control
+                                        type="text"
+                                        value={
+                                          typeof option === "string"
+                                            ? option
+                                            : option.value
+                                        }
+                                        onChange={(e) =>
+                                          handleOptionChange(index, optIndex, e)
+                                        }
+                                        className="bg-dark text-light border-secondary"
+                                      />
+                                      <Button
+                                        variant="outline-danger"
+                                        onClick={() =>
+                                          removeOption(index, optIndex)
+                                        }
+                                      >
+                                        <FaTrash />
+                                      </Button>
+                                    </InputGroup>
+                                  ),
+                                )}
+                                <Button
+                                  variant="outline-info"
+                                  size="sm"
+                                  onClick={() => addOption(index)}
+                                  className="w-100"
+                                >
+                                  <FaPlus className="me-1" /> Tambah Opsi
+                                </Button>
+                              </div>
+                            </Col>
+                          )}
+                        </Row>
+                      </div>
+                    ),
+                  )}
 
                   <Button
                     variant="success"

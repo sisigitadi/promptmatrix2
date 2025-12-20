@@ -7,13 +7,7 @@
       "name": "platform",
       "label": "Platform",
       "type": "select",
-      "options": [
-        "LinkedIn",
-        "Instagram",
-        "Twitter (X)",
-        "Facebook",
-        "TikTok"
-      ],
+      "options": ["LinkedIn", "Instagram", "Twitter (X)", "Facebook", "TikTok"],
       "info": "Setiap platform memiliki format dan ekspektasi audiens yang berbeda.",
       "validation": {
         "regex": "^(?!Pilih Platform...).*$"
@@ -141,11 +135,7 @@
           "name": "tweetFormat",
           "label": "Format Tweet",
           "type": "select",
-          "options": [
-            "Single Tweet",
-            "Thread (Rangkaian Tweet)",
-            "Lainnya..."
-          ],
+          "options": ["Single Tweet", "Thread (Rangkaian Tweet)", "Lainnya..."],
           "info": "Apakah ini tweet tunggal atau rangkaian bersambung?"
         },
         {
@@ -271,9 +261,6 @@
       ]
     }
   },
-  "kategori": [
-    "Teks & Konten",
-    "Pemasaran & Penjualan"
-  ],
+  "kategori": ["Teks & Konten", "Pemasaran & Penjualan"],
   "nama_kerangka": "Postingan Media Sosial"
 }

@@ -64,9 +64,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Kreatif & Ideasi"
-  ],
+  "kategori": ["Teks & Konten", "Kreatif & Ideasi"],
   "nama_kerangka": "Generator Nama Brand/Produk"
 }

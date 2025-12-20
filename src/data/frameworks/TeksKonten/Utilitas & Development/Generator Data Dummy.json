@@ -28,11 +28,7 @@
       "name": "outputFormat",
       "label": "Format Output",
       "type": "select",
-      "options": [
-        "JSON Array",
-        "CSV",
-        "Lainnya..."
-      ],
+      "options": ["JSON Array", "CSV", "Lainnya..."],
       "info": "Pilih format output yang diinginkan (misalnya, JSON Array, CSV)."
     },
     {
@@ -43,9 +39,6 @@
       "info": "Instruksi spesifik tentang batasan data, relasi antar field, atau tingkat kerandoman."
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Utilitas & Development"
-  ],
+  "kategori": ["Teks & Konten", "Utilitas & Development"],
   "nama_kerangka": "Generator Data Dummy"
 }

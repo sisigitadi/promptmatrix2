@@ -110,10 +110,7 @@
       }
     }
   },
-  "required": [
-    "description",
-    "toolType"
-  ],
+  "required": ["description", "toolType"],
   "properties": {
     "temperature": {
       "type": "number",
@@ -182,11 +179,7 @@
     },
     "komponen_prompt": {
       "type": "object",
-      "required": [
-        "PERAN",
-        "KONTEKS",
-        "TUGAS"
-      ],
+      "required": ["PERAN", "KONTEKS", "TUGAS"],
       "properties": {
         "PERAN": { "type": "string" },
         "KONTEKS": { "type": "string" },

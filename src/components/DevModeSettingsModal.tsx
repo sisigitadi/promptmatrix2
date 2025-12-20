@@ -53,8 +53,19 @@ const DevModeSettingsModal: React.FC<DevModeSettingsModalProps> = ({
         <Form>
           {/* SECTION: API CONFIGURATION */}
           <div className="mb-4 p-3 bg-dark-subtle rounded border border-secondary">
-            <h6 className="text-info mb-3 d-flex align-items-center gap-2 small text-uppercase fw-bold">
-              <FaKey size={14} /> Konfigurasi API
+            <h6 className="text-info mb-3 d-flex align-items-center justify-content-between gap-2 small text-uppercase fw-bold">
+              <span className="d-flex align-items-center gap-2">
+                <FaKey size={14} /> Konfigurasi API
+              </span>
+              {isApiKeyEnabled ? (
+                <span className="text-success" style={{ fontSize: "0.65rem" }}>
+                  Status: Aktif
+                </span>
+              ) : (
+                <span className="text-danger" style={{ fontSize: "0.65rem" }}>
+                  Status: Nonaktif
+                </span>
+              )}
             </h6>
 
             <Form.Group className="mb-3">
@@ -67,17 +78,16 @@ const DevModeSettingsModal: React.FC<DevModeSettingsModalProps> = ({
                 className="bg-dark text-light border-secondary"
               >
                 <option value="gemini-3.0-pro">gemini-3.0-pro</option>
-                <option value="gemini-2.0-flash-exp">
-                  gemini-2.0-flash-exp
+                <option value="gemini-3.0-flash">gemini-3.0-flash</option>
+                <option value="gemini-3.0-deep-think">
+                  gemini-3.0-deep-think
                 </option>
+                <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+                <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+                <option value="gemini-2.0-pro">gemini-2.0-pro</option>
+                <option value="gemini-2.0-flash">gemini-2.0-flash</option>
                 <option value="gemini-1.5-pro">gemini-1.5-pro</option>
                 <option value="gemini-1.5-flash">gemini-1.5-flash</option>
-                <option value="gemini-1.5-pro-002">gemini-1.5-pro-002</option>
-                <option value="gemini-1.5-flash-002">
-                  gemini-1.5-flash-002
-                </option>
-                <option value="gemini-1.5-flash-8b">gemini-1.5-flash-8b</option>
-                <option value="gemini-1.0-pro">gemini-1.0-pro</option>
               </Form.Select>
             </Form.Group>
 

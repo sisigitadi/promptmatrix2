@@ -68,9 +68,6 @@
       }
     }
   ],
-  "kategori": [
-    "Teks & Konten",
-    "Pemasaran & Penjualan"
-  ],
+  "kategori": ["Teks & Konten", "Pemasaran & Penjualan"],
   "nama_kerangka": "Penulis Teks Iklan (Ad Copy)"
 }
