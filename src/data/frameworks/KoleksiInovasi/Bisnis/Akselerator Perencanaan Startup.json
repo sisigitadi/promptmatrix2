@@ -2,7 +2,10 @@
   "id_kerangka": "BIS-STP-001",
   "nama_kerangka": "Akselerator Perencanaan Startup",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Bisnis"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
   "description": "Co-founder AI strategis untuk memandu wirausahawan melalui tahapan krusial membangun bisnis, dari ide hingga pitch deck.",
   "perspektif_user": "Saya butuh bantuan terstruktur untuk setiap tahap memulai bisnis, mulai dari mencari ide, menganalisis pasar, hingga membuat materi untuk investor.",
   "ai_logic_description": "Persona AI: Anda adalah seorang ahli strategi startup yang akan merencanakan dan mengembangkan startup.",
@@ -15,7 +18,8 @@
         "Generator Ide Bisnis",
         "Penyusun Model Bisnis Kanvas",
         "Analisis Persaingan dan Pasar",
-        "Pembuat Draf Konten Pitch Deck"
+        "Pembuat Draf Konten Pitch Deck",
+        "Lainnya..."
       ],
       "default": "Generator Ide Bisnis",
       "info": "Pilih tugas yang paling relevan dengan tahap Anda saat ini."
@@ -96,7 +100,7 @@
     "PERAN": "Anda adalah seorang ahli strategi startup dan co-founder AI.",
     "KONTEKS": "Pengguna memerlukan bantuan untuk tahap '{TUGAS_PERENCANAAN_STARTUP}' dari perjalanan startup mereka.",
     "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Generator Ide Bisnis'**: Berikan 3 ide startup unik di industri '{INDUSTRI_STARTUP}' yang menyelesaikan masalah '{MASALAH_STARTUP}'. Sertakan usulan nama, proposisi nilai, dan langkah validasi awal.\n- **Jika 'Penyusun Model Bisnis Kanvas'**: Buat draf Business Model Canvas berdasarkan proposisi nilai '{BMC_PROPOSISI_NILAI}' dan segmen pelanggan '{BMC_SEGMEN_PELANGGAN}'. Isi blok lainnya dengan asumsi yang cerdas dan berikan saran perbaikan.\n- **Jika 'Analisis Persaingan dan Pasar'**: Lakukan analisis SWOT untuk bisnis '{ANALISIS_DESKRIPSI_BISNIS}' dan analisis singkat kompetitor '{ANALISIS_KOMPETITOR}'.\n- **Jika 'Pembuat Draf Konten Pitch Deck'**: Buat draf konten terstruktur untuk 10 slide pitch deck untuk startup '{PITCH_NAMA_STARTUP}' yang menyelesaikan '{PITCH_MASALAH_SOLUSI}'.",
-    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan dalam bentuk laporan atau dokumen yang terstruktur dengan judul dan sub-judul yang jelas."
+    "FORMAT_OUTPUT": "Gunakan format Markdown. Sajikan dalam bentuk laporan atau dokumen yang terstruktur dengan judul dan sub-judul yang jelas."
   },
   "toolType": "text",
   "konteks_tambahan_instruksi_khusus": "Selalu gunakan pendekatan yang praktis dan berorientasi pada tindakan. Berikan saran yang realistis untuk startup tahap awal.",

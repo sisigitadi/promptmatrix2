@@ -1,6 +1,16 @@
 # Prompt Matrix 2.0 - Catatan Rilis
 
-## Versi 2.4.0
+## Versi 2.6.0
+
+### Fitur & Peningkatan Utama
+
+*   **Expanded Dice Functionality**: Tombol "Dice" (Saran Acak) kini mendukung tipe input `number`, `slider`, `color`, `select`, `multiselect`, dan `code`. Fitur ini memberikan saran kontekstual cerdas atau nilai acak yang aman untuk mempercepat eksperimen prompt.
+*   **Database Saran Masif**: Perluasan signifikan pada `suggestions.ts` dengan penambahan kategori baru (Cyber Security, SWOT, Hero's Journey, dll.) dan ratusan alias pintar. Memastikan hampir semua variabel input memiliki saran yang relevan.
+*   **Automation Super Frameworks**: Konsolidasi 8 framework otomasi utama menjadi struktur "Super Frameworks" dengan integrasi pemilihan alat (Zapier, n8n, Make) yang lebih intuitif.
+*   **Standardisasi Format Output**: Seluruh key framework kini distandardisasi menggunakan `FORMAT_OUTPUT`, menghapus inkonsistensi legacy.
+*   **Optimasi UI/UX**: Peningkatan mikro-interaksi pada input form dan validasi yang lebih mulus.
+
+## Versi 2.4.0                                                                                  
 
 ### Fitur & Peningkatan Utama
 

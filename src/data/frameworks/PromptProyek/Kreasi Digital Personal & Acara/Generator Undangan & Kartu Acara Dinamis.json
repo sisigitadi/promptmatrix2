@@ -12,7 +12,8 @@
         "Bisnis/Resmi",
         "Ulang Tahun/Personal",
         "Workshop/Komunitas",
-        "Terima Kasih"
+        "Terima Kasih",
+        "Lainnya..."
       ],
       "info": "Pilih jenis acara untuk menentukan format dan nada.",
       "validation": {
@@ -52,7 +53,8 @@
             "Formal & Tradisional",
             "Modern & Minimalis",
             "Rustic & Santai",
-            "Bohemian & Unik"
+            "Bohemian & Unik",
+            "Lainnya..."
           ],
           "info": "Gaya keseluruhan akan mempengaruhi pilihan kata."
         },
@@ -487,7 +489,8 @@
             "Tulus & Hangat",
             "Formal & Profesional",
             "Singkat & Efisien",
-            "Penuh Sukacita"
+            "Penuh Sukacita",
+            "Lainnya..."
           ],
           "info": "Pilih nuansa pesan yang ingin disampaikan."
         },
@@ -506,6 +509,9 @@
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus sangat peka terhadap `Jenis Acara`. Jika pengguna tidak memberikan `Gaya & Nada`, AI harus memilih yang paling sesuai secara default (misal: 'Elegan' untuk Pernikahan, 'Profesional' untuk Bisnis). Tujuan utamanya adalah menghasilkan output yang terasa otentik dan dibuat khusus untuk acara tersebut, bukan hasil dari template generik.",
-  "kategori": ["Prompt Proyek", "Kreasi Digital Personal & Acara"],
+  "kategori": [
+    "Prompt Proyek",
+    "Kreasi Digital Personal & Acara"
+  ],
   "nama_kerangka": "Generator Undangan & Kartu Acara Dinamis"
 }

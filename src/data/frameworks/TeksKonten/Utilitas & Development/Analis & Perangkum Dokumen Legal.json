@@ -33,7 +33,7 @@
     },
     {
       "name": "outputFormat",
-      "label": "Format Output",
+      "label": "FORMAT_OUTPUT",
       "type": "select",
       "options": [
         "Poin-poin Ringkasan",

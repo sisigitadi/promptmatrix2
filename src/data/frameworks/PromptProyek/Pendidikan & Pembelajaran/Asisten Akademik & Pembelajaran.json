@@ -11,7 +11,8 @@
         "Rencana Belajar",
         "Materi Belajar (Kuis/Flashcard)",
         "Rencana Mengajar (RPP)",
-        "Ide Topik Diskusi"
+        "Ide Topik Diskusi",
+        "Lainnya..."
       ],
       "info": "Pilih jenis bantuan yang Anda butuhkan.",
       "validation": {
@@ -83,7 +84,8 @@
           "options": [
             "Soal Pilihan Ganda",
             "Flashcard (Tanya-Jawab)",
-            "Soal Esai Singkat"
+            "Soal Esai Singkat",
+            "Lainnya..."
           ],
           "info": "Pilih jenis materi belajar yang ingin dibuat."
         },
@@ -161,7 +163,8 @@
             "Membangun Pemahaman",
             "Mencari Solusi",
             "Debat/Perdebatan",
-            "Brainstorming Ide"
+            "Brainstorming Ide",
+            "Lainnya..."
           ],
           "info": "Apa yang ingin dicapai dari diskusi ini?"
         },
@@ -179,7 +182,13 @@
           "name": "discussionFormat",
           "label": "Format Diskusi",
           "type": "select",
-          "options": ["Terbuka", "Terstruktur", "Panel", "Debat"],
+          "options": [
+            "Terbuka",
+            "Terstruktur",
+            "Panel",
+            "Debat",
+            "Lainnya..."
+          ],
           "info": "Bagaimana diskusi akan dijalankan?"
         },
         {
@@ -197,6 +206,9 @@
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu menekankan pentingnya pemahaman konsep di atas hafalan. Untuk pembuatan soal, pastikan tingkat kesulitan sesuai dengan tingkat audiens yang diberikan. Untuk RPP, sarankan variasi aktivitas untuk menjaga keterlibatan siswa. Wajib sertakan disclaimer: 'Materi yang dihasilkan adalah alat bantu. Guru/pelajar disarankan untuk memverifikasi informasi dan menyesuaikannya dengan kurikulum atau kebutuhan belajar yang spesifik.'",
-  "kategori": ["Prompt Proyek", "Pendidikan & Pembelajaran"],
+  "kategori": [
+    "Prompt Proyek",
+    "Pendidikan & Pembelajaran"
+  ],
   "nama_kerangka": "Asisten Akademik & Pembelajaran"
 }

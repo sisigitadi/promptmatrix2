@@ -1,0 +1,104 @@
+{
+  "id_kerangka": "KOL-AUTO-007",
+  "nama_kerangka": "Otomasi Monetisasi Langsung",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Automation"
+  ],
+  "description": "Ubah keahlian otomatisasi Anda menjadi layanan atau produk yang menghasilkan uang.",
+  "perspektif_user": "Saya ingin menjual jasa pembuatan otomasi, membangun marketplace prompt, atau menyediakan pembuatan SOP otomatis sebagai layanan (SaaS) agar saya bisa memonetisasi keahlian saya di bidang AI dan otomatisasi.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Digital Business strategist yang ahli dalam Productizing Service dan pembangunan sistem pendapatan pasif (passive income).",
+  "toolType": "planning",
+  "output": "natural_language_prompt",
+  "contoh_kalimat": "Bantu saya buat rencana bisnis jual jasa otomasi landing page.",
+  "konteks_tambahan_instruksi_khusus": "Fokus pada scalability dan value proposition. Sarankan tool untuk billing (Stripe) dan delivery (Loom/Client Portal).",
+  "components": [
+    {
+      "name": "ALUR_MONETISASI",
+      "label": "Pilih Alur Otomasi",
+      "type": "select",
+      "description": "Pilih salah satu template alur kerja monetisasi.",
+      "optional": false,
+      "default": "Prompt Marketplace Pack",
+      "options": [
+        "Prompt Marketplace Pack",
+        "Custom Workflow as Service",
+        "Automasi Landing & Follow-Up",
+        "AI-Assisted SOP Builder",
+        "Lainnya..."
+      ]
+    },
+    {
+      "name": "TOOLS_OTOMASI",
+      "label": "Alat Otomasi Utama",
+      "type": "select",
+      "description": "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+      "optional": false,
+      "default": "n8n",
+      "options": [
+        "Zapier",
+        "Make.com (Integromat)",
+        "n8n",
+        "Pipedream",
+        "Bardeen",
+        "Custom Script (Python/Node)",
+        "Lainnya..."
+      ]
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "ALUR_MONETISASI",
+      "options": {
+        "Prompt Marketplace Pack": [
+          {
+            "name": "PROMPT_NICHE",
+            "label": "Niche Prompt",
+            "type": "text",
+            "placeholder": "Arsitektur, Hukum, Coding...",
+            "description": "Topik spesifik dari paket prompt yang akan dijual."
+          }
+        ],
+        "Custom Workflow as Service": [
+          {
+            "name": "SERVICE_TYPE",
+            "label": "Jenis Layanan",
+            "type": "select",
+            "options": [
+              "Otomasi CRM",
+              "LinkedIn Content System",
+              "Data Scraper for Sales",
+              "Lainnya..."
+            ],
+            "description": "Layanan utama yang ditawarkan kepada klien."
+          }
+        ],
+        "Automasi Landing & Follow-Up": [
+          {
+            "name": "FUNNEL_STEPS",
+            "label": "Tahap Funnel",
+            "type": "textarea",
+            "placeholder": "Landing Page -> Quiz -> Order -> Upsell",
+            "description": "Langkah-langkah yang ingin diotomatiskan dalam penjualan."
+          }
+        ],
+        "AI-Assisted SOP Builder": [
+          {
+            "name": "BUSINESS_PROCESS",
+            "label": "Proses Bisnis",
+            "type": "text",
+            "placeholder": "Hiring, Onboarding, Refund...",
+            "description": "Proses yang ingin dibuatkan SOP-nya secara otomatis."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Digital Business Strategist.",
+    "KONTEKS": "Pengguna ingin membangun model bisnis atau layanan berbasis **Workflow Automation** untuk alur: **{ALUR_MONETISASI}** menggunakan alat **{TOOLS_OTOMASI}**.",
+    "TUGAS": "Rancang sebuah Workflow Automation yang bernilai komersial untuk alur **{ALUR_MONETISASI}** dengan memanfaatkan tool **{TOOLS_OTOMASI}**. \n\n1. **Productized Service Logic**: Jelaskan bagaimana {TOOLS_OTOMASI} digunakan untuk membuat paket layanan {PROMPT_NICHE} atau {SERVICE_TYPE} yang dapat diskalakan.\n2. **Delivery Automation**: Rancang sistem pengiriman hasil (delivery) otomatis kepada klien, mulai dari {FUNNEL_STEPS} hingga pembuatan {BUSINESS_PROCESS}.\n3. **Backend Operations**: Detailkan integrasi sistem pembayaran atau manajemen klien yang dapat diotomatiskan langsung melalui {TOOLS_OTOMASI}.\n4. **Monetization Strategy**: Berikan saran cara mengemas alur kerja ini di {TOOLS_OTOMASI} agar memiliki nilai jual tinggi dan biaya operasional rendah.",
+    "FORMAT_OUTPUT": "Sajikan dalam format Perencanaan Bisnis (Business Model Canvas Light) di Markdown. Sertakan strategi penetapan harga (Pricing Strategy)."
+  }
+}

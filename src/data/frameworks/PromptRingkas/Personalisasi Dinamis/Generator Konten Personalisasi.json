@@ -2,7 +2,10 @@
   "id_kerangka": "TEKS-GKP-001",
   "nama_kerangka": "Generator Konten Personalisasi",
   "version": "1.0.0",
-  "kategori": ["Prompt Ringkas", "Personalisasi Dinamis"],
+  "kategori": [
+    "Prompt Ringkas",
+    "Personalisasi Dinamis"
+  ],
   "description": "Membuat konten (seperti email, artikel, atau postingan media sosial) yang disesuaikan secara dinamis dengan audiens atau persona target tertentu.",
   "perspektif_user": "Saya ingin membuat konten yang pesannya tepat sasaran. Saya perlu menyesuaikan gaya bahasa, tingkat kedalaman materi, dan tujuan konten agar sesuai dengan profil pembaca saya, sehingga hasilnya lebih efektif dan menarik.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Copywriter dan Ahli Strategi Konten yang akan membuat teks yang relevan dengan profil audiens.",
@@ -24,7 +27,12 @@
       "description": "Pilih tingkat pemahaman atau keahlian audiens target Anda.",
       "default": "Menengah",
       "optional": false,
-      "options": ["Pemula", "Menengah", "Ahli"],
+      "options": [
+        "Pemula",
+        "Menengah",
+        "Ahli",
+        "Lainnya..."
+      ],
       "info": "Ini akan menentukan kedalaman teknis dan kompleksitas bahasa yang digunakan."
     },
     {
@@ -34,7 +42,14 @@
       "description": "Pilih gaya atau nada bahasa yang paling sesuai untuk audiens Anda.",
       "default": "Informatif",
       "optional": false,
-      "options": ["Formal", "Kasual", "Humoris", "Informatif", "Persuasif"],
+      "options": [
+        "Formal",
+        "Kasual",
+        "Humoris",
+        "Informatif",
+        "Persuasif",
+        "Lainnya..."
+      ],
       "info": "Gaya bahasa akan memengaruhi cara AI menyusun kalimat dan memilih kata."
     },
     {
@@ -59,7 +74,8 @@
         "Artikel Blog",
         "Postingan Media Sosial (Singkat)",
         "Postingan Media Sosial (Panjang)",
-        "Naskah Video (Intro)"
+        "Naskah Video (Intro)",
+        "Lainnya..."
       ],
       "info": "AI akan menyesuaikan struktur dan panjang konten sesuai format yang dipilih."
     }
@@ -68,7 +84,7 @@
     "PERAN": "Anda adalah seorang Copywriter dan Ahli Strategi Konten yang sangat terampil. Tugas Anda adalah mengubah draf konten mentah menjadi sebuah tulisan yang dipoles dan disesuaikan secara presisi untuk audiens target yang spesifik.",
     "KONTEKS": "Konteks Pembuatan Konten:\n- Draf Konten Utama: {KONTEN_UTAMA}\n- Profil Audiens Target:\n  - Tingkat Keahlian: {TARGET_AUDIENS_KEAHLIAN}\n  - Gaya Bahasa yang Disukai: {TARGET_AUDIENS_GAYA}\n  - Tujuan Utama Mereka: {TARGET_AUDIENS_TUJUAN}",
     "TUGAS": "Berdasarkan draf dan profil audiens yang diberikan, hasilkan versi final dari konten tersebut dalam format '{JENIS_OUTPUT}'. Pastikan nada, kedalaman teknis, dan struktur tulisan selaras sempurna dengan kebutuhan dan preferensi audiens. Fokus pada kejelasan, keterbacaan, dan pencapaian tujuan audiens.",
-    "FORMAT OUTPUT": "Hasilkan teks final dalam format '{JENIS_OUTPUT}'. Jangan menyertakan judul atau header tambahan kecuali jika itu adalah bagian standar dari format tersebut (misalnya, subjek untuk email). Langsung berikan kontennya."
+    "FORMAT_OUTPUT": "Hasilkan teks final dalam format '{JENIS_OUTPUT}'. Jangan menyertakan judul atau header tambahan kecuali jika itu adalah bagian standar dari format tersebut (misalnya, subjek untuk email). Langsung berikan kontennya."
   },
   "toolType": "text",
   "output": "natural_language_prompt",

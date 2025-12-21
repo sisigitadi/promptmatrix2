@@ -2,7 +2,10 @@
   "id_kerangka": "KOL-PP-102",
   "nama_kerangka": "Tutor Pemrograman & Konsep Lanjutan",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Pengembangan Perangkat Lunak"
+  ],
   "description": "Pusat pembelajaran terintegrasi untuk pemula hingga ahli, mencakup pemilihan bahasa, dasar-dasar pemrograman, debugging, dan konsep lanjutan seperti AI, keamanan siber, dan blockchain.",
   "perspektif_user": "Sebagai seseorang yang ingin belajar atau memperdalam ilmu pemrograman, saya memerlukan satu tempat untuk mendapatkan bimbingan, mulai dari memilih bahasa pertama, memahami dasar-dasarnya, hingga menjelajahi topik-topik canggih seperti AI dan keamanan siber.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Tutor Pemrograman yang akan mengajarkan konsep pemrograman dan teknologi.",
@@ -51,7 +54,13 @@
             "name": "programmingLanguage",
             "label": "Bahasa Pemrograman",
             "type": "select",
-            "options": ["Python", "JavaScript", "Java", "C++", "Lainnya..."],
+            "options": [
+              "Python",
+              "JavaScript",
+              "Java",
+              "C++",
+              "Lainnya..."
+            ],
             "default": "Python",
             "info": "Pilih bahasa pemrograman yang ingin Anda pelajari."
           },
@@ -64,9 +73,13 @@
               "Tipe Data",
               "Kondisi (if/else)",
               "Loop (for/while)",
-              "Fungsi"
+              "Fungsi",
+              "Lainnya..."
             ],
-            "default": ["Variabel", "Kondisi (if/else)"],
+            "default": [
+              "Variabel",
+              "Kondisi (if/else)"
+            ],
             "info": "Pilih konsep dasar yang ingin Anda fokuskan."
           }
         ],
@@ -162,7 +175,13 @@
             "name": "programmingLanguage",
             "label": "Bahasa Pemrograman",
             "type": "select",
-            "options": ["Python", "JavaScript", "Java", "C++", "Lainnya..."],
+            "options": [
+              "Python",
+              "JavaScript",
+              "Java",
+              "C++",
+              "Lainnya..."
+            ],
             "default": "Python",
             "info": "Pilih bahasa pemrograman yang relevan."
           }
@@ -184,7 +203,7 @@
     "PERAN": "Anda adalah seorang Tutor Pemrograman serbaguna dan ahli dalam konsep-konsep teknologi canggih.",
     "KONTEKS": "Pengguna telah memilih topik pembelajaran: '{TOPIK_PEMBELAJARAN}'. Anda akan bertindak sebagai tutor atau ahli di bidang tersebut.",
     "TUGAS": "Berdasarkan topik '{TOPIK_PEMBELAJARAN}', berikan penjelasan, panduan, atau contoh kode yang relevan. Gunakan variabel input dari sub-komponen yang sesuai untuk menyusun respons Anda.",
-    "FORMAT OUTPUT": "Sajikan output dalam format yang paling sesuai dengan topik pembelajaran (misalnya, panduan langkah demi langkah, penjelasan konsep dengan contoh, atau visualisasi teks). Gunakan Markdown untuk keterbacaan yang baik."
+    "FORMAT_OUTPUT": "Sajikan output dalam format yang paling sesuai dengan topik pembelajaran (misalnya, panduan langkah demi langkah, penjelasan konsep dengan contoh, atau visualisasi teks). Gunakan Markdown untuk keterbacaan yang baik."
   },
   "toolType": "text",
   "konteks_tambahan_instruksi_khusus": "Sesuaikan kedalaman penjelasan dengan topik yang dipilih. Untuk pemula, gunakan analogi dan bahasa yang sederhana. Untuk topik lanjutan, berikan detail teknis yang akurat.",

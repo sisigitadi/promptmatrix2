@@ -53,7 +53,8 @@ export type KomponenPromptType = {
   PERAN?: string;
   KONTEKS?: string;
   TUGAS?: string;
-  "FORMAT OUTPUT"?: string;
+  FORMAT_OUTPUT?: string;
+  "FORMAT OUTPUT"?: string; // Legacy support
   [key: string]: string | undefined;
 };
 

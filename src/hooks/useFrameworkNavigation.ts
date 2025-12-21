@@ -140,9 +140,13 @@ export function useFrameworkNavigation(
         frameworkDetails.framework.components?.map((c) => [c.name, c]) || []; // Add null check for components
 
       for (const [name, details] of inputs) {
-        // Safe access to properties with type guards if needed, but here structure is known
-        const compDetails = details as any; // Cast to access properties easily if FrameworkComponent is complex
-        if (compDetails.type === "select" && compDetails.options?.length) {
+        const compDetails = details as any;
+        if (compDetails.default !== undefined && compDetails.default !== null) {
+          initialFormData[name] = compDetails.default;
+        } else if (
+          compDetails.type === "select" &&
+          compDetails.options?.length
+        ) {
           const firstOption = compDetails.options[0];
           if (
             typeof firstOption === "string" &&
@@ -154,7 +158,7 @@ export function useFrameworkNavigation(
             initialFormData[name] = firstOption;
           }
         } else {
-          initialFormData[name] = compDetails.default ?? "";
+          initialFormData[name] = "";
         }
       }
 

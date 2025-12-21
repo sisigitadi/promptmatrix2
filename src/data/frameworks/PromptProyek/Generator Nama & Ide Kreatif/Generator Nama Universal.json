@@ -14,7 +14,8 @@
         "Nama Tim/Komunitas",
         "Nama Karakter Fiksi",
         "Judul Acara/Karya",
-        "Nama Domain/Hashtag"
+        "Nama Domain/Hashtag",
+        "Lainnya..."
       ],
       "info": "Pilih untuk apa nama ini akan digunakan."
     }
@@ -27,7 +28,12 @@
           "name": "gender",
           "label": "Jenis Kelamin",
           "type": "select",
-          "options": ["Laki-laki", "Perempuan", "Unisex"],
+          "options": [
+            "Laki-laki",
+            "Perempuan",
+            "Unisex",
+            "Lainnya..."
+          ],
           "info": "Pilih jenis kelamin."
         },
         {
@@ -56,7 +62,12 @@
           "name": "nameStyle",
           "label": "Gaya Nama",
           "type": "select",
-          "options": ["Klasik & Populer", "Modern & Unik", "Singkat & Manis"],
+          "options": [
+            "Klasik & Populer",
+            "Modern & Unik",
+            "Singkat & Manis",
+            "Lainnya..."
+          ],
           "info": "Pilih gaya nama yang Anda inginkan."
         }
       ],
@@ -118,7 +129,12 @@
           "name": "role",
           "label": "Peran Karakter",
           "type": "select",
-          "options": ["Protagonis", "Antagonis", "Pendukung"],
+          "options": [
+            "Protagonis",
+            "Antagonis",
+            "Pendukung",
+            "Lainnya..."
+          ],
           "info": "Pilih peran karakter dalam cerita."
         },
         {
@@ -157,7 +173,12 @@
           "name": "gender",
           "label": "Jenis Kelamin (Opsional)",
           "type": "select",
-          "options": ["Jantan", "Betina", "Tidak Tahu"],
+          "options": [
+            "Jantan",
+            "Betina",
+            "Tidak Tahu",
+            "Lainnya..."
+          ],
           "info": "Jenis kelamin hewan peliharaan."
         },
         {
@@ -180,7 +201,8 @@
             "Modern",
             "Unik",
             "Lucu",
-            "Berdasarkan Makanan"
+            "Berdasarkan Makanan",
+            "Lainnya..."
           ],
           "info": "Pilih gaya nama yang Anda inginkan."
         }
@@ -204,7 +226,8 @@
             "Profesional",
             "Santai & Kreatif",
             "Kompetitif",
-            "Inklusif"
+            "Inklusif",
+            "Lainnya..."
           ],
           "info": "Nuansa atau atmosfer yang ingin dibangun dalam tim/komunitas."
         },
@@ -243,7 +266,8 @@
             "Pameran Seni",
             "Buku",
             "Film",
-            "Podcast"
+            "Podcast",
+            "Lainnya..."
           ],
           "info": "Pilih jenis acara atau karya yang akan diberi judul."
         },
@@ -276,7 +300,8 @@
             "Edukatif",
             "Menghibur",
             "Misterius",
-            "Serius"
+            "Serius",
+            "Lainnya..."
           ],
           "info": "Suasana atau emosi yang ingin disampaikan oleh judul."
         }
@@ -306,7 +331,12 @@
           "name": "lengthPreference",
           "label": "Preferensi Panjang",
           "type": "select",
-          "options": ["Singkat", "Sedang", "Panjang"],
+          "options": [
+            "Singkat",
+            "Sedang",
+            "Panjang",
+            "Lainnya..."
+          ],
           "info": "Apakah Anda menginginkan nama yang singkat, sedang, atau panjang?"
         },
         {
@@ -323,6 +353,9 @@
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu memberikan variasi nama yang luas, dari yang aman hingga yang lebih berani. Untuk nama bisnis/produk, sertakan saran untuk memeriksa ketersediaan domain dan media sosial. Untuk nama personal, pertimbangkan kemudahan pengucapan. Disclaimer wajib: 'Nama yang dihasilkan adalah saran kreatif. Pastikan untuk memeriksa ketersediaan merek dagang, domain, dan handle media sosial secara mandiri sebelum mengadopsi sebuah nama.'",
-  "kategori": ["Prompt Proyek", "Generator Nama & Ide Kreatif"],
+  "kategori": [
+    "Prompt Proyek",
+    "Generator Nama & Ide Kreatif"
+  ],
   "nama_kerangka": "Generator Nama Universal"
 }

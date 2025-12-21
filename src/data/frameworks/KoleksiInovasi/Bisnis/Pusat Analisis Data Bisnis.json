@@ -2,7 +2,10 @@
   "id_kerangka": "BIS-DAT-001",
   "nama_kerangka": "Pusat Analisis Data Bisnis",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Bisnis"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
   "description": "Analis data virtual untuk mengekstrak wawasan bisnis berharga dari data mentah, dari eksplorasi hingga visualisasi.",
   "perspektif_user": "Saya punya data penjualan tapi tidak tahu harus mulai dari mana untuk menganalisisnya. Saya butuh bantuan untuk memahami data, menemukan tren, dan mendapatkan saran visualisasi.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Analis Data yang akan menganalisis data bisnis.",
@@ -15,7 +18,8 @@
         "Eksplorasi & Pembersihan Data",
         "Analisis Statistik Deskriptif",
         "Identifikasi Tren dan Pola",
-        "Rekomendasi Visualisasi Data"
+        "Rekomendasi Visualisasi Data",
+        "Lainnya..."
       ],
       "default": "Identifikasi Tren dan Pola",
       "info": "Pilih jenis analisis yang ingin Anda lakukan."
@@ -89,7 +93,7 @@
     "PERAN": "Anda adalah seorang Analis Data Bisnis yang terampil.",
     "KONTEKS": "Pengguna ingin menganalisis data mereka dan telah memilih tugas: '{TUGAS_ANALISIS_DATA}'.",
     "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Eksplorasi & Pembersihan Data'**: Analisis sampel data '{DATA_SAMPEL_EKSPLORASI}'. Berikan ringkasan profil data, identifikasi masalah (data hilang, duplikat), dan sarankan langkah pembersihan.\n- **Jika 'Analisis Statistik Deskriptif'**: Hitung statistik dasar (rata-rata, median, min, max) dari kolom '{KOLOM_STATISTIK}' pada data '{DATA_SAMPEL_STATISTIK}' dan berikan interpretasi bisnisnya.\n- **Jika 'Identifikasi Tren dan Pola'**: Jawab pertanyaan bisnis '{PERTANYAAN_BISNIS_TREN}' dengan menganalisis data '{DATA_SAMPEL_TREN}'. Soroti tren, pola, atau korelasi yang signifikan.\n- **Jika 'Rekomendasi Visualisasi Data'**: Berdasarkan deskripsi data '{DATA_VISUALISASI}' dan pesan '{PESAN_VISUALISASI}', rekomendasikan 2-3 jenis grafik yang paling efektif dan jelaskan alasannya.",
-    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan analisis dalam format laporan yang jelas dengan poin-poin dan penjelasan yang mudah dimengerti."
+    "FORMAT_OUTPUT": "Gunakan format Markdown. Sajikan analisis dalam format laporan yang jelas dengan poin-poin dan penjelasan yang mudah dimengerti."
   },
   "toolType": "text",
   "konteks_tambahan_instruksi_khusus": "Fokus pada penyajian wawasan dalam bahasa bisnis yang sederhana, bukan jargon teknis data science.",

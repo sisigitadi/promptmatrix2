@@ -14,7 +14,8 @@
         "Skrip Video Pendek",
         "Resensi",
         "Lirik Lagu",
-        "Naskah Iklan"
+        "Naskah Iklan",
+        "Lainnya..."
       ],
       "info": "Pilih jenis konten yang ingin Anda hasilkan."
     }
@@ -57,7 +58,13 @@
           "name": "tone",
           "label": "Gaya & Nada",
           "type": "select",
-          "options": ["Informatif", "Profesional", "Kasual", "Persuasif"],
+          "options": [
+            "Informatif",
+            "Profesional",
+            "Kasual",
+            "Persuasif",
+            "Lainnya..."
+          ],
           "info": "Pilih nuansa yang diinginkan untuk artikel Anda."
         },
         {
@@ -81,7 +88,8 @@
             "Facebook",
             "Twitter/X",
             "LinkedIn",
-            "TikTok"
+            "TikTok",
+            "Lainnya..."
           ],
           "info": "Pilih platform media sosial yang dituju."
         },
@@ -113,7 +121,8 @@
             "Menarik & Singkat",
             "Humoris",
             "Inspiratif",
-            "Informatif"
+            "Informatif",
+            "Lainnya..."
           ],
           "info": "Pilih nuansa yang sesuai dengan platform."
         },
@@ -176,7 +185,8 @@
           "options": [
             "Persuasif & Menjual",
             "Teknis & Detail",
-            "Mewah & Eksklusif"
+            "Mewah & Eksklusif",
+            "Lainnya..."
           ],
           "info": "Pilih nuansa yang sesuai dengan citra merek Anda."
         }
@@ -249,7 +259,13 @@
           "name": "reviewType",
           "label": "Jenis Resensi",
           "type": "select",
-          "options": ["Positif", "Negatif", "Seimbang", "Perbandingan"],
+          "options": [
+            "Positif",
+            "Negatif",
+            "Seimbang",
+            "Perbandingan",
+            "Lainnya..."
+          ],
           "info": "Fokus resensi (misal: menyoroti kelebihan, kekurangan, atau perbandingan)."
         },
         {
@@ -329,7 +345,8 @@
             "Senang & Ceria",
             "Sedih & Melankolis",
             "Energik & Memotivasi",
-            "Romantis & Intim"
+            "Romantis & Intim",
+            "Lainnya..."
           ],
           "info": "Emosi utama yang ingin disampaikan melalui lirik."
         },
@@ -393,7 +410,8 @@
           "options": [
             "Sangat Singkat (Headline & Deskripsi)",
             "Singkat (Beberapa Kalimat)",
-            "Sedang (Paragraf Singkat)"
+            "Sedang (Paragraf Singkat)",
+            "Lainnya..."
           ],
           "info": "Pilih panjang teks iklan yang diinginkan."
         }
@@ -401,6 +419,9 @@
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus proaktif. Jika pengguna meminta 'Post Media Sosial' tanpa menyebut platform, buat versi untuk Instagram sebagai default. Jika tidak ada 'Gaya & Nada', pilih yang paling umum untuk 'Jenis Konten' (misal: 'Informatif' untuk Blog, 'Persuasif' untuk Deskripsi Produk). Selalu prioritaskan kejelasan, keringkasan, dan dampak sesuai dengan tujuan akhir konten (menjual, mengedukasi, atau menghibur). Untuk konten kreatif seperti lirik, jangan takut untuk menjadi lebih puitis dan abstrak.",
-  "kategori": ["Prompt Proyek", "Konten & Pemasaran"],
+  "kategori": [
+    "Prompt Proyek",
+    "Konten & Pemasaran"
+  ],
   "nama_kerangka": "Generator Konten Multi-Platform"
 }

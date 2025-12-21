@@ -2,7 +2,10 @@
   "id_kerangka": "KI-PEM-001",
   "nama_kerangka": "Pusat Strategi Pemasaran 360°",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Pemasaran"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Pemasaran"
+  ],
   "description": "Dasbor komprehensif untuk merancang, mengimplementasikan, dan menganalisis berbagai aspek kampanye pemasaran, dari SEO hingga peluncuran produk.",
   "perspektif_user": "Sebagai seorang profesional pemasaran, saya memerlukan satu alat terpusat yang dapat membantu saya dengan berbagai tugas pemasaran sehari-hari tanpa harus berpindah-pindah kerangka kerja.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Ahli Strategi Pemasaran 360° yang akan merancang kampanye pemasaran.",
@@ -19,7 +22,8 @@
         "Peluncuran Produk & Kampanye",
         "Riset Pasar & Analisis Kompetitor",
         "Branding & Hubungan Masyarakat (PR)",
-        "Optimasi Penjualan & Konversi"
+        "Optimasi Penjualan & Konversi",
+        "Lainnya..."
       ],
       "default": "Strategi SEO & SEM",
       "info": "Pilihan Anda akan menampilkan serangkaian input yang dirancang khusus untuk area tersebut."
@@ -51,9 +55,13 @@
             "Riset Kata Kunci",
             "Analisis SERP",
             "Outline Konten SEO",
-            "Ide Iklan SEM"
+            "Ide Iklan SEM",
+            "Lainnya..."
           ],
-          "default": ["Riset Kata Kunci", "Outline Konten SEO"],
+          "default": [
+            "Riset Kata Kunci",
+            "Outline Konten SEO"
+          ],
           "info": "Pilih aspek yang ingin Anda dalami."
         }
       ],
@@ -62,7 +70,12 @@
           "name": "JENIS_KONTEN",
           "label": "Jenis Konten yang Diinginkan",
           "type": "select",
-          "options": ["Artikel Blog", "Naskah Video", "Utas Media Sosial"],
+          "options": [
+            "Artikel Blog",
+            "Naskah Video",
+            "Utas Media Sosial",
+            "Lainnya..."
+          ],
           "default": "Artikel Blog",
           "info": "Pilih format konten yang ingin dibuat."
         },
@@ -88,7 +101,8 @@
             "Profesional",
             "Santai & Ramah",
             "Edukasi & Informatif",
-            "Menghibur"
+            "Menghibur",
+            "Lainnya..."
           ],
           "default": "Profesional",
           "info": "Pilih tone yang sesuai dengan brand Anda."
@@ -104,9 +118,13 @@
             "TikTok",
             "LinkedIn",
             "X/Twitter",
-            "Facebook"
+            "Facebook",
+            "Lainnya..."
           ],
-          "default": ["Instagram", "LinkedIn"],
+          "default": [
+            "Instagram",
+            "LinkedIn"
+          ],
           "info": "Pilih platform di mana Anda ingin aktif."
         },
         {
@@ -116,7 +134,8 @@
           "options": [
             "Meningkatkan Awareness",
             "Mendorong Engagement",
-            "Memicu Konversi"
+            "Memicu Konversi",
+            "Lainnya..."
           ],
           "default": "Meningkatkan Awareness",
           "info": "Apa gol dari aktivitas media sosial Anda?"
@@ -138,7 +157,8 @@
             "Welcome Email Series",
             "Newsletter Bulanan",
             "Email Promosi",
-            "Email Re-engagement"
+            "Email Re-engagement",
+            "Lainnya..."
           ],
           "default": "Welcome Email Series",
           "info": "Pilih jenis kampanye email yang ingin Anda buat."
@@ -182,9 +202,13 @@
             "Siaran Pers (Press Release)",
             "Email Pengumuman",
             "Paket Konten Media Sosial",
-            "Draf Iklan Digital"
+            "Draf Iklan Digital",
+            "Lainnya..."
           ],
-          "default": ["Email Pengumuman", "Paket Konten Media Sosial"],
+          "default": [
+            "Email Pengumuman",
+            "Paket Konten Media Sosial"
+          ],
           "info": "Pilih materi komunikasi yang ingin Anda hasilkan."
         }
       ],
@@ -218,9 +242,13 @@
           "options": [
             "Analisis SWOT",
             "Analisis Kompetitor",
-            "Pembuatan Buyer Persona"
+            "Pembuatan Buyer Persona",
+            "Lainnya..."
           ],
-          "default": ["Analisis SWOT", "Analisis Kompetitor"],
+          "default": [
+            "Analisis SWOT",
+            "Analisis Kompetitor"
+          ],
           "info": "Pilih jenis analisis yang Anda butuhkan."
         }
       ],
@@ -246,7 +274,8 @@
           "options": [
             "Platform Identitas Merek",
             "Draf Siaran Pers",
-            "Rencana Komunikasi Krisis"
+            "Rencana Komunikasi Krisis",
+            "Lainnya..."
           ],
           "default": "Platform Identitas Merek",
           "info": "Pilih output yang Anda butuhkan."
@@ -274,7 +303,8 @@
           "options": [
             "Naskah Penjualan (Sales Script)",
             "Copy Halaman Arahan (Landing Page)",
-            "Ide Lead Magnet"
+            "Ide Lead Magnet",
+            "Lainnya..."
           ],
           "default": "Copy Halaman Arahan (Landing Page)",
           "info": "Pilih aset penjualan yang ingin Anda buat."
@@ -286,7 +316,7 @@
     "PERAN": "Anda adalah seorang Ahli Strategi Pemasaran 360° yang serbaguna.",
     "KONTEKS": "Pengguna memerlukan bantuan untuk tugas pemasaran: '{TUGAS_PEMASARAN_UTAMA}'. Anda harus memandu mereka untuk memberikan input yang relevan dan menghasilkan output yang dapat ditindaklanjuti.",
     "TUGAS": "Berdasarkan tugas yang dipilih, gunakan input yang diberikan untuk menghasilkan output yang komprehensif dan profesional. Sesuaikan respons Anda dengan setiap sub-tugas yang dipilih pengguna.",
-    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, laporan, draf konten, rencana, atau tabel). Pastikan output jelas, terstruktur, dan mudah dipahami."
+    "FORMAT_OUTPUT": "Gunakan format Markdown. Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, laporan, draf konten, rencana, atau tabel). Pastikan output jelas, terstruktur, dan mudah dipahami."
   },
   "toolType": "planning",
   "konteks_tambahan_instruksi_khusus": "Selalu prioritaskan strategi yang berpusat pada pelanggan. Berikan saran yang praktis dan dapat diimplementasikan. Jika ada ambiguitas, berikan asumsi yang cerdas atau ajukan pertanyaan klarifikasi.",

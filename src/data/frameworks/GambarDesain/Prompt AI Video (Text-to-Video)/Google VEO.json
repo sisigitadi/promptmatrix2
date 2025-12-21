@@ -17,14 +17,24 @@
       "name": "aspectRatio",
       "label": "Aspect Ratio",
       "type": "select",
-      "options": ["16:9", "9:16", "1:1"],
+      "options": [
+        "16:9",
+        "9:16",
+        "1:1",
+        "Lainnya..."
+      ],
       "info": "Nilai yang didukung adalah \"16:9\" (layar lebar, bagus untuk lanskap), \"9:16\" (potret/vertikal, bagus untuk objek tinggi), dan \"1:1\" (persegi). Default adalah \"16:9\"."
     },
     {
       "name": "personGeneration",
       "label": "Generasi Orang",
       "type": "select",
-      "options": ["allow", "dont_allow", "allow_adult"],
+      "options": [
+        "allow",
+        "dont_allow",
+        "allow_adult",
+        "Lainnya..."
+      ],
       "info": "Kontrol penyertaan orang dengan \"dont_allow\" atau \"allow_adult\"."
     },
     {
@@ -42,7 +52,11 @@
       "name": "generateAudio",
       "label": "Generate Audio",
       "type": "select",
-      "options": ["true", "false"],
+      "options": [
+        "true",
+        "false",
+        "Lainnya..."
+      ],
       "info": "Kontrol apakah audio dihasilkan untuk video."
     },
     {
@@ -134,6 +148,9 @@
       }
     }
   ],
-  "kategori": ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Video (Text-to-Video)"
+  ],
   "nama_kerangka": "Google VEO"
 }

@@ -14,7 +14,8 @@
         "Daftar Tamu & RSVP",
         "Teks Pidato/Sambutan",
         "Checklist Vendor",
-        "Ide Souvenir/Lomba"
+        "Ide Souvenir/Lomba",
+        "Lainnya..."
       ],
       "info": "Pilih dokumen perencanaan yang Anda butuhkan.",
       "validation": {
@@ -95,7 +96,8 @@
           "options": [
             "Pengalaman Tamu",
             "Pemasaran & Jangkauan",
-            "Hemat Biaya"
+            "Hemat Biaya",
+            "Lainnya..."
           ],
           "info": "Pilih area yang menjadi prioritas utama dalam pengalokasian dana."
         }
@@ -125,7 +127,12 @@
           "name": "speechTone",
           "label": "Gaya & Nada Pidato",
           "type": "select",
-          "options": ["Formal", "Santai & Humoris", "Inspiratif"],
+          "options": [
+            "Formal",
+            "Santai & Humoris",
+            "Inspiratif",
+            "Lainnya..."
+          ],
           "info": "Pilih nuansa yang diinginkan untuk pidato."
         },
         {
@@ -165,7 +172,12 @@
           "name": "budgetLevel",
           "label": "Tingkat Anggaran",
           "type": "select",
-          "options": ["Hemat", "Menengah", "Mewah"],
+          "options": [
+            "Hemat",
+            "Menengah",
+            "Mewah",
+            "Lainnya..."
+          ],
           "info": "Estimasi anggaran untuk pesta."
         },
         {
@@ -183,7 +195,12 @@
           "name": "locationType",
           "label": "Jenis Lokasi (Opsional)",
           "type": "select",
-          "options": ["Indoor", "Outdoor", "Keduanya"],
+          "options": [
+            "Indoor",
+            "Outdoor",
+            "Keduanya",
+            "Lainnya..."
+          ],
           "info": "Apakah pesta akan diadakan di dalam atau luar ruangan?"
         }
       ],
@@ -222,7 +239,12 @@
           "name": "contactMethod",
           "label": "Metode Kontak RSVP",
           "type": "select",
-          "options": ["Email", "Telepon/WhatsApp", "Formulir Online"],
+          "options": [
+            "Email",
+            "Telepon/WhatsApp",
+            "Formulir Online",
+            "Lainnya..."
+          ],
           "info": "Bagaimana tamu harus mengkonfirmasi kehadiran?"
         },
         {
@@ -329,13 +351,21 @@
           "name": "ideaType",
           "label": "Jenis Ide",
           "type": "select",
-          "options": ["Souvenir", "Lomba", "Keduanya"],
+          "options": [
+            "Souvenir",
+            "Lomba",
+            "Keduanya",
+            "Lainnya..."
+          ],
           "info": "Apakah Anda mencari ide souvenir, lomba, atau keduanya?"
         }
       ]
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu memberikan saran yang praktis dan realistis. Untuk anggaran, jika tidak ada input, berikan persentase alokasi yang umum sebagai contoh. Untuk checklist, berikan pertanyaan-pertanyaan kunci yang sering terlupakan. Untuk ide tema, berikan 3-5 opsi yang bervariasi dari segi biaya dan kompleksitas. Selalu akhiri dengan kalimat yang memotivasi dan mengurangi stres pengguna, seperti 'Perencanaan adalah kunci, nikmati setiap langkahnya!'",
-  "kategori": ["Prompt Proyek", "Perencanaan Acara & Manajemen"],
+  "kategori": [
+    "Prompt Proyek",
+    "Perencanaan Acara & Manajemen"
+  ],
   "nama_kerangka": "Manajer Perencanaan Acara Lengkap"
 }

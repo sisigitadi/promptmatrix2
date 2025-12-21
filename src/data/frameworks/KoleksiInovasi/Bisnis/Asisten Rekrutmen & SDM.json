@@ -2,7 +2,10 @@
   "id_kerangka": "BIS-HR-001",
   "nama_kerangka": "Asisten Rekrutmen & SDM",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Bisnis"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
   "description": "Asisten personalia untuk menyederhanakan tugas rekrutmen dan SDM, dari deskripsi pekerjaan hingga rencana onboarding.",
   "perspektif_user": "Saya perlu bantuan untuk tugas-tugas HR seperti membuat lowongan kerja yang menarik, menyiapkan pertanyaan wawancara yang bagus, dan merancang proses orientasi untuk karyawan baru.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Spesialis SDM yang akan merekrut dan mengelola sumber daya manusia.",
@@ -15,7 +18,8 @@
         "Pembuat Deskripsi Pekerjaan",
         "Generator Pertanyaan Wawancara",
         "Penyusun Rencana Onboarding",
-        "Pembuat Draf Email Rekrutmen"
+        "Pembuat Draf Email Rekrutmen",
+        "Lainnya..."
       ],
       "default": "Pembuat Deskripsi Pekerjaan",
       "info": "Pilih tugas SDM yang ingin Anda kerjakan."
@@ -81,7 +85,8 @@
             "options": [
               "Undangan Wawancara",
               "Surat Penolakan Kandidat",
-              "Surat Penawaran Kerja"
+              "Surat Penawaran Kerja",
+              "Lainnya..."
             ],
             "default": "Undangan Wawancara",
             "info": "Pilih templat email yang Anda butuhkan."
@@ -101,7 +106,7 @@
     "PERAN": "Anda adalah seorang Spesialis SDM (Human Resources) yang berpengalaman.",
     "KONTEKS": "Pengguna memerlukan bantuan untuk tugas '{TUGAS_SDM}'.",
     "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Pembuat Deskripsi Pekerjaan'**: Buat draf deskripsi pekerjaan yang lengkap untuk posisi '{HR_POSISI_JABATAN}' dengan tanggung jawab utama '{HR_TANGGUNG_JAWAB}'. Sertakan bagian Kualifikasi dan paragraf 'Tentang Kami' yang menarik.\n- **Jika 'Generator Pertanyaan Wawancara'**: Buat daftar pertanyaan wawancara yang terstruktur untuk posisi '{HR_POSISI_WAWANCARA}' yang menguji soft skill '{HR_SOFT_SKILL}'. Kategorikan pertanyaan menjadi Perilaku, Teknis/Studi Kasus, dan Kecocokan Budaya.\n- **Jika 'Penyusun Rencana Onboarding'**: Buat checklist rencana onboarding 30 hari untuk posisi '{HR_POSISI_ONBOARDING}' dengan tujuan '{HR_TUJUAN_30_HARI}'. Pisahkan rencana per Hari ke-1, Minggu ke-1, dan 30 Hari Pertama.\n- **Jika 'Pembuat Draf Email Rekrutmen'**: Buat draf '{HR_JENIS_EMAIL}' yang ditujukan kepada '{HR_NAMA_KANDIDAT}'. Pastikan email penolakan tetap sopan dan email penawaran jelas serta profesional.",
-    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan output dalam format dokumen yang sesuai (misalnya, deskripsi pekerjaan atau checklist) yang rapi dan mudah digunakan."
+    "FORMAT_OUTPUT": "Gunakan format Markdown. Sajikan output dalam format dokumen yang sesuai (misalnya, deskripsi pekerjaan atau checklist) yang rapi dan mudah digunakan."
   },
   "toolType": "text",
   "konteks_tambahan_instruksi_khusus": "Gunakan bahasa yang inklusif dan profesional. Untuk email, selalu gunakan nada yang sopan dan menghargai kandidat.",

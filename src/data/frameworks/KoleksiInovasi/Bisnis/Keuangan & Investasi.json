@@ -2,7 +2,10 @@
   "id_kerangka": "BIS-KEU-001",
   "nama_kerangka": "Keuangan & Investasi",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Bisnis"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
   "description": "Pusat komando untuk semua kebutuhan analisis keuangan dan investasi, dari strategi jangka panjang hingga analisis saham individual.",
   "perspektif_user": "Saya butuh alat fleksibel untuk membantu saya dengan berbagai tugas keuangan, seperti merancang rencana investasi, menganalisis saham, membandingkan produk, atau mensimulasikan dana pensiun.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Analis Keuangan yang akan menganalisis keuangan dan investasi.",
@@ -15,7 +18,8 @@
         "Perencanaan Strategi Investasi",
         "Analisis Saham Tunggal",
         "Perbandingan Produk Investasi",
-        "Simulasi Proyeksi Dana"
+        "Simulasi Proyeksi Dana",
+        "Lainnya..."
       ],
       "default": "Perencanaan Strategi Investasi",
       "info": "Pilihan Anda akan menampilkan serangkaian input yang dirancang khusus untuk area tersebut."
@@ -44,7 +48,12 @@
             "name": "TINGKAT_RISIKO",
             "label": "Toleransi Risiko Anda",
             "type": "select",
-            "options": ["Konservatif", "Moderat", "Agresif"],
+            "options": [
+              "Konservatif",
+              "Moderat",
+              "Agresif",
+              "Lainnya..."
+            ],
             "default": "Moderat",
             "info": "Ini akan sangat mempengaruhi jenis instrumen investasi yang akan direkomendasikan."
           },
@@ -71,9 +80,12 @@
             "options": [
               "Analisis Fundamental",
               "Analisis Teknikal",
-              "Sentimen Berita"
+              "Sentimen Berita",
+              "Lainnya..."
             ],
-            "default": ["Analisis Fundamental"],
+            "default": [
+              "Analisis Fundamental"
+            ],
             "info": "Pilih aspek yang ingin Anda dalami dari saham tersebut."
           }
         ],
@@ -100,7 +112,8 @@
               "Imbal Hasil (1th, 3th, 5th)",
               "Tingkat Risiko (Volatility)",
               "Biaya Manajemen",
-              "Minimum Investasi"
+              "Minimum Investasi",
+              "Lainnya..."
             ],
             "default": [
               "Imbal Hasil (1th, 3th, 5th)",
@@ -152,7 +165,7 @@
     "PERAN": "Anda adalah seorang Analis Keuangan dan Perencana Investasi profesional.",
     "KONTEKS": "Seorang klien meminta bantuan analisis keuangan. Tugas yang dipilih adalah: '{TUGAS_ANALISIS_KEUANGAN}'.",
     "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Perencanaan Strategi Investasi'**: Buat proposal strategi investasi komprehensif berdasarkan tujuan '{TUJUAN_INVESTASI}', modal '{MODAL_AWAL}', risiko '{TINGKAT_RISIKO}', dan horizon '{HORIZON_WAKTU}'. Sertakan alokasi aset, contoh instrumen, dan justifikasi.\n- **Jika 'Analisis Saham Tunggal'**: Lakukan analisis pada saham '{KODE_SAHAM}' dengan fokus pada '{FOKUS_ANALISIS_SAHAM}'. Sajikan laporan yang mencakup valuasi kunci, tren harga, sentimen berita, serta potensi kelebihan dan kekurangan.\n- **Jika 'Perbandingan Produk Investasi'**: Buat tabel perbandingan antara '{PRODUK_A}' dan '{PRODUK_B}' berdasarkan metrik '{METRIK_PERBANDINGAN}'. Berikan ringkasan perbandingan di akhir.\n- **Jika 'Simulasi Proyeksi Dana'**: Hitung proyeksi untuk mencapai target '{TARGET_DANA}' dengan saldo awal '{SALDO_SAAT_INI}', investasi bulanan '{INVESTASI_BULANAN}', dan asumsi return '{ASUMSI_RETURN}%'. Tampilkan perkiraan waktu yang dibutuhkan dan berikan saran jika perlu.",
-    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan dalam bentuk laporan yang terstruktur dengan judul yang jelas untuk setiap bagian. Gunakan daftar berpoin atau tabel untuk mempermudah pembacaan."
+    "FORMAT_OUTPUT": "Gunakan format Markdown. Sajikan dalam bentuk laporan yang terstruktur dengan judul yang jelas untuk setiap bagian. Gunakan daftar berpoin atau tabel untuk mempermudah pembacaan."
   },
   "toolType": "text",
   "konteks_tambahan_instruksi_khusus": "Selalu berikan disclaimer bahwa semua investasi mengandung risiko dan kinerja masa lalu tidak mencerminkan hasil di masa depan. Gunakan bahasa yang profesional namun mudah dimengerti.",

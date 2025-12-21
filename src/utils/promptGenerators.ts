@@ -142,7 +142,9 @@ export const generatePrompt = (
   }
 
   // Handle FORMAT_OUTPUT.
-  const formatOutput = framework.komponen_prompt?.["FORMAT OUTPUT"];
+  const formatOutput =
+    framework.komponen_prompt?.FORMAT_OUTPUT ||
+    framework.komponen_prompt?.["FORMAT OUTPUT"];
   if (formatOutput) {
     prompt += `**Format Output:**\n${replacePlaceholders(formatOutput, allValues, customInputs)}\n`;
   }
@@ -288,7 +290,9 @@ export const generatePlaceholderPrompt = (framework: Framework): string => {
     prompt += `**Instruksi Tambahan:**\n${framework.konteks_tambahan_instruksi_khusus}\n\n`;
   }
 
-  const formatOutput = framework.komponen_prompt?.["FORMAT OUTPUT"];
+  const formatOutput =
+    framework.komponen_prompt?.FORMAT_OUTPUT ||
+    framework.komponen_prompt?.["FORMAT OUTPUT"];
   if (formatOutput) {
     prompt += `**Format Output:**\n${formatOutput}\n`;
   }
@@ -416,8 +420,6 @@ export const generateJsonPrompt = (
     }
   });
 
-  const formatOutputKey = "FORMAT OUTPUT"; // Define variable for the key
-
   const jsonOutput: Record<string, unknown> = {
     id_kerangka: framework.id_kerangka || "",
     nama_kerangka: framework.nama_kerangka || frameworkName,
@@ -439,8 +441,10 @@ export const generateJsonPrompt = (
         allValues,
         customInputs,
       ),
-      [formatOutputKey]: replacePlaceholders(
-        framework.komponen_prompt?.[formatOutputKey] || "",
+      FORMAT_OUTPUT: replacePlaceholders(
+        framework.komponen_prompt?.FORMAT_OUTPUT ||
+          framework.komponen_prompt?.["FORMAT OUTPUT"] ||
+          "",
         allValues,
         customInputs,
       ),

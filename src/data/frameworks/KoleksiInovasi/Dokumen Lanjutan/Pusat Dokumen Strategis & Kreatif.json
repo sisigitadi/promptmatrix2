@@ -2,7 +2,10 @@
   "id_kerangka": "KOL-DOC-001",
   "nama_kerangka": "Pusat Dokumen Strategis & Kreatif",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Dokumen Lanjutan"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Dokumen Lanjutan"
+  ],
   "description": "Satu alat terpusat untuk menghasilkan berbagai dokumen terstruktur yang kompleks, mulai dari Game Design Document, analisis keuangan mendalam, hingga persiapan debat.",
   "perspektif_user": "Saya perlu membuat dokumen yang spesifik dan terstruktur, seperti GDD untuk ide game saya, menganalisis laporan keuangan bisnis, atau mempersiapkan argumen untuk debat penting. Saya ingin panduan yang jelas untuk setiap jenis dokumen.",
   "ai_logic_description": "Persona AI: Anda adalah seorang konsultan ahli multi-disiplin. Bergantung pada pilihan pengguna, Anda akan bertindak sebagai Game Designer, Analis Keuangan, atau Pelatih Debat untuk menghasilkan dokumen yang diminta.",
@@ -14,7 +17,8 @@
       "options": [
         "Dokumen Desain Game (GDD)",
         "Analisis Laporan Keuangan",
-        "Perencanaan Argumen Debat"
+        "Perencanaan Argumen Debat",
+        "Lainnya..."
       ],
       "default": "Dokumen Desain Game (GDD)",
       "info": "Pilih jenis dokumen terstruktur yang ingin Anda hasilkan. Pilihan Anda akan menampilkan kolom input yang sesuai."
@@ -111,7 +115,8 @@
             "Analisis Rasio Profitabilitas",
             "Analisis Rasio Likuiditas",
             "Analisis Rasio Solvabilitas",
-            "Identifikasi Red Flags"
+            "Identifikasi Red Flags",
+            "Lainnya..."
           ],
           "default": [
             "Analisis Rasio Profitabilitas",
@@ -132,7 +137,11 @@
           "name": "POSISI_SAYA",
           "label": "Posisi Anda",
           "type": "select",
-          "options": ["Pro (Setuju)", "Kontra (Tidak Setuju)"],
+          "options": [
+            "Pro (Setuju)",
+            "Kontra (Tidak Setuju)",
+            "Lainnya..."
+          ],
           "default": "Pro (Setuju)",
           "info": "Pilih sisi argumen yang akan Anda bela."
         },
@@ -158,7 +167,7 @@
     "PERAN": "Anda adalah seorang konsultan ahli multi-disiplin. Bergantung pada pilihan pengguna, Anda akan bertindak sebagai Game Designer, Analis Keuangan, atau Pelatih Debat untuk menghasilkan dokumen yang diminta.",
     "KONTEKS": "Pengguna ingin membuat sebuah dokumen terstruktur dengan jenis: '{{JENIS_DOKUMEN}}'. Anda harus memproses input yang diberikan untuk menghasilkan output yang komprehensif dan profesional sesuai dengan peran yang relevan.",
     "TUGAS": "Berdasarkan jenis dokumen yang dipilih, lakukan tugas berikut:\n\n{{#if JENIS_DOKUMEN === 'Dokumen Desain Game (GDD)'}}**Tugas: Buat Draf Game Design Document**\nBuat draf GDD yang terstruktur untuk game berjudul **'{{NAMA_GAME}}'**. Elaborasikan setiap bagian berdasarkan detail berikut:\n- **Genre:** {{GENRE_GAME}}\n- **Konsep Inti & USP:** {{KONSEP_UTAMA}}\n- **Mekanik Gameplay:** {{MEKANIK_INTI}}\n- **Narasi & Dunia:** {{NARASI_RINGKAS}}\n- **Gaya Visual & Mood:** {{GAYA_VISUAL}}\nStruktur dokumen harus mencakup: 1. Ringkasan Eksekutif, 2. Konsep Inti, 3. Target Audiens, 4. Mekanik Gameplay (jelaskan mekanik inti), 5. Narasi & Dunia (cerita, karakter), 6. Gaya Visual & Audio.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Analisis Laporan Keuangan'}}**Tugas: Lakukan Analisis Laporan Keuangan**\nLakukan analisis kesehatan keuangan untuk **{{NAMA_PERUSAHAAN}}** periode **{{PERIODE_LAPORAN}}**. Berdasarkan data berikut:\n- **Laba Rugi:** {{DATA_LABA_RUGI}}\n- **Neraca:** {{DATA_NERACA}}\n- **Arus Kas:** {{DATA_ARUS_KAS}}\nFokuskan analisis Anda pada: **{{FOKUS_ANALISIS}}**. Hitung rasio-rasio yang relevan, berikan interpretasi dari setiap angka, dan berikan ringkasan eksekutif mengenai kesehatan keuangan perusahaan secara keseluruhan.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Perencanaan Argumen Debat'}}**Tugas: Siapkan Materi Debat**\nSiapkan materi untuk debat dengan mosi **'{{MOSI_DEBAT}}'**. Anda berada di posisi **{{POSISI_SAYA}}**. Bangun argumen yang kuat berdasarkan poin-poin berikut: {{ARGUMEN_UTAMA_SAYA}}. Untuk setiap poin, berikan elaborasi dan contoh. Jika disediakan, siapkan juga sanggahan (rebuttal) untuk potensi argumen lawan berikut: {{POTENSI_ARGUMEN_LAWAN}}. Susun materi ini menjadi sebuah kerangka pidato yang logis dan persuasif.\n{{/if}}",
-    "FORMAT OUTPUT": "Selalu gunakan format Markdown yang sangat terstruktur dengan heading, sub-heading, dan daftar berpoin untuk memastikan keterbacaan maksimal. Setiap dokumen harus memiliki judul yang jelas sesuai dengan jenisnya."
+    "FORMAT_OUTPUT": "Selalu gunakan format Markdown yang sangat terstruktur dengan heading, sub-heading, dan daftar berpoin untuk memastikan keterbacaan maksimal. Setiap dokumen harus memiliki judul yang jelas sesuai dengan jenisnya."
   },
   "toolType": "planning",
   "konteks_tambahan_instruksi_khusus": "Untuk setiap tugas, berikan output yang mendalam dan profesional. Jika ada informasi yang kurang dari pengguna, buat asumsi yang cerdas dan nyatakan asumsi tersebut di awal laporan Anda. Contoh: 'Dengan asumsi target audiens adalah pemain kasual...'.",

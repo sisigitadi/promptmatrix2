@@ -2,7 +2,10 @@
   "id_kerangka": "BIS-CS-001",
   "nama_kerangka": "Pusat Bantuan Layanan Pelanggan",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Bisnis"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
   "description": "Pusat komando untuk tim layanan pelanggan untuk meningkatkan kualitas, konsistensi, dan efisiensi interaksi.",
   "perspektif_user": "Tim saya butuh bantuan untuk membuat respons standar yang baik, menangani keluhan, dan menganalisis umpan balik pelanggan secara efisien.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Manajer Layanan Pelanggan yang akan meningkatkan kualitas layanan pelanggan.",
@@ -15,7 +18,8 @@
         "Generator Templat Respons",
         "Penyusun Skrip Eskalasi Masalah",
         "Pembuat Konten Halaman FAQ",
-        "Analisis Umpan Balik Pelanggan"
+        "Analisis Umpan Balik Pelanggan",
+        "Lainnya..."
       ],
       "default": "Generator Templat Respons",
       "info": "Pilih tugas yang ingin Anda optimalkan."
@@ -40,7 +44,8 @@
             "options": [
               "Empatik & Profesional",
               "Cepat & Efisien",
-              "Sangat Sopan & Formal"
+              "Sangat Sopan & Formal",
+              "Lainnya..."
             ],
             "default": "Empatik & Profesional",
             "info": "Pilih gaya bahasa untuk respons."
@@ -88,7 +93,7 @@
     "PERAN": "Anda adalah seorang Manajer Layanan Pelanggan yang berpengalaman.",
     "KONTEKS": "Pengguna memerlukan bantuan untuk tugas '{TUGAS_LAYANAN_PELANGGAN}' untuk meningkatkan kualitas layanan mereka.",
     "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Generator Templat Respons'**: Buat draf templat email/chat untuk skenario '{CS_SKENARIO}' dengan nada '{CS_TONE}'. Sertakan placeholder untuk personalisasi.\n- **Jika 'Penyusun Skrip Eskalasi Masalah'**: Buat panduan skrip untuk agen tentang cara mengeskalasi masalah '{CS_MASALAH_ESKALASI}' ke tim senior, termasuk informasi apa yang harus dikumpulkan.\n- **Jika 'Pembuat Konten Halaman FAQ'**: Buat daftar Pertanyaan dan Jawaban yang jelas dan ringkas untuk produk '{CS_PRODUK_FAQ}', berdasarkan '{CS_PERTANYAAN_UMUM}' jika ada.\n- **Jika 'Analisis Umpan Balik Pelanggan'**: Analisis umpan balik di '{CS_UMPAN_BALIK}'. Identifikasi 3 tema positif utama, 3 tema negatif utama, dan berikan saran perbaikan yang dapat ditindaklanjuti.",
-    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan output dalam format yang paling praktis untuk setiap tugas (misalnya, templat, checklist, atau laporan analisis)."
+    "FORMAT_OUTPUT": "Gunakan format Markdown. Sajikan output dalam format yang paling praktis untuk setiap tugas (misalnya, templat, checklist, atau laporan analisis)."
   },
   "toolType": "text",
   "konteks_tambahan_instruksi_khusus": "Prioritaskan kejelasan, empati, dan solusi dalam setiap output. Tujuannya adalah untuk menyelesaikan masalah pelanggan secara efisien sambil menjaga kepuasan mereka.",

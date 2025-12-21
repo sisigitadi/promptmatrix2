@@ -1,0 +1,79 @@
+{
+  "id_kerangka": "KOL-AUTO-004",
+  "nama_kerangka": "Otomasi Support & CRM",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Automation"
+  ],
+  "description": "Otomatisasi layanan pelanggan untuk respon lebih cepat dan kepuasan lebih tinggi.",
+  "perspektif_user": "Saya ingin memberikan layanan 24/7 kepada pelanggan tanpa menambah staf, mengelola tiket secara efisien, dan mengumpulkan feedback otomatis setelah transaksi selesai.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Customer Experience (CX) Architect yang ahli dalam merancang bot support dan alur kerja retensi pelanggan.",
+  "toolType": "planning",
+  "output": "natural_language_prompt",
+  "contoh_kalimat": "Buat alur untuk membalas komentar TikTok secara otomatis berdasarkan keyword.",
+  "konteks_tambahan_instruksi_khusus": "Fokus pada empati dalam bahasa bot. Pastikan ada jalur eskalasi ke manusia (human handoff).",
+  "components": [
+    {
+      "name": "ALUR_SUPPORT",
+      "label": "Pilih Alur Otomasi",
+      "type": "select",
+      "description": "Pilih salah satu template alur kerja otomatisasi layanan pelanggan.",
+      "optional": false,
+      "default": "Support Tiktokan Otomatis",
+      "options": [
+        "Support Tiktokan Otomatis",
+        "Auto-Survey Kepuasan",
+        "Lainnya..."
+      ]
+    },
+    {
+      "name": "TOOLS_OTOMASI",
+      "label": "Alat Otomasi Utama",
+      "type": "select",
+      "description": "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+      "optional": false,
+      "default": "n8n",
+      "options": [
+        "Zapier",
+        "Make.com (Integromat)",
+        "n8n",
+        "Pipedream",
+        "Bardeen",
+        "Custom Script (Python/Node)",
+        "Lainnya..."
+      ]
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "ALUR_SUPPORT",
+      "options": {
+        "Support Tiktokan Otomatis": [
+          {
+            "name": "KEYWORDS",
+            "label": "Kata Kunci Pemicu",
+            "type": "text",
+            "placeholder": "harga, cara beli, ready, lokasi",
+            "description": "Komentar yang berisi kata ini akan dibalas otomatis."
+          }
+        ],
+        "Auto-Survey Kepuasan": [
+          {
+            "name": "SURVEY_DELAY",
+            "label": "Jeda Pengiriman (Jam)",
+            "type": "number",
+            "default": 24,
+            "description": "Kapan survey dikirim setelah barang sampai."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang CX Architect.",
+    "KONTEKS": "Pengguna ingin membangun sebuah **Workflow Automation** untuk meningkatkan layanan pelanggan melalui alur: **{ALUR_SUPPORT}** menggunakan alat **{TOOLS_OTOMASI}**.",
+    "TUGAS": "Rancang sebuah Workflow Automation untuk Customer Experience (CX) pada alur **{ALUR_SUPPORT}** dengan memaksimalkan integrasi dari **{TOOLS_OTOMASI}**. \n\n1. **Event Monitoring**: Jelaskan cara workflow mendeteksi trigger (seperti {KEYWORDS} atau status pesanan) melalui {TOOLS_OTOMASI}.\n2. **Automated Response Logic**: Detailkan logika pengiriman balasan otomatis atau survey kepuasan (setelah {SURVEY_DELAY} jam) yang personal dan empatik.\n3. **Smart Routing**: Tentukan kriteria eskalasi di mana workflow ini akan berhenti dan mengarahkan tugas ke agen manusia.\n4. **CRM Sync**: Pastikan setiap interaksi dicatat kembali ke sistem CRM melalui koneksi otomatis di {TOOLS_OTOMASI}.",
+    "FORMAT_OUTPUT": "Sajikan dalam format User Journey Map di Markdown. Sertakan draf pesan (scripts) untuk berbagai skenario interaksi."
+  }
+}

@@ -26,7 +26,7 @@
     },
     {
       "name": "outputFormat",
-      "label": "Format Output",
+      "label": "FORMAT_OUTPUT",
       "type": "select",
       "options": ["JSON Array", "CSV", "Lainnya..."],
       "info": "Pilih format output yang diinginkan (misalnya, JSON Array, CSV)."

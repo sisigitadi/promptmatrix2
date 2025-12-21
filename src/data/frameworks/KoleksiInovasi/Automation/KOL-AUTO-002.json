@@ -1,0 +1,107 @@
+{
+  "id_kerangka": "KOL-AUTO-002",
+  "nama_kerangka": "Otomasi Konten & Produktivitas",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Automation"
+  ],
+  "description": "Alur kerja untuk meningkatkan produktivitas pembuatan konten dan manajemen tugas menggunakan AI.",
+  "perspektif_user": "Saya ingin menghemat waktu dalam menulis draf, mencatat hasil rapat, dan membuat caption media sosial agar proses kreatif saya lebih cepat dan terstruktur.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang AI Productivity Consultant yang ahli dalam merancang sistem yang memadukan AI (LLM) dengan aplikasi produktivitas (Notion, Slack, Canva).",
+  "toolType": "planning",
+  "output": "natural_language_prompt",
+  "contoh_kalimat": "Buat alur otomatisasi untuk merangkum hasil meeting Zoom ke Notion.",
+  "konteks_tambahan_instruksi_khusus": "Tekankan pada kualitas output AI (prompt chaining). Sarankan integrasi dengan tool transkripsi (Otter/Whisper) dan penyimpanan (Notion/Obsidian).",
+  "components": [
+    {
+      "name": "ALUR_KONTEN",
+      "label": "Pilih Alur Otomasi",
+      "type": "select",
+      "description": "Pilih salah satu template alur kerja otomatisasi konten.",
+      "optional": false,
+      "default": "AI Content Drafting",
+      "options": [
+        "AI Content Drafting",
+        "Automasi Meeting Notes",
+        "AI Instagram Caption Generator",
+        "Lainnya..."
+      ]
+    },
+    {
+      "name": "TOOLS_OTOMASI",
+      "label": "Alat Otomasi Utama",
+      "type": "select",
+      "description": "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+      "optional": false,
+      "default": "n8n",
+      "options": [
+        "Zapier",
+        "Make.com (Integromat)",
+        "n8n",
+        "Pipedream",
+        "Bardeen",
+        "Custom Script (Python/Node)",
+        "Lainnya..."
+      ]
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "ALUR_KONTEN",
+      "options": {
+        "AI Content Drafting": [
+          {
+            "name": "CONTENT_TYPE",
+            "label": "Jenis Konten",
+            "type": "select",
+            "options": [
+              "Blog Post",
+              "LinkedIn Article",
+              "Email Cold Reach",
+              "Script Video",
+              "Lainnya..."
+            ],
+            "description": "Output utama yang ingin dihasilkan."
+          }
+        ],
+        "Automasi Meeting Notes": [
+          {
+            "name": "TRANSCRIPT_SOURCE",
+            "label": "Sumber Transkrip",
+            "type": "select",
+            "options": [
+              "Zoom Recording",
+              "Google Meet (Transcript)",
+              "Uploaded Audio",
+              "Lainnya..."
+            ],
+            "description": "Dari mana asal teks/audio rapat."
+          },
+          {
+            "name": "NOTES_TARGET",
+            "label": "Target Penyimpanan",
+            "type": "text",
+            "placeholder": "Notion, Slack, Google Docs",
+            "description": "Di mana catatan akan disimpan."
+          }
+        ],
+        "AI Instagram Caption Generator": [
+          {
+            "name": "VISUAL_DESC",
+            "label": "Deskripsi Gambar/Video",
+            "type": "textarea",
+            "placeholder": "Foto produk sepatu lari di pegunungan...",
+            "description": "Jelaskan apa yang ada di postingan tersebut."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang AI Productivity Consultant.",
+    "KONTEKS": "Pengguna ingin membangun sebuah **Workflow Automation** untuk alur kerja Konten & Produktivitas: **{ALUR_KONTEN}** menggunakan alat **{TOOLS_OTOMASI}**.",
+    "TUGAS": "Rancang sebuah Workflow Automation yang cerdas untuk alur **{ALUR_KONTEN}** dengan mengintegrasikan AI dan fitur dari **{TOOLS_OTOMASI}**. \n\n1. **Input Stage**: Detailkan cara menangkap data dari {TRANSCRIPT_SOURCE} atau deskripsi visual ({VISUAL_DESC}) menggunakan trigger di {TOOLS_OTOMASI}.\n2. **AI Processing Layer**: Jelaskan bagaimana workflow mengirimkan data ke model AI (LLM) untuk menghasilkan {CONTENT_TYPE} atau ringkasan rapat.\n3. **Output & Storage**: Rincikan langkah pengiriman hasil akhir ke {NOTES_TARGET} secara otomatis.\n4. **Productivity Boost**: Berikan tips konfigurasi di {TOOLS_OTOMASI} agar workflow ini tetap stabil dan mampu menangani volume konten yang besar.",
+    "FORMAT_OUTPUT": "Sajikan dalam format langkah-langkah implementasi (Workflow Design) di Markdown. Sertakan contoh prompt 'Seed' untuk model AI yang digunakan dalam alur ini."
+  }
+}

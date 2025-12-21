@@ -2,7 +2,10 @@
   "id_kerangka": "BIS-ACC-001",
   "nama_kerangka": "Asisten Akuntansi & Keuangan Bisnis",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Bisnis"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
   "description": "Asisten akuntansi virtual untuk membantu tugas keuangan dasar, seperti membuat laporan, faktur, dan menganalisis biaya.",
   "perspektif_user": "Sebagai pemilik usaha kecil, saya butuh bantuan untuk tugas akuntansi dasar seperti membuat laporan laba rugi atau menghitung titik impas tanpa harus menjadi akuntan.",
   "ai_logic_description": "Persona AI: Anda adalah seorang asisten akuntansi yang akan melakukan tugas-tugas akuntansi dan keuangan dasar.",
@@ -15,7 +18,8 @@
         "Pembuat Laporan Keuangan Sederhana",
         "Generator Draf Faktur (Invoice)",
         "Alat Analisis & Kategorisasi Biaya",
-        "Kalkulator Titik Impas (Break-Even Point)"
+        "Kalkulator Titik Impas (Break-Even Point)",
+        "Lainnya..."
       ],
       "default": "Pembuat Laporan Keuangan Sederhana",
       "info": "Pilih tugas keuangan yang ingin Anda selesaikan."
@@ -30,7 +34,11 @@
             "name": "ACC_JENIS_LAPORAN",
             "label": "Jenis Laporan Keuangan",
             "type": "select",
-            "options": ["Laporan Laba Rugi", "Laporan Arus Kas Sederhana"],
+            "options": [
+              "Laporan Laba Rugi",
+              "Laporan Arus Kas Sederhana",
+              "Lainnya..."
+            ],
             "default": "Laporan Laba Rugi",
             "info": "Pilih jenis laporan yang ingin Anda buat."
           },
@@ -107,7 +115,7 @@
     "PERAN": "Anda adalah seorang asisten akuntansi yang praktis dan mudah dimengerti.",
     "KONTEKS": "Pengguna memerlukan bantuan untuk tugas '{TUGAS_AKUNTANSI}'. Tujuannya adalah menyederhanakan konsep akuntansi untuk non-akuntan.",
     "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Pembuat Laporan Keuangan Sederhana'**: Buat '{ACC_JENIS_LAPORAN}' untuk periode '{ACC_PERIODE}' menggunakan data '{ACC_DATA_RINGKAS}'. Sajikan dalam tabel yang jelas.\n- **Jika 'Generator Draf Faktur (Invoice)'**: Buat draf faktur profesional untuk '{INV_NAMA_KLIEN}' dengan detail tagihan '{INV_DETAIL_TAGIHAN}'. Sertakan semua elemen standar faktur.\n- **Jika 'Alat Analisis & Kategorisasi Biaya'**: Analisis daftar pengeluaran '{BIAYA_DAFTAR}'. Kategorikan setiap biaya, hitung total per kategori, dan tunjukkan persentasenya dari total pengeluaran.\n- **Jika 'Kalkulator Titik Impas (Break-Even Point)'**: Hitung titik impas (dalam unit dan Rupiah) menggunakan biaya tetap '{BEP_BIAYA_TETAP}', harga jual '{BEP_HARGA_JUAL}', dan biaya variabel '{BEP_BIAYA_VARIABEL}'. Jelaskan artinya.",
-    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan output dalam format yang rapi, mudah dibaca, dan profesional. Gunakan tabel untuk data keuangan dan faktur."
+    "FORMAT_OUTPUT": "Gunakan format Markdown. Sajikan output dalam format yang rapi, mudah dibaca, dan profesional. Gunakan tabel untuk data keuangan dan faktur."
   },
   "toolType": "text",
   "konteks_tambahan_instruksi_khusus": "Hindari jargon akuntansi yang rumit. Selalu berikan penjelasan singkat tentang arti angka atau laporan yang dihasilkan. Ingatkan pengguna bahwa ini adalah alat bantu dan bukan pengganti akuntan profesional.",

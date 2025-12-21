@@ -1,0 +1,101 @@
+{
+  "id_kerangka": "KOL-AUTO-008",
+  "nama_kerangka": "Hub Otomasi Universal",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Automation"
+  ],
+  "description": "Kerangka kerja umum untuk memecahkan masalah dan menghubungkan sistem apa pun tanpa batasan niche.",
+  "perspektif_user": "Saya punya konsep otomatisasi yang unik atau masalah manual yang ingin saya hilangkan. Saya butuh cara untuk memecah masalah tersebut menjadi langkah-langkah teknis dan menemukan tool yang tepat untuk menghubungkan semuanya.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang Solution Architect & Systems Thinker yang ahli dalam dekonstruksi masalah dan integrasi ekosistem aplikasi.",
+  "toolType": "planning",
+  "output": "natural_language_prompt",
+  "contoh_kalimat": "Bantu saya merancang otomatisasi untuk menghubungkan alat pengukur suhu IoT ke Google Sheets.",
+  "konteks_tambahan_instruksi_khusus": "Gunakan pendekatan First Principles Thinking. Jangan terpaku pada satu merk tool, tawarkan alternatif open-source dan berbayar.",
+  "components": [
+    {
+      "name": "ALUR_UNIVERSAL",
+      "label": "Metode Pemecahan Masalah",
+      "type": "select",
+      "description": "Pilih pendekatan untuk merancang otomatisasi Anda.",
+      "optional": false,
+      "default": "Kanvas Otomasi Universal",
+      "options": [
+        "Kanvas Otomasi Universal",
+        "Pemecah Masalah Manual",
+        "Penghubung Ekosistem Tools",
+        "Lainnya..."
+      ]
+    },
+    {
+      "name": "TOOLS_OTOMASI",
+      "label": "Alat Otomasi Utama",
+      "type": "select",
+      "description": "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+      "optional": false,
+      "default": "n8n",
+      "options": [
+        "Zapier",
+        "Make.com (Integromat)",
+        "n8n",
+        "Pipedream",
+        "Bardeen",
+        "Custom Script (Python/Node)",
+        "Lainnya..."
+      ]
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "ALUR_UNIVERSAL",
+      "options": {
+        "Kanvas Otomasi Universal": [
+          {
+            "name": "USER_IDEA",
+            "label": "Ide/Konsep Otomasi",
+            "type": "textarea",
+            "placeholder": "Saya ingin setiap kali saya posting di YouTube, ringkasannya masuk ke LinkedIn dan Twitter...",
+            "description": "Jelaskan apa yang ingin Anda capai."
+          }
+        ],
+        "Pemecah Masalah Manual": [
+          {
+            "name": "MANUAL_PAIN",
+            "label": "Tugas Manual yang Membosankan",
+            "type": "textarea",
+            "placeholder": "Saya harus mengunduh invoice satu per satu dari email setiap hari Senin...",
+            "description": "Jelaskan tugas yang ingin Anda hilangkan."
+          },
+          {
+            "name": "TECH_SKILL",
+            "label": "Skill Teknikal Anda",
+            "type": "select",
+            "options": [
+              "Pemula (No-Code)",
+              "Menengah (Low-Code)",
+              "Ahli (Pro-Code)",
+              "Lainnya..."
+            ],
+            "description": "Kemampuan Anda untuk mengimplementasikan solusi."
+          }
+        ],
+        "Penghubung Ekosistem Tools": [
+          {
+            "name": "TOOL_LIST",
+            "label": "Daftar Tool yang Ingin Dihubungkan",
+            "type": "text",
+            "placeholder": "Slack, Gmail, Airtable, Notion",
+            "description": "Aplikasi yang saat ini Anda gunakan di kantor/bisnis."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang Solution Architect & Systems Thinker.",
+    "KONTEKS": "Pengguna ingin membangun sebuah **Workflow Automation** universal untuk memecahkan masalah melalui metode: **{ALUR_UNIVERSAL}** dengan alat **{TOOLS_OTOMASI}**.",
+    "TUGAS": "Rancang sebuah solusi Workflow Automation yang fleksibel untuk metode **{ALUR_UNIVERSAL}** dengan memanfaatkan kemampuan dari **{TOOLS_OTOMASI}**. \n\n1. **Conceptual Design**: Dekonstruksi ide {USER_IDEA} atau masalah manual ({MANUAL_PAIN}) menjadi diagram alir yang dapat diimplementasikan di {TOOLS_OTOMASI}.\n2. **Connectivity Strategy**: Detailkan cara menghubungkan berbagai aplikasi dalam {TOOL_LIST} secara mulus melalui workflow di {TOOLS_OTOMASI}.\n3. **Implementation Level**: Sesuaikan desain solusi dengan tingkat {TECH_SKILL} pengguna, mulai dari integrasi no-code hingga script kustom di dalam {TOOLS_OTOMASI}.\n4. **Universal Bridge**: Berikan panduan cara membangun 'jembatan' antar tool yang mungkin belum memiliki integrasi native dengan fitur kustom dari {TOOLS_OTOMASI}.",
+    "FORMAT_OUTPUT": "Sajikan dalam format Panduan Solusi (Solution Guide) di Markdown. Sertakan analogi untuk menjelaskan konsep teknis yang rumit."
+  }
+}

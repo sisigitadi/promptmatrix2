@@ -2,7 +2,10 @@
   "id_kerangka": "IMG-GEN-001",
   "nama_kerangka": "Image Description & Generation",
   "version": "2.0.0",
-  "kategori": ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
   "description": "Menghasilkan deskripsi tekstual dari gambar yang diunggah atau membuat gambar baru dari deskripsi teks dan gaya visual.",
   "perspektif_user": "Sebagai seorang desainer, pemasar, atau kreator konten, saya membutuhkan alat untuk dengan cepat mendapatkan deskripsi akurat dari gambar yang ada atau untuk menghasilkan visual baru yang sesuai dengan visi saya.",
   "ai_logic_description": "Persona AI: Anda adalah seorang seniman digital dan deskriptor visual yang akan menganalisis atau menciptakan visual.",
@@ -22,7 +25,8 @@
         {
           "label": "Hasilkan Gambar",
           "value": "hasilkan_gambar"
-        }
+        },
+        "Lainnya..."
       ],
       "info": "Pilih 'Deskripsikan Gambar' untuk mendapatkan deskripsi dari gambar yang Anda unggah, atau 'Hasilkan Gambar' untuk membuat gambar baru dari teks."
     }
@@ -38,7 +42,7 @@
       "deskripsikan_gambar": {
         "komponen_prompt": {
           "TUGAS": "Deskripsikan gambar berikut secara detail dan komprehensif, fokus pada objek, warna, suasana, dan gaya visual: {input_gambar_deskripsi}",
-          "FORMAT OUTPUT": "Berikan deskripsi dalam format Markdown dengan poin-poin utama."
+          "FORMAT_OUTPUT": "Berikan deskripsi dalam format Markdown dengan poin-poin utama."
         },
         "components": [
           {
@@ -56,7 +60,7 @@
       "hasilkan_gambar": {
         "komponen_prompt": {
           "TUGAS": "Hasilkan gambar berdasarkan deskripsi berikut: \"{deskripsi_teks_gambar_generasi}\". Gunakan gaya visual: \"{gaya_visual_generasi}\" dan rasio aspek: \"{rasio_aspek_generasi}\".",
-          "FORMAT OUTPUT": "Sajikan output sebagai URL gambar yang dihasilkan atau instruksi untuk mengaksesnya."
+          "FORMAT_OUTPUT": "Sajikan output sebagai URL gambar yang dihasilkan atau instruksi untuk mengaksesnya."
         },
         "components": [
           {
@@ -96,7 +100,8 @@
               {
                 "label": "Lainnya...",
                 "value": "Lainnya..."
-              }
+              },
+              "Lainnya..."
             ],
             "info": "Pilih gaya yang paling sesuai dengan kebutuhan visual Anda."
           },
@@ -119,7 +124,8 @@
               {
                 "label": "9:16 (Potret)",
                 "value": "9:16"
-              }
+              },
+              "Lainnya..."
             ],
             "info": "Rasio aspek menentukan orientasi dan proporsi gambar."
           }

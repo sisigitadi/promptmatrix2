@@ -7,7 +7,12 @@
       "name": "assetType",
       "label": "Jenis Aset Branding",
       "type": "select",
-      "options": ["Nama Brand", "Slogan/Tagline", "Konsep Logo"],
+      "options": [
+        "Nama Brand",
+        "Slogan/Tagline",
+        "Konsep Logo",
+        "Lainnya..."
+      ],
       "info": "Pilih aset branding yang Anda butuhkan.",
       "validation": {
         "regex": "^(?!Pilih Jenis Aset Branding...).*$"
@@ -56,7 +61,8 @@
             "Modern & Singkat",
             "Klasik & Elegan",
             "Deskriptif",
-            "Imajinatif & Unik"
+            "Imajinatif & Unik",
+            "Lainnya..."
           ],
           "info": "Pilih gaya nama yang Anda inginkan."
         }
@@ -99,7 +105,8 @@
           "options": [
             "Singkat & Berkesan",
             "Deskriptif & Jelas",
-            "Cerdas & Berima"
+            "Cerdas & Berima",
+            "Lainnya..."
           ],
           "info": "Pilih gaya slogan yang Anda inginkan."
         }
@@ -123,7 +130,8 @@
             "Wordmark (teks saja)",
             "Pictorial Mark (simbol/ikon)",
             "Combination Mark (teks & simbol)",
-            "Emblem"
+            "Emblem",
+            "Lainnya..."
           ],
           "info": "Pilih jenis struktur logo yang Anda inginkan."
         },
@@ -154,7 +162,8 @@
           "options": [
             "Minimalis & Modern",
             "Vintage & Klasik",
-            "Hand-drawn & Organik"
+            "Hand-drawn & Organik",
+            "Lainnya..."
           ],
           "info": "Pilih gaya visual keseluruhan untuk logo."
         }
@@ -162,6 +171,9 @@
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu memberikan beberapa opsi yang bervariasi dalam gaya dan pendekatan. Untuk nama, AI harus menyarankan nama yang terdengar baik saat diucapkan dan mudah dieja. Untuk slogan, prioritaskan keringkasan. Untuk konsep logo, fokus pada deskripsi yang bisa dipahami oleh desainer maupun non-desainer. Penting: Selalu sertakan disclaimer bahwa AI tidak dapat memeriksa ketersediaan merek dagang (trademark) atau domain, dan pengguna harus melakukan verifikasi sendiri.",
-  "kategori": ["Prompt Proyek", "Branding & Identitas"],
+  "kategori": [
+    "Prompt Proyek",
+    "Branding & Identitas"
+  ],
   "nama_kerangka": "Studio Branding & Identitas"
 }

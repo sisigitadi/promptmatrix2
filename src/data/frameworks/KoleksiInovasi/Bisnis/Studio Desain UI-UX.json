@@ -2,7 +2,10 @@
   "id_kerangka": "BIS-UIX-001",
   "nama_kerangka": "Studio Desain UI/UX",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Bisnis"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Bisnis"
+  ],
   "description": "Konsultan desain produk digital untuk merencanakan pengalaman dan antarmuka pengguna yang efektif, dari alur pengguna hingga konsep visual.",
   "perspektif_user": "Saya perlu bantuan untuk merancang aplikasi saya, mulai dari bagaimana pengguna akan memakainya, seperti apa tampilan halamannya, hingga teks yang harus ditulis di tombol.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Konsultan Desain UI/UX yang akan merancang pengalaman dan antarmuka pengguna.",
@@ -15,7 +18,8 @@
         "Perancangan Alur Pengguna (User Flow)",
         "Generator Konsep Tata Letak (Wireframe)",
         "Analisis & Umpan Balik Desain",
-        "Generator Teks Antarmuka (UX Writing)"
+        "Generator Teks Antarmuka (UX Writing)",
+        "Lainnya..."
       ],
       "default": "Perancangan Alur Pengguna (User Flow)",
       "info": "Pilih jenis bantuan desain yang Anda perlukan."
@@ -85,7 +89,13 @@
             "name": "UXWRITING_TONE",
             "label": "Nada Suara (Tone of Voice)",
             "type": "select",
-            "options": ["Formal", "Ramah", "Jenaka", "Profesional"],
+            "options": [
+              "Formal",
+              "Ramah",
+              "Jenaka",
+              "Profesional",
+              "Lainnya..."
+            ],
             "default": "Ramah",
             "info": "Pilih gaya bahasa yang sesuai dengan brand Anda."
           }
@@ -97,7 +107,7 @@
     "PERAN": "Anda adalah seorang Konsultan Desain Produk Digital (UI/UX)",
     "KONTEKS": "Pengguna memerlukan bantuan dengan '{TUGAS_DESAIN_UIUX}' untuk produk digital mereka.",
     "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Perancangan Alur Pengguna (User Flow)'**: Petakan alur langkah-demi-langkah untuk tugas '{FLOW_TUGAS_PENGGUNA}' dari '{FLOW_TITIK_AWAL_AKHIR}'. Identifikasi potensi masalah dan berikan saran penyederhanaan.\n- **Jika 'Generator Konsep Tata Letak (Wireframe)'**: Buat deskripsi tekstual konsep wireframe untuk '{WIREFRAME_JENIS_HALAMAN}' yang mengandung elemen '{WIREFRAME_ELEMEN_KUNCI}'. Jelaskan alasan di balik penempatan elemen.\n- **Jika 'Analisis & Umpan Balik Desain'**: Berikan kritik membangun untuk desain '{ANALISIS_DESKRIPSI_DESAIN}' yang bertujuan untuk '{ANALISIS_TUJUAN_DESAIN}'. Gunakan prinsip usability sebagai dasar analisis.\n- **Jika 'Generator Teks Antarmuka (UX Writing)'**: Buat 3 alternatif teks untuk '{UXWRITING_KONTEKS}' dengan nada '{UXWRITING_TONE}'. Jelaskan kelebihan masing-masing alternatif.",
-    "FORMAT OUTPUT": "Gunakan format Markdown. Sajikan output secara terstruktur, jelas, dan mudah ditindaklanjuti. Gunakan daftar berpoin atau bernomor untuk alur dan analisis."
+    "FORMAT_OUTPUT": "Gunakan format Markdown. Sajikan output secara terstruktur, jelas, dan mudah ditindaklanjuti. Gunakan daftar berpoin atau bernomor untuk alur dan analisis."
   },
   "toolType": "text",
   "konteks_tambahan_instruksi_khusus": "Fokus pada pengguna. Semua saran dan output harus bertujuan untuk membuat pengalaman pengguna lebih mudah, lebih jelas, dan lebih menyenangkan.",

@@ -6,10 +6,18 @@
   "definitions": {
     "FrameworkComponent": {
       "type": "object",
-      "required": ["name", "label", "type"],
+      "required": [
+        "name",
+        "label",
+        "type"
+      ],
       "properties": {
-        "name": { "type": "string" },
-        "label": { "type": "string" },
+        "name": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
         "type": {
           "type": "string",
           "enum": [
@@ -27,39 +35,78 @@
             "file"
           ]
         },
-        "placeholder": { "type": "string" },
+        "placeholder": {
+          "type": "string"
+        },
         "options": {
           "type": "array",
           "items": {
             "oneOf": [
-              { "type": "string" },
+              {
+                "type": "string"
+              },
               {
                 "type": "object",
-                "required": ["label", "value"],
+                "required": [
+                  "label",
+                  "value"
+                ],
                 "properties": {
-                  "label": { "type": "string" },
-                  "value": { "type": "string" }
+                  "label": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             ]
           }
         },
-        "info": { "type": "string" },
-        "min": { "type": "number" },
-        "max": { "type": "number" },
-        "step": { "type": "number" },
-        "optional": { "type": "boolean" },
-        "unit": { "type": "string" },
+        "info": {
+          "type": "string"
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "step": {
+          "type": "number"
+        },
+        "optional": {
+          "type": "boolean"
+        },
+        "unit": {
+          "type": "string"
+        },
         "validation": {
           "type": "object",
           "properties": {
-            "min_length": { "type": "number" },
-            "max_length": { "type": "number" },
-            "regex": { "type": "string" },
-            "min_value": { "type": "number" },
-            "max_value": { "type": "number" },
-            "min_date": { "type": "string", "format": "date-time" },
-            "max_date": { "type": "string", "format": "date-time" }
+            "min_length": {
+              "type": "number"
+            },
+            "max_length": {
+              "type": "number"
+            },
+            "regex": {
+              "type": "string"
+            },
+            "min_value": {
+              "type": "number"
+            },
+            "max_value": {
+              "type": "number"
+            },
+            "min_date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "max_date": {
+              "type": "string",
+              "format": "date-time"
+            }
           },
           "additionalProperties": false
         }
@@ -67,9 +114,14 @@
     },
     "DynamicSubcomponents": {
       "type": "object",
-      "required": ["trigger", "options"],
+      "required": [
+        "trigger",
+        "options"
+      ],
       "properties": {
-        "trigger": { "type": "string" },
+        "trigger": {
+          "type": "string"
+        },
         "options": {
           "type": "object",
           "patternProperties": {
@@ -78,24 +130,41 @@
                 {
                   "description": "Legacy structure: Direct array of components.",
                   "type": "array",
-                  "items": { "$ref": "#/definitions/FrameworkComponent" }
+                  "items": {
+                    "$ref": "#/definitions/FrameworkComponent"
+                  }
                 },
                 {
                   "description": "New Super-Framework structure: Object containing components and optional prompt overrides.",
                   "type": "object",
-                  "required": ["components"],
+                  "required": [
+                    "components"
+                  ],
                   "properties": {
                     "components": {
                       "type": "array",
-                      "items": { "$ref": "#/definitions/FrameworkComponent" }
+                      "items": {
+                        "$ref": "#/definitions/FrameworkComponent"
+                      }
                     },
                     "komponen_prompt": {
                       "type": "object",
                       "properties": {
-                        "PERAN": { "type": "string" },
-                        "KONTEKS": { "type": "string" },
-                        "TUGAS": { "type": "string" },
-                        "FORMAT OUTPUT": { "type": "string" }
+                        "PERAN": {
+                          "type": "string"
+                        },
+                        "KONTEKS": {
+                          "type": "string"
+                        },
+                        "TUGAS": {
+                          "type": "string"
+                        },
+                        "FORMAT_OUTPUT": {
+                          "type": "string"
+                        },
+                        "FORMAT OUTPUT": {
+                          "type": "string"
+                        }
                       },
                       "additionalProperties": true
                     }
@@ -110,7 +179,10 @@
       }
     }
   },
-  "required": ["description", "toolType"],
+  "required": [
+    "description",
+    "toolType"
+  ],
   "properties": {
     "temperature": {
       "type": "number",
@@ -134,7 +206,10 @@
       "description": "Optional: Few-shot examples to guide the AI's behavior.",
       "items": {
         "type": "object",
-        "required": ["input", "output"],
+        "required": [
+          "input",
+          "output"
+        ],
         "properties": {
           "input": {
             "type": "string",
@@ -164,7 +239,9 @@
     },
     "kategori": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "minItems": 2,
       "maxItems": 2,
       "description": "Main category and sub-category."
@@ -179,12 +256,27 @@
     },
     "komponen_prompt": {
       "type": "object",
-      "required": ["PERAN", "KONTEKS", "TUGAS"],
+      "required": [
+        "PERAN",
+        "KONTEKS",
+        "TUGAS"
+      ],
       "properties": {
-        "PERAN": { "type": "string" },
-        "KONTEKS": { "type": "string" },
-        "TUGAS": { "type": "string" },
-        "FORMAT_OUTPUT": { "type": "string" }
+        "PERAN": {
+          "type": "string"
+        },
+        "KONTEKS": {
+          "type": "string"
+        },
+        "TUGAS": {
+          "type": "string"
+        },
+        "FORMAT_OUTPUT": {
+          "type": "string"
+        },
+        "FORMAT OUTPUT": {
+          "type": "string"
+        }
       },
       "additionalProperties": true
     },
@@ -198,7 +290,10 @@
     },
     "output": {
       "type": "string",
-      "enum": ["natural_language_prompt", "json_prompt"],
+      "enum": [
+        "natural_language_prompt",
+        "json_prompt"
+      ],
       "description": "Type of output expected."
     },
     "description": {
@@ -230,10 +325,14 @@
     "dynamicSubcomponents": {
       "description": "Optional: Dynamic subcomponents triggered by other inputs.",
       "oneOf": [
-        { "$ref": "#/definitions/DynamicSubcomponents" },
+        {
+          "$ref": "#/definitions/DynamicSubcomponents"
+        },
         {
           "type": "array",
-          "items": { "$ref": "#/definitions/DynamicSubcomponents" }
+          "items": {
+            "$ref": "#/definitions/DynamicSubcomponents"
+          }
         }
       ]
     }

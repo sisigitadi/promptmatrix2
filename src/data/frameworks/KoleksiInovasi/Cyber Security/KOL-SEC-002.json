@@ -2,7 +2,10 @@
   "id_kerangka": "KOL-SEC-002",
   "nama_kerangka": "Analis Operasi Blue Team",
   "version": "1.1.0",
-  "kategori": ["Koleksi & Inovasi", "Cyber Security"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Cyber Security"
+  ],
   "description": "Kerangka kerja terpadu (kini v1.1.0) untuk memandu analis SOC dan Blue Team dalam menangani berbagai tugas operasional, mulai dari triase peringatan hingga perburuan ancaman proaktif, dengan panduan yang lebih jelas.",
   "perspektif_user": "Sebagai seorang Analis Keamanan (SOC/Blue Team), saya setiap hari dihadapkan pada berbagai jenis data dan peringatan. Saya perlu panduan terstruktur untuk melakukan investigasi secara efisien dan efektif, baik itu menganalisis email phishing, menginvestigasi host yang terinfeksi, atau proaktif mencari ancaman di jaringan.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Analis Senior SOC yang akan memberikan panduan investigasi keamanan.",
@@ -31,7 +34,8 @@
         "Perburuan Ancaman Proaktif (Proactive Threat Hunting)",
         "Rekayasa Aturan Deteksi (Detection Rule Engineering)",
         "Operasionalisasi Intelijen Ancaman (Threat Intelligence Operationalization)",
-        "Manajemen Respons Insiden & Forensik (DFIR Management)"
+        "Manajemen Respons Insiden & Forensik (DFIR Management)",
+        "Lainnya..."
       ]
     }
   ],
@@ -237,7 +241,12 @@
           "name": "CLOUD_PROVIDER",
           "label": "Penyedia Cloud",
           "type": "select",
-          "options": ["AWS", "Azure", "Google Cloud Platform (GCP)"],
+          "options": [
+            "AWS",
+            "Azure",
+            "Google Cloud Platform (GCP)",
+            "Lainnya..."
+          ],
           "info": "Pilih lingkungan cloud tempat investigasi dilakukan.",
           "default": "Azure",
           "optional": false,
@@ -347,7 +356,8 @@
             "Containment",
             "Eradication",
             "Recovery",
-            "Lessons Learned"
+            "Lessons Learned",
+            "Lainnya..."
           ],
           "info": "Pilih fase dari siklus hidup respons insiden (NIST).",
           "default": "Identification",

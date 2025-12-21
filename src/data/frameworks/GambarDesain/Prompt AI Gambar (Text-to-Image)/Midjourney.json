@@ -40,7 +40,14 @@
       "name": "version",
       "label": "Model Version (--v)",
       "type": "select",
-      "options": ["6.0", "5.2", "5.1", "niji 5", "6.1"],
+      "options": [
+        "6.0",
+        "5.2",
+        "5.1",
+        "niji 5",
+        "6.1",
+        "Lainnya..."
+      ],
       "info": "Versi model Midjourney yang akan digunakan."
     },
     {
@@ -186,14 +193,22 @@
       "name": "tile",
       "label": "Tile (--tile)",
       "type": "select",
-      "options": ["No", "Yes"],
+      "options": [
+        "No",
+        "Yes",
+        "Lainnya..."
+      ],
       "info": "Buat gambar yang bisa di-tile secara seamless."
     },
     {
       "name": "styleRaw",
       "label": "Style Raw (--style raw)",
       "type": "select",
-      "options": ["No", "Yes"],
+      "options": [
+        "No",
+        "Yes",
+        "Lainnya..."
+      ],
       "info": "Mengurangi beautifikasi otomatis, membuat gambar lebih akurat terhadap prompt dan umumnya lebih fotorealistik. Dapat juga digunakan dengan kode gaya (misalnya, `--style raw --sref random`) untuk menerapkan estetika tertentu."
     },
     {
@@ -203,6 +218,9 @@
       "info": "Unggah gambar untuk digunakan sebagai referensi visual atau input untuk AI."
     }
   ],
-  "kategori": ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
   "nama_kerangka": "Midjourney"
 }

@@ -231,7 +231,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             name: "duration",
             label: "Durasi (detik)",
             type: "select",
-            options: ["30", "50", "70"],
+            options: ["30", "50", "70", "Lainnya..."],
             info: "Pilih panjang loop musik yang akan dihasilkan.",
           },
           {
@@ -306,14 +306,20 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             name: "model",
             label: "Model",
             type: "select",
-            options: ["v3.5", "v3.5-turbo", "v4-alpha", "chirp-v3"],
+            options: [
+              "v3.5",
+              "v3.5-turbo",
+              "v4-alpha",
+              "chirp-v3",
+              "Lainnya...",
+            ],
             info: "Pilih versi model Suno AI yang akan digunakan.",
           },
           {
             name: "instrumental",
             label: "Instrumental?",
             type: "select",
-            options: ["Tidak", "Ya"],
+            options: ["Tidak", "Ya", "Lainnya..."],
             info: "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal.",
           },
           {
@@ -328,7 +334,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             name: "makeInstrumental",
             label: "Buat Versi Instrumental?",
             type: "select",
-            options: ["Tidak", "Ya"],
+            options: ["Tidak", "Ya", "Lainnya..."],
             info: "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal.",
           },
           {
@@ -369,7 +375,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             name: "instrumental",
             label: "Instrumental?",
             type: "select",
-            options: ["Tidak", "Ya"],
+            options: ["Tidak", "Ya", "Lainnya..."],
             info: "Pilih 'Ya' untuk membuat lagu tanpa vokal.",
           },
           {
@@ -412,6 +418,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Deskripsikan Gambar",
               "Transkripsikan Audio",
               "Analisis Gambar dengan Konteks Teks",
+              "Lainnya...",
             ],
             info: "Pilihan Anda akan menampilkan kolom input yang sesuai untuk tugas tersebut.",
           },
@@ -470,7 +477,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna ingin melakukan tugas analisis media: '{TUGAS_MULTIMODAL}'.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, lakukan analisis berikut:\n\n- **Jika tugasnya 'Deskripsikan Gambar'**: Analisis gambar yang diunggah (`{GAMBAR_INPUT}`). Berikan deskripsi yang sangat detail mencakup: objek utama, latar belakang, komposisi, warna, gaya, dan kemungkinan makna atau konteks dari gambar tersebut.\n\n- **Jika tugasnya 'Transkripsikan Audio'**: Transkripsikan konten audio dari file yang diunggah (`{AUDIO_INPUT}`). Pastikan transkripsi akurat, termasuk identifikasi pembicara jika memungkinkan. Setelah transkripsi, berikan ringkasan 3 poin utama dari isi pembicaraan.\n\n- **Jika tugasnya 'Analisis Gambar dengan Konteks Teks'**: Analisis gambar yang diunggah (`{GAMBAR_INPUT_ANALISIS}`) dalam konteks teks yang diberikan: '{TEKS_KONTEKS}'. Jelaskan bagaimana gambar dan teks saling berhubungan. Apa wawasan gabungan yang bisa didapat dari keduanya?",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Sajikan output dalam format Markdown yang terstruktur. Gunakan heading dan bullet points untuk kejelasan.",
         },
         toolType: "text",
@@ -957,6 +964,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 label: "Hasilkan Gambar",
                 value: "hasilkan_gambar",
               },
+              "Lainnya...",
             ],
             info: "Pilih 'Deskripsikan Gambar' untuk mendapatkan deskripsi dari gambar yang Anda unggah, atau 'Hasilkan Gambar' untuk membuat gambar baru dari teks.",
           },
@@ -973,7 +981,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               komponen_prompt: {
                 TUGAS:
                   "Deskripsikan gambar berikut secara detail dan komprehensif, fokus pada objek, warna, suasana, dan gaya visual: {input_gambar_deskripsi}",
-                "FORMAT OUTPUT":
+                FORMAT_OUTPUT:
                   "Berikan deskripsi dalam format Markdown dengan poin-poin utama.",
               },
               components: [
@@ -993,7 +1001,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               komponen_prompt: {
                 TUGAS:
                   'Hasilkan gambar berdasarkan deskripsi berikut: "{deskripsi_teks_gambar_generasi}". Gunakan gaya visual: "{gaya_visual_generasi}" dan rasio aspek: "{rasio_aspek_generasi}".',
-                "FORMAT OUTPUT":
+                FORMAT_OUTPUT:
                   "Sajikan output sebagai URL gambar yang dihasilkan atau instruksi untuk mengaksesnya.",
               },
               components: [
@@ -1038,6 +1046,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                       label: "Lainnya...",
                       value: "Lainnya...",
                     },
+                    "Lainnya...",
                   ],
                   info: "Pilih gaya yang paling sesuai dengan kebutuhan visual Anda.",
                 },
@@ -1062,6 +1071,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                       label: "9:16 (Potret)",
                       value: "9:16",
                     },
+                    "Lainnya...",
                   ],
                   info: "Rasio aspek menentukan orientasi dan proporsi gambar.",
                 },
@@ -1206,7 +1216,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             name: "version",
             label: "Model Version (--v)",
             type: "select",
-            options: ["6.0", "5.2", "5.1", "niji 5", "6.1"],
+            options: ["6.0", "5.2", "5.1", "niji 5", "6.1", "Lainnya..."],
             info: "Versi model Midjourney yang akan digunakan.",
           },
           {
@@ -1352,14 +1362,14 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             name: "tile",
             label: "Tile (--tile)",
             type: "select",
-            options: ["No", "Yes"],
+            options: ["No", "Yes", "Lainnya..."],
             info: "Buat gambar yang bisa di-tile secara seamless.",
           },
           {
             name: "styleRaw",
             label: "Style Raw (--style raw)",
             type: "select",
-            options: ["No", "Yes"],
+            options: ["No", "Yes", "Lainnya..."],
             info: "Mengurangi beautifikasi otomatis, membuat gambar lebih akurat terhadap prompt dan umumnya lebih fotorealistik. Dapat juga digunakan dengan kode gaya (misalnya, `--style raw --sref random`) untuk menerapkan estetika tertentu.",
           },
           {
@@ -1563,14 +1573,14 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             name: "aspectRatio",
             label: "Aspect Ratio",
             type: "select",
-            options: ["16:9", "9:16", "1:1"],
+            options: ["16:9", "9:16", "1:1", "Lainnya..."],
             info: 'Nilai yang didukung adalah "16:9" (layar lebar, bagus untuk lanskap), "9:16" (potret/vertikal, bagus untuk objek tinggi), dan "1:1" (persegi). Default adalah "16:9".',
           },
           {
             name: "personGeneration",
             label: "Generasi Orang",
             type: "select",
-            options: ["allow", "dont_allow", "allow_adult"],
+            options: ["allow", "dont_allow", "allow_adult", "Lainnya..."],
             info: 'Kontrol penyertaan orang dengan "dont_allow" atau "allow_adult".',
           },
           {
@@ -1588,7 +1598,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             name: "generateAudio",
             label: "Generate Audio",
             type: "select",
-            options: ["true", "false"],
+            options: ["true", "false", "Lainnya..."],
             info: "Kontrol apakah audio dihasilkan untuk video.",
           },
           {
@@ -1730,7 +1740,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             name: "aspectRatio",
             label: "Aspect Ratio",
             type: "select",
-            options: ["9:16 (Portrait)", "16:9 (Landscape)", "1:1 (Square)"],
+            options: [
+              "9:16 (Portrait)",
+              "16:9 (Landscape)",
+              "1:1 (Square)",
+              "Lainnya...",
+            ],
             info: "Pilih orientasi video Anda.",
           },
           {
@@ -2082,7 +2097,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna telah menyediakan potongan kode dalam bahasa {programmingLanguage} dan ingin mendapatkan tinjauan kode multi-agen dengan fokus pada {reviewFocus}. Potongan kode yang akan ditinjau adalah:\n\n```{{programmingLanguage}}\n{{codeSnippet}}\n```\n\nInstruksi tambahan dari pengguna: {{additionalContext || 'Tidak ada instruksi tambahan.'}}",
           TUGAS:
             "Sebagai tim ahli, lakukan tinjauan kode multi-agen. Setiap agen harus memberikan analisis terpisah berdasarkan fokusnya, kemudian ringkas temuan utama dan berikan rekomendasi gabungan.\n\n**1. Insinyur Keamanan:**\n   - Analisis `codeSnippet` untuk potensi kerentanan keamanan (misalnya, injeksi, XSS, otentikasi yang lemah, kesalahan penanganan data sensitif).\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan keamanan.\n\n**2. Insinyur Kinerja:**\n   - Analisis `codeSnippet` untuk potensi masalah kinerja (misalnya, kompleksitas algoritma, penggunaan sumber daya yang tidak efisien, *bottleneck*).\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan kinerja.\n\n**3. Arsitek Perangkat Lunak:**\n   - Analisis `codeSnippet` untuk keterbacaan, pemeliharaan, kepatuhan terhadap praktik terbaik, dan keselarasan dengan pola desain umum.\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan kualitas kode dan arsitektur.\n\n**4. Ringkasan & Rekomendasi Gabungan:**\n   - Setelah setiap agen memberikan analisisnya, berikan ringkasan singkat dari temuan paling kritis dari semua agen.\n   - Sajikan daftar rekomendasi gabungan yang dapat ditindaklanjuti, diprioritaskan berdasarkan dampak dan urgensi.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Sajikan output dalam bagian-bagian yang jelas untuk setiap agen, diikuti dengan ringkasan dan daftar rekomendasi gabungan. Gunakan daftar berpoin untuk temuan dan rekomendasi.",
         },
         toolType: "code",
@@ -2172,7 +2187,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna ingin menghasilkan konten tentang '{TOPIK_UTAMA_KONTEN}'. Anda harus menggunakan sumber informasi eksternal yang disediakan untuk memastikan akurasi dan kedalaman konten. Sumber-sumber yang diberikan adalah: {SUMBER_EKSTERNAL}.",
           TUGAS:
             "Hasilkan konten dalam format '{FORMAT_OUTPUT_KONTEN}' (jika 'FORMAT_OUTPUT_KONTEN' adalah 'Lainnya...' gunakan '{FORMAT_OUTPUT_KONTEN_LAINNYA}') tentang '{TOPIK_UTAMA_KONTEN}'. Pastikan semua informasi yang disajikan didukung oleh 'SUMBER_EKSTERNAL' yang diberikan. Gunakan nada bahasa '{NADA_BAHASA}'. Jika ada informasi yang tidak dapat diverifikasi dari sumber yang diberikan, nyatakan dengan jelas atau hindari.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Sajikan output dalam format Markdown yang terstruktur, dengan kutipan atau referensi yang jelas ke sumber eksternal jika memungkinkan. Untuk 'Artikel Blog', gunakan judul, sub-judul, dan paragraf yang mudah dibaca. Untuk 'Ringkasan Laporan', gunakan poin-poin utama. Untuk 'FAQ', gunakan format tanya-jawab.",
         },
         toolType: "text",
@@ -2182,6 +2197,891 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buatkan saya artikel blog tentang AI generatif menggunakan dokumen PDF ini sebagai referensi.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+      },
+    },
+    Automation: {
+      "Otomasi Bisnis & Pemasaran": {
+        id_kerangka: "KOL-AUTO-001",
+        nama_kerangka: "Otomasi Bisnis & Pemasaran",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation"],
+        description:
+          "Kumpulan alur kerja otomatisasi untuk mempercepat pertumbuhan bisnis dan efisiensi pemasaran.",
+        perspektif_user:
+          "Sebagai pemilik bisnis atau pemasar, saya ingin mengotomatiskan tugas-tugas rutin seperti sinkronisasi lead, pengiriman pesan WhatsApp, dan manajemen newsletter agar saya bisa fokus pada strategi besar.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Spesialis Otomasi Pemasaran (Marketing Automation Specialist) yang ahli dalam menghubungkan berbagai tool (CRM, Sheets, WhatsApp, Email) menjadi alur kerja yang mulus.",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Bantu saya buat alur otomatisasi untuk sinkronisasi lead dari Facebook Ads ke CRM.",
+        konteks_tambahan_instruksi_khusus:
+          "Selalu sertakan detail teknis tentang trigger dan action. Rekomendasikan tool populer seperti Zapier, Make.com, atau n8n jika relevan. Pastikan alur kerja mencakup penanganan error (error handling).",
+        components: [
+          {
+            name: "ALUR_BISNIS",
+            label: "Pilih Alur Otomasi",
+            type: "select",
+            description:
+              "Pilih salah satu template alur kerja otomatisasi bisnis.",
+            optional: false,
+            default: "Lead ke CRM Otomatis",
+            options: [
+              "Lead ke CRM Otomatis",
+              "Lead Gen ke Google Sheets dan WhatsApp",
+              "Auto-Assign Lead",
+              "Email Newsletter Otomatis",
+              "Retargeting OTOMATIS",
+              "Lainnya...",
+            ],
+          },
+          {
+            name: "TOOLS_OTOMASI",
+            label: "Alat Otomasi Utama",
+            type: "select",
+            description:
+              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+            optional: false,
+            default: "n8n",
+            options: [
+              "Zapier",
+              "Make.com (Integromat)",
+              "n8n",
+              "Pipedream",
+              "Bardeen",
+              "Custom Script (Python/Node)",
+              "Lainnya...",
+            ],
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "ALUR_BISNIS",
+            options: {
+              "Lead ke CRM Otomatis": [
+                {
+                  name: "SOURCE_ADS",
+                  label: "Sumber Iklan/Lead",
+                  type: "select",
+                  options: [
+                    "Facebook Ads",
+                    "Google Ads",
+                    "TikTok Ads",
+                    "LinkedIn Ads",
+                    "Lainnya...",
+                  ],
+                  description: "Platform tempat iklan dijalankan.",
+                },
+                {
+                  name: "TARGET_CRM",
+                  label: "CRM Tujuan",
+                  type: "text",
+                  placeholder: "Contoh: HubSpot, Pipedrive, Salesforce, Zoho",
+                  description: "Aplikasi CRM yang Anda gunakan.",
+                },
+              ],
+              "Lead Gen ke Google Sheets dan WhatsApp": [
+                {
+                  name: "WA_TEMPLATE",
+                  label: "Pesan WhatsApp Pertama",
+                  type: "textarea",
+                  placeholder: "Halo {{name}}, terima kasih telah mendaftar...",
+                  description: "Pesan otomatis yang dikirim saat lead masuk.",
+                },
+              ],
+              "Auto-Assign Lead": [
+                {
+                  name: "SALES_TEAM",
+                  label: "Daftar Tim Sales",
+                  type: "textarea",
+                  placeholder: "Admin A, Admin B, Admin C",
+                  description:
+                    "Nama tim yang akan menerima lead secara bergilir (Round Robin).",
+                },
+              ],
+              "Email Newsletter Otomatis": [
+                {
+                  name: "RSS_FEED",
+                  label: "URL RSS Feed / Blog",
+                  type: "text",
+                  placeholder: "https://bloganda.com/feed",
+                  description: "Sumber konten untuk newsletter otomatis.",
+                },
+              ],
+              "Retargeting OTOMATIS": [
+                {
+                  name: "EVENT_TRIGGER",
+                  label: "Picu Retargeting Jika",
+                  type: "select",
+                  options: [
+                    "Cart Abandoned",
+                    "Page View 3x",
+                    "Email Opened No Click",
+                    "Lainnya...",
+                  ],
+                  description: "Aksi pengguna yang memicu retargeting.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang Marketing Automation Specialist.",
+          KONTEKS:
+            "Pengguna ingin membangun sebuah **Workflow Automation** untuk alur kerja Bisnis: **{ALUR_BISNIS}** menggunakan alat **{TOOLS_OTOMASI}**.",
+          TUGAS:
+            "Rancang sebuah Workflow Automation yang komprehensif untuk alur **{ALUR_BISNIS}** dengan memanfaatkan fitur-fitur dari **{TOOLS_OTOMASI}**. \n\n1. **Trigger Phase**: Identifikasi event pemicu dari {SOURCE_ADS} atau sistem terkait yang didukung oleh {TOOLS_OTOMASI}.\n2. **Processing & Logic**: Jelaskan langkah-langkah transformasi data, filter, atau pembagian tugas ({SALES_TEAM}) yang terjadi di dalam workflow.\n3. **Action Phase**: Detailkan aksi sinkronisasi ke {TARGET_CRM} atau pengiriman pesan otomatis ('{WA_TEMPLATE}') melalui integrasi yang tersedia di {TOOLS_OTOMASI}.\n4. **Optimization**: Berikan saran teknis spesifik untuk {TOOLS_OTOMASI} agar alur kerja ini berjalan efisien dan minim error.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format dokumen teknis (SOP) di Markdown. Sertakan diagram alur (Mermaid jika mungkin) dan langkah-langkah konfigurasi langkah-demi-langkah.",
+        },
+      },
+      "Otomasi Konten & Produktivitas": {
+        id_kerangka: "KOL-AUTO-002",
+        nama_kerangka: "Otomasi Konten & Produktivitas",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation"],
+        description:
+          "Alur kerja untuk meningkatkan produktivitas pembuatan konten dan manajemen tugas menggunakan AI.",
+        perspektif_user:
+          "Saya ingin menghemat waktu dalam menulis draf, mencatat hasil rapat, dan membuat caption media sosial agar proses kreatif saya lebih cepat dan terstruktur.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang AI Productivity Consultant yang ahli dalam merancang sistem yang memadukan AI (LLM) dengan aplikasi produktivitas (Notion, Slack, Canva).",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat alur otomatisasi untuk merangkum hasil meeting Zoom ke Notion.",
+        konteks_tambahan_instruksi_khusus:
+          "Tekankan pada kualitas output AI (prompt chaining). Sarankan integrasi dengan tool transkripsi (Otter/Whisper) dan penyimpanan (Notion/Obsidian).",
+        components: [
+          {
+            name: "ALUR_KONTEN",
+            label: "Pilih Alur Otomasi",
+            type: "select",
+            description:
+              "Pilih salah satu template alur kerja otomatisasi konten.",
+            optional: false,
+            default: "AI Content Drafting",
+            options: [
+              "AI Content Drafting",
+              "Automasi Meeting Notes",
+              "AI Instagram Caption Generator",
+              "Lainnya...",
+            ],
+          },
+          {
+            name: "TOOLS_OTOMASI",
+            label: "Alat Otomasi Utama",
+            type: "select",
+            description:
+              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+            optional: false,
+            default: "n8n",
+            options: [
+              "Zapier",
+              "Make.com (Integromat)",
+              "n8n",
+              "Pipedream",
+              "Bardeen",
+              "Custom Script (Python/Node)",
+              "Lainnya...",
+            ],
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "ALUR_KONTEN",
+            options: {
+              "AI Content Drafting": [
+                {
+                  name: "CONTENT_TYPE",
+                  label: "Jenis Konten",
+                  type: "select",
+                  options: [
+                    "Blog Post",
+                    "LinkedIn Article",
+                    "Email Cold Reach",
+                    "Script Video",
+                    "Lainnya...",
+                  ],
+                  description: "Output utama yang ingin dihasilkan.",
+                },
+              ],
+              "Automasi Meeting Notes": [
+                {
+                  name: "TRANSCRIPT_SOURCE",
+                  label: "Sumber Transkrip",
+                  type: "select",
+                  options: [
+                    "Zoom Recording",
+                    "Google Meet (Transcript)",
+                    "Uploaded Audio",
+                    "Lainnya...",
+                  ],
+                  description: "Dari mana asal teks/audio rapat.",
+                },
+                {
+                  name: "NOTES_TARGET",
+                  label: "Target Penyimpanan",
+                  type: "text",
+                  placeholder: "Notion, Slack, Google Docs",
+                  description: "Di mana catatan akan disimpan.",
+                },
+              ],
+              "AI Instagram Caption Generator": [
+                {
+                  name: "VISUAL_DESC",
+                  label: "Deskripsi Gambar/Video",
+                  type: "textarea",
+                  placeholder: "Foto produk sepatu lari di pegunungan...",
+                  description: "Jelaskan apa yang ada di postingan tersebut.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang AI Productivity Consultant.",
+          KONTEKS:
+            "Pengguna ingin membangun sebuah **Workflow Automation** untuk alur kerja Konten & Produktivitas: **{ALUR_KONTEN}** menggunakan alat **{TOOLS_OTOMASI}**.",
+          TUGAS:
+            "Rancang sebuah Workflow Automation yang cerdas untuk alur **{ALUR_KONTEN}** dengan mengintegrasikan AI dan fitur dari **{TOOLS_OTOMASI}**. \n\n1. **Input Stage**: Detailkan cara menangkap data dari {TRANSCRIPT_SOURCE} atau deskripsi visual ({VISUAL_DESC}) menggunakan trigger di {TOOLS_OTOMASI}.\n2. **AI Processing Layer**: Jelaskan bagaimana workflow mengirimkan data ke model AI (LLM) untuk menghasilkan {CONTENT_TYPE} atau ringkasan rapat.\n3. **Output & Storage**: Rincikan langkah pengiriman hasil akhir ke {NOTES_TARGET} secara otomatis.\n4. **Productivity Boost**: Berikan tips konfigurasi di {TOOLS_OTOMASI} agar workflow ini tetap stabil dan mampu menangani volume konten yang besar.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format langkah-langkah implementasi (Workflow Design) di Markdown. Sertakan contoh prompt 'Seed' untuk model AI yang digunakan dalam alur ini.",
+        },
+      },
+      "Otomasi Data & Analisis": {
+        id_kerangka: "KOL-AUTO-003",
+        nama_kerangka: "Otomasi Data & Analisis",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation"],
+        description:
+          "Transformasi data mentah menjadi wawasan bisnis secara otomatis.",
+        perspektif_user:
+          "Saya ingin mengumpulkan data dari berbagai sumber, memantau tren penjualan secara real-time, dan mendapatkan peringatan otomatis jika ada anomali dalam bisnis saya tanpa perlu mengecek dashboard setiap saat.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Business Intelligence (BI) Automator yang ahli dalam mengelola pipa data (data pipelines) dan visualisasi otomatis.",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat alur untuk mengirim ringkasan penjualan harian dari SQL ke Slack.",
+        konteks_tambahan_instruksi_khusus:
+          "Fokus pada akurasi data dan kecepatan update. Sarankan tool seperti Looker Studio, Power BI, atau script Python untuk pengolahan tingkat lanjut.",
+        components: [
+          {
+            name: "ALUR_DATA",
+            label: "Pilih Alur Otomasi",
+            type: "select",
+            description:
+              "Pilih salah satu template alur kerja otomatisasi data.",
+            optional: false,
+            default: "Data Aggregation",
+            options: [
+              "Data Aggregation",
+              "Sales Dashboard Otomatis",
+              "Alert Anomali Penjualan",
+              "Lainnya...",
+            ],
+          },
+          {
+            name: "TOOLS_OTOMASI",
+            label: "Alat Otomasi Utama",
+            type: "select",
+            description:
+              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+            optional: false,
+            default: "n8n",
+            options: [
+              "Zapier",
+              "Make.com (Integromat)",
+              "n8n",
+              "Pipedream",
+              "Bardeen",
+              "Custom Script (Python/Node)",
+              "Lainnya...",
+            ],
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "ALUR_DATA",
+            options: {
+              "Data Aggregation": [
+                {
+                  name: "DATA_SOURCES",
+                  label: "Sumber Data (pisahkan koma)",
+                  type: "text",
+                  placeholder: "Google Ads, FB Ads, Shopify, GA4",
+                  description: "Daftar sumber data yang ingin digabungkan.",
+                },
+              ],
+              "Sales Dashboard Otomatis": [
+                {
+                  name: "DASHBOARD_TOOL",
+                  label: "Alat Dashboard",
+                  type: "select",
+                  options: [
+                    "Google Sheets",
+                    "Looker Studio",
+                    "Excel Online",
+                    "Lainnya...",
+                  ],
+                  description: "Tempat data akan divisualisasikan.",
+                },
+              ],
+              "Alert Anomali Penjualan": [
+                {
+                  name: "ALERT_CHANNEL",
+                  label: "Saluran Notifikasi",
+                  type: "select",
+                  options: [
+                    "Slack",
+                    "WhatsApp",
+                    "Email",
+                    "Telegram",
+                    "Lainnya...",
+                  ],
+                  description: "Di mana Anda ingin menerima peringatan.",
+                },
+                {
+                  name: "THRESHOLD",
+                  label: "Ambang Batas Anomali (%)",
+                  type: "number",
+                  default: 20,
+                  description:
+                    "Persentase penurunan/kenaikan drastis yang dianggap anomali.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang Business Intelligence Automator.",
+          KONTEKS:
+            "Pengguna ingin membangun sebuah **Workflow Automation** untuk alur kerja Data & Analisis: **{ALUR_DATA}** menggunakan alat **{TOOLS_OTOMASI}**.",
+          TUGAS:
+            "Rancang sebuah Workflow Automation berbasis data (Data Pipeline) untuk alur **{ALUR_DATA}** dengan memanfaatkan kapabilitas integrasi dari **{TOOLS_OTOMASI}**. \n\n1. **Extraction Phase**: Jelaskan cara menarik data secara otomatis dari {DATA_SOURCES} menggunakan module/node yang tersedia di {TOOLS_OTOMASI}.\n2. **Transformation Logic**: Rancang logika pemrosesan data (seperti filter, formatting, atau kalkulasi anomali berdasarkan {THRESHOLD}%) di dalam workflow.\n3. **Loading & Alerting**: Detailkan cara mengirim data ke {DASHBOARD_TOOL} atau memicu peringatan ke {ALERT_CHANNEL} secara real-time.\n4. **Data Reliability**: Berikan panduan cara memantau (monitoring) kesehatan workflow ini di dalam {TOOLS_OTOMASI} agar tidak ada data yang terlewat.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format cetak biru (Blueprint) arsitektur data di Markdown. Sertakan daftar API atau Connector yang diperlukan.",
+        },
+      },
+      "Otomasi Support & CRM": {
+        id_kerangka: "KOL-AUTO-004",
+        nama_kerangka: "Otomasi Support & CRM",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation"],
+        description:
+          "Otomatisasi layanan pelanggan untuk respon lebih cepat dan kepuasan lebih tinggi.",
+        perspektif_user:
+          "Saya ingin memberikan layanan 24/7 kepada pelanggan tanpa menambah staf, mengelola tiket secara efisien, dan mengumpulkan feedback otomatis setelah transaksi selesai.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Customer Experience (CX) Architect yang ahli dalam merancang bot support dan alur kerja retensi pelanggan.",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat alur untuk membalas komentar TikTok secara otomatis berdasarkan keyword.",
+        konteks_tambahan_instruksi_khusus:
+          "Fokus pada empati dalam bahasa bot. Pastikan ada jalur eskalasi ke manusia (human handoff).",
+        components: [
+          {
+            name: "ALUR_SUPPORT",
+            label: "Pilih Alur Otomasi",
+            type: "select",
+            description:
+              "Pilih salah satu template alur kerja otomatisasi layanan pelanggan.",
+            optional: false,
+            default: "Support Tiktokan Otomatis",
+            options: [
+              "Support Tiktokan Otomatis",
+              "Auto-Survey Kepuasan",
+              "Lainnya...",
+            ],
+          },
+          {
+            name: "TOOLS_OTOMASI",
+            label: "Alat Otomasi Utama",
+            type: "select",
+            description:
+              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+            optional: false,
+            default: "n8n",
+            options: [
+              "Zapier",
+              "Make.com (Integromat)",
+              "n8n",
+              "Pipedream",
+              "Bardeen",
+              "Custom Script (Python/Node)",
+              "Lainnya...",
+            ],
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "ALUR_SUPPORT",
+            options: {
+              "Support Tiktokan Otomatis": [
+                {
+                  name: "KEYWORDS",
+                  label: "Kata Kunci Pemicu",
+                  type: "text",
+                  placeholder: "harga, cara beli, ready, lokasi",
+                  description:
+                    "Komentar yang berisi kata ini akan dibalas otomatis.",
+                },
+              ],
+              "Auto-Survey Kepuasan": [
+                {
+                  name: "SURVEY_DELAY",
+                  label: "Jeda Pengiriman (Jam)",
+                  type: "number",
+                  default: 24,
+                  description: "Kapan survey dikirim setelah barang sampai.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang CX Architect.",
+          KONTEKS:
+            "Pengguna ingin membangun sebuah **Workflow Automation** untuk meningkatkan layanan pelanggan melalui alur: **{ALUR_SUPPORT}** menggunakan alat **{TOOLS_OTOMASI}**.",
+          TUGAS:
+            "Rancang sebuah Workflow Automation untuk Customer Experience (CX) pada alur **{ALUR_SUPPORT}** dengan memaksimalkan integrasi dari **{TOOLS_OTOMASI}**. \n\n1. **Event Monitoring**: Jelaskan cara workflow mendeteksi trigger (seperti {KEYWORDS} atau status pesanan) melalui {TOOLS_OTOMASI}.\n2. **Automated Response Logic**: Detailkan logika pengiriman balasan otomatis atau survey kepuasan (setelah {SURVEY_DELAY} jam) yang personal dan empatik.\n3. **Smart Routing**: Tentukan kriteria eskalasi di mana workflow ini akan berhenti dan mengarahkan tugas ke agen manusia.\n4. **CRM Sync**: Pastikan setiap interaksi dicatat kembali ke sistem CRM melalui koneksi otomatis di {TOOLS_OTOMASI}.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format User Journey Map di Markdown. Sertakan draf pesan (scripts) untuk berbagai skenario interaksi.",
+        },
+      },
+      "Otomasi E-Commerce & Toko": {
+        id_kerangka: "KOL-AUTO-005",
+        nama_kerangka: "Otomasi E-Commerce & Toko",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation"],
+        description:
+          "Alur kerja untuk menyederhanakan operasional toko online dan meningkatkan retensi pembeli.",
+        perspektif_user:
+          "Saya ingin mengotomatiskan pemrosesan pesanan, mengirim pengingat perpanjangan langganan, dan mendapatkan feedback dari pembeli secara otomatis agar toko saya berjalan lancar tanpa pengawasan manual yang ketat.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang E-commerce Operations Specialist yang ahli dalam menghubungkan platform toko (Shopify, Tokopedia, WooCommerce) dengan tool logistik dan marketing.",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat alur untuk mengirim pengingat otomatis bagi pelanggan yang belum membayar pesanan.",
+        konteks_tambahan_instruksi_khusus:
+          "Fokus pada konversi dan efisiensi logistik. Sarankan penggunaan webhook untuk sinkronisasi data real-time.",
+        components: [
+          {
+            name: "ALUR_ECOMMERCE",
+            label: "Pilih Alur Otomasi",
+            type: "select",
+            description:
+              "Pilih salah satu template alur kerja otomatisasi e-commerce.",
+            optional: false,
+            default: "Order Processing Otomatis",
+            options: [
+              "Order Processing Otomatis",
+              "Subscription Renewal Reminder",
+              "Feedback Loop Otomatis",
+              "Lainnya...",
+            ],
+          },
+          {
+            name: "TOOLS_OTOMASI",
+            label: "Alat Otomasi Utama",
+            type: "select",
+            description:
+              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+            optional: false,
+            default: "n8n",
+            options: [
+              "Zapier",
+              "Make.com (Integromat)",
+              "n8n",
+              "Pipedream",
+              "Bardeen",
+              "Custom Script (Python/Node)",
+              "Lainnya...",
+            ],
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "ALUR_ECOMMERCE",
+            options: {
+              "Order Processing Otomatis": [
+                {
+                  name: "PLATFORM_TOKO",
+                  label: "Platform Toko",
+                  type: "select",
+                  options: [
+                    "Shopify",
+                    "WooCommerce",
+                    "TikTok Shop",
+                    "Shopee/Tokopedia (via API)",
+                    "Lainnya...",
+                  ],
+                  description: "Di mana Anda berjualan.",
+                },
+              ],
+              "Subscription Renewal Reminder": [
+                {
+                  name: "RENEWAL_PERIOD",
+                  label: "Periode Pengingat (Hari sebelum)",
+                  type: "number",
+                  default: 3,
+                  description:
+                    "Berapa hari sebelum masa aktif habis untuk mengirim pesan.",
+                },
+              ],
+              "Feedback Loop Otomatis": [
+                {
+                  name: "RATING_THRESHOLD",
+                  label: "Batas Rating untuk Follow-up",
+                  type: "number",
+                  default: 3,
+                  description:
+                    "Jika rating di bawah angka ini, kirim pesan bantuan ke customer service.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang E-commerce Operations Specialist.",
+          KONTEKS:
+            "Pengguna ingin membangun sebuah **Workflow Automation** untuk operasional E-Commerce pada alur: **{ALUR_ECOMMERCE}** menggunakan alat **{TOOLS_OTOMASI}**.",
+          TUGAS:
+            "Rancang sebuah Workflow Automation operasional untuk alur **{ALUR_ECOMMERCE}** pada platform {PLATFORM_TOKO} dengan bantuan tool **{TOOLS_OTOMASI}**. \n\n1. **Integration Trigger**: Jelaskan cara menghubungkan {PLATFORM_TOKO} ke {TOOLS_OTOMASI} (misal: via Webhook atau Native App).\n2. **Order & Subscription Logic**: Detailkan langkah pengecekan data (stok/status) atau kalkulasi waktu pengingat ({RENEWAL_PERIOD} hari) di dalam workflow.\n3. **Multichannel Action**: Rincikan aksi pengiriman notifikasi, tagihan, atau permintaan feedback (berdasarkan {RATING_THRESHOLD}) melalui channel yang terhubung di {TOOLS_OTOMASI}.\n4. **Operational Stability**: Berikan tips agar workflow ini sinkron dengan sistem eksternal (layanan kurir/pembayaran) tanpa terjadi duplikasi data.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format Alur Kerja Operasional (Ops Workflow) di Markdown. Sertakan daftar 'Pemeriksaan Keamanan' (Security Checks) untuk data transaksi.",
+        },
+      },
+      "Otomasi Agen AI Pintar": {
+        id_kerangka: "KOL-AUTO-006",
+        nama_kerangka: "Otomasi Agen AI Pintar",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation"],
+        description:
+          "Pemanfaatan AI Agent otonom untuk tugas-tugas kompleks yang membutuhkan pengambilan keputusan.",
+        perspektif_user:
+          "Saya ingin memiliki asisten digital yang bisa mengelola konten secara mandiri, mengoptimalkan alur kerja saya secara dinamis, dan memetakan tugas ke sub-tugas secara otomatis tanpa instruksi mendetail setiap saat.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang AI Engineer & Automation Architect yang ahli dalam merancang sistem Multi-Agent dan Autonomous Workflows.",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Buat sistem AI Agent yang bisa riset tren berita dan tulis draf artikel secara otonom.",
+        konteks_tambahan_instruksi_khusus:
+          "Fokus pada otonomi dan kontrol (Human-in-the-loop). Sarankan framework seperti CrewAI, AutoGPT, atau LangChain untuk implementasi.",
+        components: [
+          {
+            name: "ALUR_AGENT",
+            label: "Pilih Alur Otomasi",
+            type: "select",
+            description: "Pilih salah satu template alur kerja agen AI.",
+            optional: false,
+            default: "AI Agent Pengelola Konten",
+            options: [
+              "AI Agent Pengelola Konten",
+              "Smart Workflow Optimize",
+              "Dynamic Task Mapping",
+              "Lainnya...",
+            ],
+          },
+          {
+            name: "TOOLS_OTOMASI",
+            label: "Alat Otomasi Utama",
+            type: "select",
+            description:
+              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+            optional: false,
+            default: "n8n",
+            options: [
+              "Zapier",
+              "Make.com (Integromat)",
+              "n8n",
+              "Pipedream",
+              "Bardeen",
+              "Custom Script (Python/Node)",
+              "Lainnya...",
+            ],
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "ALUR_AGENT",
+            options: {
+              "AI Agent Pengelola Konten": [
+                {
+                  name: "AGENT_TOOLS",
+                  label: "Alat yang Digunakan Agent",
+                  type: "multiselect",
+                  options: [
+                    "Google Search",
+                    "Web Scraper",
+                    "Stable Diffusion",
+                    "OpenAI Vision",
+                    "Lainnya...",
+                  ],
+                  description: "Kemampuan teknis yang diberikan kepada agen.",
+                },
+              ],
+              "Smart Workflow Optimize": [
+                {
+                  name: "GOAL_METRIC",
+                  label: "Metrik Optimasi",
+                  type: "text",
+                  placeholder:
+                    "Biaya terendah, waktu tercepat, kualitas tertinggi",
+                  description:
+                    "Apa yang harus diprioritaskan oleh sistem otomatis.",
+                },
+              ],
+              "Dynamic Task Mapping": [
+                {
+                  name: "COMPLEX_PROJECT",
+                  label: "Proyek Kompleks",
+                  type: "textarea",
+                  placeholder: "Membangun SaaS dalam 30 hari...",
+                  description:
+                    "Proyek besar yang ingin dipecah menjadi tugas-tugas kecil secara otomatis.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang AI Engineer & Automation Architect.",
+          KONTEKS:
+            "Pengguna ingin membangun sebuah **Workflow Automation** tingkat lanjut menggunakan AI Agent untuk alur: **{ALUR_AGENT}** dengan alat **{TOOLS_OTOMASI}**.",
+          TUGAS:
+            "Rancang arsitektur Workflow Automation yang otonom untuk alur **{ALUR_AGENT}** dengan mengintegrasikan AI Agent ke dalam ekosistem **{TOOLS_OTOMASI}**. \n\n1. **Agent Orchestration**: Jelaskan bagaimana {TOOLS_OTOMASI} bertindak sebagai orkestrator bagi agen yang menggunakan {AGENT_TOOLS}.\n2. **Dynamic Decision Flow**: Rancang logika di mana agen membuat keputusan dinamis berdasarkan {GOAL_METRIC} di tengah-tengah jalannya workflow.\n3. **Advanced Tasking**: Detailkan cara workflow ini memecah {COMPLEX_PROJECT} dan mendistribusikannya ke berbagai sub-tugas secara otomatis.\n4. **AI-Human Collaboration**: Tentukan titik-titik kontrol di dalam {TOOLS_OTOMASI} agar pengguna tetap bisa mengawasi performa agen secara efisien.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format Arsitektur Sistem (System Architecture) di Markdown. Sertakan definisi 'System Message' (Base Prompt) untuk agen tersebut.",
+        },
+      },
+      "Otomasi Monetisasi Langsung": {
+        id_kerangka: "KOL-AUTO-007",
+        nama_kerangka: "Otomasi Monetisasi Langsung",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation"],
+        description:
+          "Ubah keahlian otomatisasi Anda menjadi layanan atau produk yang menghasilkan uang.",
+        perspektif_user:
+          "Saya ingin menjual jasa pembuatan otomasi, membangun marketplace prompt, atau menyediakan pembuatan SOP otomatis sebagai layanan (SaaS) agar saya bisa memonetisasi keahlian saya di bidang AI dan otomatisasi.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Digital Business strategist yang ahli dalam Productizing Service dan pembangunan sistem pendapatan pasif (passive income).",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Bantu saya buat rencana bisnis jual jasa otomasi landing page.",
+        konteks_tambahan_instruksi_khusus:
+          "Fokus pada scalability dan value proposition. Sarankan tool untuk billing (Stripe) dan delivery (Loom/Client Portal).",
+        components: [
+          {
+            name: "ALUR_MONETISASI",
+            label: "Pilih Alur Otomasi",
+            type: "select",
+            description: "Pilih salah satu template alur kerja monetisasi.",
+            optional: false,
+            default: "Prompt Marketplace Pack",
+            options: [
+              "Prompt Marketplace Pack",
+              "Custom Workflow as Service",
+              "Automasi Landing & Follow-Up",
+              "AI-Assisted SOP Builder",
+              "Lainnya...",
+            ],
+          },
+          {
+            name: "TOOLS_OTOMASI",
+            label: "Alat Otomasi Utama",
+            type: "select",
+            description:
+              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+            optional: false,
+            default: "n8n",
+            options: [
+              "Zapier",
+              "Make.com (Integromat)",
+              "n8n",
+              "Pipedream",
+              "Bardeen",
+              "Custom Script (Python/Node)",
+              "Lainnya...",
+            ],
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "ALUR_MONETISASI",
+            options: {
+              "Prompt Marketplace Pack": [
+                {
+                  name: "PROMPT_NICHE",
+                  label: "Niche Prompt",
+                  type: "text",
+                  placeholder: "Arsitektur, Hukum, Coding...",
+                  description:
+                    "Topik spesifik dari paket prompt yang akan dijual.",
+                },
+              ],
+              "Custom Workflow as Service": [
+                {
+                  name: "SERVICE_TYPE",
+                  label: "Jenis Layanan",
+                  type: "select",
+                  options: [
+                    "Otomasi CRM",
+                    "LinkedIn Content System",
+                    "Data Scraper for Sales",
+                    "Lainnya...",
+                  ],
+                  description: "Layanan utama yang ditawarkan kepada klien.",
+                },
+              ],
+              "Automasi Landing & Follow-Up": [
+                {
+                  name: "FUNNEL_STEPS",
+                  label: "Tahap Funnel",
+                  type: "textarea",
+                  placeholder: "Landing Page -> Quiz -> Order -> Upsell",
+                  description:
+                    "Langkah-langkah yang ingin diotomatiskan dalam penjualan.",
+                },
+              ],
+              "AI-Assisted SOP Builder": [
+                {
+                  name: "BUSINESS_PROCESS",
+                  label: "Proses Bisnis",
+                  type: "text",
+                  placeholder: "Hiring, Onboarding, Refund...",
+                  description:
+                    "Proses yang ingin dibuatkan SOP-nya secara otomatis.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang Digital Business Strategist.",
+          KONTEKS:
+            "Pengguna ingin membangun model bisnis atau layanan berbasis **Workflow Automation** untuk alur: **{ALUR_MONETISASI}** menggunakan alat **{TOOLS_OTOMASI}**.",
+          TUGAS:
+            "Rancang sebuah Workflow Automation yang bernilai komersial untuk alur **{ALUR_MONETISASI}** dengan memanfaatkan tool **{TOOLS_OTOMASI}**. \n\n1. **Productized Service Logic**: Jelaskan bagaimana {TOOLS_OTOMASI} digunakan untuk membuat paket layanan {PROMPT_NICHE} atau {SERVICE_TYPE} yang dapat diskalakan.\n2. **Delivery Automation**: Rancang sistem pengiriman hasil (delivery) otomatis kepada klien, mulai dari {FUNNEL_STEPS} hingga pembuatan {BUSINESS_PROCESS}.\n3. **Backend Operations**: Detailkan integrasi sistem pembayaran atau manajemen klien yang dapat diotomatiskan langsung melalui {TOOLS_OTOMASI}.\n4. **Monetization Strategy**: Berikan saran cara mengemas alur kerja ini di {TOOLS_OTOMASI} agar memiliki nilai jual tinggi dan biaya operasional rendah.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format Perencanaan Bisnis (Business Model Canvas Light) di Markdown. Sertakan strategi penetapan harga (Pricing Strategy).",
+        },
+      },
+      "Hub Otomasi Universal": {
+        id_kerangka: "KOL-AUTO-008",
+        nama_kerangka: "Hub Otomasi Universal",
+        version: "1.0.0",
+        kategori: ["Koleksi & Inovasi", "Automation"],
+        description:
+          "Kerangka kerja umum untuk memecahkan masalah dan menghubungkan sistem apa pun tanpa batasan niche.",
+        perspektif_user:
+          "Saya punya konsep otomatisasi yang unik atau masalah manual yang ingin saya hilangkan. Saya butuh cara untuk memecah masalah tersebut menjadi langkah-langkah teknis dan menemukan tool yang tepat untuk menghubungkan semuanya.",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Solution Architect & Systems Thinker yang ahli dalam dekonstruksi masalah dan integrasi ekosistem aplikasi.",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Bantu saya merancang otomatisasi untuk menghubungkan alat pengukur suhu IoT ke Google Sheets.",
+        konteks_tambahan_instruksi_khusus:
+          "Gunakan pendekatan First Principles Thinking. Jangan terpaku pada satu merk tool, tawarkan alternatif open-source dan berbayar.",
+        components: [
+          {
+            name: "ALUR_UNIVERSAL",
+            label: "Metode Pemecahan Masalah",
+            type: "select",
+            description: "Pilih pendekatan untuk merancang otomatisasi Anda.",
+            optional: false,
+            default: "Kanvas Otomasi Universal",
+            options: [
+              "Kanvas Otomasi Universal",
+              "Pemecah Masalah Manual",
+              "Penghubung Ekosistem Tools",
+              "Lainnya...",
+            ],
+          },
+          {
+            name: "TOOLS_OTOMASI",
+            label: "Alat Otomasi Utama",
+            type: "select",
+            description:
+              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+            optional: false,
+            default: "n8n",
+            options: [
+              "Zapier",
+              "Make.com (Integromat)",
+              "n8n",
+              "Pipedream",
+              "Bardeen",
+              "Custom Script (Python/Node)",
+              "Lainnya...",
+            ],
+          },
+        ],
+        dynamicSubcomponents: [
+          {
+            trigger: "ALUR_UNIVERSAL",
+            options: {
+              "Kanvas Otomasi Universal": [
+                {
+                  name: "USER_IDEA",
+                  label: "Ide/Konsep Otomasi",
+                  type: "textarea",
+                  placeholder:
+                    "Saya ingin setiap kali saya posting di YouTube, ringkasannya masuk ke LinkedIn dan Twitter...",
+                  description: "Jelaskan apa yang ingin Anda capai.",
+                },
+              ],
+              "Pemecah Masalah Manual": [
+                {
+                  name: "MANUAL_PAIN",
+                  label: "Tugas Manual yang Membosankan",
+                  type: "textarea",
+                  placeholder:
+                    "Saya harus mengunduh invoice satu per satu dari email setiap hari Senin...",
+                  description: "Jelaskan tugas yang ingin Anda hilangkan.",
+                },
+                {
+                  name: "TECH_SKILL",
+                  label: "Skill Teknikal Anda",
+                  type: "select",
+                  options: [
+                    "Pemula (No-Code)",
+                    "Menengah (Low-Code)",
+                    "Ahli (Pro-Code)",
+                    "Lainnya...",
+                  ],
+                  description:
+                    "Kemampuan Anda untuk mengimplementasikan solusi.",
+                },
+              ],
+              "Penghubung Ekosistem Tools": [
+                {
+                  name: "TOOL_LIST",
+                  label: "Daftar Tool yang Ingin Dihubungkan",
+                  type: "text",
+                  placeholder: "Slack, Gmail, Airtable, Notion",
+                  description:
+                    "Aplikasi yang saat ini Anda gunakan di kantor/bisnis.",
+                },
+              ],
+            },
+          },
+        ],
+        komponen_prompt: {
+          PERAN: "Anda adalah seorang Solution Architect & Systems Thinker.",
+          KONTEKS:
+            "Pengguna ingin membangun sebuah **Workflow Automation** universal untuk memecahkan masalah melalui metode: **{ALUR_UNIVERSAL}** dengan alat **{TOOLS_OTOMASI}**.",
+          TUGAS:
+            "Rancang sebuah solusi Workflow Automation yang fleksibel untuk metode **{ALUR_UNIVERSAL}** dengan memanfaatkan kemampuan dari **{TOOLS_OTOMASI}**. \n\n1. **Conceptual Design**: Dekonstruksi ide {USER_IDEA} atau masalah manual ({MANUAL_PAIN}) menjadi diagram alir yang dapat diimplementasikan di {TOOLS_OTOMASI}.\n2. **Connectivity Strategy**: Detailkan cara menghubungkan berbagai aplikasi dalam {TOOL_LIST} secara mulus melalui workflow di {TOOLS_OTOMASI}.\n3. **Implementation Level**: Sesuaikan desain solusi dengan tingkat {TECH_SKILL} pengguna, mulai dari integrasi no-code hingga script kustom di dalam {TOOLS_OTOMASI}.\n4. **Universal Bridge**: Berikan panduan cara membangun 'jembatan' antar tool yang mungkin belum memiliki integrasi native dengan fitur kustom dari {TOOLS_OTOMASI}.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format Panduan Solusi (Solution Guide) di Markdown. Sertakan analogi untuk menjelaskan konsep teknis yang rumit.",
+        },
       },
     },
     Bisnis: {
@@ -2206,6 +3106,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Penyusun Model Bisnis Kanvas",
               "Analisis Persaingan dan Pasar",
               "Pembuat Draf Konten Pitch Deck",
+              "Lainnya...",
             ],
             default: "Generator Ide Bisnis",
             info: "Pilih tugas yang paling relevan dengan tahap Anda saat ini.",
@@ -2293,7 +3194,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna memerlukan bantuan untuk tahap '{TUGAS_PERENCANAAN_STARTUP}' dari perjalanan startup mereka.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Generator Ide Bisnis'**: Berikan 3 ide startup unik di industri '{INDUSTRI_STARTUP}' yang menyelesaikan masalah '{MASALAH_STARTUP}'. Sertakan usulan nama, proposisi nilai, dan langkah validasi awal.\n- **Jika 'Penyusun Model Bisnis Kanvas'**: Buat draf Business Model Canvas berdasarkan proposisi nilai '{BMC_PROPOSISI_NILAI}' dan segmen pelanggan '{BMC_SEGMEN_PELANGGAN}'. Isi blok lainnya dengan asumsi yang cerdas dan berikan saran perbaikan.\n- **Jika 'Analisis Persaingan dan Pasar'**: Lakukan analisis SWOT untuk bisnis '{ANALISIS_DESKRIPSI_BISNIS}' dan analisis singkat kompetitor '{ANALISIS_KOMPETITOR}'.\n- **Jika 'Pembuat Draf Konten Pitch Deck'**: Buat draf konten terstruktur untuk 10 slide pitch deck untuk startup '{PITCH_NAMA_STARTUP}' yang menyelesaikan '{PITCH_MASALAH_SOLUSI}'.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Sajikan dalam bentuk laporan atau dokumen yang terstruktur dengan judul dan sub-judul yang jelas.",
         },
         toolType: "text",
@@ -2325,6 +3226,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Generator Draf Faktur (Invoice)",
               "Alat Analisis & Kategorisasi Biaya",
               "Kalkulator Titik Impas (Break-Even Point)",
+              "Lainnya...",
             ],
             default: "Pembuat Laporan Keuangan Sederhana",
             info: "Pilih tugas keuangan yang ingin Anda selesaikan.",
@@ -2339,7 +3241,11 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   name: "ACC_JENIS_LAPORAN",
                   label: "Jenis Laporan Keuangan",
                   type: "select",
-                  options: ["Laporan Laba Rugi", "Laporan Arus Kas Sederhana"],
+                  options: [
+                    "Laporan Laba Rugi",
+                    "Laporan Arus Kas Sederhana",
+                    "Lainnya...",
+                  ],
                   default: "Laporan Laba Rugi",
                   info: "Pilih jenis laporan yang ingin Anda buat.",
                 },
@@ -2422,7 +3328,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna memerlukan bantuan untuk tugas '{TUGAS_AKUNTANSI}'. Tujuannya adalah menyederhanakan konsep akuntansi untuk non-akuntan.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Pembuat Laporan Keuangan Sederhana'**: Buat '{ACC_JENIS_LAPORAN}' untuk periode '{ACC_PERIODE}' menggunakan data '{ACC_DATA_RINGKAS}'. Sajikan dalam tabel yang jelas.\n- **Jika 'Generator Draf Faktur (Invoice)'**: Buat draf faktur profesional untuk '{INV_NAMA_KLIEN}' dengan detail tagihan '{INV_DETAIL_TAGIHAN}'. Sertakan semua elemen standar faktur.\n- **Jika 'Alat Analisis & Kategorisasi Biaya'**: Analisis daftar pengeluaran '{BIAYA_DAFTAR}'. Kategorikan setiap biaya, hitung total per kategori, dan tunjukkan persentasenya dari total pengeluaran.\n- **Jika 'Kalkulator Titik Impas (Break-Even Point)'**: Hitung titik impas (dalam unit dan Rupiah) menggunakan biaya tetap '{BEP_BIAYA_TETAP}', harga jual '{BEP_HARGA_JUAL}', dan biaya variabel '{BEP_BIAYA_VARIABEL}'. Jelaskan artinya.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Sajikan output dalam format yang rapi, mudah dibaca, dan profesional. Gunakan tabel untuk data keuangan dan faktur.",
         },
         toolType: "text",
@@ -2453,6 +3359,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Generator Pertanyaan Wawancara",
               "Penyusun Rencana Onboarding",
               "Pembuat Draf Email Rekrutmen",
+              "Lainnya...",
             ],
             default: "Pembuat Deskripsi Pekerjaan",
             info: "Pilih tugas SDM yang ingin Anda kerjakan.",
@@ -2522,6 +3429,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                     "Undangan Wawancara",
                     "Surat Penolakan Kandidat",
                     "Surat Penawaran Kerja",
+                    "Lainnya...",
                   ],
                   default: "Undangan Wawancara",
                   info: "Pilih templat email yang Anda butuhkan.",
@@ -2543,7 +3451,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           KONTEKS: "Pengguna memerlukan bantuan untuk tugas '{TUGAS_SDM}'.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Pembuat Deskripsi Pekerjaan'**: Buat draf deskripsi pekerjaan yang lengkap untuk posisi '{HR_POSISI_JABATAN}' dengan tanggung jawab utama '{HR_TANGGUNG_JAWAB}'. Sertakan bagian Kualifikasi dan paragraf 'Tentang Kami' yang menarik.\n- **Jika 'Generator Pertanyaan Wawancara'**: Buat daftar pertanyaan wawancara yang terstruktur untuk posisi '{HR_POSISI_WAWANCARA}' yang menguji soft skill '{HR_SOFT_SKILL}'. Kategorikan pertanyaan menjadi Perilaku, Teknis/Studi Kasus, dan Kecocokan Budaya.\n- **Jika 'Penyusun Rencana Onboarding'**: Buat checklist rencana onboarding 30 hari untuk posisi '{HR_POSISI_ONBOARDING}' dengan tujuan '{HR_TUJUAN_30_HARI}'. Pisahkan rencana per Hari ke-1, Minggu ke-1, dan 30 Hari Pertama.\n- **Jika 'Pembuat Draf Email Rekrutmen'**: Buat draf '{HR_JENIS_EMAIL}' yang ditujukan kepada '{HR_NAMA_KANDIDAT}'. Pastikan email penolakan tetap sopan dan email penawaran jelas serta profesional.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Sajikan output dalam format dokumen yang sesuai (misalnya, deskripsi pekerjaan atau checklist) yang rapi dan mudah digunakan.",
         },
         toolType: "text",
@@ -2575,6 +3483,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Analisis Saham Tunggal",
               "Perbandingan Produk Investasi",
               "Simulasi Proyeksi Dana",
+              "Lainnya...",
             ],
             default: "Perencanaan Strategi Investasi",
             info: "Pilihan Anda akan menampilkan serangkaian input yang dirancang khusus untuk area tersebut.",
@@ -2605,7 +3514,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   name: "TINGKAT_RISIKO",
                   label: "Toleransi Risiko Anda",
                   type: "select",
-                  options: ["Konservatif", "Moderat", "Agresif"],
+                  options: ["Konservatif", "Moderat", "Agresif", "Lainnya..."],
                   default: "Moderat",
                   info: "Ini akan sangat mempengaruhi jenis instrumen investasi yang akan direkomendasikan.",
                 },
@@ -2633,6 +3542,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                     "Analisis Fundamental",
                     "Analisis Teknikal",
                     "Sentimen Berita",
+                    "Lainnya...",
                   ],
                   default: ["Analisis Fundamental"],
                   info: "Pilih aspek yang ingin Anda dalami dari saham tersebut.",
@@ -2662,6 +3572,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                     "Tingkat Risiko (Volatility)",
                     "Biaya Manajemen",
                     "Minimum Investasi",
+                    "Lainnya...",
                   ],
                   default: [
                     "Imbal Hasil (1th, 3th, 5th)",
@@ -2716,7 +3627,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Seorang klien meminta bantuan analisis keuangan. Tugas yang dipilih adalah: '{TUGAS_ANALISIS_KEUANGAN}'.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Perencanaan Strategi Investasi'**: Buat proposal strategi investasi komprehensif berdasarkan tujuan '{TUJUAN_INVESTASI}', modal '{MODAL_AWAL}', risiko '{TINGKAT_RISIKO}', dan horizon '{HORIZON_WAKTU}'. Sertakan alokasi aset, contoh instrumen, dan justifikasi.\n- **Jika 'Analisis Saham Tunggal'**: Lakukan analisis pada saham '{KODE_SAHAM}' dengan fokus pada '{FOKUS_ANALISIS_SAHAM}'. Sajikan laporan yang mencakup valuasi kunci, tren harga, sentimen berita, serta potensi kelebihan dan kekurangan.\n- **Jika 'Perbandingan Produk Investasi'**: Buat tabel perbandingan antara '{PRODUK_A}' dan '{PRODUK_B}' berdasarkan metrik '{METRIK_PERBANDINGAN}'. Berikan ringkasan perbandingan di akhir.\n- **Jika 'Simulasi Proyeksi Dana'**: Hitung proyeksi untuk mencapai target '{TARGET_DANA}' dengan saldo awal '{SALDO_SAAT_INI}', investasi bulanan '{INVESTASI_BULANAN}', dan asumsi return '{ASUMSI_RETURN}%'. Tampilkan perkiraan waktu yang dibutuhkan dan berikan saran jika perlu.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Sajikan dalam bentuk laporan yang terstruktur dengan judul yang jelas untuk setiap bagian. Gunakan daftar berpoin atau tabel untuk mempermudah pembacaan.",
         },
         toolType: "text",
@@ -2747,6 +3658,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Generator Kebijakan Privasi & Syarat Layanan",
               "Penerjemah Istilah Hukum",
               "Checklist Kepatuhan Bisnis",
+              "Lainnya...",
             ],
             default: "Pembuat Draf Perjanjian Dasar",
             info: "Pilih tugas legal yang Anda butuhkan.",
@@ -2765,6 +3677,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                     "Perjanjian Kerja (PKWT)",
                     "Perjanjian Kerahasiaan (NDA)",
                     "Surat Perjanjian Kerja Sama (MoU)",
+                    "Lainnya...",
                   ],
                   default: "Perjanjian Kerja (PKWT)",
                   info: "Pilih jenis dokumen yang ingin Anda buat drafnya.",
@@ -2816,7 +3729,13 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   name: "BENTUK_BADAN_USAHA",
                   label: "Bentuk Badan Usaha",
                   type: "select",
-                  options: ["PT Perorangan", "CV", "Firma", "UMKM Perorangan"],
+                  options: [
+                    "PT Perorangan",
+                    "CV",
+                    "Firma",
+                    "UMKM Perorangan",
+                    "Lainnya...",
+                  ],
                   default: "UMKM Perorangan",
                   info: "Pilih bentuk badan usaha Anda.",
                 },
@@ -2838,7 +3757,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna memerlukan bantuan untuk tugas '{TUGAS_BANTUAN_HUKUM}'. Penting untuk diingat bahwa output yang Anda berikan adalah draf awal dan bukan nasihat hukum formal.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Pembuat Draf Perjanjian Dasar'**: Buat draf '{JENIS_PERJANJIAN}' antara '{PIHAK_PERTAMA}' dan '{PIHAK_KEDUA}'. Gunakan klausul-klausul standar yang umum dan sertakan placeholder untuk detail spesifik.\n- **Jika 'Generator Kebijakan Privasi & Syarat Layanan'**: Buat draf Kebijakan Privasi dan Syarat & Ketentuan untuk '{NAMA_WEBSITE_APP}' yang mengumpulkan data seperti '{JENIS_DATA_PENGGUNA}'.\n- **Jika 'Penerjemah Istilah Hukum'**: Jelaskan istilah atau klausul '{ISTILAH_HUKUM}' dalam bahasa bisnis yang sederhana dan berikan contoh implikasi praktisnya.\n- **Jika 'Checklist Kepatuhan Bisnis'**: Buat checklist umum mengenai izin dan pendaftaran yang mungkin diperlukan untuk '{BENTUK_BADAN_USAHA}' di bidang '{BIDANG_USAHA}' di Indonesia.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Untuk draf dokumen, gunakan struktur yang jelas dengan judul, pasal, dan ayat. Selalu awali output dengan disclaimer bahwa ini adalah draf dan perlu ditinjau oleh ahli hukum.",
         },
         toolType: "text",
@@ -2869,6 +3788,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Generator Peta Jalan Produk (Roadmap)",
               "Asisten Prioritas Fitur",
               "Penulis Cerita Pengguna (User Story)",
+              "Lainnya...",
             ],
             default: "Penulis Dokumen Persyaratan Produk (PRD)",
             info: "Pilih tugas manajemen produk yang ingin Anda selesaikan.",
@@ -2928,6 +3848,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   options: [
                     "RICE (Reach, Impact, Confidence, Effort)",
                     "MoSCoW (Must, Should, Could, Won't)",
+                    "Lainnya...",
                   ],
                   default: "RICE (Reach, Impact, Confidence, Effort)",
                   info: "Pilih metode untuk membantu prioritas.",
@@ -2953,7 +3874,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna memerlukan bantuan dengan tugas '{TUGAS_MANAJEMEN_PRODUK}'.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Penulis Dokumen Persyaratan Produk (PRD)'**: Buat draf PRD untuk fitur '{PRD_NAMA_FITUR}' yang menyelesaikan masalah '{PRD_MASALAH_PENGGUNA}'. Sertakan bagian Latar Belakang, Tujuan, Target Pengguna, dan Persyaratan Fungsional.\n- **Jika 'Generator Peta Jalan Produk (Roadmap)'**: Buat draf roadmap berbasis teks per kuartal berdasarkan visi '{ROADMAP_VISI_PRODUK}' dan tujuan '{ROADMAP_TUJUAN_BISNIS}'.\n- **Jika 'Asisten Prioritas Fitur'**: Prioritaskan daftar fitur '{PRIORITAS_DAFTAR_FITUR}' menggunakan kerangka '{PRIORITAS_KERANGKA}' dan sajikan dalam bentuk tabel dengan justifikasi.\n- **Jika 'Penulis Cerita Pengguna (User Story)'**: Ubah deskripsi '{USERSTORY_DESKRIPSI_FITUR}' menjadi format User Story yang benar ('Sebagai seorang..., saya ingin..., agar...') lengkap dengan beberapa contoh Kriteria Penerimaan (Acceptance Criteria).",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Sajikan output dalam format dokumen yang terstruktur, profesional, dan mudah ditindaklanjuti.",
         },
         toolType: "text",
@@ -2984,6 +3905,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Analisis Statistik Deskriptif",
               "Identifikasi Tren dan Pola",
               "Rekomendasi Visualisasi Data",
+              "Lainnya...",
             ],
             default: "Identifikasi Tren dan Pola",
             info: "Pilih jenis analisis yang ingin Anda lakukan.",
@@ -3065,7 +3987,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna ingin menganalisis data mereka dan telah memilih tugas: '{TUGAS_ANALISIS_DATA}'.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Eksplorasi & Pembersihan Data'**: Analisis sampel data '{DATA_SAMPEL_EKSPLORASI}'. Berikan ringkasan profil data, identifikasi masalah (data hilang, duplikat), dan sarankan langkah pembersihan.\n- **Jika 'Analisis Statistik Deskriptif'**: Hitung statistik dasar (rata-rata, median, min, max) dari kolom '{KOLOM_STATISTIK}' pada data '{DATA_SAMPEL_STATISTIK}' dan berikan interpretasi bisnisnya.\n- **Jika 'Identifikasi Tren dan Pola'**: Jawab pertanyaan bisnis '{PERTANYAAN_BISNIS_TREN}' dengan menganalisis data '{DATA_SAMPEL_TREN}'. Soroti tren, pola, atau korelasi yang signifikan.\n- **Jika 'Rekomendasi Visualisasi Data'**: Berdasarkan deskripsi data '{DATA_VISUALISASI}' dan pesan '{PESAN_VISUALISASI}', rekomendasikan 2-3 jenis grafik yang paling efektif dan jelaskan alasannya.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Sajikan analisis dalam format laporan yang jelas dengan poin-poin dan penjelasan yang mudah dimengerti.",
         },
         toolType: "text",
@@ -3097,6 +4019,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Penyusun Skrip Eskalasi Masalah",
               "Pembuat Konten Halaman FAQ",
               "Analisis Umpan Balik Pelanggan",
+              "Lainnya...",
             ],
             default: "Generator Templat Respons",
             info: "Pilih tugas yang ingin Anda optimalkan.",
@@ -3123,6 +4046,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                     "Empatik & Profesional",
                     "Cepat & Efisien",
                     "Sangat Sopan & Formal",
+                    "Lainnya...",
                   ],
                   default: "Empatik & Profesional",
                   info: "Pilih gaya bahasa untuk respons.",
@@ -3176,7 +4100,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna memerlukan bantuan untuk tugas '{TUGAS_LAYANAN_PELANGGAN}' untuk meningkatkan kualitas layanan mereka.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Generator Templat Respons'**: Buat draf templat email/chat untuk skenario '{CS_SKENARIO}' dengan nada '{CS_TONE}'. Sertakan placeholder untuk personalisasi.\n- **Jika 'Penyusun Skrip Eskalasi Masalah'**: Buat panduan skrip untuk agen tentang cara mengeskalasi masalah '{CS_MASALAH_ESKALASI}' ke tim senior, termasuk informasi apa yang harus dikumpulkan.\n- **Jika 'Pembuat Konten Halaman FAQ'**: Buat daftar Pertanyaan dan Jawaban yang jelas dan ringkas untuk produk '{CS_PRODUK_FAQ}', berdasarkan '{CS_PERTANYAAN_UMUM}' jika ada.\n- **Jika 'Analisis Umpan Balik Pelanggan'**: Analisis umpan balik di '{CS_UMPAN_BALIK}'. Identifikasi 3 tema positif utama, 3 tema negatif utama, dan berikan saran perbaikan yang dapat ditindaklanjuti.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Sajikan output dalam format yang paling praktis untuk setiap tugas (misalnya, templat, checklist, atau laporan analisis).",
         },
         toolType: "text",
@@ -3208,6 +4132,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Generator Konsep Tata Letak (Wireframe)",
               "Analisis & Umpan Balik Desain",
               "Generator Teks Antarmuka (UX Writing)",
+              "Lainnya...",
             ],
             default: "Perancangan Alur Pengguna (User Flow)",
             info: "Pilih jenis bantuan desain yang Anda perlukan.",
@@ -3282,7 +4207,13 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   name: "UXWRITING_TONE",
                   label: "Nada Suara (Tone of Voice)",
                   type: "select",
-                  options: ["Formal", "Ramah", "Jenaka", "Profesional"],
+                  options: [
+                    "Formal",
+                    "Ramah",
+                    "Jenaka",
+                    "Profesional",
+                    "Lainnya...",
+                  ],
                   default: "Ramah",
                   info: "Pilih gaya bahasa yang sesuai dengan brand Anda.",
                 },
@@ -3296,7 +4227,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna memerlukan bantuan dengan '{TUGAS_DESAIN_UIUX}' untuk produk digital mereka.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Perancangan Alur Pengguna (User Flow)'**: Petakan alur langkah-demi-langkah untuk tugas '{FLOW_TUGAS_PENGGUNA}' dari '{FLOW_TITIK_AWAL_AKHIR}'. Identifikasi potensi masalah dan berikan saran penyederhanaan.\n- **Jika 'Generator Konsep Tata Letak (Wireframe)'**: Buat deskripsi tekstual konsep wireframe untuk '{WIREFRAME_JENIS_HALAMAN}' yang mengandung elemen '{WIREFRAME_ELEMEN_KUNCI}'. Jelaskan alasan di balik penempatan elemen.\n- **Jika 'Analisis & Umpan Balik Desain'**: Berikan kritik membangun untuk desain '{ANALISIS_DESKRIPSI_DESAIN}' yang bertujuan untuk '{ANALISIS_TUJUAN_DESAIN}'. Gunakan prinsip usability sebagai dasar analisis.\n- **Jika 'Generator Teks Antarmuka (UX Writing)'**: Buat 3 alternatif teks untuk '{UXWRITING_KONTEKS}' dengan nada '{UXWRITING_TONE}'. Jelaskan kelebihan masing-masing alternatif.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Sajikan output secara terstruktur, jelas, dan mudah ditindaklanjuti. Gunakan daftar berpoin atau bernomor untuk alur dan analisis.",
         },
         toolType: "text",
@@ -3349,6 +4280,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Pengumpulan Data (Collection)",
               "Desain Infrastruktur C2 (C2 Infrastructure Design)",
               "Perencanaan Kampanye Red Team (Red Team Campaign Plan)",
+              "Lainnya...",
             ],
           },
         ],
@@ -3549,7 +4481,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   name: "PERSIST_TARGET_OS",
                   label: "Sistem Operasi Target",
                   type: "select",
-                  options: ["Windows", "Linux", "macOS"],
+                  options: ["Windows", "Linux", "macOS", "Lainnya..."],
                   info: "Pilih OS target karena teknik persistensi seringkali spesifik untuk OS tertentu.",
                   default: "Windows",
                   optional: false,
@@ -3836,6 +4768,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Rekayasa Aturan Deteksi (Detection Rule Engineering)",
               "Operasionalisasi Intelijen Ancaman (Threat Intelligence Operationalization)",
               "Manajemen Respons Insiden & Forensik (DFIR Management)",
+              "Lainnya...",
             ],
           },
         ],
@@ -4057,7 +4990,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "CLOUD_PROVIDER",
                 label: "Penyedia Cloud",
                 type: "select",
-                options: ["AWS", "Azure", "Google Cloud Platform (GCP)"],
+                options: [
+                  "AWS",
+                  "Azure",
+                  "Google Cloud Platform (GCP)",
+                  "Lainnya...",
+                ],
                 info: "Pilih lingkungan cloud tempat investigasi dilakukan.",
                 default: "Azure",
                 optional: false,
@@ -4176,6 +5114,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Eradication",
                   "Recovery",
                   "Lessons Learned",
+                  "Lainnya...",
                 ],
                 info: "Pilih fase dari siklus hidup respons insiden (NIST).",
                 default: "Identification",
@@ -4236,6 +5175,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Post-Mortem Insiden Kolaboratif (Collaborative Incident Post-Mortem)",
               "Debriefing & Laporan Latihan Gabungan (Joint Exercise Debrief & Reporting)",
               "Pengukuran & Pelaporan Program Keamanan (Security Program Metrics & Reporting)",
+              "Lainnya...",
             ],
           },
         ],
@@ -4692,6 +5632,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Dokumen Desain Game (GDD)",
               "Analisis Laporan Keuangan",
               "Perencanaan Argumen Debat",
+              "Lainnya...",
             ],
             default: "Dokumen Desain Game (GDD)",
             info: "Pilih jenis dokumen terstruktur yang ingin Anda hasilkan. Pilihan Anda akan menampilkan kolom input yang sesuai.",
@@ -4797,6 +5738,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Analisis Rasio Likuiditas",
                   "Analisis Rasio Solvabilitas",
                   "Identifikasi Red Flags",
+                  "Lainnya...",
                 ],
                 default: [
                   "Analisis Rasio Profitabilitas",
@@ -4818,7 +5760,11 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "POSISI_SAYA",
                 label: "Posisi Anda",
                 type: "select",
-                options: ["Pro (Setuju)", "Kontra (Tidak Setuju)"],
+                options: [
+                  "Pro (Setuju)",
+                  "Kontra (Tidak Setuju)",
+                  "Lainnya...",
+                ],
                 default: "Pro (Setuju)",
                 info: "Pilih sisi argumen yang akan Anda bela.",
               },
@@ -4849,7 +5795,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna ingin membuat sebuah dokumen terstruktur dengan jenis: '{{JENIS_DOKUMEN}}'. Anda harus memproses input yang diberikan untuk menghasilkan output yang komprehensif dan profesional sesuai dengan peran yang relevan.",
           TUGAS:
             "Berdasarkan jenis dokumen yang dipilih, lakukan tugas berikut:\n\n{{#if JENIS_DOKUMEN === 'Dokumen Desain Game (GDD)'}}**Tugas: Buat Draf Game Design Document**\nBuat draf GDD yang terstruktur untuk game berjudul **'{{NAMA_GAME}}'**. Elaborasikan setiap bagian berdasarkan detail berikut:\n- **Genre:** {{GENRE_GAME}}\n- **Konsep Inti & USP:** {{KONSEP_UTAMA}}\n- **Mekanik Gameplay:** {{MEKANIK_INTI}}\n- **Narasi & Dunia:** {{NARASI_RINGKAS}}\n- **Gaya Visual & Mood:** {{GAYA_VISUAL}}\nStruktur dokumen harus mencakup: 1. Ringkasan Eksekutif, 2. Konsep Inti, 3. Target Audiens, 4. Mekanik Gameplay (jelaskan mekanik inti), 5. Narasi & Dunia (cerita, karakter), 6. Gaya Visual & Audio.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Analisis Laporan Keuangan'}}**Tugas: Lakukan Analisis Laporan Keuangan**\nLakukan analisis kesehatan keuangan untuk **{{NAMA_PERUSAHAAN}}** periode **{{PERIODE_LAPORAN}}**. Berdasarkan data berikut:\n- **Laba Rugi:** {{DATA_LABA_RUGI}}\n- **Neraca:** {{DATA_NERACA}}\n- **Arus Kas:** {{DATA_ARUS_KAS}}\nFokuskan analisis Anda pada: **{{FOKUS_ANALISIS}}**. Hitung rasio-rasio yang relevan, berikan interpretasi dari setiap angka, dan berikan ringkasan eksekutif mengenai kesehatan keuangan perusahaan secara keseluruhan.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Perencanaan Argumen Debat'}}**Tugas: Siapkan Materi Debat**\nSiapkan materi untuk debat dengan mosi **'{{MOSI_DEBAT}}'**. Anda berada di posisi **{{POSISI_SAYA}}**. Bangun argumen yang kuat berdasarkan poin-poin berikut: {{ARGUMEN_UTAMA_SAYA}}. Untuk setiap poin, berikan elaborasi dan contoh. Jika disediakan, siapkan juga sanggahan (rebuttal) untuk potensi argumen lawan berikut: {{POTENSI_ARGUMEN_LAWAN}}. Susun materi ini menjadi sebuah kerangka pidato yang logis dan persuasif.\n{{/if}}",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Selalu gunakan format Markdown yang sangat terstruktur dengan heading, sub-heading, dan daftar berpoin untuk memastikan keterbacaan maksimal. Setiap dokumen harus memiliki judul yang jelas sesuai dengan jenisnya.",
         },
         toolType: "planning",
@@ -4886,6 +5832,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Riset Pasar & Analisis Kompetitor",
               "Branding & Hubungan Masyarakat (PR)",
               "Optimasi Penjualan & Konversi",
+              "Lainnya...",
             ],
             default: "Strategi SEO & SEM",
             info: "Pilihan Anda akan menampilkan serangkaian input yang dirancang khusus untuk area tersebut.",
@@ -4919,6 +5866,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Analisis SERP",
                   "Outline Konten SEO",
                   "Ide Iklan SEM",
+                  "Lainnya...",
                 ],
                 default: ["Riset Kata Kunci", "Outline Konten SEO"],
                 info: "Pilih aspek yang ingin Anda dalami.",
@@ -4929,7 +5877,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "JENIS_KONTEN",
                 label: "Jenis Konten yang Diinginkan",
                 type: "select",
-                options: ["Artikel Blog", "Naskah Video", "Utas Media Sosial"],
+                options: [
+                  "Artikel Blog",
+                  "Naskah Video",
+                  "Utas Media Sosial",
+                  "Lainnya...",
+                ],
                 default: "Artikel Blog",
                 info: "Pilih format konten yang ingin dibuat.",
               },
@@ -4957,6 +5910,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Santai & Ramah",
                   "Edukasi & Informatif",
                   "Menghibur",
+                  "Lainnya...",
                 ],
                 default: "Profesional",
                 info: "Pilih tone yang sesuai dengan brand Anda.",
@@ -4973,6 +5927,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "LinkedIn",
                   "X/Twitter",
                   "Facebook",
+                  "Lainnya...",
                 ],
                 default: ["Instagram", "LinkedIn"],
                 info: "Pilih platform di mana Anda ingin aktif.",
@@ -4985,6 +5940,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Meningkatkan Awareness",
                   "Mendorong Engagement",
                   "Memicu Konversi",
+                  "Lainnya...",
                 ],
                 default: "Meningkatkan Awareness",
                 info: "Apa gol dari aktivitas media sosial Anda?",
@@ -5008,6 +5964,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Newsletter Bulanan",
                   "Email Promosi",
                   "Email Re-engagement",
+                  "Lainnya...",
                 ],
                 default: "Welcome Email Series",
                 info: "Pilih jenis kampanye email yang ingin Anda buat.",
@@ -5053,6 +6010,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Email Pengumuman",
                   "Paket Konten Media Sosial",
                   "Draf Iklan Digital",
+                  "Lainnya...",
                 ],
                 default: ["Email Pengumuman", "Paket Konten Media Sosial"],
                 info: "Pilih materi komunikasi yang ingin Anda hasilkan.",
@@ -5090,6 +6048,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Analisis SWOT",
                   "Analisis Kompetitor",
                   "Pembuatan Buyer Persona",
+                  "Lainnya...",
                 ],
                 default: ["Analisis SWOT", "Analisis Kompetitor"],
                 info: "Pilih jenis analisis yang Anda butuhkan.",
@@ -5118,6 +6077,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Platform Identitas Merek",
                   "Draf Siaran Pers",
                   "Rencana Komunikasi Krisis",
+                  "Lainnya...",
                 ],
                 default: "Platform Identitas Merek",
                 info: "Pilih output yang Anda butuhkan.",
@@ -5147,6 +6107,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Naskah Penjualan (Sales Script)",
                   "Copy Halaman Arahan (Landing Page)",
                   "Ide Lead Magnet",
+                  "Lainnya...",
                 ],
                 default: "Copy Halaman Arahan (Landing Page)",
                 info: "Pilih aset penjualan yang ingin Anda buat.",
@@ -5161,7 +6122,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna memerlukan bantuan untuk tugas pemasaran: '{TUGAS_PEMASARAN_UTAMA}'. Anda harus memandu mereka untuk memberikan input yang relevan dan menghasilkan output yang dapat ditindaklanjuti.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, gunakan input yang diberikan untuk menghasilkan output yang komprehensif dan profesional. Sesuaikan respons Anda dengan setiap sub-tugas yang dipilih pengguna.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, laporan, draf konten, rencana, atau tabel). Pastikan output jelas, terstruktur, dan mudah dipahami.",
         },
         toolType: "planning",
@@ -5546,7 +6507,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna telah memilih tugas: '{TUGAS_PENGEMBANGAN}'. Berdasarkan pilihan ini, Anda akan bertindak sebagai spesialis yang relevan (misalnya, Insinyur Kode, Auditor Kode, Penulis Teknis).",
           TUGAS:
             "Berdasarkan tugas '{TUGAS_PENGEMBANGAN}', lakukan hal berikut:\n\n*   **Jika 'Buat Kode Baru'**: Hasilkan kode fungsional berdasarkan deskripsi: '{functionalityDescription}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Gunakan gaya '{codeStyle}'. {additionalInstructions}\n*   **Jika 'Tinjau & Perbaiki Kode'**: Analisis kode '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Fokus pada: {reviewFocus}. Jika fokus adalah 'Lainnya...', gunakan '{customReviewFocus}'. Berikan saran perbaikan yang sesuai untuk tingkat keahlian '{userLevel}'. Jika tingkat keahlian adalah 'Lainnya...', gunakan '{customUserLevel}'. {additionalInstructions}\n*   **Jika 'Jelaskan Kode'**: Terjemahkan kode '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Jadikan penjelasan mudah dipahami untuk audiens '{targetAudience}'. Jika audiens adalah 'Lainnya...', gunakan '{customTargetAudience}', dengan tingkat detail '{explanationDetailLevel}'. Jika tingkat detail adalah 'Lainnya...', gunakan '{customExplanationDetailLevel}'. {additionalInstructions}\n*   **Jika 'Buat Pengujian Otomatis'**: Buat '{testType}'. Jika jenis tes adalah 'Lainnya...', gunakan '{customTestType}'. Buat tes untuk kode/fungsionalitas '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}', menggunakan framework '{testFramework}'. {additionalInstructions}\n*   **Jika 'Buat Dokumentasi Teknis'**: Buat '{documentType}'. Jika jenis dokumen adalah 'Lainnya...', gunakan '{customDocumentType}'. Buat dokumentasi untuk proyek '{projectDescription}' yang ditujukan untuk '{targetAudience}'. Jika audiens adalah 'Lainnya...', gunakan '{customTargetAudience}'. Gunakan kode '{codeSnippet}' jika disediakan. {additionalInstructions}\n*   **Jika 'Lainnya...**: Tanggapi permintaan kustom '{customDevelopmentTask}' dengan memberikan solusi, kode, atau panduan terbaik.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, blok kode untuk pembuatan kode, daftar poin-poin untuk ulasan, Markdown terstruktur untuk dokumentasi). Pastikan output jelas, akurat, dan dapat ditindaklanjuti.",
         },
         toolType: "code",
@@ -5583,7 +6544,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             name: "HTTP_METHOD",
             label: "Metode HTTP",
             type: "select",
-            options: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+            options: ["GET", "POST", "PUT", "DELETE", "PATCH", "Lainnya..."],
             default: "GET",
             info: "Pilih metode HTTP yang sesuai untuk endpoint ini.",
           },
@@ -5674,7 +6635,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Anda akan diberikan detail sebuah endpoint API. Tugas Anda adalah mengubah detail teknis ini menjadi blok dokumentasi Markdown yang terstruktur dengan baik dan siap digunakan.",
           TUGAS:
             "Buat dokumentasi Markdown untuk endpoint berikut:\n\n**Endpoint:** `{{HTTP_METHOD}} {{ENDPOINT_URL}}`\n\n**Deskripsi:**\n{{ENDPOINT_DESCRIPTION}}\n\n**Autentikasi:**\n{{#if AUTH_METHOD === 'Lainnya...'}}{{AUTH_METHOD_LAINNYA}}{{else}}{{AUTH_METHOD}}{{/if}}\n\n{{#if PATH_PARAMETERS}}**Parameter Path:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split PATH_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if QUERY_PARAMETERS}}**Parameter Query:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split QUERY_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if REQUEST_BODY}}**Contoh Request Body:**\n```json\n{{REQUEST_BODY}}\n```\n{{/if}}\n\n**Contoh Response:**\n*   **200 OK (Sukses):**\n    ```json\n    {{SUCCESS_RESPONSE}}\n    ```\n{{#if ERROR_RESPONSE}}*   **Contoh Error:**\n    ```json\n    {{ERROR_RESPONSE}}\n    ```\n{{/if}}",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Gunakan format Markdown. Gunakan heading, list, tabel, dan blok kode untuk keterbacaan maksimal. Pastikan tabel untuk parameter diformat dengan benar.",
         },
         toolType: "code",
@@ -5754,6 +6715,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                     "Manajemen Dependensi",
                     "Kontrol Versi (Git)",
                     "Keduanya",
+                    "Lainnya...",
                   ],
                   default: "Kontrol Versi (Git)",
                   info: "Pilih topik yang Anda butuhkan bantuan.",
@@ -5991,7 +6953,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna telah memilih tugas operasional: '{TUGAS_OPERASIONAL}'. Anda akan bertindak sebagai spesialis yang relevan untuk memandu pengguna.",
           TUGAS:
             "Berdasarkan tugas '{TUGAS_OPERASIONAL}', berikan panduan, konfigurasi, atau rencana yang relevan. Gunakan variabel input yang disediakan dari sub-komponen yang sesuai untuk menyusun respons Anda.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, file konfigurasi YAML, daftar langkah-langkah dalam Markdown, atau rencana proyek). Pastikan output jelas, akurat, dan dapat ditindaklanjuti.",
         },
         toolType: "planning",
@@ -6079,6 +7041,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                     "Kondisi (if/else)",
                     "Loop (for/while)",
                     "Fungsi",
+                    "Lainnya...",
                   ],
                   default: ["Variabel", "Kondisi (if/else)"],
                   info: "Pilih konsep dasar yang ingin Anda fokuskan.",
@@ -6212,7 +7175,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna telah memilih topik pembelajaran: '{TOPIK_PEMBELAJARAN}'. Anda akan bertindak sebagai tutor atau ahli di bidang tersebut.",
           TUGAS:
             "Berdasarkan topik '{TOPIK_PEMBELAJARAN}', berikan penjelasan, panduan, atau contoh kode yang relevan. Gunakan variabel input dari sub-komponen yang sesuai untuk menyusun respons Anda.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Sajikan output dalam format yang paling sesuai dengan topik pembelajaran (misalnya, panduan langkah demi langkah, penjelasan konsep dengan contoh, atau visualisasi teks). Gunakan Markdown untuk keterbacaan yang baik.",
         },
         toolType: "text",
@@ -6245,6 +7208,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Notulen Rapat",
               "Faktur/Invoice",
               "Email Profesional",
+              "Lainnya...",
             ],
             info: "Pilih jenis dokumen bisnis yang Anda butuhkan.",
             validation: {
@@ -6392,6 +7356,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Sangat Formal",
                   "Profesional Standar",
                   "Ramah tapi Jelas",
+                  "Lainnya...",
                 ],
                 info: "Pilih nada yang sesuai untuk email Anda.",
               },
@@ -6603,7 +7568,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             name: "assetType",
             label: "Jenis Aset Branding",
             type: "select",
-            options: ["Nama Brand", "Slogan/Tagline", "Konsep Logo"],
+            options: [
+              "Nama Brand",
+              "Slogan/Tagline",
+              "Konsep Logo",
+              "Lainnya...",
+            ],
             info: "Pilih aset branding yang Anda butuhkan.",
             validation: {
               regex: "^(?!Pilih Jenis Aset Branding...).*$",
@@ -6654,6 +7624,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Klasik & Elegan",
                   "Deskriptif",
                   "Imajinatif & Unik",
+                  "Lainnya...",
                 ],
                 info: "Pilih gaya nama yang Anda inginkan.",
               },
@@ -6698,6 +7669,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Singkat & Berkesan",
                   "Deskriptif & Jelas",
                   "Cerdas & Berima",
+                  "Lainnya...",
                 ],
                 info: "Pilih gaya slogan yang Anda inginkan.",
               },
@@ -6722,6 +7694,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Pictorial Mark (simbol/ikon)",
                   "Combination Mark (teks & simbol)",
                   "Emblem",
+                  "Lainnya...",
                 ],
                 info: "Pilih jenis struktur logo yang Anda inginkan.",
               },
@@ -6753,6 +7726,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Minimalis & Modern",
                   "Vintage & Klasik",
                   "Hand-drawn & Organik",
+                  "Lainnya...",
                 ],
                 info: "Pilih gaya visual keseluruhan untuk logo.",
               },
@@ -6782,6 +7756,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Desain Halaman/Slide",
               "Konsep MVP/Database",
               "Strategi Peluncuran",
+              "Lainnya...",
             ],
             info: "Pilih jenis dokumen perencanaan yang Anda butuhkan.",
           },
@@ -6794,7 +7769,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "projectType",
                 label: "Jenis Proyek",
                 type: "select",
-                options: ["Website", "Aplikasi Mobile", "Aplikasi Web"],
+                options: [
+                  "Website",
+                  "Aplikasi Mobile",
+                  "Aplikasi Web",
+                  "Lainnya...",
+                ],
                 info: "Pilih jenis proyek yang akan dirancang.",
               },
               {
@@ -6978,6 +7958,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Nama Karakter Fiksi",
               "Judul Acara/Karya",
               "Nama Domain/Hashtag",
+              "Lainnya...",
             ],
             info: "Pilih untuk apa nama ini akan digunakan.",
           },
@@ -6990,7 +7971,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "gender",
                 label: "Jenis Kelamin",
                 type: "select",
-                options: ["Laki-laki", "Perempuan", "Unisex"],
+                options: ["Laki-laki", "Perempuan", "Unisex", "Lainnya..."],
                 info: "Pilih jenis kelamin.",
               },
               {
@@ -7023,6 +8004,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Klasik & Populer",
                   "Modern & Unik",
                   "Singkat & Manis",
+                  "Lainnya...",
                 ],
                 info: "Pilih gaya nama yang Anda inginkan.",
               },
@@ -7085,7 +8067,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "role",
                 label: "Peran Karakter",
                 type: "select",
-                options: ["Protagonis", "Antagonis", "Pendukung"],
+                options: ["Protagonis", "Antagonis", "Pendukung", "Lainnya..."],
                 info: "Pilih peran karakter dalam cerita.",
               },
               {
@@ -7126,7 +8108,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "gender",
                 label: "Jenis Kelamin (Opsional)",
                 type: "select",
-                options: ["Jantan", "Betina", "Tidak Tahu"],
+                options: ["Jantan", "Betina", "Tidak Tahu", "Lainnya..."],
                 info: "Jenis kelamin hewan peliharaan.",
               },
               {
@@ -7150,6 +8132,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Unik",
                   "Lucu",
                   "Berdasarkan Makanan",
+                  "Lainnya...",
                 ],
                 info: "Pilih gaya nama yang Anda inginkan.",
               },
@@ -7174,6 +8157,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Santai & Kreatif",
                   "Kompetitif",
                   "Inklusif",
+                  "Lainnya...",
                 ],
                 info: "Nuansa atau atmosfer yang ingin dibangun dalam tim/komunitas.",
               },
@@ -7213,6 +8197,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Buku",
                   "Film",
                   "Podcast",
+                  "Lainnya...",
                 ],
                 info: "Pilih jenis acara atau karya yang akan diberi judul.",
               },
@@ -7247,6 +8232,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Menghibur",
                   "Misterius",
                   "Serius",
+                  "Lainnya...",
                 ],
                 info: "Suasana atau emosi yang ingin disampaikan oleh judul.",
               },
@@ -7277,7 +8263,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "lengthPreference",
                 label: "Preferensi Panjang",
                 type: "select",
-                options: ["Singkat", "Sedang", "Panjang"],
+                options: ["Singkat", "Sedang", "Panjang", "Lainnya..."],
                 info: "Apakah Anda menginginkan nama yang singkat, sedang, atau panjang?",
               },
               {
@@ -7320,6 +8306,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Resensi",
               "Lirik Lagu",
               "Naskah Iklan",
+              "Lainnya...",
             ],
             info: "Pilih jenis konten yang ingin Anda hasilkan.",
           },
@@ -7362,7 +8349,13 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "tone",
                 label: "Gaya & Nada",
                 type: "select",
-                options: ["Informatif", "Profesional", "Kasual", "Persuasif"],
+                options: [
+                  "Informatif",
+                  "Profesional",
+                  "Kasual",
+                  "Persuasif",
+                  "Lainnya...",
+                ],
                 info: "Pilih nuansa yang diinginkan untuk artikel Anda.",
               },
               {
@@ -7388,6 +8381,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Twitter/X",
                   "LinkedIn",
                   "TikTok",
+                  "Lainnya...",
                 ],
                 info: "Pilih platform media sosial yang dituju.",
               },
@@ -7420,6 +8414,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Humoris",
                   "Inspiratif",
                   "Informatif",
+                  "Lainnya...",
                 ],
                 info: "Pilih nuansa yang sesuai dengan platform.",
               },
@@ -7485,6 +8480,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Persuasif & Menjual",
                   "Teknis & Detail",
                   "Mewah & Eksklusif",
+                  "Lainnya...",
                 ],
                 info: "Pilih nuansa yang sesuai dengan citra merek Anda.",
               },
@@ -7559,7 +8555,13 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "reviewType",
                 label: "Jenis Resensi",
                 type: "select",
-                options: ["Positif", "Negatif", "Seimbang", "Perbandingan"],
+                options: [
+                  "Positif",
+                  "Negatif",
+                  "Seimbang",
+                  "Perbandingan",
+                  "Lainnya...",
+                ],
                 info: "Fokus resensi (misal: menyoroti kelebihan, kekurangan, atau perbandingan).",
               },
               {
@@ -7643,6 +8645,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Sedih & Melankolis",
                   "Energik & Memotivasi",
                   "Romantis & Intim",
+                  "Lainnya...",
                 ],
                 info: "Emosi utama yang ingin disampaikan melalui lirik.",
               },
@@ -7710,6 +8713,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Sangat Singkat (Headline & Deskripsi)",
                   "Singkat (Beberapa Kalimat)",
                   "Sedang (Paragraf Singkat)",
+                  "Lainnya...",
                 ],
                 info: "Pilih panjang teks iklan yang diinginkan.",
               },
@@ -7740,6 +8744,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Ulang Tahun/Personal",
               "Workshop/Komunitas",
               "Terima Kasih",
+              "Lainnya...",
             ],
             info: "Pilih jenis acara untuk menentukan format dan nada.",
             validation: {
@@ -7780,6 +8785,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Modern & Minimalis",
                   "Rustic & Santai",
                   "Bohemian & Unik",
+                  "Lainnya...",
                 ],
                 info: "Gaya keseluruhan akan mempengaruhi pilihan kata.",
               },
@@ -8229,6 +9235,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Formal & Profesional",
                   "Singkat & Efisien",
                   "Penuh Sukacita",
+                  "Lainnya...",
                 ],
                 info: "Pilih nuansa pesan yang ingin disampaikan.",
               },
@@ -8339,6 +9346,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 label: "Lainnya...",
                 value: "Lainnya",
               },
+              "Lainnya...",
             ],
             info: "Tujuan spesifik yang ingin Anda capai dengan strategi Lead Generation ini.",
           },
@@ -8379,6 +9387,10 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 label: "Lainnya...",
                 value: "Lainnya",
               },
+              {
+                label: "Lainnya...",
+                value: "Lainnya...",
+              },
             ],
             info: "Pilih platform atau metode yang akan Anda gunakan untuk mendistribusikan konten dan menarik prospek.",
           },
@@ -8418,6 +9430,10 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               {
                 label: "Lainnya...",
                 value: "Lainnya",
+              },
+              {
+                label: "Lainnya...",
+                value: "Lainnya...",
               },
             ],
             info: "Pilih jenis 'lead magnet' atau penawaran nilai yang akan Anda gunakan untuk mendapatkan informasi kontak prospek.",
@@ -8581,6 +9597,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Materi Belajar (Kuis/Flashcard)",
               "Rencana Mengajar (RPP)",
               "Ide Topik Diskusi",
+              "Lainnya...",
             ],
             info: "Pilih jenis bantuan yang Anda butuhkan.",
             validation: {
@@ -8653,6 +9670,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Soal Pilihan Ganda",
                   "Flashcard (Tanya-Jawab)",
                   "Soal Esai Singkat",
+                  "Lainnya...",
                 ],
                 info: "Pilih jenis materi belajar yang ingin dibuat.",
               },
@@ -8732,6 +9750,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Mencari Solusi",
                   "Debat/Perdebatan",
                   "Brainstorming Ide",
+                  "Lainnya...",
                 ],
                 info: "Apa yang ingin dicapai dari diskusi ini?",
               },
@@ -8749,7 +9768,13 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "discussionFormat",
                 label: "Format Diskusi",
                 type: "select",
-                options: ["Terbuka", "Terstruktur", "Panel", "Debat"],
+                options: [
+                  "Terbuka",
+                  "Terstruktur",
+                  "Panel",
+                  "Debat",
+                  "Lainnya...",
+                ],
                 info: "Bagaimana diskusi akan dijalankan?",
               },
               {
@@ -8839,6 +9864,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 label: "Tinggi (Tugas, Sub-tugas, Estimasi Waktu)",
                 value: "tinggi",
               },
+              "Lainnya...",
             ],
             info: "Pilih tingkat detail yang sesuai dengan kebutuhan perencanaan Anda.",
           },
@@ -8881,6 +9907,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Jadwal Kebersihan",
               "Rencana Pengembangan Diri",
               "Pelacak Kebiasaan",
+              "Lainnya...",
             ],
             info: "Pilih aspek kehidupan yang ingin Anda rencanakan.",
             validation: {
@@ -8896,7 +9923,14 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "dietaryPreferences",
                 label: "Preferensi Diet",
                 type: "select",
-                options: ["Omnivore", "Vegetarian", "Vegan", "Keto", "Paleo"],
+                options: [
+                  "Omnivore",
+                  "Vegetarian",
+                  "Vegan",
+                  "Keto",
+                  "Paleo",
+                  "Lainnya...",
+                ],
                 info: "Pilih jenis diet yang Anda ikuti.",
               },
               {
@@ -8949,7 +9983,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "fitnessLevel",
                 label: "Tingkat Kebugaran",
                 type: "select",
-                options: ["Pemula", "Menengah", "Mahir"],
+                options: ["Pemula", "Menengah", "Mahir", "Lainnya..."],
                 info: "Pilih tingkat kebugaran Anda saat ini.",
               },
               {
@@ -9021,7 +10055,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "priorityLevel",
                 label: "Tingkat Prioritas",
                 type: "select",
-                options: ["Tinggi", "Sedang", "Rendah"],
+                options: ["Tinggi", "Sedang", "Rendah", "Lainnya..."],
                 info: "Seberapa penting proyek ini?",
               },
               {
@@ -9041,7 +10075,13 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "cleaningFrequency",
                 label: "Frekuensi Kebersihan",
                 type: "select",
-                options: ["Harian", "Mingguan", "Bulanan", "Musiman"],
+                options: [
+                  "Harian",
+                  "Mingguan",
+                  "Bulanan",
+                  "Musiman",
+                  "Lainnya...",
+                ],
                 info: "Seberapa sering Anda ingin membersihkan?",
               },
               {
@@ -9152,7 +10192,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "frequency",
                 label: "Frekuensi",
                 type: "select",
-                options: ["Harian", "Mingguan", "Beberapa Kali Seminggu"],
+                options: [
+                  "Harian",
+                  "Mingguan",
+                  "Beberapa Kali Seminggu",
+                  "Lainnya...",
+                ],
                 info: "Seberapa sering kebiasaan ini akan dilakukan?",
               },
               {
@@ -9183,7 +10228,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "trackingMethod",
                 label: "Metode Pelacakan",
                 type: "select",
-                options: ["Checklist Harian", "Aplikasi Mobile", "Jurnal"],
+                options: [
+                  "Checklist Harian",
+                  "Aplikasi Mobile",
+                  "Jurnal",
+                  "Lainnya...",
+                ],
                 info: "Bagaimana Anda akan melacak kemajuan kebiasaan ini?",
               },
             ],
@@ -9215,6 +10265,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Teks Pidato/Sambutan",
               "Checklist Vendor",
               "Ide Souvenir/Lomba",
+              "Lainnya...",
             ],
             info: "Pilih dokumen perencanaan yang Anda butuhkan.",
             validation: {
@@ -9297,6 +10348,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                   "Pengalaman Tamu",
                   "Pemasaran & Jangkauan",
                   "Hemat Biaya",
+                  "Lainnya...",
                 ],
                 info: "Pilih area yang menjadi prioritas utama dalam pengalokasian dana.",
               },
@@ -9326,7 +10378,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "speechTone",
                 label: "Gaya & Nada Pidato",
                 type: "select",
-                options: ["Formal", "Santai & Humoris", "Inspiratif"],
+                options: [
+                  "Formal",
+                  "Santai & Humoris",
+                  "Inspiratif",
+                  "Lainnya...",
+                ],
                 info: "Pilih nuansa yang diinginkan untuk pidato.",
               },
               {
@@ -9367,7 +10424,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "budgetLevel",
                 label: "Tingkat Anggaran",
                 type: "select",
-                options: ["Hemat", "Menengah", "Mewah"],
+                options: ["Hemat", "Menengah", "Mewah", "Lainnya..."],
                 info: "Estimasi anggaran untuk pesta.",
               },
               {
@@ -9386,7 +10443,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "locationType",
                 label: "Jenis Lokasi (Opsional)",
                 type: "select",
-                options: ["Indoor", "Outdoor", "Keduanya"],
+                options: ["Indoor", "Outdoor", "Keduanya", "Lainnya..."],
                 info: "Apakah pesta akan diadakan di dalam atau luar ruangan?",
               },
             ],
@@ -9425,7 +10482,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "contactMethod",
                 label: "Metode Kontak RSVP",
                 type: "select",
-                options: ["Email", "Telepon/WhatsApp", "Formulir Online"],
+                options: [
+                  "Email",
+                  "Telepon/WhatsApp",
+                  "Formulir Online",
+                  "Lainnya...",
+                ],
                 info: "Bagaimana tamu harus mengkonfirmasi kehadiran?",
               },
               {
@@ -9536,7 +10598,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 name: "ideaType",
                 label: "Jenis Ide",
                 type: "select",
-                options: ["Souvenir", "Lomba", "Keduanya"],
+                options: ["Souvenir", "Lomba", "Keduanya", "Lainnya..."],
                 info: "Apakah Anda mencari ide souvenir, lomba, atau keduanya?",
               },
             ],
@@ -9594,7 +10656,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Pengguna membutuhkan sebuah tulisan yang tidak hanya informatif tetapi juga terstruktur dengan baik, persuasif, dan bebas dari kesalahan. Anda akan menggunakan metode 'self-correction' untuk mencapai ini. Topik utamanya adalah: {TOPIK_KONTEN}.",
           TUGAS:
             "Lakukan tiga langkah berikut secara berurutan:\n\n1.  **LANGKAH 1: BUAT DRAF AWAL**\n    Tulis draf pertama dari konten berdasarkan topik yang diberikan. Fokus pada penyampaian ide utama.\n\n2.  **LANGKAH 2: KRITIK DRAF**\n    Setelah draf selesai, berikan kritik yang tajam dan membangun terhadap tulisan Anda sendiri. Tinjau dari sudut pandang '{SUDUT_PANDANG_KRITIK}'. Evaluasi aspek-aspek seperti: kejelasan argumen, alur tulisan, kekuatan bukti, dan gaya bahasa. Sajikan kritik dalam format poin-poin.\n\n3.  **LANGKAH 3: TULIS VERSI FINAL**\n    Berdasarkan poin-poin kritik dari Langkah 2, tulis ulang dan sempurnakan draf tersebut menjadi sebuah versi final yang poles dan berkualitas tinggi.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Sajikan output Anda dengan jelas dalam tiga bagian terpisah:\n\n### DRAF AWAL\n[Teks draf awal Anda di sini]\n\n### KRITIK\n[Poin-poin kritik Anda di sini]\n\n### VERSI FINAL\n[Teks versi final yang sudah direvisi di sini]",
         },
         toolType: "text",
@@ -10464,6 +11526,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 label: "Lainnya...",
                 value: "Lainnya",
               },
+              "Lainnya...",
             ],
             info: "Pilih jenis wawancara untuk mendapatkan persiapan yang paling relevan.",
           },
@@ -10483,6 +11546,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 label: "Pewawancara",
                 value: "Pewawancara",
               },
+              "Lainnya...",
             ],
             info: "Apakah Anda yang akan diwawancarai atau yang akan mewawancarai?",
           },
@@ -10547,6 +11611,10 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               {
                 label: "Lainnya...",
                 value: "Lainnya",
+              },
+              {
+                label: "Lainnya...",
+                value: "Lainnya...",
               },
             ],
             info: "Pilih area spesifik di mana Anda membutuhkan bantuan persiapan.",
@@ -11052,7 +12120,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Pilih tingkat pemahaman atau keahlian audiens target Anda.",
             default: "Menengah",
             optional: false,
-            options: ["Pemula", "Menengah", "Ahli"],
+            options: ["Pemula", "Menengah", "Ahli", "Lainnya..."],
             info: "Ini akan menentukan kedalaman teknis dan kompleksitas bahasa yang digunakan.",
           },
           {
@@ -11063,7 +12131,14 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Pilih gaya atau nada bahasa yang paling sesuai untuk audiens Anda.",
             default: "Informatif",
             optional: false,
-            options: ["Formal", "Kasual", "Humoris", "Informatif", "Persuasif"],
+            options: [
+              "Formal",
+              "Kasual",
+              "Humoris",
+              "Informatif",
+              "Persuasif",
+              "Lainnya...",
+            ],
             info: "Gaya bahasa akan memengaruhi cara AI menyusun kalimat dan memilih kata.",
           },
           {
@@ -11091,6 +12166,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Postingan Media Sosial (Singkat)",
               "Postingan Media Sosial (Panjang)",
               "Naskah Video (Intro)",
+              "Lainnya...",
             ],
             info: "AI akan menyesuaikan struktur dan panjang konten sesuai format yang dipilih.",
           },
@@ -11102,7 +12178,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Konteks Pembuatan Konten:\n- Draf Konten Utama: {KONTEN_UTAMA}\n- Profil Audiens Target:\n  - Tingkat Keahlian: {TARGET_AUDIENS_KEAHLIAN}\n  - Gaya Bahasa yang Disukai: {TARGET_AUDIENS_GAYA}\n  - Tujuan Utama Mereka: {TARGET_AUDIENS_TUJUAN}",
           TUGAS:
             "Berdasarkan draf dan profil audiens yang diberikan, hasilkan versi final dari konten tersebut dalam format '{JENIS_OUTPUT}'. Pastikan nada, kedalaman teknis, dan struktur tulisan selaras sempurna dengan kebutuhan dan preferensi audiens. Fokus pada kejelasan, keterbacaan, dan pencapaian tujuan audiens.",
-          "FORMAT OUTPUT":
+          FORMAT_OUTPUT:
             "Hasilkan teks final dalam format '{JENIS_OUTPUT}'. Jangan menyertakan judul atau header tambahan kecuali jika itu adalah bagian standar dari format tersebut (misalnya, subjek untuk email). Langsung berikan kontennya.",
         },
         toolType: "text",
@@ -12308,7 +13384,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           },
           {
             name: "outputFormat",
-            label: "Format Output",
+            label: "FORMAT_OUTPUT",
             type: "select",
             options: [
               "Daftar Sederhana per Kategori",
@@ -14159,6 +15235,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Twitter (X)",
               "Facebook",
               "TikTok",
+              "Lainnya...",
             ],
             info: "Setiap platform memiliki format dan ekspektasi audiens yang berbeda.",
             validation: {
@@ -15159,7 +16236,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           },
           {
             name: "outputFormat",
-            label: "Format Output",
+            label: "FORMAT_OUTPUT",
             type: "select",
             options: [
               "Poin-poin Ringkasan",
@@ -15215,7 +16292,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           },
           {
             name: "outputFormat",
-            label: "Format Output",
+            label: "FORMAT_OUTPUT",
             type: "select",
             options: ["JSON Array", "CSV", "Lainnya..."],
             info: "Pilih format output yang diinginkan (misalnya, JSON Array, CSV).",

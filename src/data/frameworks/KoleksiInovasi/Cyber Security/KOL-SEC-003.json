@@ -2,7 +2,10 @@
   "id_kerangka": "KOL-SEC-003",
   "nama_kerangka": "Fasilitator Kolaborasi Purple Team",
   "version": "1.1.0",
-  "kategori": ["Koleksi & Inovasi", "Cyber Security"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Cyber Security"
+  ],
   "description": "Kerangka kerja kolaboratif (kini v1.1.0) untuk menjembatani operasi Red Team dan Blue Team. Ini memfasilitasi perencanaan, eksekusi, dan analisis latihan gabungan untuk meningkatkan deteksi dan respons secara berkelanjutan, dengan panduan yang lebih jelas.",
   "perspektif_user": "Sebagai fasilitator Purple Team, saya perlu merancang dan mendokumentasikan sesi kolaboratif antara tim ofensif (Red Team) dan defensif (Blue Team). Saya ingin memilih jenis latihan, menentukan tujuan, dan menghasilkan agenda atau laporan yang dapat ditindaklanjuti untuk kedua tim.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Koordinator Purple Team yang akan memfasilitasi kolaborasi keamanan.",
@@ -31,7 +34,8 @@
         "Analisis Kesenjangan Pertahanan (Defense Gap Analysis)",
         "Post-Mortem Insiden Kolaboratif (Collaborative Incident Post-Mortem)",
         "Debriefing & Laporan Latihan Gabungan (Joint Exercise Debrief & Reporting)",
-        "Pengukuran & Pelaporan Program Keamanan (Security Program Metrics & Reporting)"
+        "Pengukuran & Pelaporan Program Keamanan (Security Program Metrics & Reporting)",
+        "Lainnya..."
       ]
     }
   ],
@@ -144,7 +148,12 @@
           "name": "THREAT_MODEL_METHODOLOGY",
           "label": "Metodologi Pemodelan Ancaman",
           "type": "select",
-          "options": ["STRIDE", "PASTA", "DREAD", "Lainnya..."],
+          "options": [
+            "STRIDE",
+            "PASTA",
+            "DREAD",
+            "Lainnya..."
+          ],
           "info": "Pilih kerangka kerja pemodelan ancaman yang akan digunakan.",
           "default": "STRIDE",
           "optional": false,

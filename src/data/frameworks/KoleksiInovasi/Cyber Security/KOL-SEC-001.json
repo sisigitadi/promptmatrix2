@@ -2,7 +2,10 @@
   "id_kerangka": "KOL-SEC-001",
   "nama_kerangka": "Perencana Operasi Red Team",
   "version": "1.1.0",
-  "kategori": ["Koleksi & Inovasi", "Cyber Security"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Cyber Security"
+  ],
   "description": "Kerangka kerja komprehensif untuk merencanakan dan mensimulasikan berbagai taktik ofensif Red Team, berdasarkan kerangka kerja MITRE ATT&CK, kini dengan tooltip yang lebih lengkap dan struktur prompt yang disempurnakan.",
   "perspektif_user": "Sebagai seorang profesional keamanan siber (Red Teamer/Pentester), saya perlu merancang sebuah skenario serangan yang realistis untuk menguji pertahanan organisasi. Saya ingin memilih taktik spesifik dari kill-chain, mendefinisikan tujuan, target, dan alat yang akan digunakan, kemudian mendapatkan prompt terstruktur untuk menghasilkan rencana operasi mendetail.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Arsitek Red Team berpengalaman yang akan merancang rencana operasi serangan siber terstruktur.",
@@ -31,7 +34,8 @@
         "Gerakan Lateral (Lateral Movement)",
         "Pengumpulan Data (Collection)",
         "Desain Infrastruktur C2 (C2 Infrastructure Design)",
-        "Perencanaan Kampanye Red Team (Red Team Campaign Plan)"
+        "Perencanaan Kampanye Red Team (Red Team Campaign Plan)",
+        "Lainnya..."
       ]
     }
   ],
@@ -82,7 +86,11 @@
             "name": "RECON_TYPE",
             "label": "Jenis Pengintaian",
             "type": "select",
-            "options": ["Aktif (Active)", "Pasif (Passive)", "Lainnya..."],
+            "options": [
+              "Aktif (Active)",
+              "Pasif (Passive)",
+              "Lainnya..."
+            ],
             "info": "Pilih antara pengintaian aktif (mis. port scanning) atau pasif (mis. analisis header DNS).",
             "default": "Aktif (Active)",
             "optional": false,
@@ -213,7 +221,12 @@
             "name": "PERSIST_TARGET_OS",
             "label": "Sistem Operasi Target",
             "type": "select",
-            "options": ["Windows", "Linux", "macOS"],
+            "options": [
+              "Windows",
+              "Linux",
+              "macOS",
+              "Lainnya..."
+            ],
             "info": "Pilih OS target karena teknik persistensi seringkali spesifik untuk OS tertentu.",
             "default": "Windows",
             "optional": false,

@@ -432,6 +432,24 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   <FaTimesCircle />
                 </Button>
               )}
+              <Button
+                variant="outline-secondary"
+                onClick={() => {
+                  const min = inputDetails.min ?? 0;
+                  const max = inputDetails.max ?? 100;
+                  const randomVal =
+                    Math.floor(Math.random() * (max - min + 1)) + min;
+                  handleInputChangeWithValidation(
+                    compName,
+                    randomVal.toString(),
+                    inputDetails,
+                  );
+                }}
+                title="Saran angka acak"
+                className="interactive-input ms-1"
+              >
+                🎲
+              </Button>
               <Form.Control.Feedback
                 type="invalid"
                 id={`validation-feedback-${compName}`}
@@ -659,6 +677,25 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   <FaTimesCircle />
                 </Button>
               )}
+              <Button
+                variant="outline-secondary"
+                onClick={() => {
+                  const randomColor =
+                    "#" +
+                    Math.floor(Math.random() * 16777215)
+                      .toString(16)
+                      .padStart(6, "0");
+                  handleInputChangeWithValidation(
+                    compName,
+                    randomColor,
+                    inputDetails,
+                  );
+                }}
+                title="Warna acak"
+                className="interactive-input ms-1"
+              >
+                🎲
+              </Button>
               <Form.Control.Feedback
                 type="invalid"
                 id={`validation-feedback-${compName}`}
@@ -790,6 +827,26 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                     : undefined
                 }
               />
+              <Button
+                variant="outline-secondary"
+                onClick={() => {
+                  const min = inputDetails.min ?? 0;
+                  const max = inputDetails.max ?? 100;
+                  const step = inputDetails.step ?? 1;
+                  const steps = Math.floor((max - min) / step);
+                  const randomVal =
+                    min + Math.floor(Math.random() * (steps + 1)) * step;
+                  handleInputChangeWithValidation(
+                    compName,
+                    randomVal.toString(),
+                    inputDetails,
+                  );
+                }}
+                title="Geser acak"
+                className="interactive-input ms-1"
+              >
+                🎲
+              </Button>
               <Form.Control.Feedback
                 type="invalid"
                 id={`validation-feedback-${compName}`}
@@ -841,6 +898,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                     touchedFields[compName] && !!validationErrors[compName]
                   }
                 >
+                  <option value="">Pilih {compLabel}...</option>
                   {compOptions?.map(
                     (option: string | { label: string; value: string }) => {
                       if (typeof option === "string") {
@@ -849,19 +907,44 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                             {option}
                           </option>
                         );
+                      } else {
+                        return (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        );
                       }
-                      return (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      );
                     },
                   )}
                 </Form.Select>
-                <Form.Control.Feedback type="invalid">
-                  {validationErrors[compName]}
-                </Form.Control.Feedback>
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => {
+                    if (compOptions && compOptions.length > 0) {
+                      const randomIndex = Math.floor(
+                        Math.random() * compOptions.length,
+                      );
+                      const randomOpt = compOptions[randomIndex];
+                      const val =
+                        typeof randomOpt === "string"
+                          ? randomOpt
+                          : randomOpt.value;
+                      handleInputChangeWithValidation(
+                        compName,
+                        val,
+                        inputDetails,
+                      );
+                    }
+                  }}
+                  title="Pilih acak"
+                  className="interactive-input ms-1"
+                >
+                  🎲
+                </Button>
               </InputGroup>
+              <Form.Control.Feedback type="invalid">
+                {validationErrors[compName]}
+              </Form.Control.Feedback>
             </div>
             {formData[compName] === "Lainnya..." && (
               <Form.Group className="mt-2" controlId={`${compName}-custom`}>
@@ -971,6 +1054,25 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                   <FaTimesCircle />
                 </Button>
               )}
+              <Button
+                variant="outline-secondary"
+                onClick={() => {
+                  const suggestion = getRandomSuggestion(compName);
+                  if (suggestion) {
+                    handleInputChangeWithValidation(
+                      compName,
+                      suggestion,
+                      inputDetails,
+                    );
+                  } else {
+                    showToast("Maaf, belum ada saran untuk kode ini.", "error");
+                  }
+                }}
+                title="Saran kode acak"
+                className="interactive-input ms-1"
+              >
+                🎲
+              </Button>
               <Form.Control.Feedback
                 type="invalid"
                 id={`validation-feedback-${compName}`}
@@ -1042,6 +1144,31 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                     </option>
                   ))}
                 </Form.Select>
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => {
+                    if (compOptions && compOptions.length > 0) {
+                      // Select a random number of options (1 to all available)
+                      const numToSelect =
+                        Math.floor(Math.random() * compOptions.length) + 1;
+                      const shuffled = [...compOptions].sort(
+                        () => 0.5 - Math.random(),
+                      );
+                      const selectedOptions = shuffled
+                        .slice(0, numToSelect)
+                        .map((opt) => opt.value);
+                      handleInputChangeWithValidation(
+                        compName,
+                        selectedOptions,
+                        inputDetails,
+                      );
+                    }
+                  }}
+                  title="Pilih acak"
+                  className="interactive-input ms-1"
+                >
+                  🎲
+                </Button>
                 <Form.Control.Feedback
                   type="invalid"
                   id={`validation-feedback-${compName}`}

@@ -13,7 +13,8 @@
         "Daftar Tugas",
         "Jadwal Kebersihan",
         "Rencana Pengembangan Diri",
-        "Pelacak Kebiasaan"
+        "Pelacak Kebiasaan",
+        "Lainnya..."
       ],
       "info": "Pilih aspek kehidupan yang ingin Anda rencanakan.",
       "validation": {
@@ -29,7 +30,14 @@
           "name": "dietaryPreferences",
           "label": "Preferensi Diet",
           "type": "select",
-          "options": ["Omnivore", "Vegetarian", "Vegan", "Keto", "Paleo"],
+          "options": [
+            "Omnivore",
+            "Vegetarian",
+            "Vegan",
+            "Keto",
+            "Paleo",
+            "Lainnya..."
+          ],
           "info": "Pilih jenis diet yang Anda ikuti."
         },
         {
@@ -81,7 +89,12 @@
           "name": "fitnessLevel",
           "label": "Tingkat Kebugaran",
           "type": "select",
-          "options": ["Pemula", "Menengah", "Mahir"],
+          "options": [
+            "Pemula",
+            "Menengah",
+            "Mahir",
+            "Lainnya..."
+          ],
           "info": "Pilih tingkat kebugaran Anda saat ini."
         },
         {
@@ -153,7 +166,12 @@
           "name": "priorityLevel",
           "label": "Tingkat Prioritas",
           "type": "select",
-          "options": ["Tinggi", "Sedang", "Rendah"],
+          "options": [
+            "Tinggi",
+            "Sedang",
+            "Rendah",
+            "Lainnya..."
+          ],
           "info": "Seberapa penting proyek ini?"
         },
         {
@@ -173,7 +191,13 @@
           "name": "cleaningFrequency",
           "label": "Frekuensi Kebersihan",
           "type": "select",
-          "options": ["Harian", "Mingguan", "Bulanan", "Musiman"],
+          "options": [
+            "Harian",
+            "Mingguan",
+            "Bulanan",
+            "Musiman",
+            "Lainnya..."
+          ],
           "info": "Seberapa sering Anda ingin membersihkan?"
         },
         {
@@ -278,7 +302,12 @@
           "name": "frequency",
           "label": "Frekuensi",
           "type": "select",
-          "options": ["Harian", "Mingguan", "Beberapa Kali Seminggu"],
+          "options": [
+            "Harian",
+            "Mingguan",
+            "Beberapa Kali Seminggu",
+            "Lainnya..."
+          ],
           "info": "Seberapa sering kebiasaan ini akan dilakukan?"
         },
         {
@@ -307,13 +336,21 @@
           "name": "trackingMethod",
           "label": "Metode Pelacakan",
           "type": "select",
-          "options": ["Checklist Harian", "Aplikasi Mobile", "Jurnal"],
+          "options": [
+            "Checklist Harian",
+            "Aplikasi Mobile",
+            "Jurnal",
+            "Lainnya..."
+          ],
           "info": "Bagaimana Anda akan melacak kemajuan kebiasaan ini?"
         }
       ]
     }
   },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu memberikan nasihat yang positif dan memotivasi. Untuk rencana terkait kesehatan (diet & olahraga), AI wajib menyertakan disclaimer: 'Saya adalah asisten AI dan bukan profesional medis. Selalu konsultasikan dengan dokter atau ahli gizi/pelatih bersertifikat sebelum memulai program kesehatan baru.' Jika pengguna memberikan batasan yang tidak realistis, AI harus memberikan saran yang lebih masuk akal dengan cara yang suportif.",
-  "kategori": ["Prompt Proyek", "Perencanaan & Produktivitas Personal"],
+  "kategori": [
+    "Prompt Proyek",
+    "Perencanaan & Produktivitas Personal"
+  ],
   "nama_kerangka": "Asisten Perencana Gaya Hidup Personal"
 }

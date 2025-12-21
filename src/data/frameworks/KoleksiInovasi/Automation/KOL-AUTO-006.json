@@ -1,0 +1,95 @@
+{
+  "id_kerangka": "KOL-AUTO-006",
+  "nama_kerangka": "Otomasi Agen AI Pintar",
+  "version": "1.0.0",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Automation"
+  ],
+  "description": "Pemanfaatan AI Agent otonom untuk tugas-tugas kompleks yang membutuhkan pengambilan keputusan.",
+  "perspektif_user": "Saya ingin memiliki asisten digital yang bisa mengelola konten secara mandiri, mengoptimalkan alur kerja saya secara dinamis, dan memetakan tugas ke sub-tugas secara otomatis tanpa instruksi mendetail setiap saat.",
+  "ai_logic_description": "Persona AI: Anda adalah seorang AI Engineer & Automation Architect yang ahli dalam merancang sistem Multi-Agent dan Autonomous Workflows.",
+  "toolType": "planning",
+  "output": "natural_language_prompt",
+  "contoh_kalimat": "Buat sistem AI Agent yang bisa riset tren berita dan tulis draf artikel secara otonom.",
+  "konteks_tambahan_instruksi_khusus": "Fokus pada otonomi dan kontrol (Human-in-the-loop). Sarankan framework seperti CrewAI, AutoGPT, atau LangChain untuk implementasi.",
+  "components": [
+    {
+      "name": "ALUR_AGENT",
+      "label": "Pilih Alur Otomasi",
+      "type": "select",
+      "description": "Pilih salah satu template alur kerja agen AI.",
+      "optional": false,
+      "default": "AI Agent Pengelola Konten",
+      "options": [
+        "AI Agent Pengelola Konten",
+        "Smart Workflow Optimize",
+        "Dynamic Task Mapping",
+        "Lainnya..."
+      ]
+    },
+    {
+      "name": "TOOLS_OTOMASI",
+      "label": "Alat Otomasi Utama",
+      "type": "select",
+      "description": "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
+      "optional": false,
+      "default": "n8n",
+      "options": [
+        "Zapier",
+        "Make.com (Integromat)",
+        "n8n",
+        "Pipedream",
+        "Bardeen",
+        "Custom Script (Python/Node)",
+        "Lainnya..."
+      ]
+    }
+  ],
+  "dynamicSubcomponents": [
+    {
+      "trigger": "ALUR_AGENT",
+      "options": {
+        "AI Agent Pengelola Konten": [
+          {
+            "name": "AGENT_TOOLS",
+            "label": "Alat yang Digunakan Agent",
+            "type": "multiselect",
+            "options": [
+              "Google Search",
+              "Web Scraper",
+              "Stable Diffusion",
+              "OpenAI Vision",
+              "Lainnya..."
+            ],
+            "description": "Kemampuan teknis yang diberikan kepada agen."
+          }
+        ],
+        "Smart Workflow Optimize": [
+          {
+            "name": "GOAL_METRIC",
+            "label": "Metrik Optimasi",
+            "type": "text",
+            "placeholder": "Biaya terendah, waktu tercepat, kualitas tertinggi",
+            "description": "Apa yang harus diprioritaskan oleh sistem otomatis."
+          }
+        ],
+        "Dynamic Task Mapping": [
+          {
+            "name": "COMPLEX_PROJECT",
+            "label": "Proyek Kompleks",
+            "type": "textarea",
+            "placeholder": "Membangun SaaS dalam 30 hari...",
+            "description": "Proyek besar yang ingin dipecah menjadi tugas-tugas kecil secara otomatis."
+          }
+        ]
+      }
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah seorang AI Engineer & Automation Architect.",
+    "KONTEKS": "Pengguna ingin membangun sebuah **Workflow Automation** tingkat lanjut menggunakan AI Agent untuk alur: **{ALUR_AGENT}** dengan alat **{TOOLS_OTOMASI}**.",
+    "TUGAS": "Rancang arsitektur Workflow Automation yang otonom untuk alur **{ALUR_AGENT}** dengan mengintegrasikan AI Agent ke dalam ekosistem **{TOOLS_OTOMASI}**. \n\n1. **Agent Orchestration**: Jelaskan bagaimana {TOOLS_OTOMASI} bertindak sebagai orkestrator bagi agen yang menggunakan {AGENT_TOOLS}.\n2. **Dynamic Decision Flow**: Rancang logika di mana agen membuat keputusan dinamis berdasarkan {GOAL_METRIC} di tengah-tengah jalannya workflow.\n3. **Advanced Tasking**: Detailkan cara workflow ini memecah {COMPLEX_PROJECT} dan mendistribusikannya ke berbagai sub-tugas secara otomatis.\n4. **AI-Human Collaboration**: Tentukan titik-titik kontrol di dalam {TOOLS_OTOMASI} agar pengguna tetap bisa mengawasi performa agen secara efisien.",
+    "FORMAT_OUTPUT": "Sajikan dalam format Arsitektur Sistem (System Architecture) di Markdown. Sertakan definisi 'System Message' (Base Prompt) untuk agen tersebut."
+  }
+}
