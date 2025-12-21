@@ -18,14 +18,14 @@ Experience a professional-grade prompt engine. Every framework is now aligned wi
 - **Strict Output Formatting:** Markdown, JSON, and technical schemas for downstream consumption.
 - **Multimodal Ready:** Support for image and file inputs across specialized categories.
 
-### 2. 🛡️ Specialized Collections (Expanded)
+### 2. 🛡️ Specialized Collections
 
-Explore 6 major categories with specialized sub-suites:
-- **⚡ Private Automation Hub:** 7 specialized verticals including Workflow Logic, Agency Operations, EdTech, and Personal Productivity.
-- **🛡️ Cyber Security Suite:** Advanced playbooks for Red Team Operations, Blue Team Analysis, and Purple Team Coordination.
-- **🏢 Enterprise Business Suite:** Optimized for MVP Planning, Startup Analysis, and Virtual Product Management.
-- **🤖 Tech & Development:** Multi-agent code reviews, RAG-enhanced generation, and technical documentation.
-- **🎨 Creative & Branding:** Scriptwriting, ad copywriting, and visual design orchestration.
+Explore 5 major categories with specialized sub-suites:
+- **📝 Text & Content:** Marketing, Copywriting, and Scripting.
+- **🎨 Image & Design:** Visual prompts and Midjourney/Stable Diffusion helpers.
+- **� Audio & Music:** Music composition and audio generation.
+- **⚡ Quick Prompts:** Concise formulas like AIDA, PAS, and Chain of Thought.
+- **🚀 Project Prompts:** Comprehensive project planning and structured output.
 
 ### 3. 🧩 Visual Prompt Orchestrator
 
