@@ -1,10 +1,20 @@
 # Prompt Matrix 2.0 - Catatan Rilis
 
+## Versi 2.6.0
+
+### Fitur & Peningkatan Utama
+
+*   **Expanded Dice Functionality**: Tombol "Dice" (Saran Acak) kini mendukung tipe input `number`, `slider`, `color`, `select`, `multiselect`, dan `code`. Fitur ini memberikan saran kontekstual cerdas atau nilai acak yang aman untuk mempercepat eksperimen prompt.
+*   **Database Saran Masif**: Perluasan signifikan pada `suggestions.ts` dengan penambahan kategori baru (Cyber Security, SWOT, Hero's Journey, dll.) dan ratusan alias pintar. Memastikan hampir semua variabel input memiliki saran yang relevan.
+*   **Automation Super Frameworks**: Konsolidasi 8 framework otomasi utama menjadi struktur "Super Frameworks" dengan integrasi pemilihan alat (Zapier, n8n, Make) yang lebih intuitif.
+*   **Standardisasi Format Output**: Seluruh key framework kini distandardisasi menggunakan `FORMAT_OUTPUT`, menghapus inkonsistensi legacy.
+*   **Optimasi UI/UX**: Peningkatan mikro-interaksi pada input form dan validasi yang lebih mulus.
+
 ## Versi 2.4.0
 
 ### Fitur & Peningkatan Utama
 
-*   **Sinkronisasi SOP Framework**: Seluruh kerangka kerja kini mengikuti standar kualitas tinggi sesuai panduan internal, mencakup logika AI yang lebih mendalam dan format output yang sangat terstruktur.
+*   **Sinkronisasi SOP Framework**: Seluruh kerangka kerja kini mengikuti standar kualitas tinggi sesuai `PROMPT_MATRIX_SOP.md`, mencakup logika AI yang lebih mendalam dan format output yang sangat terstruktur.
 *   **Peningkatan Suite Keamanan Siber**: Penambahan dan penyempurnaan playbook untuk operasi Red, Blue, dan Purple Team dengan integrasi framework MITRE ATT&CK.
 *   **Visual Prompt Builder v2**: Peningkatan stabilitas dan fitur pada drag-and-drop orchestrator, mendukung blok teks dan gambar dengan lebih lancar.
 *   **Eksperimen "Dice Roll"**: Implementasi pengisian input otomatis yang cerdas untuk membantu kreativitas pengguna.
