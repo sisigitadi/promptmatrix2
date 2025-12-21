@@ -721,7 +721,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({
                     onClick={handleCopyWithPlaceholders}
                     title="Salin template prompt dengan placeholder asli ({{VAR}})"
                   >
-                    🧩 Temp
+                    🧩 <span style={{ fontSize: "0.75rem" }}>Template</span>
                   </Button>
                 </ButtonGroup>
 
