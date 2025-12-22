@@ -112,5 +112,17 @@
   "konteks_tambahan_instruksi_khusus": "Gunakan bahasa yang inklusif dan profesional. Untuk email, selalu gunakan nada yang sopan dan menghargai kandidat.",
   "contoh_kalimat": "Buatkan saya templat email untuk menanggapi keluhan produk rusak.",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:43:43.253958",
+  "_review_notes": [
+    "HYBRID: Tugas Rekrutmen atau SDM → 'Pembuat Deskripsi Pekerjaan' (add English technical term if applicable)",
+    "HYBRID: Tugas Rekrutmen atau SDM → 'Generator Pertanyaan Wawancara' (add English technical term if applicable)",
+    "HYBRID: Tugas Rekrutmen atau SDM → 'Penyusun Rencana Onboarding' (add English technical term if applicable)",
+    "HYBRID: Tugas Rekrutmen atau SDM → 'Pembuat Draf Email Rekrutmen' (add English technical term if applicable)",
+    "SEAMLESS: Add conditional blocks [...] for optional parameters"
+  ]
 }

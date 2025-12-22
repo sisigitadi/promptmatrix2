@@ -322,5 +322,20 @@
   "konteks_tambahan_instruksi_khusus": "Selalu prioritaskan strategi yang berpusat pada pelanggan. Berikan saran yang praktis dan dapat diimplementasikan. Jika ada ambiguitas, berikan asumsi yang cerdas atau ajukan pertanyaan klarifikasi.",
   "contoh_kalimat": "Bantu saya membuat strategi SEO untuk website e-commerce saya.",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:43:43.300756",
+  "_review_notes": [
+    "HYBRID: Tugas Pemasaran Utama → 'Strategi SEO & SEM' (add English technical term if applicable)",
+    "HYBRID: Tugas Pemasaran Utama → 'Pengembangan Konten & Blog' (add English technical term if applicable)",
+    "HYBRID: Tugas Pemasaran Utama → 'Manajemen Media Sosial' (add English technical term if applicable)",
+    "HYBRID: Tugas Pemasaran Utama → 'Kampanye Pemasaran Email' (add English technical term if applicable)",
+    "HYBRID: Tugas Pemasaran Utama → 'Peluncuran Produk & Kampanye' (add English technical term if applicable)",
+    "HYBRID: Tugas Pemasaran Utama → 'Riset Pasar & Analisis Kompetitor' (add English technical term if applicable)",
+    "HYBRID: Tugas Pemasaran Utama → 'Optimasi Penjualan & Konversi' (add English technical term if applicable)",
+    "SEAMLESS: Add conditional blocks [...] for optional parameters"
+  ]
 }

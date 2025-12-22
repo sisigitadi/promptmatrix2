@@ -2,7 +2,10 @@
   "id_kerangka": "KOL-PP-100",
   "nama_kerangka": "Asisten Pengembang Cerdas",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Pengembangan Perangkat Lunak"
+  ],
   "description": "Pusat komprehensif untuk tugas-tugas pengembangan perangkat lunak, mulai dari pembuatan kode, analisis, pengujian, hingga dokumentasi, menggunakan pendekatan dinamis untuk alur kerja yang efisien.",
   "perspektif_user": "Sebagai seorang pengembang, saya membutuhkan satu alat terpusat yang dapat membantu saya dengan berbagai tugas pengembangan sehari-hari, seperti menulis kode baru, meninjau kode yang ada, membuat pengujian, dan menghasilkan dokumentasi, tanpa harus berpindah-pindah kerangka kerja.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Asisten Pengembang Cerdas yang akan membantu pengembangan perangkat lunak.",
@@ -44,7 +47,13 @@
             "name": "programmingLanguage",
             "label": "Bahasa Pemrograman",
             "type": "select",
-            "options": ["Python", "JavaScript", "Java", "C#", "Lainnya..."],
+            "options": [
+              "Python",
+              "JavaScript",
+              "Java",
+              "C#",
+              "Lainnya..."
+            ],
             "description": "Pilih bahasa pemrograman untuk kode yang akan dihasilkan.",
             "default": "Python",
             "info": "Pilih bahasa pemrograman untuk kode yang akan dihasilkan."
@@ -125,14 +134,22 @@
               "Lainnya..."
             ],
             "description": "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring.",
-            "default": ["Keterbacaan", "Efisiensi"],
+            "default": [
+              "Keterbacaan",
+              "Efisiensi"
+            ],
             "info": "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring."
           },
           {
             "name": "userLevel",
             "label": "Tingkat Keahlian Anda",
             "type": "select",
-            "options": ["Pemula", "Menengah", "Ahli", "Lainnya..."],
+            "options": [
+              "Pemula",
+              "Menengah",
+              "Ahli",
+              "Lainnya..."
+            ],
             "description": "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran.",
             "default": "Menengah",
             "info": "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran."
@@ -230,7 +247,13 @@
             "name": "programmingLanguage",
             "label": "Bahasa Pemrograman",
             "type": "select",
-            "options": ["Python", "JavaScript", "Java", "C#", "Lainnya..."],
+            "options": [
+              "Python",
+              "JavaScript",
+              "Java",
+              "C#",
+              "Lainnya..."
+            ],
             "description": "Pilih bahasa pemrograman dari kode.",
             "default": "JavaScript",
             "info": "Pilih bahasa pemrograman dari kode."
@@ -345,5 +368,18 @@
   "konteks_tambahan_instruksi_khusus": "Selalu prioritaskan kode yang bersih, efisien, dan mudah dipelihara. Berikan penjelasan yang mendidik di balik saran Anda. Jika ada ambiguitas dalam permintaan pengguna, ajukan pertanyaan klarifikasi sebelum menghasilkan output.",
   "contoh_kalimat": "Gunakan Asisten Pengembang Cerdas untuk membuat fungsi Python baru.",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:43:43.305192",
+  "_review_notes": [
+    "HYBRID: Tugas Pengembangan → 'Buat Kode Baru' (add English technical term if applicable)",
+    "HYBRID: Tugas Pengembangan → 'Tinjau & Perbaiki Kode' (add English technical term if applicable)",
+    "HYBRID: Tugas Pengembangan → 'Jelaskan Kode' (add English technical term if applicable)",
+    "HYBRID: Tugas Pengembangan → 'Buat Pengujian Otomatis' (add English technical term if applicable)",
+    "HYBRID: Tugas Pengembangan → 'Buat Dokumentasi Teknis' (add English technical term if applicable)",
+    "SEAMLESS: Add conditional blocks [...] for optional parameters"
+  ]
 }

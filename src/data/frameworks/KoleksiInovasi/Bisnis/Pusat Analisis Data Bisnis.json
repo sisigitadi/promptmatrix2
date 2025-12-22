@@ -99,5 +99,17 @@
   "konteks_tambahan_instruksi_khusus": "Fokus pada penyajian wawasan dalam bahasa bisnis yang sederhana, bukan jargon teknis data science.",
   "contoh_kalimat": "Bantu saya menemukan tren dari data penjualan bulanan saya.",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:43:43.271411",
+  "_review_notes": [
+    "HYBRID: Tugas Analisis Data → 'Eksplorasi & Pembersihan Data' (add English technical term if applicable)",
+    "HYBRID: Tugas Analisis Data → 'Analisis Statistik Deskriptif' (add English technical term if applicable)",
+    "HYBRID: Tugas Analisis Data → 'Identifikasi Tren dan Pola' (add English technical term if applicable)",
+    "HYBRID: Tugas Analisis Data → 'Rekomendasi Visualisasi Data' (add English technical term if applicable)",
+    "SEAMLESS: Add conditional blocks [...] for optional parameters"
+  ]
 }

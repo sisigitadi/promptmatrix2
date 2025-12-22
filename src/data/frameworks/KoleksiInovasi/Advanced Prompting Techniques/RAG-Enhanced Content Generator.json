@@ -2,7 +2,10 @@
   "id_kerangka": "KOL-APT-002",
   "nama_kerangka": "RAG-Enhanced Content Generator",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Advanced Prompting Techniques"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Advanced Prompting Techniques"
+  ],
   "description": "Hasilkan konten yang akurat dan berbasis fakta dengan menyediakan sumber informasi eksternal (dokumen, URL) yang akan digunakan AI sebagai referensi.",
   "perspektif_user": "Saya ingin membuat konten yang tidak hanya kreatif tetapi juga faktual. Saya perlu AI untuk merujuk pada dokumen atau sumber web yang saya sediakan untuk memastikan akurasi dan kedalaman informasi.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Peneliti dan Penulis Konten yang akan menghasilkan konten yang akurat dan terverifikasi berdasarkan sumber eksternal.",
@@ -31,7 +34,12 @@
       "name": "FORMAT_OUTPUT_KONTEN",
       "label": "Format Output Konten",
       "type": "select",
-      "options": ["Artikel Blog", "Ringkasan Laporan", "FAQ", "Lainnya..."],
+      "options": [
+        "Artikel Blog",
+        "Ringkasan Laporan",
+        "FAQ",
+        "Lainnya..."
+      ],
       "default": "Artikel Blog",
       "info": "Pilih format konten yang Anda inginkan."
     },
@@ -64,6 +72,25 @@
           }
         ]
       }
+    },
+    {
+      "trigger": "NADA_BAHASA",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_NADA_BAHASA",
+            "label": "Sebutkan Nada Bahasa Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Nada Bahasa.",
+            "placeholder": "Contoh: Opsi kustom, kategori baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Nada Bahasa standar tidak tersedia."
+          }
+        ]
+      }
     }
   ],
   "komponen_prompt": {
@@ -76,5 +103,20 @@
   "konteks_tambahan_instruksi_khusus": "Prioritaskan akurasi dan verifikasi fakta dari sumber yang diberikan. Hindari spekulasi atau informasi yang tidak didukung. Jika sumber adalah URL, coba ekstrak informasi relevan dari sana. Jika sumber adalah teks, analisis teks tersebut secara mendalam.",
   "contoh_kalimat": "Buatkan saya artikel blog tentang AI generatif menggunakan dokumen PDF ini sebagai referensi.",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:43:43.242014",
+  "_review_notes": [
+    "HYBRID: Format Output Konten → 'Artikel Blog' (add English technical term if applicable)",
+    "HYBRID: Format Output Konten → 'Ringkasan Laporan' (add English technical term if applicable)",
+    "HYBRID: Format Output Konten → 'FAQ' (add English technical term if applicable)",
+    "HYBRID: Nada Bahasa → 'Formal' (add English technical term if applicable)",
+    "HYBRID: Nada Bahasa → 'Informatif' (add English technical term if applicable)",
+    "HYBRID: Nada Bahasa → 'Persuasif' (add English technical term if applicable)",
+    "HYBRID: Nada Bahasa → 'Akademis' (add English technical term if applicable)",
+    "SEAMLESS: Add conditional blocks [...] for optional parameters"
+  ]
 }

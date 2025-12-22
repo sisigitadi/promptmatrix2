@@ -3051,6 +3051,66 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Lakukan tinjauan kode multi-agen pada potongan kode Python ini untuk keamanan dan kinerja.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.238754",
+        dynamicSubcomponents: [
+          {
+            trigger: "programmingLanguage",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_programmingLanguage",
+                  label: "Sebutkan Bahasa Pemrograman Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Bahasa Pemrograman.",
+                  placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Bahasa Pemrograman standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "reviewFocus",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_reviewFocus",
+                  label:
+                    "Sebutkan Fokus Tinjauan (Pilih satu atau lebih) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Fokus Tinjauan (Pilih satu atau lebih).",
+                  placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Fokus Tinjauan (Pilih satu atau lebih) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "HYBRID: Bahasa Pemrograman → 'Python' (add English technical term if applicable)",
+          "HYBRID: Bahasa Pemrograman → 'JavaScript' (add English technical term if applicable)",
+          "HYBRID: Bahasa Pemrograman → 'Java' (add English technical term if applicable)",
+          "HYBRID: Bahasa Pemrograman → 'C#' (add English technical term if applicable)",
+          "HYBRID: Bahasa Pemrograman → 'Go' (add English technical term if applicable)",
+          "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Keamanan' (add English technical term if applicable)",
+          "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Kinerja' (add English technical term if applicable)",
+          "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Keterbacaan' (add English technical term if applicable)",
+          "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Praktik Terbaik' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "RAG-Enhanced Content Generator": {
         id_kerangka: "KOL-APT-002",
@@ -3123,6 +3183,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               ],
             },
           },
+          {
+            trigger: "NADA_BAHASA",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_NADA_BAHASA",
+                  label: "Sebutkan Nada Bahasa Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Nada Bahasa.",
+                  placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Nada Bahasa standar tidak tersedia.",
+                },
+              ],
+            },
+          },
         ],
         komponen_prompt: {
           PERAN:
@@ -3141,6 +3220,21 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buatkan saya artikel blog tentang AI generatif menggunakan dokumen PDF ini sebagai referensi.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.242014",
+        _review_notes: [
+          "HYBRID: Format Output Konten → 'Artikel Blog' (add English technical term if applicable)",
+          "HYBRID: Format Output Konten → 'Ringkasan Laporan' (add English technical term if applicable)",
+          "HYBRID: Format Output Konten → 'FAQ' (add English technical term if applicable)",
+          "HYBRID: Nada Bahasa → 'Formal' (add English technical term if applicable)",
+          "HYBRID: Nada Bahasa → 'Informatif' (add English technical term if applicable)",
+          "HYBRID: Nada Bahasa → 'Persuasif' (add English technical term if applicable)",
+          "HYBRID: Nada Bahasa → 'Akademis' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
     },
     Bisnis: {
@@ -3263,6 +3357,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya membuat model bisnis kanvas untuk ide startup saya.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.246327",
+        _review_notes: [
+          "HYBRID: Tugas Perencanaan Startup → 'Generator Ide Bisnis' (add English technical term if applicable)",
+          "HYBRID: Tugas Perencanaan Startup → 'Penyusun Model Bisnis Kanvas' (add English technical term if applicable)",
+          "HYBRID: Tugas Perencanaan Startup → 'Analisis Persaingan dan Pasar' (add English technical term if applicable)",
+          "HYBRID: Tugas Perencanaan Startup → 'Pembuat Draf Konten Pitch Deck' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Asisten Akuntansi & Keuangan Bisnis": {
         id_kerangka: "BIS-ACC-001",
@@ -3396,6 +3502,16 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Bantu saya hitung titik impas usaha saya.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.249742",
+        _review_notes: [
+          "HYBRID: Tugas Akuntansi atau Keuangan → 'Pembuat Laporan Keuangan Sederhana' (add English technical term if applicable)",
+          "HYBRID: Tugas Akuntansi atau Keuangan → 'Alat Analisis & Kategorisasi Biaya' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Asisten Rekrutmen & SDM": {
         id_kerangka: "BIS-HR-001",
@@ -3520,6 +3636,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buatkan saya templat email untuk menanggapi keluhan produk rusak.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.253958",
+        _review_notes: [
+          "HYBRID: Tugas Rekrutmen atau SDM → 'Pembuat Deskripsi Pekerjaan' (add English technical term if applicable)",
+          "HYBRID: Tugas Rekrutmen atau SDM → 'Generator Pertanyaan Wawancara' (add English technical term if applicable)",
+          "HYBRID: Tugas Rekrutmen atau SDM → 'Penyusun Rencana Onboarding' (add English technical term if applicable)",
+          "HYBRID: Tugas Rekrutmen atau SDM → 'Pembuat Draf Email Rekrutmen' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Keuangan & Investasi": {
         id_kerangka: "BIS-KEU-001",
@@ -3695,6 +3823,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Bantu saya menganalisis saham BBCA.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.258633",
+        _review_notes: [
+          "HYBRID: Jenis Analisis Keuangan → 'Perencanaan Strategi Investasi' (add English technical term if applicable)",
+          "HYBRID: Jenis Analisis Keuangan → 'Analisis Saham Tunggal' (add English technical term if applicable)",
+          "HYBRID: Jenis Analisis Keuangan → 'Perbandingan Produk Investasi' (add English technical term if applicable)",
+          "HYBRID: Jenis Analisis Keuangan → 'Simulasi Proyeksi Dana' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Konsultan Dokumen & Kepatuhan Hukum": {
         id_kerangka: "BIS-LGL-001",
@@ -3825,6 +3965,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Bantu saya membuat draf Perjanjian Kerahasiaan (NDA).",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.262664",
+        _review_notes: [
+          "HYBRID: Jenis Bantuan Hukum → 'Pembuat Draf Perjanjian Dasar' (add English technical term if applicable)",
+          "HYBRID: Jenis Bantuan Hukum → 'Generator Kebijakan Privasi & Syarat Layanan' (add English technical term if applicable)",
+          "HYBRID: Jenis Bantuan Hukum → 'Penerjemah Istilah Hukum' (add English technical term if applicable)",
+          "HYBRID: Jenis Bantuan Hukum → 'Checklist Kepatuhan Bisnis' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Manajer Produk Virtual": {
         id_kerangka: "BIS-PRD-001",
@@ -3942,6 +4094,15 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Bantu saya membuat PRD untuk fitur kolaborasi baru.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.266557",
+        _review_notes: [
+          "HYBRID: Tugas Manajemen Produk → 'Asisten Prioritas Fitur' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Pusat Analisis Data Bisnis": {
         id_kerangka: "BIS-DAT-001",
@@ -4056,6 +4217,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya menemukan tren dari data penjualan bulanan saya.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.271411",
+        _review_notes: [
+          "HYBRID: Tugas Analisis Data → 'Eksplorasi & Pembersihan Data' (add English technical term if applicable)",
+          "HYBRID: Tugas Analisis Data → 'Analisis Statistik Deskriptif' (add English technical term if applicable)",
+          "HYBRID: Tugas Analisis Data → 'Identifikasi Tren dan Pola' (add English technical term if applicable)",
+          "HYBRID: Tugas Analisis Data → 'Rekomendasi Visualisasi Data' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Pusat Bantuan Layanan Pelanggan": {
         id_kerangka: "BIS-CS-001",
@@ -4169,6 +4342,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buatkan saya templat email untuk menanggapi keluhan produk rusak.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.274427",
+        _review_notes: [
+          "HYBRID: Tugas Layanan Pelanggan → 'Generator Templat Respons' (add English technical term if applicable)",
+          "HYBRID: Tugas Layanan Pelanggan → 'Penyusun Skrip Eskalasi Masalah' (add English technical term if applicable)",
+          "HYBRID: Tugas Layanan Pelanggan → 'Pembuat Konten Halaman FAQ' (add English technical term if applicable)",
+          "HYBRID: Tugas Layanan Pelanggan → 'Analisis Umpan Balik Pelanggan' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Studio Desain UI/UX": {
         id_kerangka: "BIS-UIX-001",
@@ -4296,6 +4481,15 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya membuat konsep tata letak untuk halaman beranda website saya.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.277591",
+        _review_notes: [
+          "HYBRID: Tugas Desain UI/UX → 'Analisis & Umpan Balik Desain' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Blueprint Workflow Otomasi": {
@@ -6609,6 +6803,14 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan rencana operasi dalam format Markdown yang profesional. Gunakan heading, sub-heading, bullet points, dan blok kode (jika perlu) untuk menyajikan informasi secara jelas dan terstruktur. Pastikan hanya membahas taktik yang dipilih dalam {RED_TEAM_TACTIC}.",
         },
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.282363",
+        _review_notes: [
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Analis Operasi Blue Team": {
         id_kerangka: "KOL-SEC-002",
@@ -7016,6 +7218,14 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan panduan dalam format Markdown yang profesional. Gunakan heading untuk setiap bagian (Tujuan, Langkah-langkah, dll.). Untuk langkah-langkah, gunakan sub-heading dan bullet points. Sajikan contoh query dalam blok kode dengan sintaks yang sesuai (misalnya, `kql`). Pastikan hanya membahas tugas yang dipilih dalam `{BLUE_TEAM_TASK}`.",
         },
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.287628",
+        _review_notes: [
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Fasilitator Kolaborasi Purple Team": {
         id_kerangka: "KOL-SEC-003",
@@ -7491,6 +7701,14 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dokumen dalam format Markdown yang profesional. Gunakan heading, sub-heading, bullet points, dan tabel jika perlu untuk menyajikan informasi secara terstruktur dan mudah dibaca oleh kedua tim. Pastikan hanya membahas aktivitas yang dipilih dalam `{PURPLE_TEAM_ACTIVITY}`.",
         },
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.291930",
+        _review_notes: [
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Dokumen Lanjutan": {
@@ -7686,6 +7904,16 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Bantu saya membuat GDD untuk game platformer.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.296472",
+        _review_notes: [
+          "HYBRID: Jenis Dokumen yang Ingin Dibuat → 'Analisis Laporan Keuangan' (add English technical term if applicable)",
+          "HYBRID: Jenis Dokumen yang Ingin Dibuat → 'Perencanaan Argumen Debat' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
     },
     Pemasaran: {
@@ -8014,6 +8242,21 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya membuat strategi SEO untuk website e-commerce saya.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.300756",
+        _review_notes: [
+          "HYBRID: Tugas Pemasaran Utama → 'Strategi SEO & SEM' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Pengembangan Konten & Blog' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Manajemen Media Sosial' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Kampanye Pemasaran Email' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Peluncuran Produk & Kampanye' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Riset Pasar & Analisis Kompetitor' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Optimasi Penjualan & Konversi' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Pengembangan Perangkat Lunak": {
@@ -8399,6 +8642,19 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Gunakan Asisten Pengembang Cerdas untuk membuat fungsi Python baru.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.305192",
+        _review_notes: [
+          "HYBRID: Tugas Pengembangan → 'Buat Kode Baru' (add English technical term if applicable)",
+          "HYBRID: Tugas Pengembangan → 'Tinjau & Perbaiki Kode' (add English technical term if applicable)",
+          "HYBRID: Tugas Pengembangan → 'Jelaskan Kode' (add English technical term if applicable)",
+          "HYBRID: Tugas Pengembangan → 'Buat Pengujian Otomatis' (add English technical term if applicable)",
+          "HYBRID: Tugas Pengembangan → 'Buat Dokumentasi Teknis' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Generator Dokumentasi API": {
         id_kerangka: "KOL-PP-103",

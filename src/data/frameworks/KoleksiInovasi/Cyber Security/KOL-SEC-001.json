@@ -454,5 +454,13 @@
     "KONTEKS": "Pengguna ingin merancang sebuah rencana operasi untuk taktik Red Team: **{RED_TEAM_TACTIC}**. Rencana ini harus realistis, dapat dijalankan, dan bertujuan untuk menguji postur keamanan sebuah organisasi.",
     "TUGAS": "Buat draf rencana operasi Red Team yang mendetail untuk taktik **{RED_TEAM_TACTIC}**. Fokus HANYA pada taktik yang dipilih dan gunakan informasi yang relevan dari input pengguna.\n\n### Rencana Operasi: {RED_TEAM_TACTIC}\n\n1.  **Ringkasan Eksekutif**:\n    - Jelaskan secara singkat tujuan dari operasi {RED_TEAM_TACTIC} ini.\n\n2.  **Tujuan (Objectives)**:\n    - Sebutkan tujuan spesifik, terukur, dapat dicapai, relevan, dan berbatas waktu (SMART) dari taktik ini, berdasarkan input pengguna.\n\n3.  **Lingkup & Target (Scope & Targets)**:\n    - Identifikasi target spesifik (misalnya, aset, individu, atau sistem) berdasarkan input pengguna.\n\n4.  **Rantai Serangan (Attack Chain)**:\n    - Uraikan langkah-langkah serangan secara berurutan KHUSUS untuk taktik yang dipilih.\n    - Jika taktik adalah 'Intelijen Sumber Terbuka (OSINT)': Jelaskan cara mengumpulkan informasi tentang {OSINT_TARGET} untuk mencapai {OSINT_OBJECTIVES} menggunakan alat seperti {OSINT_TOOLS}.\n    - Jika taktik adalah 'Pengintaian & Pemetaan Aset': Rincikan bagaimana pengintaian {RECON_TYPE} (atau {RECON_TYPE_OTHER}) akan dilakukan pada {RECON_TARGET_SCOPE} menggunakan {RECON_TOOLS}.\n    - Dan seterusnya untuk setiap taktik lainnya, hanya gunakan variabel yang relevan.\n\n5.  **Alat & Sumber Daya (Tools & Resources)**:\n    - Sebutkan alat, skrip, atau sumber daya lain yang diperlukan yang disebutkan dalam input pengguna (misalnya {OSINT_TOOLS}, {RECON_TOOLS}).\n\n6.  **Indikator Kompromi (Indicators of Compromise - IOCs)**:\n    - Sebutkan IOCs potensial yang mungkin dihasilkan dari aktivitas ini (misalnya, alamat IP C2, hash file payload, artefak registri).\n\n7.  **Rekomendasi Mitigasi & Deteksi (Blue Team Perspective)**:\n    - Berikan rekomendasi konkret bagi Blue Team tentang cara mendeteksi atau mencegah teknik yang digunakan dalam taktik {RED_TEAM_TACTIC} ini.",
     "FORMAT_OUTPUT": "Sajikan rencana operasi dalam format Markdown yang profesional. Gunakan heading, sub-heading, bullet points, dan blok kode (jika perlu) untuk menyajikan informasi secara jelas dan terstruktur. Pastikan hanya membahas taktik yang dipilih dalam {RED_TEAM_TACTIC}."
-  }
+  },
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:43:43.282363",
+  "_review_notes": [
+    "SEAMLESS: Add conditional blocks [...] for optional parameters"
+  ]
 }

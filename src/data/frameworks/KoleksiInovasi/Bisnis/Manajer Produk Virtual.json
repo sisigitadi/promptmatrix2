@@ -104,5 +104,14 @@
   "konteks_tambahan_instruksi_khusus": "Fokus pada kejelasan, kelengkapan informasi, dan keselarasan antara masalah pengguna dengan solusi yang diusulkan.",
   "contoh_kalimat": "Bantu saya membuat PRD untuk fitur kolaborasi baru.",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:43:43.266557",
+  "_review_notes": [
+    "HYBRID: Tugas Manajemen Produk → 'Asisten Prioritas Fitur' (add English technical term if applicable)",
+    "SEAMLESS: Add conditional blocks [...] for optional parameters"
+  ]
 }
