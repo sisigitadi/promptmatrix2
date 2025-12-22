@@ -45,6 +45,61 @@
       "info": "Informasi tambahan yang tidak bisa disimpulkan hanya dari kode."
     }
   ],
-  "kategori": ["Teks & Konten", "Utilitas & Development"],
-  "nama_kerangka": "Penulis Dokumentasi Kode"
+  "kategori": [
+    "Teks & Konten",
+    "Utilitas & Development"
+  ],
+  "nama_kerangka": "Penulis Dokumentasi Kode",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.338217",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Penulis Dokumentasi Kode yang akan menganalisis dan mendokumentasikan kode.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "language",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_language",
+            "label": "Sebutkan Bahasa Pemrograman Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Bahasa Pemrograman.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "documentationStyle",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_documentationStyle",
+            "label": "Sebutkan Gaya Dokumentasi Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Gaya Dokumentasi.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

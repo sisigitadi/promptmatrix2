@@ -25,6 +25,21 @@
       "info": "Instruksi akhir untuk memicu proses penalaran."
     }
   ],
-  "kategori": ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
-  "nama_kerangka": "CoT (Chain of Thought)"
+  "kategori": [
+    "Prompt Ringkas",
+    "Pemikiran Terstruktur & Analisis"
+  ],
+  "nama_kerangka": "CoT (Chain of Thought)",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.358221",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Pemikir Logis yang akan memecah masalah kompleks menjadi langkah-langkah penalaran.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  }
 }

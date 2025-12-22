@@ -71,6 +71,61 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Alat Bantu Menulis"],
-  "nama_kerangka": "Asisten Pembuat Resume/CV"
+  "kategori": [
+    "Teks & Konten",
+    "Alat Bantu Menulis"
+  ],
+  "nama_kerangka": "Asisten Pembuat Resume/CV",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.240149",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Konsultan Karir yang akan menghasilkan poin-poin pencapaian untuk resume.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "experienceLevel",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_experienceLevel",
+            "label": "Sebutkan Tingkat Pengalaman Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Tingkat Pengalaman.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "sectionToGenerate",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_sectionToGenerate",
+            "label": "Sebutkan Bagian yang Akan Dibuat Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Bagian yang Akan Dibuat.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

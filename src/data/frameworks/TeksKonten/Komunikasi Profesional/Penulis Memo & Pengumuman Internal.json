@@ -65,6 +65,21 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Komunikasi Profesional"],
-  "nama_kerangka": "Penulis Memo & Pengumuman Internal"
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Penulis Memo & Pengumuman Internal",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.280741",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Spesialis Komunikasi Internal yang akan membuat pengumuman.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  }
 }

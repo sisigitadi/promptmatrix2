@@ -68,6 +68,42 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Kehidupan & Produktivitas"],
-  "nama_kerangka": "Perencana Perjalanan (Itinerary Planner)"
+  "kategori": [
+    "Teks & Konten",
+    "Kehidupan & Produktivitas"
+  ],
+  "nama_kerangka": "Perencana Perjalanan (Itinerary Planner)",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.264744",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Perencana Perjalanan yang akan membuat jadwal perjalanan harian.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "travelStyle",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_travelStyle",
+            "label": "Sebutkan Gaya Perjalanan Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Gaya Perjalanan.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

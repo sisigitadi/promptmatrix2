@@ -45,7 +45,11 @@
       "name": "actionItemsToExtract",
       "label": "Fokus Ekstraksi 'Action Items'",
       "type": "select",
-      "options": ["Ya, ekstrak dengan detail", "Tidak perlu", "Lainnya..."],
+      "options": [
+        "Ya, ekstrak dengan detail",
+        "Tidak perlu",
+        "Lainnya..."
+      ],
       "info": "Minta AI untuk secara khusus mencari, mengumpulkan, dan mendaftar semua tugas, penanggung jawab, dan tenggat waktu.",
       "optional": true
     },
@@ -61,6 +65,61 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Komunikasi Profesional"],
-  "nama_kerangka": "Generator Ringkasan Rapat (Meeting Summarizer)"
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Generator Ringkasan Rapat (Meeting Summarizer)",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.275044",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Notulis Rapat yang akan menghasilkan ringkasan.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "summaryStyle",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_summaryStyle",
+            "label": "Sebutkan Gaya Ringkasan Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Gaya Ringkasan.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "actionItemsToExtract",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_actionItemsToExtract",
+            "label": "Sebutkan Fokus Ekstraksi 'Action Items' Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Fokus Ekstraksi 'Action Items'.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

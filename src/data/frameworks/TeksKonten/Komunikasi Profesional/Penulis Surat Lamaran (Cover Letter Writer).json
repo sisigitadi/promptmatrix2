@@ -76,6 +76,42 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Komunikasi Profesional"],
-  "nama_kerangka": "Penulis Surat Lamaran (Cover Letter Writer)"
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Penulis Surat Lamaran (Cover Letter Writer)",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.282650",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Spesialis Lamaran Kerja yang akan membuat surat lamaran.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "tone",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_tone",
+            "label": "Sebutkan Gaya Bahasa Surat Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Gaya Bahasa Surat.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

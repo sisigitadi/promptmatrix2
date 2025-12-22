@@ -25,6 +25,21 @@
       "info": "Instruksi untuk menjaga keaslian persona."
     }
   ],
-  "kategori": ["Prompt Ringkas", "Persona, Gaya & Skenario"],
-  "nama_kerangka": "Expert Persona"
+  "kategori": [
+    "Prompt Ringkas",
+    "Persona, Gaya & Skenario"
+  ],
+  "nama_kerangka": "Expert Persona",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.385140",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Ahli Persona yang akan mengadopsi persona seorang ahli.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  }
 }

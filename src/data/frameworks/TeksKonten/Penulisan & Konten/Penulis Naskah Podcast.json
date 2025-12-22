@@ -69,6 +69,42 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Penulisan & Konten"],
-  "nama_kerangka": "Penulis Naskah Podcast"
+  "kategori": [
+    "Teks & Konten",
+    "Penulisan & Konten"
+  ],
+  "nama_kerangka": "Penulis Naskah Podcast",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.324629",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Penulis Naskah Podcast yang akan menyusun naskah.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "podcastFormat",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_podcastFormat",
+            "label": "Sebutkan Format Podcast Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Format Podcast.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

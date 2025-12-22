@@ -71,6 +71,61 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Kehidupan & Produktivitas"],
-  "nama_kerangka": "Generator Resep Masakan"
+  "kategori": [
+    "Teks & Konten",
+    "Kehidupan & Produktivitas"
+  ],
+  "nama_kerangka": "Generator Resep Masakan",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.260578",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Koki AI yang akan membuat resep masakan baru dan kreatif.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "cuisineType",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_cuisineType",
+            "label": "Sebutkan Jenis Masakan yang Diinginkan Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Jenis Masakan yang Diinginkan.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "difficultyLevel",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_difficultyLevel",
+            "label": "Sebutkan Tingkat Kesulitan Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Tingkat Kesulitan.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

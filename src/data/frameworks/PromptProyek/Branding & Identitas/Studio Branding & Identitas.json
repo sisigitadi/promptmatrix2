@@ -175,5 +175,17 @@
     "Prompt Proyek",
     "Branding & Identitas"
   ],
-  "nama_kerangka": "Studio Branding & Identitas"
+  "nama_kerangka": "Studio Branding & Identitas",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.427157",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Direktur Kreatif Branding yang akan menerjemahkan esensi ide menjadi aset kreatif.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  }
 }

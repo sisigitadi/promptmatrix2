@@ -72,6 +72,61 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Komunikasi Profesional"],
-  "nama_kerangka": "Penulis Email Profesional"
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Penulis Email Profesional",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.278599",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Asisten Komunikasi Profesional yang akan menyusun draf email.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "scenario",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_scenario",
+            "label": "Sebutkan Skenario Email Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Skenario Email.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "tone",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_tone",
+            "label": "Sebutkan Tingkat Formalitas Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Tingkat Formalitas.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

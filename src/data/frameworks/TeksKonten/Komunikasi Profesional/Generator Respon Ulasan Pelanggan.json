@@ -70,6 +70,61 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Komunikasi Profesional"],
-  "nama_kerangka": "Generator Respon Ulasan Pelanggan"
+  "kategori": [
+    "Teks & Konten",
+    "Komunikasi Profesional"
+  ],
+  "nama_kerangka": "Generator Respon Ulasan Pelanggan",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.272737",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Manajer Hubungan Pelanggan yang akan menghasilkan balasan.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "sentiment",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_sentiment",
+            "label": "Sebutkan Sentimen Ulasan Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Sentimen Ulasan.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "tone",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_tone",
+            "label": "Sebutkan Gaya Bahasa Balasan Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Gaya Bahasa Balasan.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

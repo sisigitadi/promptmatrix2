@@ -65,6 +65,42 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Alat Bantu Menulis"],
-  "nama_kerangka": "Penulis Ulang & Parafraser"
+  "kategori": [
+    "Teks & Konten",
+    "Alat Bantu Menulis"
+  ],
+  "nama_kerangka": "Penulis Ulang & Parafraser",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.249693",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Ahli Parafrase yang akan menulis ulang teks.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "rewriteGoal",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_rewriteGoal",
+            "label": "Sebutkan Tujuan Penulisan Ulang Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Tujuan Penulisan Ulang.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

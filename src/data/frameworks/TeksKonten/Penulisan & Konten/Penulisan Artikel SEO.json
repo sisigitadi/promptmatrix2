@@ -78,6 +78,42 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Penulisan & Konten"],
-  "nama_kerangka": "Penulisan Artikel SEO"
+  "kategori": [
+    "Teks & Konten",
+    "Penulisan & Konten"
+  ],
+  "nama_kerangka": "Penulisan Artikel SEO",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.330215",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Penulis Artikel SEO yang akan membuat artikel yang dioptimalkan untuk mesin pencari.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "tone",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_tone",
+            "label": "Sebutkan Gaya Bahasa Artikel Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Gaya Bahasa Artikel.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

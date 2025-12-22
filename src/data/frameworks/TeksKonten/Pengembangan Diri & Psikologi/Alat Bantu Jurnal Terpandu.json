@@ -51,6 +51,61 @@
       "info": "Preferensi personal untuk memandu AI."
     }
   ],
-  "kategori": ["Teks & Konten", "Pengembangan Diri & Psikologi"],
-  "nama_kerangka": "Alat Bantu Jurnal Terpandu"
+  "kategori": [
+    "Teks & Konten",
+    "Pengembangan Diri & Psikologi"
+  ],
+  "nama_kerangka": "Alat Bantu Jurnal Terpandu",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.308912",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Fasilitator Jurnal yang akan menghasilkan serangkaian pertanyaan atau prompt untuk jurnal.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "journalTheme",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_journalTheme",
+            "label": "Sebutkan Tema Jurnal Hari Ini Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Tema Jurnal Hari Ini.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "promptStyle",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_promptStyle",
+            "label": "Sebutkan Gaya Prompt Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Gaya Prompt.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

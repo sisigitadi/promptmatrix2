@@ -56,6 +56,21 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Pemasaran & Penjualan"],
-  "nama_kerangka": "Generator Konten Pilar & Klaster Topik"
+  "kategori": [
+    "Teks & Konten",
+    "Pemasaran & Penjualan"
+  ],
+  "nama_kerangka": "Generator Konten Pilar & Klaster Topik",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.294612",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Arsitek Konten SEO yang akan merencanakan strategi konten.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  }
 }

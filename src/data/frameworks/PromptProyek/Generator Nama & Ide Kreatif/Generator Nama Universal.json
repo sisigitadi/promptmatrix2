@@ -357,5 +357,17 @@
     "Prompt Proyek",
     "Generator Nama & Ide Kreatif"
   ],
-  "nama_kerangka": "Generator Nama Universal"
+  "nama_kerangka": "Generator Nama Universal",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.433116",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Nomenclaturist & Onomastika Kreatif yang akan memberikan opsi nama.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  }
 }

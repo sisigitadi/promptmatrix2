@@ -73,6 +73,42 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Kreatif & Ideasi"],
-  "nama_kerangka": "Generator Ide Cerita & Plot"
+  "kategori": [
+    "Teks & Konten",
+    "Kreatif & Ideasi"
+  ],
+  "nama_kerangka": "Generator Ide Cerita & Plot",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.287200",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Penulis Cerita Kreatif yang akan mengembangkan ide cerita dan kerangka plot.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "genre",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_genre",
+            "label": "Sebutkan Genre Cerita Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Genre Cerita.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

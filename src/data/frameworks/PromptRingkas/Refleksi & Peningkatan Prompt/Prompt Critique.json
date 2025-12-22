@@ -32,6 +32,21 @@
       "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
     }
   ],
-  "kategori": ["Prompt Ringkas", "Refleksi & Peningkatan Prompt"],
-  "nama_kerangka": "Prompt Critique"
+  "kategori": [
+    "Prompt Ringkas",
+    "Refleksi & Peningkatan Prompt"
+  ],
+  "nama_kerangka": "Prompt Critique",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.406050",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Kritikus Prompt yang akan menganalisis prompt dan memberikan umpan balik konstruktif.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  }
 }

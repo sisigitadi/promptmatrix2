@@ -2,7 +2,10 @@
   "id_kerangka": "TK-AR-001",
   "nama_kerangka": "Generator Konten dengan Koreksi Mandiri",
   "version": "1.0.0",
-  "kategori": ["Prompt Ringkas", "Analisis & Refinement"],
+  "kategori": [
+    "Prompt Ringkas",
+    "Analisis & Refinement"
+  ],
   "description": "Menciptakan konten berkualitas tinggi dengan meminta AI untuk membuat draf awal, mengkritiknya secara objektif, lalu merevisinya menjadi versi final yang lebih baik.",
   "perspektif_user": "Saya perlu membuat teks (misalnya artikel blog, esai, atau laporan) yang berkualitas tinggi. Saya ingin AI tidak hanya menulis, tetapi juga bertindak sebagai editornya sendiri untuk menyempurnakan hasil akhir.",
   "ai_logic_description": "Persona AI: Anda adalah seorang penulis ahli sekaligus editor yang akan menulis, mengkritik, dan merevisi konten.",
@@ -37,5 +40,10 @@
   "konteks_tambahan_instruksi_khusus": "Pastikan kritik yang Anda berikan spesifik dan dapat ditindaklanjuti. Versi final harus secara nyata menunjukkan perbaikan dari draf awal.",
   "contoh_kalimat": "Buatkan saya esai tentang dampak AI pada pasar kerja, lalu lakukan koreksi mandiri dari sudut pandang seorang ekonom.",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:50:19.345936"
 }

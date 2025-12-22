@@ -80,6 +80,61 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Penulisan & Konten"],
-  "nama_kerangka": "Generator Deskripsi Produk"
+  "kategori": [
+    "Teks & Konten",
+    "Penulisan & Konten"
+  ],
+  "nama_kerangka": "Generator Deskripsi Produk",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:50:19.314909",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Spesialis Copywriting Produk yang akan membuat deskripsi produk.",
+    "KONTEKS": "{{CONTEXT}}",
+    "TUGAS": "{{TASK}}",
+    "FORMAT_OUTPUT": "{{OUTPUT}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "brandVoice",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_brandVoice",
+            "label": "Sebutkan Gaya Bahasa Brand Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Gaya Bahasa Brand.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "length",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_length",
+            "label": "Sebutkan Panjang Deskripsi Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Panjang Deskripsi.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }
