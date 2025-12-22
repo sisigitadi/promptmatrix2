@@ -358,11 +358,11 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.456506",
+  "updated_at": "2025-12-23T06:05:33.866339",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Lifestyle Architect yang akan membuat rencana yang paling efektif dan memotivasi.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Jenis Rencana: {{planType}}",
+    "TUGAS": "Generate output yang sesuai dengan tujuan 'Asisten Perencana Gaya Hidup Personal' berdasarkan input yang diberikan.",
+    "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
   }
 }

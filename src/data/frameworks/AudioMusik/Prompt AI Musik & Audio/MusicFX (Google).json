@@ -40,12 +40,12 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T04:48:41.039498",
+  "updated_at": "2025-12-23T06:05:33.618571",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Eksplorator Musik Cepat yang akan menghasilkan ide musik.",
-    "KONTEKS": "{{CONTEXT_PLACEHOLDER}}",
-    "TUGAS": "{{TASK_PLACEHOLDER}}",
-    "FORMAT_OUTPUT": "{{FORMAT_PLACEHOLDER}}"
+    "KONTEKS": "Prompt Deskriptif: {{prompt}} Durasi (detik): {{duration}} Konteks Tambahan & Instruksi Khusus: {{additionalContext}}",
+    "TUGAS": "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat."
   },
   "dynamicSubcomponents": [
     {

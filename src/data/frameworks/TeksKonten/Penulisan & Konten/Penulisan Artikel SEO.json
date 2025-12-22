@@ -88,12 +88,12 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.330215",
+  "updated_at": "2025-12-23T06:05:34.938381",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Penulis Artikel SEO yang akan membuat artikel yang dioptimalkan untuk mesin pencari.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Kata Kunci Utama: {{targetKeyword}} Kata Kunci Sekunder (pisahkan koma): {{secondaryKeywords}} Target Audiens Artikel: {{targetAudience}} Gaya Bahasa Artikel: {{tone}} Target Jumlah Kata: {{wordCount}}",
+    "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
   },
   "dynamicSubcomponents": [
     {

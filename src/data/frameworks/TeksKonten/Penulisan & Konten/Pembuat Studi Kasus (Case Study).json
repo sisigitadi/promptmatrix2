@@ -76,11 +76,11 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.320299",
+  "updated_at": "2025-12-23T06:05:34.889060",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Analis Studi Kasus yang akan menyusun narasi studi kasus.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Nama Klien/Proyek: {{clientName}} Masalah atau Tantangan Awal: {{problem}} Solusi yang Diterapkan: {{solution}} Hasil & Metrik Kuantitatif: {{results}} [Kutipan dari Klien (Opsional): {{clientQuote}}]",
+    "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
   }
 }

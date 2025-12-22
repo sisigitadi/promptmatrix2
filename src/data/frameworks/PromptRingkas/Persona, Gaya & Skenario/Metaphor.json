@@ -42,11 +42,11 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.394840",
+  "updated_at": "2025-12-23T06:05:34.180506",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Ahli Metafora yang akan menjelaskan konsep kompleks atau abstrak menggunakan metafora atau analogi.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Konsep Kompleks: {{complexConcept}} Target Audiens: {{targetAudience}} Jumlah Opsi Metafora: {{numberOfMetaphors}} Konteks Tambahan & Instruksi Khusus: {{additionalContext}}",
+    "TUGAS": "Generate output yang sesuai dengan tujuan 'Metaphor' berdasarkan input yang diberikan.",
+    "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
   }
 }

@@ -363,11 +363,11 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.433116",
+  "updated_at": "2025-12-23T06:05:33.782307",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Nomenclaturist & Onomastika Kreatif yang akan memberikan opsi nama.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Kategori Penamaan: {{category}}",
+    "TUGAS": "Generate output yang sesuai dengan tujuan 'Generator Nama Universal' berdasarkan input yang diberikan.",
+    "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
   }
 }

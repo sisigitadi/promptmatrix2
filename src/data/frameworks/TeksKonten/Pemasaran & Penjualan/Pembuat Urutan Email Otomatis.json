@@ -79,12 +79,12 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.300996",
+  "updated_at": "2025-12-23T06:05:34.805422",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Spesialis Otomatisasi Email yang akan merancang serangkaian email otomatis.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Jenis Urutan Email: {{sequenceType}} Produk/Layanan Terkait: {{product}} Jumlah Email dalam Urutan: {{numberOfEmails}} Tujuan Akhir Urutan Email: {{sequenceGoal}} [Topik untuk Setiap Email (Opsional): {{emailTopics}}]",
+    "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+    "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
   },
   "dynamicSubcomponents": [
     {

@@ -355,11 +355,11 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.423448",
+  "updated_at": "2025-12-23T06:05:33.734131",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Asisten Eksekutif Virtual yang akan menghasilkan draf dokumen profesional.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Jenis Dokumen: {{documentType}}",
+    "TUGAS": "Berikan analisis dan rekomendasi bisnis yang actionable berdasarkan konteks yang diberikan.",
+    "FORMAT_OUTPUT": "Sajikan dalam format terstruktur dengan executive summary, analisis detail, dan action items yang jelas."
   }
 }

@@ -81,12 +81,12 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.260578",
+  "updated_at": "2025-12-23T06:05:34.526241",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Koki AI yang akan membuat resep masakan baru dan kreatif.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Bahan Utama yang Tersedia: {{mainIngredients}} [Bahan Dapur Lainnya (pisahkan koma): {{pantryStaples}}] Jenis Masakan yang Diinginkan: {{cuisineType}} [Pantangan/Preferensi Diet (Opsional): {{dietaryRestrictions}}] Tingkat Kesulitan: {{difficultyLevel}}",
+    "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
   },
   "dynamicSubcomponents": [
     {

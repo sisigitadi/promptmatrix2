@@ -75,12 +75,12 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.249693",
+  "updated_at": "2025-12-23T06:05:34.443959",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Ahli Parafrase yang akan menulis ulang teks.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Teks Asli: {{originalText}} Tujuan Penulisan Ulang: {{rewriteGoal}} Target Audiens Baru: {{targetAudience}} [Kata Kunci yang Harus Dipertahankan: {{keywordsToKeep}}] [Tiru Gaya Penulisan (Opsional): {{styleToEmulate}}]",
+    "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
   },
   "dynamicSubcomponents": [
     {

@@ -66,11 +66,11 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.294612",
+  "updated_at": "2025-12-23T06:05:34.768961",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Arsitek Konten SEO yang akan merencanakan strategi konten.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Tema Utama Bisnis/Website: {{mainTheme}} Target Audiens: {{targetAudience}} Ide Topik Pilar: {{pillarTopic}} Jumlah Klaster Topik yang Diinginkan: {{clusterCount}} [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}]",
+    "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+    "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
   }
 }

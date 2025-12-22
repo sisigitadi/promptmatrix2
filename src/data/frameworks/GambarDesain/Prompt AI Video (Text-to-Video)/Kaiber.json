@@ -68,12 +68,12 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:07:55.272011",
+  "updated_at": "2025-12-23T06:05:33.658754",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Transformator Visual yang akan menghasilkan video dengan gaya visual artistik.",
-    "KONTEKS": "{{CONTEXT_PLACEHOLDER}}",
-    "TUGAS": "{{TASK_PLACEHOLDER}}",
-    "FORMAT_OUTPUT": "{{FORMAT_PLACEHOLDER}}"
+    "KONTEKS": "Subjek Video: {{subject}} Gaya Visual: {{style}} [Transformasi (untuk video-ke-video): {{transformation}}] Aspect Ratio: {{aspectRatio}} [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}]",
+    "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
   },
   "dynamicSubcomponents": [
     {

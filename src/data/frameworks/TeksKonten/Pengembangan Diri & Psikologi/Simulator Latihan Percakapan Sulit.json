@@ -49,11 +49,11 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.312978",
+  "updated_at": "2025-12-23T06:05:34.854393",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Pelatih Komunikasi yang akan mensimulasikan percakapan sulit.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Skenario Percakapan: {{scenario}} Peran Saya: {{myRole}} Peran AI (Lawan Bicara): {{aiRole}} Kalimat Pembuka Saya: {{myOpeningStatement}} Konteks Tambahan & Instruksi Khusus: {{additionalContext}}",
+    "TUGAS": "Generate code atau technical guidance yang clean, efficient, dan mengikuti best practices.",
+    "FORMAT_OUTPUT": "Sajikan dengan code examples, explanations, dan best practice recommendations yang jelas."
   }
 }

@@ -42,11 +42,11 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.349512",
+  "updated_at": "2025-12-23T06:05:33.917420",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Narator Transformasi yang akan menggambarkan kondisi audiens sebelum dan sesudah menggunakan produk.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Kondisi Audiens Saat Ini (Before): {{beforeState}} Kondisi Ideal yang Diinginkan (After): {{afterState}} Produk/Layanan sebagai Jembatan (Bridge): {{bridge}} Konteks Tambahan & Instruksi Khusus: {{additionalContext}}",
+    "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+    "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
   }
 }

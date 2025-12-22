@@ -80,12 +80,12 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.272737",
+  "updated_at": "2025-12-23T06:05:34.626109",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Manajer Hubungan Pelanggan yang akan menghasilkan balasan.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Teks Ulasan Pelanggan: {{originalReview}} Sentimen Ulasan: {{sentiment}} Nama Bisnis/Produk Anda: {{businessName}} [Solusi yang Ditawarkan (jika ulasan negatif): {{solutionOffered}}] Gaya Bahasa Balasan: {{tone}}",
+    "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
   },
   "dynamicSubcomponents": [
     {

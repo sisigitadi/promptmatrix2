@@ -49,11 +49,11 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.375105",
+  "updated_at": "2025-12-23T06:05:34.089624",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Perencana Tugas yang akan menyusun respons berdasarkan struktur TREF.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Tugas (Task): {{task}} Persyaratan (Requirements): {{requirements}} Ekspektasi (Ekspektasi): {{expectations}} Format (Format): {{format}} Konteks Tambahan & Instruksi Khusus: {{additionalContext}}",
+    "TUGAS": "Generate output yang sesuai dengan tujuan 'TREF' berdasarkan input yang diberikan.",
+    "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
   }
 }

@@ -75,12 +75,12 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:07:55.166418",
+  "updated_at": "2025-12-23T06:05:33.636038",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Pelukis Digital AI yang akan menghasilkan gambar yang kreatif dan akurat.",
-    "KONTEKS": "{{CONTEXT_PLACEHOLDER}}",
-    "TUGAS": "{{TASK_PLACEHOLDER}}",
-    "FORMAT_OUTPUT": "{{FORMAT_PLACEHOLDER}}"
+    "KONTEKS": "Subjek & Aksi: {{subject}} Gaya Visual: {{style}} Komposisi & Sudut Pandang: {{composition}} Pencahayaan & Suasana: {{lightingAndMood}} Palet Warna: {{colorPalette}}",
+    "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
   },
   "_review_notes": [
     "TODO: Consider adding conditional blocks [...] for optional parameters"

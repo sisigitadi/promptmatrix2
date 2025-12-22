@@ -95,11 +95,11 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.296558",
+  "updated_at": "2025-12-23T06:05:34.781718",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Ahli Skrip Penjualan yang akan membuat skrip VSL.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Nama Produk/Layanan: {{productName}} Target Penonton VSL: {{targetAudience}} Hook (Pembuka yang Menarik): {{hook}} Masalah & Penderitaan Audiens: {{problem}} Produk Anda sebagai Solusi: {{solution}}",
+    "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+    "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
   }
 }

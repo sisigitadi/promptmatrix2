@@ -35,11 +35,11 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.413257",
+  "updated_at": "2025-12-23T06:05:34.306738",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Pemformat Data yang akan mengonversi data menjadi format JSON yang valid.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Data Tidak Terstruktur: {{unstructuredData}} Petunjuk Skema (Opsional): {{schemaHint}} Konteks Tambahan & Instruksi Khusus: {{additionalContext}}",
+    "TUGAS": "Generate output yang sesuai dengan tujuan 'JSON Formatter' berdasarkan input yang diberikan.",
+    "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
   }
 }

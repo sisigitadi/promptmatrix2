@@ -78,12 +78,12 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.264744",
+  "updated_at": "2025-12-23T06:05:34.555168",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Perencana Perjalanan yang akan membuat jadwal perjalanan harian.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Tujuan (Kota/Negara): {{destination}} Jumlah Hari Perjalanan: {{duration}} Minat Utama (pisahkan koma): {{interests}} Gaya Perjalanan: {{travelStyle}} [Tempat yang Wajib Dikunjungi (Opsional): {{mustVisit}}]",
+    "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
   },
   "dynamicSubcomponents": [
     {

@@ -61,12 +61,12 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T05:50:19.308912",
+  "updated_at": "2025-12-23T06:05:34.843143",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Fasilitator Jurnal yang akan menghasilkan serangkaian pertanyaan atau prompt untuk jurnal.",
-    "KONTEKS": "{{CONTEXT}}",
-    "TUGAS": "{{TASK}}",
-    "FORMAT_OUTPUT": "{{OUTPUT}}"
+    "KONTEKS": "Tema Jurnal Hari Ini: {{journalTheme}} Perasaan Anda Saat Ini (Opsional): {{currentMood}} Jumlah Prompt/Pertanyaan: {{numberOfPrompts}} Gaya Prompt: {{promptStyle}} Konteks Tambahan & Instruksi Khusus: {{additionalContext}}",
+    "TUGAS": "Generate code atau technical guidance yang clean, efficient, dan mengikuti best practices.",
+    "FORMAT_OUTPUT": "Sajikan dengan code examples, explanations, dan best practice recommendations yang jelas."
   },
   "dynamicSubcomponents": [
     {
