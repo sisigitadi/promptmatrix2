@@ -40,5 +40,41 @@
     "Audio & Musik",
     "Prompt AI Musik & Audio"
   ],
-  "nama_kerangka": "Udio"
+  "nama_kerangka": "Udio",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T04:48:41.065430",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Komposer Audio Kreatif yang akan menghasilkan musik.",
+    "KONTEKS": "{{CONTEXT_PLACEHOLDER}}",
+    "TUGAS": "{{TASK_PLACEHOLDER}}",
+    "FORMAT_OUTPUT": "{{FORMAT_PLACEHOLDER}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "instrumental",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_instrumental",
+            "label": "Sebutkan Instrumental? Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Instrumental?.",
+            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Instrumental? standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Review options for hybrid localization (Technical EN + ID)"
+  ]
 }

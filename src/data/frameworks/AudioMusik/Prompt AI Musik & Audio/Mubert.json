@@ -25,6 +25,24 @@
       "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
     }
   ],
-  "kategori": ["Audio & Musik", "Prompt AI Musik & Audio"],
-  "nama_kerangka": "Mubert"
+  "kategori": [
+    "Audio & Musik",
+    "Prompt AI Musik & Audio"
+  ],
+  "nama_kerangka": "Mubert",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T04:48:41.032734",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Kurator Musik Fungsional yang akan menghasilkan musik fungsional bebas royalti.",
+    "KONTEKS": "{{CONTEXT_PLACEHOLDER}}",
+    "TUGAS": "{{TASK_PLACEHOLDER}}",
+    "FORMAT_OUTPUT": "{{FORMAT_PLACEHOLDER}}"
+  },
+  "_review_notes": [
+    "TODO: Review options for hybrid localization (Technical EN + ID)"
+  ]
 }

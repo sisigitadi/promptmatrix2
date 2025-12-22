@@ -106,6 +106,103 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Alat Bantu Komposisi"],
         nama_kerangka: "Ide Progresi Kord",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T04:48:41.019625",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Komposer Musik yang akan menghasilkan ide progresi kord.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "genre",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_genre",
+                  label: "Sebutkan Genre Musik Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Genre Musik.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Genre Musik standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "mood",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_mood",
+                  label: "Sebutkan Mood yang Diinginkan Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Mood yang Diinginkan.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Mood yang Diinginkan standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "complexity",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_complexity",
+                  label: "Sebutkan Tingkat Kompleksitas Kord Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Kord.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tingkat Kompleksitas Kord standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "partOfSong",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_partOfSong",
+                  label: "Sebutkan Untuk Bagian Lagu Mana? Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Untuk Bagian Lagu Mana?.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Untuk Bagian Lagu Mana? standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
       "Penulisan Lirik Lagu": {
         description:
@@ -176,6 +273,63 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Alat Bantu Komposisi"],
         nama_kerangka: "Penulisan Lirik Lagu",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T04:48:41.027097",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Lirik Profesional yang akan menulis lirik lagu.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "genre",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_genre",
+                  label: "Sebutkan Genre Musik Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Genre Musik.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Genre Musik standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "mood",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_mood",
+                  label: "Sebutkan Suasana Hati Lagu Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Suasana Hati Lagu.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Suasana Hati Lagu standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
     },
     "Prompt AI Musik & Audio": {
@@ -211,6 +365,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
         nama_kerangka: "Mubert",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T04:48:41.032734",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Kurator Musik Fungsional yang akan menghasilkan musik fungsional bebas royalti.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
       "MusicFX (Google)": {
         description:
@@ -245,6 +415,44 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
         nama_kerangka: "MusicFX (Google)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T04:48:41.039498",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Eksplorator Musik Cepat yang akan menghasilkan ide musik.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "duration",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_duration",
+                  label: "Sebutkan Durasi (detik) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Durasi (detik).",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Durasi (detik) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
       "Stable Audio": {
         description:
@@ -286,6 +494,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
         nama_kerangka: "Stable Audio",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T04:48:41.044783",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Insinyur Audio AI yang akan menghasilkan audio, efek suara, atau musik instrumental.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
       "Suno AI": {
         description:
@@ -348,6 +572,82 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
         nama_kerangka: "Suno AI",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T04:48:41.053069",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Produser Musik AI yang akan menghasilkan lagu.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "model",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_model",
+                  label: "Sebutkan Model Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Model.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Model standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "instrumental",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_instrumental",
+                  label: "Sebutkan Instrumental? Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Instrumental?.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Instrumental? standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "makeInstrumental",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_makeInstrumental",
+                  label: "Sebutkan Buat Versi Instrumental? Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Buat Versi Instrumental?.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Buat Versi Instrumental? standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
       Udio: {
         description:
@@ -389,6 +689,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
         nama_kerangka: "Udio",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T04:48:41.065430",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Komposer Audio Kreatif yang akan menghasilkan musik.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "instrumental",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_instrumental",
+                  label: "Sebutkan Instrumental? Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Instrumental?.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Instrumental? standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
     },
   },

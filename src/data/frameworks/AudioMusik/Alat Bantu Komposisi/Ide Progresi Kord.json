@@ -54,7 +54,13 @@
       "name": "partOfSong",
       "label": "Untuk Bagian Lagu Mana?",
       "type": "select",
-      "options": ["Verse", "Chorus", "Bridge", "Semua Bagian", "Lainnya..."],
+      "options": [
+        "Verse",
+        "Chorus",
+        "Bridge",
+        "Semua Bagian",
+        "Lainnya..."
+      ],
       "info": "Progresi untuk chorus biasanya lebih kuat dan 'catchy' daripada verse."
     },
     {
@@ -65,6 +71,102 @@
       "info": "Instruksi teknis atau artistik tambahan untuk progresi kord yang dihasilkan."
     }
   ],
-  "kategori": ["Audio & Musik", "Alat Bantu Komposisi"],
-  "nama_kerangka": "Ide Progresi Kord"
+  "kategori": [
+    "Audio & Musik",
+    "Alat Bantu Komposisi"
+  ],
+  "nama_kerangka": "Ide Progresi Kord",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T04:48:41.019625",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Komposer Musik yang akan menghasilkan ide progresi kord.",
+    "KONTEKS": "{{CONTEXT_PLACEHOLDER}}",
+    "TUGAS": "{{TASK_PLACEHOLDER}}",
+    "FORMAT_OUTPUT": "{{FORMAT_PLACEHOLDER}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "genre",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_genre",
+            "label": "Sebutkan Genre Musik Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Genre Musik.",
+            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Genre Musik standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "mood",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_mood",
+            "label": "Sebutkan Mood yang Diinginkan Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Mood yang Diinginkan.",
+            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Mood yang Diinginkan standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "complexity",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_complexity",
+            "label": "Sebutkan Tingkat Kompleksitas Kord Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Tingkat Kompleksitas Kord.",
+            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Tingkat Kompleksitas Kord standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "partOfSong",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_partOfSong",
+            "label": "Sebutkan Untuk Bagian Lagu Mana? Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Untuk Bagian Lagu Mana?.",
+            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Untuk Bagian Lagu Mana? standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Review options for hybrid localization (Technical EN + ID)"
+  ]
 }

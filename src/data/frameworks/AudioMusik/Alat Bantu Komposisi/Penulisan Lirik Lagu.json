@@ -61,6 +61,64 @@
       "info": "Detail artistik atau batasan kreatif untuk AI. Misalnya, penggunaan metafora atau majas tertentu."
     }
   ],
-  "kategori": ["Audio & Musik", "Alat Bantu Komposisi"],
-  "nama_kerangka": "Penulisan Lirik Lagu"
+  "kategori": [
+    "Audio & Musik",
+    "Alat Bantu Komposisi"
+  ],
+  "nama_kerangka": "Penulisan Lirik Lagu",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T04:48:41.027097",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Penulis Lirik Profesional yang akan menulis lirik lagu.",
+    "KONTEKS": "{{CONTEXT_PLACEHOLDER}}",
+    "TUGAS": "{{TASK_PLACEHOLDER}}",
+    "FORMAT_OUTPUT": "{{FORMAT_PLACEHOLDER}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "genre",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_genre",
+            "label": "Sebutkan Genre Musik Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Genre Musik.",
+            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Genre Musik standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "mood",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_mood",
+            "label": "Sebutkan Suasana Hati Lagu Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Suasana Hati Lagu.",
+            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Suasana Hati Lagu standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Review options for hybrid localization (Technical EN + ID)"
+  ]
 }

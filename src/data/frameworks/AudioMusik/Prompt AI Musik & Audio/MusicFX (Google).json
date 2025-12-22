@@ -34,5 +34,41 @@
     "Audio & Musik",
     "Prompt AI Musik & Audio"
   ],
-  "nama_kerangka": "MusicFX (Google)"
+  "nama_kerangka": "MusicFX (Google)",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T04:48:41.039498",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Eksplorator Musik Cepat yang akan menghasilkan ide musik.",
+    "KONTEKS": "{{CONTEXT_PLACEHOLDER}}",
+    "TUGAS": "{{TASK_PLACEHOLDER}}",
+    "FORMAT_OUTPUT": "{{FORMAT_PLACEHOLDER}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "duration",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_duration",
+            "label": "Sebutkan Durasi (detik) Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Durasi (detik).",
+            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Durasi (detik) standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Review options for hybrid localization (Technical EN + ID)"
+  ]
 }
