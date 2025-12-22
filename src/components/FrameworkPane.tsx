@@ -32,6 +32,7 @@ import {
 
 import { callGeminiApi } from "../utils/api"; // Import API functions
 import { toast } from "react-toastify";
+import FrameworkMultiSelect from "./framework-inputs/FrameworkMultiSelect";
 
 interface FrameworkPaneProps {
   currentFrameworkDetails: {
@@ -1105,104 +1106,21 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
           </div>
         )}
         {compType === "multiselect" && (
-          <>
-            <div className="w-100">
-              <InputGroup>
-                <Form.Select
-                  name={compName}
-                  value={formData[compName] || []}
-                  onChange={(e) =>
-                    handleInputChangeWithValidation(
-                      compName,
-                      Array.from(
-                        e.target.selectedOptions,
-                        (option) => option.value,
-                      ),
-                      inputDetails,
-                    )
-                  }
-                  onBlur={() => handleInputBlur(compName)}
-                  className="form-select"
-                  multiple
-                  isInvalid={
-                    touchedFields[compName] && !!validationErrors[compName]
-                  }
-                  aria-invalid={
-                    touchedFields[compName] && !!validationErrors[compName]
-                      ? "true"
-                      : "false"
-                  }
-                  aria-describedby={
-                    touchedFields[compName] && !!validationErrors[compName]
-                      ? `validation-feedback-${compName}`
-                      : undefined
-                  }
-                >
-                  {compOptions?.map((opt: { label: string; value: string }) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </Form.Select>
-                <Button
-                  variant="outline-secondary"
-                  onClick={() => {
-                    if (compOptions && compOptions.length > 0) {
-                      // Select a random number of options (1 to all available)
-                      const numToSelect =
-                        Math.floor(Math.random() * compOptions.length) + 1;
-                      const shuffled = [...compOptions].sort(
-                        () => 0.5 - Math.random(),
-                      );
-                      const selectedOptions = shuffled
-                        .slice(0, numToSelect)
-                        .map((opt) => opt.value);
-                      handleInputChangeWithValidation(
-                        compName,
-                        selectedOptions,
-                        inputDetails,
-                      );
-                    }
-                  }}
-                  title="Pilih acak"
-                  className="interactive-input ms-1"
-                >
-                  🎲
-                </Button>
-                <Form.Control.Feedback
-                  type="invalid"
-                  id={`validation-feedback-${compName}`}
-                >
-                  {validationErrors[compName] || " "}
-                </Form.Control.Feedback>
-              </InputGroup>
-            </div>
-            {formData[compName] &&
-              formData[compName].includes("Lainnya...") && (
-                <Form.Group className="mt-2" controlId={`${compName}-custom`}>
-                  <Form.Control
-                    type="text"
-                    placeholder={`Sebutkan ${compLabel} Lainnya`}
-                    value={customInputs[compName] || ""}
-                    onChange={(e) =>
-                      handleCustomInputChangeWithValidation(
-                        compName,
-                        e.target.value,
-                        inputDetails,
-                      )
-                    }
-                    onBlur={() => handleInputBlur(`${compName}-custom`)}
-                    isInvalid={
-                      touchedFields[`${compName}-custom`] &&
-                      !!validationErrors[`${compName}-custom`]
-                    }
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {validationErrors[`${compName}-custom`]}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              )}
-          </>
+          <FrameworkMultiSelect
+            compName={compName}
+            compLabel={compLabel}
+            compOptions={compOptions}
+            formData={formData}
+            customInputs={customInputs}
+            inputDetails={inputDetails}
+            handleInputChangeWithValidation={handleInputChangeWithValidation}
+            handleCustomInputChangeWithValidation={
+              handleCustomInputChangeWithValidation
+            }
+            handleInputBlur={handleInputBlur}
+            validationErrors={validationErrors}
+            touchedFields={touchedFields}
+          />
         )}
         {compType === "image" && (
           <div className="d-flex align-items-center">

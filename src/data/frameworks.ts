@@ -12464,7 +12464,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
                 label: "Lainnya...",
                 value: "Lainnya",
               },
-              "Lainnya...",
             ],
             info: "Pilih jenis wawancara untuk mendapatkan persiapan yang paling relevan.",
           },
@@ -12549,10 +12548,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               {
                 label: "Lainnya...",
                 value: "Lainnya",
-              },
-              {
-                label: "Lainnya...",
-                value: "Lainnya...",
               },
             ],
             info: "Pilih area spesifik di mana Anda membutuhkan bantuan persiapan.",
