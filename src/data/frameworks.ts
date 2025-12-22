@@ -823,6 +823,17 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         konteks_tambahan_instruksi_khusus:
           "Saat menganalisis, berikan interpretasi yang cerdas dan jangan hanya menyebutkan apa yang terlihat atau terdengar secara harfiah. Cari makna yang lebih dalam jika memungkinkan.",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:07:55.059684",
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Pilih Tugas Analisis' option 'Deskripsikan Gambar'",
+          "TODO: Apply hybrid format to 'Pilih Tugas Analisis' option 'Transkripsikan Audio'",
+          "TODO: Apply hybrid format to 'Pilih Tugas Analisis' option 'Analisis Gambar dengan Konteks Teks'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Perencanaan Video & Visual": {
@@ -888,6 +899,75 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Perencanaan Video & Visual"],
         nama_kerangka: "Ide Konten Video",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.079490",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Strategis Konten Video yang akan menghasilkan ide-ide video.",
+          KONTEKS:
+            "[Konsep video: {concept}] [Gaya sinematik: {style}] [Durasi target: {duration}]",
+          TUGAS:
+            "Generate prompt yang menghasilkan video dengan narrative flow dan visual continuity yang baik.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dengan scene breakdown, camera movements, dan transition details yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "platform",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_platform",
+                  label: "Sebutkan Platform Video Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Platform Video.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Platform Video standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "videoFormat",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_videoFormat",
+                  label: "Sebutkan Format Video Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Format Video.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Format Video standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Platform Video' option 'YouTube'",
+          "TODO: Apply hybrid format to 'Platform Video' option 'TikTok'",
+          "TODO: Apply hybrid format to 'Platform Video' option 'Instagram Reels'",
+          "TODO: Apply hybrid format to 'Platform Video' option 'LinkedIn Video'",
+          "TODO: Apply hybrid format to 'Format Video' option 'Tutorial / How-to'",
+          "TODO: Apply hybrid format to 'Format Video' option 'Vlog Harian/Mingguan'",
+          "TODO: Apply hybrid format to 'Format Video' option 'Review Produk/Jasa'",
+          "TODO: Apply hybrid format to 'Format Video' option 'Edukasi Singkat / Explainer'",
+          "TODO: Apply hybrid format to 'Format Video' option 'Wawancara'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Script Iklan": {
         description: "Buat naskah singkat untuk iklan video atau audio.",
@@ -948,6 +1028,47 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Perencanaan Video & Visual"],
         nama_kerangka: "Script Iklan",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.092620",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Naskah Iklan yang akan membuat naskah iklan.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "platform",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_platform",
+                  label: "Sebutkan Platform Penayangan Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Platform Penayangan.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Platform Penayangan standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Platform Penayangan' option 'TV'",
+          "TODO: Apply hybrid format to 'Platform Penayangan' option 'Radio'",
+          "TODO: Apply hybrid format to 'Platform Penayangan' option 'TikTok/Reels/Shorts'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Platform Desain Berbasis AI": {
@@ -1009,6 +1130,47 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Platform Desain Berbasis AI"],
         nama_kerangka: "Canva (Magic Design)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.120458",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Desainer Grafis AI yang akan menghasilkan template desain yang dapat disesuaikan di Canva.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "designType",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_designType",
+                  label: "Sebutkan Jenis Desain Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Jenis Desain.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Jenis Desain standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Jenis Desain' option 'Presentasi'",
+          "TODO: Apply hybrid format to 'Jenis Desain' option 'Postingan Instagram'",
+          "TODO: Apply hybrid format to 'Jenis Desain' option 'Poster'",
+          "TODO: Apply hybrid format to 'Jenis Desain' option 'Logo'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Prompt AI Gambar (Text-to-Image)": {
@@ -1073,6 +1235,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Custom Image Generator",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.148322",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Demonstrator Input yang akan menampilkan bagaimana berbagai jenis input interaktif dapat digunakan.",
+          KONTEKS:
+            "[Deskripsi subjek: {subject}] [Gaya visual: {style}] [Parameter teknis: {parameters}]",
+          TUGAS:
+            "Generate prompt yang optimal untuk menghasilkan gambar sesuai deskripsi dan gaya yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang sesuai dengan platform target, dengan detail visualisasi yang jelas dan parameter teknis yang tepat.",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "DALL-E 3": {
         description:
@@ -1151,6 +1332,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "DALL-E 3",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.166418",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pelukis Digital AI yang akan menghasilkan gambar yang kreatif dan akurat.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Firefly (Adobe)": {
         description:
@@ -1217,6 +1414,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Firefly (Adobe)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.180613",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Seniman Efek Digital yang akan menerapkan gaya dan efek pada subjek.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       Ideogram: {
         description:
@@ -1271,6 +1484,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Ideogram",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.198378",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Perancang Tipografi Visual yang akan merender teks yang akurat di dalam gambar.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Image Description & Generation": {
         id_kerangka: "IMG-GEN-001",
@@ -1440,6 +1669,15 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Deskripsi teks gambar harus diisi untuk mode 'Hasilkan Gambar'.",
           },
         ],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:07:55.207917",
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Pilih Mode Operasi' option 'Deskripsikan Gambar'",
+          "TODO: Apply hybrid format to 'Pilih Mode Operasi' option 'Hasilkan Gambar'",
+        ],
       },
       "Leonardo AI": {
         description:
@@ -1506,6 +1744,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Leonardo AI",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.222196",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Kreator Visual Leonardo yang akan menghasilkan gambar.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       Midjourney: {
         description:
@@ -1718,6 +1972,104 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Midjourney",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.231364",
+        dynamicSubcomponents: [
+          {
+            trigger: "aspectRatio",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_aspectRatio",
+                  label: "Sebutkan Aspect Ratio (--ar) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Aspect Ratio (--ar).",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Aspect Ratio (--ar) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "version",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_version",
+                  label: "Sebutkan Model Version (--v) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Model Version (--v).",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Model Version (--v) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "tile",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_tile",
+                  label: "Sebutkan Tile (--tile) Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Tile (--tile).",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tile (--tile) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "styleRaw",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_styleRaw",
+                  label: "Sebutkan Style Raw (--style raw) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Style Raw (--style raw).",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Style Raw (--style raw) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Model Version (--v)' option '6.0'",
+          "TODO: Apply hybrid format to 'Model Version (--v)' option '5.2'",
+          "TODO: Apply hybrid format to 'Model Version (--v)' option '5.1'",
+          "TODO: Apply hybrid format to 'Model Version (--v)' option 'niji 5'",
+          "TODO: Apply hybrid format to 'Model Version (--v)' option '6.1'",
+          "TODO: Apply hybrid format to 'Tile (--tile)' option 'No'",
+          "TODO: Apply hybrid format to 'Tile (--tile)' option 'Yes'",
+          "TODO: Apply hybrid format to 'Style Raw (--style raw)' option 'No'",
+          "TODO: Apply hybrid format to 'Style Raw (--style raw)' option 'Yes'",
+        ],
       },
       NightCafe: {
         description:
@@ -1783,6 +2135,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "NightCafe",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.243622",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Kurator Seni AI yang akan menghasilkan karya seni berdasarkan prompt utama.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Playground AI": {
         description:
@@ -1828,6 +2196,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Playground AI",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.248484",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Eksplorator Visual yang akan menghasilkan gambar berdasarkan prompt utama.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Stable Diffusion": {
         description:
@@ -1885,6 +2269,13 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Stable Diffusion",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.254083",
+        _review_notes: [],
       },
     },
     "Prompt AI Video (Text-to-Video)": {
@@ -2033,6 +2424,91 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
         nama_kerangka: "Google VEO",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.264328",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Sinematografer AI yang akan menghasilkan video berkualitas tinggi.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "aspectRatio",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_aspectRatio",
+                  label: "Sebutkan Aspect Ratio Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Aspect Ratio.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Aspect Ratio standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "personGeneration",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_personGeneration",
+                  label: "Sebutkan Generasi Orang Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Generasi Orang.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Generasi Orang standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "generateAudio",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_generateAudio",
+                  label: "Sebutkan Generate Audio Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Generate Audio.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Generate Audio standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Aspect Ratio' option '16:9'",
+          "TODO: Apply hybrid format to 'Aspect Ratio' option '9:16'",
+          "TODO: Apply hybrid format to 'Aspect Ratio' option '1:1'",
+          "TODO: Apply hybrid format to 'Generasi Orang' option 'allow'",
+          "TODO: Apply hybrid format to 'Generasi Orang' option 'dont_allow'",
+          "TODO: Apply hybrid format to 'Generasi Orang' option 'allow_adult'",
+          "TODO: Apply hybrid format to 'Generate Audio' option 'true'",
+          "TODO: Apply hybrid format to 'Generate Audio' option 'false'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       Kaiber: {
         description:
@@ -2100,6 +2576,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
         nama_kerangka: "Kaiber",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.272011",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Transformator Visual yang akan menghasilkan video dengan gaya visual artistik.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "aspectRatio",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_aspectRatio",
+                  label: "Sebutkan Aspect Ratio Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Aspect Ratio.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Aspect Ratio standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       Pika: {
         description:
@@ -2169,6 +2682,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
         nama_kerangka: "Pika",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.279607",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Animator AI yang akan menganimasikan gambar atau menghasilkan video dari teks.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       Runway: {
         description:
@@ -2236,6 +2765,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
         nama_kerangka: "Runway",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.283735",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Produser Video AI yang akan menghasilkan video berdasarkan prompt.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Sora (OpenAI)": {
         description:
@@ -2303,6 +2848,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
         nama_kerangka: "Sora (OpenAI)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.289615",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Sutradara AI yang akan menghasilkan video sinematik.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Utilitas & Penyuntingan AI": {
@@ -2367,6 +2928,52 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Utilitas & Penyuntingan AI"],
         nama_kerangka: "Clipdrop",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.297705",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Editor Foto AI yang akan menerapkan fungsi alat Clipdrop.",
+          KONTEKS: "{{CONTEXT_PLACEHOLDER}}",
+          TUGAS: "{{TASK_PLACEHOLDER}}",
+          FORMAT_OUTPUT: "{{FORMAT_PLACEHOLDER}}",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "tool",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_tool",
+                  label: "Sebutkan Alat Clipdrop yang Digunakan Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Alat Clipdrop yang Digunakan.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Alat Clipdrop yang Digunakan standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Stable Diffusion XL'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Uncrop'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Reimagine XL'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Stable Doodle'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Cleanup'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Remove Background'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Replace Background'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Image Upscaler'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
     },
   },

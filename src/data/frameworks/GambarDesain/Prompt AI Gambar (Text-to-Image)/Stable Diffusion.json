@@ -46,6 +46,16 @@
       }
     }
   ],
-  "kategori": ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
-  "nama_kerangka": "Stable Diffusion"
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
+  "nama_kerangka": "Stable Diffusion",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:07:55.254083",
+  "_review_notes": []
 }

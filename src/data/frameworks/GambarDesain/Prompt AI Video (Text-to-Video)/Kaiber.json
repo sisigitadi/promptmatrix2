@@ -62,5 +62,41 @@
     "Gambar & Desain",
     "Prompt AI Video (Text-to-Video)"
   ],
-  "nama_kerangka": "Kaiber"
+  "nama_kerangka": "Kaiber",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:07:55.272011",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Transformator Visual yang akan menghasilkan video dengan gaya visual artistik.",
+    "KONTEKS": "{{CONTEXT_PLACEHOLDER}}",
+    "TUGAS": "{{TASK_PLACEHOLDER}}",
+    "FORMAT_OUTPUT": "{{FORMAT_PLACEHOLDER}}"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "aspectRatio",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_aspectRatio",
+            "label": "Sebutkan Aspect Ratio Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Aspect Ratio.",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Aspect Ratio standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Consider adding conditional blocks [...] for optional parameters"
+  ]
 }

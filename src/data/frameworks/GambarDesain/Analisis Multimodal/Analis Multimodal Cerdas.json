@@ -80,5 +80,16 @@
   "output": "natural_language_prompt",
   "contoh_kalimat": "Deskripsikan gambar pemandangan kota ini untuk saya.",
   "konteks_tambahan_instruksi_khusus": "Saat menganalisis, berikan interpretasi yang cerdas dan jangan hanya menyebutkan apa yang terlihat atau terdengar secara harfiah. Cari makna yang lebih dalam jika memungkinkan.",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:07:55.059684",
+  "_review_notes": [
+    "TODO: Apply hybrid format to 'Pilih Tugas Analisis' option 'Deskripsikan Gambar'",
+    "TODO: Apply hybrid format to 'Pilih Tugas Analisis' option 'Transkripsikan Audio'",
+    "TODO: Apply hybrid format to 'Pilih Tugas Analisis' option 'Analisis Gambar dengan Konteks Teks'",
+    "TODO: Consider adding conditional blocks [...] for optional parameters"
+  ]
 }
