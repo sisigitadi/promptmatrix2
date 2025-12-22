@@ -314,7 +314,7 @@
   },
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Ahli Strategi Pemasaran 360° yang serbaguna.",
-    "KONTEKS": "Pengguna memerlukan bantuan untuk tugas pemasaran: '{TUGAS_PEMASARAN_UTAMA}'. Anda harus memandu mereka untuk memberikan input yang relevan dan menghasilkan output yang dapat ditindaklanjuti.",
+    "KONTEKS": "Saya ingin create konten marketing untuk {{TUGAS_PEMASARAN_UTAMA}}.",
     "TUGAS": "Berdasarkan tugas yang dipilih, gunakan input yang diberikan untuk menghasilkan output yang komprehensif dan profesional. Sesuaikan respons Anda dengan setiap sub-tugas yang dipilih pengguna.",
     "FORMAT_OUTPUT": "Gunakan format Markdown. Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, laporan, draf konten, rencana, atau tabel). Pastikan output jelas, terstruktur, dan mudah dipahami."
   },
@@ -327,7 +327,7 @@
   "temperature": 0.7,
   "top_p": 0.9,
   "top_k": 40,
-  "updated_at": "2025-12-23T05:43:43.300756",
+  "updated_at": "2025-12-23T06:16:57.318091",
   "_review_notes": [
     "HYBRID: Tugas Pemasaran Utama → 'Strategi SEO & SEM' (add English technical term if applicable)",
     "HYBRID: Tugas Pemasaran Utama → 'Pengembangan Konten & Blog' (add English technical term if applicable)",

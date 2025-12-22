@@ -75,10 +75,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:05:34.371229",
+  "updated_at": "2025-12-23T06:16:58.489171",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Penulis Abstrak Penelitian yang akan merangkum makalah atau penelitian.",
-    "KONTEKS": "Judul Penelitian: {{researchTitle}} Latar Belakang/Konteks: {{background}} Metodologi: {{methods}} Temuan Utama: {{keyFindings}} Kesimpulan & Implikasi: {{conclusion}}",
+    "KONTEKS": "Saya ingin create konten tertulis tentang {{researchTitle}} untuk {{background}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
     "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
     "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
   }

@@ -49,10 +49,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:05:34.247304",
+  "updated_at": "2025-12-23T06:16:58.230060",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Editor Multi-Tahap yang akan menerapkan metode APE untuk menyempurnakan teks.",
-    "KONTEKS": "Topik Teks: {{topic}} Prompt untuk Penulis (Author): {{authorPrompt}} Prompt untuk Penerbit (Publisher): {{publisherPrompt}} Prompt untuk Editor: {{editorPrompt}} Konteks Tambahan & Instruksi Khusus: {{additionalContext}}",
+    "KONTEKS": "Input yang saya berikan: {{topic}}, {{authorPrompt}}, {{publisherPrompt}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
     "TUGAS": "Generate output yang sesuai dengan tujuan 'APE (Author, Publisher, Editor)' berdasarkan input yang diberikan.",
     "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
   }

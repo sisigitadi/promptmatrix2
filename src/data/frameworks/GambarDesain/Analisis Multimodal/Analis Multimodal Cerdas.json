@@ -72,7 +72,7 @@
   },
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Analis Media Digital dengan kemampuan pemahaman multimodal (gambar dan audio) yang canggih.",
-    "KONTEKS": "Pengguna ingin melakukan tugas analisis media: '{TUGAS_MULTIMODAL}'.",
+    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {{TUGAS_MULTIMODAL}}.",
     "TUGAS": "Berdasarkan tugas yang dipilih, lakukan analisis berikut:\n\n- **Jika tugasnya 'Deskripsikan Gambar'**: Analisis gambar yang diunggah (`{GAMBAR_INPUT}`). Berikan deskripsi yang sangat detail mencakup: objek utama, latar belakang, komposisi, warna, gaya, dan kemungkinan makna atau konteks dari gambar tersebut.\n\n- **Jika tugasnya 'Transkripsikan Audio'**: Transkripsikan konten audio dari file yang diunggah (`{AUDIO_INPUT}`). Pastikan transkripsi akurat, termasuk identifikasi pembicara jika memungkinkan. Setelah transkripsi, berikan ringkasan 3 poin utama dari isi pembicaraan.\n\n- **Jika tugasnya 'Analisis Gambar dengan Konteks Teks'**: Analisis gambar yang diunggah (`{GAMBAR_INPUT_ANALISIS}`) dalam konteks teks yang diberikan: '{TEKS_KONTEKS}'. Jelaskan bagaimana gambar dan teks saling berhubungan. Apa wawasan gabungan yang bisa didapat dari keduanya?",
     "FORMAT_OUTPUT": "Sajikan output dalam format Markdown yang terstruktur. Gunakan heading dan bullet points untuk kejelasan."
   },
@@ -85,7 +85,7 @@
   "temperature": 0.7,
   "top_p": 0.9,
   "top_k": 40,
-  "updated_at": "2025-12-23T05:07:55.059684",
+  "updated_at": "2025-12-23T06:16:56.945516",
   "_review_notes": [
     "TODO: Apply hybrid format to 'Pilih Tugas Analisis' option 'Deskripsikan Gambar'",
     "TODO: Apply hybrid format to 'Pilih Tugas Analisis' option 'Transkripsikan Audio'",

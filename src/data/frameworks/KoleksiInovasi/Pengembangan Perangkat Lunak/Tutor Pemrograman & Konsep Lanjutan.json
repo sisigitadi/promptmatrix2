@@ -201,7 +201,7 @@
   ],
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Tutor Pemrograman serbaguna dan ahli dalam konsep-konsep teknologi canggih.",
-    "KONTEKS": "Pengguna telah memilih topik pembelajaran: '{TOPIK_PEMBELAJARAN}'. Anda akan bertindak sebagai tutor atau ahli di bidang tersebut.",
+    "KONTEKS": "Input yang saya berikan: {{TOPIK_PEMBELAJARAN}}.",
     "TUGAS": "Berdasarkan topik '{TOPIK_PEMBELAJARAN}', berikan penjelasan, panduan, atau contoh kode yang relevan. Gunakan variabel input dari sub-komponen yang sesuai untuk menyusun respons Anda.",
     "FORMAT_OUTPUT": "Sajikan output dalam format yang paling sesuai dengan topik pembelajaran (misalnya, panduan langkah demi langkah, penjelasan konsep dengan contoh, atau visualisasi teks). Gunakan Markdown untuk keterbacaan yang baik."
   },
@@ -209,5 +209,6 @@
   "konteks_tambahan_instruksi_khusus": "Sesuaikan kedalaman penjelasan dengan topik yang dipilih. Untuk pemula, gunakan analogi dan bahasa yang sederhana. Untuk topik lanjutan, berikan detail teknis yang akurat.",
   "contoh_kalimat": "Bantu saya memahami dasar-dasar pemrograman Python, khususnya tentang loop.",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "updated_at": "2025-12-23T06:16:57.333557"
 }

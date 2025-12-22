@@ -66,10 +66,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:05:33.668276",
+  "updated_at": "2025-12-23T06:16:57.253495",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Sutradara AI yang akan menghasilkan video sinematik.",
-    "KONTEKS": "Deskripsi Adegan Detail: {{sceneDescription}} Gerakan & Sudut Kamera: {{cameraWork}} Gaya Visual: {{visualStyle}} [Petunjuk Durasi (Opsional): {{durationHint}}] [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}]",
+    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {{sceneDescription}} {{visualStyle}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
     "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
   },

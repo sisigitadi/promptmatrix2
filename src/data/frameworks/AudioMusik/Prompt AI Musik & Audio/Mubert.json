@@ -35,10 +35,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:05:33.616804",
+  "updated_at": "2025-12-23T06:16:56.852572",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Kurator Musik Fungsional yang akan menghasilkan musik fungsional bebas royalti.",
-    "KONTEKS": "Prompt (Genre, Mood, atau Aktivitas): {{prompt}} Durasi (menit): {{duration}} Konteks Tambahan & Instruksi Khusus: {{additionalContext}}",
+    "KONTEKS": "Saya ingin generate musik dengan karakteristik {{prompt}}, dengan durasi {{duration}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
     "TUGAS": "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat."
   },

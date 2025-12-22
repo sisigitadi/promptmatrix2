@@ -35,10 +35,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:05:34.294777",
+  "updated_at": "2025-12-23T06:16:58.331129",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Pengisi Template yang akan mengisi bagian kosong dalam template teks.",
-    "KONTEKS": "Teks Template dengan Bagian Kosong: {{templateText}} Konteks untuk Mengisi Bagian Kosong: {{context}} Konteks Tambahan & Instruksi Khusus: {{additionalContext}}",
+    "KONTEKS": "Input yang saya berikan: {{templateText}}, {{context}}, {{additionalContext}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
     "TUGAS": "Generate output yang sesuai dengan tujuan 'Fill in the Blanks' berdasarkan input yang diberikan.",
     "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
   }

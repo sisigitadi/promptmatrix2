@@ -49,10 +49,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:05:33.988421",
+  "updated_at": "2025-12-23T06:16:57.788417",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Pemikir Fundamental yang akan memecah masalah kompleks menjadi kebenaran-kebenaran fundamentalnya.",
-    "KONTEKS": "Masalah atau Konsep: {{problem}} Asumsi yang Ada Saat Ini: {{assumptions}} Identifikasi Prinsip Pertama: {{firstPrinciples}} Bangun Solusi Baru dari Dasar: {{rebuildSolution}} Konteks Tambahan & Instruksi Khusus: {{additionalContext}}",
+    "KONTEKS": "Input yang saya berikan: {{problem}}, {{assumptions}}, {{firstPrinciples}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
     "TUGAS": "Generate output yang sesuai dengan tujuan 'First Principles Thinking' berdasarkan input yang diberikan.",
     "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
   }

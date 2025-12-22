@@ -74,10 +74,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:05:34.725984",
+  "updated_at": "2025-12-23T06:16:59.170785",
   "komponen_prompt": {
-    "PERAN": "Persona AI: Anda adalah seorang Ahli Penamaan yang akan menghasilkan nama brand atau produk.",
-    "KONTEKS": "Deskripsi Konsep/Produk: {{coreConcept}} Nilai Inti Brand (pisahkan koma): {{coreValues}} Gaya Nama yang Diinginkan: {{nameStyle}} [Kata atau Akar Kata untuk Disertakan (Opsional): {{keywordsToInclude}}] [Kata atau Konsep untuk Dihindari: {{keywordsToAvoid}}]",
+    "PERAN": "Persona AI: Anda adalah seorang Ahli Penamaan yang akan menghasilkan nama brand atau produk.. [Gaya Nama yang Diinginkan: **{{nameStyle}}**]",
+    "KONTEKS": "Saya ingin create konten tertulis tentang {{coreConcept}} untuk {{coreValues}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
     "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
     "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
   },

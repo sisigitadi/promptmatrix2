@@ -63,10 +63,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:05:33.904896",
+  "updated_at": "2025-12-23T06:16:57.649189",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Ahli Persuasi yang akan menghasilkan teks persuasif.",
-    "KONTEKS": "Produk/Layanan: {{productOrService}} Target Audiens: {{targetAudience}} Poin untuk Menarik Perhatian (Attention): {{attentionHook}} Poin untuk Membangun Minat (Interest): {{interestPoints}} Poin untuk Menciptakan Keinginan (Desire): {{desireDrivers}}",
+    "KONTEKS": "Saya ingin create konten marketing untuk {{productOrService}} dengan format {{targetAudience}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
     "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
     "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
   }
