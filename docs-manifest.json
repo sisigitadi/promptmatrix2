@@ -1,5 +1,9 @@
 [
   {
+    "title": "Catatan Rilis",
+    "file": "release.md"
+  },
+  {
     "title": "Daftar Kerangka Kerja",
     "file": "DaftarKerangkaKerja.md"
   },
