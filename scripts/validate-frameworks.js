@@ -30,7 +30,7 @@ const frameworksContent = fs.readFileSync(frameworksPath, "utf8");
 // A simple regex to extract the PROMPT_FRAMEWORKS object.
 // This is a bit fragile but avoids needing a full TypeScript parser for a simple validation script.
 const frameworksMatch = frameworksContent.match(
-  /export const PROMPT_FRAMEWORKS: PromptFrameworksType = (\{[\s\S]*?\});/,
+  /export const PROMPT_FRAMEWORKS: PromptFrameworksType = (\{[\s\S]*\});\s*$/,
 );
 
 if (!frameworksMatch || !frameworksMatch[1]) {

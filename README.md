@@ -3,7 +3,7 @@
 Prompt Matrix 2.0 is a state-of-the-art web application designed to revolutionize the way you create, curate, and optimize AI prompts. Built with a focus on structured prompt engineering, it provides a powerful toolkit for AI power users, developers, and creative professionals to achieve high-quality, predictable outputs from any Large Language Model (LLM).
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://sisigitadi.github.io/promptmatrix2/)
-![Version](https://img.shields.io/badge/Version-2.6.0-blue?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.7.0-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-orange?style=for-the-badge)
 
 ---
@@ -13,9 +13,9 @@ Prompt Matrix 2.0 is a state-of-the-art web application designed to revolutioniz
 ### 1. 🧠 High-Fidelity Framework Engine (SOP Aligned)
 
 Experience a professional-grade prompt engine. Every framework is now aligned with a rigorous **Standard Operating Procedure (SOP)**, ensuring:
-- **Role-Based Logic:** Deep persona definitions for consistent AI behavior.
-- **Dynamic Variable Injection:** Hundreds of customizable fields with real-time validation.
-- **Strict Output Formatting:** Markdown, JSON, and technical schemas for downstream consumption.
+- **Seamless Storytelling:** Conditional syntax `[...]` for organic prompt flow.
+- **Smart Deduplication:** Intelligent removal of redundant variables in preview.
+- **Hybrid Localization:** Technical English with Indonesian context.
 - **Improved Automation:** Dedicated super-frameworks for workflow automation (Zapier, n8n, Make).
 
 ### 2. 🛡️ Specialized Collections

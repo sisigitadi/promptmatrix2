@@ -1,0 +1,305 @@
+{
+  "id_kerangka": "KOL-AUTO-004",
+  "nama_kerangka": "Mesin IT, DevOps & Rekayasa Produk",
+  "version": "7.9.8",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Blueprint Workflow Otomasi"
+  ],
+  "description": "Otomasi untuk tim teknis: Incident Response, Log Analysis, Github Automation, hingga Product Feedback Loop.",
+  "perspektif_user": "Bantu saya merancang sistem otomasi Mesin IT, DevOps & Rekayasa Produk [menggunakan {{PLATFORM_OTOMASI}}].",
+  "ai_logic_description": "Anda adalah Senior DevOps Engineer & Product Operations Specialist. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+  "toolType": "planning",
+  "output": "natural_language_prompt",
+  "contoh_kalimat": "Rancang workflow untuk Mesin IT, DevOps & Rekayasa Produk di sektor {{INDUSTRY_SECTOR}}.",
+  "components": [
+    {
+      "name": "TECH_MISSION",
+      "label": "Misi Teknikal (Ops)",
+      "type": "select",
+      "options": [
+        "Automated Incident Response (Respon Insiden SRE)",
+        "Server Log Anomaly Detection (Deteksi Anomali)",
+        "Git PR Review & Compliance Check",
+        "Automated QA & Bug Reporting (Laporan Bug)",
+        "Feature Extraction from Support Tickets",
+        "Database Health Monitoring",
+        "Security Vulnerability Scan (DevSecOps)",
+        "Lainnya..."
+      ],
+      "info": "Masalah operasional apa yang ingin diselesaikan?"
+    },
+    {
+      "name": "TECH_STACK",
+      "label": "Tech Stack / Tools",
+      "type": "multiselect",
+      "options": [
+        "AWS / CloudWatch / Lambda",
+        "Kubernetes / Docker",
+        "GitHub / GitLab",
+        "Jira / Linear",
+        "PagerDuty / OpsGenie",
+        "Sentry / Datadog",
+        "Slack / Discord Webhooks",
+        "PostgreSQL / MongoDB",
+        "Lainnya..."
+      ],
+      "info": "Tools apa saja yang terlibat?"
+    },
+    {
+      "name": "ENGINEERING_LOGIC",
+      "label": "Logika Pemrosesan",
+      "type": "multiselect",
+      "options": [
+        "Root Cause Analysis (RCA - Akar Masalah)",
+        "Severity Classification (P1-P5)",
+        "Code Syntax & Style Check",
+        "SQL Query Optimization Suggestion",
+        "User Story Generation from Feedback",
+        "Auto-Restart Service Logic",
+        "Lainnya..."
+      ],
+      "info": "Logika spesifik apa yang harus dijalankan?"
+    },
+    {
+      "name": "OPTIMIZATION_GOAL",
+      "label": "Prioritas Optimasi (Trade-off)",
+      "type": "select",
+      "options": [
+        "Cost Minimization (Efisiensi Biaya/Gratis)",
+        "Reliability & Security (Kestabilan Enterprise)",
+        "Speed to Market (Kecepatan Implementasi MVP)",
+        "Scalability & High Throughput (Siap Volume Besar)",
+        "User Experience (Kemudahan Pengguna)"
+      ],
+      "description": "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
+      "info": "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil)."
+    },
+    {
+      "name": "PLATFORM_OTOMASI",
+      "label": "Platform Otomasi Utama",
+      "type": "select",
+      "options": [
+        "Make.com (Integromat) - Visual & User Friendly",
+        "N8n (Self-Hosted) - Unlimited, Secure & Murah",
+        "Zapier - Premium, Mahal & Mudah",
+        "Pipedream - Developer Oriented",
+        "Relay.app - Human-in-the-Loop AI",
+        "Activepieces - Open Source Zapier Alternative",
+        "FlowiseAI - LLM Chain Builder",
+        "LangFlow - AI Agent Builder",
+        "Microsoft Power Automate - Enterprise",
+        "Vapi.ai / Bland.ai (Khusus Voice)",
+        "Lainnya..."
+      ],
+      "description": "Platform mana yang akan digunakan?",
+      "info": "Platform tempat workflow ini akan dibangun."
+    },
+    {
+      "name": "COMPLEXITY",
+      "label": "Tingkat Kompleksitas Workflow",
+      "type": "select",
+      "options": [
+        "Level 1: Linear (Trigger -> Single Action)",
+        "Level 2: Logika Cabang (If/Else, Router, Switch)",
+        "Level 3: Iterasi Data (Looping Array, Batching)",
+        "Level 4: Integrasi API Kustom (HTTP Request Auth)",
+        "Level 5: Database Sync (CRUD Operations)",
+        "Level 6: AI Agent (Memory, RAG, Function Calling)",
+        "Level 7: Human Approval (Proses berhenti tunggu approval)",
+        "Lainnya..."
+      ],
+      "info": "Seberapa rumit logika workflow yang Anda bayangkan?"
+    },
+    {
+      "name": "INDUSTRY_SECTOR",
+      "label": "Sektor Industri",
+      "type": "select",
+      "options": [
+        "E-commerce & Retail (Ritel)",
+        "SaaS & Technology (Teknologi)",
+        "Agency & Service Business (Jasa)",
+        "Real Estate & Property (Properti)",
+        "Finance & Fintech (Keuangan)",
+        "Healthcare & Medical (Kesehatan)",
+        "Education & EdTech (Pendidikan)",
+        "F&B (Restoran/Cafe)",
+        "Local Services (Bengkel/Salon/Jasa Lokal)",
+        "Media & Content Creator",
+        "HR & Recruitment (SDM)",
+        "Lainnya..."
+      ],
+      "info": "Industri target untuk menyesuaikan terminologi bisnis."
+    },
+    {
+      "name": "DATA_VOLUME",
+      "label": "Perkiraan Volume Data",
+      "type": "select",
+      "options": [
+        "Rendah (< 100 eksekusi/bulan)",
+        "Menengah (100 - 1,000 eksekusi/bulan)",
+        "Tinggi (1,000 - 10,000 eksekusi/bulan)",
+        "Massive (10,000+ eksekusi/bulan)",
+        "Streaming/Real-time",
+        "Lainnya..."
+      ],
+      "info": "Estimasi beban kerja untuk perhitungan biaya server/API."
+    },
+    {
+      "name": "ADDITIONAL_INSTRUCTIONS",
+      "label": "Instruksi Tambahan",
+      "type": "textarea",
+      "placeholder": "Contoh: Jangan gunakan Google Sheets, ganti dengan Airtable. Atau: Pastikan notifikasi dikirim hanya pada jam kerja.",
+      "description": "Detail spesifik atau batasan khusus yang ingin Anda tambahkan.",
+      "optional": true,
+      "info": "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas."
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah Senior DevOps Engineer & Product Operations Specialist. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+    "KONTEKS": "Saya ingin mengotomatisasi workflow teknis untuk {TECH_MISSION}. Sistem akan berinteraksi dengan {TECH_STACK} dan harus menangani logika {ENGINEERING_LOGIC}. [Input tambahan: {ADDITIONAL_INSTRUCTIONS}].",
+    "TUGAS": "Rancang Architecture Diagram & Blueprint. Pastikan mencakup Error Handling, Retry Logic, dan Security Best Practices.",
+    "FORMAT_OUTPUT": "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "TECH_MISSION",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_TECH_MISSION",
+            "label": "Sebutkan Misi Teknikal (Ops) Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Misi Teknikal (Ops).",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Misi Teknikal (Ops) standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "TECH_STACK",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_TECH_STACK",
+            "label": "Sebutkan Tech Stack / Tools Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Tech Stack / Tools.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Tech Stack / Tools standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "ENGINEERING_LOGIC",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_ENGINEERING_LOGIC",
+            "label": "Sebutkan Logika Pemrosesan Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Logika Pemrosesan.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Logika Pemrosesan standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "PLATFORM_OTOMASI",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_PLATFORM_OTOMASI",
+            "label": "Sebutkan Platform Otomasi Utama Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "COMPLEXITY",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_COMPLEXITY",
+            "label": "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "INDUSTRY_SECTOR",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_INDUSTRY_SECTOR",
+            "label": "Sebutkan Sektor Industri Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Sektor Industri.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Sektor Industri standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "DATA_VOLUME",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_DATA_VOLUME",
+            "label": "Sebutkan Perkiraan Volume Data Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "konteks_tambahan_instruksi_khusus": "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T03:41:36.802319"
+}

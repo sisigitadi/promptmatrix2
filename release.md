@@ -1,5 +1,16 @@
 # Prompt Matrix 2.0 - Catatan Rilis
 
+## Versi 2.7.0
+
+### Fitur & Peningkatan Utama
+
+*   **Seamless Storytelling Architecture**: Implementasi sistem narasi prompt yang lebih mengalir menggunakan sintaks kondisional `[...]`. Menghilangkan teks statis yang mengganggu saat input opsional kosong.
+*   **Smart Prompt Deduplication**: Pratinjau prompt kini secara cerdas mendeteksi dan menghapus duplikasi komponen yang sudah masuk ke dalam narasi (Persona/Konteks), menghemat token secara signifikan.
+*   **Hybrid Localization Strategy**: Keseimbangan antara akurasi teknis (Bahasa Inggris) dan kenyamanan pengguna lokal (Bahasa Indonesia) pada seluruh opsi dropdown framework.
+*   **Automation Blueprint v2**: Peningkatan logika generator untuk Blueprint Workflow Otomasi dengan dukungan otomatis untuk opsi kustom ("Lainnya...").
+*   **Penyempurnaan AI Logic**: Persona AI yang lebih mendalam dan spesifik, memberikan instruksi yang lebih konkrit dan teknis (pseudo-code/logic flow).
+*   **Peningkatan Efisiensi Token**: Reduksi redundansi instruksi pada template prompt untuk penggunaan API yang lebih hemat dan efisien.
+
 ## Versi 2.6.0
 
 ### Fitur & Peningkatan Utama

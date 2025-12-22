@@ -3,29 +3,96 @@ import { Framework, FrameworkComponent } from "../data/frameworks"; // Keep Fram
 import { SPECIAL_FRAMEWORKS } from "../config";
 import { FormData, CustomInputs, PromptBlock } from "../types";
 
-// Helper function to replace placeholders in a string
+// Helper to clean verbose descriptions from values (e.g. "Level 1 (Desc)" -> "Level 1")
+const cleanVerboseValue = (val: string) => {
+  if (!val) return "";
+  let cleaned = val;
+
+  // 1. Remove "Level X: " prefix (Flexible spacing)
+  if (cleaned.match(/^(Level|Opsi|Tahap) \d+\s*:/i)) {
+    cleaned = cleaned.replace(/^(Level|Opsi|Tahap) \d+\s*:\s*/i, "");
+  }
+
+  // 2. Remove description after Dash (Handle hyphen, en-dash, em-dash, with surrounding spaces)
+  cleaned = cleaned.split(/\s+[-–—]\s+/)[0];
+
+  // 3. Remove parenthesized description " (...)" (Handle optional space before parenthesis)
+  cleaned = cleaned.split(/\s*\(/)[0];
+
+  return cleaned.trim();
+};
+
+// Helper: Process Conditional Blocks [...]
+const processConditionalBlocks = (
+  template: string,
+  values: FormData,
+  customInputs: CustomInputs,
+): string => {
+  return template.replace(/\[([^\]]+)\]/g, (match, content) => {
+    // Cari semua placeholder {KEY} di dalam konten blok ini
+    const placeholders = content.match(/\{([a-zA-Z0-9_]+)\}/g);
+
+    if (!placeholders) {
+      // Jika tidak ada placeholder (teks biasa dalam kurung), tampilkan saja (hapus kurung)
+      return content;
+    }
+
+    // Cek apakah minimal satu placeholder di blok ini memiliki nilai
+    let hasValue = false;
+    for (const ph of placeholders) {
+      const key = ph.replace(/\{|\}/g, "");
+      let val = values[key];
+      if (val === "Lainnya...") val = customInputs[key];
+
+      // Anggap ada value jika string tidak kosong / array ada isi
+      if (
+        val &&
+        (typeof val !== "string" || val.trim() !== "") &&
+        (!Array.isArray(val) || val.length > 0)
+      ) {
+        hasValue = true;
+        break;
+      }
+    }
+
+    // Jika tidak ada value sama sekali di blok ini, HAPUS blok ini.
+    if (!hasValue) {
+      return "";
+    }
+
+    // Jika ada value, kembalikan kontennya (kurung siku process selesai)
+    return content;
+  });
+};
+
 const replacePlaceholders = (
   template: string,
   values: FormData,
   customInputs: CustomInputs,
 ) => {
-  let result = template;
+  // 1. Pre-process: Handle Conditional Blocks [...]
+  let result = processConditionalBlocks(template, values, customInputs);
+
+  // 2. Replace all placeholders
   for (const key in values) {
     const placeholder = `{${key}}`;
     let value = values[key];
+
     if (value === "Lainnya...") {
       value = customInputs[key] || "";
     }
-    // Ensure value is a string or number before replacing
+
     if (typeof value === "string" || typeof value === "number") {
-      result = result.replace(new RegExp(placeholder, "g"), String(value));
+      const cleanVal = cleanVerboseValue(String(value));
+      // Replace with cleaned value. If empty/unselected, replace with empty string.
+      // This often creates double spaces like "from  to".
+      result = result.replace(new RegExp(placeholder, "g"), cleanVal);
     } else if (Array.isArray(value)) {
-      // Handle multiselect arrays, replacing "Lainnya..." with custom input if present
       const processedValues = value.map((item) => {
         if (item === "Lainnya...") {
-          return customInputs[key] || ""; // Use the custom input for this key
+          return customInputs[key] || "";
         }
-        return item;
+        return cleanVerboseValue(String(item));
       });
       result = result.replace(
         new RegExp(placeholder, "g"),
@@ -33,6 +100,38 @@ const replacePlaceholders = (
       );
     }
   }
+
+  // 3. Post-processing: Remove Dangling Prepositions
+  const prepositions =
+    "dari|ke|via|menggunakan|dengan|untuk|tentang|pada|di|pakai|sebagai";
+  // Regex: Word boundary + Preposition + Word boundary + Spaces + Lookahead (Space OR Punctuation OR End)
+  // \s{2,} captures the "double space" caused by empty replacement.
+  const danglingRegex = new RegExp(
+    `\\b(${prepositions})\\b\\s+(?=\\s|[.,:;!?\\n]|$)`,
+    "gi",
+  );
+
+  // Run multiple times to clean chains like "dari dengan ke"
+  let prevResult = "";
+  while (result !== prevResult) {
+    prevResult = result;
+    result = result.replace(danglingRegex, "");
+  }
+
+  // 4. Cleanup residual double spaces
+  result = result.replace(/  +/g, " ").trim();
+
+  // 5. Fix puncuation sticking (e.g. " ." -> ".")
+  result = result.replace(/\s+([.,:;!?])/g, "$1");
+
+  // 6. Cleanup duplicate punctuation (caused by conditional blocks or empty inputs)
+  // Remove duplicate commas
+  result = result.replace(/,\s*,/g, ",");
+  // Remove comma before dot (",.") -> "."
+  result = result.replace(/,\s*\./g, ".");
+  // Remove comma at the start of line (if any logic failed)
+  result = result.replace(/^\s*,/, "");
+
   return result;
 };
 
@@ -162,12 +261,7 @@ export const generateUserPreviewPrompt = (
     return "Pilih kerangka kerja untuk melihat pratinjau.";
   }
 
-  let previewContent = "";
-
-  if (framework.ai_logic_description) {
-    previewContent += `${framework.ai_logic_description.replace(/\*\*/g, "")}\n\n`; // Remove bold markdown
-  }
-
+  // Pre-calculate active components to check for inputs
   const allComponents: FrameworkComponent[] = [...(framework.components || [])];
   const subcomponents = Array.isArray(framework.dynamicSubcomponents)
     ? framework.dynamicSubcomponents
@@ -181,15 +275,12 @@ export const generateUserPreviewPrompt = (
       if (triggerValue && sub.options[triggerValue]) {
         const optionValue = sub.options[triggerValue];
         if (optionValue) {
-          // New super-framework structure
           if (
             "components" in optionValue &&
             Array.isArray(optionValue.components)
           ) {
             allComponents.push(...optionValue.components);
-          }
-          // Old structure
-          else if (Array.isArray(optionValue)) {
+          } else if (Array.isArray(optionValue)) {
             allComponents.push(...(optionValue as FrameworkComponent[]));
           }
         }
@@ -197,6 +288,7 @@ export const generateUserPreviewPrompt = (
     }
   });
 
+  // Check if any input has been filled
   let hasInputs = false;
   allComponents.forEach((comp) => {
     const value = params[comp.name];
@@ -207,28 +299,93 @@ export const generateUserPreviewPrompt = (
       (!Array.isArray(value) || value.length > 0)
     ) {
       hasInputs = true;
+    }
+  });
+
+  let previewContent = "";
+
+  // 1. Gabungkan PERAN (Persona) - SELALU TAMPIL
+  if (framework.komponen_prompt) {
+    if (framework.komponen_prompt.PERAN) {
+      const processedPersona = replacePlaceholders(
+        framework.komponen_prompt.PERAN,
+        params,
+        customInputs,
+      );
+      // Hapus bold markdown (**) agar lebih bersih
+      previewContent += `${processedPersona.replace(/\*\*/g, "")}\n\n`;
+    }
+
+    // 2. KONTEKS - HANYA TAMPIL JIKA ADA INPUT
+    if (hasInputs && framework.komponen_prompt.KONTEKS) {
+      let processedContext = replacePlaceholders(
+        framework.komponen_prompt.KONTEKS,
+        params,
+        customInputs,
+      );
+
+      // Cleanup: Hapus bold kosong dari template jika input kosong
+      processedContext = processedContext.replace(/\*\*\s*\*\*/g, "").trim();
+
+      if (processedContext) {
+        previewContent += `${processedContext.replace(/\*\*/g, "")}\n\n`;
+      }
+    }
+  } else if (framework.ai_logic_description) {
+    // Fallback untuk framework lama
+    previewContent += `${framework.ai_logic_description.replace(/\*\*/g, "")}\n\n`;
+  }
+
+  // 3. List Input Values sebagai "Detail Spesifikasi" (Hanya yang BELUM masuk narasi)
+  const narrativeTemplates = [
+    framework.komponen_prompt.PERAN,
+    framework.komponen_prompt.KONTEKS,
+    framework.komponen_prompt.TUGAS,
+    framework.konteks_tambahan_instruksi_khusus,
+  ].join(" ");
+
+  let detailSpecsNeeded = false;
+  let specContent = `\nBerikut adalah detail spesifikasi tambahan:\n`;
+
+  allComponents.forEach((comp) => {
+    // Lewati jika komponen sudah ada di narasi sebagai placeholder {NAMA}
+    if (narrativeTemplates.includes(`{${comp.name}}`)) return;
+
+    const value = params[comp.name];
+    if (
+      value !== undefined &&
+      value !== "" &&
+      value !== null &&
+      (!Array.isArray(value) || value.length > 0)
+    ) {
       let displayValue = "";
       if (value === "Lainnya...") {
         displayValue = customInputs[comp.name] || "";
       } else if (Array.isArray(value)) {
-        // SOP: Juga tanpa karakter pemformatan seperti * atau -.
         displayValue = value
-          .map((item) => String(item).replace(/\*\*/g, ""))
+          .map((item) => {
+            if (item === "Lainnya...") return customInputs[comp.name] || "";
+            return cleanVerboseValue(String(item));
+          })
           .filter(Boolean)
           .join(", ");
       } else {
-        displayValue = String(value).replace(/\*\*/g, ""); // Remove bold markdown from single values
+        displayValue = cleanVerboseValue(String(value));
       }
+
       if (displayValue) {
-        previewContent += `${comp.label}: ${displayValue}\n`;
+        specContent += `- ${comp.label}: ${displayValue}\n`;
+        detailSpecsNeeded = true;
       }
     }
   });
 
-  if (!hasInputs && !framework.ai_logic_description) {
-    previewContent = "Isi komponen untuk melihat pratinjau.";
-  } else if (!hasInputs) {
-    // If there's an AI logic description but no inputs, we don't need to add more text.
+  if (detailSpecsNeeded) {
+    previewContent += specContent;
+  }
+
+  if (!hasInputs) {
+    previewContent += "\n(Belum ada input yang diisi)";
   }
 
   return previewContent.trim();
@@ -272,10 +429,6 @@ export const generateVisualPromptParts = (blocks: PromptBlock[]): Part[] => {
     .filter((part): part is Part => part !== null);
 };
 
-/**
- * Generates a prompt containing its original placeholders (e.g., {{TOPIK}}).
- * Useful for developers creating AI application templates.
- */
 export const generatePlaceholderPrompt = (framework: Framework): string => {
   if (!framework || !framework.komponen_prompt) return "";
 

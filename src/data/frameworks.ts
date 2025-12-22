@@ -2199,891 +2199,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         crossValidationRules: [],
       },
     },
-    Automation: {
-      "Otomasi Bisnis & Pemasaran": {
-        id_kerangka: "KOL-AUTO-001",
-        nama_kerangka: "Otomasi Bisnis & Pemasaran",
-        version: "1.0.0",
-        kategori: ["Koleksi & Inovasi", "Automation"],
-        description:
-          "Kumpulan alur kerja otomatisasi untuk mempercepat pertumbuhan bisnis dan efisiensi pemasaran.",
-        perspektif_user:
-          "Sebagai pemilik bisnis atau pemasar, saya ingin mengotomatiskan tugas-tugas rutin seperti sinkronisasi lead, pengiriman pesan WhatsApp, dan manajemen newsletter agar saya bisa fokus pada strategi besar.",
-        ai_logic_description:
-          "Persona AI: Anda adalah seorang Spesialis Otomasi Pemasaran (Marketing Automation Specialist) yang ahli dalam menghubungkan berbagai tool (CRM, Sheets, WhatsApp, Email) menjadi alur kerja yang mulus.",
-        toolType: "planning",
-        output: "natural_language_prompt",
-        contoh_kalimat:
-          "Bantu saya buat alur otomatisasi untuk sinkronisasi lead dari Facebook Ads ke CRM.",
-        konteks_tambahan_instruksi_khusus:
-          "Selalu sertakan detail teknis tentang trigger dan action. Rekomendasikan tool populer seperti Zapier, Make.com, atau n8n jika relevan. Pastikan alur kerja mencakup penanganan error (error handling).",
-        components: [
-          {
-            name: "ALUR_BISNIS",
-            label: "Pilih Alur Otomasi",
-            type: "select",
-            description:
-              "Pilih salah satu template alur kerja otomatisasi bisnis.",
-            optional: false,
-            default: "Lead ke CRM Otomatis",
-            options: [
-              "Lead ke CRM Otomatis",
-              "Lead Gen ke Google Sheets dan WhatsApp",
-              "Auto-Assign Lead",
-              "Email Newsletter Otomatis",
-              "Retargeting OTOMATIS",
-              "Lainnya...",
-            ],
-          },
-          {
-            name: "TOOLS_OTOMASI",
-            label: "Alat Otomasi Utama",
-            type: "select",
-            description:
-              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
-            optional: false,
-            default: "n8n",
-            options: [
-              "Zapier",
-              "Make.com (Integromat)",
-              "n8n",
-              "Pipedream",
-              "Bardeen",
-              "Custom Script (Python/Node)",
-              "Lainnya...",
-            ],
-          },
-        ],
-        dynamicSubcomponents: [
-          {
-            trigger: "ALUR_BISNIS",
-            options: {
-              "Lead ke CRM Otomatis": [
-                {
-                  name: "SOURCE_ADS",
-                  label: "Sumber Iklan/Lead",
-                  type: "select",
-                  options: [
-                    "Facebook Ads",
-                    "Google Ads",
-                    "TikTok Ads",
-                    "LinkedIn Ads",
-                    "Lainnya...",
-                  ],
-                  description: "Platform tempat iklan dijalankan.",
-                },
-                {
-                  name: "TARGET_CRM",
-                  label: "CRM Tujuan",
-                  type: "text",
-                  placeholder: "Contoh: HubSpot, Pipedrive, Salesforce, Zoho",
-                  description: "Aplikasi CRM yang Anda gunakan.",
-                },
-              ],
-              "Lead Gen ke Google Sheets dan WhatsApp": [
-                {
-                  name: "WA_TEMPLATE",
-                  label: "Pesan WhatsApp Pertama",
-                  type: "textarea",
-                  placeholder: "Halo {{name}}, terima kasih telah mendaftar...",
-                  description: "Pesan otomatis yang dikirim saat lead masuk.",
-                },
-              ],
-              "Auto-Assign Lead": [
-                {
-                  name: "SALES_TEAM",
-                  label: "Daftar Tim Sales",
-                  type: "textarea",
-                  placeholder: "Admin A, Admin B, Admin C",
-                  description:
-                    "Nama tim yang akan menerima lead secara bergilir (Round Robin).",
-                },
-              ],
-              "Email Newsletter Otomatis": [
-                {
-                  name: "RSS_FEED",
-                  label: "URL RSS Feed / Blog",
-                  type: "text",
-                  placeholder: "https://bloganda.com/feed",
-                  description: "Sumber konten untuk newsletter otomatis.",
-                },
-              ],
-              "Retargeting OTOMATIS": [
-                {
-                  name: "EVENT_TRIGGER",
-                  label: "Picu Retargeting Jika",
-                  type: "select",
-                  options: [
-                    "Cart Abandoned",
-                    "Page View 3x",
-                    "Email Opened No Click",
-                    "Lainnya...",
-                  ],
-                  description: "Aksi pengguna yang memicu retargeting.",
-                },
-              ],
-            },
-          },
-        ],
-        komponen_prompt: {
-          PERAN: "Anda adalah seorang Marketing Automation Specialist.",
-          KONTEKS:
-            "Pengguna ingin membangun sebuah **Workflow Automation** untuk alur kerja Bisnis: **{ALUR_BISNIS}** menggunakan alat **{TOOLS_OTOMASI}**.",
-          TUGAS:
-            "Rancang sebuah Workflow Automation yang komprehensif untuk alur **{ALUR_BISNIS}** dengan memanfaatkan fitur-fitur dari **{TOOLS_OTOMASI}**. \n\n1. **Trigger Phase**: Identifikasi event pemicu dari {SOURCE_ADS} atau sistem terkait yang didukung oleh {TOOLS_OTOMASI}.\n2. **Processing & Logic**: Jelaskan langkah-langkah transformasi data, filter, atau pembagian tugas ({SALES_TEAM}) yang terjadi di dalam workflow.\n3. **Action Phase**: Detailkan aksi sinkronisasi ke {TARGET_CRM} atau pengiriman pesan otomatis ('{WA_TEMPLATE}') melalui integrasi yang tersedia di {TOOLS_OTOMASI}.\n4. **Optimization**: Berikan saran teknis spesifik untuk {TOOLS_OTOMASI} agar alur kerja ini berjalan efisien dan minim error.",
-          FORMAT_OUTPUT:
-            "Sajikan dalam format dokumen teknis (SOP) di Markdown. Sertakan diagram alur (Mermaid jika mungkin) dan langkah-langkah konfigurasi langkah-demi-langkah.",
-        },
-      },
-      "Otomasi Konten & Produktivitas": {
-        id_kerangka: "KOL-AUTO-002",
-        nama_kerangka: "Otomasi Konten & Produktivitas",
-        version: "1.0.0",
-        kategori: ["Koleksi & Inovasi", "Automation"],
-        description:
-          "Alur kerja untuk meningkatkan produktivitas pembuatan konten dan manajemen tugas menggunakan AI.",
-        perspektif_user:
-          "Saya ingin menghemat waktu dalam menulis draf, mencatat hasil rapat, dan membuat caption media sosial agar proses kreatif saya lebih cepat dan terstruktur.",
-        ai_logic_description:
-          "Persona AI: Anda adalah seorang AI Productivity Consultant yang ahli dalam merancang sistem yang memadukan AI (LLM) dengan aplikasi produktivitas (Notion, Slack, Canva).",
-        toolType: "planning",
-        output: "natural_language_prompt",
-        contoh_kalimat:
-          "Buat alur otomatisasi untuk merangkum hasil meeting Zoom ke Notion.",
-        konteks_tambahan_instruksi_khusus:
-          "Tekankan pada kualitas output AI (prompt chaining). Sarankan integrasi dengan tool transkripsi (Otter/Whisper) dan penyimpanan (Notion/Obsidian).",
-        components: [
-          {
-            name: "ALUR_KONTEN",
-            label: "Pilih Alur Otomasi",
-            type: "select",
-            description:
-              "Pilih salah satu template alur kerja otomatisasi konten.",
-            optional: false,
-            default: "AI Content Drafting",
-            options: [
-              "AI Content Drafting",
-              "Automasi Meeting Notes",
-              "AI Instagram Caption Generator",
-              "Lainnya...",
-            ],
-          },
-          {
-            name: "TOOLS_OTOMASI",
-            label: "Alat Otomasi Utama",
-            type: "select",
-            description:
-              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
-            optional: false,
-            default: "n8n",
-            options: [
-              "Zapier",
-              "Make.com (Integromat)",
-              "n8n",
-              "Pipedream",
-              "Bardeen",
-              "Custom Script (Python/Node)",
-              "Lainnya...",
-            ],
-          },
-        ],
-        dynamicSubcomponents: [
-          {
-            trigger: "ALUR_KONTEN",
-            options: {
-              "AI Content Drafting": [
-                {
-                  name: "CONTENT_TYPE",
-                  label: "Jenis Konten",
-                  type: "select",
-                  options: [
-                    "Blog Post",
-                    "LinkedIn Article",
-                    "Email Cold Reach",
-                    "Script Video",
-                    "Lainnya...",
-                  ],
-                  description: "Output utama yang ingin dihasilkan.",
-                },
-              ],
-              "Automasi Meeting Notes": [
-                {
-                  name: "TRANSCRIPT_SOURCE",
-                  label: "Sumber Transkrip",
-                  type: "select",
-                  options: [
-                    "Zoom Recording",
-                    "Google Meet (Transcript)",
-                    "Uploaded Audio",
-                    "Lainnya...",
-                  ],
-                  description: "Dari mana asal teks/audio rapat.",
-                },
-                {
-                  name: "NOTES_TARGET",
-                  label: "Target Penyimpanan",
-                  type: "text",
-                  placeholder: "Notion, Slack, Google Docs",
-                  description: "Di mana catatan akan disimpan.",
-                },
-              ],
-              "AI Instagram Caption Generator": [
-                {
-                  name: "VISUAL_DESC",
-                  label: "Deskripsi Gambar/Video",
-                  type: "textarea",
-                  placeholder: "Foto produk sepatu lari di pegunungan...",
-                  description: "Jelaskan apa yang ada di postingan tersebut.",
-                },
-              ],
-            },
-          },
-        ],
-        komponen_prompt: {
-          PERAN: "Anda adalah seorang AI Productivity Consultant.",
-          KONTEKS:
-            "Pengguna ingin membangun sebuah **Workflow Automation** untuk alur kerja Konten & Produktivitas: **{ALUR_KONTEN}** menggunakan alat **{TOOLS_OTOMASI}**.",
-          TUGAS:
-            "Rancang sebuah Workflow Automation yang cerdas untuk alur **{ALUR_KONTEN}** dengan mengintegrasikan AI dan fitur dari **{TOOLS_OTOMASI}**. \n\n1. **Input Stage**: Detailkan cara menangkap data dari {TRANSCRIPT_SOURCE} atau deskripsi visual ({VISUAL_DESC}) menggunakan trigger di {TOOLS_OTOMASI}.\n2. **AI Processing Layer**: Jelaskan bagaimana workflow mengirimkan data ke model AI (LLM) untuk menghasilkan {CONTENT_TYPE} atau ringkasan rapat.\n3. **Output & Storage**: Rincikan langkah pengiriman hasil akhir ke {NOTES_TARGET} secara otomatis.\n4. **Productivity Boost**: Berikan tips konfigurasi di {TOOLS_OTOMASI} agar workflow ini tetap stabil dan mampu menangani volume konten yang besar.",
-          FORMAT_OUTPUT:
-            "Sajikan dalam format langkah-langkah implementasi (Workflow Design) di Markdown. Sertakan contoh prompt 'Seed' untuk model AI yang digunakan dalam alur ini.",
-        },
-      },
-      "Otomasi Data & Analisis": {
-        id_kerangka: "KOL-AUTO-003",
-        nama_kerangka: "Otomasi Data & Analisis",
-        version: "1.0.0",
-        kategori: ["Koleksi & Inovasi", "Automation"],
-        description:
-          "Transformasi data mentah menjadi wawasan bisnis secara otomatis.",
-        perspektif_user:
-          "Saya ingin mengumpulkan data dari berbagai sumber, memantau tren penjualan secara real-time, dan mendapatkan peringatan otomatis jika ada anomali dalam bisnis saya tanpa perlu mengecek dashboard setiap saat.",
-        ai_logic_description:
-          "Persona AI: Anda adalah seorang Business Intelligence (BI) Automator yang ahli dalam mengelola pipa data (data pipelines) dan visualisasi otomatis.",
-        toolType: "planning",
-        output: "natural_language_prompt",
-        contoh_kalimat:
-          "Buat alur untuk mengirim ringkasan penjualan harian dari SQL ke Slack.",
-        konteks_tambahan_instruksi_khusus:
-          "Fokus pada akurasi data dan kecepatan update. Sarankan tool seperti Looker Studio, Power BI, atau script Python untuk pengolahan tingkat lanjut.",
-        components: [
-          {
-            name: "ALUR_DATA",
-            label: "Pilih Alur Otomasi",
-            type: "select",
-            description:
-              "Pilih salah satu template alur kerja otomatisasi data.",
-            optional: false,
-            default: "Data Aggregation",
-            options: [
-              "Data Aggregation",
-              "Sales Dashboard Otomatis",
-              "Alert Anomali Penjualan",
-              "Lainnya...",
-            ],
-          },
-          {
-            name: "TOOLS_OTOMASI",
-            label: "Alat Otomasi Utama",
-            type: "select",
-            description:
-              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
-            optional: false,
-            default: "n8n",
-            options: [
-              "Zapier",
-              "Make.com (Integromat)",
-              "n8n",
-              "Pipedream",
-              "Bardeen",
-              "Custom Script (Python/Node)",
-              "Lainnya...",
-            ],
-          },
-        ],
-        dynamicSubcomponents: [
-          {
-            trigger: "ALUR_DATA",
-            options: {
-              "Data Aggregation": [
-                {
-                  name: "DATA_SOURCES",
-                  label: "Sumber Data (pisahkan koma)",
-                  type: "text",
-                  placeholder: "Google Ads, FB Ads, Shopify, GA4",
-                  description: "Daftar sumber data yang ingin digabungkan.",
-                },
-              ],
-              "Sales Dashboard Otomatis": [
-                {
-                  name: "DASHBOARD_TOOL",
-                  label: "Alat Dashboard",
-                  type: "select",
-                  options: [
-                    "Google Sheets",
-                    "Looker Studio",
-                    "Excel Online",
-                    "Lainnya...",
-                  ],
-                  description: "Tempat data akan divisualisasikan.",
-                },
-              ],
-              "Alert Anomali Penjualan": [
-                {
-                  name: "ALERT_CHANNEL",
-                  label: "Saluran Notifikasi",
-                  type: "select",
-                  options: [
-                    "Slack",
-                    "WhatsApp",
-                    "Email",
-                    "Telegram",
-                    "Lainnya...",
-                  ],
-                  description: "Di mana Anda ingin menerima peringatan.",
-                },
-                {
-                  name: "THRESHOLD",
-                  label: "Ambang Batas Anomali (%)",
-                  type: "number",
-                  default: 20,
-                  description:
-                    "Persentase penurunan/kenaikan drastis yang dianggap anomali.",
-                },
-              ],
-            },
-          },
-        ],
-        komponen_prompt: {
-          PERAN: "Anda adalah seorang Business Intelligence Automator.",
-          KONTEKS:
-            "Pengguna ingin membangun sebuah **Workflow Automation** untuk alur kerja Data & Analisis: **{ALUR_DATA}** menggunakan alat **{TOOLS_OTOMASI}**.",
-          TUGAS:
-            "Rancang sebuah Workflow Automation berbasis data (Data Pipeline) untuk alur **{ALUR_DATA}** dengan memanfaatkan kapabilitas integrasi dari **{TOOLS_OTOMASI}**. \n\n1. **Extraction Phase**: Jelaskan cara menarik data secara otomatis dari {DATA_SOURCES} menggunakan module/node yang tersedia di {TOOLS_OTOMASI}.\n2. **Transformation Logic**: Rancang logika pemrosesan data (seperti filter, formatting, atau kalkulasi anomali berdasarkan {THRESHOLD}%) di dalam workflow.\n3. **Loading & Alerting**: Detailkan cara mengirim data ke {DASHBOARD_TOOL} atau memicu peringatan ke {ALERT_CHANNEL} secara real-time.\n4. **Data Reliability**: Berikan panduan cara memantau (monitoring) kesehatan workflow ini di dalam {TOOLS_OTOMASI} agar tidak ada data yang terlewat.",
-          FORMAT_OUTPUT:
-            "Sajikan dalam format cetak biru (Blueprint) arsitektur data di Markdown. Sertakan daftar API atau Connector yang diperlukan.",
-        },
-      },
-      "Otomasi Support & CRM": {
-        id_kerangka: "KOL-AUTO-004",
-        nama_kerangka: "Otomasi Support & CRM",
-        version: "1.0.0",
-        kategori: ["Koleksi & Inovasi", "Automation"],
-        description:
-          "Otomatisasi layanan pelanggan untuk respon lebih cepat dan kepuasan lebih tinggi.",
-        perspektif_user:
-          "Saya ingin memberikan layanan 24/7 kepada pelanggan tanpa menambah staf, mengelola tiket secara efisien, dan mengumpulkan feedback otomatis setelah transaksi selesai.",
-        ai_logic_description:
-          "Persona AI: Anda adalah seorang Customer Experience (CX) Architect yang ahli dalam merancang bot support dan alur kerja retensi pelanggan.",
-        toolType: "planning",
-        output: "natural_language_prompt",
-        contoh_kalimat:
-          "Buat alur untuk membalas komentar TikTok secara otomatis berdasarkan keyword.",
-        konteks_tambahan_instruksi_khusus:
-          "Fokus pada empati dalam bahasa bot. Pastikan ada jalur eskalasi ke manusia (human handoff).",
-        components: [
-          {
-            name: "ALUR_SUPPORT",
-            label: "Pilih Alur Otomasi",
-            type: "select",
-            description:
-              "Pilih salah satu template alur kerja otomatisasi layanan pelanggan.",
-            optional: false,
-            default: "Support Tiktokan Otomatis",
-            options: [
-              "Support Tiktokan Otomatis",
-              "Auto-Survey Kepuasan",
-              "Lainnya...",
-            ],
-          },
-          {
-            name: "TOOLS_OTOMASI",
-            label: "Alat Otomasi Utama",
-            type: "select",
-            description:
-              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
-            optional: false,
-            default: "n8n",
-            options: [
-              "Zapier",
-              "Make.com (Integromat)",
-              "n8n",
-              "Pipedream",
-              "Bardeen",
-              "Custom Script (Python/Node)",
-              "Lainnya...",
-            ],
-          },
-        ],
-        dynamicSubcomponents: [
-          {
-            trigger: "ALUR_SUPPORT",
-            options: {
-              "Support Tiktokan Otomatis": [
-                {
-                  name: "KEYWORDS",
-                  label: "Kata Kunci Pemicu",
-                  type: "text",
-                  placeholder: "harga, cara beli, ready, lokasi",
-                  description:
-                    "Komentar yang berisi kata ini akan dibalas otomatis.",
-                },
-              ],
-              "Auto-Survey Kepuasan": [
-                {
-                  name: "SURVEY_DELAY",
-                  label: "Jeda Pengiriman (Jam)",
-                  type: "number",
-                  default: 24,
-                  description: "Kapan survey dikirim setelah barang sampai.",
-                },
-              ],
-            },
-          },
-        ],
-        komponen_prompt: {
-          PERAN: "Anda adalah seorang CX Architect.",
-          KONTEKS:
-            "Pengguna ingin membangun sebuah **Workflow Automation** untuk meningkatkan layanan pelanggan melalui alur: **{ALUR_SUPPORT}** menggunakan alat **{TOOLS_OTOMASI}**.",
-          TUGAS:
-            "Rancang sebuah Workflow Automation untuk Customer Experience (CX) pada alur **{ALUR_SUPPORT}** dengan memaksimalkan integrasi dari **{TOOLS_OTOMASI}**. \n\n1. **Event Monitoring**: Jelaskan cara workflow mendeteksi trigger (seperti {KEYWORDS} atau status pesanan) melalui {TOOLS_OTOMASI}.\n2. **Automated Response Logic**: Detailkan logika pengiriman balasan otomatis atau survey kepuasan (setelah {SURVEY_DELAY} jam) yang personal dan empatik.\n3. **Smart Routing**: Tentukan kriteria eskalasi di mana workflow ini akan berhenti dan mengarahkan tugas ke agen manusia.\n4. **CRM Sync**: Pastikan setiap interaksi dicatat kembali ke sistem CRM melalui koneksi otomatis di {TOOLS_OTOMASI}.",
-          FORMAT_OUTPUT:
-            "Sajikan dalam format User Journey Map di Markdown. Sertakan draf pesan (scripts) untuk berbagai skenario interaksi.",
-        },
-      },
-      "Otomasi E-Commerce & Toko": {
-        id_kerangka: "KOL-AUTO-005",
-        nama_kerangka: "Otomasi E-Commerce & Toko",
-        version: "1.0.0",
-        kategori: ["Koleksi & Inovasi", "Automation"],
-        description:
-          "Alur kerja untuk menyederhanakan operasional toko online dan meningkatkan retensi pembeli.",
-        perspektif_user:
-          "Saya ingin mengotomatiskan pemrosesan pesanan, mengirim pengingat perpanjangan langganan, dan mendapatkan feedback dari pembeli secara otomatis agar toko saya berjalan lancar tanpa pengawasan manual yang ketat.",
-        ai_logic_description:
-          "Persona AI: Anda adalah seorang E-commerce Operations Specialist yang ahli dalam menghubungkan platform toko (Shopify, Tokopedia, WooCommerce) dengan tool logistik dan marketing.",
-        toolType: "planning",
-        output: "natural_language_prompt",
-        contoh_kalimat:
-          "Buat alur untuk mengirim pengingat otomatis bagi pelanggan yang belum membayar pesanan.",
-        konteks_tambahan_instruksi_khusus:
-          "Fokus pada konversi dan efisiensi logistik. Sarankan penggunaan webhook untuk sinkronisasi data real-time.",
-        components: [
-          {
-            name: "ALUR_ECOMMERCE",
-            label: "Pilih Alur Otomasi",
-            type: "select",
-            description:
-              "Pilih salah satu template alur kerja otomatisasi e-commerce.",
-            optional: false,
-            default: "Order Processing Otomatis",
-            options: [
-              "Order Processing Otomatis",
-              "Subscription Renewal Reminder",
-              "Feedback Loop Otomatis",
-              "Lainnya...",
-            ],
-          },
-          {
-            name: "TOOLS_OTOMASI",
-            label: "Alat Otomasi Utama",
-            type: "select",
-            description:
-              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
-            optional: false,
-            default: "n8n",
-            options: [
-              "Zapier",
-              "Make.com (Integromat)",
-              "n8n",
-              "Pipedream",
-              "Bardeen",
-              "Custom Script (Python/Node)",
-              "Lainnya...",
-            ],
-          },
-        ],
-        dynamicSubcomponents: [
-          {
-            trigger: "ALUR_ECOMMERCE",
-            options: {
-              "Order Processing Otomatis": [
-                {
-                  name: "PLATFORM_TOKO",
-                  label: "Platform Toko",
-                  type: "select",
-                  options: [
-                    "Shopify",
-                    "WooCommerce",
-                    "TikTok Shop",
-                    "Shopee/Tokopedia (via API)",
-                    "Lainnya...",
-                  ],
-                  description: "Di mana Anda berjualan.",
-                },
-              ],
-              "Subscription Renewal Reminder": [
-                {
-                  name: "RENEWAL_PERIOD",
-                  label: "Periode Pengingat (Hari sebelum)",
-                  type: "number",
-                  default: 3,
-                  description:
-                    "Berapa hari sebelum masa aktif habis untuk mengirim pesan.",
-                },
-              ],
-              "Feedback Loop Otomatis": [
-                {
-                  name: "RATING_THRESHOLD",
-                  label: "Batas Rating untuk Follow-up",
-                  type: "number",
-                  default: 3,
-                  description:
-                    "Jika rating di bawah angka ini, kirim pesan bantuan ke customer service.",
-                },
-              ],
-            },
-          },
-        ],
-        komponen_prompt: {
-          PERAN: "Anda adalah seorang E-commerce Operations Specialist.",
-          KONTEKS:
-            "Pengguna ingin membangun sebuah **Workflow Automation** untuk operasional E-Commerce pada alur: **{ALUR_ECOMMERCE}** menggunakan alat **{TOOLS_OTOMASI}**.",
-          TUGAS:
-            "Rancang sebuah Workflow Automation operasional untuk alur **{ALUR_ECOMMERCE}** pada platform {PLATFORM_TOKO} dengan bantuan tool **{TOOLS_OTOMASI}**. \n\n1. **Integration Trigger**: Jelaskan cara menghubungkan {PLATFORM_TOKO} ke {TOOLS_OTOMASI} (misal: via Webhook atau Native App).\n2. **Order & Subscription Logic**: Detailkan langkah pengecekan data (stok/status) atau kalkulasi waktu pengingat ({RENEWAL_PERIOD} hari) di dalam workflow.\n3. **Multichannel Action**: Rincikan aksi pengiriman notifikasi, tagihan, atau permintaan feedback (berdasarkan {RATING_THRESHOLD}) melalui channel yang terhubung di {TOOLS_OTOMASI}.\n4. **Operational Stability**: Berikan tips agar workflow ini sinkron dengan sistem eksternal (layanan kurir/pembayaran) tanpa terjadi duplikasi data.",
-          FORMAT_OUTPUT:
-            "Sajikan dalam format Alur Kerja Operasional (Ops Workflow) di Markdown. Sertakan daftar 'Pemeriksaan Keamanan' (Security Checks) untuk data transaksi.",
-        },
-      },
-      "Otomasi Agen AI Pintar": {
-        id_kerangka: "KOL-AUTO-006",
-        nama_kerangka: "Otomasi Agen AI Pintar",
-        version: "1.0.0",
-        kategori: ["Koleksi & Inovasi", "Automation"],
-        description:
-          "Pemanfaatan AI Agent otonom untuk tugas-tugas kompleks yang membutuhkan pengambilan keputusan.",
-        perspektif_user:
-          "Saya ingin memiliki asisten digital yang bisa mengelola konten secara mandiri, mengoptimalkan alur kerja saya secara dinamis, dan memetakan tugas ke sub-tugas secara otomatis tanpa instruksi mendetail setiap saat.",
-        ai_logic_description:
-          "Persona AI: Anda adalah seorang AI Engineer & Automation Architect yang ahli dalam merancang sistem Multi-Agent dan Autonomous Workflows.",
-        toolType: "planning",
-        output: "natural_language_prompt",
-        contoh_kalimat:
-          "Buat sistem AI Agent yang bisa riset tren berita dan tulis draf artikel secara otonom.",
-        konteks_tambahan_instruksi_khusus:
-          "Fokus pada otonomi dan kontrol (Human-in-the-loop). Sarankan framework seperti CrewAI, AutoGPT, atau LangChain untuk implementasi.",
-        components: [
-          {
-            name: "ALUR_AGENT",
-            label: "Pilih Alur Otomasi",
-            type: "select",
-            description: "Pilih salah satu template alur kerja agen AI.",
-            optional: false,
-            default: "AI Agent Pengelola Konten",
-            options: [
-              "AI Agent Pengelola Konten",
-              "Smart Workflow Optimize",
-              "Dynamic Task Mapping",
-              "Lainnya...",
-            ],
-          },
-          {
-            name: "TOOLS_OTOMASI",
-            label: "Alat Otomasi Utama",
-            type: "select",
-            description:
-              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
-            optional: false,
-            default: "n8n",
-            options: [
-              "Zapier",
-              "Make.com (Integromat)",
-              "n8n",
-              "Pipedream",
-              "Bardeen",
-              "Custom Script (Python/Node)",
-              "Lainnya...",
-            ],
-          },
-        ],
-        dynamicSubcomponents: [
-          {
-            trigger: "ALUR_AGENT",
-            options: {
-              "AI Agent Pengelola Konten": [
-                {
-                  name: "AGENT_TOOLS",
-                  label: "Alat yang Digunakan Agent",
-                  type: "multiselect",
-                  options: [
-                    "Google Search",
-                    "Web Scraper",
-                    "Stable Diffusion",
-                    "OpenAI Vision",
-                    "Lainnya...",
-                  ],
-                  description: "Kemampuan teknis yang diberikan kepada agen.",
-                },
-              ],
-              "Smart Workflow Optimize": [
-                {
-                  name: "GOAL_METRIC",
-                  label: "Metrik Optimasi",
-                  type: "text",
-                  placeholder:
-                    "Biaya terendah, waktu tercepat, kualitas tertinggi",
-                  description:
-                    "Apa yang harus diprioritaskan oleh sistem otomatis.",
-                },
-              ],
-              "Dynamic Task Mapping": [
-                {
-                  name: "COMPLEX_PROJECT",
-                  label: "Proyek Kompleks",
-                  type: "textarea",
-                  placeholder: "Membangun SaaS dalam 30 hari...",
-                  description:
-                    "Proyek besar yang ingin dipecah menjadi tugas-tugas kecil secara otomatis.",
-                },
-              ],
-            },
-          },
-        ],
-        komponen_prompt: {
-          PERAN: "Anda adalah seorang AI Engineer & Automation Architect.",
-          KONTEKS:
-            "Pengguna ingin membangun sebuah **Workflow Automation** tingkat lanjut menggunakan AI Agent untuk alur: **{ALUR_AGENT}** dengan alat **{TOOLS_OTOMASI}**.",
-          TUGAS:
-            "Rancang arsitektur Workflow Automation yang otonom untuk alur **{ALUR_AGENT}** dengan mengintegrasikan AI Agent ke dalam ekosistem **{TOOLS_OTOMASI}**. \n\n1. **Agent Orchestration**: Jelaskan bagaimana {TOOLS_OTOMASI} bertindak sebagai orkestrator bagi agen yang menggunakan {AGENT_TOOLS}.\n2. **Dynamic Decision Flow**: Rancang logika di mana agen membuat keputusan dinamis berdasarkan {GOAL_METRIC} di tengah-tengah jalannya workflow.\n3. **Advanced Tasking**: Detailkan cara workflow ini memecah {COMPLEX_PROJECT} dan mendistribusikannya ke berbagai sub-tugas secara otomatis.\n4. **AI-Human Collaboration**: Tentukan titik-titik kontrol di dalam {TOOLS_OTOMASI} agar pengguna tetap bisa mengawasi performa agen secara efisien.",
-          FORMAT_OUTPUT:
-            "Sajikan dalam format Arsitektur Sistem (System Architecture) di Markdown. Sertakan definisi 'System Message' (Base Prompt) untuk agen tersebut.",
-        },
-      },
-      "Otomasi Monetisasi Langsung": {
-        id_kerangka: "KOL-AUTO-007",
-        nama_kerangka: "Otomasi Monetisasi Langsung",
-        version: "1.0.0",
-        kategori: ["Koleksi & Inovasi", "Automation"],
-        description:
-          "Ubah keahlian otomatisasi Anda menjadi layanan atau produk yang menghasilkan uang.",
-        perspektif_user:
-          "Saya ingin menjual jasa pembuatan otomasi, membangun marketplace prompt, atau menyediakan pembuatan SOP otomatis sebagai layanan (SaaS) agar saya bisa memonetisasi keahlian saya di bidang AI dan otomatisasi.",
-        ai_logic_description:
-          "Persona AI: Anda adalah seorang Digital Business strategist yang ahli dalam Productizing Service dan pembangunan sistem pendapatan pasif (passive income).",
-        toolType: "planning",
-        output: "natural_language_prompt",
-        contoh_kalimat:
-          "Bantu saya buat rencana bisnis jual jasa otomasi landing page.",
-        konteks_tambahan_instruksi_khusus:
-          "Fokus pada scalability dan value proposition. Sarankan tool untuk billing (Stripe) dan delivery (Loom/Client Portal).",
-        components: [
-          {
-            name: "ALUR_MONETISASI",
-            label: "Pilih Alur Otomasi",
-            type: "select",
-            description: "Pilih salah satu template alur kerja monetisasi.",
-            optional: false,
-            default: "Prompt Marketplace Pack",
-            options: [
-              "Prompt Marketplace Pack",
-              "Custom Workflow as Service",
-              "Automasi Landing & Follow-Up",
-              "AI-Assisted SOP Builder",
-              "Lainnya...",
-            ],
-          },
-          {
-            name: "TOOLS_OTOMASI",
-            label: "Alat Otomasi Utama",
-            type: "select",
-            description:
-              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
-            optional: false,
-            default: "n8n",
-            options: [
-              "Zapier",
-              "Make.com (Integromat)",
-              "n8n",
-              "Pipedream",
-              "Bardeen",
-              "Custom Script (Python/Node)",
-              "Lainnya...",
-            ],
-          },
-        ],
-        dynamicSubcomponents: [
-          {
-            trigger: "ALUR_MONETISASI",
-            options: {
-              "Prompt Marketplace Pack": [
-                {
-                  name: "PROMPT_NICHE",
-                  label: "Niche Prompt",
-                  type: "text",
-                  placeholder: "Arsitektur, Hukum, Coding...",
-                  description:
-                    "Topik spesifik dari paket prompt yang akan dijual.",
-                },
-              ],
-              "Custom Workflow as Service": [
-                {
-                  name: "SERVICE_TYPE",
-                  label: "Jenis Layanan",
-                  type: "select",
-                  options: [
-                    "Otomasi CRM",
-                    "LinkedIn Content System",
-                    "Data Scraper for Sales",
-                    "Lainnya...",
-                  ],
-                  description: "Layanan utama yang ditawarkan kepada klien.",
-                },
-              ],
-              "Automasi Landing & Follow-Up": [
-                {
-                  name: "FUNNEL_STEPS",
-                  label: "Tahap Funnel",
-                  type: "textarea",
-                  placeholder: "Landing Page -> Quiz -> Order -> Upsell",
-                  description:
-                    "Langkah-langkah yang ingin diotomatiskan dalam penjualan.",
-                },
-              ],
-              "AI-Assisted SOP Builder": [
-                {
-                  name: "BUSINESS_PROCESS",
-                  label: "Proses Bisnis",
-                  type: "text",
-                  placeholder: "Hiring, Onboarding, Refund...",
-                  description:
-                    "Proses yang ingin dibuatkan SOP-nya secara otomatis.",
-                },
-              ],
-            },
-          },
-        ],
-        komponen_prompt: {
-          PERAN: "Anda adalah seorang Digital Business Strategist.",
-          KONTEKS:
-            "Pengguna ingin membangun model bisnis atau layanan berbasis **Workflow Automation** untuk alur: **{ALUR_MONETISASI}** menggunakan alat **{TOOLS_OTOMASI}**.",
-          TUGAS:
-            "Rancang sebuah Workflow Automation yang bernilai komersial untuk alur **{ALUR_MONETISASI}** dengan memanfaatkan tool **{TOOLS_OTOMASI}**. \n\n1. **Productized Service Logic**: Jelaskan bagaimana {TOOLS_OTOMASI} digunakan untuk membuat paket layanan {PROMPT_NICHE} atau {SERVICE_TYPE} yang dapat diskalakan.\n2. **Delivery Automation**: Rancang sistem pengiriman hasil (delivery) otomatis kepada klien, mulai dari {FUNNEL_STEPS} hingga pembuatan {BUSINESS_PROCESS}.\n3. **Backend Operations**: Detailkan integrasi sistem pembayaran atau manajemen klien yang dapat diotomatiskan langsung melalui {TOOLS_OTOMASI}.\n4. **Monetization Strategy**: Berikan saran cara mengemas alur kerja ini di {TOOLS_OTOMASI} agar memiliki nilai jual tinggi dan biaya operasional rendah.",
-          FORMAT_OUTPUT:
-            "Sajikan dalam format Perencanaan Bisnis (Business Model Canvas Light) di Markdown. Sertakan strategi penetapan harga (Pricing Strategy).",
-        },
-      },
-      "Hub Otomasi Universal": {
-        id_kerangka: "KOL-AUTO-008",
-        nama_kerangka: "Hub Otomasi Universal",
-        version: "1.0.0",
-        kategori: ["Koleksi & Inovasi", "Automation"],
-        description:
-          "Kerangka kerja umum untuk memecahkan masalah dan menghubungkan sistem apa pun tanpa batasan niche.",
-        perspektif_user:
-          "Saya punya konsep otomatisasi yang unik atau masalah manual yang ingin saya hilangkan. Saya butuh cara untuk memecah masalah tersebut menjadi langkah-langkah teknis dan menemukan tool yang tepat untuk menghubungkan semuanya.",
-        ai_logic_description:
-          "Persona AI: Anda adalah seorang Solution Architect & Systems Thinker yang ahli dalam dekonstruksi masalah dan integrasi ekosistem aplikasi.",
-        toolType: "planning",
-        output: "natural_language_prompt",
-        contoh_kalimat:
-          "Bantu saya merancang otomatisasi untuk menghubungkan alat pengukur suhu IoT ke Google Sheets.",
-        konteks_tambahan_instruksi_khusus:
-          "Gunakan pendekatan First Principles Thinking. Jangan terpaku pada satu merk tool, tawarkan alternatif open-source dan berbayar.",
-        components: [
-          {
-            name: "ALUR_UNIVERSAL",
-            label: "Metode Pemecahan Masalah",
-            type: "select",
-            description: "Pilih pendekatan untuk merancang otomatisasi Anda.",
-            optional: false,
-            default: "Kanvas Otomasi Universal",
-            options: [
-              "Kanvas Otomasi Universal",
-              "Pemecah Masalah Manual",
-              "Penghubung Ekosistem Tools",
-              "Lainnya...",
-            ],
-          },
-          {
-            name: "TOOLS_OTOMASI",
-            label: "Alat Otomasi Utama",
-            type: "select",
-            description:
-              "Pilih alat yang akan digunakan untuk membangun alur kerja ini.",
-            optional: false,
-            default: "n8n",
-            options: [
-              "Zapier",
-              "Make.com (Integromat)",
-              "n8n",
-              "Pipedream",
-              "Bardeen",
-              "Custom Script (Python/Node)",
-              "Lainnya...",
-            ],
-          },
-        ],
-        dynamicSubcomponents: [
-          {
-            trigger: "ALUR_UNIVERSAL",
-            options: {
-              "Kanvas Otomasi Universal": [
-                {
-                  name: "USER_IDEA",
-                  label: "Ide/Konsep Otomasi",
-                  type: "textarea",
-                  placeholder:
-                    "Saya ingin setiap kali saya posting di YouTube, ringkasannya masuk ke LinkedIn dan Twitter...",
-                  description: "Jelaskan apa yang ingin Anda capai.",
-                },
-              ],
-              "Pemecah Masalah Manual": [
-                {
-                  name: "MANUAL_PAIN",
-                  label: "Tugas Manual yang Membosankan",
-                  type: "textarea",
-                  placeholder:
-                    "Saya harus mengunduh invoice satu per satu dari email setiap hari Senin...",
-                  description: "Jelaskan tugas yang ingin Anda hilangkan.",
-                },
-                {
-                  name: "TECH_SKILL",
-                  label: "Skill Teknikal Anda",
-                  type: "select",
-                  options: [
-                    "Pemula (No-Code)",
-                    "Menengah (Low-Code)",
-                    "Ahli (Pro-Code)",
-                    "Lainnya...",
-                  ],
-                  description:
-                    "Kemampuan Anda untuk mengimplementasikan solusi.",
-                },
-              ],
-              "Penghubung Ekosistem Tools": [
-                {
-                  name: "TOOL_LIST",
-                  label: "Daftar Tool yang Ingin Dihubungkan",
-                  type: "text",
-                  placeholder: "Slack, Gmail, Airtable, Notion",
-                  description:
-                    "Aplikasi yang saat ini Anda gunakan di kantor/bisnis.",
-                },
-              ],
-            },
-          },
-        ],
-        komponen_prompt: {
-          PERAN: "Anda adalah seorang Solution Architect & Systems Thinker.",
-          KONTEKS:
-            "Pengguna ingin membangun sebuah **Workflow Automation** universal untuk memecahkan masalah melalui metode: **{ALUR_UNIVERSAL}** dengan alat **{TOOLS_OTOMASI}**.",
-          TUGAS:
-            "Rancang sebuah solusi Workflow Automation yang fleksibel untuk metode **{ALUR_UNIVERSAL}** dengan memanfaatkan kemampuan dari **{TOOLS_OTOMASI}**. \n\n1. **Conceptual Design**: Dekonstruksi ide {USER_IDEA} atau masalah manual ({MANUAL_PAIN}) menjadi diagram alir yang dapat diimplementasikan di {TOOLS_OTOMASI}.\n2. **Connectivity Strategy**: Detailkan cara menghubungkan berbagai aplikasi dalam {TOOL_LIST} secara mulus melalui workflow di {TOOLS_OTOMASI}.\n3. **Implementation Level**: Sesuaikan desain solusi dengan tingkat {TECH_SKILL} pengguna, mulai dari integrasi no-code hingga script kustom di dalam {TOOLS_OTOMASI}.\n4. **Universal Bridge**: Berikan panduan cara membangun 'jembatan' antar tool yang mungkin belum memiliki integrasi native dengan fitur kustom dari {TOOLS_OTOMASI}.",
-          FORMAT_OUTPUT:
-            "Sajikan dalam format Panduan Solusi (Solution Guide) di Markdown. Sertakan analogi untuk menjelaskan konsep teknis yang rumit.",
-        },
-      },
-    },
     Bisnis: {
       "Akselerator Perencanaan Startup": {
         id_kerangka: "BIS-STP-001",
@@ -4237,6 +3352,1829 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya membuat konsep tata letak untuk halaman beranda website saya.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+      },
+    },
+    "Blueprint Workflow Otomasi": {
+      "Mesin Operasional Bisnis, Penjualan & Keuangan": {
+        id_kerangka: "KOL-AUTO-001",
+        nama_kerangka: "Mesin Operasional Bisnis, Penjualan & Keuangan",
+        version: "7.9.8",
+        kategori: ["Koleksi & Inovasi", "Blueprint Workflow Otomasi"],
+        description:
+          "Sistem terpadu untuk mengotomatisasi pendapatan dan operasional: Sales, Property/Real Estate, Support, hingga Keuangan.",
+        perspektif_user:
+          "Bantu saya merancang sistem otomasi Mesin Operasional Bisnis, Penjualan & Keuangan [menggunakan {{PLATFORM_OTOMASI}}].",
+        ai_logic_description:
+          "Anda adalah Chief Revenue Operations (RevOps) Architect yang ahli merancang funnels konversi dan efisiensi back-office. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Rancang workflow untuk Mesin Operasional Bisnis, Penjualan & Keuangan di sektor {{INDUSTRY_SECTOR}}.",
+        components: [
+          {
+            name: "REVENUE_FOCUS",
+            label: "Fokus Utama",
+            type: "select",
+            options: [
+              "Lead Generation & Follow-up (CRM)",
+              "Real Estate Lead & Tenant Screening (Properti)",
+              "E-commerce Order Fulfillment (Pesanan)",
+              "Customer Support Triage & Auto-Reply",
+              "Finance & Expense Management (OCR/Keuangan)",
+              "Client Onboarding & Contracts",
+              "Cold Outreach (Email/DM/Voice)",
+              "Lainnya...",
+            ],
+            info: "Jenis alur bisnis apa yang ingin diotomatisasi?",
+          },
+          {
+            name: "ENTRY_POINT",
+            label: "Sumber Pemicu (Trigger)",
+            type: "select",
+            options: [
+              "Ads Lead Form / Webhook",
+              "Property Portal Inquiry (Zillow/Realtor)",
+              "New Support Ticket (Zendesk/WA)",
+              "Uploaded Invoice/Receipt Image",
+              "Checkout Success (Stripe/Bank Transfer)",
+              "Booking Submission",
+              "Manual Input",
+              "Lainnya...",
+            ],
+            info: "Dari mana proses ini dimulai?",
+          },
+          {
+            name: "ACTION_GOAL",
+            label: "Tujuan/Aksi Utama",
+            type: "multiselect",
+            options: [
+              "Update CRM & Voice Call Follow-up",
+              "Schedule Property Tour & Qualify",
+              "Dispatch Vendor/Technician (Kirim Teknisi)",
+              "Auto-Escalate to Human Agent (Eskalasi)",
+              "OCR Extract & Sync to Accounting App",
+              "Generate Invoice & Drive Folder",
+              "Voice Call AI (Vapi.ai)",
+              "Send Digital Contract (eSign)",
+              "Lainnya...",
+            ],
+            info: "Apa hasil akhir yang diharapkan dari robot ini?",
+          },
+          {
+            name: "OPTIMIZATION_GOAL",
+            label: "Prioritas Optimasi (Trade-off)",
+            type: "select",
+            options: [
+              "Cost Minimization (Efisiensi Biaya/Gratis)",
+              "Reliability & Security (Kestabilan Enterprise)",
+              "Speed to Market (Kecepatan Implementasi MVP)",
+              "Scalability & High Throughput (Siap Volume Besar)",
+              "User Experience (Kemudahan Pengguna)",
+            ],
+            description:
+              "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
+            info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+          },
+          {
+            name: "PLATFORM_OTOMASI",
+            label: "Platform Otomasi Utama",
+            type: "select",
+            options: [
+              "Make.com (Integromat) - Visual & User Friendly",
+              "N8n (Self-Hosted) - Unlimited, Secure & Murah",
+              "Zapier - Premium, Mahal & Mudah",
+              "Pipedream - Developer Oriented",
+              "Relay.app - Human-in-the-Loop AI",
+              "Activepieces - Open Source Zapier Alternative",
+              "FlowiseAI - LLM Chain Builder",
+              "LangFlow - AI Agent Builder",
+              "Microsoft Power Automate - Enterprise",
+              "Vapi.ai / Bland.ai (Khusus Voice)",
+              "Lainnya...",
+            ],
+            description: "Platform mana yang akan digunakan?",
+            info: "Platform tempat workflow ini akan dibangun.",
+          },
+          {
+            name: "COMPLEXITY",
+            label: "Tingkat Kompleksitas Workflow",
+            type: "select",
+            options: [
+              "Level 1: Linear (Trigger -> Single Action)",
+              "Level 2: Logika Cabang (If/Else, Router, Switch)",
+              "Level 3: Iterasi Data (Looping Array, Batching)",
+              "Level 4: Integrasi API Kustom (HTTP Request Auth)",
+              "Level 5: Database Sync (CRUD Operations)",
+              "Level 6: AI Agent (Memory, RAG, Function Calling)",
+              "Level 7: Human Approval (Proses berhenti tunggu approval)",
+              "Lainnya...",
+            ],
+            info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+          },
+          {
+            name: "INDUSTRY_SECTOR",
+            label: "Sektor Industri",
+            type: "select",
+            options: [
+              "E-commerce & Retail (Ritel)",
+              "SaaS & Technology (Teknologi)",
+              "Agency & Service Business (Jasa)",
+              "Real Estate & Property (Properti)",
+              "Finance & Fintech (Keuangan)",
+              "Healthcare & Medical (Kesehatan)",
+              "Education & EdTech (Pendidikan)",
+              "F&B (Restoran/Cafe)",
+              "Local Services (Bengkel/Salon/Jasa Lokal)",
+              "Media & Content Creator",
+              "HR & Recruitment (SDM)",
+              "Lainnya...",
+            ],
+            info: "Industri target untuk menyesuaikan terminologi bisnis.",
+          },
+          {
+            name: "DATA_VOLUME",
+            label: "Perkiraan Volume Data",
+            type: "select",
+            options: [
+              "Rendah (< 100 eksekusi/bulan)",
+              "Menengah (100 - 1,000 eksekusi/bulan)",
+              "Tinggi (1,000 - 10,000 eksekusi/bulan)",
+              "Massive (10,000+ eksekusi/bulan)",
+              "Streaming/Real-time",
+              "Lainnya...",
+            ],
+            info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+          },
+          {
+            name: "ADDITIONAL_INSTRUCTIONS",
+            label: "Instruksi Tambahan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Jangan gunakan Google Sheets, ganti dengan Airtable. Atau: Pastikan notifikasi dikirim hanya pada jam kerja.",
+            description:
+              "Detail spesifik atau batasan khusus yang ingin Anda tambahkan.",
+            optional: true,
+            info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah Chief Revenue Operations (RevOps) Architect yang ahli merancang funnels konversi dan efisiensi back-office. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+          KONTEKS:
+            "Saya ingin membangun 'Business Ops Engine' otomatis. Fokus utama workflow ini adalah pada {REVENUE_FOCUS}. Input data berasal dari {ENTRY_POINT}, dan akan diproses untuk {ACTION_GOAL}. [Input tambahan: {ADDITIONAL_INSTRUCTIONS}].",
+          TUGAS:
+            "Rancang Technical Blueprint untuk Flow ini: 1. Trigger Definition, 2. Qualification/Validation/OCR Logic, 3. Database Sync, 4. Notification & Action Sequence. Sertakan Error Handling.",
+          FORMAT_OUTPUT:
+            "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "REVENUE_FOCUS",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_REVENUE_FOCUS",
+                  label: "Sebutkan Fokus Utama Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Fokus Utama.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Fokus Utama standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "ENTRY_POINT",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_ENTRY_POINT",
+                  label: "Sebutkan Sumber Pemicu (Trigger) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Sumber Pemicu (Trigger).",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Sumber Pemicu (Trigger) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "ACTION_GOAL",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_ACTION_GOAL",
+                  label: "Sebutkan Tujuan/Aksi Utama Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tujuan/Aksi Utama.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tujuan/Aksi Utama standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "PLATFORM_OTOMASI",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_PLATFORM_OTOMASI",
+                  label: "Sebutkan Platform Otomasi Utama Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "COMPLEXITY",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_COMPLEXITY",
+                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "INDUSTRY_SECTOR",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_INDUSTRY_SECTOR",
+                  label: "Sebutkan Sektor Industri Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Sektor Industri.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "DATA_VOLUME",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_DATA_VOLUME",
+                  label: "Sebutkan Perkiraan Volume Data Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        konteks_tambahan_instruksi_khusus:
+          "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T03:41:36.793100",
+      },
+      "Pabrik Konten, Komunitas & Kursus Online": {
+        id_kerangka: "KOL-AUTO-002",
+        nama_kerangka: "Pabrik Konten, Komunitas & Kursus Online",
+        version: "7.9.8",
+        kategori: ["Koleksi & Inovasi", "Blueprint Workflow Otomasi"],
+        description:
+          "Mesin produksi konten otomatis, manajemen komunitas, dan operasional kursus/edukasi tanpa kerja manual berulang.",
+        perspektif_user:
+          "Bantu saya merancang sistem otomasi Pabrik Konten, Komunitas & Kursus Online [menggunakan {{PLATFORM_OTOMASI}}].",
+        ai_logic_description:
+          "Anda adalah AI Creative Director & Community Ops Manager. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Rancang workflow untuk Pabrik Konten, Komunitas & Kursus Online di sektor {{INDUSTRY_SECTOR}}.",
+        components: [
+          {
+            name: "CONTENT_GOAL",
+            label: "Tujuan Workflow",
+            type: "select",
+            options: [
+              "Repurpose Video Panjang ke Shorts/Reels",
+              "Community Moderation & Engagement",
+              "Course Student Onboarding & Certs",
+              "Faceless Video Production (Full AI)",
+              "News Aggregation & Newsletter",
+              "Reputation & Review Management (GBP)",
+              "Lainnya...",
+            ],
+            info: "Jenis mesin konten/komunitas apa yang ingin dibangun?",
+          },
+          {
+            name: "SOURCE_MATERIAL",
+            label: "Bahan Baku / Pemicu",
+            type: "select",
+            options: [
+              "Zoom/YouTube Recordings",
+              "New Member Introduction Post",
+              "Course Completion Trigger",
+              "RSS Feed News/Blog",
+              "User Reviews (Google Maps)",
+              "Lainnya...",
+            ],
+            info: "Apa input mentah yang akan diolah oleh AI?",
+          },
+          {
+            name: "DISTRIBUTION_CHANNELS",
+            label: "Output / Aksi",
+            type: "multiselect",
+            options: [
+              "TikTok/Reels/Shorts Posting",
+              "Generate PDF Certificate (Sertifikat)",
+              "Direct Message (Member Welcome)",
+              "Email Newsletter",
+              "Automated Review Reply (Balas Ulasan)",
+              "Lainnya...",
+            ],
+            info: "Di mana hasil akhirnya akan tayang atau dikirim?",
+          },
+          {
+            name: "OPTIMIZATION_GOAL",
+            label: "Prioritas Optimasi (Trade-off)",
+            type: "select",
+            options: [
+              "Cost Minimization (Efisiensi Biaya/Gratis)",
+              "Reliability & Security (Kestabilan Enterprise)",
+              "Speed to Market (Kecepatan Implementasi MVP)",
+              "Scalability & High Throughput (Siap Volume Besar)",
+              "User Experience (Kemudahan Pengguna)",
+            ],
+            description:
+              "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
+            info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+          },
+          {
+            name: "PLATFORM_OTOMASI",
+            label: "Platform Otomasi Utama",
+            type: "select",
+            options: [
+              "Make.com (Integromat) - Visual & User Friendly",
+              "N8n (Self-Hosted) - Unlimited, Secure & Murah",
+              "Zapier - Premium, Mahal & Mudah",
+              "Pipedream - Developer Oriented",
+              "Relay.app - Human-in-the-Loop AI",
+              "Activepieces - Open Source Zapier Alternative",
+              "FlowiseAI - LLM Chain Builder",
+              "LangFlow - AI Agent Builder",
+              "Microsoft Power Automate - Enterprise",
+              "Vapi.ai / Bland.ai (Khusus Voice)",
+              "Lainnya...",
+            ],
+            description: "Platform mana yang akan digunakan?",
+            info: "Platform tempat workflow ini akan dibangun.",
+          },
+          {
+            name: "COMPLEXITY",
+            label: "Tingkat Kompleksitas Workflow",
+            type: "select",
+            options: [
+              "Level 1: Linear (Trigger -> Single Action)",
+              "Level 2: Logika Cabang (If/Else, Router, Switch)",
+              "Level 3: Iterasi Data (Looping Array, Batching)",
+              "Level 4: Integrasi API Kustom (HTTP Request Auth)",
+              "Level 5: Database Sync (CRUD Operations)",
+              "Level 6: AI Agent (Memory, RAG, Function Calling)",
+              "Level 7: Human Approval (Proses berhenti tunggu approval)",
+              "Lainnya...",
+            ],
+            info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+          },
+          {
+            name: "INDUSTRY_SECTOR",
+            label: "Sektor Industri",
+            type: "select",
+            options: [
+              "E-commerce & Retail (Ritel)",
+              "SaaS & Technology (Teknologi)",
+              "Agency & Service Business (Jasa)",
+              "Real Estate & Property (Properti)",
+              "Finance & Fintech (Keuangan)",
+              "Healthcare & Medical (Kesehatan)",
+              "Education & EdTech (Pendidikan)",
+              "F&B (Restoran/Cafe)",
+              "Local Services (Bengkel/Salon/Jasa Lokal)",
+              "Media & Content Creator",
+              "HR & Recruitment (SDM)",
+              "Lainnya...",
+            ],
+            info: "Industri target untuk menyesuaikan terminologi bisnis.",
+          },
+          {
+            name: "DATA_VOLUME",
+            label: "Perkiraan Volume Data",
+            type: "select",
+            options: [
+              "Rendah (< 100 eksekusi/bulan)",
+              "Menengah (100 - 1,000 eksekusi/bulan)",
+              "Tinggi (1,000 - 10,000 eksekusi/bulan)",
+              "Massive (10,000+ eksekusi/bulan)",
+              "Streaming/Real-time",
+              "Lainnya...",
+            ],
+            info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+          },
+          {
+            name: "ADDITIONAL_INSTRUCTIONS",
+            label: "Instruksi Tambahan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Jangan gunakan Google Sheets, ganti dengan Airtable. Atau: Pastikan notifikasi dikirim hanya pada jam kerja.",
+            description:
+              "Detail spesifik atau batasan khusus yang ingin Anda tambahkan.",
+            optional: true,
+            info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah AI Creative Director & Community Ops Manager. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+          KONTEKS:
+            "Saya ingin membangun 'Content & Community Engine' untuk {CONTENT_GOAL}. Sumber materi berasal dari {SOURCE_MATERIAL}. Distribusi akhir ke {DISTRIBUTION_CHANNELS}. [Input tambahan: {ADDITIONAL_INSTRUCTIONS}].",
+          TUGAS:
+            "Buat Arsitektur Automation: 1. Ingest Source, 2. AI Processing (Scripting/Moderation/Grading), 3. Quality Check, 4. Posting/Delivery/Certification.",
+          FORMAT_OUTPUT:
+            "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "CONTENT_GOAL",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_CONTENT_GOAL",
+                  label: "Sebutkan Tujuan Workflow Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tujuan Workflow.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tujuan Workflow standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "SOURCE_MATERIAL",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_SOURCE_MATERIAL",
+                  label: "Sebutkan Bahan Baku / Pemicu Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Bahan Baku / Pemicu.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Bahan Baku / Pemicu standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "DISTRIBUTION_CHANNELS",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_DISTRIBUTION_CHANNELS",
+                  label: "Sebutkan Output / Aksi Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Output / Aksi.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Output / Aksi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "PLATFORM_OTOMASI",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_PLATFORM_OTOMASI",
+                  label: "Sebutkan Platform Otomasi Utama Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "COMPLEXITY",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_COMPLEXITY",
+                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "INDUSTRY_SECTOR",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_INDUSTRY_SECTOR",
+                  label: "Sebutkan Sektor Industri Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Sektor Industri.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "DATA_VOLUME",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_DATA_VOLUME",
+                  label: "Sebutkan Perkiraan Volume Data Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        konteks_tambahan_instruksi_khusus:
+          "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T03:41:36.796582",
+      },
+      "Mesin Riset & Intelijen Pasar": {
+        id_kerangka: "KOL-AUTO-003",
+        nama_kerangka: "Mesin Riset & Intelijen Pasar",
+        version: "7.9.8",
+        kategori: ["Koleksi & Inovasi", "Blueprint Workflow Otomasi"],
+        description:
+          "Spesialis riset pasar, analisis kompetitor, monitoring berita tren, dan sintesa data strategis.",
+        perspektif_user:
+          "Bantu saya merancang sistem otomasi Mesin Riset & Intelijen Pasar [menggunakan {{PLATFORM_OTOMASI}}].",
+        ai_logic_description:
+          "Anda adalah Strategic Market Researcher & Data Analyst dengan keahlian OSINT (Open Source Intelligence). [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Rancang workflow untuk Mesin Riset & Intelijen Pasar di sektor {{INDUSTRY_SECTOR}}.",
+        components: [
+          {
+            name: "RESEARCH_MISSION",
+            label: "Tujuan Riset (Misi)",
+            type: "select",
+            options: [
+              "Competitor Price & Feature Monitoring (Pantau Pesaing)",
+              "Deep Dive Industry Trends & Virality (Tren Industri)",
+              "Customer Sentiment & Voice of Customer (Suara Pelanggan)",
+              "News Aggregation & Summarization (Ringkasan Berita)",
+              "Academic/Scientific Paper Research (Jurnal Ilmiah)",
+              "Regulatory Change Monitoring (Regulasi)",
+              "Lainnya...",
+            ],
+            info: "Apa insight strategis yang ingin didapatkan?",
+          },
+          {
+            name: "DATA_SOURCE",
+            label: "Sumber Data Target",
+            type: "select",
+            options: [
+              "Google Search API & News",
+              "Competitor Websites (Scraping)",
+              "Social Media Feeds (X/Reddit/TikTok)",
+              "Industry Reports (PDF/CSV)",
+              "Review Aggregators (G2/Capterra)",
+              "Government/Regulatory Database",
+              "Lainnya...",
+            ],
+            info: "Dari mana data mentah akan diambil?",
+          },
+          {
+            name: "ANALYSIS_FRAMEWORK",
+            label: "Kerangka Analisis",
+            type: "multiselect",
+            options: [
+              "SWOT Analysis (Strength/Weakness)",
+              "PESTEL (Macro-environmental)",
+              "Sentiment Analysis (Pos/Neg/Neu)",
+              "Feature Comparison Matrix (Perbandingan)",
+              "Price Fluctuation Alerting (Deteksi Harga)",
+              "Key Topic Extraction & Clustering",
+              "Lainnya...",
+            ],
+            info: "Model mental apa yang harus digunakan AI?",
+          },
+          {
+            name: "OPTIMIZATION_GOAL",
+            label: "Prioritas Optimasi (Trade-off)",
+            type: "select",
+            options: [
+              "Cost Minimization (Efisiensi Biaya/Gratis)",
+              "Reliability & Security (Kestabilan Enterprise)",
+              "Speed to Market (Kecepatan Implementasi MVP)",
+              "Scalability & High Throughput (Siap Volume Besar)",
+              "User Experience (Kemudahan Pengguna)",
+            ],
+            description:
+              "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
+            info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+          },
+          {
+            name: "PLATFORM_OTOMASI",
+            label: "Platform Otomasi Utama",
+            type: "select",
+            options: [
+              "Make.com (Integromat) - Visual & User Friendly",
+              "N8n (Self-Hosted) - Unlimited, Secure & Murah",
+              "Zapier - Premium, Mahal & Mudah",
+              "Pipedream - Developer Oriented",
+              "Relay.app - Human-in-the-Loop AI",
+              "Activepieces - Open Source Zapier Alternative",
+              "FlowiseAI - LLM Chain Builder",
+              "LangFlow - AI Agent Builder",
+              "Microsoft Power Automate - Enterprise",
+              "Vapi.ai / Bland.ai (Khusus Voice)",
+              "Lainnya...",
+            ],
+            description: "Platform mana yang akan digunakan?",
+            info: "Platform tempat workflow ini akan dibangun.",
+          },
+          {
+            name: "COMPLEXITY",
+            label: "Tingkat Kompleksitas Workflow",
+            type: "select",
+            options: [
+              "Level 1: Linear (Trigger -> Single Action)",
+              "Level 2: Logika Cabang (If/Else, Router, Switch)",
+              "Level 3: Iterasi Data (Looping Array, Batching)",
+              "Level 4: Integrasi API Kustom (HTTP Request Auth)",
+              "Level 5: Database Sync (CRUD Operations)",
+              "Level 6: AI Agent (Memory, RAG, Function Calling)",
+              "Level 7: Human Approval (Proses berhenti tunggu approval)",
+              "Lainnya...",
+            ],
+            info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+          },
+          {
+            name: "INDUSTRY_SECTOR",
+            label: "Sektor Industri",
+            type: "select",
+            options: [
+              "E-commerce & Retail (Ritel)",
+              "SaaS & Technology (Teknologi)",
+              "Agency & Service Business (Jasa)",
+              "Real Estate & Property (Properti)",
+              "Finance & Fintech (Keuangan)",
+              "Healthcare & Medical (Kesehatan)",
+              "Education & EdTech (Pendidikan)",
+              "F&B (Restoran/Cafe)",
+              "Local Services (Bengkel/Salon/Jasa Lokal)",
+              "Media & Content Creator",
+              "HR & Recruitment (SDM)",
+              "Lainnya...",
+            ],
+            info: "Industri target untuk menyesuaikan terminologi bisnis.",
+          },
+          {
+            name: "DATA_VOLUME",
+            label: "Perkiraan Volume Data",
+            type: "select",
+            options: [
+              "Rendah (< 100 eksekusi/bulan)",
+              "Menengah (100 - 1,000 eksekusi/bulan)",
+              "Tinggi (1,000 - 10,000 eksekusi/bulan)",
+              "Massive (10,000+ eksekusi/bulan)",
+              "Streaming/Real-time",
+              "Lainnya...",
+            ],
+            info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+          },
+          {
+            name: "ADDITIONAL_INSTRUCTIONS",
+            label: "Instruksi Tambahan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Jangan gunakan Google Sheets, ganti dengan Airtable. Atau: Pastikan notifikasi dikirim hanya pada jam kerja.",
+            description:
+              "Detail spesifik atau batasan khusus yang ingin Anda tambahkan.",
+            optional: true,
+            info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah Strategic Market Researcher & Data Analyst dengan keahlian OSINT (Open Source Intelligence). [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+          KONTEKS:
+            "Saya membutuhkan sistem 'Market Intelligence' untuk melakukan {RESEARCH_MISSION}. Sistem harus mengumpulkan data dari {DATA_SOURCE} dan menerapkan metode analisis {ANALYSIS_FRAMEWORK}. [Input tambahan: {ADDITIONAL_INSTRUCTIONS}].",
+          TUGAS:
+            "Rancang Technical Blueprint untuk mesin riset otomatis. Alur: 1. Data Collection/Scraping, 2. AI Processing/Summarization, 3. Insight Extraction, 4. Reporting.",
+          FORMAT_OUTPUT:
+            "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "RESEARCH_MISSION",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_RESEARCH_MISSION",
+                  label: "Sebutkan Tujuan Riset (Misi) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tujuan Riset (Misi).",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tujuan Riset (Misi) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "DATA_SOURCE",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_DATA_SOURCE",
+                  label: "Sebutkan Sumber Data Target Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Sumber Data Target.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Sumber Data Target standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "ANALYSIS_FRAMEWORK",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_ANALYSIS_FRAMEWORK",
+                  label: "Sebutkan Kerangka Analisis Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Kerangka Analisis.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Kerangka Analisis standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "PLATFORM_OTOMASI",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_PLATFORM_OTOMASI",
+                  label: "Sebutkan Platform Otomasi Utama Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "COMPLEXITY",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_COMPLEXITY",
+                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "INDUSTRY_SECTOR",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_INDUSTRY_SECTOR",
+                  label: "Sebutkan Sektor Industri Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Sektor Industri.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "DATA_VOLUME",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_DATA_VOLUME",
+                  label: "Sebutkan Perkiraan Volume Data Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        konteks_tambahan_instruksi_khusus:
+          "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T03:41:36.799488",
+      },
+      "Mesin IT, DevOps & Rekayasa Produk": {
+        id_kerangka: "KOL-AUTO-004",
+        nama_kerangka: "Mesin IT, DevOps & Rekayasa Produk",
+        version: "7.9.8",
+        kategori: ["Koleksi & Inovasi", "Blueprint Workflow Otomasi"],
+        description:
+          "Otomasi untuk tim teknis: Incident Response, Log Analysis, Github Automation, hingga Product Feedback Loop.",
+        perspektif_user:
+          "Bantu saya merancang sistem otomasi Mesin IT, DevOps & Rekayasa Produk [menggunakan {{PLATFORM_OTOMASI}}].",
+        ai_logic_description:
+          "Anda adalah Senior DevOps Engineer & Product Operations Specialist. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Rancang workflow untuk Mesin IT, DevOps & Rekayasa Produk di sektor {{INDUSTRY_SECTOR}}.",
+        components: [
+          {
+            name: "TECH_MISSION",
+            label: "Misi Teknikal (Ops)",
+            type: "select",
+            options: [
+              "Automated Incident Response (Respon Insiden SRE)",
+              "Server Log Anomaly Detection (Deteksi Anomali)",
+              "Git PR Review & Compliance Check",
+              "Automated QA & Bug Reporting (Laporan Bug)",
+              "Feature Extraction from Support Tickets",
+              "Database Health Monitoring",
+              "Security Vulnerability Scan (DevSecOps)",
+              "Lainnya...",
+            ],
+            info: "Masalah operasional apa yang ingin diselesaikan?",
+          },
+          {
+            name: "TECH_STACK",
+            label: "Tech Stack / Tools",
+            type: "multiselect",
+            options: [
+              "AWS / CloudWatch / Lambda",
+              "Kubernetes / Docker",
+              "GitHub / GitLab",
+              "Jira / Linear",
+              "PagerDuty / OpsGenie",
+              "Sentry / Datadog",
+              "Slack / Discord Webhooks",
+              "PostgreSQL / MongoDB",
+              "Lainnya...",
+            ],
+            info: "Tools apa saja yang terlibat?",
+          },
+          {
+            name: "ENGINEERING_LOGIC",
+            label: "Logika Pemrosesan",
+            type: "multiselect",
+            options: [
+              "Root Cause Analysis (RCA - Akar Masalah)",
+              "Severity Classification (P1-P5)",
+              "Code Syntax & Style Check",
+              "SQL Query Optimization Suggestion",
+              "User Story Generation from Feedback",
+              "Auto-Restart Service Logic",
+              "Lainnya...",
+            ],
+            info: "Logika spesifik apa yang harus dijalankan?",
+          },
+          {
+            name: "OPTIMIZATION_GOAL",
+            label: "Prioritas Optimasi (Trade-off)",
+            type: "select",
+            options: [
+              "Cost Minimization (Efisiensi Biaya/Gratis)",
+              "Reliability & Security (Kestabilan Enterprise)",
+              "Speed to Market (Kecepatan Implementasi MVP)",
+              "Scalability & High Throughput (Siap Volume Besar)",
+              "User Experience (Kemudahan Pengguna)",
+            ],
+            description:
+              "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
+            info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+          },
+          {
+            name: "PLATFORM_OTOMASI",
+            label: "Platform Otomasi Utama",
+            type: "select",
+            options: [
+              "Make.com (Integromat) - Visual & User Friendly",
+              "N8n (Self-Hosted) - Unlimited, Secure & Murah",
+              "Zapier - Premium, Mahal & Mudah",
+              "Pipedream - Developer Oriented",
+              "Relay.app - Human-in-the-Loop AI",
+              "Activepieces - Open Source Zapier Alternative",
+              "FlowiseAI - LLM Chain Builder",
+              "LangFlow - AI Agent Builder",
+              "Microsoft Power Automate - Enterprise",
+              "Vapi.ai / Bland.ai (Khusus Voice)",
+              "Lainnya...",
+            ],
+            description: "Platform mana yang akan digunakan?",
+            info: "Platform tempat workflow ini akan dibangun.",
+          },
+          {
+            name: "COMPLEXITY",
+            label: "Tingkat Kompleksitas Workflow",
+            type: "select",
+            options: [
+              "Level 1: Linear (Trigger -> Single Action)",
+              "Level 2: Logika Cabang (If/Else, Router, Switch)",
+              "Level 3: Iterasi Data (Looping Array, Batching)",
+              "Level 4: Integrasi API Kustom (HTTP Request Auth)",
+              "Level 5: Database Sync (CRUD Operations)",
+              "Level 6: AI Agent (Memory, RAG, Function Calling)",
+              "Level 7: Human Approval (Proses berhenti tunggu approval)",
+              "Lainnya...",
+            ],
+            info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+          },
+          {
+            name: "INDUSTRY_SECTOR",
+            label: "Sektor Industri",
+            type: "select",
+            options: [
+              "E-commerce & Retail (Ritel)",
+              "SaaS & Technology (Teknologi)",
+              "Agency & Service Business (Jasa)",
+              "Real Estate & Property (Properti)",
+              "Finance & Fintech (Keuangan)",
+              "Healthcare & Medical (Kesehatan)",
+              "Education & EdTech (Pendidikan)",
+              "F&B (Restoran/Cafe)",
+              "Local Services (Bengkel/Salon/Jasa Lokal)",
+              "Media & Content Creator",
+              "HR & Recruitment (SDM)",
+              "Lainnya...",
+            ],
+            info: "Industri target untuk menyesuaikan terminologi bisnis.",
+          },
+          {
+            name: "DATA_VOLUME",
+            label: "Perkiraan Volume Data",
+            type: "select",
+            options: [
+              "Rendah (< 100 eksekusi/bulan)",
+              "Menengah (100 - 1,000 eksekusi/bulan)",
+              "Tinggi (1,000 - 10,000 eksekusi/bulan)",
+              "Massive (10,000+ eksekusi/bulan)",
+              "Streaming/Real-time",
+              "Lainnya...",
+            ],
+            info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+          },
+          {
+            name: "ADDITIONAL_INSTRUCTIONS",
+            label: "Instruksi Tambahan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Jangan gunakan Google Sheets, ganti dengan Airtable. Atau: Pastikan notifikasi dikirim hanya pada jam kerja.",
+            description:
+              "Detail spesifik atau batasan khusus yang ingin Anda tambahkan.",
+            optional: true,
+            info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah Senior DevOps Engineer & Product Operations Specialist. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+          KONTEKS:
+            "Saya ingin mengotomatisasi workflow teknis untuk {TECH_MISSION}. Sistem akan berinteraksi dengan {TECH_STACK} dan harus menangani logika {ENGINEERING_LOGIC}. [Input tambahan: {ADDITIONAL_INSTRUCTIONS}].",
+          TUGAS:
+            "Rancang Architecture Diagram & Blueprint. Pastikan mencakup Error Handling, Retry Logic, dan Security Best Practices.",
+          FORMAT_OUTPUT:
+            "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "TECH_MISSION",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_TECH_MISSION",
+                  label: "Sebutkan Misi Teknikal (Ops) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Misi Teknikal (Ops).",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Misi Teknikal (Ops) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "TECH_STACK",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_TECH_STACK",
+                  label: "Sebutkan Tech Stack / Tools Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tech Stack / Tools.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tech Stack / Tools standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "ENGINEERING_LOGIC",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_ENGINEERING_LOGIC",
+                  label: "Sebutkan Logika Pemrosesan Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Logika Pemrosesan.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Logika Pemrosesan standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "PLATFORM_OTOMASI",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_PLATFORM_OTOMASI",
+                  label: "Sebutkan Platform Otomasi Utama Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "COMPLEXITY",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_COMPLEXITY",
+                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "INDUSTRY_SECTOR",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_INDUSTRY_SECTOR",
+                  label: "Sebutkan Sektor Industri Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Sektor Industri.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "DATA_VOLUME",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_DATA_VOLUME",
+                  label: "Sebutkan Perkiraan Volume Data Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        konteks_tambahan_instruksi_khusus:
+          "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T03:41:36.802319",
+      },
+      "Mesin Legal, HR & Kepatuhan Perusahaan": {
+        id_kerangka: "KOL-AUTO-005",
+        nama_kerangka: "Mesin Legal, HR & Kepatuhan Perusahaan",
+        version: "7.9.8",
+        kategori: ["Koleksi & Inovasi", "Blueprint Workflow Otomasi"],
+        description:
+          "Sistem pendukung operasional back-office: Review kontrak, rekrutmen otomatis, dan kepatuhan regulasi.",
+        perspektif_user:
+          "Bantu saya merancang sistem otomasi Mesin Legal, HR & Kepatuhan Perusahaan [menggunakan {{PLATFORM_OTOMASI}}].",
+        ai_logic_description:
+          "Anda adalah Legal Ops Manager & HR Automation Architect. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Rancang workflow untuk Mesin Legal, HR & Kepatuhan Perusahaan di sektor {{INDUSTRY_SECTOR}}.",
+        components: [
+          {
+            name: "ADMIN_GOAL",
+            label: "Tujuan Administrasi",
+            type: "select",
+            options: [
+              "Legal Contract Review & Redlining",
+              "Candidate CV Screening (Rekrutmen)",
+              "Supplier/Vendor Due Diligence",
+              "Employee Onboarding Sequence",
+              "Expense & Invoice Audit (Keuangan)",
+              "NDA/Letter Generation (Surat Otomatis)",
+              "Internal Policy Q&A Bot",
+              "Lainnya...",
+            ],
+            info: "Proses admin apa yang lambat dan perlu diotomatisasi?",
+          },
+          {
+            name: "DOCUMENT_TYPE",
+            label: "Dokumen Terkait",
+            type: "select",
+            options: [
+              "Kontrak Kerjasama (MSA/NDA)",
+              "CV / Resume Kandidat (PDF)",
+              "Invoice / Kwitansi",
+              "Proposal Vendor",
+              "Employee Handbook / SOP",
+              "Government Regulations (UU/Permen)",
+              "Lainnya...",
+            ],
+            info: "Jenis dokumen apa yang menjadi input utama?",
+          },
+          {
+            name: "COMPLIANCE_CHECK",
+            label: "Standar / Poin Cek",
+            type: "multiselect",
+            options: [
+              "Risk Clause Detection (Pasal Berisiko)",
+              "Skill & Experience Matching Score",
+              "Budget & Pricing Validation",
+              "GDPR / Data Privacy Check",
+              "Missing Signature/Field Check",
+              "Expiration Date Monitoring",
+              "Lainnya...",
+            ],
+            info: "Apa yang harus divalidasi oleh AI?",
+          },
+          {
+            name: "OPTIMIZATION_GOAL",
+            label: "Prioritas Optimasi (Trade-off)",
+            type: "select",
+            options: [
+              "Cost Minimization (Efisiensi Biaya/Gratis)",
+              "Reliability & Security (Kestabilan Enterprise)",
+              "Speed to Market (Kecepatan Implementasi MVP)",
+              "Scalability & High Throughput (Siap Volume Besar)",
+              "User Experience (Kemudahan Pengguna)",
+            ],
+            description:
+              "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
+            info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+          },
+          {
+            name: "PLATFORM_OTOMASI",
+            label: "Platform Otomasi Utama",
+            type: "select",
+            options: [
+              "Make.com (Integromat) - Visual & User Friendly",
+              "N8n (Self-Hosted) - Unlimited, Secure & Murah",
+              "Zapier - Premium, Mahal & Mudah",
+              "Pipedream - Developer Oriented",
+              "Relay.app - Human-in-the-Loop AI",
+              "Activepieces - Open Source Zapier Alternative",
+              "FlowiseAI - LLM Chain Builder",
+              "LangFlow - AI Agent Builder",
+              "Microsoft Power Automate - Enterprise",
+              "Vapi.ai / Bland.ai (Khusus Voice)",
+              "Lainnya...",
+            ],
+            description: "Platform mana yang akan digunakan?",
+            info: "Platform tempat workflow ini akan dibangun.",
+          },
+          {
+            name: "COMPLEXITY",
+            label: "Tingkat Kompleksitas Workflow",
+            type: "select",
+            options: [
+              "Level 1: Linear (Trigger -> Single Action)",
+              "Level 2: Logika Cabang (If/Else, Router, Switch)",
+              "Level 3: Iterasi Data (Looping Array, Batching)",
+              "Level 4: Integrasi API Kustom (HTTP Request Auth)",
+              "Level 5: Database Sync (CRUD Operations)",
+              "Level 6: AI Agent (Memory, RAG, Function Calling)",
+              "Level 7: Human Approval (Proses berhenti tunggu approval)",
+              "Lainnya...",
+            ],
+            info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+          },
+          {
+            name: "INDUSTRY_SECTOR",
+            label: "Sektor Industri",
+            type: "select",
+            options: [
+              "E-commerce & Retail (Ritel)",
+              "SaaS & Technology (Teknologi)",
+              "Agency & Service Business (Jasa)",
+              "Real Estate & Property (Properti)",
+              "Finance & Fintech (Keuangan)",
+              "Healthcare & Medical (Kesehatan)",
+              "Education & EdTech (Pendidikan)",
+              "F&B (Restoran/Cafe)",
+              "Local Services (Bengkel/Salon/Jasa Lokal)",
+              "Media & Content Creator",
+              "HR & Recruitment (SDM)",
+              "Lainnya...",
+            ],
+            info: "Industri target untuk menyesuaikan terminologi bisnis.",
+          },
+          {
+            name: "DATA_VOLUME",
+            label: "Perkiraan Volume Data",
+            type: "select",
+            options: [
+              "Rendah (< 100 eksekusi/bulan)",
+              "Menengah (100 - 1,000 eksekusi/bulan)",
+              "Tinggi (1,000 - 10,000 eksekusi/bulan)",
+              "Massive (10,000+ eksekusi/bulan)",
+              "Streaming/Real-time",
+              "Lainnya...",
+            ],
+            info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+          },
+          {
+            name: "ADDITIONAL_INSTRUCTIONS",
+            label: "Instruksi Tambahan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Jangan gunakan Google Sheets, ganti dengan Airtable. Atau: Pastikan notifikasi dikirim hanya pada jam kerja.",
+            description:
+              "Detail spesifik atau batasan khusus yang ingin Anda tambahkan.",
+            optional: true,
+            info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah Legal Ops Manager & HR Automation Architect. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+          KONTEKS:
+            "Saya membangun sistem otomasi administrasi untuk {ADMIN_GOAL}. Dokumen utama yang diproses adalah {DOCUMENT_TYPE}. Sistem harus memeriksa aspek {COMPLIANCE_CHECK}. [Input tambahan: {ADDITIONAL_INSTRUCTIONS}].",
+          TUGAS:
+            "Buat Blueprint Workflow Administrasi yang aman dan akurat. Fokus pada Data Privacy dan Accuracy.",
+          FORMAT_OUTPUT:
+            "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "ADMIN_GOAL",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_ADMIN_GOAL",
+                  label: "Sebutkan Tujuan Administrasi Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tujuan Administrasi.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tujuan Administrasi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "DOCUMENT_TYPE",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_DOCUMENT_TYPE",
+                  label: "Sebutkan Dokumen Terkait Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Dokumen Terkait.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Dokumen Terkait standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "COMPLIANCE_CHECK",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_COMPLIANCE_CHECK",
+                  label: "Sebutkan Standar / Poin Cek Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Standar / Poin Cek.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Standar / Poin Cek standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "PLATFORM_OTOMASI",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_PLATFORM_OTOMASI",
+                  label: "Sebutkan Platform Otomasi Utama Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "COMPLEXITY",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_COMPLEXITY",
+                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "INDUSTRY_SECTOR",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_INDUSTRY_SECTOR",
+                  label: "Sebutkan Sektor Industri Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Sektor Industri.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "DATA_VOLUME",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_DATA_VOLUME",
+                  label: "Sebutkan Perkiraan Volume Data Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        konteks_tambahan_instruksi_khusus:
+          "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T03:41:36.804743",
+      },
+      "Arsitek Workflow Kustom Universal": {
+        id_kerangka: "KOL-AUTO-006",
+        nama_kerangka: "Arsitek Workflow Kustom Universal",
+        version: "7.9.8",
+        kategori: ["Koleksi & Inovasi", "Blueprint Workflow Otomasi"],
+        description:
+          "Blueprint fleksibel untuk merancang logika workflow unik apapun yang tidak tercaakup dalam kategori spesifik.",
+        perspektif_user:
+          "Bantu saya merancang sistem otomasi Arsitek Workflow Kustom Universal [menggunakan {{PLATFORM_OTOMASI}}].",
+        ai_logic_description:
+          "Anda adalah Senior Solution Architect dengan spesialisasi System Integration. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+        toolType: "planning",
+        output: "natural_language_prompt",
+        contoh_kalimat:
+          "Rancang workflow untuk Arsitek Workflow Kustom Universal di sektor {{INDUSTRY_SECTOR}}.",
+        components: [
+          {
+            name: "CUSTOM_GOAL",
+            label: "Tujuan Workflow",
+            type: "textarea",
+            placeholder: "Jelaskan detail apa yang ingin diotomatisasi...",
+            info: "Jelaskan use-case unik Anda secara spesifik.",
+          },
+          {
+            name: "APP_LIST",
+            label: "Aplikasi Terlibat",
+            type: "text",
+            placeholder: "Gmail, Slack, Custom API, dll",
+            info: "Daftar aplikasi yang perlu dihubungkan.",
+          },
+          {
+            name: "OPTIMIZATION_GOAL",
+            label: "Prioritas Optimasi (Trade-off)",
+            type: "select",
+            options: [
+              "Cost Minimization (Efisiensi Biaya/Gratis)",
+              "Reliability & Security (Kestabilan Enterprise)",
+              "Speed to Market (Kecepatan Implementasi MVP)",
+              "Scalability & High Throughput (Siap Volume Besar)",
+              "User Experience (Kemudahan Pengguna)",
+            ],
+            description:
+              "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
+            info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+          },
+          {
+            name: "PLATFORM_OTOMASI",
+            label: "Platform Otomasi Utama",
+            type: "select",
+            options: [
+              "Make.com (Integromat) - Visual & User Friendly",
+              "N8n (Self-Hosted) - Unlimited, Secure & Murah",
+              "Zapier - Premium, Mahal & Mudah",
+              "Pipedream - Developer Oriented",
+              "Relay.app - Human-in-the-Loop AI",
+              "Activepieces - Open Source Zapier Alternative",
+              "FlowiseAI - LLM Chain Builder",
+              "LangFlow - AI Agent Builder",
+              "Microsoft Power Automate - Enterprise",
+              "Vapi.ai / Bland.ai (Khusus Voice)",
+              "Lainnya...",
+            ],
+            description: "Platform mana yang akan digunakan?",
+            info: "Platform tempat workflow ini akan dibangun.",
+          },
+          {
+            name: "COMPLEXITY",
+            label: "Tingkat Kompleksitas Workflow",
+            type: "select",
+            options: [
+              "Level 1: Linear (Trigger -> Single Action)",
+              "Level 2: Logika Cabang (If/Else, Router, Switch)",
+              "Level 3: Iterasi Data (Looping Array, Batching)",
+              "Level 4: Integrasi API Kustom (HTTP Request Auth)",
+              "Level 5: Database Sync (CRUD Operations)",
+              "Level 6: AI Agent (Memory, RAG, Function Calling)",
+              "Level 7: Human Approval (Proses berhenti tunggu approval)",
+              "Lainnya...",
+            ],
+            info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+          },
+          {
+            name: "INDUSTRY_SECTOR",
+            label: "Sektor Industri",
+            type: "select",
+            options: [
+              "E-commerce & Retail (Ritel)",
+              "SaaS & Technology (Teknologi)",
+              "Agency & Service Business (Jasa)",
+              "Real Estate & Property (Properti)",
+              "Finance & Fintech (Keuangan)",
+              "Healthcare & Medical (Kesehatan)",
+              "Education & EdTech (Pendidikan)",
+              "F&B (Restoran/Cafe)",
+              "Local Services (Bengkel/Salon/Jasa Lokal)",
+              "Media & Content Creator",
+              "HR & Recruitment (SDM)",
+              "Lainnya...",
+            ],
+            info: "Industri target untuk menyesuaikan terminologi bisnis.",
+          },
+          {
+            name: "DATA_VOLUME",
+            label: "Perkiraan Volume Data",
+            type: "select",
+            options: [
+              "Rendah (< 100 eksekusi/bulan)",
+              "Menengah (100 - 1,000 eksekusi/bulan)",
+              "Tinggi (1,000 - 10,000 eksekusi/bulan)",
+              "Massive (10,000+ eksekusi/bulan)",
+              "Streaming/Real-time",
+              "Lainnya...",
+            ],
+            info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+          },
+          {
+            name: "ADDITIONAL_INSTRUCTIONS",
+            label: "Instruksi Tambahan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Jangan gunakan Google Sheets, ganti dengan Airtable. Atau: Pastikan notifikasi dikirim hanya pada jam kerja.",
+            description:
+              "Detail spesifik atau batasan khusus yang ingin Anda tambahkan.",
+            optional: true,
+            info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
+          },
+        ],
+        komponen_prompt: {
+          PERAN:
+            "Anda adalah Senior Solution Architect dengan spesialisasi System Integration. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+          KONTEKS:
+            "Workflow custom untuk {CUSTOM_GOAL} yang melibatkan aplikasi {APP_LIST}. [Input tambahan: {ADDITIONAL_INSTRUCTIONS}].",
+          TUGAS:
+            "Buat Blueprint Lengkap: Logic Flow, Mermaid Diagram, Node Configuration, dan Error Handling Recommendations.",
+          FORMAT_OUTPUT:
+            "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "PLATFORM_OTOMASI",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_PLATFORM_OTOMASI",
+                  label: "Sebutkan Platform Otomasi Utama Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "COMPLEXITY",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_COMPLEXITY",
+                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "INDUSTRY_SECTOR",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_INDUSTRY_SECTOR",
+                  label: "Sebutkan Sektor Industri Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Sektor Industri.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "DATA_VOLUME",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_DATA_VOLUME",
+                  label: "Sebutkan Perkiraan Volume Data Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+                  placeholder: "Contoh: API Kustom, App Baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        konteks_tambahan_instruksi_khusus:
+          "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T03:41:36.808273",
       },
     },
     "Cyber Security": {

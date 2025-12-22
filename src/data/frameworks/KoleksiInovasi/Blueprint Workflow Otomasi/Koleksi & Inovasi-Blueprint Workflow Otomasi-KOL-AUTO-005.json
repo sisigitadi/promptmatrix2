@@ -1,0 +1,303 @@
+{
+  "id_kerangka": "KOL-AUTO-005",
+  "nama_kerangka": "Mesin Legal, HR & Kepatuhan Perusahaan",
+  "version": "7.9.8",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Blueprint Workflow Otomasi"
+  ],
+  "description": "Sistem pendukung operasional back-office: Review kontrak, rekrutmen otomatis, dan kepatuhan regulasi.",
+  "perspektif_user": "Bantu saya merancang sistem otomasi Mesin Legal, HR & Kepatuhan Perusahaan [menggunakan {{PLATFORM_OTOMASI}}].",
+  "ai_logic_description": "Anda adalah Legal Ops Manager & HR Automation Architect. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+  "toolType": "planning",
+  "output": "natural_language_prompt",
+  "contoh_kalimat": "Rancang workflow untuk Mesin Legal, HR & Kepatuhan Perusahaan di sektor {{INDUSTRY_SECTOR}}.",
+  "components": [
+    {
+      "name": "ADMIN_GOAL",
+      "label": "Tujuan Administrasi",
+      "type": "select",
+      "options": [
+        "Legal Contract Review & Redlining",
+        "Candidate CV Screening (Rekrutmen)",
+        "Supplier/Vendor Due Diligence",
+        "Employee Onboarding Sequence",
+        "Expense & Invoice Audit (Keuangan)",
+        "NDA/Letter Generation (Surat Otomatis)",
+        "Internal Policy Q&A Bot",
+        "Lainnya..."
+      ],
+      "info": "Proses admin apa yang lambat dan perlu diotomatisasi?"
+    },
+    {
+      "name": "DOCUMENT_TYPE",
+      "label": "Dokumen Terkait",
+      "type": "select",
+      "options": [
+        "Kontrak Kerjasama (MSA/NDA)",
+        "CV / Resume Kandidat (PDF)",
+        "Invoice / Kwitansi",
+        "Proposal Vendor",
+        "Employee Handbook / SOP",
+        "Government Regulations (UU/Permen)",
+        "Lainnya..."
+      ],
+      "info": "Jenis dokumen apa yang menjadi input utama?"
+    },
+    {
+      "name": "COMPLIANCE_CHECK",
+      "label": "Standar / Poin Cek",
+      "type": "multiselect",
+      "options": [
+        "Risk Clause Detection (Pasal Berisiko)",
+        "Skill & Experience Matching Score",
+        "Budget & Pricing Validation",
+        "GDPR / Data Privacy Check",
+        "Missing Signature/Field Check",
+        "Expiration Date Monitoring",
+        "Lainnya..."
+      ],
+      "info": "Apa yang harus divalidasi oleh AI?"
+    },
+    {
+      "name": "OPTIMIZATION_GOAL",
+      "label": "Prioritas Optimasi (Trade-off)",
+      "type": "select",
+      "options": [
+        "Cost Minimization (Efisiensi Biaya/Gratis)",
+        "Reliability & Security (Kestabilan Enterprise)",
+        "Speed to Market (Kecepatan Implementasi MVP)",
+        "Scalability & High Throughput (Siap Volume Besar)",
+        "User Experience (Kemudahan Pengguna)"
+      ],
+      "description": "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
+      "info": "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil)."
+    },
+    {
+      "name": "PLATFORM_OTOMASI",
+      "label": "Platform Otomasi Utama",
+      "type": "select",
+      "options": [
+        "Make.com (Integromat) - Visual & User Friendly",
+        "N8n (Self-Hosted) - Unlimited, Secure & Murah",
+        "Zapier - Premium, Mahal & Mudah",
+        "Pipedream - Developer Oriented",
+        "Relay.app - Human-in-the-Loop AI",
+        "Activepieces - Open Source Zapier Alternative",
+        "FlowiseAI - LLM Chain Builder",
+        "LangFlow - AI Agent Builder",
+        "Microsoft Power Automate - Enterprise",
+        "Vapi.ai / Bland.ai (Khusus Voice)",
+        "Lainnya..."
+      ],
+      "description": "Platform mana yang akan digunakan?",
+      "info": "Platform tempat workflow ini akan dibangun."
+    },
+    {
+      "name": "COMPLEXITY",
+      "label": "Tingkat Kompleksitas Workflow",
+      "type": "select",
+      "options": [
+        "Level 1: Linear (Trigger -> Single Action)",
+        "Level 2: Logika Cabang (If/Else, Router, Switch)",
+        "Level 3: Iterasi Data (Looping Array, Batching)",
+        "Level 4: Integrasi API Kustom (HTTP Request Auth)",
+        "Level 5: Database Sync (CRUD Operations)",
+        "Level 6: AI Agent (Memory, RAG, Function Calling)",
+        "Level 7: Human Approval (Proses berhenti tunggu approval)",
+        "Lainnya..."
+      ],
+      "info": "Seberapa rumit logika workflow yang Anda bayangkan?"
+    },
+    {
+      "name": "INDUSTRY_SECTOR",
+      "label": "Sektor Industri",
+      "type": "select",
+      "options": [
+        "E-commerce & Retail (Ritel)",
+        "SaaS & Technology (Teknologi)",
+        "Agency & Service Business (Jasa)",
+        "Real Estate & Property (Properti)",
+        "Finance & Fintech (Keuangan)",
+        "Healthcare & Medical (Kesehatan)",
+        "Education & EdTech (Pendidikan)",
+        "F&B (Restoran/Cafe)",
+        "Local Services (Bengkel/Salon/Jasa Lokal)",
+        "Media & Content Creator",
+        "HR & Recruitment (SDM)",
+        "Lainnya..."
+      ],
+      "info": "Industri target untuk menyesuaikan terminologi bisnis."
+    },
+    {
+      "name": "DATA_VOLUME",
+      "label": "Perkiraan Volume Data",
+      "type": "select",
+      "options": [
+        "Rendah (< 100 eksekusi/bulan)",
+        "Menengah (100 - 1,000 eksekusi/bulan)",
+        "Tinggi (1,000 - 10,000 eksekusi/bulan)",
+        "Massive (10,000+ eksekusi/bulan)",
+        "Streaming/Real-time",
+        "Lainnya..."
+      ],
+      "info": "Estimasi beban kerja untuk perhitungan biaya server/API."
+    },
+    {
+      "name": "ADDITIONAL_INSTRUCTIONS",
+      "label": "Instruksi Tambahan",
+      "type": "textarea",
+      "placeholder": "Contoh: Jangan gunakan Google Sheets, ganti dengan Airtable. Atau: Pastikan notifikasi dikirim hanya pada jam kerja.",
+      "description": "Detail spesifik atau batasan khusus yang ingin Anda tambahkan.",
+      "optional": true,
+      "info": "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas."
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah Legal Ops Manager & HR Automation Architect. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+    "KONTEKS": "Saya membangun sistem otomasi administrasi untuk {ADMIN_GOAL}. Dokumen utama yang diproses adalah {DOCUMENT_TYPE}. Sistem harus memeriksa aspek {COMPLIANCE_CHECK}. [Input tambahan: {ADDITIONAL_INSTRUCTIONS}].",
+    "TUGAS": "Buat Blueprint Workflow Administrasi yang aman dan akurat. Fokus pada Data Privacy dan Accuracy.",
+    "FORMAT_OUTPUT": "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "ADMIN_GOAL",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_ADMIN_GOAL",
+            "label": "Sebutkan Tujuan Administrasi Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Tujuan Administrasi.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Tujuan Administrasi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "DOCUMENT_TYPE",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_DOCUMENT_TYPE",
+            "label": "Sebutkan Dokumen Terkait Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Dokumen Terkait.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Dokumen Terkait standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "COMPLIANCE_CHECK",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_COMPLIANCE_CHECK",
+            "label": "Sebutkan Standar / Poin Cek Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Standar / Poin Cek.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Standar / Poin Cek standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "PLATFORM_OTOMASI",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_PLATFORM_OTOMASI",
+            "label": "Sebutkan Platform Otomasi Utama Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "COMPLEXITY",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_COMPLEXITY",
+            "label": "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "INDUSTRY_SECTOR",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_INDUSTRY_SECTOR",
+            "label": "Sebutkan Sektor Industri Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Sektor Industri.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Sektor Industri standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "DATA_VOLUME",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_DATA_VOLUME",
+            "label": "Sebutkan Perkiraan Volume Data Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "konteks_tambahan_instruksi_khusus": "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T03:41:36.804743"
+}

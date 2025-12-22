@@ -1,0 +1,300 @@
+{
+  "id_kerangka": "KOL-AUTO-002",
+  "nama_kerangka": "Pabrik Konten, Komunitas & Kursus Online",
+  "version": "7.9.8",
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Blueprint Workflow Otomasi"
+  ],
+  "description": "Mesin produksi konten otomatis, manajemen komunitas, dan operasional kursus/edukasi tanpa kerja manual berulang.",
+  "perspektif_user": "Bantu saya merancang sistem otomasi Pabrik Konten, Komunitas & Kursus Online [menggunakan {{PLATFORM_OTOMASI}}].",
+  "ai_logic_description": "Anda adalah AI Creative Director & Community Ops Manager. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+  "toolType": "planning",
+  "output": "natural_language_prompt",
+  "contoh_kalimat": "Rancang workflow untuk Pabrik Konten, Komunitas & Kursus Online di sektor {{INDUSTRY_SECTOR}}.",
+  "components": [
+    {
+      "name": "CONTENT_GOAL",
+      "label": "Tujuan Workflow",
+      "type": "select",
+      "options": [
+        "Repurpose Video Panjang ke Shorts/Reels",
+        "Community Moderation & Engagement",
+        "Course Student Onboarding & Certs",
+        "Faceless Video Production (Full AI)",
+        "News Aggregation & Newsletter",
+        "Reputation & Review Management (GBP)",
+        "Lainnya..."
+      ],
+      "info": "Jenis mesin konten/komunitas apa yang ingin dibangun?"
+    },
+    {
+      "name": "SOURCE_MATERIAL",
+      "label": "Bahan Baku / Pemicu",
+      "type": "select",
+      "options": [
+        "Zoom/YouTube Recordings",
+        "New Member Introduction Post",
+        "Course Completion Trigger",
+        "RSS Feed News/Blog",
+        "User Reviews (Google Maps)",
+        "Lainnya..."
+      ],
+      "info": "Apa input mentah yang akan diolah oleh AI?"
+    },
+    {
+      "name": "DISTRIBUTION_CHANNELS",
+      "label": "Output / Aksi",
+      "type": "multiselect",
+      "options": [
+        "TikTok/Reels/Shorts Posting",
+        "Generate PDF Certificate (Sertifikat)",
+        "Direct Message (Member Welcome)",
+        "Email Newsletter",
+        "Automated Review Reply (Balas Ulasan)",
+        "Lainnya..."
+      ],
+      "info": "Di mana hasil akhirnya akan tayang atau dikirim?"
+    },
+    {
+      "name": "OPTIMIZATION_GOAL",
+      "label": "Prioritas Optimasi (Trade-off)",
+      "type": "select",
+      "options": [
+        "Cost Minimization (Efisiensi Biaya/Gratis)",
+        "Reliability & Security (Kestabilan Enterprise)",
+        "Speed to Market (Kecepatan Implementasi MVP)",
+        "Scalability & High Throughput (Siap Volume Besar)",
+        "User Experience (Kemudahan Pengguna)"
+      ],
+      "description": "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
+      "info": "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil)."
+    },
+    {
+      "name": "PLATFORM_OTOMASI",
+      "label": "Platform Otomasi Utama",
+      "type": "select",
+      "options": [
+        "Make.com (Integromat) - Visual & User Friendly",
+        "N8n (Self-Hosted) - Unlimited, Secure & Murah",
+        "Zapier - Premium, Mahal & Mudah",
+        "Pipedream - Developer Oriented",
+        "Relay.app - Human-in-the-Loop AI",
+        "Activepieces - Open Source Zapier Alternative",
+        "FlowiseAI - LLM Chain Builder",
+        "LangFlow - AI Agent Builder",
+        "Microsoft Power Automate - Enterprise",
+        "Vapi.ai / Bland.ai (Khusus Voice)",
+        "Lainnya..."
+      ],
+      "description": "Platform mana yang akan digunakan?",
+      "info": "Platform tempat workflow ini akan dibangun."
+    },
+    {
+      "name": "COMPLEXITY",
+      "label": "Tingkat Kompleksitas Workflow",
+      "type": "select",
+      "options": [
+        "Level 1: Linear (Trigger -> Single Action)",
+        "Level 2: Logika Cabang (If/Else, Router, Switch)",
+        "Level 3: Iterasi Data (Looping Array, Batching)",
+        "Level 4: Integrasi API Kustom (HTTP Request Auth)",
+        "Level 5: Database Sync (CRUD Operations)",
+        "Level 6: AI Agent (Memory, RAG, Function Calling)",
+        "Level 7: Human Approval (Proses berhenti tunggu approval)",
+        "Lainnya..."
+      ],
+      "info": "Seberapa rumit logika workflow yang Anda bayangkan?"
+    },
+    {
+      "name": "INDUSTRY_SECTOR",
+      "label": "Sektor Industri",
+      "type": "select",
+      "options": [
+        "E-commerce & Retail (Ritel)",
+        "SaaS & Technology (Teknologi)",
+        "Agency & Service Business (Jasa)",
+        "Real Estate & Property (Properti)",
+        "Finance & Fintech (Keuangan)",
+        "Healthcare & Medical (Kesehatan)",
+        "Education & EdTech (Pendidikan)",
+        "F&B (Restoran/Cafe)",
+        "Local Services (Bengkel/Salon/Jasa Lokal)",
+        "Media & Content Creator",
+        "HR & Recruitment (SDM)",
+        "Lainnya..."
+      ],
+      "info": "Industri target untuk menyesuaikan terminologi bisnis."
+    },
+    {
+      "name": "DATA_VOLUME",
+      "label": "Perkiraan Volume Data",
+      "type": "select",
+      "options": [
+        "Rendah (< 100 eksekusi/bulan)",
+        "Menengah (100 - 1,000 eksekusi/bulan)",
+        "Tinggi (1,000 - 10,000 eksekusi/bulan)",
+        "Massive (10,000+ eksekusi/bulan)",
+        "Streaming/Real-time",
+        "Lainnya..."
+      ],
+      "info": "Estimasi beban kerja untuk perhitungan biaya server/API."
+    },
+    {
+      "name": "ADDITIONAL_INSTRUCTIONS",
+      "label": "Instruksi Tambahan",
+      "type": "textarea",
+      "placeholder": "Contoh: Jangan gunakan Google Sheets, ganti dengan Airtable. Atau: Pastikan notifikasi dikirim hanya pada jam kerja.",
+      "description": "Detail spesifik atau batasan khusus yang ingin Anda tambahkan.",
+      "optional": true,
+      "info": "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas."
+    }
+  ],
+  "komponen_prompt": {
+    "PERAN": "Anda adalah AI Creative Director & Community Ops Manager. [Orientasi strategis: **{OPTIMIZATION_GOAL}**]. [Sektor target: **{INDUSTRY_SECTOR}**]. [Volume ekspektasi: **{DATA_VOLUME}**]. [Gunakan platform **{PLATFORM_OTOMASI}** dengan kompleksitas **{COMPLEXITY}**].",
+    "KONTEKS": "Saya ingin membangun 'Content & Community Engine' untuk {CONTENT_GOAL}. Sumber materi berasal dari {SOURCE_MATERIAL}. Distribusi akhir ke {DISTRIBUTION_CHANNELS}. [Input tambahan: {ADDITIONAL_INSTRUCTIONS}].",
+    "TUGAS": "Buat Arsitektur Automation: 1. Ingest Source, 2. AI Processing (Scripting/Moderation/Grading), 3. Quality Check, 4. Posting/Delivery/Certification.",
+    "FORMAT_OUTPUT": "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n"
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "CONTENT_GOAL",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_CONTENT_GOAL",
+            "label": "Sebutkan Tujuan Workflow Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Tujuan Workflow.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Tujuan Workflow standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "SOURCE_MATERIAL",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_SOURCE_MATERIAL",
+            "label": "Sebutkan Bahan Baku / Pemicu Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Bahan Baku / Pemicu.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Bahan Baku / Pemicu standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "DISTRIBUTION_CHANNELS",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_DISTRIBUTION_CHANNELS",
+            "label": "Sebutkan Output / Aksi Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Output / Aksi.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Output / Aksi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "PLATFORM_OTOMASI",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_PLATFORM_OTOMASI",
+            "label": "Sebutkan Platform Otomasi Utama Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "COMPLEXITY",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_COMPLEXITY",
+            "label": "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "INDUSTRY_SECTOR",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_INDUSTRY_SECTOR",
+            "label": "Sebutkan Sektor Industri Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Sektor Industri.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Sektor Industri standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "DATA_VOLUME",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_DATA_VOLUME",
+            "label": "Sebutkan Perkiraan Volume Data Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+            "placeholder": "Contoh: API Kustom, App Baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "konteks_tambahan_instruksi_khusus": "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T03:41:36.796582"
+}
