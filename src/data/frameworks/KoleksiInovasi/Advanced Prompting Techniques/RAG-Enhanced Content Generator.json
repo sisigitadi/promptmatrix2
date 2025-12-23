@@ -95,7 +95,7 @@
   ],
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Peneliti dan Penulis Konten yang sangat teliti dan akurat.",
-    "KONTEKS": "Input yang saya berikan: {{TOPIK_UTAMA_KONTEN}}, {{SUMBER_EKSTERNAL}}, {{FORMAT_OUTPUT_KONTEN}}.",
+    "KONTEKS": "Input yang saya berikan: {TOPIK_UTAMA_KONTEN}, {SUMBER_EKSTERNAL}, {FORMAT_OUTPUT_KONTEN}.",
     "TUGAS": "Hasilkan konten dalam format '{FORMAT_OUTPUT_KONTEN}' (jika 'FORMAT_OUTPUT_KONTEN' adalah 'Lainnya...' gunakan '{FORMAT_OUTPUT_KONTEN_LAINNYA}') tentang '{TOPIK_UTAMA_KONTEN}'. Pastikan semua informasi yang disajikan didukung oleh 'SUMBER_EKSTERNAL' yang diberikan. Gunakan nada bahasa '{NADA_BAHASA}'. Jika ada informasi yang tidak dapat diverifikasi dari sumber yang diberikan, nyatakan dengan jelas atau hindari.",
     "FORMAT_OUTPUT": "Sajikan output dalam format Markdown yang terstruktur, dengan kutipan atau referensi yang jelas ke sumber eksternal jika memungkinkan. Untuk 'Artikel Blog', gunakan judul, sub-judul, dan paragraf yang mudah dibaca. Untuk 'Ringkasan Laporan', gunakan poin-poin utama. Untuk 'FAQ', gunakan format tanya-jawab."
   },
@@ -108,7 +108,7 @@
   "temperature": 0.7,
   "top_p": 0.9,
   "top_k": 40,
-  "updated_at": "2025-12-23T06:16:57.284109",
+  "updated_at": "2025-12-23T06:59:22.653685",
   "_review_notes": [
     "HYBRID: Format Output Konten → 'Artikel Blog' (add English technical term if applicable)",
     "HYBRID: Format Output Konten → 'Ringkasan Laporan' (add English technical term if applicable)",

@@ -309,7 +309,7 @@
   ],
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Ahli DevOps dan MLOps serbaguna.",
-    "KONTEKS": "Input yang saya berikan: {{TUGAS_OPERASIONAL}}.",
+    "KONTEKS": "Input yang saya berikan: {TUGAS_OPERASIONAL}.",
     "TUGAS": "Berdasarkan tugas '{TUGAS_OPERASIONAL}', berikan panduan, konfigurasi, atau rencana yang relevan. Gunakan variabel input yang disediakan dari sub-komponen yang sesuai untuk menyusun respons Anda.",
     "FORMAT_OUTPUT": "Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, file konfigurasi YAML, daftar langkah-langkah dalam Markdown, atau rencana proyek). Pastikan output jelas, akurat, dan dapat ditindaklanjuti."
   },
@@ -318,5 +318,5 @@
   "contoh_kalimat": "Bantu saya merancang CI/CD pipeline untuk aplikasi web Node.js saya menggunakan GitHub Actions.",
   "output": "natural_language_prompt",
   "crossValidationRules": [],
-  "updated_at": "2025-12-23T06:16:57.329728"
+  "updated_at": "2025-12-23T06:59:22.838514"
 }

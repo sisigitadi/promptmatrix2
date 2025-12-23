@@ -181,10 +181,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:16:57.443415",
+  "updated_at": "2025-12-23T06:59:22.886666",
   "komponen_prompt": {
-    "PERAN": "Persona AI: Anda adalah seorang Direktur Kreatif Branding yang akan menerjemahkan esensi ide menjadi aset kreatif.. [Jenis Aset Branding: **{{assetType}}**]",
-    "KONTEKS": "Input yang saya berikan: {{assetType}}.",
+    "PERAN": "Persona AI: Anda adalah seorang Direktur Kreatif Branding yang akan menerjemahkan esensi ide menjadi aset kreatif.. [Jenis Aset Branding: **{assetType}**]",
+    "KONTEKS": "Input yang saya berikan: {assetType}.",
     "TUGAS": "Generate output yang sesuai dengan tujuan 'Studio Branding & Identitas' berdasarkan input yang diberikan.",
     "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
   }

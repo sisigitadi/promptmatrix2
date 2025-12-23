@@ -163,7 +163,7 @@
   ],
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Analis Keuangan dan Perencana Investasi profesional.",
-    "KONTEKS": "Saya ingin develop strategi bisnis untuk {{TUGAS_ANALISIS_KEUANGAN}}.",
+    "KONTEKS": "Saya ingin develop strategi bisnis untuk {TUGAS_ANALISIS_KEUANGAN}.",
     "TUGAS": "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Perencanaan Strategi Investasi'**: Buat proposal strategi investasi komprehensif berdasarkan tujuan '{TUJUAN_INVESTASI}', modal '{MODAL_AWAL}', risiko '{TINGKAT_RISIKO}', dan horizon '{HORIZON_WAKTU}'. Sertakan alokasi aset, contoh instrumen, dan justifikasi.\n- **Jika 'Analisis Saham Tunggal'**: Lakukan analisis pada saham '{KODE_SAHAM}' dengan fokus pada '{FOKUS_ANALISIS_SAHAM}'. Sajikan laporan yang mencakup valuasi kunci, tren harga, sentimen berita, serta potensi kelebihan dan kekurangan.\n- **Jika 'Perbandingan Produk Investasi'**: Buat tabel perbandingan antara '{PRODUK_A}' dan '{PRODUK_B}' berdasarkan metrik '{METRIK_PERBANDINGAN}'. Berikan ringkasan perbandingan di akhir.\n- **Jika 'Simulasi Proyeksi Dana'**: Hitung proyeksi untuk mencapai target '{TARGET_DANA}' dengan saldo awal '{SALDO_SAAT_INI}', investasi bulanan '{INVESTASI_BULANAN}', dan asumsi return '{ASUMSI_RETURN}%'. Tampilkan perkiraan waktu yang dibutuhkan dan berikan saran jika perlu.",
     "FORMAT_OUTPUT": "Gunakan format Markdown. Sajikan dalam bentuk laporan yang terstruktur dengan judul yang jelas untuk setiap bagian. Gunakan daftar berpoin atau tabel untuk mempermudah pembacaan."
   },
@@ -176,7 +176,7 @@
   "temperature": 0.7,
   "top_p": 0.9,
   "top_k": 40,
-  "updated_at": "2025-12-23T06:16:57.291280",
+  "updated_at": "2025-12-23T06:59:22.666803",
   "_review_notes": [
     "HYBRID: Jenis Analisis Keuangan → 'Perencanaan Strategi Investasi' (add English technical term if applicable)",
     "HYBRID: Jenis Analisis Keuangan → 'Analisis Saham Tunggal' (add English technical term if applicable)",

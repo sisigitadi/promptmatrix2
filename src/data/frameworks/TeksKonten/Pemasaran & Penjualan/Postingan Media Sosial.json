@@ -282,10 +282,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:16:59.474697",
+  "updated_at": "2025-12-23T06:59:24.015114",
   "komponen_prompt": {
-    "PERAN": "Persona AI: Anda adalah seorang Spesialis Konten Media Sosial yang akan membuat postingan.. [Platform: **{{platform}}**]",
-    "KONTEKS": "Saya ingin create konten marketing untuk {{platform}} dengan format [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}]. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
+    "PERAN": "Persona AI: Anda adalah seorang Spesialis Konten Media Sosial yang akan membuat postingan.. [Platform: **{platform}**]",
+    "KONTEKS": "Saya ingin create konten marketing untuk {platform} dengan format [Konteks Tambahan & Instruksi Khusus: {additionalContext}]. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
     "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
   }

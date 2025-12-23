@@ -61,10 +61,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:16:59.497695",
+  "updated_at": "2025-12-23T06:59:24.030843",
   "komponen_prompt": {
-    "PERAN": "Persona AI: Anda adalah seorang Fasilitator Jurnal yang akan menghasilkan serangkaian pertanyaan atau prompt untuk jurnal.. [Tema Jurnal Hari Ini: **{{journalTheme}}**] [Gaya Prompt: **{{promptStyle}}**]",
-    "KONTEKS": "Saya ingin create konten tertulis tentang {{journalTheme}} untuk {{currentMood}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
+    "PERAN": "Persona AI: Anda adalah seorang Fasilitator Jurnal yang akan menghasilkan serangkaian pertanyaan atau prompt untuk jurnal.. [Tema Jurnal Hari Ini: **{journalTheme}**] [Gaya Prompt: **{promptStyle}**]",
+    "KONTEKS": "Saya ingin create konten tertulis tentang {journalTheme} untuk {currentMood}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate code atau technical guidance yang clean, efficient, dan mengikuti best practices.",
     "FORMAT_OUTPUT": "Sajikan dengan code examples, explanations, dan best practice recommendations yang jelas."
   },

@@ -32,7 +32,7 @@
   ],
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang penulis konten dan editor yang sangat teliti. Tujuan Anda adalah menghasilkan konten terbaik melalui proses penulisan, kritik, dan revisi.",
-    "KONTEKS": "Input yang saya berikan: {{TOPIK_KONTEN}}, {{SUDUT_PANDANG_KRITIK}}.",
+    "KONTEKS": "Input yang saya berikan: {TOPIK_KONTEN}, {SUDUT_PANDANG_KRITIK}.",
     "TUGAS": "Lakukan tiga langkah berikut secara berurutan:\n\n1.  **LANGKAH 1: BUAT DRAF AWAL**\n    Tulis draf pertama dari konten berdasarkan topik yang diberikan. Fokus pada penyampaian ide utama.\n\n2.  **LANGKAH 2: KRITIK DRAF**\n    Setelah draf selesai, berikan kritik yang tajam dan membangun terhadap tulisan Anda sendiri. Tinjau dari sudut pandang '{SUDUT_PANDANG_KRITIK}'. Evaluasi aspek-aspek seperti: kejelasan argumen, alur tulisan, kekuatan bukti, dan gaya bahasa. Sajikan kritik dalam format poin-poin.\n\n3.  **LANGKAH 3: TULIS VERSI FINAL**\n    Berdasarkan poin-poin kritik dari Langkah 2, tulis ulang dan sempurnakan draf tersebut menjadi sebuah versi final yang poles dan berkualitas tinggi.",
     "FORMAT_OUTPUT": "Sajikan output Anda dengan jelas dalam tiga bagian terpisah:\n\n### DRAF AWAL\n[Teks draf awal Anda di sini]\n\n### KRITIK\n[Poin-poin kritik Anda di sini]\n\n### VERSI FINAL\n[Teks versi final yang sudah direvisi di sini]"
   },
@@ -45,5 +45,5 @@
   "temperature": 0.7,
   "top_p": 0.9,
   "top_k": 40,
-  "updated_at": "2025-12-23T06:16:57.624268"
+  "updated_at": "2025-12-23T06:59:23.012685"
 }

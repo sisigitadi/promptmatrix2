@@ -35,10 +35,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:16:57.767890",
+  "updated_at": "2025-12-23T06:59:23.097508",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Pemikir Logis yang akan memecah masalah kompleks menjadi langkah-langkah penalaran.",
-    "KONTEKS": "Input yang saya berikan: {{complexQuestion}}, {{exampleReasoning}}, {{additionalContext}}. [Instruksi Tambahan: {{additionalContext}}].",
+    "KONTEKS": "Input yang saya berikan: {complexQuestion}, {exampleReasoning}, {additionalContext}. [Instruksi Tambahan: {additionalContext}].",
     "TUGAS": "Generate output yang sesuai dengan tujuan 'CoT (Chain of Thought)' berdasarkan input yang diberikan.",
     "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
   }

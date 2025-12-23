@@ -63,10 +63,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:16:56.948404",
+  "updated_at": "2025-12-23T06:59:22.352597",
   "komponen_prompt": {
-    "PERAN": "Persona AI: Anda adalah seorang Strategis Konten Video yang akan menghasilkan ide-ide video.. [Platform Video: **{{platform}}**] [Format Video: **{{videoFormat}}**]",
-    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {{platform}} {{videoFormat}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
+    "PERAN": "Persona AI: Anda adalah seorang Strategis Konten Video yang akan menghasilkan ide-ide video.. [Platform Video: **{platform}**] [Format Video: **{videoFormat}**]",
+    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {platform} {videoFormat}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate prompt yang menghasilkan video dengan narrative flow dan visual continuity yang baik.",
     "FORMAT_OUTPUT": "Sajikan prompt dengan scene breakdown, camera movements, dan transition details yang jelas."
   },

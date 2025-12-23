@@ -355,10 +355,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:16:57.418090",
+  "updated_at": "2025-12-23T06:59:22.872831",
   "komponen_prompt": {
-    "PERAN": "Persona AI: Anda adalah seorang Asisten Eksekutif Virtual yang akan menghasilkan draf dokumen profesional.. [Jenis Dokumen: **{{documentType}}**]",
-    "KONTEKS": "Saya ingin develop strategi bisnis untuk {{documentType}}.",
+    "PERAN": "Persona AI: Anda adalah seorang Asisten Eksekutif Virtual yang akan menghasilkan draf dokumen profesional.. [Jenis Dokumen: **{documentType}**]",
+    "KONTEKS": "Saya ingin develop strategi bisnis untuk {documentType}.",
     "TUGAS": "Berikan analisis dan rekomendasi bisnis yang actionable berdasarkan konteks yang diberikan.",
     "FORMAT_OUTPUT": "Sajikan dalam format terstruktur dengan executive summary, analisis detail, dan action items yang jelas."
   }

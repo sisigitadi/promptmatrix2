@@ -66,10 +66,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:16:57.124723",
+  "updated_at": "2025-12-23T06:59:22.510300",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Kurator Seni AI yang akan menghasilkan karya seni berdasarkan prompt utama.",
-    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {{mainPrompt}} {{model}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
+    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {mainPrompt} {model}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
   },

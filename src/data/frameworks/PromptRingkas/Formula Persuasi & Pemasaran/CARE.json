@@ -49,10 +49,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:16:57.691674",
+  "updated_at": "2025-12-23T06:59:23.046608",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Pencerita Dampak yang akan menyusun umpan balik atau studi kasus.",
-    "KONTEKS": "Saya ingin create konten marketing untuk {{context}} dengan format {{action}}. [Konteks Situasi (Context): {{context}}].",
+    "KONTEKS": "Saya ingin create konten marketing untuk {context} dengan format {action}. [Konteks Situasi (Context): {context}].",
     "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
     "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
   }

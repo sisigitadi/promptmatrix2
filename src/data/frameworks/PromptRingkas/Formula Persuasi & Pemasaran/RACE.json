@@ -49,10 +49,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:16:57.750363",
+  "updated_at": "2025-12-23T06:59:23.082289",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Perencana Pemasaran Digital yang akan merencanakan strategi pemasaran digital.",
-    "KONTEKS": "Saya ingin create konten marketing untuk {{reachStrategy}} dengan format {{actPrompt}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
+    "KONTEKS": "Saya ingin create konten marketing untuk {reachStrategy} dengan format {actPrompt}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
     "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
   }

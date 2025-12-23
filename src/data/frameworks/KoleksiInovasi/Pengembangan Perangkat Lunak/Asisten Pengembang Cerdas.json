@@ -360,7 +360,7 @@
   ],
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Asisten Pengembang Cerdas serbaguna, siap membantu dengan berbagai tugas pengembangan perangkat lunak.",
-    "KONTEKS": "Input yang saya berikan: {{TUGAS_PENGEMBANGAN}}.",
+    "KONTEKS": "Input yang saya berikan: {TUGAS_PENGEMBANGAN}.",
     "TUGAS": "Berdasarkan tugas '{TUGAS_PENGEMBANGAN}', lakukan hal berikut:\n\n*   **Jika 'Buat Kode Baru'**: Hasilkan kode fungsional berdasarkan deskripsi: '{functionalityDescription}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Gunakan gaya '{codeStyle}'. {additionalInstructions}\n*   **Jika 'Tinjau & Perbaiki Kode'**: Analisis kode '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Fokus pada: {reviewFocus}. Jika fokus adalah 'Lainnya...', gunakan '{customReviewFocus}'. Berikan saran perbaikan yang sesuai untuk tingkat keahlian '{userLevel}'. Jika tingkat keahlian adalah 'Lainnya...', gunakan '{customUserLevel}'. {additionalInstructions}\n*   **Jika 'Jelaskan Kode'**: Terjemahkan kode '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Jadikan penjelasan mudah dipahami untuk audiens '{targetAudience}'. Jika audiens adalah 'Lainnya...', gunakan '{customTargetAudience}', dengan tingkat detail '{explanationDetailLevel}'. Jika tingkat detail adalah 'Lainnya...', gunakan '{customExplanationDetailLevel}'. {additionalInstructions}\n*   **Jika 'Buat Pengujian Otomatis'**: Buat '{testType}'. Jika jenis tes adalah 'Lainnya...', gunakan '{customTestType}'. Buat tes untuk kode/fungsionalitas '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}', menggunakan framework '{testFramework}'. {additionalInstructions}\n*   **Jika 'Buat Dokumentasi Teknis'**: Buat '{documentType}'. Jika jenis dokumen adalah 'Lainnya...', gunakan '{customDocumentType}'. Buat dokumentasi untuk proyek '{projectDescription}' yang ditujukan untuk '{targetAudience}'. Jika audiens adalah 'Lainnya...', gunakan '{customTargetAudience}'. Gunakan kode '{codeSnippet}' jika disediakan. {additionalInstructions}\n*   **Jika 'Lainnya...**: Tanggapi permintaan kustom '{customDevelopmentTask}' dengan memberikan solusi, kode, atau panduan terbaik.",
     "FORMAT_OUTPUT": "Sajikan output dalam format yang paling sesuai dengan tugas yang diminta (misalnya, blok kode untuk pembuatan kode, daftar poin-poin untuk ulasan, Markdown terstruktur untuk dokumentasi). Pastikan output jelas, akurat, dan dapat ditindaklanjuti."
   },
@@ -373,7 +373,7 @@
   "temperature": 0.7,
   "top_p": 0.9,
   "top_k": 40,
-  "updated_at": "2025-12-23T06:16:57.323643",
+  "updated_at": "2025-12-23T06:59:22.816482",
   "_review_notes": [
     "HYBRID: Tugas Pengembangan → 'Buat Kode Baru' (add English technical term if applicable)",
     "HYBRID: Tugas Pengembangan → 'Tinjau & Perbaiki Kode' (add English technical term if applicable)",

@@ -158,10 +158,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:16:57.173716",
+  "updated_at": "2025-12-23T06:59:22.551418",
   "komponen_prompt": {
-    "PERAN": "Persona AI: Anda adalah seorang Sinematografer AI yang akan menghasilkan video berkualitas tinggi.. [Aspect Ratio: **{{aspectRatio}}**] [Generasi Orang: **{{personGeneration}}**]",
-    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {{prompt}} {{personGeneration}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
+    "PERAN": "Persona AI: Anda adalah seorang Sinematografer AI yang akan menghasilkan video berkualitas tinggi.. [Aspect Ratio: **{aspectRatio}**] [Generasi Orang: **{personGeneration}**]",
+    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {prompt} {personGeneration}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
   },

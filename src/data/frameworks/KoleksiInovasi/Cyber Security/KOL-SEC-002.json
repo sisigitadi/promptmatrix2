@@ -369,7 +369,7 @@
   },
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Analis Senior SOC (Security Operations Center) yang berpengalaman, mahir dalam berbagai platform keamanan dan bahasa query seperti KQL, SPL, dan SQL.",
-    "KONTEKS": "Input yang saya berikan: {{BLUE_TEAM_TASK}}.",
+    "KONTEKS": "Input yang saya berikan: {BLUE_TEAM_TASK}.",
     "TUGAS": "Berikan panduan langkah-demi-langkah (playbook) yang jelas dan dapat ditindaklanjuti untuk tugas **{BLUE_TEAM_TASK}**. Fokus HANYA pada tugas yang dipilih dan gunakan informasi relevan dari input pengguna.\n\n### Playbook Investigasi: {BLUE_TEAM_TASK}\n\n1.  **Tujuan Investigasi**: Sebutkan apa tujuan utama dari analisis ini.\n2.  **Langkah-langkah Investigasi**: Uraikan proses investigasi secara berurutan. Untuk setiap langkah, sertakan:\n    *   **Tindakan**: Penjelasan singkat tentang apa yang harus dilakukan.\n    *   **Contoh Query**: Berikan contoh query analitik yang relevan dengan tugas. Gunakan placeholder seperti `<placeholder>` untuk nilai yang harus diganti pengguna. Asumsikan platform SIEM umum.\n    *   **Indikasi**: Jelaskan pola, anomali, atau IOCs yang harus diwaspadai dari hasil query.\n3.  **Tindakan Rekomendasi**: Berdasarkan temuan potensial, berikan rekomendasi untuk langkah selanjutnya (misalnya, isolasi host, reset kata sandi, blokir IP).\n4.  **Dokumentasi**: Sarankan informasi apa yang harus didokumentasikan untuk laporan insiden.\n\n---\n\n**Gunakan blok yang relevan di bawah ini untuk menyusun jawabanmu:**\n\n*   **Jika tugas adalah 'Triase Peringatan Keamanan'**: Investigasi peringatan `{ALERT_NAME}` dari `{ALERT_SOURCE}` dengan detail: `{ALERT_KEY_INFO}`.\n*   **Jika tugas adalah 'Analisis Email Phishing'**: Lakukan analisis pada email dengan header `{PHISHING_HEADER}` dan IOCs: `{PHISHING_LINKS_ATTACHMENTS}`.\n*   **Dan seterusnya untuk setiap tugas Blue Team lainnya, hanya gunakan variabel yang relevan dengan tugas tersebut.**",
     "FORMAT_OUTPUT": "Sajikan panduan dalam format Markdown yang profesional. Gunakan heading untuk setiap bagian (Tujuan, Langkah-langkah, dll.). Untuk langkah-langkah, gunakan sub-heading dan bullet points. Sajikan contoh query dalam blok kode dengan sintaks yang sesuai (misalnya, `kql`). Pastikan hanya membahas tugas yang dipilih dalam `{BLUE_TEAM_TASK}`."
   },
@@ -377,7 +377,7 @@
   "temperature": 0.7,
   "top_p": 0.9,
   "top_k": 40,
-  "updated_at": "2025-12-23T06:16:57.305956",
+  "updated_at": "2025-12-23T06:59:22.737482",
   "_review_notes": [
     "SEAMLESS: Add conditional blocks [...] for optional parameters"
   ]

@@ -63,10 +63,10 @@
   "top_p": 0.9,
   "top_k": 40,
   "version": "2.0.0",
-  "updated_at": "2025-12-23T06:16:58.088844",
+  "updated_at": "2025-12-23T06:59:23.280544",
   "komponen_prompt": {
     "PERAN": "Persona AI: Anda adalah seorang Pencerita Brand yang akan merancang narasi atau cerita brand.",
-    "KONTEKS": "Input yang saya berikan: {{hero}}, {{ordinaryWorld}}, {{callToAdventure}}. [Konteks Tambahan & Instruksi Khusus: {{additionalContext}}].",
+    "KONTEKS": "Input yang saya berikan: {hero}, {ordinaryWorld}, {callToAdventure}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate output yang sesuai dengan tujuan 'Hero's Journey' berdasarkan input yang diberikan.",
     "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
   }
