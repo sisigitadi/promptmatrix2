@@ -305,13 +305,43 @@ export const generateUserPreviewPrompt = (
     }
   });
 
+  // DYNAMIC komponen_prompt HANDLING (Pattern 3: Image Description & Generation)
+  // If dynamicSubcomponents has komponen_prompt override, merge with root
+  let effectiveKomponenPrompt = { ...framework.komponen_prompt };
+
+  subcomponents.forEach((sub) => {
+    if (sub && sub.trigger) {
+      const triggerValue = params[sub.trigger];
+      if (triggerValue && sub.options[triggerValue]) {
+        const optionValue = sub.options[triggerValue];
+
+        // Check if this option has komponen_prompt override
+        if (optionValue && "komponen_prompt" in optionValue) {
+          const dynamicPrompt = (optionValue as any).komponen_prompt;
+
+          // Merge: Dynamic overrides root, but keep root fields if not overridden
+          effectiveKomponenPrompt = {
+            PERAN: dynamicPrompt.PERAN || effectiveKomponenPrompt.PERAN || "",
+            KONTEKS:
+              dynamicPrompt.KONTEKS || effectiveKomponenPrompt.KONTEKS || "",
+            TUGAS: dynamicPrompt.TUGAS || effectiveKomponenPrompt.TUGAS || "",
+            FORMAT_OUTPUT:
+              dynamicPrompt.FORMAT_OUTPUT ||
+              effectiveKomponenPrompt.FORMAT_OUTPUT ||
+              "",
+          };
+        }
+      }
+    }
+  });
+
   let previewContent = "";
 
   // 1. PERAN (Persona) - SELALU TAMPIL dengan variables replaced
-  if (framework.komponen_prompt) {
-    if (framework.komponen_prompt.PERAN) {
+  if (effectiveKomponenPrompt) {
+    if (effectiveKomponenPrompt.PERAN) {
       let processedPersona = replacePlaceholders(
-        framework.komponen_prompt.PERAN,
+        effectiveKomponenPrompt.PERAN,
         params,
         customInputs,
       );
@@ -327,9 +357,9 @@ export const generateUserPreviewPrompt = (
     }
 
     // 2. KONTEKS - HANYA TAMPIL JIKA ADA INPUT (seamless narrative)
-    if (hasInputs && framework.komponen_prompt.KONTEKS) {
+    if (hasInputs && effectiveKomponenPrompt.KONTEKS) {
       let processedContext = replacePlaceholders(
-        framework.komponen_prompt.KONTEKS,
+        effectiveKomponenPrompt.KONTEKS,
         params,
         customInputs,
       );
