@@ -9954,11 +9954,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         top_p: 0.9,
         top_k: 40,
         version: "2.0.0",
-        updated_at: "2025-12-23T06:59:22.886666",
+        updated_at: "2025-12-23T07:10:59.577088",
         komponen_prompt: {
           PERAN:
             "Persona AI: Anda adalah seorang Direktur Kreatif Branding yang akan menerjemahkan esensi ide menjadi aset kreatif.. [Jenis Aset Branding: **{assetType}**]",
-          KONTEKS: "Input yang saya berikan: {assetType}.",
+          KONTEKS:
+            "Saya ingin membuat {assetType}. [Detail yang dibutuhkan: deskripsi proyek, kepribadian brand, dan preferensi gaya untuk aset ini].",
           TUGAS:
             "Generate output yang sesuai dengan tujuan 'Studio Branding & Identitas' berdasarkan input yang diberikan.",
           FORMAT_OUTPUT:
@@ -10986,11 +10987,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         top_p: 0.9,
         top_k: 40,
         version: "2.0.0",
-        updated_at: "2025-12-23T06:59:22.927754",
+        updated_at: "2025-12-23T07:10:59.608150",
         komponen_prompt: {
           PERAN:
             "Persona AI: Anda adalah seorang Kepala Strategi Konten yang akan menghasilkan konten untuk berbagai platform.. [Jenis Konten: **{contentType}**]",
-          KONTEKS: "Saya ingin create konten marketing untuk {contentType}.",
+          KONTEKS:
+            "Saya ingin create konten {contentType}. [Detail konten: topik/pesan utama, target audiens, gaya/nada, dan elemen pendukung spesifik untuk platform ini].",
           TUGAS:
             "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
           FORMAT_OUTPUT:
