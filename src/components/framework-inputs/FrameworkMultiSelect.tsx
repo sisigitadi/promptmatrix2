@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
-import { FaTimesCircle, FaExclamationCircle } from "react-icons/fa";
+import { FaExclamationCircle } from "react-icons/fa";
 
 interface FrameworkMultiSelectProps {
   compName: string;

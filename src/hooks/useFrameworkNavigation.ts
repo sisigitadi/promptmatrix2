@@ -143,20 +143,10 @@ export function useFrameworkNavigation(
         const compDetails = details as any;
         if (compDetails.default !== undefined && compDetails.default !== null) {
           initialFormData[name] = compDetails.default;
-        } else if (
-          compDetails.type === "select" &&
-          compDetails.options?.length
-        ) {
-          const firstOption = compDetails.options[0];
-          if (
-            typeof firstOption === "string" &&
-            (firstOption.startsWith("Pilih") ||
-              firstOption.startsWith("Select"))
-          ) {
-            initialFormData[name] = compDetails.options[1] || "";
-          } else {
-            initialFormData[name] = firstOption;
-          }
+        } else if (compDetails.type === "select") {
+          // MODIFIKASI: Jangan otomatis pilih opsi pertama. Biarkan kosong agar user memilih sendiri.
+          // Kecuali ada default value yang spesifik di definisinya.
+          initialFormData[name] = "";
         } else {
           initialFormData[name] = "";
         }

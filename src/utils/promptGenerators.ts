@@ -145,13 +145,17 @@ export const generatePrompt = (
   if (!framework || !framework.komponen_prompt) {
     return generateFinalPrompt(
       framework,
-      framework.nama_kerangka || "",
+      framework?.nama_kerangka || "",
       params,
       customInputs,
     );
   }
 
-  const { PERAN, KONTEKS, TUGAS } = framework.komponen_prompt;
+  const {
+    PERAN = "",
+    KONTEKS = "",
+    TUGAS = "",
+  } = framework.komponen_prompt || {};
 
   // Combine static and active dynamic components to get all possible inputs.
   const allComponents: FrameworkComponent[] = [...(framework.components || [])];
@@ -257,9 +261,7 @@ export const generateUserPreviewPrompt = (
   params: FormData,
   customInputs: CustomInputs,
 ): string => {
-  if (!framework) {
-    return "Pilih kerangka kerja untuk melihat pratinjau.";
-  }
+  if (!framework) return "";
 
   // Pre-calculate active components to check for inputs
   const allComponents: FrameworkComponent[] = [...(framework.components || [])];
@@ -337,12 +339,15 @@ export const generateUserPreviewPrompt = (
   }
 
   // 3. List Input Values sebagai "Detail Spesifikasi" (Hanya yang BELUM masuk narasi)
+  const promptParts = framework.komponen_prompt || {};
   const narrativeTemplates = [
-    framework.komponen_prompt.PERAN,
-    framework.komponen_prompt.KONTEKS,
-    framework.komponen_prompt.TUGAS,
+    promptParts.PERAN,
+    promptParts.KONTEKS,
+    promptParts.TUGAS,
     framework.konteks_tambahan_instruksi_khusus,
-  ].join(" ");
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   let detailSpecsNeeded = false;
   let specContent = `\nBerikut adalah detail spesifikasi tambahan:\n`;
@@ -432,7 +437,11 @@ export const generateVisualPromptParts = (blocks: PromptBlock[]): Part[] => {
 export const generatePlaceholderPrompt = (framework: Framework): string => {
   if (!framework || !framework.komponen_prompt) return "";
 
-  const { PERAN, KONTEKS, TUGAS } = framework.komponen_prompt;
+  const {
+    PERAN = "",
+    KONTEKS = "",
+    TUGAS = "",
+  } = framework.komponen_prompt || {};
   let prompt = "";
 
   if (PERAN) prompt += `**Peran:**\n${PERAN}\n\n`;

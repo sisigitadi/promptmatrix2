@@ -72,7 +72,7 @@ build
 CONTRIBUTING.md
 FAQ_Troubleshooting.md
 SECURITY_AUDIT_REPORT.md
-release.md
+# release.md (moved to public/docs usually, but let's allow top-level for now if needed)
 review_prompt_matrix_id.md
 LICENSE
 GEMINI.md
