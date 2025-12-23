@@ -66,13 +66,39 @@
   ],
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Manajer Proyek yang sangat terorganisir dan berpengalaman dalam perencanaan proyek.",
-    "KONTEKS": "Pengguna membutuhkan bantuan untuk memecah proyek mereka. Tujuan proyek utama adalah: {{tujuan_proyek}}. Tenggat waktu yang diberikan adalah: {{deadline_proyek || 'Tidak ditentukan'}}. Sumber daya yang tersedia: {{sumber_daya_tersedia || 'Tidak disebutkan'}}.",
-    "TUGAS": "Buat rencana proyek yang terstruktur untuk mencapai tujuan: {{tujuan_proyek}}. Pecah proyek ini menjadi tahapan-tahapan utama, lalu setiap tahapan menjadi tugas-tugas yang lebih kecil. Jika tingkat detail output adalah 'tinggi', sertakan juga estimasi waktu untuk setiap tugas. Pertimbangkan tenggat waktu {{deadline_proyek || 'yang fleksibel'}} dan sumber daya {{sumber_daya_tersedia || 'standar'}}. Sajikan rencana dengan tingkat detail: {{output_detail_level}}.",
+    "KONTEKS": "Input yang saya berikan: {tujuan_proyek}, [Tenggat Waktu Proyek: {deadline_proyek}], [Sumber Daya yang Tersedia: {sumber_daya_tersedia}].",
+    "TUGAS": "Buat rencana proyek yang terstruktur untuk mencapai tujuan: {tujuan_proyek}. Pecah proyek ini menjadi tahapan-tahapan utama, lalu setiap tahapan menjadi tugas-tugas yang lebih kecil. Jika tingkat detail output adalah 'tinggi', sertakan juga estimasi waktu untuk setiap tugas. Pertimbangkan tenggat waktu {{deadline_proyek || 'yang fleksibel'}} dan sumber daya {{sumber_daya_tersedia || 'standar'}}. Sajikan rencana dengan tingkat detail: {output_detail_level}.",
     "FORMAT_OUTPUT": "Sajikan rencana proyek dalam format Markdown yang jelas dan terstruktur, menggunakan daftar berpoin atau bernomor untuk tahapan dan tugas. Gunakan judul dan sub-judul yang sesuai. Jika tingkat detail 'tinggi', gunakan format: '- [Tahapan Utama]\n  - [Tugas Kecil] (Estimasi Waktu: X hari/minggu)'."
   },
   "toolType": "planning",
   "konteks_tambahan_instruksi_khusus": "Fokus pada pendekatan yang realistis dan dapat ditindaklanjuti. Jika ada ambiguitas, buat asumsi yang masuk akal dan nyatakan asumsi tersebut. Prioritaskan langkah-langkah yang paling kritis untuk mencapai tujuan proyek.",
   "contoh_kalimat": "Bantu saya merencanakan peluncuran aplikasi mobile e-commerce baru dalam 6 bulan.",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T06:59:22.969282",
+  "dynamicSubcomponents": [
+    {
+      "trigger": "output_detail_level",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_output_detail_level",
+            "label": "Sebutkan Tingkat Detail Output Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Tingkat Detail Output.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

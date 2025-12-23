@@ -32,6 +32,21 @@
       "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
     }
   ],
-  "kategori": ["Prompt Ringkas", "Formula Persuasi & Pemasaran"],
-  "nama_kerangka": "PAS"
+  "kategori": [
+    "Prompt Ringkas",
+    "Formula Persuasi & Pemasaran"
+  ],
+  "nama_kerangka": "PAS",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:23.070059",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Diagnostik Pemasaran yang akan mengidentifikasi masalah audiens dan menawarkan solusi.",
+    "KONTEKS": "Saya ingin create konten marketing untuk {problem} dengan format {agitation}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+    "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
+  }
 }

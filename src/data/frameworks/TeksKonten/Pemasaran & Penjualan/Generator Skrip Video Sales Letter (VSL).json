@@ -85,6 +85,21 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Pemasaran & Penjualan"],
-  "nama_kerangka": "Generator Skrip Video Sales Letter (VSL)"
+  "kategori": [
+    "Teks & Konten",
+    "Pemasaran & Penjualan"
+  ],
+  "nama_kerangka": "Generator Skrip Video Sales Letter (VSL)",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:23.943516",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Ahli Skrip Penjualan yang akan membuat skrip VSL.",
+    "KONTEKS": "Saya ingin create konten marketing untuk {productName} dengan format {targetAudience}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+    "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
+  }
 }

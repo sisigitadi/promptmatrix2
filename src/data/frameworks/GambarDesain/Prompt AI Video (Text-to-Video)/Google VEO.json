@@ -152,5 +152,87 @@
     "Gambar & Desain",
     "Prompt AI Video (Text-to-Video)"
   ],
-  "nama_kerangka": "Google VEO"
+  "nama_kerangka": "Google VEO",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:22.551418",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Sinematografer AI yang akan menghasilkan video berkualitas tinggi.. [Aspect Ratio: **{aspectRatio}**] [Generasi Orang: **{personGeneration}**]",
+    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {prompt} {personGeneration}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "aspectRatio",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_aspectRatio",
+            "label": "Sebutkan Aspect Ratio Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Aspect Ratio.",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Aspect Ratio standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "personGeneration",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_personGeneration",
+            "label": "Sebutkan Generasi Orang Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Generasi Orang.",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Generasi Orang standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "generateAudio",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_generateAudio",
+            "label": "Sebutkan Generate Audio Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Generate Audio.",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Generate Audio standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Apply hybrid format to 'Aspect Ratio' option '16:9'",
+    "TODO: Apply hybrid format to 'Aspect Ratio' option '9:16'",
+    "TODO: Apply hybrid format to 'Aspect Ratio' option '1:1'",
+    "TODO: Apply hybrid format to 'Generasi Orang' option 'allow'",
+    "TODO: Apply hybrid format to 'Generasi Orang' option 'dont_allow'",
+    "TODO: Apply hybrid format to 'Generasi Orang' option 'allow_adult'",
+    "TODO: Apply hybrid format to 'Generate Audio' option 'true'",
+    "TODO: Apply hybrid format to 'Generate Audio' option 'false'",
+    "TODO: Consider adding conditional blocks [...] for optional parameters"
+  ]
 }

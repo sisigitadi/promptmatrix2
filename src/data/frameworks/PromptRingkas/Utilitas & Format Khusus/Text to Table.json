@@ -32,6 +32,21 @@
       "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
     }
   ],
-  "kategori": ["Prompt Ringkas", "Utilitas & Format Khusus"],
-  "nama_kerangka": "Text to Table"
+  "kategori": [
+    "Prompt Ringkas",
+    "Utilitas & Format Khusus"
+  ],
+  "nama_kerangka": "Text to Table",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:23.442515",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Konverter Data yang akan mengekstrak informasi dari teks dan menyajikannya dalam format tabel.",
+    "KONTEKS": "Input yang saya berikan: {sourceText}, {columns}, {extractionInstruction}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Generate output yang sesuai dengan tujuan 'Text to Table' berdasarkan input yang diberikan.",
+    "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
+  }
 }

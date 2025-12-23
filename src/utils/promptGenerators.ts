@@ -256,6 +256,7 @@ export const generatePrompt = (
 };
 
 // Function for the user-facing preview, showing AI logic and filled inputs in plain text.
+// SEAMLESS STORYTELLING: Following Blueprint Workflow Otomasi pattern
 export const generateUserPreviewPrompt = (
   framework: Framework,
   params: FormData,
@@ -304,33 +305,83 @@ export const generateUserPreviewPrompt = (
     }
   });
 
+  // DYNAMIC komponen_prompt HANDLING (Pattern 3: Image Description & Generation)
+  // If dynamicSubcomponents has komponen_prompt override, merge with root
+  let effectiveKomponenPrompt = { ...framework.komponen_prompt };
+
+  subcomponents.forEach((sub) => {
+    if (sub && sub.trigger) {
+      const triggerValue = params[sub.trigger];
+      if (triggerValue && sub.options[triggerValue]) {
+        const optionValue = sub.options[triggerValue];
+
+        // Check if this option has komponen_prompt override
+        if (optionValue && "komponen_prompt" in optionValue) {
+          const dynamicPrompt = (optionValue as any).komponen_prompt;
+
+          // Merge: Dynamic overrides root, but keep root fields if not overridden
+          effectiveKomponenPrompt = {
+            PERAN: dynamicPrompt.PERAN || effectiveKomponenPrompt.PERAN || "",
+            KONTEKS:
+              dynamicPrompt.KONTEKS || effectiveKomponenPrompt.KONTEKS || "",
+            TUGAS: dynamicPrompt.TUGAS || effectiveKomponenPrompt.TUGAS || "",
+            FORMAT_OUTPUT:
+              dynamicPrompt.FORMAT_OUTPUT ||
+              effectiveKomponenPrompt.FORMAT_OUTPUT ||
+              "",
+          };
+        }
+      }
+    }
+  });
+
   let previewContent = "";
 
-  // 1. Gabungkan PERAN (Persona) - SELALU TAMPIL
-  if (framework.komponen_prompt) {
-    if (framework.komponen_prompt.PERAN) {
-      const processedPersona = replacePlaceholders(
-        framework.komponen_prompt.PERAN,
+  // 1. PERAN (Persona) - SELALU TAMPIL dengan variables replaced
+  if (effectiveKomponenPrompt) {
+    if (effectiveKomponenPrompt.PERAN) {
+      let processedPersona = replacePlaceholders(
+        effectiveKomponenPrompt.PERAN,
         params,
         customInputs,
       );
-      // Hapus bold markdown (**) agar lebih bersih
-      previewContent += `${processedPersona.replace(/\*\*/g, "")}\n\n`;
+
+      // Remove bold markdown (**) untuk preview yang lebih bersih
+      processedPersona = processedPersona.replace(/\*\*/g, "");
+
+      // Cleanup conditional blocks yang kosong [...empty...]
+      processedPersona = processedPersona.replace(/\[\s*\]/g, "");
+      processedPersona = processedPersona.replace(/\[\s*:\s*\]/g, "");
+
+      previewContent += `${processedPersona}\n\n`;
     }
 
-    // 2. KONTEKS - HANYA TAMPIL JIKA ADA INPUT
-    if (hasInputs && framework.komponen_prompt.KONTEKS) {
+    // 2. KONTEKS - HANYA TAMPIL JIKA ADA INPUT (seamless narrative)
+    if (hasInputs && effectiveKomponenPrompt.KONTEKS) {
       let processedContext = replacePlaceholders(
-        framework.komponen_prompt.KONTEKS,
+        effectiveKomponenPrompt.KONTEKS,
         params,
         customInputs,
       );
 
-      // Cleanup: Hapus bold kosong dari template jika input kosong
-      processedContext = processedContext.replace(/\*\*\s*\*\*/g, "").trim();
+      // Remove bold markdown
+      processedContext = processedContext.replace(/\*\*/g, "");
 
-      if (processedContext) {
-        previewContent += `${processedContext.replace(/\*\*/g, "")}\n\n`;
+      // Cleanup empty conditional blocks
+      processedContext = processedContext.replace(/\[\s*\]/g, "");
+      processedContext = processedContext.replace(/\[\s*:\s*\]/g, "");
+      processedContext = processedContext.replace(/\[\s*\.\s*\]/g, "");
+
+      // Cleanup dangling punctuation from empty conditionals
+      processedContext = processedContext.replace(/\s+\./g, ".");
+      processedContext = processedContext.replace(/\.\s*\./g, ".");
+      processedContext = processedContext.replace(/,\s*\./g, ".");
+      processedContext = processedContext.replace(/\s{2,}/g, " ");
+
+      processedContext = processedContext.trim();
+
+      if (processedContext && processedContext.length > 0) {
+        previewContent += `${processedContext}\n\n`;
       }
     }
   } else if (framework.ai_logic_description) {
@@ -338,56 +389,9 @@ export const generateUserPreviewPrompt = (
     previewContent += `${framework.ai_logic_description.replace(/\*\*/g, "")}\n\n`;
   }
 
-  // 3. List Input Values sebagai "Detail Spesifikasi" (Hanya yang BELUM masuk narasi)
-  const promptParts = framework.komponen_prompt || {};
-  const narrativeTemplates = [
-    promptParts.PERAN,
-    promptParts.KONTEKS,
-    promptParts.TUGAS,
-    framework.konteks_tambahan_instruksi_khusus,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  let detailSpecsNeeded = false;
-  let specContent = `\nBerikut adalah detail spesifikasi tambahan:\n`;
-
-  allComponents.forEach((comp) => {
-    // Lewati jika komponen sudah ada di narasi sebagai placeholder {NAMA}
-    if (narrativeTemplates.includes(`{${comp.name}}`)) return;
-
-    const value = params[comp.name];
-    if (
-      value !== undefined &&
-      value !== "" &&
-      value !== null &&
-      (!Array.isArray(value) || value.length > 0)
-    ) {
-      let displayValue = "";
-      if (value === "Lainnya...") {
-        displayValue = customInputs[comp.name] || "";
-      } else if (Array.isArray(value)) {
-        displayValue = value
-          .map((item) => {
-            if (item === "Lainnya...") return customInputs[comp.name] || "";
-            return cleanVerboseValue(String(item));
-          })
-          .filter(Boolean)
-          .join(", ");
-      } else {
-        displayValue = cleanVerboseValue(String(value));
-      }
-
-      if (displayValue) {
-        specContent += `- ${comp.label}: ${displayValue}\n`;
-        detailSpecsNeeded = true;
-      }
-    }
-  });
-
-  if (detailSpecsNeeded) {
-    previewContent += specContent;
-  }
+  // 3. NO "Detail Spesifikasi Tambahan" - Pure seamless storytelling
+  // All information should be in PERAN and KONTEKS narrative
+  // This follows Blueprint Workflow Otomasi pattern exactly
 
   if (!hasInputs) {
     previewContent += "\n(Belum ada input yang diisi)";
@@ -605,8 +609,8 @@ export const generateJsonPrompt = (
       ),
       FORMAT_OUTPUT: replacePlaceholders(
         framework.komponen_prompt?.FORMAT_OUTPUT ||
-          framework.komponen_prompt?.["FORMAT OUTPUT"] ||
-          "",
+        framework.komponen_prompt?.["FORMAT OUTPUT"] ||
+        "",
         allValues,
         customInputs,
       ),

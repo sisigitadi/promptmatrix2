@@ -2,7 +2,10 @@
   "id_kerangka": "KOL-APT-001",
   "nama_kerangka": "Multi-Agent Code Review",
   "version": "1.0.0",
-  "kategori": ["Koleksi & Inovasi", "Advanced Prompting Techniques"],
+  "kategori": [
+    "Koleksi & Inovasi",
+    "Advanced Prompting Techniques"
+  ],
   "description": "Simulasikan tinjauan kode kolaboratif dengan beberapa persona AI yang menganalisis kode dari berbagai sudut pandang (misalnya, keamanan, kinerja, keterbacaan).",
   "perspektif_user": "Saya ingin mendapatkan tinjauan kode yang komprehensif dari berbagai perspektif, seperti yang dilakukan oleh tim pengembang yang beragam, untuk memastikan kualitas dan keamanan kode saya.",
   "ai_logic_description": "Persona AI: Anda adalah sebuah tim ahli tinjauan kode AI yang akan memberikan tinjauan kode yang holistik.",
@@ -21,7 +24,14 @@
       "name": "programmingLanguage",
       "label": "Bahasa Pemrograman",
       "type": "select",
-      "options": ["Python", "JavaScript", "Java", "C#", "Go", "Lainnya..."],
+      "options": [
+        "Python",
+        "JavaScript",
+        "Java",
+        "C#",
+        "Go",
+        "Lainnya..."
+      ],
       "default": "Python",
       "info": "Pilih bahasa pemrograman dari potongan kode."
     },
@@ -36,7 +46,11 @@
         "Praktik Terbaik",
         "Lainnya..."
       ],
-      "default": ["Keamanan", "Kinerja", "Keterbacaan"],
+      "default": [
+        "Keamanan",
+        "Kinerja",
+        "Keterbacaan"
+      ],
       "info": "Pilih aspek yang ingin Anda fokuskan dalam tinjauan."
     },
     {
@@ -50,7 +64,7 @@
   ],
   "komponen_prompt": {
     "PERAN": "Anda adalah sebuah tim ahli tinjauan kode AI yang terdiri dari seorang Insinyur Keamanan, seorang Insinyur Kinerja, dan seorang Arsitek Perangkat Lunak.",
-    "KONTEKS": "Pengguna telah menyediakan potongan kode dalam bahasa {programmingLanguage} dan ingin mendapatkan tinjauan kode multi-agen dengan fokus pada {reviewFocus}. Potongan kode yang akan ditinjau adalah:\n\n```{{programmingLanguage}}\n{{codeSnippet}}\n```\n\nInstruksi tambahan dari pengguna: {{additionalContext || 'Tidak ada instruksi tambahan.'}}",
+    "KONTEKS": "Input yang saya berikan: {codeSnippet}, {programmingLanguage}, {reviewFocus}. [Instruksi Tambahan & Batasan: {additionalContext}].",
     "TUGAS": "Sebagai tim ahli, lakukan tinjauan kode multi-agen. Setiap agen harus memberikan analisis terpisah berdasarkan fokusnya, kemudian ringkas temuan utama dan berikan rekomendasi gabungan.\n\n**1. Insinyur Keamanan:**\n   - Analisis `codeSnippet` untuk potensi kerentanan keamanan (misalnya, injeksi, XSS, otentikasi yang lemah, kesalahan penanganan data sensitif).\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan keamanan.\n\n**2. Insinyur Kinerja:**\n   - Analisis `codeSnippet` untuk potensi masalah kinerja (misalnya, kompleksitas algoritma, penggunaan sumber daya yang tidak efisien, *bottleneck*).\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan kinerja.\n\n**3. Arsitek Perangkat Lunak:**\n   - Analisis `codeSnippet` untuk keterbacaan, pemeliharaan, kepatuhan terhadap praktik terbaik, dan keselarasan dengan pola desain umum.\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan kualitas kode dan arsitektur.\n\n**4. Ringkasan & Rekomendasi Gabungan:**\n   - Setelah setiap agen memberikan analisisnya, berikan ringkasan singkat dari temuan paling kritis dari semua agen.\n   - Sajikan daftar rekomendasi gabungan yang dapat ditindaklanjuti, diprioritaskan berdasarkan dampak dan urgensi.",
     "FORMAT_OUTPUT": "Gunakan format Markdown. Sajikan output dalam bagian-bagian yang jelas untuk setiap agen, diikuti dengan ringkasan dan daftar rekomendasi gabungan. Gunakan daftar berpoin untuk temuan dan rekomendasi."
   },
@@ -58,5 +72,62 @@
   "konteks_tambahan_instruksi_khusus": "Setiap agen harus memberikan analisis terpisah berdasarkan fokusnya, kemudian ringkas temuan utama dan berikan rekomendasi gabungan. Pastikan output terstruktur dan mudah dibaca.",
   "contoh_kalimat": "Lakukan tinjauan kode multi-agen pada potongan kode Python ini untuk keamanan dan kinerja.",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T06:59:22.640679",
+  "dynamicSubcomponents": [
+    {
+      "trigger": "programmingLanguage",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_programmingLanguage",
+            "label": "Sebutkan Bahasa Pemrograman Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Bahasa Pemrograman.",
+            "placeholder": "Contoh: Opsi kustom, kategori baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Bahasa Pemrograman standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "reviewFocus",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_reviewFocus",
+            "label": "Sebutkan Fokus Tinjauan (Pilih satu atau lebih) Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Fokus Tinjauan (Pilih satu atau lebih).",
+            "placeholder": "Contoh: Opsi kustom, kategori baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Fokus Tinjauan (Pilih satu atau lebih) standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "HYBRID: Bahasa Pemrograman → 'Python' (add English technical term if applicable)",
+    "HYBRID: Bahasa Pemrograman → 'JavaScript' (add English technical term if applicable)",
+    "HYBRID: Bahasa Pemrograman → 'Java' (add English technical term if applicable)",
+    "HYBRID: Bahasa Pemrograman → 'C#' (add English technical term if applicable)",
+    "HYBRID: Bahasa Pemrograman → 'Go' (add English technical term if applicable)",
+    "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Keamanan' (add English technical term if applicable)",
+    "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Kinerja' (add English technical term if applicable)",
+    "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Keterbacaan' (add English technical term if applicable)",
+    "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Praktik Terbaik' (add English technical term if applicable)",
+    "SEAMLESS: Add conditional blocks [...] for optional parameters"
+  ]
 }

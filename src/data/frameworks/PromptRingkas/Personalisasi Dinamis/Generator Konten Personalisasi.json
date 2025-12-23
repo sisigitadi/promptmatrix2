@@ -90,5 +90,69 @@
   "output": "natural_language_prompt",
   "contoh_kalimat": "Buatkan saya email pemasaran dari draf ini untuk audiens pemula dengan gaya kasual.",
   "konteks_tambahan_instruksi_khusus": "Selalu prioritaskan kejelasan dan relevansi pesan untuk audiens yang dituju.",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:50:19.401622",
+  "dynamicSubcomponents": [
+    {
+      "trigger": "TARGET_AUDIENS_KEAHLIAN",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_TARGET_AUDIENS_KEAHLIAN",
+            "label": "Sebutkan Tingkat Keahlian Audiens Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Tingkat Keahlian Audiens.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "TARGET_AUDIENS_GAYA",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_TARGET_AUDIENS_GAYA",
+            "label": "Sebutkan Gaya Bahasa Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Gaya Bahasa.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "JENIS_OUTPUT",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_JENIS_OUTPUT",
+            "label": "Sebutkan Format Output Konten Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Format Output Konten.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

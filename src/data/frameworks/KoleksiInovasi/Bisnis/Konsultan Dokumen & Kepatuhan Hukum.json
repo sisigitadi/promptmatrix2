@@ -119,5 +119,17 @@
   "konteks_tambahan_instruksi_khusus": "Disclaimer hukum adalah yang paling penting. Pastikan setiap output menekankan bahwa ini bukan pengganti nasihat pengacara profesional.",
   "contoh_kalimat": "Bantu saya membuat draf Perjanjian Kerahasiaan (NDA).",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:43:43.262664",
+  "_review_notes": [
+    "HYBRID: Jenis Bantuan Hukum → 'Pembuat Draf Perjanjian Dasar' (add English technical term if applicable)",
+    "HYBRID: Jenis Bantuan Hukum → 'Generator Kebijakan Privasi & Syarat Layanan' (add English technical term if applicable)",
+    "HYBRID: Jenis Bantuan Hukum → 'Penerjemah Istilah Hukum' (add English technical term if applicable)",
+    "HYBRID: Jenis Bantuan Hukum → 'Checklist Kepatuhan Bisnis' (add English technical term if applicable)",
+    "SEAMLESS: Add conditional blocks [...] for optional parameters"
+  ]
 }

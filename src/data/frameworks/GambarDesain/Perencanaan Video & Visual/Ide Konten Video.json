@@ -53,6 +53,73 @@
       "info": "Detail tambahan yang bisa mengarahkan ide AI menjadi lebih unik dan sesuai dengan channel Anda."
     }
   ],
-  "kategori": ["Gambar & Desain", "Perencanaan Video & Visual"],
-  "nama_kerangka": "Ide Konten Video"
+  "kategori": [
+    "Gambar & Desain",
+    "Perencanaan Video & Visual"
+  ],
+  "nama_kerangka": "Ide Konten Video",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:22.352597",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Strategis Konten Video yang akan menghasilkan ide-ide video.. [Platform Video: **{platform}**] [Format Video: **{videoFormat}**]",
+    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {platform} {videoFormat}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Generate prompt yang menghasilkan video dengan narrative flow dan visual continuity yang baik.",
+    "FORMAT_OUTPUT": "Sajikan prompt dengan scene breakdown, camera movements, dan transition details yang jelas."
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "platform",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_platform",
+            "label": "Sebutkan Platform Video Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Platform Video.",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Platform Video standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "videoFormat",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_videoFormat",
+            "label": "Sebutkan Format Video Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Format Video.",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Format Video standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Apply hybrid format to 'Platform Video' option 'YouTube'",
+    "TODO: Apply hybrid format to 'Platform Video' option 'TikTok'",
+    "TODO: Apply hybrid format to 'Platform Video' option 'Instagram Reels'",
+    "TODO: Apply hybrid format to 'Platform Video' option 'LinkedIn Video'",
+    "TODO: Apply hybrid format to 'Format Video' option 'Tutorial / How-to'",
+    "TODO: Apply hybrid format to 'Format Video' option 'Vlog Harian/Mingguan'",
+    "TODO: Apply hybrid format to 'Format Video' option 'Review Produk/Jasa'",
+    "TODO: Apply hybrid format to 'Format Video' option 'Edukasi Singkat / Explainer'",
+    "TODO: Apply hybrid format to 'Format Video' option 'Wawancara'",
+    "TODO: Consider adding conditional blocks [...] for optional parameters"
+  ]
 }

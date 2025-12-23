@@ -53,6 +53,53 @@
       }
     }
   ],
-  "kategori": ["Gambar & Desain", "Utilitas & Penyuntingan AI"],
-  "nama_kerangka": "Clipdrop"
+  "kategori": [
+    "Gambar & Desain",
+    "Utilitas & Penyuntingan AI"
+  ],
+  "nama_kerangka": "Clipdrop",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:22.622859",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Editor Foto AI yang akan menerapkan fungsi alat Clipdrop.. [Alat Clipdrop yang Digunakan: **{tool}**]",
+    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {tool} [Input Gambar (jika ada): {imageInput}]. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "tool",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_tool",
+            "label": "Sebutkan Alat Clipdrop yang Digunakan Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Alat Clipdrop yang Digunakan.",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Alat Clipdrop yang Digunakan standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Stable Diffusion XL'",
+    "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Uncrop'",
+    "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Reimagine XL'",
+    "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Stable Doodle'",
+    "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Cleanup'",
+    "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Remove Background'",
+    "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Replace Background'",
+    "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Image Upscaler'",
+    "TODO: Consider adding conditional blocks [...] for optional parameters"
+  ]
 }

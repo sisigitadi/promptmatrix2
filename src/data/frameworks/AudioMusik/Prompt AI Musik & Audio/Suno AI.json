@@ -64,5 +64,79 @@
     "Audio & Musik",
     "Prompt AI Musik & Audio"
   ],
-  "nama_kerangka": "Suno AI"
+  "nama_kerangka": "Suno AI",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:22.301737",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Produser Musik AI yang akan menghasilkan lagu.. [Model: **{model}**] [Instrumental?: **{instrumental}**]",
+    "KONTEKS": "Saya ingin generate musik dengan karakteristik {lyrics}, dengan durasi {model}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat."
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "model",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_model",
+            "label": "Sebutkan Model Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Model.",
+            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Model standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "instrumental",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_instrumental",
+            "label": "Sebutkan Instrumental? Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Instrumental?.",
+            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Instrumental? standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "makeInstrumental",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_makeInstrumental",
+            "label": "Sebutkan Buat Versi Instrumental? Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Buat Versi Instrumental?.",
+            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Buat Versi Instrumental? standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Review options for hybrid localization (Technical EN + ID)"
+  ]
 }

@@ -106,6 +106,106 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Alat Bantu Komposisi"],
         nama_kerangka: "Ide Progresi Kord",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.248091",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Komposer Musik yang akan menghasilkan ide progresi kord.. [Genre Musik: **{genre}**] [Mood yang Diinginkan: **{mood}**]",
+          KONTEKS:
+            "Saya ingin generate musik dengan karakteristik {genre}, dengan durasi {mood}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "genre",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_genre",
+                  label: "Sebutkan Genre Musik Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Genre Musik.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Genre Musik standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "mood",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_mood",
+                  label: "Sebutkan Mood yang Diinginkan Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Mood yang Diinginkan.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Mood yang Diinginkan standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "complexity",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_complexity",
+                  label: "Sebutkan Tingkat Kompleksitas Kord Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Kord.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tingkat Kompleksitas Kord standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "partOfSong",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_partOfSong",
+                  label: "Sebutkan Untuk Bagian Lagu Mana? Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Untuk Bagian Lagu Mana?.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Untuk Bagian Lagu Mana? standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
       "Penulisan Lirik Lagu": {
         description:
@@ -176,6 +276,66 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Alat Bantu Komposisi"],
         nama_kerangka: "Penulisan Lirik Lagu",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.264014",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Lirik Profesional yang akan menulis lirik lagu.. [Genre Musik: **{genre}**] [Suasana Hati Lagu: **{mood}**]",
+          KONTEKS:
+            "Saya ingin generate musik dengan karakteristik {genre}, dengan durasi {theme}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "genre",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_genre",
+                  label: "Sebutkan Genre Musik Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Genre Musik.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Genre Musik standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "mood",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_mood",
+                  label: "Sebutkan Suasana Hati Lagu Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Suasana Hati Lagu.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Suasana Hati Lagu standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
     },
     "Prompt AI Musik & Audio": {
@@ -211,6 +371,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
         nama_kerangka: "Mubert",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.265459",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Kurator Musik Fungsional yang akan menghasilkan musik fungsional bebas royalti.",
+          KONTEKS:
+            "Saya ingin generate musik dengan karakteristik {prompt}, dengan durasi {duration}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
+        },
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
       "MusicFX (Google)": {
         description:
@@ -245,6 +424,47 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
         nama_kerangka: "MusicFX (Google)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.277998",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Eksplorator Musik Cepat yang akan menghasilkan ide musik.. [Durasi (detik): **{duration}**]",
+          KONTEKS:
+            "Saya ingin generate musik dengan karakteristik {prompt}, dengan durasi {duration}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "duration",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_duration",
+                  label: "Sebutkan Durasi (detik) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Durasi (detik).",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Durasi (detik) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
       "Stable Audio": {
         description:
@@ -286,6 +506,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
         nama_kerangka: "Stable Audio",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.289332",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Insinyur Audio AI yang akan menghasilkan audio, efek suara, atau musik instrumental.",
+          KONTEKS:
+            "Saya ingin generate musik dengan karakteristik {prompt}, dengan durasi {negativePrompt}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
+        },
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
       "Suno AI": {
         description:
@@ -348,6 +587,85 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
         nama_kerangka: "Suno AI",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.301737",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Produser Musik AI yang akan menghasilkan lagu.. [Model: **{model}**] [Instrumental?: **{instrumental}**]",
+          KONTEKS:
+            "Saya ingin generate musik dengan karakteristik {lyrics}, dengan durasi {model}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "model",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_model",
+                  label: "Sebutkan Model Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Model.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Model standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "instrumental",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_instrumental",
+                  label: "Sebutkan Instrumental? Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Instrumental?.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Instrumental? standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "makeInstrumental",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_makeInstrumental",
+                  label: "Sebutkan Buat Versi Instrumental? Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Buat Versi Instrumental?.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Buat Versi Instrumental? standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
       Udio: {
         description:
@@ -389,6 +707,46 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
         nama_kerangka: "Udio",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.318606",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Komposer Audio Kreatif yang akan menghasilkan musik.. [Instrumental?: **{instrumental}**]",
+          KONTEKS:
+            "Saya ingin generate musik dengan karakteristik {prompt}, dengan durasi {lyrics}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "instrumental",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_instrumental",
+                  label: "Sebutkan Instrumental? Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Instrumental?.",
+                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Instrumental? standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Review options for hybrid localization (Technical EN + ID)",
+        ],
       },
     },
   },
@@ -474,7 +832,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           PERAN:
             "Anda adalah seorang Analis Media Digital dengan kemampuan pemahaman multimodal (gambar dan audio) yang canggih.",
           KONTEKS:
-            "Pengguna ingin melakukan tugas analisis media: '{TUGAS_MULTIMODAL}'.",
+            "Saya ingin generate gambar/visual dengan deskripsi: {TUGAS_MULTIMODAL}.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, lakukan analisis berikut:\n\n- **Jika tugasnya 'Deskripsikan Gambar'**: Analisis gambar yang diunggah (`{GAMBAR_INPUT}`). Berikan deskripsi yang sangat detail mencakup: objek utama, latar belakang, komposisi, warna, gaya, dan kemungkinan makna atau konteks dari gambar tersebut.\n\n- **Jika tugasnya 'Transkripsikan Audio'**: Transkripsikan konten audio dari file yang diunggah (`{AUDIO_INPUT}`). Pastikan transkripsi akurat, termasuk identifikasi pembicara jika memungkinkan. Setelah transkripsi, berikan ringkasan 3 poin utama dari isi pembicaraan.\n\n- **Jika tugasnya 'Analisis Gambar dengan Konteks Teks'**: Analisis gambar yang diunggah (`{GAMBAR_INPUT_ANALISIS}`) dalam konteks teks yang diberikan: '{TEKS_KONTEKS}'. Jelaskan bagaimana gambar dan teks saling berhubungan. Apa wawasan gabungan yang bisa didapat dari keduanya?",
           FORMAT_OUTPUT:
@@ -486,6 +844,17 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         konteks_tambahan_instruksi_khusus:
           "Saat menganalisis, berikan interpretasi yang cerdas dan jangan hanya menyebutkan apa yang terlihat atau terdengar secara harfiah. Cari makna yang lebih dalam jika memungkinkan.",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.335485",
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Pilih Tugas Analisis' option 'Deskripsikan Gambar'",
+          "TODO: Apply hybrid format to 'Pilih Tugas Analisis' option 'Transkripsikan Audio'",
+          "TODO: Apply hybrid format to 'Pilih Tugas Analisis' option 'Analisis Gambar dengan Konteks Teks'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Perencanaan Video & Visual": {
@@ -551,6 +920,75 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Perencanaan Video & Visual"],
         nama_kerangka: "Ide Konten Video",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.352597",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Strategis Konten Video yang akan menghasilkan ide-ide video.. [Platform Video: **{platform}**] [Format Video: **{videoFormat}**]",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {platform} {videoFormat}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt yang menghasilkan video dengan narrative flow dan visual continuity yang baik.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dengan scene breakdown, camera movements, dan transition details yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "platform",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_platform",
+                  label: "Sebutkan Platform Video Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Platform Video.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Platform Video standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "videoFormat",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_videoFormat",
+                  label: "Sebutkan Format Video Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Format Video.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Format Video standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Platform Video' option 'YouTube'",
+          "TODO: Apply hybrid format to 'Platform Video' option 'TikTok'",
+          "TODO: Apply hybrid format to 'Platform Video' option 'Instagram Reels'",
+          "TODO: Apply hybrid format to 'Platform Video' option 'LinkedIn Video'",
+          "TODO: Apply hybrid format to 'Format Video' option 'Tutorial / How-to'",
+          "TODO: Apply hybrid format to 'Format Video' option 'Vlog Harian/Mingguan'",
+          "TODO: Apply hybrid format to 'Format Video' option 'Review Produk/Jasa'",
+          "TODO: Apply hybrid format to 'Format Video' option 'Edukasi Singkat / Explainer'",
+          "TODO: Apply hybrid format to 'Format Video' option 'Wawancara'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Script Iklan": {
         description: "Buat naskah singkat untuk iklan video atau audio.",
@@ -611,6 +1049,50 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Perencanaan Video & Visual"],
         nama_kerangka: "Script Iklan",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.371062",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Naskah Iklan yang akan membuat naskah iklan.. [Platform Penayangan: **{platform}**]",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {product} {duration}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "platform",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_platform",
+                  label: "Sebutkan Platform Penayangan Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Platform Penayangan.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Platform Penayangan standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Platform Penayangan' option 'TV'",
+          "TODO: Apply hybrid format to 'Platform Penayangan' option 'Radio'",
+          "TODO: Apply hybrid format to 'Platform Penayangan' option 'TikTok/Reels/Shorts'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Platform Desain Berbasis AI": {
@@ -672,6 +1154,50 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Platform Desain Berbasis AI"],
         nama_kerangka: "Canva (Magic Design)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.392044",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Desainer Grafis AI yang akan menghasilkan template desain yang dapat disesuaikan di Canva.. [Jenis Desain: **{designType}**]",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {designType} {contentToInclude}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "designType",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_designType",
+                  label: "Sebutkan Jenis Desain Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Jenis Desain.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Jenis Desain standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Jenis Desain' option 'Presentasi'",
+          "TODO: Apply hybrid format to 'Jenis Desain' option 'Postingan Instagram'",
+          "TODO: Apply hybrid format to 'Jenis Desain' option 'Poster'",
+          "TODO: Apply hybrid format to 'Jenis Desain' option 'Logo'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Prompt AI Gambar (Text-to-Image)": {
@@ -736,6 +1262,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Custom Image Generator",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.412532",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Demonstrator Input yang akan menampilkan bagaimana berbagai jenis input interaktif dapat digunakan.",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {mainSubject} {creationDate}. [Catatan Tambahan: {additionalNotes}].",
+          TUGAS:
+            "Generate prompt yang optimal untuk menghasilkan gambar sesuai deskripsi dan gaya yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang sesuai dengan platform target, dengan detail visualisasi yang jelas dan parameter teknis yang tepat.",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "DALL-E 3": {
         description:
@@ -814,6 +1359,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "DALL-E 3",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.432222",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pelukis Digital AI yang akan menghasilkan gambar yang kreatif dan akurat.",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {subject} {composition}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Firefly (Adobe)": {
         description:
@@ -880,6 +1444,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Firefly (Adobe)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.449561",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Seniman Efek Digital yang akan menerapkan gaya dan efek pada subjek.",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {subject} {colorAndTone}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       Ideogram: {
         description:
@@ -934,6 +1517,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Ideogram",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.465299",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Perancang Tipografi Visual yang akan merender teks yang akurat di dalam gambar.",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {textToRender} {style}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Image Description & Generation": {
         id_kerangka: "IMG-GEN-001",
@@ -1103,6 +1705,15 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Deskripsi teks gambar harus diisi untuk mode 'Hasilkan Gambar'.",
           },
         ],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:07:55.207917",
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Pilih Mode Operasi' option 'Deskripsikan Gambar'",
+          "TODO: Apply hybrid format to 'Pilih Mode Operasi' option 'Hasilkan Gambar'",
+        ],
       },
       "Leonardo AI": {
         description:
@@ -1169,6 +1780,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Leonardo AI",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.481224",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Kreator Visual Leonardo yang akan menghasilkan gambar.",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {positivePrompt}. [Hindari elemen: {negativePrompt}] {leonardoModel}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       Midjourney: {
         description:
@@ -1381,6 +2011,104 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Midjourney",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.231364",
+        dynamicSubcomponents: [
+          {
+            trigger: "aspectRatio",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_aspectRatio",
+                  label: "Sebutkan Aspect Ratio (--ar) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Aspect Ratio (--ar).",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Aspect Ratio (--ar) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "version",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_version",
+                  label: "Sebutkan Model Version (--v) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Model Version (--v).",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Model Version (--v) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "tile",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_tile",
+                  label: "Sebutkan Tile (--tile) Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Tile (--tile).",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Tile (--tile) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "styleRaw",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_styleRaw",
+                  label: "Sebutkan Style Raw (--style raw) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Style Raw (--style raw).",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Style Raw (--style raw) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Model Version (--v)' option '6.0'",
+          "TODO: Apply hybrid format to 'Model Version (--v)' option '5.2'",
+          "TODO: Apply hybrid format to 'Model Version (--v)' option '5.1'",
+          "TODO: Apply hybrid format to 'Model Version (--v)' option 'niji 5'",
+          "TODO: Apply hybrid format to 'Model Version (--v)' option '6.1'",
+          "TODO: Apply hybrid format to 'Tile (--tile)' option 'No'",
+          "TODO: Apply hybrid format to 'Tile (--tile)' option 'Yes'",
+          "TODO: Apply hybrid format to 'Style Raw (--style raw)' option 'No'",
+          "TODO: Apply hybrid format to 'Style Raw (--style raw)' option 'Yes'",
+        ],
       },
       NightCafe: {
         description:
@@ -1446,6 +2174,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "NightCafe",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.510300",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Kurator Seni AI yang akan menghasilkan karya seni berdasarkan prompt utama.",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {mainPrompt} {model}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Playground AI": {
         description:
@@ -1491,6 +2238,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Playground AI",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.524922",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Eksplorator Visual yang akan menghasilkan gambar berdasarkan prompt utama.",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {prompt}. [Hindari elemen: [Kecualikan dari Gambar (Negative Prompt): {excludeFromImage}]] [Konteks Tambahan & Instruksi Khusus: {additionalContext}]. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Stable Diffusion": {
         description:
@@ -1548,6 +2314,13 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
         nama_kerangka: "Stable Diffusion",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T05:07:55.254083",
+        _review_notes: [],
       },
     },
     "Prompt AI Video (Text-to-Video)": {
@@ -1696,6 +2469,94 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
         nama_kerangka: "Google VEO",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.551418",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Sinematografer AI yang akan menghasilkan video berkualitas tinggi.. [Aspect Ratio: **{aspectRatio}**] [Generasi Orang: **{personGeneration}**]",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {prompt} {personGeneration}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "aspectRatio",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_aspectRatio",
+                  label: "Sebutkan Aspect Ratio Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Aspect Ratio.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Aspect Ratio standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "personGeneration",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_personGeneration",
+                  label: "Sebutkan Generasi Orang Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Generasi Orang.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Generasi Orang standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "generateAudio",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_generateAudio",
+                  label: "Sebutkan Generate Audio Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Generate Audio.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Generate Audio standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Aspect Ratio' option '16:9'",
+          "TODO: Apply hybrid format to 'Aspect Ratio' option '9:16'",
+          "TODO: Apply hybrid format to 'Aspect Ratio' option '1:1'",
+          "TODO: Apply hybrid format to 'Generasi Orang' option 'allow'",
+          "TODO: Apply hybrid format to 'Generasi Orang' option 'dont_allow'",
+          "TODO: Apply hybrid format to 'Generasi Orang' option 'allow_adult'",
+          "TODO: Apply hybrid format to 'Generate Audio' option 'true'",
+          "TODO: Apply hybrid format to 'Generate Audio' option 'false'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       Kaiber: {
         description:
@@ -1763,6 +2624,46 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
         nama_kerangka: "Kaiber",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.565519",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Transformator Visual yang akan menghasilkan video dengan gaya visual artistik.. [Aspect Ratio: **{aspectRatio}**]",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {subject} [Transformasi (untuk video-ke-video): {transformation}]. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "aspectRatio",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_aspectRatio",
+                  label: "Sebutkan Aspect Ratio Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Aspect Ratio.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Aspect Ratio standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       Pika: {
         description:
@@ -1832,6 +2733,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
         nama_kerangka: "Pika",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.579785",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Animator AI yang akan menganimasikan gambar atau menghasilkan video dari teks.",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {mainPrompt} [Kontrol Gerakan: {motionControl}]. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       Runway: {
         description:
@@ -1899,6 +2819,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
         nama_kerangka: "Runway",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.592742",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Produser Video AI yang akan menghasilkan video berdasarkan prompt.",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {prompt} [Gerakan Kamera: {cameraMotion}]. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
       "Sora (OpenAI)": {
         description:
@@ -1966,6 +2905,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
         nama_kerangka: "Sora (OpenAI)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.606392",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Sutradara AI yang akan menghasilkan video sinematik.",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {sceneDescription} {visualStyle}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        _review_notes: [
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Utilitas & Penyuntingan AI": {
@@ -2030,6 +2988,55 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Gambar & Desain", "Utilitas & Penyuntingan AI"],
         nama_kerangka: "Clipdrop",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.622859",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Editor Foto AI yang akan menerapkan fungsi alat Clipdrop.. [Alat Clipdrop yang Digunakan: **{tool}**]",
+          KONTEKS:
+            "Saya ingin generate gambar/visual dengan deskripsi: {tool} [Input Gambar (jika ada): {imageInput}]. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "tool",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_tool",
+                  label: "Sebutkan Alat Clipdrop yang Digunakan Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Alat Clipdrop yang Digunakan.",
+                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Alat Clipdrop yang Digunakan standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Stable Diffusion XL'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Uncrop'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Reimagine XL'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Stable Doodle'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Cleanup'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Remove Background'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Replace Background'",
+          "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Image Upscaler'",
+          "TODO: Consider adding conditional blocks [...] for optional parameters",
+        ],
       },
     },
   },
@@ -2094,7 +3101,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           PERAN:
             "Anda adalah sebuah tim ahli tinjauan kode AI yang terdiri dari seorang Insinyur Keamanan, seorang Insinyur Kinerja, dan seorang Arsitek Perangkat Lunak.",
           KONTEKS:
-            "Pengguna telah menyediakan potongan kode dalam bahasa {programmingLanguage} dan ingin mendapatkan tinjauan kode multi-agen dengan fokus pada {reviewFocus}. Potongan kode yang akan ditinjau adalah:\n\n```{{programmingLanguage}}\n{{codeSnippet}}\n```\n\nInstruksi tambahan dari pengguna: {{additionalContext || 'Tidak ada instruksi tambahan.'}}",
+            "Input yang saya berikan: {codeSnippet}, {programmingLanguage}, {reviewFocus}. [Instruksi Tambahan & Batasan: {additionalContext}].",
           TUGAS:
             "Sebagai tim ahli, lakukan tinjauan kode multi-agen. Setiap agen harus memberikan analisis terpisah berdasarkan fokusnya, kemudian ringkas temuan utama dan berikan rekomendasi gabungan.\n\n**1. Insinyur Keamanan:**\n   - Analisis `codeSnippet` untuk potensi kerentanan keamanan (misalnya, injeksi, XSS, otentikasi yang lemah, kesalahan penanganan data sensitif).\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan keamanan.\n\n**2. Insinyur Kinerja:**\n   - Analisis `codeSnippet` untuk potensi masalah kinerja (misalnya, kompleksitas algoritma, penggunaan sumber daya yang tidak efisien, *bottleneck*).\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan kinerja.\n\n**3. Arsitek Perangkat Lunak:**\n   - Analisis `codeSnippet` untuk keterbacaan, pemeliharaan, kepatuhan terhadap praktik terbaik, dan keselarasan dengan pola desain umum.\n   - Berikan temuan dan rekomendasi spesifik untuk meningkatkan kualitas kode dan arsitektur.\n\n**4. Ringkasan & Rekomendasi Gabungan:**\n   - Setelah setiap agen memberikan analisisnya, berikan ringkasan singkat dari temuan paling kritis dari semua agen.\n   - Sajikan daftar rekomendasi gabungan yang dapat ditindaklanjuti, diprioritaskan berdasarkan dampak dan urgensi.",
           FORMAT_OUTPUT:
@@ -2107,6 +3114,66 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Lakukan tinjauan kode multi-agen pada potongan kode Python ini untuk keamanan dan kinerja.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.640679",
+        dynamicSubcomponents: [
+          {
+            trigger: "programmingLanguage",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_programmingLanguage",
+                  label: "Sebutkan Bahasa Pemrograman Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Bahasa Pemrograman.",
+                  placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Bahasa Pemrograman standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "reviewFocus",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_reviewFocus",
+                  label:
+                    "Sebutkan Fokus Tinjauan (Pilih satu atau lebih) Lainnya",
+                  type: "text",
+                  description:
+                    "Ketik manual nilai kustom untuk Fokus Tinjauan (Pilih satu atau lebih).",
+                  placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Fokus Tinjauan (Pilih satu atau lebih) standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
+        _review_notes: [
+          "HYBRID: Bahasa Pemrograman → 'Python' (add English technical term if applicable)",
+          "HYBRID: Bahasa Pemrograman → 'JavaScript' (add English technical term if applicable)",
+          "HYBRID: Bahasa Pemrograman → 'Java' (add English technical term if applicable)",
+          "HYBRID: Bahasa Pemrograman → 'C#' (add English technical term if applicable)",
+          "HYBRID: Bahasa Pemrograman → 'Go' (add English technical term if applicable)",
+          "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Keamanan' (add English technical term if applicable)",
+          "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Kinerja' (add English technical term if applicable)",
+          "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Keterbacaan' (add English technical term if applicable)",
+          "HYBRID: Fokus Tinjauan (Pilih satu atau lebih) → 'Praktik Terbaik' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "RAG-Enhanced Content Generator": {
         id_kerangka: "KOL-APT-002",
@@ -2179,12 +3246,31 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               ],
             },
           },
+          {
+            trigger: "NADA_BAHASA",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_NADA_BAHASA",
+                  label: "Sebutkan Nada Bahasa Lainnya",
+                  type: "text",
+                  description: "Ketik manual nilai kustom untuk Nada Bahasa.",
+                  placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Input manual jika pilihan Nada Bahasa standar tidak tersedia.",
+                },
+              ],
+            },
+          },
         ],
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang Peneliti dan Penulis Konten yang sangat teliti dan akurat.",
           KONTEKS:
-            "Pengguna ingin menghasilkan konten tentang '{TOPIK_UTAMA_KONTEN}'. Anda harus menggunakan sumber informasi eksternal yang disediakan untuk memastikan akurasi dan kedalaman konten. Sumber-sumber yang diberikan adalah: {SUMBER_EKSTERNAL}.",
+            "Input yang saya berikan: {TOPIK_UTAMA_KONTEN}, {SUMBER_EKSTERNAL}, {FORMAT_OUTPUT_KONTEN}.",
           TUGAS:
             "Hasilkan konten dalam format '{FORMAT_OUTPUT_KONTEN}' (jika 'FORMAT_OUTPUT_KONTEN' adalah 'Lainnya...' gunakan '{FORMAT_OUTPUT_KONTEN_LAINNYA}') tentang '{TOPIK_UTAMA_KONTEN}'. Pastikan semua informasi yang disajikan didukung oleh 'SUMBER_EKSTERNAL' yang diberikan. Gunakan nada bahasa '{NADA_BAHASA}'. Jika ada informasi yang tidak dapat diverifikasi dari sumber yang diberikan, nyatakan dengan jelas atau hindari.",
           FORMAT_OUTPUT:
@@ -2197,6 +3283,21 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buatkan saya artikel blog tentang AI generatif menggunakan dokumen PDF ini sebagai referensi.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.653685",
+        _review_notes: [
+          "HYBRID: Format Output Konten → 'Artikel Blog' (add English technical term if applicable)",
+          "HYBRID: Format Output Konten → 'Ringkasan Laporan' (add English technical term if applicable)",
+          "HYBRID: Format Output Konten → 'FAQ' (add English technical term if applicable)",
+          "HYBRID: Nada Bahasa → 'Formal' (add English technical term if applicable)",
+          "HYBRID: Nada Bahasa → 'Informatif' (add English technical term if applicable)",
+          "HYBRID: Nada Bahasa → 'Persuasif' (add English technical term if applicable)",
+          "HYBRID: Nada Bahasa → 'Akademis' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
     },
     Bisnis: {
@@ -2319,6 +3420,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya membuat model bisnis kanvas untuk ide startup saya.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.246327",
+        _review_notes: [
+          "HYBRID: Tugas Perencanaan Startup → 'Generator Ide Bisnis' (add English technical term if applicable)",
+          "HYBRID: Tugas Perencanaan Startup → 'Penyusun Model Bisnis Kanvas' (add English technical term if applicable)",
+          "HYBRID: Tugas Perencanaan Startup → 'Analisis Persaingan dan Pasar' (add English technical term if applicable)",
+          "HYBRID: Tugas Perencanaan Startup → 'Pembuat Draf Konten Pitch Deck' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Asisten Akuntansi & Keuangan Bisnis": {
         id_kerangka: "BIS-ACC-001",
@@ -2452,6 +3565,16 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Bantu saya hitung titik impas usaha saya.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.249742",
+        _review_notes: [
+          "HYBRID: Tugas Akuntansi atau Keuangan → 'Pembuat Laporan Keuangan Sederhana' (add English technical term if applicable)",
+          "HYBRID: Tugas Akuntansi atau Keuangan → 'Alat Analisis & Kategorisasi Biaya' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Asisten Rekrutmen & SDM": {
         id_kerangka: "BIS-HR-001",
@@ -2576,6 +3699,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buatkan saya templat email untuk menanggapi keluhan produk rusak.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.253958",
+        _review_notes: [
+          "HYBRID: Tugas Rekrutmen atau SDM → 'Pembuat Deskripsi Pekerjaan' (add English technical term if applicable)",
+          "HYBRID: Tugas Rekrutmen atau SDM → 'Generator Pertanyaan Wawancara' (add English technical term if applicable)",
+          "HYBRID: Tugas Rekrutmen atau SDM → 'Penyusun Rencana Onboarding' (add English technical term if applicable)",
+          "HYBRID: Tugas Rekrutmen atau SDM → 'Pembuat Draf Email Rekrutmen' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Keuangan & Investasi": {
         id_kerangka: "BIS-KEU-001",
@@ -2739,7 +3874,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           PERAN:
             "Anda adalah seorang Analis Keuangan dan Perencana Investasi profesional.",
           KONTEKS:
-            "Seorang klien meminta bantuan analisis keuangan. Tugas yang dipilih adalah: '{TUGAS_ANALISIS_KEUANGAN}'.",
+            "Saya ingin develop strategi bisnis untuk {TUGAS_ANALISIS_KEUANGAN}.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Perencanaan Strategi Investasi'**: Buat proposal strategi investasi komprehensif berdasarkan tujuan '{TUJUAN_INVESTASI}', modal '{MODAL_AWAL}', risiko '{TINGKAT_RISIKO}', dan horizon '{HORIZON_WAKTU}'. Sertakan alokasi aset, contoh instrumen, dan justifikasi.\n- **Jika 'Analisis Saham Tunggal'**: Lakukan analisis pada saham '{KODE_SAHAM}' dengan fokus pada '{FOKUS_ANALISIS_SAHAM}'. Sajikan laporan yang mencakup valuasi kunci, tren harga, sentimen berita, serta potensi kelebihan dan kekurangan.\n- **Jika 'Perbandingan Produk Investasi'**: Buat tabel perbandingan antara '{PRODUK_A}' dan '{PRODUK_B}' berdasarkan metrik '{METRIK_PERBANDINGAN}'. Berikan ringkasan perbandingan di akhir.\n- **Jika 'Simulasi Proyeksi Dana'**: Hitung proyeksi untuk mencapai target '{TARGET_DANA}' dengan saldo awal '{SALDO_SAAT_INI}', investasi bulanan '{INVESTASI_BULANAN}', dan asumsi return '{ASUMSI_RETURN}%'. Tampilkan perkiraan waktu yang dibutuhkan dan berikan saran jika perlu.",
           FORMAT_OUTPUT:
@@ -2751,6 +3886,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Bantu saya menganalisis saham BBCA.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.666803",
+        _review_notes: [
+          "HYBRID: Jenis Analisis Keuangan → 'Perencanaan Strategi Investasi' (add English technical term if applicable)",
+          "HYBRID: Jenis Analisis Keuangan → 'Analisis Saham Tunggal' (add English technical term if applicable)",
+          "HYBRID: Jenis Analisis Keuangan → 'Perbandingan Produk Investasi' (add English technical term if applicable)",
+          "HYBRID: Jenis Analisis Keuangan → 'Simulasi Proyeksi Dana' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Konsultan Dokumen & Kepatuhan Hukum": {
         id_kerangka: "BIS-LGL-001",
@@ -2881,6 +4028,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Bantu saya membuat draf Perjanjian Kerahasiaan (NDA).",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.262664",
+        _review_notes: [
+          "HYBRID: Jenis Bantuan Hukum → 'Pembuat Draf Perjanjian Dasar' (add English technical term if applicable)",
+          "HYBRID: Jenis Bantuan Hukum → 'Generator Kebijakan Privasi & Syarat Layanan' (add English technical term if applicable)",
+          "HYBRID: Jenis Bantuan Hukum → 'Penerjemah Istilah Hukum' (add English technical term if applicable)",
+          "HYBRID: Jenis Bantuan Hukum → 'Checklist Kepatuhan Bisnis' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Manajer Produk Virtual": {
         id_kerangka: "BIS-PRD-001",
@@ -2998,6 +4157,15 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Bantu saya membuat PRD untuk fitur kolaborasi baru.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.266557",
+        _review_notes: [
+          "HYBRID: Tugas Manajemen Produk → 'Asisten Prioritas Fitur' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Pusat Analisis Data Bisnis": {
         id_kerangka: "BIS-DAT-001",
@@ -3099,7 +4267,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         komponen_prompt: {
           PERAN: "Anda adalah seorang Analis Data Bisnis yang terampil.",
           KONTEKS:
-            "Pengguna ingin menganalisis data mereka dan telah memilih tugas: '{TUGAS_ANALISIS_DATA}'.",
+            "Saya ingin develop strategi bisnis untuk {TUGAS_ANALISIS_DATA}.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, berikan output yang sesuai:\n\n- **Jika 'Eksplorasi & Pembersihan Data'**: Analisis sampel data '{DATA_SAMPEL_EKSPLORASI}'. Berikan ringkasan profil data, identifikasi masalah (data hilang, duplikat), dan sarankan langkah pembersihan.\n- **Jika 'Analisis Statistik Deskriptif'**: Hitung statistik dasar (rata-rata, median, min, max) dari kolom '{KOLOM_STATISTIK}' pada data '{DATA_SAMPEL_STATISTIK}' dan berikan interpretasi bisnisnya.\n- **Jika 'Identifikasi Tren dan Pola'**: Jawab pertanyaan bisnis '{PERTANYAAN_BISNIS_TREN}' dengan menganalisis data '{DATA_SAMPEL_TREN}'. Soroti tren, pola, atau korelasi yang signifikan.\n- **Jika 'Rekomendasi Visualisasi Data'**: Berdasarkan deskripsi data '{DATA_VISUALISASI}' dan pesan '{PESAN_VISUALISASI}', rekomendasikan 2-3 jenis grafik yang paling efektif dan jelaskan alasannya.",
           FORMAT_OUTPUT:
@@ -3112,6 +4280,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya menemukan tren dari data penjualan bulanan saya.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.680952",
+        _review_notes: [
+          "HYBRID: Tugas Analisis Data → 'Eksplorasi & Pembersihan Data' (add English technical term if applicable)",
+          "HYBRID: Tugas Analisis Data → 'Analisis Statistik Deskriptif' (add English technical term if applicable)",
+          "HYBRID: Tugas Analisis Data → 'Identifikasi Tren dan Pola' (add English technical term if applicable)",
+          "HYBRID: Tugas Analisis Data → 'Rekomendasi Visualisasi Data' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Pusat Bantuan Layanan Pelanggan": {
         id_kerangka: "BIS-CS-001",
@@ -3225,6 +4405,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buatkan saya templat email untuk menanggapi keluhan produk rusak.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.274427",
+        _review_notes: [
+          "HYBRID: Tugas Layanan Pelanggan → 'Generator Templat Respons' (add English technical term if applicable)",
+          "HYBRID: Tugas Layanan Pelanggan → 'Penyusun Skrip Eskalasi Masalah' (add English technical term if applicable)",
+          "HYBRID: Tugas Layanan Pelanggan → 'Pembuat Konten Halaman FAQ' (add English technical term if applicable)",
+          "HYBRID: Tugas Layanan Pelanggan → 'Analisis Umpan Balik Pelanggan' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Studio Desain UI/UX": {
         id_kerangka: "BIS-UIX-001",
@@ -3352,6 +4544,15 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya membuat konsep tata letak untuk halaman beranda website saya.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:43:43.277591",
+        _review_notes: [
+          "HYBRID: Tugas Desain UI/UX → 'Analisis & Umpan Balik Desain' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Blueprint Workflow Otomasi": {
@@ -5658,13 +6859,20 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang Arsitek Red Team berpengalaman yang merancang operasi serangan siber berdasarkan kerangka kerja MITRE ATT&CK.",
-          KONTEKS:
-            "Pengguna ingin merancang sebuah rencana operasi untuk taktik Red Team: **{RED_TEAM_TACTIC}**. Rencana ini harus realistis, dapat dijalankan, dan bertujuan untuk menguji postur keamanan sebuah organisasi.",
+          KONTEKS: "Input yang saya berikan: {RED_TEAM_TACTIC}.",
           TUGAS:
             "Buat draf rencana operasi Red Team yang mendetail untuk taktik **{RED_TEAM_TACTIC}**. Fokus HANYA pada taktik yang dipilih dan gunakan informasi yang relevan dari input pengguna.\n\n### Rencana Operasi: {RED_TEAM_TACTIC}\n\n1.  **Ringkasan Eksekutif**:\n    - Jelaskan secara singkat tujuan dari operasi {RED_TEAM_TACTIC} ini.\n\n2.  **Tujuan (Objectives)**:\n    - Sebutkan tujuan spesifik, terukur, dapat dicapai, relevan, dan berbatas waktu (SMART) dari taktik ini, berdasarkan input pengguna.\n\n3.  **Lingkup & Target (Scope & Targets)**:\n    - Identifikasi target spesifik (misalnya, aset, individu, atau sistem) berdasarkan input pengguna.\n\n4.  **Rantai Serangan (Attack Chain)**:\n    - Uraikan langkah-langkah serangan secara berurutan KHUSUS untuk taktik yang dipilih.\n    - Jika taktik adalah 'Intelijen Sumber Terbuka (OSINT)': Jelaskan cara mengumpulkan informasi tentang {OSINT_TARGET} untuk mencapai {OSINT_OBJECTIVES} menggunakan alat seperti {OSINT_TOOLS}.\n    - Jika taktik adalah 'Pengintaian & Pemetaan Aset': Rincikan bagaimana pengintaian {RECON_TYPE} (atau {RECON_TYPE_OTHER}) akan dilakukan pada {RECON_TARGET_SCOPE} menggunakan {RECON_TOOLS}.\n    - Dan seterusnya untuk setiap taktik lainnya, hanya gunakan variabel yang relevan.\n\n5.  **Alat & Sumber Daya (Tools & Resources)**:\n    - Sebutkan alat, skrip, atau sumber daya lain yang diperlukan yang disebutkan dalam input pengguna (misalnya {OSINT_TOOLS}, {RECON_TOOLS}).\n\n6.  **Indikator Kompromi (Indicators of Compromise - IOCs)**:\n    - Sebutkan IOCs potensial yang mungkin dihasilkan dari aktivitas ini (misalnya, alamat IP C2, hash file payload, artefak registri).\n\n7.  **Rekomendasi Mitigasi & Deteksi (Blue Team Perspective)**:\n    - Berikan rekomendasi konkret bagi Blue Team tentang cara mendeteksi atau mencegah teknik yang digunakan dalam taktik {RED_TEAM_TACTIC} ini.",
           FORMAT_OUTPUT:
             "Sajikan rencana operasi dalam format Markdown yang profesional. Gunakan heading, sub-heading, bullet points, dan blok kode (jika perlu) untuk menyajikan informasi secara jelas dan terstruktur. Pastikan hanya membahas taktik yang dipilih dalam {RED_TEAM_TACTIC}.",
         },
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.699059",
+        _review_notes: [
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Analis Operasi Blue Team": {
         id_kerangka: "KOL-SEC-002",
@@ -6065,13 +7273,20 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang Analis Senior SOC (Security Operations Center) yang berpengalaman, mahir dalam berbagai platform keamanan dan bahasa query seperti KQL, SPL, dan SQL.",
-          KONTEKS:
-            "Pengguna, seorang analis keamanan, memerlukan panduan terstruktur untuk melakukan tugas investigasi: **{BLUE_TEAM_TASK}**.",
+          KONTEKS: "Input yang saya berikan: {BLUE_TEAM_TASK}.",
           TUGAS:
             "Berikan panduan langkah-demi-langkah (playbook) yang jelas dan dapat ditindaklanjuti untuk tugas **{BLUE_TEAM_TASK}**. Fokus HANYA pada tugas yang dipilih dan gunakan informasi relevan dari input pengguna.\n\n### Playbook Investigasi: {BLUE_TEAM_TASK}\n\n1.  **Tujuan Investigasi**: Sebutkan apa tujuan utama dari analisis ini.\n2.  **Langkah-langkah Investigasi**: Uraikan proses investigasi secara berurutan. Untuk setiap langkah, sertakan:\n    *   **Tindakan**: Penjelasan singkat tentang apa yang harus dilakukan.\n    *   **Contoh Query**: Berikan contoh query analitik yang relevan dengan tugas. Gunakan placeholder seperti `<placeholder>` untuk nilai yang harus diganti pengguna. Asumsikan platform SIEM umum.\n    *   **Indikasi**: Jelaskan pola, anomali, atau IOCs yang harus diwaspadai dari hasil query.\n3.  **Tindakan Rekomendasi**: Berdasarkan temuan potensial, berikan rekomendasi untuk langkah selanjutnya (misalnya, isolasi host, reset kata sandi, blokir IP).\n4.  **Dokumentasi**: Sarankan informasi apa yang harus didokumentasikan untuk laporan insiden.\n\n---\n\n**Gunakan blok yang relevan di bawah ini untuk menyusun jawabanmu:**\n\n*   **Jika tugas adalah 'Triase Peringatan Keamanan'**: Investigasi peringatan `{ALERT_NAME}` dari `{ALERT_SOURCE}` dengan detail: `{ALERT_KEY_INFO}`.\n*   **Jika tugas adalah 'Analisis Email Phishing'**: Lakukan analisis pada email dengan header `{PHISHING_HEADER}` dan IOCs: `{PHISHING_LINKS_ATTACHMENTS}`.\n*   **Dan seterusnya untuk setiap tugas Blue Team lainnya, hanya gunakan variabel yang relevan dengan tugas tersebut.**",
           FORMAT_OUTPUT:
             "Sajikan panduan dalam format Markdown yang profesional. Gunakan heading untuk setiap bagian (Tujuan, Langkah-langkah, dll.). Untuk langkah-langkah, gunakan sub-heading dan bullet points. Sajikan contoh query dalam blok kode dengan sintaks yang sesuai (misalnya, `kql`). Pastikan hanya membahas tugas yang dipilih dalam `{BLUE_TEAM_TASK}`.",
         },
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.737482",
+        _review_notes: [
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Fasilitator Kolaborasi Purple Team": {
         id_kerangka: "KOL-SEC-003",
@@ -6540,13 +7755,20 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang Koordinator Purple Team yang ahli dalam memfasilitasi kolaborasi antara tim ofensif dan defensif untuk meningkatkan postur keamanan secara keseluruhan.",
-          KONTEKS:
-            "Pengguna ingin merencanakan atau mendokumentasikan sebuah aktivitas kolaborasi Purple Team: **{PURPLE_TEAM_ACTIVITY}**.",
+          KONTEKS: "Input yang saya berikan: {PURPLE_TEAM_ACTIVITY}.",
           TUGAS:
             "Buat draf dokumen (rencana, agenda, atau laporan) yang komprehensif untuk aktivitas **{PURPLE_TEAM_ACTIVITY}**. Fokus HANYA pada aktivitas yang dipilih dan gunakan informasi yang relevan dari input pengguna.\n\n### Dokumen Kolaborasi Purple Team: {PURPLE_TEAM_ACTIVITY}\n\n1.  **Judul Dokumen**: Nama aktivitas dan tanggal.\n2.  **Tujuan (Objective)**: Jelaskan secara singkat tujuan dari sesi kolaboratif ini.\n3.  **Peserta**: Sebutkan peran yang harus hadir (misalnya, Analis Red Team, Analis SOC, Rekayasawan Deteksi).\n4.  **Agenda atau Rincian Aktivitas**: Uraikan langkah-langkah atau agenda sesi. Gunakan input pengguna untuk menyusun bagian ini, KHUSUS untuk aktivitas yang dipilih:\n    *   **Validasi Deteksi Taktis**: Rancang rencana pengujian untuk `{VALIDATION_TTP_ID}`. Red Team akan menggunakan `{VALIDATION_RED_TEAM_TOOL}` dan Blue Team akan memantau `{VALIDATION_BLUE_TEAM_TOOL}`. Definisikan kriteria keberhasilan (deteksi terlihat/tidak terlihat).\n    *   **Penyesuaian & Pengoptimalan Aturan**: Buat agenda untuk sesi tuning aturan `{TUNING_RULE_ID}` yang mengalami masalah `{TUNING_PROBLEM}` (atau `{TUNING_PROBLEM_OTHER}`). Langkah-langkah harus mencakup: analisis `{TUNING_CONTEXT}`, simulasi ulang serangan oleh Red Team, dan modifikasi query aturan secara langsung oleh Blue Team.\n    *   **Evaluasi Alat Keamanan**: Rencanakan evaluasi alat `{EVAL_TOOL_NAME}` berdasarkan kriteria `{EVAL_CRITERIA}` dengan tujuan `{EVAL_PURPOSE}`.\n    *   **Pemodelan Ancaman Kolaboratif**: Buat agenda untuk sesi pemodelan ancaman pada `{THREAT_MODEL_TARGET_APP}` menggunakan metodologi `{THREAT_MODEL_METHODOLOGY}` (atau `{THREAT_MODEL_METHODOLOGY_OTHER}`). Libatkan Red Team untuk identifikasi vektor serangan dan Blue Team untuk identifikasi kontrol yang ada dalam lingkup `{THREAT_MODEL_SCOPE}`.\n    *   **Sesi Rekayasa Deteksi**: Rancang sesi kerja untuk mencapai `{DE_SESSION_GOAL}`. Alokasikan waktu untuk analisis data dari `{DE_SESSION_LOG_SOURCES}`, penulisan p... [truncated]",
           FORMAT_OUTPUT:
             "Sajikan dokumen dalam format Markdown yang profesional. Gunakan heading, sub-heading, bullet points, dan tabel jika perlu untuk menyajikan informasi secara terstruktur dan mudah dibaca oleh kedua tim. Pastikan hanya membahas aktivitas yang dipilih dalam `{PURPLE_TEAM_ACTIVITY}`.",
         },
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.758448",
+        _review_notes: [
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Dokumen Lanjutan": {
@@ -6729,10 +7951,9 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang konsultan ahli multi-disiplin. Bergantung pada pilihan pengguna, Anda akan bertindak sebagai Game Designer, Analis Keuangan, atau Pelatih Debat untuk menghasilkan dokumen yang diminta.",
-          KONTEKS:
-            "Pengguna ingin membuat sebuah dokumen terstruktur dengan jenis: '{{JENIS_DOKUMEN}}'. Anda harus memproses input yang diberikan untuk menghasilkan output yang komprehensif dan profesional sesuai dengan peran yang relevan.",
+          KONTEKS: "Input yang saya berikan: {JENIS_DOKUMEN}.",
           TUGAS:
-            "Berdasarkan jenis dokumen yang dipilih, lakukan tugas berikut:\n\n{{#if JENIS_DOKUMEN === 'Dokumen Desain Game (GDD)'}}**Tugas: Buat Draf Game Design Document**\nBuat draf GDD yang terstruktur untuk game berjudul **'{{NAMA_GAME}}'**. Elaborasikan setiap bagian berdasarkan detail berikut:\n- **Genre:** {{GENRE_GAME}}\n- **Konsep Inti & USP:** {{KONSEP_UTAMA}}\n- **Mekanik Gameplay:** {{MEKANIK_INTI}}\n- **Narasi & Dunia:** {{NARASI_RINGKAS}}\n- **Gaya Visual & Mood:** {{GAYA_VISUAL}}\nStruktur dokumen harus mencakup: 1. Ringkasan Eksekutif, 2. Konsep Inti, 3. Target Audiens, 4. Mekanik Gameplay (jelaskan mekanik inti), 5. Narasi & Dunia (cerita, karakter), 6. Gaya Visual & Audio.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Analisis Laporan Keuangan'}}**Tugas: Lakukan Analisis Laporan Keuangan**\nLakukan analisis kesehatan keuangan untuk **{{NAMA_PERUSAHAAN}}** periode **{{PERIODE_LAPORAN}}**. Berdasarkan data berikut:\n- **Laba Rugi:** {{DATA_LABA_RUGI}}\n- **Neraca:** {{DATA_NERACA}}\n- **Arus Kas:** {{DATA_ARUS_KAS}}\nFokuskan analisis Anda pada: **{{FOKUS_ANALISIS}}**. Hitung rasio-rasio yang relevan, berikan interpretasi dari setiap angka, dan berikan ringkasan eksekutif mengenai kesehatan keuangan perusahaan secara keseluruhan.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Perencanaan Argumen Debat'}}**Tugas: Siapkan Materi Debat**\nSiapkan materi untuk debat dengan mosi **'{{MOSI_DEBAT}}'**. Anda berada di posisi **{{POSISI_SAYA}}**. Bangun argumen yang kuat berdasarkan poin-poin berikut: {{ARGUMEN_UTAMA_SAYA}}. Untuk setiap poin, berikan elaborasi dan contoh. Jika disediakan, siapkan juga sanggahan (rebuttal) untuk potensi argumen lawan berikut: {{POTENSI_ARGUMEN_LAWAN}}. Susun materi ini menjadi sebuah kerangka pidato yang logis dan persuasif.\n{{/if}}",
+            "Berdasarkan jenis dokumen yang dipilih, lakukan tugas berikut:\n\n{{#if JENIS_DOKUMEN === 'Dokumen Desain Game (GDD)'}}**Tugas: Buat Draf Game Design Document**\nBuat draf GDD yang terstruktur untuk game berjudul **'{NAMA_GAME}'**. Elaborasikan setiap bagian berdasarkan detail berikut:\n- **Genre:** {GENRE_GAME}\n- **Konsep Inti & USP:** {KONSEP_UTAMA}\n- **Mekanik Gameplay:** {MEKANIK_INTI}\n- **Narasi & Dunia:** {NARASI_RINGKAS}\n- **Gaya Visual & Mood:** {GAYA_VISUAL}\nStruktur dokumen harus mencakup: 1. Ringkasan Eksekutif, 2. Konsep Inti, 3. Target Audiens, 4. Mekanik Gameplay (jelaskan mekanik inti), 5. Narasi & Dunia (cerita, karakter), 6. Gaya Visual & Audio.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Analisis Laporan Keuangan'}}**Tugas: Lakukan Analisis Laporan Keuangan**\nLakukan analisis kesehatan keuangan untuk **{NAMA_PERUSAHAAN}** periode **{PERIODE_LAPORAN}**. Berdasarkan data berikut:\n- **Laba Rugi:** {DATA_LABA_RUGI}\n- **Neraca:** {DATA_NERACA}\n- **Arus Kas:** {DATA_ARUS_KAS}\nFokuskan analisis Anda pada: **{FOKUS_ANALISIS}**. Hitung rasio-rasio yang relevan, berikan interpretasi dari setiap angka, dan berikan ringkasan eksekutif mengenai kesehatan keuangan perusahaan secara keseluruhan.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Perencanaan Argumen Debat'}}**Tugas: Siapkan Materi Debat**\nSiapkan materi untuk debat dengan mosi **'{MOSI_DEBAT}'**. Anda berada di posisi **{POSISI_SAYA}**. Bangun argumen yang kuat berdasarkan poin-poin berikut: {ARGUMEN_UTAMA_SAYA}. Untuk setiap poin, berikan elaborasi dan contoh. Jika disediakan, siapkan juga sanggahan (rebuttal) untuk potensi argumen lawan berikut: {POTENSI_ARGUMEN_LAWAN}. Susun materi ini menjadi sebuah kerangka pidato yang logis dan persuasif.\n{{/if}}",
           FORMAT_OUTPUT:
             "Selalu gunakan format Markdown yang sangat terstruktur dengan heading, sub-heading, dan daftar berpoin untuk memastikan keterbacaan maksimal. Setiap dokumen harus memiliki judul yang jelas sesuai dengan jenisnya.",
         },
@@ -6742,6 +7963,16 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Bantu saya membuat GDD untuk game platformer.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.777772",
+        _review_notes: [
+          "HYBRID: Jenis Dokumen yang Ingin Dibuat → 'Analisis Laporan Keuangan' (add English technical term if applicable)",
+          "HYBRID: Jenis Dokumen yang Ingin Dibuat → 'Perencanaan Argumen Debat' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
     },
     Pemasaran: {
@@ -7057,7 +8288,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           PERAN:
             "Anda adalah seorang Ahli Strategi Pemasaran 360° yang serbaguna.",
           KONTEKS:
-            "Pengguna memerlukan bantuan untuk tugas pemasaran: '{TUGAS_PEMASARAN_UTAMA}'. Anda harus memandu mereka untuk memberikan input yang relevan dan menghasilkan output yang dapat ditindaklanjuti.",
+            "Saya ingin create konten marketing untuk {TUGAS_PEMASARAN_UTAMA}.",
           TUGAS:
             "Berdasarkan tugas yang dipilih, gunakan input yang diberikan untuk menghasilkan output yang komprehensif dan profesional. Sesuaikan respons Anda dengan setiap sub-tugas yang dipilih pengguna.",
           FORMAT_OUTPUT:
@@ -7070,6 +8301,21 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya membuat strategi SEO untuk website e-commerce saya.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.796467",
+        _review_notes: [
+          "HYBRID: Tugas Pemasaran Utama → 'Strategi SEO & SEM' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Pengembangan Konten & Blog' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Manajemen Media Sosial' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Kampanye Pemasaran Email' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Peluncuran Produk & Kampanye' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Riset Pasar & Analisis Kompetitor' (add English technical term if applicable)",
+          "HYBRID: Tugas Pemasaran Utama → 'Optimasi Penjualan & Konversi' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
     },
     "Pengembangan Perangkat Lunak": {
@@ -7441,8 +8687,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang Asisten Pengembang Cerdas serbaguna, siap membantu dengan berbagai tugas pengembangan perangkat lunak.",
-          KONTEKS:
-            "Pengguna telah memilih tugas: '{TUGAS_PENGEMBANGAN}'. Berdasarkan pilihan ini, Anda akan bertindak sebagai spesialis yang relevan (misalnya, Insinyur Kode, Auditor Kode, Penulis Teknis).",
+          KONTEKS: "Input yang saya berikan: {TUGAS_PENGEMBANGAN}.",
           TUGAS:
             "Berdasarkan tugas '{TUGAS_PENGEMBANGAN}', lakukan hal berikut:\n\n*   **Jika 'Buat Kode Baru'**: Hasilkan kode fungsional berdasarkan deskripsi: '{functionalityDescription}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Gunakan gaya '{codeStyle}'. {additionalInstructions}\n*   **Jika 'Tinjau & Perbaiki Kode'**: Analisis kode '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Fokus pada: {reviewFocus}. Jika fokus adalah 'Lainnya...', gunakan '{customReviewFocus}'. Berikan saran perbaikan yang sesuai untuk tingkat keahlian '{userLevel}'. Jika tingkat keahlian adalah 'Lainnya...', gunakan '{customUserLevel}'. {additionalInstructions}\n*   **Jika 'Jelaskan Kode'**: Terjemahkan kode '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}'. Jadikan penjelasan mudah dipahami untuk audiens '{targetAudience}'. Jika audiens adalah 'Lainnya...', gunakan '{customTargetAudience}', dengan tingkat detail '{explanationDetailLevel}'. Jika tingkat detail adalah 'Lainnya...', gunakan '{customExplanationDetailLevel}'. {additionalInstructions}\n*   **Jika 'Buat Pengujian Otomatis'**: Buat '{testType}'. Jika jenis tes adalah 'Lainnya...', gunakan '{customTestType}'. Buat tes untuk kode/fungsionalitas '{codeSnippet}' dalam bahasa '{programmingLanguage}'. Jika bahasa adalah 'Lainnya...', gunakan '{customProgrammingLanguage}', menggunakan framework '{testFramework}'. {additionalInstructions}\n*   **Jika 'Buat Dokumentasi Teknis'**: Buat '{documentType}'. Jika jenis dokumen adalah 'Lainnya...', gunakan '{customDocumentType}'. Buat dokumentasi untuk proyek '{projectDescription}' yang ditujukan untuk '{targetAudience}'. Jika audiens adalah 'Lainnya...', gunakan '{customTargetAudience}'. Gunakan kode '{codeSnippet}' jika disediakan. {additionalInstructions}\n*   **Jika 'Lainnya...**: Tanggapi permintaan kustom '{customDevelopmentTask}' dengan memberikan solusi, kode, atau panduan terbaik.",
           FORMAT_OUTPUT:
@@ -7455,6 +8700,19 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Gunakan Asisten Pengembang Cerdas untuk membuat fungsi Python baru.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.816482",
+        _review_notes: [
+          "HYBRID: Tugas Pengembangan → 'Buat Kode Baru' (add English technical term if applicable)",
+          "HYBRID: Tugas Pengembangan → 'Tinjau & Perbaiki Kode' (add English technical term if applicable)",
+          "HYBRID: Tugas Pengembangan → 'Jelaskan Kode' (add English technical term if applicable)",
+          "HYBRID: Tugas Pengembangan → 'Buat Pengujian Otomatis' (add English technical term if applicable)",
+          "HYBRID: Tugas Pengembangan → 'Buat Dokumentasi Teknis' (add English technical term if applicable)",
+          "SEAMLESS: Add conditional blocks [...] for optional parameters",
+        ],
       },
       "Generator Dokumentasi API": {
         id_kerangka: "KOL-PP-103",
@@ -7572,7 +8830,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           KONTEKS:
             "Anda akan diberikan detail sebuah endpoint API. Tugas Anda adalah mengubah detail teknis ini menjadi blok dokumentasi Markdown yang terstruktur dengan baik dan siap digunakan.",
           TUGAS:
-            "Buat dokumentasi Markdown untuk endpoint berikut:\n\n**Endpoint:** `{{HTTP_METHOD}} {{ENDPOINT_URL}}`\n\n**Deskripsi:**\n{{ENDPOINT_DESCRIPTION}}\n\n**Autentikasi:**\n{{#if AUTH_METHOD === 'Lainnya...'}}{{AUTH_METHOD_LAINNYA}}{{else}}{{AUTH_METHOD}}{{/if}}\n\n{{#if PATH_PARAMETERS}}**Parameter Path:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split PATH_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if QUERY_PARAMETERS}}**Parameter Query:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split QUERY_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if REQUEST_BODY}}**Contoh Request Body:**\n```json\n{{REQUEST_BODY}}\n```\n{{/if}}\n\n**Contoh Response:**\n*   **200 OK (Sukses):**\n    ```json\n    {{SUCCESS_RESPONSE}}\n    ```\n{{#if ERROR_RESPONSE}}*   **Contoh Error:**\n    ```json\n    {{ERROR_RESPONSE}}\n    ```\n{{/if}}",
+            "Buat dokumentasi Markdown untuk endpoint berikut:\n\n**Endpoint:** `{HTTP_METHOD} {ENDPOINT_URL}`\n\n**Deskripsi:**\n{ENDPOINT_DESCRIPTION}\n\n**Autentikasi:**\n{{#if AUTH_METHOD === 'Lainnya...'}}{AUTH_METHOD_LAINNYA}{else}{AUTH_METHOD}{{/if}}\n\n{{#if PATH_PARAMETERS}}**Parameter Path:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split PATH_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if QUERY_PARAMETERS}}**Parameter Query:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split QUERY_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if REQUEST_BODY}}**Contoh Request Body:**\n```json\n{REQUEST_BODY}\n```\n{{/if}}\n\n**Contoh Response:**\n*   **200 OK (Sukses):**\n    ```json\n    {SUCCESS_RESPONSE}\n    ```\n{{#if ERROR_RESPONSE}}*   **Contoh Error:**\n    ```json\n    {ERROR_RESPONSE}\n    ```\n{{/if}}",
           FORMAT_OUTPUT:
             "Gunakan format Markdown. Gunakan heading, list, tabel, dan blok kode untuk keterbacaan maksimal. Pastikan tabel untuk parameter diformat dengan benar.",
         },
@@ -7582,6 +8840,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Buatkan saya dokumentasi untuk API get user by id.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        updated_at: "2025-12-23T06:59:22.819117",
       },
       "Panduan DevOps & MLOps": {
         id_kerangka: "KOL-PP-101",
@@ -7887,8 +9146,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         komponen_prompt: {
           PERAN: "Anda adalah seorang Ahli DevOps dan MLOps serbaguna.",
-          KONTEKS:
-            "Pengguna telah memilih tugas operasional: '{TUGAS_OPERASIONAL}'. Anda akan bertindak sebagai spesialis yang relevan untuk memandu pengguna.",
+          KONTEKS: "Input yang saya berikan: {TUGAS_OPERASIONAL}.",
           TUGAS:
             "Berdasarkan tugas '{TUGAS_OPERASIONAL}', berikan panduan, konfigurasi, atau rencana yang relevan. Gunakan variabel input yang disediakan dari sub-komponen yang sesuai untuk menyusun respons Anda.",
           FORMAT_OUTPUT:
@@ -7901,6 +9159,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya merancang CI/CD pipeline untuk aplikasi web Node.js saya menggunakan GitHub Actions.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        updated_at: "2025-12-23T06:59:22.838514",
       },
       "Tutor Pemrograman & Konsep Lanjutan": {
         id_kerangka: "KOL-PP-102",
@@ -8109,8 +9368,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang Tutor Pemrograman serbaguna dan ahli dalam konsep-konsep teknologi canggih.",
-          KONTEKS:
-            "Pengguna telah memilih topik pembelajaran: '{TOPIK_PEMBELAJARAN}'. Anda akan bertindak sebagai tutor atau ahli di bidang tersebut.",
+          KONTEKS: "Input yang saya berikan: {TOPIK_PEMBELAJARAN}.",
           TUGAS:
             "Berdasarkan topik '{TOPIK_PEMBELAJARAN}', berikan penjelasan, panduan, atau contoh kode yang relevan. Gunakan variabel input dari sub-komponen yang sesuai untuk menyusun respons Anda.",
           FORMAT_OUTPUT:
@@ -8123,6 +9381,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya memahami dasar-dasar pemrograman Python, khususnya tentang loop.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        updated_at: "2025-12-23T06:59:22.856072",
       },
     },
   },
@@ -8492,6 +9751,21 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "AI harus sangat peka terhadap `Gaya & Nada` yang diminta. Untuk dokumen legal seperti kontrak, AI wajib menyertakan disclaimer tebal: '**PENTING: Ini adalah template sederhana dan bukan merupakan nasihat hukum. Selalu konsultasikan dengan profesional hukum untuk kebutuhan spesifik Anda.**' Untuk laporan, prioritaskan kejelasan data. Untuk email, prioritaskan keringkasan dan kejelasan tujuan.",
         kategori: ["Prompt Proyek", "Bisnis & Profesional"],
         nama_kerangka: "Asisten Dokumen Profesional",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.872831",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Asisten Eksekutif Virtual yang akan menghasilkan draf dokumen profesional.. [Jenis Dokumen: **{documentType}**]",
+          KONTEKS: "Saya ingin develop strategi bisnis untuk {documentType}.",
+          TUGAS:
+            "Berikan analisis dan rekomendasi bisnis yang actionable berdasarkan konteks yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format terstruktur dengan executive summary, analisis detail, dan action items yang jelas.",
+        },
       },
     },
     "Branding & Identitas": {
@@ -8675,6 +9949,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "AI harus selalu memberikan beberapa opsi yang bervariasi dalam gaya dan pendekatan. Untuk nama, AI harus menyarankan nama yang terdengar baik saat diucapkan dan mudah dieja. Untuk slogan, prioritaskan keringkasan. Untuk konsep logo, fokus pada deskripsi yang bisa dipahami oleh desainer maupun non-desainer. Penting: Selalu sertakan disclaimer bahwa AI tidak dapat memeriksa ketersediaan merek dagang (trademark) atau domain, dan pengguna harus melakukan verifikasi sendiri.",
         kategori: ["Prompt Proyek", "Branding & Identitas"],
         nama_kerangka: "Studio Branding & Identitas",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T07:10:59.577088",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Direktur Kreatif Branding yang akan menerjemahkan esensi ide menjadi aset kreatif.. [Jenis Aset Branding: **{assetType}**]",
+          KONTEKS:
+            "Saya ingin membuat {assetType}. [Detail yang dibutuhkan: deskripsi proyek, kepribadian brand, dan preferensi gaya untuk aset ini].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Studio Branding & Identitas' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
     },
     "Desain & Pengembangan Proyek": {
@@ -8874,6 +10164,21 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "AI harus selalu menekankan bahwa output ini adalah untuk tujuan perencanaan dan konseptual, bukan kode atau desain final. Untuk database, gunakan format yang mudah dibaca. Untuk user flow, gunakan penomoran dan panah (->) untuk menunjukkan alur. Selalu gunakan bahasa yang jelas dan hindari jargon teknis yang berlebihan.",
         kategori: ["Prompt Proyek", "Desain & Pengembangan Proyek"],
         nama_kerangka: "Perancang Proyek Digital & UX",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.899632",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Arsitek Produk Digital yang akan mengubah ide menjadi rencana yang dapat ditindaklanjuti.. [Jenis Dokumen Proyek: **{documentType}**]",
+          KONTEKS: "Input yang saya berikan: {documentType}.",
+          TUGAS:
+            "Generate code atau technical guidance yang clean, efficient, dan mengikuti best practices.",
+          FORMAT_OUTPUT:
+            "Sajikan dengan code examples, explanations, dan best practice recommendations yang jelas.",
+        },
       },
     },
     "Generator Nama & Ide Kreatif": {
@@ -9222,6 +10527,21 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "AI harus selalu memberikan variasi nama yang luas, dari yang aman hingga yang lebih berani. Untuk nama bisnis/produk, sertakan saran untuk memeriksa ketersediaan domain dan media sosial. Untuk nama personal, pertimbangkan kemudahan pengucapan. Disclaimer wajib: 'Nama yang dihasilkan adalah saran kreatif. Pastikan untuk memeriksa ketersediaan merek dagang, domain, dan handle media sosial secara mandiri sebelum mengadopsi sebuah nama.'",
         kategori: ["Prompt Proyek", "Generator Nama & Ide Kreatif"],
         nama_kerangka: "Generator Nama Universal",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.913549",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Nomenclaturist & Onomastika Kreatif yang akan memberikan opsi nama.. [Kategori Penamaan: **{category}**]",
+          KONTEKS: "Input yang saya berikan: {category}.",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Generator Nama Universal' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
     },
     "Konten & Pemasaran": {
@@ -9662,6 +10982,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "AI harus proaktif. Jika pengguna meminta 'Post Media Sosial' tanpa menyebut platform, buat versi untuk Instagram sebagai default. Jika tidak ada 'Gaya & Nada', pilih yang paling umum untuk 'Jenis Konten' (misal: 'Informatif' untuk Blog, 'Persuasif' untuk Deskripsi Produk). Selalu prioritaskan kejelasan, keringkasan, dan dampak sesuai dengan tujuan akhir konten (menjual, mengedukasi, atau menghibur). Untuk konten kreatif seperti lirik, jangan takut untuk menjadi lebih puitis dan abstrak.",
         kategori: ["Prompt Proyek", "Konten & Pemasaran"],
         nama_kerangka: "Generator Konten Multi-Platform",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T07:10:59.608150",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Kepala Strategi Konten yang akan menghasilkan konten untuk berbagai platform.. [Jenis Konten: **{contentType}**]",
+          KONTEKS:
+            "Saya ingin create konten {contentType}. [Detail konten: topik/pesan utama, target audiens, gaya/nada, dan elemen pendukung spesifik untuk platform ini].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
       },
     },
     "Kreasi Digital Personal & Acara": {
@@ -10196,6 +11532,21 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "AI harus sangat peka terhadap `Jenis Acara`. Jika pengguna tidak memberikan `Gaya & Nada`, AI harus memilih yang paling sesuai secara default (misal: 'Elegan' untuk Pernikahan, 'Profesional' untuk Bisnis). Tujuan utamanya adalah menghasilkan output yang terasa otentik dan dibuat khusus untuk acara tersebut, bukan hasil dari template generik.",
         kategori: ["Prompt Proyek", "Kreasi Digital Personal & Acara"],
         nama_kerangka: "Generator Undangan & Kartu Acara Dinamis",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.941078",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Perancang Undangan yang akan menyusun teks undangan atau kartu ucapan untuk acara.. [Jenis Acara: **{eventType}**]",
+          KONTEKS: "Input yang saya berikan: {eventType}.",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Generator Undangan & Kartu Acara Dinamis' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
     },
     "Lead Generation": {
@@ -10411,7 +11762,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           PERAN:
             "Anda adalah seorang ahli strategi pemasaran digital yang akan membantu pengguna merancang rencana Lead Generation yang efektif.",
           KONTEKS:
-            "Saya ingin Anda membantu saya merancang strategi Lead Generation yang komprehensif untuk produk/layanan saya. Berikut adalah detailnya:\n\nNama Produk/Layanan: {{nama_produk_layanan}}\nDeskripsi Produk/Layanan: {{deskripsi_produk_layanan}}\nTarget Audiens Utama: {{target_audiens}}\nTujuan Utama Lead Generation: {{tujuan_leadgen}}{{#if tujuan_leadgen_lainnya}} ({{tujuan_leadgen_lainnya}}){{/if}}\nSaluran Pemasaran yang Dipertimbangkan: {{saluran_pemasaran}}{{#if saluran_pemasaran_lainnya}}, {{saluran_pemasaran_lainnya}}{{/if}}\nJenis Konten/Penawaran untuk Menarik Leads: {{jenis_konten_penawaran}}{{#if jenis_konten_penawaran_lainnya}}, {{jenis_konten_penawaran_lainnya}}{{/if}}\nMetrik Keberhasilan: {{metrik_keberhasilan}}\n{{#if kriteria_pencarian_prospek}}Kriteria Pencarian Prospek: {{kriteria_pencarian_prospek}}{{/if}}",
+            "Saya ingin Anda membantu saya merancang strategi Lead Generation yang komprehensif untuk produk/layanan saya. Berikut adalah detailnya:\n\nNama Produk/Layanan: {nama_produk_layanan}\nDeskripsi Produk/Layanan: {deskripsi_produk_layanan}\nTarget Audiens Utama: {target_audiens}\nTujuan Utama Lead Generation: {tujuan_leadgen}{{#if tujuan_leadgen_lainnya}} ({tujuan_leadgen_lainnya}){{/if}}\nSaluran Pemasaran yang Dipertimbangkan: {saluran_pemasaran}{{#if saluran_pemasaran_lainnya}}, {saluran_pemasaran_lainnya}{{/if}}\nJenis Konten/Penawaran untuk Menarik Leads: {jenis_konten_penawaran}{{#if jenis_konten_penawaran_lainnya}}, {jenis_konten_penawaran_lainnya}{{/if}}\nMetrik Keberhasilan: {metrik_keberhasilan}\n{{#if kriteria_pencarian_prospek}}Kriteria Pencarian Prospek: {kriteria_pencarian_prospek}{{/if}}",
           TUGAS:
             "Berdasarkan informasi di atas, buatkan saya strategi Lead Generation yang terperinci. Strategi ini harus mencakup:\n\n1.  **Ringkasan Eksekutif:** Gambaran umum singkat tentang strategi.\n2.  **Analisis Target Audiens:** Penjelasan lebih lanjut tentang persona target dan bagaimana produk/layanan Anda menyelesaikan masalah mereka.\n3.  **Tujuan SMART:** Tujuan spesifik, terukur, dapat dicapai, relevan, dan terikat waktu untuk kampanye Lead Generation ini.\n4.  **Strategi Konten & Penawaran:** Ide-ide konten spesifik dan 'lead magnet' yang relevan untuk setiap saluran yang dipilih, serta bagaimana mereka akan menarik prospek.\n5.  **Rencana Distribusi & Promosi:** Bagaimana konten dan penawaran akan didistribusikan melalui saluran pemasaran yang dipilih.\n6.  **Proses Pengumpulan & Kualifikasi Lead:** Langkah-langkah untuk mengumpulkan informasi prospek dan bagaimana mereka akan dikualifikasi (misalnya, MQL, SQL).\n7.  **Metrik & Pengukuran:** Bagaimana keberhasilan akan diukur berdasarkan metrik yang diberikan, dan saran untuk alat pelacakan.\n8.  **Timeline (Opsional):** Saran timeline umum untuk implementasi strategi.\n9.  **Rekomendasi Pencarian Data Prospek:** Berdasarkan kriteria yang diberikan (jika ada), sarankan metode, alat, atau sumber daya yang efektif untuk mencari dan mengumpulkan data prospek (perusahaan atau perorangan) yang relevan.",
           FORMAT_OUTPUT:
@@ -10516,6 +11867,11 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Harap isi 'Jenis Konten/Penawaran Lainnya' jika Anda memilih 'Lainnya'.",
           },
         ],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.944489",
       },
     },
     "Pendidikan & Pembelajaran": {
@@ -10734,6 +12090,21 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "AI harus selalu menekankan pentingnya pemahaman konsep di atas hafalan. Untuk pembuatan soal, pastikan tingkat kesulitan sesuai dengan tingkat audiens yang diberikan. Untuk RPP, sarankan variasi aktivitas untuk menjaga keterlibatan siswa. Wajib sertakan disclaimer: 'Materi yang dihasilkan adalah alat bantu. Guru/pelajar disarankan untuk memverifikasi informasi dan menyesuaikannya dengan kurikulum atau kebutuhan belajar yang spesifik.'",
         kategori: ["Prompt Proyek", "Pendidikan & Pembelajaran"],
         nama_kerangka: "Asisten Akademik & Pembelajaran",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.957215",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pelatih Akademik & Desainer Instruksional yang akan membuat materi edukasi.. [Jenis Bantuan Akademik: **{assistanceType}**]",
+          KONTEKS: "Input yang saya berikan: {assistanceType}.",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Asisten Akademik & Pembelajaran' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
     },
     "Perencanaan & Manajemen": {
@@ -10811,9 +12182,9 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           PERAN:
             "Anda adalah seorang Manajer Proyek yang sangat terorganisir dan berpengalaman dalam perencanaan proyek.",
           KONTEKS:
-            "Pengguna membutuhkan bantuan untuk memecah proyek mereka. Tujuan proyek utama adalah: {{tujuan_proyek}}. Tenggat waktu yang diberikan adalah: {{deadline_proyek || 'Tidak ditentukan'}}. Sumber daya yang tersedia: {{sumber_daya_tersedia || 'Tidak disebutkan'}}.",
+            "Input yang saya berikan: {tujuan_proyek}, [Tenggat Waktu Proyek: {deadline_proyek}], [Sumber Daya yang Tersedia: {sumber_daya_tersedia}].",
           TUGAS:
-            "Buat rencana proyek yang terstruktur untuk mencapai tujuan: {{tujuan_proyek}}. Pecah proyek ini menjadi tahapan-tahapan utama, lalu setiap tahapan menjadi tugas-tugas yang lebih kecil. Jika tingkat detail output adalah 'tinggi', sertakan juga estimasi waktu untuk setiap tugas. Pertimbangkan tenggat waktu {{deadline_proyek || 'yang fleksibel'}} dan sumber daya {{sumber_daya_tersedia || 'standar'}}. Sajikan rencana dengan tingkat detail: {{output_detail_level}}.",
+            "Buat rencana proyek yang terstruktur untuk mencapai tujuan: {tujuan_proyek}. Pecah proyek ini menjadi tahapan-tahapan utama, lalu setiap tahapan menjadi tugas-tugas yang lebih kecil. Jika tingkat detail output adalah 'tinggi', sertakan juga estimasi waktu untuk setiap tugas. Pertimbangkan tenggat waktu {{deadline_proyek || 'yang fleksibel'}} dan sumber daya {{sumber_daya_tersedia || 'standar'}}. Sajikan rencana dengan tingkat detail: {output_detail_level}.",
           FORMAT_OUTPUT:
             "Sajikan rencana proyek dalam format Markdown yang jelas dan terstruktur, menggunakan daftar berpoin atau bernomor untuk tahapan dan tugas. Gunakan judul dan sub-judul yang sesuai. Jika tingkat detail 'tinggi', gunakan format: '- [Tahapan Utama]\n  - [Tugas Kecil] (Estimasi Waktu: X hari/minggu)'.",
         },
@@ -10824,6 +12195,32 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya merencanakan peluncuran aplikasi mobile e-commerce baru dalam 6 bulan.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:22.969282",
+        dynamicSubcomponents: [
+          {
+            trigger: "output_detail_level",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_output_detail_level",
+                  label: "Sebutkan Tingkat Detail Output Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Tingkat Detail Output.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
     },
     "Perencanaan & Produktivitas Personal": {
@@ -11181,6 +12578,21 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "AI harus selalu memberikan nasihat yang positif dan memotivasi. Untuk rencana terkait kesehatan (diet & olahraga), AI wajib menyertakan disclaimer: 'Saya adalah asisten AI dan bukan profesional medis. Selalu konsultasikan dengan dokter atau ahli gizi/pelatih bersertifikat sebelum memulai program kesehatan baru.' Jika pengguna memberikan batasan yang tidak realistis, AI harus memberikan saran yang lebih masuk akal dengan cara yang suportif.",
         kategori: ["Prompt Proyek", "Perencanaan & Produktivitas Personal"],
         nama_kerangka: "Asisten Perencana Gaya Hidup Personal",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.982078",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Lifestyle Architect yang akan membuat rencana yang paling efektif dan memotivasi.. [Jenis Rencana: **{planType}**]",
+          KONTEKS: "Input yang saya berikan: {planType}.",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Asisten Perencana Gaya Hidup Personal' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
     },
     "Perencanaan Acara & Manajemen": {
@@ -11546,6 +12958,21 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "AI harus selalu memberikan saran yang praktis dan realistis. Untuk anggaran, jika tidak ada input, berikan persentase alokasi yang umum sebagai contoh. Untuk checklist, berikan pertanyaan-pertanyaan kunci yang sering terlupakan. Untuk ide tema, berikan 3-5 opsi yang bervariasi dari segi biaya dan kompleksitas. Selalu akhiri dengan kalimat yang memotivasi dan mengurangi stres pengguna, seperti 'Perencanaan adalah kunci, nikmati setiap langkahnya!'",
         kategori: ["Prompt Proyek", "Perencanaan Acara & Manajemen"],
         nama_kerangka: "Manajer Perencanaan Acara Lengkap",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:22.995755",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Event Organizer Pro yang akan menyusun dokumen perencanaan acara.. [Jenis Dokumen Acara: **{documentType}**]",
+          KONTEKS: "Input yang saya berikan: {documentType}.",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Manajer Perencanaan Acara Lengkap' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
     },
   },
@@ -11591,7 +13018,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           PERAN:
             "Anda adalah seorang penulis konten dan editor yang sangat teliti. Tujuan Anda adalah menghasilkan konten terbaik melalui proses penulisan, kritik, dan revisi.",
           KONTEKS:
-            "Pengguna membutuhkan sebuah tulisan yang tidak hanya informatif tetapi juga terstruktur dengan baik, persuasif, dan bebas dari kesalahan. Anda akan menggunakan metode 'self-correction' untuk mencapai ini. Topik utamanya adalah: {TOPIK_KONTEN}.",
+            "Input yang saya berikan: {TOPIK_KONTEN}, {SUDUT_PANDANG_KRITIK}.",
           TUGAS:
             "Lakukan tiga langkah berikut secara berurutan:\n\n1.  **LANGKAH 1: BUAT DRAF AWAL**\n    Tulis draf pertama dari konten berdasarkan topik yang diberikan. Fokus pada penyampaian ide utama.\n\n2.  **LANGKAH 2: KRITIK DRAF**\n    Setelah draf selesai, berikan kritik yang tajam dan membangun terhadap tulisan Anda sendiri. Tinjau dari sudut pandang '{SUDUT_PANDANG_KRITIK}'. Evaluasi aspek-aspek seperti: kejelasan argumen, alur tulisan, kekuatan bukti, dan gaya bahasa. Sajikan kritik dalam format poin-poin.\n\n3.  **LANGKAH 3: TULIS VERSI FINAL**\n    Berdasarkan poin-poin kritik dari Langkah 2, tulis ulang dan sempurnakan draf tersebut menjadi sebuah versi final yang poles dan berkualitas tinggi.",
           FORMAT_OUTPUT:
@@ -11604,6 +13031,11 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Buatkan saya esai tentang dampak AI pada pasar kerja, lalu lakukan koreksi mandiri dari sudut pandang seorang ekonom.",
         output: "natural_language_prompt",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:23.012685",
       },
     },
     "Formula Persuasi & Pemasaran": {
@@ -11671,6 +13103,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Formula Persuasi & Pemasaran"],
         nama_kerangka: "AIDA",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.023985",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Ahli Persuasi yang akan menghasilkan teks persuasif.",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {productOrService} dengan format {targetAudience}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
       },
       BAB: {
         description:
@@ -11714,6 +13162,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Formula Persuasi & Pemasaran"],
         nama_kerangka: "BAB",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.035078",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Narator Transformasi yang akan menggambarkan kondisi audiens sebelum dan sesudah menggunakan produk.",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {beforeState} dengan format {afterState}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
       },
       CARE: {
         description:
@@ -11765,6 +13229,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Formula Persuasi & Pemasaran"],
         nama_kerangka: "CARE",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.046608",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pencerita Dampak yang akan menyusun umpan balik atau studi kasus.",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {context} dengan format {action}. [Konteks Situasi (Context): {context}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
       },
       FAB: {
         description:
@@ -11815,6 +13295,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Formula Persuasi & Pemasaran"],
         nama_kerangka: "FAB",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.058861",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penjelas Produk yang akan menjelaskan fitur produk, keunggulannya, dan manfaatnya.",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {productOrService} dengan format {features}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
       },
       PAS: {
         description:
@@ -11858,6 +13354,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Formula Persuasi & Pemasaran"],
         nama_kerangka: "PAS",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.070059",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Diagnostik Pemasaran yang akan mengidentifikasi masalah audiens dan menawarkan solusi.",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {problem} dengan format {agitation}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
       },
       RACE: {
         description:
@@ -11909,6 +13421,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Formula Persuasi & Pemasaran"],
         nama_kerangka: "RACE",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.082289",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Perencana Pemasaran Digital yang akan merencanakan strategi pemasaran digital.",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {reachStrategy} dengan format {actPrompt}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
       },
     },
     "Pemikiran Terstruktur & Analisis": {
@@ -11945,6 +13473,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
         nama_kerangka: "CoT (Chain of Thought)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.097508",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pemikir Logis yang akan memecah masalah kompleks menjadi langkah-langkah penalaran.",
+          KONTEKS:
+            "Input yang saya berikan: {complexQuestion}, {exampleReasoning}, {additionalContext}. [Instruksi Tambahan: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'CoT (Chain of Thought)' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "First Principles Thinking": {
         description:
@@ -11996,6 +13540,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
         nama_kerangka: "First Principles Thinking",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.111748",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pemikir Fundamental yang akan memecah masalah kompleks menjadi kebenaran-kebenaran fundamentalnya.",
+          KONTEKS:
+            "Input yang saya berikan: {problem}, {assumptions}, {firstPrinciples}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'First Principles Thinking' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       GRADE: {
         description:
@@ -12045,6 +13605,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
         nama_kerangka: "GRADE",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.127766",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Perancang Respons yang akan menghasilkan respons yang terstruktur berdasarkan kerangka GRADE.",
+          KONTEKS:
+            "Input yang saya berikan: {goal}, {role}, {audience}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'GRADE' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       RACEF: {
         description:
@@ -12103,6 +13679,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
         nama_kerangka: "RACEF",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.141261",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Komunikator Efektif yang akan menghasilkan konten berdasarkan kerangka RACEF.",
+          KONTEKS:
+            "Input yang saya berikan: {role}, {action}, {context}. [Konteks (Context): {context}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'RACEF' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       SCAMPER: {
         description:
@@ -12185,6 +13777,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
         nama_kerangka: "SCAMPER",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.153955",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Inovator Kreatif yang akan menerapkan kerangka SCAMPER.",
+          KONTEKS:
+            "Input yang saya berikan: {subject}, {substitute}, {combine}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'SCAMPER' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       STAR: {
         description:
@@ -12236,6 +13844,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
         nama_kerangka: "STAR",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.166829",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Narator Pencapaian yang akan menyusun jawaban atau deskripsi pencapaian.",
+          KONTEKS:
+            "Input yang saya berikan: {situation}, {task}, {action}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'STAR' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       SWOT: {
         description:
@@ -12295,6 +13919,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
         nama_kerangka: "SWOT",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.180293",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Analis Strategis yang akan melakukan analisis SWOT.",
+          KONTEKS:
+            "Input yang saya berikan: {subject}, {strengths}, {weaknesses}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'SWOT' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "ToT (Tree of Thoughts)": {
         description:
@@ -12337,6 +13977,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
         nama_kerangka: "ToT (Tree of Thoughts)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.215871",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pemikir Strategis yang akan mengeksplorasi beberapa jalur pemikiran.",
+          KONTEKS:
+            "Input yang saya berikan: {problem}, {thoughtPaths}, {evaluationCriteria}. [Instruksi Tambahan: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'ToT (Tree of Thoughts)' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       TREF: {
         description:
@@ -12388,6 +14044,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
         nama_kerangka: "TREF",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.228233",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Perencana Tugas yang akan menyusun respons berdasarkan struktur TREF.",
+          KONTEKS:
+            "Input yang saya berikan: {task}, {requirements}, {expectations}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'TREF' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "Zero-shot CoT": {
         description:
@@ -12421,6 +14093,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
         nama_kerangka: "Zero-shot CoT",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.240791",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penalaran Cepat yang akan menerapkan penalaran langkah-demi-langkah.",
+          KONTEKS:
+            "Input yang saya berikan: {question}, {magicPhrase}, {additionalContext}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Zero-shot CoT' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
     },
     "Persiapan Wawancara": {
@@ -12557,7 +14245,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           PERAN:
             "Anda adalah seorang Pelatih Wawancara yang sangat berpengalaman dan berpengetahuan luas dalam berbagai jenis wawancara.",
           KONTEKS:
-            "Pengguna ingin mempersiapkan diri untuk wawancara. Berikut adalah detail yang diberikan:\n\nJenis Wawancara: {{jenis_wawancara}}{{#if jenis_wawancara_lainnya}} ({{jenis_wawancara_lainnya}}){{/if}}\nPeran Anda: {{peran_anda}}\nTopik/Posisi Wawancara: {{topik_wawancara}}\nKonteks Tambahan: {{konteks_tambahan || 'Tidak ada konteks tambahan.'}}\nFokus Bantuan: {{fokus_bantuan}}{{#if fokus_bantuan_lainnya}}, {{fokus_bantuan_lainnya}}{{/if}}",
+            "Pengguna ingin mempersiapkan diri untuk wawancara. Berikut adalah detail yang diberikan:\n\nJenis Wawancara: {jenis_wawancara}{{#if jenis_wawancara_lainnya}} ({jenis_wawancara_lainnya}){{/if}}\nPeran Anda: {peran_anda}\nTopik/Posisi Wawancara: {topik_wawancara}\nKonteks Tambahan: {{konteks_tambahan || 'Tidak ada konteks tambahan.'}}\nFokus Bantuan: {fokus_bantuan}{{#if fokus_bantuan_lainnya}}, {fokus_bantuan_lainnya}{{/if}}",
           TUGAS:
             "Berdasarkan informasi di atas, berikan bantuan persiapan wawancara yang terperinci sesuai dengan fokus yang dipilih. Sajikan informasi dengan jelas dan mudah dipahami.\n\n**Jika 'Pertanyaan Wawancara' dipilih:**\n- Hasilkan daftar pertanyaan wawancara yang relevan dan spesifik untuk jenis wawancara dan topik/posisi yang disebutkan. Sertakan campuran pertanyaan umum, perilaku, dan situasional (jika relevan).\n\n**Jika 'Tips & Strategi' dipilih:**\n- Berikan tips dan strategi praktis untuk menghadapi wawancara, termasuk persiapan mental, bahasa tubuh, cara berkomunikasi, dan hal-hal yang harus dihindari.\n\n**Jika 'Struktur Wawancara' dipilih:**\n- Jelaskan struktur umum dari jenis wawancara yang dipilih, termasuk tahapan-tahapan dan apa yang diharapkan di setiap tahapan.\n\n**Jika 'Latihan Jawaban (Metode STAR)' dipilih:**\n- Berikan contoh pertanyaan perilaku dan panduan langkah demi langkah tentang cara menyusun jawaban menggunakan metode STAR (Situation, Task, Action, Result).\n\n**Jika 'Pertanyaan untuk Pewawancara' dipilih:**\n- Hasilkan daftar pertanyaan cerdas yang dapat diajukan oleh pengguna kepada pewawancara untuk menunjukkan minat dan mendapatkan informasi lebih lanjut.\n\n**Jika 'Lainnya...' dipilih untuk Fokus Bantuan:**\n- Berikan bantuan sesuai dengan 'Fokus Bantuan Lainnya' yang disebutkan.",
           FORMAT_OUTPUT:
@@ -12608,6 +14296,25 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               ],
             },
           },
+          {
+            trigger: "peran_anda",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_peran_anda",
+                  label: "Sebutkan Peran Anda dalam Wawancara Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Peran Anda dalam Wawancara.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
         ],
         toolType: "text",
         konteks_tambahan_instruksi_khusus:
@@ -12633,6 +14340,11 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Harap isi 'Fokus Bantuan Lainnya' jika Anda memilih 'Lainnya'.",
           },
         ],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T06:59:23.243190",
       },
     },
     "Persona, Gaya & Skenario": {
@@ -12670,6 +14382,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Persona, Gaya & Skenario"],
         nama_kerangka: "Expert Persona",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.254952",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Ahli Persona yang akan mengadopsi persona seorang ahli.",
+          KONTEKS:
+            "Input yang saya berikan: {expertRole}, {task}, {additionalContext}. [Konteks Tambahan: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Expert Persona' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "Fictional Dialogue": {
         description:
@@ -12728,6 +14456,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Persona, Gaya & Skenario"],
         nama_kerangka: "Fictional Dialogue",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.267875",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Dialog yang akan menghasilkan dialog fiksi antara karakter.",
+          KONTEKS:
+            "Input yang saya berikan: {topic}, {character1}, {character2}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Fictional Dialogue' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "Hero's Journey": {
         description:
@@ -12794,6 +14538,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Persona, Gaya & Skenario"],
         nama_kerangka: "Hero's Journey",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.280544",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pencerita Brand yang akan merancang narasi atau cerita brand.",
+          KONTEKS:
+            "Input yang saya berikan: {hero}, {ordinaryWorld}, {callToAdventure}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Hero's Journey' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "Historical Figure": {
         description:
@@ -12836,6 +14596,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Persona, Gaya & Skenario"],
         nama_kerangka: "Historical Figure",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.292759",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Sejarawan Berbicara yang akan mengadopsi persona tokoh sejarah dan menjawab pertanyaan.",
+          KONTEKS:
+            "Input yang saya berikan: {figure}, {question}, {context}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Historical Figure' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       Metaphor: {
         description:
@@ -12876,6 +14652,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Persona, Gaya & Skenario"],
         nama_kerangka: "Metaphor",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.305205",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Ahli Metafora yang akan menjelaskan konsep kompleks atau abstrak menggunakan metafora atau analogi.",
+          KONTEKS:
+            "Input yang saya berikan: {complexConcept}, {targetAudience}, {numberOfMetaphors}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Metaphor' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       SceneCraft: {
         description:
@@ -12927,6 +14719,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Persona, Gaya & Skenario"],
         nama_kerangka: "SceneCraft",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.317699",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Perancang Adegan yang akan membangun sebuah adegan yang detail untuk cerita atau skenario.",
+          KONTEKS:
+            "Input yang saya berikan: {setting}, {characters}, {plotPoint}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'SceneCraft' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "Socratic Method": {
         description:
@@ -12976,6 +14784,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Persona, Gaya & Skenario"],
         nama_kerangka: "Socratic Method",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.331491",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Filsuf yang akan menggunakan metode bertanya ala Socrates.",
+          KONTEKS:
+            "Input yang saya berikan: {topic}, {aiRole}, {myRole}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Socratic Method' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "Style Transfer": {
         description:
@@ -13018,6 +14842,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Persona, Gaya & Skenario"],
         nama_kerangka: "Style Transfer",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.343665",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Peniru Gaya yang akan menulis ulang teks dengan meniru gaya penulisan.",
+          KONTEKS:
+            "Input yang saya berikan: {originalText}, {styleSource}, {keyElementsToKeep}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Style Transfer' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
     },
     "Personalisasi Dinamis": {
@@ -13121,6 +14961,70 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         konteks_tambahan_instruksi_khusus:
           "Selalu prioritaskan kejelasan dan relevansi pesan untuk audiens yang dituju.",
         crossValidationRules: [],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        updated_at: "2025-12-23T05:50:19.401622",
+        dynamicSubcomponents: [
+          {
+            trigger: "TARGET_AUDIENS_KEAHLIAN",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_TARGET_AUDIENS_KEAHLIAN",
+                  label: "Sebutkan Tingkat Keahlian Audiens Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Tingkat Keahlian Audiens.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "TARGET_AUDIENS_GAYA",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_TARGET_AUDIENS_GAYA",
+                  label: "Sebutkan Gaya Bahasa Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Bahasa.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "JENIS_OUTPUT",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_JENIS_OUTPUT",
+                  label: "Sebutkan Format Output Konten Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Format Output Konten.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
     },
     "Refleksi & Peningkatan Prompt": {
@@ -13173,6 +15077,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Refleksi & Peningkatan Prompt"],
         nama_kerangka: "APE (Author, Publisher, Editor)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.357449",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Editor Multi-Tahap yang akan menerapkan metode APE untuk menyempurnakan teks.",
+          KONTEKS:
+            "Input yang saya berikan: {topic}, {authorPrompt}, {publisherPrompt}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'APE (Author, Publisher, Editor)' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "Prompt Critique": {
         description:
@@ -13215,6 +15135,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Refleksi & Peningkatan Prompt"],
         nama_kerangka: "Prompt Critique",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.376546",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Kritikus Prompt yang akan menganalisis prompt dan memberikan umpan balik konstruktif.",
+          KONTEKS:
+            "Input yang saya berikan: {originalPrompt}, {goal}, {critiqueCriteria}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Prompt Critique' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "Self-Correction": {
         description:
@@ -13250,6 +15186,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Refleksi & Peningkatan Prompt"],
         nama_kerangka: "Self-Correction",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.392225",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pelatih AI yang akan melakukan self-correction.",
+          KONTEKS:
+            "Input yang saya berikan: {task}, {correctionInstruction}, {additionalContext}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Self-Correction' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "Summarization Constraints": {
         description:
@@ -13292,6 +15244,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Refleksi & Peningkatan Prompt"],
         nama_kerangka: "Summarization Constraints",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.406833",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Spesialis Ringkasan yang akan meringkas teks dengan menerapkan batasan yang ketat.",
+          KONTEKS:
+            "Input yang saya berikan: {textToSummarize}, {lengthConstraint}, {formatConstraint}.",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Summarization Constraints' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
     },
     "Utilitas & Format Khusus": {
@@ -13329,6 +15297,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Utilitas & Format Khusus"],
         nama_kerangka: "Fill in the Blanks",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.418408",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pengisi Template yang akan mengisi bagian kosong dalam template teks.",
+          KONTEKS:
+            "Input yang saya berikan: {templateText}, {context}, {additionalContext}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Fill in the Blanks' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "JSON Formatter": {
         description:
@@ -13364,6 +15348,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Utilitas & Format Khusus"],
         nama_kerangka: "JSON Formatter",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.430815",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pemformat Data yang akan mengonversi data menjadi format JSON yang valid.",
+          KONTEKS:
+            "Input yang saya berikan: {unstructuredData}, {schemaHint}, {additionalContext}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'JSON Formatter' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
       "Text to Table": {
         description:
@@ -13406,6 +15406,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Prompt Ringkas", "Utilitas & Format Khusus"],
         nama_kerangka: "Text to Table",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.442515",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Konverter Data yang akan mengekstrak informasi dari teks dan menyajikannya dalam format tabel.",
+          KONTEKS:
+            "Input yang saya berikan: {sourceText}, {columns}, {extractionInstruction}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'Text to Table' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
       },
     },
   },
@@ -13492,6 +15508,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Akademis & Edukasi"],
         nama_kerangka: "Asisten Penulis Esai Akademis",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.456874",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Esai Akademis yang akan menyusun kerangka, argumen, dan kalimat tesis.. [Jenis Esai: **{essayType}**] [Output yang Diinginkan: **{outputToGenerate}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {essayQuestion} untuk {myStance}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "essayType",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_essayType",
+                  label: "Sebutkan Jenis Esai Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Jenis Esai.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "outputToGenerate",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_outputToGenerate",
+                  label: "Sebutkan Output yang Diinginkan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Output yang Diinginkan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Rencana Pembelajaran (Lesson Plan)": {
         description:
@@ -13589,6 +15661,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Akademis & Edukasi"],
         nama_kerangka: "Generator Rencana Pembelajaran (Lesson Plan)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.469915",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Perencana Pembelajaran yang akan menyusun rencana pembelajaran.",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {subject} untuk {gradeLevel}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
       },
       "Generator Soal Kuis & Ujian": {
         description:
@@ -13660,6 +15748,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Akademis & Edukasi"],
         nama_kerangka: "Generator Soal Kuis & Ujian",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.484238",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pembuat Soal Ujian yang akan membuat soal kuis dan ujian.. [Jenis Soal: **{questionType}**] [Tingkat Kesulitan: **{difficultyLevel}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {subjectMatter} untuk {questionType}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "questionType",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_questionType",
+                  label: "Sebutkan Jenis Soal Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Jenis Soal.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "difficultyLevel",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_difficultyLevel",
+                  label: "Sebutkan Tingkat Kesulitan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Tingkat Kesulitan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Pembuat Abstrak Penelitian": {
         description:
@@ -13738,6 +15882,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Akademis & Edukasi"],
         nama_kerangka: "Pembuat Abstrak Penelitian",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.501430",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Abstrak Penelitian yang akan merangkum makalah atau penelitian.",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {researchTitle} untuk {background}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
       },
     },
     "Alat Bantu Menulis": {
@@ -13820,6 +15980,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
         nama_kerangka: "Asisten Pembuat Resume/CV",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.516150",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Konsultan Karir yang akan menghasilkan poin-poin pencapaian untuk resume.. [Tingkat Pengalaman: **{experienceLevel}**] [Bagian yang Akan Dibuat: **{sectionToGenerate}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {jobTitle} untuk {experienceLevel}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "experienceLevel",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_experienceLevel",
+                  label: "Sebutkan Tingkat Pengalaman Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Tingkat Pengalaman.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "sectionToGenerate",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_sectionToGenerate",
+                  label: "Sebutkan Bagian yang Akan Dibuat Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Bagian yang Akan Dibuat.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator FAQ (Frequently Asked Questions)": {
         description:
@@ -13901,6 +16117,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
         nama_kerangka: "Generator FAQ (Frequently Asked Questions)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.533793",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Spesialis FAQ yang akan menghasilkan pertanyaan dan jawaban.. [Gaya Pertanyaan: **{questionStyle}**] [Gaya Jawaban: **{answerStyle}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {sourceText} untuk {targetAudience}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "questionStyle",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_questionStyle",
+                  label: "Sebutkan Gaya Pertanyaan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Pertanyaan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "answerStyle",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_answerStyle",
+                  label: "Sebutkan Gaya Jawaban Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Jawaban.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Judul & Headline": {
         description:
@@ -13971,6 +16243,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
         nama_kerangka: "Generator Judul & Headline",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.552729",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Kreator Headline yang akan menghasilkan berbagai opsi judul.. [Gaya Headline: **{headlineStyle}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {mainTopic} untuk {keywords}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "headlineStyle",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_headlineStyle",
+                  label: "Sebutkan Gaya Headline Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Headline.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Meta Deskripsi SEO": {
         description:
@@ -14036,6 +16345,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
         nama_kerangka: "Generator Meta Deskripsi SEO",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.570587",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Spesialis SEO On-Page yang akan membuat meta deskripsi.",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {pageTitle} untuk {mainKeyword}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
       },
       "Pemeriksa & Penyempurna Gaya Bahasa": {
         description:
@@ -14093,6 +16418,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
         nama_kerangka: "Pemeriksa & Penyempurna Gaya Bahasa",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.589722",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Editor Gaya Bahasa yang akan menganalisis dan menyempurnakan tulisan.. [Fokus Penyempurnaan: **{improvementGoal}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {originalText} untuk {improvementGoal}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "improvementGoal",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_improvementGoal",
+                  label: "Sebutkan Fokus Penyempurnaan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Fokus Penyempurnaan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Penulis Ulang & Parafraser": {
         description:
@@ -14167,6 +16529,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
         nama_kerangka: "Penulis Ulang & Parafraser",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.605528",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Ahli Parafrase yang akan menulis ulang teks.. [Tujuan Penulisan Ulang: **{rewriteGoal}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {originalText} untuk {rewriteGoal}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "rewriteGoal",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_rewriteGoal",
+                  label: "Sebutkan Tujuan Penulisan Ulang Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Tujuan Penulisan Ulang.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Peringkas Teks & Artikel": {
         description:
@@ -14232,6 +16631,44 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
         nama_kerangka: "Peringkas Teks & Artikel",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.620199",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Ahli Ringkasan yang akan mengekstrak ide-ide utama dari teks.. [Panjang Ringkasan yang Diinginkan: **{summaryLength}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {originalText} untuk {summaryLength}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "summaryLength",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_summaryLength",
+                  label: "Sebutkan Panjang Ringkasan yang Diinginkan Lainnya",
+                  type: "text",
+                  description:
+                    "Input kustom untuk Panjang Ringkasan yang Diinginkan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
     },
     "Analisis & Ekstraksi Data": {
@@ -14288,6 +16725,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Analisis & Ekstraksi Data"],
         nama_kerangka: "Analis Sentimen & Tema Umpan Balik",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.635439",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Analis Sentimen yang akan menganalisis data umpan balik dan mengidentifikasi sentimen dan tema.. [Jenis Analisis: **{analysisType}**] [Format Laporan: **{outputFormat}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {feedbackData} untuk {analysisType}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "analysisType",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_analysisType",
+                  label: "Sebutkan Jenis Analisis Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Jenis Analisis.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "outputFormat",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_outputFormat",
+                  label: "Sebutkan Format Laporan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Format Laporan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Ekstraktor Entitas dari Teks": {
         description:
@@ -14338,6 +16831,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Analisis & Ekstraksi Data"],
         nama_kerangka: "Ekstraktor Entitas dari Teks",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.650003",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Ekstraktor Data yang akan menganalisis teks tidak terstruktur dan mengekstrak entitas.. [FORMAT_OUTPUT: **{outputFormat}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {sourceText} untuk {entitiesToExtract}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "outputFormat",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_outputFormat",
+                  label: "Sebutkan FORMAT_OUTPUT Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk FORMAT_OUTPUT.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
     },
     "Hiburan & Permainan": {
@@ -14406,6 +16936,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Hiburan & Permainan"],
         nama_kerangka: "Generator Deskripsi Karakter RPG",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.663561",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pencipta Karakter RPG yang akan menghasilkan latar belakang, kepribadian, dan penampilan untuk karakter.. [Alignment (Watak): **{alignment}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {gameSystem} untuk {characterClass}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "alignment",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_alignment",
+                  label: "Sebutkan Alignment (Watak) Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Alignment (Watak).",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Teka-teki & Riddle": {
         description:
@@ -14465,6 +17032,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Hiburan & Permainan"],
         nama_kerangka: "Generator Teka-teki & Riddle",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.676960",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Perancang Teka-Teki yang akan membuat teka-teki, riddle, atau puzzle logika.. [Jenis Teka-teki: **{puzzleType}**] [Tingkat Kesulitan: **{difficultyLevel}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {puzzleType} untuk {answer}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "puzzleType",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_puzzleType",
+                  label: "Sebutkan Jenis Teka-teki Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Jenis Teka-teki.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "difficultyLevel",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_difficultyLevel",
+                  label: "Sebutkan Tingkat Kesulitan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Tingkat Kesulitan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
     },
     "Kehidupan & Produktivitas": {
@@ -14546,6 +17169,63 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Kehidupan & Produktivitas"],
         nama_kerangka: "Generator Resep Masakan",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.690711",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Koki AI yang akan membuat resep masakan baru dan kreatif.. [Jenis Masakan yang Diinginkan: **{cuisineType}**] [Tingkat Kesulitan: **{difficultyLevel}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {mainIngredients} untuk [Bahan Dapur Lainnya (pisahkan koma): {pantryStaples}]. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "cuisineType",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_cuisineType",
+                  label: "Sebutkan Jenis Masakan yang Diinginkan Lainnya",
+                  type: "text",
+                  description:
+                    "Input kustom untuk Jenis Masakan yang Diinginkan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "difficultyLevel",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_difficultyLevel",
+                  label: "Sebutkan Tingkat Kesulitan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Tingkat Kesulitan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Template Balasan Cepat": {
         description:
@@ -14615,6 +17295,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Kehidupan & Produktivitas"],
         nama_kerangka: "Generator Template Balasan Cepat",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.703391",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Asisten Komunikasi Cepat yang akan membuat template balasan cepat.. [Gaya Bahasa Template: **{tone}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {scenario} untuk {myRole}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "tone",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_tone",
+                  label: "Sebutkan Gaya Bahasa Template Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Bahasa Template.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Perencana Perjalanan (Itinerary Planner)": {
         description:
@@ -14692,6 +17409,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Kehidupan & Produktivitas"],
         nama_kerangka: "Perencana Perjalanan (Itinerary Planner)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.716348",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Perencana Perjalanan yang akan membuat jadwal perjalanan harian.. [Gaya Perjalanan: **{travelStyle}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {destination} untuk {duration}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "travelStyle",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_travelStyle",
+                  label: "Sebutkan Gaya Perjalanan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Perjalanan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Perencana Tujuan Pribadi": {
         description:
@@ -14759,6 +17513,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Kehidupan & Produktivitas"],
         nama_kerangka: "Perencana Tujuan Pribadi",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.729076",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pelatih Tujuan Pribadi yang akan memecah tujuan besar menjadi langkah-langkah kecil.. [Kerangka Perencanaan: **{planningFramework}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {mainGoal} untuk {timeframe}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "planningFramework",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_planningFramework",
+                  label: "Sebutkan Kerangka Perencanaan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Kerangka Perencanaan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
     },
     "Komunikasi Profesional": {
@@ -14847,6 +17638,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
         nama_kerangka: "Email Marketing",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.741151",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Spesialis Pemasaran Email yang akan menghasilkan naskah email.. [Gaya Bahasa Email: **{tone}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {objective} untuk {productName}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "tone",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_tone",
+                  label: "Sebutkan Gaya Bahasa Email Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Bahasa Email.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator 'Icebreaker' untuk Rapat": {
         description:
@@ -14916,6 +17744,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
         nama_kerangka: "Generator 'Icebreaker' untuk Rapat",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.753020",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Fasilitator Rapat yang akan menciptakan pertanyaan icebreaker.. [Jenis Icebreaker: **{icebreakerType}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {meetingContext} untuk {teamProfile}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "icebreakerType",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_icebreakerType",
+                  label: "Sebutkan Jenis Icebreaker Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Jenis Icebreaker.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Naskah Pidato/Presentasi": {
         description:
@@ -14997,6 +17862,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
         nama_kerangka: "Generator Naskah Pidato/Presentasi",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.765359",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Konsultan Pidato yang akan menyusun naskah.. [Gaya Penyampaian: **{deliveryStyle}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {audienceProfile} untuk {coreMessage}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "deliveryStyle",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_deliveryStyle",
+                  label: "Sebutkan Gaya Penyampaian Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Penyampaian.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Respon Ulasan Pelanggan": {
         description:
@@ -15076,6 +17978,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
         nama_kerangka: "Generator Respon Ulasan Pelanggan",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.778168",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Manajer Hubungan Pelanggan yang akan menghasilkan balasan.. [Sentimen Ulasan: **{sentiment}**] [Gaya Bahasa Balasan: **{tone}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {originalReview} untuk {sentiment}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "sentiment",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_sentiment",
+                  label: "Sebutkan Sentimen Ulasan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Sentimen Ulasan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "tone",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_tone",
+                  label: "Sebutkan Gaya Bahasa Balasan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Bahasa Balasan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Ringkasan Rapat (Meeting Summarizer)": {
         description:
@@ -15147,6 +18105,63 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
         nama_kerangka: "Generator Ringkasan Rapat (Meeting Summarizer)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.791377",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Notulis Rapat yang akan menghasilkan ringkasan.. [Gaya Ringkasan: **{summaryStyle}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {meetingTranscript} untuk [Daftar Peserta (Opsional): {attendees}]. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "summaryStyle",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_summaryStyle",
+                  label: "Sebutkan Gaya Ringkasan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Ringkasan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "actionItemsToExtract",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_actionItemsToExtract",
+                  label: "Sebutkan Fokus Ekstraksi 'Action Items' Lainnya",
+                  type: "text",
+                  description:
+                    "Input kustom untuk Fokus Ekstraksi 'Action Items'.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Penulis Email Profesional": {
         description:
@@ -15229,6 +18244,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
         nama_kerangka: "Penulis Email Profesional",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.803276",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Asisten Komunikasi Profesional yang akan menyusun draf email.. [Skenario Email: **{scenario}**] [Tingkat Formalitas: **{tone}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {scenario} untuk {recipient}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "scenario",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_scenario",
+                  label: "Sebutkan Skenario Email Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Skenario Email.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "tone",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_tone",
+                  label: "Sebutkan Tingkat Formalitas Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Tingkat Formalitas.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Penulis Memo & Pengumuman Internal": {
         description:
@@ -15303,6 +18374,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
         nama_kerangka: "Penulis Memo & Pengumuman Internal",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.816289",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Spesialis Komunikasi Internal yang akan membuat pengumuman.",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {subject} untuk {targetAudience}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
       },
       "Penulis Surat Lamaran (Cover Letter Writer)": {
         description:
@@ -15390,6 +18477,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
         nama_kerangka: "Penulis Surat Lamaran (Cover Letter Writer)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.830461",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Spesialis Lamaran Kerja yang akan membuat surat lamaran.. [Gaya Bahasa Surat: **{tone}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {jobTitle} untuk {companyName}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "tone",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_tone",
+                  label: "Sebutkan Gaya Bahasa Surat Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Bahasa Surat.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
     },
     "Kreatif & Ideasi": {
@@ -15458,6 +18582,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Kreatif & Ideasi"],
         nama_kerangka: "Asisten Brainstorming",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.846739",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Fasilitator Ide yang akan menghasilkan cabang-cabang ide terkait dari ide sentral.. [Fokus Brainstorming: **{brainstormingFocus}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {centralIdea} untuk {brainstormingFocus}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "brainstormingFocus",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_brainstormingFocus",
+                  label: "Sebutkan Fokus Brainstorming Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Fokus Brainstorming.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Ide Cerita & Plot": {
         description:
@@ -15542,6 +18703,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Kreatif & Ideasi"],
         nama_kerangka: "Generator Ide Cerita & Plot",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.861953",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Cerita Kreatif yang akan mengembangkan ide cerita dan kerangka plot.. [Genre Cerita: **{genre}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {genre} untuk {mainCharacter}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "genre",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_genre",
+                  label: "Sebutkan Genre Cerita Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Genre Cerita.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Nama Brand/Produk": {
         description:
@@ -15615,6 +18813,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Kreatif & Ideasi"],
         nama_kerangka: "Generator Nama Brand/Produk",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.880184",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Ahli Penamaan yang akan menghasilkan nama brand atau produk.. [Gaya Nama yang Diinginkan: **{nameStyle}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {coreConcept} untuk {coreValues}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "nameStyle",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_nameStyle",
+                  label: "Sebutkan Gaya Nama yang Diinginkan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Nama yang Diinginkan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Premis Film/Serial TV": {
         description:
@@ -15676,6 +18911,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Kreatif & Ideasi"],
         nama_kerangka: "Generator Premis Film/Serial TV",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.897602",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Premis Sinematik yang akan mengembangkan ide premis satu kalimat.",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {genre} untuk {mainCharacter}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
       },
       "Generator Slogan/Tagline": {
         description:
@@ -15755,6 +19006,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Kreatif & Ideasi"],
         nama_kerangka: "Generator Slogan/Tagline",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.912615",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pakar Slogan yang akan menciptakan slogan atau tagline.. [Gaya Slogan: **{sloganStyle}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {brandName} untuk {coreBenefit}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "sloganStyle",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_sloganStyle",
+                  label: "Sebutkan Gaya Slogan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Slogan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
     },
     "Pemasaran & Penjualan": {
@@ -15821,6 +19109,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Pemasaran & Penjualan"],
         nama_kerangka: "Generator Konten Pilar & Klaster Topik",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.929020",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Arsitek Konten SEO yang akan merencanakan strategi konten.",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {mainTheme} dengan format {targetAudience}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
       },
       "Generator Skrip Video Sales Letter (VSL)": {
         description:
@@ -15919,6 +19223,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Pemasaran & Penjualan"],
         nama_kerangka: "Generator Skrip Video Sales Letter (VSL)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.943516",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Ahli Skrip Penjualan yang akan membuat skrip VSL.",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {productName} dengan format {targetAudience}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
       },
       "Pembuat Proposisi Nilai (Value Proposition)": {
         description:
@@ -15995,6 +19315,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Pemasaran & Penjualan"],
         nama_kerangka: "Pembuat Proposisi Nilai (Value Proposition)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.960452",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Strategis Nilai Produk yang akan merumuskan proposisi nilai.",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {productName} dengan format {targetCustomer}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
       },
       "Pembuat Urutan Email Otomatis": {
         description:
@@ -16074,6 +19410,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Pemasaran & Penjualan"],
         nama_kerangka: "Pembuat Urutan Email Otomatis",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.978366",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Spesialis Otomatisasi Email yang akan merancang serangkaian email otomatis.. [Jenis Urutan Email: **{sequenceType}**]",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {sequenceType} dengan format {product}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "sequenceType",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_sequenceType",
+                  label: "Sebutkan Jenis Urutan Email Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Jenis Urutan Email.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Penulis Teks Iklan (Ad Copy)": {
         description:
@@ -16150,6 +19523,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Pemasaran & Penjualan"],
         nama_kerangka: "Penulis Teks Iklan (Ad Copy)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.996112",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Spesialis Iklan Digital yang akan membuat teks iklan.. [Platform Iklan: **{platform}**]",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {platform} dengan format {product}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "platform",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_platform",
+                  label: "Sebutkan Platform Iklan Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Platform Iklan.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Postingan Media Sosial": {
         description:
@@ -16436,6 +19846,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         },
         kategori: ["Teks & Konten", "Pemasaran & Penjualan"],
         nama_kerangka: "Postingan Media Sosial",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.015114",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Spesialis Konten Media Sosial yang akan membuat postingan.. [Platform: **{platform}**]",
+          KONTEKS:
+            "Saya ingin create konten marketing untuk {platform} dengan format [Konteks Tambahan & Instruksi Khusus: {additionalContext}]. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
+        },
       },
     },
     "Pengembangan Diri & Psikologi": {
@@ -16497,6 +19923,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Pengembangan Diri & Psikologi"],
         nama_kerangka: "Alat Bantu Jurnal Terpandu",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.030843",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Fasilitator Jurnal yang akan menghasilkan serangkaian pertanyaan atau prompt untuk jurnal.. [Tema Jurnal Hari Ini: **{journalTheme}**] [Gaya Prompt: **{promptStyle}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {journalTheme} untuk {currentMood}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate code atau technical guidance yang clean, efficient, dan mengikuti best practices.",
+          FORMAT_OUTPUT:
+            "Sajikan dengan code examples, explanations, dan best practice recommendations yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "journalTheme",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_journalTheme",
+                  label: "Sebutkan Tema Jurnal Hari Ini Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Tema Jurnal Hari Ini.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "promptStyle",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_promptStyle",
+                  label: "Sebutkan Gaya Prompt Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Prompt.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Simulator Latihan Percakapan Sulit": {
         description:
@@ -16547,6 +20029,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Pengembangan Diri & Psikologi"],
         nama_kerangka: "Simulator Latihan Percakapan Sulit",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.045470",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pelatih Komunikasi yang akan mensimulasikan percakapan sulit.",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {scenario} untuk {myRole}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate code atau technical guidance yang clean, efficient, dan mengikuti best practices.",
+          FORMAT_OUTPUT:
+            "Sajikan dengan code examples, explanations, dan best practice recommendations yang jelas.",
+        },
       },
     },
     "Penulisan & Konten": {
@@ -16638,6 +20136,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
         nama_kerangka: "Generator Deskripsi Produk",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.059645",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Spesialis Copywriting Produk yang akan membuat deskripsi produk.. [Gaya Bahasa Brand: **{brandVoice}**] [Panjang Deskripsi: **{length}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {productName} untuk {targetAudience}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "brandVoice",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_brandVoice",
+                  label: "Sebutkan Gaya Bahasa Brand Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Bahasa Brand.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "length",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_length",
+                  label: "Sebutkan Panjang Deskripsi Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Panjang Deskripsi.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Halaman 'Tentang Kami'": {
         description:
@@ -16717,6 +20271,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
         nama_kerangka: "Generator Halaman 'Tentang Kami'",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.073881",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Narator Brand yang akan menciptakan narasi 'Tentang Kami'.. [Gaya Bahasa Halaman: **{tone}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {companyName} untuk {missionStatement}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "tone",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_tone",
+                  label: "Sebutkan Gaya Bahasa Halaman Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Bahasa Halaman.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Pembuat Studi Kasus (Case Study)": {
         description:
@@ -16795,6 +20386,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
         nama_kerangka: "Pembuat Studi Kasus (Case Study)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.087327",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Analis Studi Kasus yang akan menyusun narasi studi kasus.",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {clientName} untuk {problem}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
       },
       "Penulis Blog Post": {
         description:
@@ -16882,6 +20489,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
         nama_kerangka: "Penulis Blog Post",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.124768",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Storyteller Konten yang akan menyusun blog post.",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {topic} untuk {uniqueAngle}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
       },
       "Penulis Naskah Podcast": {
         description:
@@ -16961,6 +20584,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
         nama_kerangka: "Penulis Naskah Podcast",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.184260",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Naskah Podcast yang akan menyusun naskah.. [Format Podcast: **{podcastFormat}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {podcastTitle} untuk {hostPersona}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "podcastFormat",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_podcastFormat",
+                  label: "Sebutkan Format Podcast Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Format Podcast.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Penulis White Paper/Laporan": {
         description:
@@ -17041,6 +20701,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
         nama_kerangka: "Penulis White Paper/Laporan",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.214170",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Laporan Korporat yang akan menyusun dokumen informatif.. [Target Pembaca: **{targetAudience}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {reportTitle} untuk {mainThesis}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "targetAudience",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_targetAudience",
+                  label: "Sebutkan Target Pembaca Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Target Pembaca.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Penulisan Artikel SEO": {
         description:
@@ -17127,6 +20824,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
         nama_kerangka: "Penulisan Artikel SEO",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.251484",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Artikel SEO yang akan membuat artikel yang dioptimalkan untuk mesin pencari.. [Gaya Bahasa Artikel: **{tone}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {targetKeyword} untuk {secondaryKeywords}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "tone",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_tone",
+                  label: "Sebutkan Gaya Bahasa Artikel Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Bahasa Artikel.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
     },
     "Utilitas & Development": {
@@ -17193,6 +20927,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Utilitas & Development"],
         nama_kerangka: "Analis & Perangkum Dokumen Legal",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.266115",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Analis Hukum yang akan menganalisis dokumen hukum dan mengekstrak poin-poin penting.. [Peran Saya: **{myRole}**] [FORMAT_OUTPUT: **{outputFormat}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {legalDocument} untuk {myRole}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "myRole",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_myRole",
+                  label: "Sebutkan Peran Saya Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Peran Saya.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "outputFormat",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_outputFormat",
+                  label: "Sebutkan FORMAT_OUTPUT Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk FORMAT_OUTPUT.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Data Dummy": {
         description:
@@ -17241,6 +21031,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Utilitas & Development"],
         nama_kerangka: "Generator Data Dummy",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.299447",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Generator Data yang akan menghasilkan data palsu.. [FORMAT_OUTPUT: **{outputFormat}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {schemaName} untuk {schemaFields}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "outputFormat",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_outputFormat",
+                  label: "Sebutkan FORMAT_OUTPUT Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk FORMAT_OUTPUT.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
       "Generator Pesan Error Ramah Pengguna": {
         description:
@@ -17291,6 +21118,22 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Utilitas & Development"],
         nama_kerangka: "Generator Pesan Error Ramah Pengguna",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.316805",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penerjemah Error yang akan mengubah pesan error teknis menjadi penjelasan yang mudah dipahami.",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {technicalError} untuk {userContext}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
       },
       "Penulis Dokumentasi Kode": {
         description:
@@ -17344,6 +21187,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         ],
         kategori: ["Teks & Konten", "Utilitas & Development"],
         nama_kerangka: "Penulis Dokumentasi Kode",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:24.331261",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Penulis Dokumentasi Kode yang akan menganalisis dan mendokumentasikan kode.. [Bahasa Pemrograman: **{language}**] [Gaya Dokumentasi: **{documentationStyle}**]",
+          KONTEKS:
+            "Saya ingin create konten tertulis tentang {codeSnippet} untuk {language}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+          TUGAS:
+            "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+          FORMAT_OUTPUT:
+            "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
+        },
+        dynamicSubcomponents: [
+          {
+            trigger: "language",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_language",
+                  label: "Sebutkan Bahasa Pemrograman Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Bahasa Pemrograman.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+          {
+            trigger: "documentationStyle",
+            options: {
+              "Lainnya...": [
+                {
+                  name: "custom_documentationStyle",
+                  label: "Sebutkan Gaya Dokumentasi Lainnya",
+                  type: "text",
+                  description: "Input kustom untuk Gaya Dokumentasi.",
+                  placeholder: "Ketik opsi kustom...",
+                  optional: false,
+                  validation: {
+                    min_length: 2,
+                  },
+                  info: "Manual input jika opsi standar tidak tersedia.",
+                },
+              ],
+            },
+          },
+        ],
       },
     },
   },

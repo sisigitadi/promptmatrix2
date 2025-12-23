@@ -55,6 +55,24 @@
       }
     }
   ],
-  "kategori": ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
-  "nama_kerangka": "Custom Image Generator"
+  "kategori": [
+    "Gambar & Desain",
+    "Prompt AI Gambar (Text-to-Image)"
+  ],
+  "nama_kerangka": "Custom Image Generator",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:22.412532",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Demonstrator Input yang akan menampilkan bagaimana berbagai jenis input interaktif dapat digunakan.",
+    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {mainSubject} {creationDate}. [Catatan Tambahan: {additionalNotes}].",
+    "TUGAS": "Generate prompt yang optimal untuk menghasilkan gambar sesuai deskripsi dan gaya yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan prompt dalam format yang sesuai dengan platform target, dengan detail visualisasi yang jelas dan parameter teknis yang tepat."
+  },
+  "_review_notes": [
+    "TODO: Consider adding conditional blocks [...] for optional parameters"
+  ]
 }

@@ -222,5 +222,100 @@
     "Gambar & Desain",
     "Prompt AI Gambar (Text-to-Image)"
   ],
-  "nama_kerangka": "Midjourney"
+  "nama_kerangka": "Midjourney",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T05:07:55.231364",
+  "dynamicSubcomponents": [
+    {
+      "trigger": "aspectRatio",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_aspectRatio",
+            "label": "Sebutkan Aspect Ratio (--ar) Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Aspect Ratio (--ar).",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Aspect Ratio (--ar) standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "version",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_version",
+            "label": "Sebutkan Model Version (--v) Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Model Version (--v).",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Model Version (--v) standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "tile",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_tile",
+            "label": "Sebutkan Tile (--tile) Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Tile (--tile).",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Tile (--tile) standar tidak tersedia."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "styleRaw",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_styleRaw",
+            "label": "Sebutkan Style Raw (--style raw) Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Style Raw (--style raw).",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Style Raw (--style raw) standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Apply hybrid format to 'Model Version (--v)' option '6.0'",
+    "TODO: Apply hybrid format to 'Model Version (--v)' option '5.2'",
+    "TODO: Apply hybrid format to 'Model Version (--v)' option '5.1'",
+    "TODO: Apply hybrid format to 'Model Version (--v)' option 'niji 5'",
+    "TODO: Apply hybrid format to 'Model Version (--v)' option '6.1'",
+    "TODO: Apply hybrid format to 'Tile (--tile)' option 'No'",
+    "TODO: Apply hybrid format to 'Tile (--tile)' option 'Yes'",
+    "TODO: Apply hybrid format to 'Style Raw (--style raw)' option 'No'",
+    "TODO: Apply hybrid format to 'Style Raw (--style raw)' option 'Yes'"
+  ]
 }

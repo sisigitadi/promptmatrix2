@@ -152,5 +152,14 @@
       "validationType": "required",
       "errorMessage": "Deskripsi teks gambar harus diisi untuk mode 'Hasilkan Gambar'."
     }
+  ],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T05:07:55.207917",
+  "_review_notes": [
+    "TODO: Apply hybrid format to 'Pilih Mode Operasi' option 'Deskripsikan Gambar'",
+    "TODO: Apply hybrid format to 'Pilih Mode Operasi' option 'Hasilkan Gambar'"
   ]
 }

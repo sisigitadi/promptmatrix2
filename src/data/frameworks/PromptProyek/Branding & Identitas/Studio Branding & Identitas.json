@@ -175,5 +175,17 @@
     "Prompt Proyek",
     "Branding & Identitas"
   ],
-  "nama_kerangka": "Studio Branding & Identitas"
+  "nama_kerangka": "Studio Branding & Identitas",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T07:10:59.577088",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Direktur Kreatif Branding yang akan menerjemahkan esensi ide menjadi aset kreatif.. [Jenis Aset Branding: **{assetType}**]",
+    "KONTEKS": "Saya ingin membuat {assetType}. [Detail yang dibutuhkan: deskripsi proyek, kepribadian brand, dan preferensi gaya untuk aset ini].",
+    "TUGAS": "Generate output yang sesuai dengan tujuan 'Studio Branding & Identitas' berdasarkan input yang diberikan.",
+    "FORMAT_OUTPUT": "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami."
+  }
 }

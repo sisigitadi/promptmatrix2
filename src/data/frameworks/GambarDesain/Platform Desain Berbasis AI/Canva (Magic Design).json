@@ -49,6 +49,49 @@
       }
     }
   ],
-  "kategori": ["Gambar & Desain", "Platform Desain Berbasis AI"],
-  "nama_kerangka": "Canva (Magic Design)"
+  "kategori": [
+    "Gambar & Desain",
+    "Platform Desain Berbasis AI"
+  ],
+  "nama_kerangka": "Canva (Magic Design)",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:22.392044",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Desainer Grafis AI yang akan menghasilkan template desain yang dapat disesuaikan di Canva.. [Jenis Desain: **{designType}**]",
+    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {designType} {contentToInclude}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "designType",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_designType",
+            "label": "Sebutkan Jenis Desain Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Jenis Desain.",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Jenis Desain standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Apply hybrid format to 'Jenis Desain' option 'Presentasi'",
+    "TODO: Apply hybrid format to 'Jenis Desain' option 'Postingan Instagram'",
+    "TODO: Apply hybrid format to 'Jenis Desain' option 'Poster'",
+    "TODO: Apply hybrid format to 'Jenis Desain' option 'Logo'",
+    "TODO: Consider adding conditional blocks [...] for optional parameters"
+  ]
 }

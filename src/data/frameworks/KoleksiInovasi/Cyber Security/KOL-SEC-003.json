@@ -433,8 +433,16 @@
   },
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Koordinator Purple Team yang ahli dalam memfasilitasi kolaborasi antara tim ofensif dan defensif untuk meningkatkan postur keamanan secara keseluruhan.",
-    "KONTEKS": "Pengguna ingin merencanakan atau mendokumentasikan sebuah aktivitas kolaborasi Purple Team: **{PURPLE_TEAM_ACTIVITY}**.",
+    "KONTEKS": "Input yang saya berikan: {PURPLE_TEAM_ACTIVITY}.",
     "TUGAS": "Buat draf dokumen (rencana, agenda, atau laporan) yang komprehensif untuk aktivitas **{PURPLE_TEAM_ACTIVITY}**. Fokus HANYA pada aktivitas yang dipilih dan gunakan informasi yang relevan dari input pengguna.\n\n### Dokumen Kolaborasi Purple Team: {PURPLE_TEAM_ACTIVITY}\n\n1.  **Judul Dokumen**: Nama aktivitas dan tanggal.\n2.  **Tujuan (Objective)**: Jelaskan secara singkat tujuan dari sesi kolaboratif ini.\n3.  **Peserta**: Sebutkan peran yang harus hadir (misalnya, Analis Red Team, Analis SOC, Rekayasawan Deteksi).\n4.  **Agenda atau Rincian Aktivitas**: Uraikan langkah-langkah atau agenda sesi. Gunakan input pengguna untuk menyusun bagian ini, KHUSUS untuk aktivitas yang dipilih:\n    *   **Validasi Deteksi Taktis**: Rancang rencana pengujian untuk `{VALIDATION_TTP_ID}`. Red Team akan menggunakan `{VALIDATION_RED_TEAM_TOOL}` dan Blue Team akan memantau `{VALIDATION_BLUE_TEAM_TOOL}`. Definisikan kriteria keberhasilan (deteksi terlihat/tidak terlihat).\n    *   **Penyesuaian & Pengoptimalan Aturan**: Buat agenda untuk sesi tuning aturan `{TUNING_RULE_ID}` yang mengalami masalah `{TUNING_PROBLEM}` (atau `{TUNING_PROBLEM_OTHER}`). Langkah-langkah harus mencakup: analisis `{TUNING_CONTEXT}`, simulasi ulang serangan oleh Red Team, dan modifikasi query aturan secara langsung oleh Blue Team.\n    *   **Evaluasi Alat Keamanan**: Rencanakan evaluasi alat `{EVAL_TOOL_NAME}` berdasarkan kriteria `{EVAL_CRITERIA}` dengan tujuan `{EVAL_PURPOSE}`.\n    *   **Pemodelan Ancaman Kolaboratif**: Buat agenda untuk sesi pemodelan ancaman pada `{THREAT_MODEL_TARGET_APP}` menggunakan metodologi `{THREAT_MODEL_METHODOLOGY}` (atau `{THREAT_MODEL_METHODOLOGY_OTHER}`). Libatkan Red Team untuk identifikasi vektor serangan dan Blue Team untuk identifikasi kontrol yang ada dalam lingkup `{THREAT_MODEL_SCOPE}`.\n    *   **Sesi Rekayasa Deteksi**: Rancang sesi kerja untuk mencapai `{DE_SESSION_GOAL}`. Alokasikan waktu untuk analisis data dari `{DE_SESSION_LOG_SOURCES}`, penulisan p... [truncated]",
     "FORMAT_OUTPUT": "Sajikan dokumen dalam format Markdown yang profesional. Gunakan heading, sub-heading, bullet points, dan tabel jika perlu untuk menyajikan informasi secara terstruktur dan mudah dibaca oleh kedua tim. Pastikan hanya membahas aktivitas yang dipilih dalam `{PURPLE_TEAM_ACTIVITY}`."
-  }
+  },
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T06:59:22.758448",
+  "_review_notes": [
+    "SEAMLESS: Add conditional blocks [...] for optional parameters"
+  ]
 }

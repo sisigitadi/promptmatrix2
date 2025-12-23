@@ -196,7 +196,7 @@
   ],
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang ahli strategi pemasaran digital yang akan membantu pengguna merancang rencana Lead Generation yang efektif.",
-    "KONTEKS": "Saya ingin Anda membantu saya merancang strategi Lead Generation yang komprehensif untuk produk/layanan saya. Berikut adalah detailnya:\n\nNama Produk/Layanan: {{nama_produk_layanan}}\nDeskripsi Produk/Layanan: {{deskripsi_produk_layanan}}\nTarget Audiens Utama: {{target_audiens}}\nTujuan Utama Lead Generation: {{tujuan_leadgen}}{{#if tujuan_leadgen_lainnya}} ({{tujuan_leadgen_lainnya}}){{/if}}\nSaluran Pemasaran yang Dipertimbangkan: {{saluran_pemasaran}}{{#if saluran_pemasaran_lainnya}}, {{saluran_pemasaran_lainnya}}{{/if}}\nJenis Konten/Penawaran untuk Menarik Leads: {{jenis_konten_penawaran}}{{#if jenis_konten_penawaran_lainnya}}, {{jenis_konten_penawaran_lainnya}}{{/if}}\nMetrik Keberhasilan: {{metrik_keberhasilan}}\n{{#if kriteria_pencarian_prospek}}Kriteria Pencarian Prospek: {{kriteria_pencarian_prospek}}{{/if}}",
+    "KONTEKS": "Saya ingin Anda membantu saya merancang strategi Lead Generation yang komprehensif untuk produk/layanan saya. Berikut adalah detailnya:\n\nNama Produk/Layanan: {nama_produk_layanan}\nDeskripsi Produk/Layanan: {deskripsi_produk_layanan}\nTarget Audiens Utama: {target_audiens}\nTujuan Utama Lead Generation: {tujuan_leadgen}{{#if tujuan_leadgen_lainnya}} ({tujuan_leadgen_lainnya}){{/if}}\nSaluran Pemasaran yang Dipertimbangkan: {saluran_pemasaran}{{#if saluran_pemasaran_lainnya}}, {saluran_pemasaran_lainnya}{{/if}}\nJenis Konten/Penawaran untuk Menarik Leads: {jenis_konten_penawaran}{{#if jenis_konten_penawaran_lainnya}}, {jenis_konten_penawaran_lainnya}{{/if}}\nMetrik Keberhasilan: {metrik_keberhasilan}\n{{#if kriteria_pencarian_prospek}}Kriteria Pencarian Prospek: {kriteria_pencarian_prospek}{{/if}}",
     "TUGAS": "Berdasarkan informasi di atas, buatkan saya strategi Lead Generation yang terperinci. Strategi ini harus mencakup:\n\n1.  **Ringkasan Eksekutif:** Gambaran umum singkat tentang strategi.\n2.  **Analisis Target Audiens:** Penjelasan lebih lanjut tentang persona target dan bagaimana produk/layanan Anda menyelesaikan masalah mereka.\n3.  **Tujuan SMART:** Tujuan spesifik, terukur, dapat dicapai, relevan, dan terikat waktu untuk kampanye Lead Generation ini.\n4.  **Strategi Konten & Penawaran:** Ide-ide konten spesifik dan 'lead magnet' yang relevan untuk setiap saluran yang dipilih, serta bagaimana mereka akan menarik prospek.\n5.  **Rencana Distribusi & Promosi:** Bagaimana konten dan penawaran akan didistribusikan melalui saluran pemasaran yang dipilih.\n6.  **Proses Pengumpulan & Kualifikasi Lead:** Langkah-langkah untuk mengumpulkan informasi prospek dan bagaimana mereka akan dikualifikasi (misalnya, MQL, SQL).\n7.  **Metrik & Pengukuran:** Bagaimana keberhasilan akan diukur berdasarkan metrik yang diberikan, dan saran untuk alat pelacakan.\n8.  **Timeline (Opsional):** Saran timeline umum untuk implementasi strategi.\n9.  **Rekomendasi Pencarian Data Prospek:** Berdasarkan kriteria yang diberikan (jika ada), sarankan metode, alat, atau sumber daya yang efektif untuk mencari dan mengumpulkan data prospek (perusahaan atau perorangan) yang relevan.",
     "FORMAT_OUTPUT": "Sajikan strategi dalam format Markdown yang terstruktur dengan baik, menggunakan heading, bullet points, dan bold untuk keterbacaan yang maksimal."
   },
@@ -288,5 +288,10 @@
       "validationType": "required",
       "errorMessage": "Harap isi 'Jenis Konten/Penawaran Lainnya' jika Anda memilih 'Lainnya'."
     }
-  ]
+  ],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T06:59:22.944489"
 }

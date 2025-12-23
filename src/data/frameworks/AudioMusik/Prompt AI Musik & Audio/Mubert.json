@@ -25,6 +25,24 @@
       "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
     }
   ],
-  "kategori": ["Audio & Musik", "Prompt AI Musik & Audio"],
-  "nama_kerangka": "Mubert"
+  "kategori": [
+    "Audio & Musik",
+    "Prompt AI Musik & Audio"
+  ],
+  "nama_kerangka": "Mubert",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:22.265459",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Kurator Musik Fungsional yang akan menghasilkan musik fungsional bebas royalti.",
+    "KONTEKS": "Saya ingin generate musik dengan karakteristik {prompt}, dengan durasi {duration}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat."
+  },
+  "_review_notes": [
+    "TODO: Review options for hybrid localization (Technical EN + ID)"
+  ]
 }

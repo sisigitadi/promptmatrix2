@@ -165,13 +165,23 @@
   },
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang konsultan ahli multi-disiplin. Bergantung pada pilihan pengguna, Anda akan bertindak sebagai Game Designer, Analis Keuangan, atau Pelatih Debat untuk menghasilkan dokumen yang diminta.",
-    "KONTEKS": "Pengguna ingin membuat sebuah dokumen terstruktur dengan jenis: '{{JENIS_DOKUMEN}}'. Anda harus memproses input yang diberikan untuk menghasilkan output yang komprehensif dan profesional sesuai dengan peran yang relevan.",
-    "TUGAS": "Berdasarkan jenis dokumen yang dipilih, lakukan tugas berikut:\n\n{{#if JENIS_DOKUMEN === 'Dokumen Desain Game (GDD)'}}**Tugas: Buat Draf Game Design Document**\nBuat draf GDD yang terstruktur untuk game berjudul **'{{NAMA_GAME}}'**. Elaborasikan setiap bagian berdasarkan detail berikut:\n- **Genre:** {{GENRE_GAME}}\n- **Konsep Inti & USP:** {{KONSEP_UTAMA}}\n- **Mekanik Gameplay:** {{MEKANIK_INTI}}\n- **Narasi & Dunia:** {{NARASI_RINGKAS}}\n- **Gaya Visual & Mood:** {{GAYA_VISUAL}}\nStruktur dokumen harus mencakup: 1. Ringkasan Eksekutif, 2. Konsep Inti, 3. Target Audiens, 4. Mekanik Gameplay (jelaskan mekanik inti), 5. Narasi & Dunia (cerita, karakter), 6. Gaya Visual & Audio.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Analisis Laporan Keuangan'}}**Tugas: Lakukan Analisis Laporan Keuangan**\nLakukan analisis kesehatan keuangan untuk **{{NAMA_PERUSAHAAN}}** periode **{{PERIODE_LAPORAN}}**. Berdasarkan data berikut:\n- **Laba Rugi:** {{DATA_LABA_RUGI}}\n- **Neraca:** {{DATA_NERACA}}\n- **Arus Kas:** {{DATA_ARUS_KAS}}\nFokuskan analisis Anda pada: **{{FOKUS_ANALISIS}}**. Hitung rasio-rasio yang relevan, berikan interpretasi dari setiap angka, dan berikan ringkasan eksekutif mengenai kesehatan keuangan perusahaan secara keseluruhan.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Perencanaan Argumen Debat'}}**Tugas: Siapkan Materi Debat**\nSiapkan materi untuk debat dengan mosi **'{{MOSI_DEBAT}}'**. Anda berada di posisi **{{POSISI_SAYA}}**. Bangun argumen yang kuat berdasarkan poin-poin berikut: {{ARGUMEN_UTAMA_SAYA}}. Untuk setiap poin, berikan elaborasi dan contoh. Jika disediakan, siapkan juga sanggahan (rebuttal) untuk potensi argumen lawan berikut: {{POTENSI_ARGUMEN_LAWAN}}. Susun materi ini menjadi sebuah kerangka pidato yang logis dan persuasif.\n{{/if}}",
+    "KONTEKS": "Input yang saya berikan: {JENIS_DOKUMEN}.",
+    "TUGAS": "Berdasarkan jenis dokumen yang dipilih, lakukan tugas berikut:\n\n{{#if JENIS_DOKUMEN === 'Dokumen Desain Game (GDD)'}}**Tugas: Buat Draf Game Design Document**\nBuat draf GDD yang terstruktur untuk game berjudul **'{NAMA_GAME}'**. Elaborasikan setiap bagian berdasarkan detail berikut:\n- **Genre:** {GENRE_GAME}\n- **Konsep Inti & USP:** {KONSEP_UTAMA}\n- **Mekanik Gameplay:** {MEKANIK_INTI}\n- **Narasi & Dunia:** {NARASI_RINGKAS}\n- **Gaya Visual & Mood:** {GAYA_VISUAL}\nStruktur dokumen harus mencakup: 1. Ringkasan Eksekutif, 2. Konsep Inti, 3. Target Audiens, 4. Mekanik Gameplay (jelaskan mekanik inti), 5. Narasi & Dunia (cerita, karakter), 6. Gaya Visual & Audio.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Analisis Laporan Keuangan'}}**Tugas: Lakukan Analisis Laporan Keuangan**\nLakukan analisis kesehatan keuangan untuk **{NAMA_PERUSAHAAN}** periode **{PERIODE_LAPORAN}**. Berdasarkan data berikut:\n- **Laba Rugi:** {DATA_LABA_RUGI}\n- **Neraca:** {DATA_NERACA}\n- **Arus Kas:** {DATA_ARUS_KAS}\nFokuskan analisis Anda pada: **{FOKUS_ANALISIS}**. Hitung rasio-rasio yang relevan, berikan interpretasi dari setiap angka, dan berikan ringkasan eksekutif mengenai kesehatan keuangan perusahaan secara keseluruhan.\n{{/if}}\n\n{{#if JENIS_DOKUMEN === 'Perencanaan Argumen Debat'}}**Tugas: Siapkan Materi Debat**\nSiapkan materi untuk debat dengan mosi **'{MOSI_DEBAT}'**. Anda berada di posisi **{POSISI_SAYA}**. Bangun argumen yang kuat berdasarkan poin-poin berikut: {ARGUMEN_UTAMA_SAYA}. Untuk setiap poin, berikan elaborasi dan contoh. Jika disediakan, siapkan juga sanggahan (rebuttal) untuk potensi argumen lawan berikut: {POTENSI_ARGUMEN_LAWAN}. Susun materi ini menjadi sebuah kerangka pidato yang logis dan persuasif.\n{{/if}}",
     "FORMAT_OUTPUT": "Selalu gunakan format Markdown yang sangat terstruktur dengan heading, sub-heading, dan daftar berpoin untuk memastikan keterbacaan maksimal. Setiap dokumen harus memiliki judul yang jelas sesuai dengan jenisnya."
   },
   "toolType": "planning",
   "konteks_tambahan_instruksi_khusus": "Untuk setiap tugas, berikan output yang mendalam dan profesional. Jika ada informasi yang kurang dari pengguna, buat asumsi yang cerdas dan nyatakan asumsi tersebut di awal laporan Anda. Contoh: 'Dengan asumsi target audiens adalah pemain kasual...'.",
   "contoh_kalimat": "Bantu saya membuat GDD untuk game platformer.",
   "output": "natural_language_prompt",
-  "crossValidationRules": []
+  "crossValidationRules": [],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "updated_at": "2025-12-23T06:59:22.777772",
+  "_review_notes": [
+    "HYBRID: Jenis Dokumen yang Ingin Dibuat → 'Analisis Laporan Keuangan' (add English technical term if applicable)",
+    "HYBRID: Jenis Dokumen yang Ingin Dibuat → 'Perencanaan Argumen Debat' (add English technical term if applicable)",
+    "SEAMLESS: Add conditional blocks [...] for optional parameters"
+  ]
 }

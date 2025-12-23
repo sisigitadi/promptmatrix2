@@ -28,7 +28,11 @@
       "name": "outputFormat",
       "label": "FORMAT_OUTPUT",
       "type": "select",
-      "options": ["JSON Array", "CSV", "Lainnya..."],
+      "options": [
+        "JSON Array",
+        "CSV",
+        "Lainnya..."
+      ],
       "info": "Pilih format output yang diinginkan (misalnya, JSON Array, CSV)."
     },
     {
@@ -39,6 +43,42 @@
       "info": "Instruksi spesifik tentang batasan data, relasi antar field, atau tingkat kerandoman."
     }
   ],
-  "kategori": ["Teks & Konten", "Utilitas & Development"],
-  "nama_kerangka": "Generator Data Dummy"
+  "kategori": [
+    "Teks & Konten",
+    "Utilitas & Development"
+  ],
+  "nama_kerangka": "Generator Data Dummy",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:24.299447",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Generator Data yang akan menghasilkan data palsu.. [FORMAT_OUTPUT: **{outputFormat}**]",
+    "KONTEKS": "Saya ingin create konten tertulis tentang {schemaName} untuk {schemaFields}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "outputFormat",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_outputFormat",
+            "label": "Sebutkan FORMAT_OUTPUT Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk FORMAT_OUTPUT.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

@@ -52,6 +52,48 @@
       "info": "Instruksi tentang nuansa, tempo, atau elemen audio/visual yang harus dibayangkan oleh AI."
     }
   ],
-  "kategori": ["Gambar & Desain", "Perencanaan Video & Visual"],
-  "nama_kerangka": "Script Iklan"
+  "kategori": [
+    "Gambar & Desain",
+    "Perencanaan Video & Visual"
+  ],
+  "nama_kerangka": "Script Iklan",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:22.371062",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Penulis Naskah Iklan yang akan membuat naskah iklan.. [Platform Penayangan: **{platform}**]",
+    "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {product} {duration}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "platform",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_platform",
+            "label": "Sebutkan Platform Penayangan Lainnya",
+            "type": "text",
+            "description": "Ketik manual nilai kustom untuk Platform Penayangan.",
+            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Input manual jika pilihan Platform Penayangan standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ],
+  "_review_notes": [
+    "TODO: Apply hybrid format to 'Platform Penayangan' option 'TV'",
+    "TODO: Apply hybrid format to 'Platform Penayangan' option 'Radio'",
+    "TODO: Apply hybrid format to 'Platform Penayangan' option 'TikTok/Reels/Shorts'",
+    "TODO: Consider adding conditional blocks [...] for optional parameters"
+  ]
 }

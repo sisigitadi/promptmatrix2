@@ -65,6 +65,21 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Pemasaran & Penjualan"],
-  "nama_kerangka": "Pembuat Proposisi Nilai (Value Proposition)"
+  "kategori": [
+    "Teks & Konten",
+    "Pemasaran & Penjualan"
+  ],
+  "nama_kerangka": "Pembuat Proposisi Nilai (Value Proposition)",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:23.960452",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Strategis Nilai Produk yang akan merumuskan proposisi nilai.",
+    "KONTEKS": "Saya ingin create konten marketing untuk {productName} dengan format {targetCustomer}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+    "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
+  }
 }

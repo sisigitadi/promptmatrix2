@@ -64,6 +64,42 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Kreatif & Ideasi"],
-  "nama_kerangka": "Generator Nama Brand/Produk"
+  "kategori": [
+    "Teks & Konten",
+    "Kreatif & Ideasi"
+  ],
+  "nama_kerangka": "Generator Nama Brand/Produk",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:23.880184",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Ahli Penamaan yang akan menghasilkan nama brand atau produk.. [Gaya Nama yang Diinginkan: **{nameStyle}**]",
+    "KONTEKS": "Saya ingin create konten tertulis tentang {coreConcept} untuk {coreValues}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
+    "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "nameStyle",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_nameStyle",
+            "label": "Sebutkan Gaya Nama yang Diinginkan Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Gaya Nama yang Diinginkan.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

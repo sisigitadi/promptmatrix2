@@ -69,6 +69,42 @@
       }
     }
   ],
-  "kategori": ["Teks & Konten", "Pemasaran & Penjualan"],
-  "nama_kerangka": "Pembuat Urutan Email Otomatis"
+  "kategori": [
+    "Teks & Konten",
+    "Pemasaran & Penjualan"
+  ],
+  "nama_kerangka": "Pembuat Urutan Email Otomatis",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:23.978366",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Spesialis Otomatisasi Email yang akan merancang serangkaian email otomatis.. [Jenis Urutan Email: **{sequenceType}**]",
+    "KONTEKS": "Saya ingin create konten marketing untuk {sequenceType} dengan format {product}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+    "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
+  },
+  "dynamicSubcomponents": [
+    {
+      "trigger": "sequenceType",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "custom_sequenceType",
+            "label": "Sebutkan Jenis Urutan Email Lainnya",
+            "type": "text",
+            "description": "Input kustom untuk Jenis Urutan Email.",
+            "placeholder": "Ketik opsi kustom...",
+            "optional": false,
+            "validation": {
+              "min_length": 2
+            },
+            "info": "Manual input jika opsi standar tidak tersedia."
+          }
+        ]
+      }
+    }
+  ]
 }

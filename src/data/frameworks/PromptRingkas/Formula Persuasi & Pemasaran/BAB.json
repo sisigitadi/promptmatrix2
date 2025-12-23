@@ -32,6 +32,21 @@
       "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
     }
   ],
-  "kategori": ["Prompt Ringkas", "Formula Persuasi & Pemasaran"],
-  "nama_kerangka": "BAB"
+  "kategori": [
+    "Prompt Ringkas",
+    "Formula Persuasi & Pemasaran"
+  ],
+  "nama_kerangka": "BAB",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
+  "version": "2.0.0",
+  "updated_at": "2025-12-23T06:59:23.035078",
+  "komponen_prompt": {
+    "PERAN": "Persona AI: Anda adalah seorang Narator Transformasi yang akan menggambarkan kondisi audiens sebelum dan sesudah menggunakan produk.",
+    "KONTEKS": "Saya ingin create konten marketing untuk {beforeState} dengan format {afterState}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
+    "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
+    "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
+  }
 }
