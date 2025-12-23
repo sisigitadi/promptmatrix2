@@ -609,8 +609,8 @@ export const generateJsonPrompt = (
       ),
       FORMAT_OUTPUT: replacePlaceholders(
         framework.komponen_prompt?.FORMAT_OUTPUT ||
-        framework.komponen_prompt?.["FORMAT OUTPUT"] ||
-        "",
+          framework.komponen_prompt?.["FORMAT OUTPUT"] ||
+          "",
         allValues,
         customInputs,
       ),
