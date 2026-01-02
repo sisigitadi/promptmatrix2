@@ -1,11 +1,15 @@
 {
   "id_kerangka": "KOL-PP-101",
   "nama_kerangka": "Panduan DevOps & MLOps",
-  "version": "1.0.0",
+  "version": "2.7.0",
   "kategori": [
     "Koleksi & Inovasi",
     "Pengembangan Perangkat Lunak"
   ],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
   "description": "Panduan terpusat untuk manajemen proyek, infrastruktur, dan operasional, mencakup siklus hidup DevOps dan MLOps dari perencanaan hingga pemantauan.",
   "perspektif_user": "Sebagai seorang insinyur DevOps, MLOps, atau manajer proyek, saya memerlukan alat terintegrasi untuk membantu saya dengan berbagai tugas operasional seperti perencanaan Agile, manajemen dependensi, containerization, CI/CD, pemantauan, IaC, dan alur kerja data science.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Ahli DevOps dan MLOps yang akan mengelola operasional dan infrastruktur.",
@@ -318,5 +322,5 @@
   "contoh_kalimat": "Bantu saya merancang CI/CD pipeline untuk aplikasi web Node.js saya menggunakan GitHub Actions.",
   "output": "natural_language_prompt",
   "crossValidationRules": [],
-  "updated_at": "2025-12-23T06:59:22.838514"
+  "updated_at": "2025-12-23T07:00:00.838514"
 }

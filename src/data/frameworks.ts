@@ -8717,8 +8717,12 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
       "Generator Dokumentasi API": {
         id_kerangka: "KOL-PP-103",
         nama_kerangka: "Generator Dokumentasi API",
-        version: "1.0.0",
+        version: "2.7.0",
         kategori: ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
         description:
           "Buat dokumentasi teknis yang jelas dan terstruktur untuk sebuah endpoint API berdasarkan spesifikasi yang diberikan.",
         perspektif_user:
@@ -8840,13 +8844,17 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         contoh_kalimat: "Buatkan saya dokumentasi untuk API get user by id.",
         output: "natural_language_prompt",
         crossValidationRules: [],
-        updated_at: "2025-12-23T06:59:22.819117",
+        updated_at: "2025-12-23T07:00:00.819117",
       },
       "Panduan DevOps & MLOps": {
         id_kerangka: "KOL-PP-101",
         nama_kerangka: "Panduan DevOps & MLOps",
-        version: "1.0.0",
+        version: "2.7.0",
         kategori: ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
         description:
           "Panduan terpusat untuk manajemen proyek, infrastruktur, dan operasional, mencakup siklus hidup DevOps dan MLOps dari perencanaan hingga pemantauan.",
         perspektif_user:
@@ -9159,13 +9167,17 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya merancang CI/CD pipeline untuk aplikasi web Node.js saya menggunakan GitHub Actions.",
         output: "natural_language_prompt",
         crossValidationRules: [],
-        updated_at: "2025-12-23T06:59:22.838514",
+        updated_at: "2025-12-23T07:00:00.838514",
       },
       "Tutor Pemrograman & Konsep Lanjutan": {
         id_kerangka: "KOL-PP-102",
         nama_kerangka: "Tutor Pemrograman & Konsep Lanjutan",
-        version: "1.0.0",
+        version: "2.7.0",
         kategori: ["Koleksi & Inovasi", "Pengembangan Perangkat Lunak"],
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
         description:
           "Pusat pembelajaran terintegrasi untuk pemula hingga ahli, mencakup pemilihan bahasa, dasar-dasar pemrograman, debugging, dan konsep lanjutan seperti AI, keamanan siber, dan blockchain.",
         perspektif_user:
@@ -9381,7 +9393,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           "Bantu saya memahami dasar-dasar pemrograman Python, khususnya tentang loop.",
         output: "natural_language_prompt",
         crossValidationRules: [],
-        updated_at: "2025-12-23T06:59:22.856072",
+        updated_at: "2025-12-23T07:00:00.856072",
       },
     },
   },
@@ -13936,64 +13948,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
         },
       },
-      "ToT (Tree of Thoughts)": {
-        description:
-          "Minta AI untuk mengeksplorasi beberapa jalur pemikiran yang berbeda secara bersamaan dan mengevaluasinya untuk menemukan solusi terbaik.",
-        toolType: "planning",
-        ai_logic_description:
-          "Persona AI: Anda adalah seorang Pemikir Strategis yang akan mengeksplorasi beberapa jalur pemikiran.",
-        components: [
-          {
-            name: "problem",
-            label: "Masalah Kompleks",
-            type: "textarea",
-            placeholder:
-              "e.g., 'Bagaimana cara merancang sistem transportasi yang efisien untuk kota metropolitan baru?'",
-            info: "Masalah yang memiliki banyak kemungkinan solusi dan variabel.",
-          },
-          {
-            name: "thoughtPaths",
-            label: "Jumlah Jalur Pemikiran untuk Dieksplorasi",
-            type: "number",
-            placeholder: "e.g., 3",
-            info: "Berapa banyak ide atau pendekatan awal yang harus dipertimbangkan AI?",
-          },
-          {
-            name: "evaluationCriteria",
-            label: "Kriteria Evaluasi",
-            type: "textarea",
-            placeholder:
-              "e.g., 'Biaya, dampak lingkungan, kecepatan implementasi, skalabilitas.'",
-            info: "Bagaimana setiap jalur pemikiran akan dinilai dan dibandingkan?",
-          },
-          {
-            name: "additionalContext",
-            label: "Instruksi Tambahan",
-            type: "textarea",
-            placeholder:
-              "e.g., 'Untuk setiap jalur pemikiran, pertimbangkan pro dan kontranya. Di akhir, berikan rekomendasi jalur terbaik berdasarkan kriteria.'",
-            info: "Panduan untuk proses eksplorasi dan evaluasi.",
-          },
-        ],
-        kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
-        nama_kerangka: "ToT (Tree of Thoughts)",
-        examples: [],
-        temperature: 0.7,
-        top_p: 0.9,
-        top_k: 40,
-        version: "2.0.0",
-        updated_at: "2025-12-23T06:59:23.215871",
-        komponen_prompt: {
-          PERAN:
-            "Persona AI: Anda adalah seorang Pemikir Strategis yang akan mengeksplorasi beberapa jalur pemikiran.",
-          KONTEKS:
-            "Input yang saya berikan: {problem}, {thoughtPaths}, {evaluationCriteria}. [Instruksi Tambahan: {additionalContext}].",
-          TUGAS:
-            "Generate output yang sesuai dengan tujuan 'ToT (Tree of Thoughts)' berdasarkan input yang diberikan.",
-          FORMAT_OUTPUT:
-            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
-        },
-      },
       TREF: {
         description:
           "Struktur prompt dengan menentukan Tugas, Persyaratan, Ekspektasi, dan Format.",
@@ -14057,6 +14011,64 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             "Input yang saya berikan: {task}, {requirements}, {expectations}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
           TUGAS:
             "Generate output yang sesuai dengan tujuan 'TREF' berdasarkan input yang diberikan.",
+          FORMAT_OUTPUT:
+            "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
+        },
+      },
+      "ToT (Tree of Thoughts)": {
+        description:
+          "Minta AI untuk mengeksplorasi beberapa jalur pemikiran yang berbeda secara bersamaan dan mengevaluasinya untuk menemukan solusi terbaik.",
+        toolType: "planning",
+        ai_logic_description:
+          "Persona AI: Anda adalah seorang Pemikir Strategis yang akan mengeksplorasi beberapa jalur pemikiran.",
+        components: [
+          {
+            name: "problem",
+            label: "Masalah Kompleks",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Bagaimana cara merancang sistem transportasi yang efisien untuk kota metropolitan baru?'",
+            info: "Masalah yang memiliki banyak kemungkinan solusi dan variabel.",
+          },
+          {
+            name: "thoughtPaths",
+            label: "Jumlah Jalur Pemikiran untuk Dieksplorasi",
+            type: "number",
+            placeholder: "e.g., 3",
+            info: "Berapa banyak ide atau pendekatan awal yang harus dipertimbangkan AI?",
+          },
+          {
+            name: "evaluationCriteria",
+            label: "Kriteria Evaluasi",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Biaya, dampak lingkungan, kecepatan implementasi, skalabilitas.'",
+            info: "Bagaimana setiap jalur pemikiran akan dinilai dan dibandingkan?",
+          },
+          {
+            name: "additionalContext",
+            label: "Instruksi Tambahan",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Untuk setiap jalur pemikiran, pertimbangkan pro dan kontranya. Di akhir, berikan rekomendasi jalur terbaik berdasarkan kriteria.'",
+            info: "Panduan untuk proses eksplorasi dan evaluasi.",
+          },
+        ],
+        kategori: ["Prompt Ringkas", "Pemikiran Terstruktur & Analisis"],
+        nama_kerangka: "ToT (Tree of Thoughts)",
+        examples: [],
+        temperature: 0.7,
+        top_p: 0.9,
+        top_k: 40,
+        version: "2.0.0",
+        updated_at: "2025-12-23T06:59:23.215871",
+        komponen_prompt: {
+          PERAN:
+            "Persona AI: Anda adalah seorang Pemikir Strategis yang akan mengeksplorasi beberapa jalur pemikiran.",
+          KONTEKS:
+            "Input yang saya berikan: {problem}, {thoughtPaths}, {evaluationCriteria}. [Instruksi Tambahan: {additionalContext}].",
+          TUGAS:
+            "Generate output yang sesuai dengan tujuan 'ToT (Tree of Thoughts)' berdasarkan input yang diberikan.",
           FORMAT_OUTPUT:
             "Sajikan output dalam format yang terstruktur, jelas, dan mudah dipahami.",
         },

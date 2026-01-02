@@ -1,11 +1,15 @@
 {
   "id_kerangka": "KOL-PP-102",
   "nama_kerangka": "Tutor Pemrograman & Konsep Lanjutan",
-  "version": "1.0.0",
+  "version": "2.7.0",
   "kategori": [
     "Koleksi & Inovasi",
     "Pengembangan Perangkat Lunak"
   ],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
   "description": "Pusat pembelajaran terintegrasi untuk pemula hingga ahli, mencakup pemilihan bahasa, dasar-dasar pemrograman, debugging, dan konsep lanjutan seperti AI, keamanan siber, dan blockchain.",
   "perspektif_user": "Sebagai seseorang yang ingin belajar atau memperdalam ilmu pemrograman, saya memerlukan satu tempat untuk mendapatkan bimbingan, mulai dari memilih bahasa pertama, memahami dasar-dasarnya, hingga menjelajahi topik-topik canggih seperti AI dan keamanan siber.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Tutor Pemrograman yang akan mengajarkan konsep pemrograman dan teknologi.",
@@ -210,5 +214,5 @@
   "contoh_kalimat": "Bantu saya memahami dasar-dasar pemrograman Python, khususnya tentang loop.",
   "output": "natural_language_prompt",
   "crossValidationRules": [],
-  "updated_at": "2025-12-23T06:59:22.856072"
+  "updated_at": "2025-12-23T07:00:00.856072"
 }
