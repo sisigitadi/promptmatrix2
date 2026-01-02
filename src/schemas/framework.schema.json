@@ -181,7 +181,13 @@
   },
   "required": [
     "description",
-    "toolType"
+    "toolType",
+    "examples",
+    "temperature",
+    "top_p",
+    "top_k",
+    "version",
+    "updated_at"
   ],
   "properties": {
     "temperature": {
@@ -236,6 +242,11 @@
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "description": "Version of the framework (e.g., '1.0.0')."
+    },
+    "updated_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z)?$",
+      "description": "Last update timestamp for the framework metadata."
     },
     "kategori": {
       "type": "array",

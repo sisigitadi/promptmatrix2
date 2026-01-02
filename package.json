@@ -6,7 +6,8 @@
   "homepage": "https://sisigitadi.github.io/promptmatrix2/",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:frameworks && node scripts/validate-frameworks.js && node scripts/generate-docs-list.js && npm run lint:fix && vite build",
+    "build": "npm run audit:frameworks && npm run build:frameworks && node scripts/validate-frameworks.js && node scripts/generate-docs-list.js && npm run lint:fix && vite build",
+    "audit:frameworks": "node scripts/audit-framework-metadata.js",
     "build:frameworks": "node scripts/build-frameworks.js",
     "preview": "vite preview",
     "lint": "eslint \"./src/**/*.{ts,tsx}\"",
