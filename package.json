@@ -15,7 +15,8 @@
     "test": "set NODE_OPTIONS=--experimental-vm-modules && jest",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "validate:frameworks": "node scripts/validate-frameworks.js",
+    "validate:frameworks": "node scripts/validate-frameworks.js && npm run validate:komponen",
+    "validate:komponen": "node scripts/validate-komponen-prompt.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "prepare": "husky"
@@ -24,6 +25,9 @@
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
+    ],
+    "src/data/frameworks/**/*.json": [
+      "node scripts/validate-komponen-prompt.js"
     ]
   },
   "dependencies": {
