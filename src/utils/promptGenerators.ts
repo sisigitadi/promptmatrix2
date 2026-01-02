@@ -324,27 +324,6 @@ export const generatePrompt = (
     prompt += `**Format Output:**\n${replacePlaceholders(formatOutput, allValues, customInputs)}\n`;
   }
 
-  const unreferencedInputs = collectUnreferencedInputs(
-    allComponents,
-    [
-      PERAN,
-      KONTEKS,
-      tugasTemplate,
-      formatOutput,
-      framework.konteks_tambahan_instruksi_khusus,
-    ],
-    allValues,
-    customInputs,
-  );
-
-  if (unreferencedInputs.length > 0) {
-    prompt += `\n**Detail Input Tambahan:**\n`;
-    unreferencedInputs.forEach(({ comp, value }) => {
-      const label = comp.label || comp.description || comp.name;
-      prompt += `- ${label}: ${value}\n`;
-    });
-  }
-
   return prompt.trim();
 };
 
@@ -459,7 +438,9 @@ export const generateUserPreviewPrompt = (
     previewContent += `${framework.ai_logic_description.replace(/\*\*/g, "")}\n\n`;
   }
 
-  if (hasInputs) {
+  const isPromptProyek = framework.kategori?.includes("Prompt Proyek");
+
+  if (hasInputs && isPromptProyek) {
     const unreferencedInputs = collectUnreferencedInputs(
       allComponents,
       [
