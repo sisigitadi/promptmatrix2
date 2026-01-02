@@ -121,6 +121,18 @@ const collectUnreferencedInputs = (
     );
 };
 
+const collectFilledInputs = (
+  components: FrameworkComponent[],
+  params: FormData,
+  customInputs: CustomInputs,
+) =>
+  components
+    .map((comp) => ({
+      comp,
+      value: formatComponentValue(comp, params, customInputs),
+    }))
+    .filter(({ value }) => value && value.trim() !== "");
+
 // Helper: Process Conditional Blocks [...]
 const processConditionalBlocks = (
   template: string,
@@ -441,22 +453,15 @@ export const generateUserPreviewPrompt = (
   const isPromptProyek = framework.kategori?.includes("Prompt Proyek");
 
   if (hasInputs && isPromptProyek) {
-    const unreferencedInputs = collectUnreferencedInputs(
+    const filledInputs = collectFilledInputs(
       allComponents,
-      [
-        effectiveKomponenPrompt?.PERAN,
-        effectiveKomponenPrompt?.KONTEKS,
-        effectiveKomponenPrompt?.TUGAS,
-        effectiveKomponenPrompt?.FORMAT_OUTPUT,
-        framework.konteks_tambahan_instruksi_khusus,
-      ],
       params,
       customInputs,
     );
 
-    if (unreferencedInputs.length > 0) {
-      previewContent += `Detail input yang Anda berikan:\n`;
-      unreferencedInputs.forEach(({ comp, value }) => {
+    if (filledInputs.length > 0) {
+      previewContent += `Ringkasan input yang Anda isi:\n`;
+      filledInputs.forEach(({ comp, value }) => {
         const label = comp.label || comp.description || comp.name;
         previewContent += `- ${label}: ${value}\n`;
       });
