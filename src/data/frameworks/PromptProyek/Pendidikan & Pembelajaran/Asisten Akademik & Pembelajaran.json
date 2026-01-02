@@ -8,10 +8,22 @@
       "label": "Jenis Bantuan Akademik",
       "type": "select",
       "options": [
-        "Rencana Belajar",
-        "Materi Belajar (Kuis/Flashcard)",
-        "Rencana Mengajar (RPP)",
-        "Ide Topik Diskusi",
+        {
+          "label": "Study Plan (Rencana Belajar)",
+          "value": "Rencana Belajar"
+        },
+        {
+          "label": "Learning Materials (Materi Belajar - Kuis/Flashcard)",
+          "value": "Materi Belajar (Kuis/Flashcard)"
+        },
+        {
+          "label": "Lesson Plan (Rencana Mengajar/RPP)",
+          "value": "Rencana Mengajar (RPP)"
+        },
+        {
+          "label": "Discussion Topic Ideas (Ide Topik Diskusi)",
+          "value": "Ide Topik Diskusi"
+        },
         "Lainnya..."
       ],
       "info": "Pilih jenis bantuan yang Anda butuhkan.",
@@ -201,6 +213,20 @@
           "validation": {
             "min_length": 10
           }
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "customAssistanceType",
+          "label": "Sebutkan Bantuan Akademik Lainnya",
+          "type": "text",
+          "description": "Tuliskan jenis bantuan atau materi akademik lain yang Anda butuhkan.",
+          "placeholder": "Contoh: Rubrik penilaian, contoh soal praktikum, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Isi kolom ini saat memilih 'Lainnya...' untuk menjelaskan kebutuhan khusus."
         }
       ]
     }

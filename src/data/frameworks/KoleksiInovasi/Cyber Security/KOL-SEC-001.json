@@ -23,18 +23,54 @@
       "optional": false,
       "default": "Intelijen Sumber Terbuka (OSINT)",
       "options": [
-        "Intelijen Sumber Terbuka (OSINT)",
-        "Pengintaian & Pemetaan Aset (Reconnaissance & Asset Discovery)",
-        "Pengujian Keamanan Aplikasi (Application Security Testing)",
-        "Rekayasa Sosial (Social Engineering)",
-        "Eksekusi Akses Awal (Initial Access Execution)",
-        "Strategi Persistensi (Persistence Strategy)",
-        "Eskalasi Hak (Privilege Escalation)",
-        "Penghindaran Pertahanan (Defense Evasion)",
-        "Gerakan Lateral (Lateral Movement)",
-        "Pengumpulan Data (Collection)",
-        "Desain Infrastruktur C2 (C2 Infrastructure Design)",
-        "Perencanaan Kampanye Red Team (Red Team Campaign Plan)",
+        {
+          "label": "Open-Source Intelligence (Intelijen Sumber Terbuka/OSINT)",
+          "value": "Intelijen Sumber Terbuka (OSINT)"
+        },
+        {
+          "label": "Reconnaissance & Asset Discovery (Pengintaian & Pemetaan Aset)",
+          "value": "Pengintaian & Pemetaan Aset (Reconnaissance & Asset Discovery)"
+        },
+        {
+          "label": "Application Security Testing (Pengujian Keamanan Aplikasi)",
+          "value": "Pengujian Keamanan Aplikasi (Application Security Testing)"
+        },
+        {
+          "label": "Social Engineering (Rekayasa Sosial)",
+          "value": "Rekayasa Sosial (Social Engineering)"
+        },
+        {
+          "label": "Initial Access Execution (Eksekusi Akses Awal)",
+          "value": "Eksekusi Akses Awal (Initial Access Execution)"
+        },
+        {
+          "label": "Persistence Strategy (Strategi Persistensi)",
+          "value": "Strategi Persistensi (Persistence Strategy)"
+        },
+        {
+          "label": "Privilege Escalation (Eskalasi Hak)",
+          "value": "Eskalasi Hak (Privilege Escalation)"
+        },
+        {
+          "label": "Defense Evasion (Penghindaran Pertahanan)",
+          "value": "Penghindaran Pertahanan (Defense Evasion)"
+        },
+        {
+          "label": "Lateral Movement (Gerakan Lateral)",
+          "value": "Gerakan Lateral (Lateral Movement)"
+        },
+        {
+          "label": "Collection (Pengumpulan Data)",
+          "value": "Pengumpulan Data (Collection)"
+        },
+        {
+          "label": "C2 Infrastructure Design (Desain Infrastruktur C2)",
+          "value": "Desain Infrastruktur C2 (C2 Infrastructure Design)"
+        },
+        {
+          "label": "Red Team Campaign Plan (Perencanaan Kampanye Red Team)",
+          "value": "Perencanaan Kampanye Red Team (Red Team Campaign Plan)"
+        },
         "Lainnya..."
       ]
     }
@@ -396,6 +432,20 @@
             "info": "Batasan dan aturan main yang telah disepakati untuk kampanye ini.",
             "optional": false,
             "description": "Aturan main dan batasan kampanye."
+          }
+        ],
+        "Lainnya...": [
+          {
+            "name": "custom_RED_TEAM_TACTIC",
+            "label": "Sebutkan Taktik Red Team Lainnya",
+            "type": "text",
+            "description": "Tuliskan taktik khusus yang ingin Anda rencanakan jika tidak ada di daftar.",
+            "placeholder": "Contoh: Operasi living-off-the-land spesifik, eksperimen supply chain, dsb.",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Isian ini wajib diisi saat memilih 'Lainnya...'."
           }
         ]
       }

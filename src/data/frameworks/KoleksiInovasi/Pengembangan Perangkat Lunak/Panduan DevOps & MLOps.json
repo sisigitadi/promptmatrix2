@@ -15,13 +15,34 @@
       "label": "Tugas Operasional",
       "type": "select",
       "options": [
-        "Manajemen Proyek Agile",
-        "Manajemen Dependensi & Versi",
-        "Containerization & Deployment",
-        "Bangun CI/CD Pipeline",
-        "Monitoring & Logging",
-        "Infrastructure as Code (IaC)",
-        "Alur Kerja Data Science",
+        {
+          "label": "Agile Project Management (Manajemen Proyek Agile)",
+          "value": "Manajemen Proyek Agile"
+        },
+        {
+          "label": "Dependency & Version Management (Manajemen Dependensi & Versi)",
+          "value": "Manajemen Dependensi & Versi"
+        },
+        {
+          "label": "Containerization & Deployment (Kontainerisasi & Deployment)",
+          "value": "Containerization & Deployment"
+        },
+        {
+          "label": "CI/CD Pipeline Building (Bangun CI/CD Pipeline)",
+          "value": "Bangun CI/CD Pipeline"
+        },
+        {
+          "label": "Monitoring & Logging (Pemantauan & Logging)",
+          "value": "Monitoring & Logging"
+        },
+        {
+          "label": "Infrastructure as Code (Infrastruktur sebagai Kode/IaC)",
+          "value": "Infrastructure as Code (IaC)"
+        },
+        {
+          "label": "Data Science Workflow (Alur Kerja Data Science)",
+          "value": "Alur Kerja Data Science"
+        },
         "Lainnya..."
       ],
       "description": "Pilih tugas operasional utama yang ingin Anda lakukan.",
@@ -301,6 +322,10 @@
             "type": "textarea",
             "description": "Jelaskan secara rinci tugas operasional spesifik yang ingin Anda lakukan.",
             "placeholder": "e.g., 'Melakukan audit keamanan pada infrastruktur cloud', 'Merancang strategi pemulihan bencana'",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
             "info": "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan."
           }
         ]

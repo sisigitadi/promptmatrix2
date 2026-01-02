@@ -8,9 +8,18 @@
       "label": "Jenis Aset Branding",
       "type": "select",
       "options": [
-        "Nama Brand",
-        "Slogan/Tagline",
-        "Konsep Logo",
+        {
+          "label": "Brand Name (Nama Brand)",
+          "value": "Nama Brand"
+        },
+        {
+          "label": "Slogan/Tagline",
+          "value": "Slogan/Tagline"
+        },
+        {
+          "label": "Logo Concept (Konsep Logo)",
+          "value": "Konsep Logo"
+        },
         "Lainnya..."
       ],
       "info": "Pilih aset branding yang Anda butuhkan.",
@@ -166,6 +175,20 @@
             "Lainnya..."
           ],
           "info": "Pilih gaya visual keseluruhan untuk logo."
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "customAssetType",
+          "label": "Sebutkan Aset Branding Lainnya",
+          "type": "text",
+          "description": "Tuliskan aset branding lain yang Anda butuhkan.",
+          "placeholder": "Contoh: Panduan brand voice, template kemasan, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Isi kolom ini saat memilih 'Lainnya...' agar output dapat dipersonalisasi."
         }
       ]
     }

@@ -8,13 +8,34 @@
       "label": "Jenis Konten",
       "type": "select",
       "options": [
-        "Artikel Blog",
-        "Post Media Sosial",
-        "Deskripsi Produk",
-        "Skrip Video Pendek",
-        "Resensi",
-        "Lirik Lagu",
-        "Naskah Iklan",
+        {
+          "label": "Blog Article (Artikel Blog)",
+          "value": "Artikel Blog"
+        },
+        {
+          "label": "Social Media Post (Post Media Sosial)",
+          "value": "Post Media Sosial"
+        },
+        {
+          "label": "Product Description (Deskripsi Produk)",
+          "value": "Deskripsi Produk"
+        },
+        {
+          "label": "Short Video Script (Skrip Video Pendek)",
+          "value": "Skrip Video Pendek"
+        },
+        {
+          "label": "Review (Resensi)",
+          "value": "Resensi"
+        },
+        {
+          "label": "Song Lyrics (Lirik Lagu)",
+          "value": "Lirik Lagu"
+        },
+        {
+          "label": "Ad Copy/Script (Naskah Iklan)",
+          "value": "Naskah Iklan"
+        },
         "Lainnya..."
       ],
       "info": "Pilih jenis konten yang ingin Anda hasilkan."
@@ -414,6 +435,20 @@
             "Lainnya..."
           ],
           "info": "Pilih panjang teks iklan yang diinginkan."
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "customContentType",
+          "label": "Sebutkan Jenis Konten Lainnya",
+          "type": "text",
+          "description": "Tuliskan jenis konten lain yang ingin Anda buat.",
+          "placeholder": "Contoh: Whitepaper teknis, skrip podcast, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Isi saat memilih 'Lainnya...' agar AI memahami format yang diinginkan."
         }
       ]
     }

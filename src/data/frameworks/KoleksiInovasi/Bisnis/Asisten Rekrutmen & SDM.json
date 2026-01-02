@@ -15,10 +15,22 @@
       "label": "Tugas Rekrutmen atau SDM",
       "type": "select",
       "options": [
-        "Pembuat Deskripsi Pekerjaan",
-        "Generator Pertanyaan Wawancara",
-        "Penyusun Rencana Onboarding",
-        "Pembuat Draf Email Rekrutmen",
+        {
+          "label": "Job Description Writer (Pembuat Deskripsi Pekerjaan)",
+          "value": "Pembuat Deskripsi Pekerjaan"
+        },
+        {
+          "label": "Interview Question Generator (Generator Pertanyaan Wawancara)",
+          "value": "Generator Pertanyaan Wawancara"
+        },
+        {
+          "label": "Onboarding Plan Builder (Penyusun Rencana Onboarding)",
+          "value": "Penyusun Rencana Onboarding"
+        },
+        {
+          "label": "Recruitment Email Drafter (Pembuat Draf Email Rekrutmen)",
+          "value": "Pembuat Draf Email Rekrutmen"
+        },
         "Lainnya..."
       ],
       "default": "Pembuat Deskripsi Pekerjaan",
@@ -83,9 +95,18 @@
             "label": "Jenis Email",
             "type": "select",
             "options": [
-              "Undangan Wawancara",
-              "Surat Penolakan Kandidat",
-              "Surat Penawaran Kerja",
+              {
+                "label": "Interview Invitation (Undangan Wawancara)",
+                "value": "Undangan Wawancara"
+              },
+              {
+                "label": "Rejection Letter (Surat Penolakan Kandidat)",
+                "value": "Surat Penolakan Kandidat"
+              },
+              {
+                "label": "Offer Letter (Surat Penawaran Kerja)",
+                "value": "Surat Penawaran Kerja"
+              },
               "Lainnya..."
             ],
             "default": "Undangan Wawancara",
@@ -97,6 +118,20 @@
             "type": "text",
             "placeholder": "Contoh: Budi Santoso",
             "info": "Nama kandidat untuk personalisasi email."
+          }
+        ],
+        "Lainnya...": [
+          {
+            "name": "custom_TUGAS_SDM",
+            "label": "Sebutkan Tugas Rekrutmen/SDM Lainnya",
+            "type": "text",
+            "description": "Tuliskan tugas HR lain yang ingin Anda otomatiskan.",
+            "placeholder": "Contoh: Survei keterlibatan, penyusunan KPI, dsb.",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Kolom ini wajib diisi saat Anda memilih 'Lainnya...'."
           }
         ]
       }

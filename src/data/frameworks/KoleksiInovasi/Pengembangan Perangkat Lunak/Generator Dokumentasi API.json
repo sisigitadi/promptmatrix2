@@ -25,11 +25,26 @@
       "label": "Metode HTTP",
       "type": "select",
       "options": [
-        "GET",
-        "POST",
-        "PUT",
-        "DELETE",
-        "PATCH",
+        {
+          "label": "GET (Ambil data)",
+          "value": "GET"
+        },
+        {
+          "label": "POST (Buat data)",
+          "value": "POST"
+        },
+        {
+          "label": "PUT (Perbarui penuh)",
+          "value": "PUT"
+        },
+        {
+          "label": "DELETE (Hapus data)",
+          "value": "DELETE"
+        },
+        {
+          "label": "PATCH (Perbarui parsial)",
+          "value": "PATCH"
+        },
         "Lainnya..."
       ],
       "default": "GET",
@@ -89,34 +104,70 @@
       "label": "Metode Autentikasi",
       "type": "select",
       "options": [
-        "Tidak Ada",
-        "API Key (Header)",
-        "Bearer Token (Header)",
-        "OAuth2",
+        {
+          "label": "No Auth (Tidak Ada)",
+          "value": "Tidak Ada"
+        },
+        {
+          "label": "API Key (Header)",
+          "value": "API Key (Header)"
+        },
+        {
+          "label": "Bearer Token (Header)",
+          "value": "Bearer Token (Header)"
+        },
+        {
+          "label": "OAuth 2.0",
+          "value": "OAuth2"
+        },
         "Lainnya..."
       ],
       "default": "Tidak Ada",
       "info": "Pilih metode autentikasi yang diperlukan untuk mengakses endpoint ini."
     }
   ],
-  "dynamicSubcomponents": {
-    "trigger": "AUTH_METHOD",
-    "options": {
-      "Lainnya...": [
-        {
-          "name": "AUTH_METHOD_LAINNYA",
-          "label": "Sebutkan Metode Autentikasi Lainnya",
-          "type": "text",
-          "placeholder": "Contoh: Basic Auth",
-          "info": "Jelaskan metode autentikasi kustom Anda."
-        }
-      ]
+  "dynamicSubcomponents": [
+    {
+      "trigger": "AUTH_METHOD",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "AUTH_METHOD_LAINNYA",
+            "label": "Sebutkan Metode Autentikasi Lainnya",
+            "type": "text",
+            "placeholder": "Contoh: Basic Auth",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Jelaskan metode autentikasi kustom Anda."
+          }
+        ]
+      }
+    },
+    {
+      "trigger": "HTTP_METHOD",
+      "options": {
+        "Lainnya...": [
+          {
+            "name": "HTTP_METHOD_LAINNYA",
+            "label": "Sebutkan Metode HTTP Lainnya",
+            "type": "text",
+            "placeholder": "Contoh: OPTIONS",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Isi jika metode HTTP yang Anda pakai tidak ada di daftar."
+          }
+        ]
+      }
     }
-  },
+  ],
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Technical Writer profesional yang sangat teliti, bertugas membuat dokumentasi API yang jelas, akurat, dan mudah diikuti untuk developer lain.",
     "KONTEKS": "Anda akan diberikan detail sebuah endpoint API. Tugas Anda adalah mengubah detail teknis ini menjadi blok dokumentasi Markdown yang terstruktur dengan baik dan siap digunakan.",
-    "TUGAS": "Buat dokumentasi Markdown untuk endpoint berikut:\n\n**Endpoint:** `{HTTP_METHOD} {ENDPOINT_URL}`\n\n**Deskripsi:**\n{ENDPOINT_DESCRIPTION}\n\n**Autentikasi:**\n{{#if AUTH_METHOD === 'Lainnya...'}}{AUTH_METHOD_LAINNYA}{else}{AUTH_METHOD}{{/if}}\n\n{{#if PATH_PARAMETERS}}**Parameter Path:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split PATH_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if QUERY_PARAMETERS}}**Parameter Query:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split QUERY_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if REQUEST_BODY}}**Contoh Request Body:**\n```json\n{REQUEST_BODY}\n```\n{{/if}}\n\n**Contoh Response:**\n*   **200 OK (Sukses):**\n    ```json\n    {SUCCESS_RESPONSE}\n    ```\n{{#if ERROR_RESPONSE}}*   **Contoh Error:**\n    ```json\n    {ERROR_RESPONSE}\n    ```\n{{/if}}",
+    "TUGAS": "Buat dokumentasi Markdown untuk endpoint berikut:\n\n**Endpoint:** `{{#if HTTP_METHOD === 'Lainnya...'}}{HTTP_METHOD_LAINNYA}{{else}}{HTTP_METHOD}{{/if}} {ENDPOINT_URL}`\n\n**Deskripsi:**\n{ENDPOINT_DESCRIPTION}\n\n**Autentikasi:**\n{{#if AUTH_METHOD === 'Lainnya...'}}{AUTH_METHOD_LAINNYA}{else}{AUTH_METHOD}{{/if}}\n\n{{#if PATH_PARAMETERS}}**Parameter Path:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split PATH_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if QUERY_PARAMETERS}}**Parameter Query:**\n| Nama | Tipe | Deskripsi |\n|---|---|---|\n{{#each (split QUERY_PARAMETERS '\n')}}{{#with (split this ':')}}| `{{this.[0]}}` | `{{this.[1]}}` | {{this.[2]}} |\n{{/with}}{{/each}}{{/if}}\n\n{{#if REQUEST_BODY}}**Contoh Request Body:**\n```json\n{REQUEST_BODY}\n```\n{{/if}}\n\n**Contoh Response:**\n*   **200 OK (Sukses):**\n    ```json\n    {SUCCESS_RESPONSE}\n    ```\n{{#if ERROR_RESPONSE}}*   **Contoh Error:**\n    ```json\n    {ERROR_RESPONSE}\n    ```\n{{/if}}",
     "FORMAT_OUTPUT": "Gunakan format Markdown. Gunakan heading, list, tabel, dan blok kode untuk keterbacaan maksimal. Pastikan tabel untuk parameter diformat dengan benar."
   },
   "toolType": "code",

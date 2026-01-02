@@ -23,18 +23,54 @@
       "optional": false,
       "default": "Validasi Deteksi Taktis (Tactical Detection Validation)",
       "options": [
-        "Validasi Deteksi Taktis (Tactical Detection Validation)",
-        "Penyesuaian & Pengoptimalan Aturan (Rule Tuning & Optimization)",
-        "Evaluasi Alat Keamanan (Security Tooling Evaluation)",
-        "Pemodelan Ancaman Kolaboratif (Collaborative Threat Modeling)",
-        "Sesi Rekayasa Deteksi (Detection Engineering Session)",
-        "Desain Skenario BAS (BAS Scenario Design)",
-        "Sesi Perburuan Terpandu (Guided Hunting Session)",
-        "Pengujian Efektivitas Kontrol Keamanan (Security Control Efficacy Testing)",
-        "Analisis Kesenjangan Pertahanan (Defense Gap Analysis)",
-        "Post-Mortem Insiden Kolaboratif (Collaborative Incident Post-Mortem)",
-        "Debriefing & Laporan Latihan Gabungan (Joint Exercise Debrief & Reporting)",
-        "Pengukuran & Pelaporan Program Keamanan (Security Program Metrics & Reporting)",
+        {
+          "label": "Tactical Detection Validation (Validasi Deteksi Taktis)",
+          "value": "Validasi Deteksi Taktis (Tactical Detection Validation)"
+        },
+        {
+          "label": "Rule Tuning & Optimization (Penyesuaian & Pengoptimalan Aturan)",
+          "value": "Penyesuaian & Pengoptimalan Aturan (Rule Tuning & Optimization)"
+        },
+        {
+          "label": "Security Tooling Evaluation (Evaluasi Alat Keamanan)",
+          "value": "Evaluasi Alat Keamanan (Security Tooling Evaluation)"
+        },
+        {
+          "label": "Collaborative Threat Modeling (Pemodelan Ancaman Kolaboratif)",
+          "value": "Pemodelan Ancaman Kolaboratif (Collaborative Threat Modeling)"
+        },
+        {
+          "label": "Detection Engineering Session (Sesi Rekayasa Deteksi)",
+          "value": "Sesi Rekayasa Deteksi (Detection Engineering Session)"
+        },
+        {
+          "label": "BAS Scenario Design (Desain Skenario BAS)",
+          "value": "Desain Skenario BAS (BAS Scenario Design)"
+        },
+        {
+          "label": "Guided Hunting Session (Sesi Perburuan Terpandu)",
+          "value": "Sesi Perburuan Terpandu (Guided Hunting Session)"
+        },
+        {
+          "label": "Security Control Efficacy Testing (Pengujian Efektivitas Kontrol Keamanan)",
+          "value": "Pengujian Efektivitas Kontrol Keamanan (Security Control Efficacy Testing)"
+        },
+        {
+          "label": "Defense Gap Analysis (Analisis Kesenjangan Pertahanan)",
+          "value": "Analisis Kesenjangan Pertahanan (Defense Gap Analysis)"
+        },
+        {
+          "label": "Collaborative Incident Post-Mortem (Post-Mortem Insiden Kolaboratif)",
+          "value": "Post-Mortem Insiden Kolaboratif (Collaborative Incident Post-Mortem)"
+        },
+        {
+          "label": "Joint Exercise Debrief & Reporting (Debriefing & Laporan Latihan Gabungan)",
+          "value": "Debriefing & Laporan Latihan Gabungan (Joint Exercise Debrief & Reporting)"
+        },
+        {
+          "label": "Security Program Metrics & Reporting (Pengukuran & Pelaporan Program Keamanan)",
+          "value": "Pengukuran & Pelaporan Program Keamanan (Security Program Metrics & Reporting)"
+        },
         "Lainnya..."
       ]
     }
@@ -427,6 +463,20 @@
           "info": "Siapa yang akan menerima laporan ini? Ini akan mempengaruhi tingkat detail dan bahasa yang digunakan.",
           "optional": false,
           "description": "Audiens utama laporan."
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "custom_PURPLE_TEAM_ACTIVITY",
+          "label": "Sebutkan Aktivitas Purple Team Lainnya",
+          "type": "text",
+          "description": "Tuliskan aktivitas kolaboratif lain yang ingin Anda fasilitasi.",
+          "placeholder": "Contoh: Evaluasi tabletop gabungan, simulasi respon real-time, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Isikan detail ini saat memilih 'Lainnya...' agar agenda dapat dipersonalisasi."
         }
       ]
     }

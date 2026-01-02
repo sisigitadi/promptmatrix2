@@ -15,10 +15,22 @@
       "label": "Tugas Manajemen Produk",
       "type": "select",
       "options": [
-        "Penulis Dokumen Persyaratan Produk (PRD)",
-        "Generator Peta Jalan Produk (Roadmap)",
-        "Asisten Prioritas Fitur",
-        "Penulis Cerita Pengguna (User Story)",
+        {
+          "label": "Product Requirements Doc Writer (Penulis Dokumen Persyaratan Produk (PRD))",
+          "value": "Penulis Dokumen Persyaratan Produk (PRD)"
+        },
+        {
+          "label": "Product Roadmap Generator (Generator Peta Jalan Produk (Roadmap))",
+          "value": "Generator Peta Jalan Produk (Roadmap)"
+        },
+        {
+          "label": "Feature Prioritization Assistant (Asisten Prioritas Fitur)",
+          "value": "Asisten Prioritas Fitur"
+        },
+        {
+          "label": "User Story Writer (Penulis Cerita Pengguna (User Story))",
+          "value": "Penulis Cerita Pengguna (User Story)"
+        },
         "Lainnya..."
       ],
       "default": "Penulis Dokumen Persyaratan Produk (PRD)",
@@ -74,8 +86,14 @@
             "label": "Kerangka Prioritas",
             "type": "select",
             "options": [
-              "RICE (Reach, Impact, Confidence, Effort)",
-              "MoSCoW (Must, Should, Could, Won't)",
+              {
+                "label": "RICE Scoring (RICE: Reach, Impact, Confidence, Effort)",
+                "value": "RICE (Reach, Impact, Confidence, Effort)"
+              },
+              {
+                "label": "MoSCoW Prioritization (MoSCoW: Must, Should, Could, Won't)",
+                "value": "MoSCoW (Must, Should, Could, Won't)"
+              },
               "Lainnya..."
             ],
             "default": "RICE (Reach, Impact, Confidence, Effort)",
@@ -89,6 +107,20 @@
             "type": "textarea",
             "placeholder": "Contoh: Pengguna ingin bisa memfilter produk berdasarkan warna agar lebih cepat menemukan barang.",
             "info": "Jelaskan kebutuhan dari sudut pandang pengguna."
+          }
+        ],
+        "Lainnya...": [
+          {
+            "name": "custom_TUGAS_MANAJEMEN_PRODUK",
+            "label": "Sebutkan Tugas Manajemen Produk Lainnya",
+            "type": "text",
+            "description": "Tuliskan tugas produk lain yang ingin Anda kerjakan.",
+            "placeholder": "Contoh: Riset kompetitor, analisis kohort pengguna, dsb.",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Isi wajib saat memilih 'Lainnya...'."
           }
         ]
       }

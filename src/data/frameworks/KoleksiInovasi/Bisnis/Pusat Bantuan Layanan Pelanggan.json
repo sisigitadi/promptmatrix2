@@ -15,10 +15,22 @@
       "label": "Tugas Layanan Pelanggan",
       "type": "select",
       "options": [
-        "Generator Templat Respons",
-        "Penyusun Skrip Eskalasi Masalah",
-        "Pembuat Konten Halaman FAQ",
-        "Analisis Umpan Balik Pelanggan",
+        {
+          "label": "Response Template Generator (Generator Templat Respons)",
+          "value": "Generator Templat Respons"
+        },
+        {
+          "label": "Escalation Script Builder (Penyusun Skrip Eskalasi Masalah)",
+          "value": "Penyusun Skrip Eskalasi Masalah"
+        },
+        {
+          "label": "FAQ Content Creator (Pembuat Konten Halaman FAQ)",
+          "value": "Pembuat Konten Halaman FAQ"
+        },
+        {
+          "label": "Customer Feedback Analysis (Analisis Umpan Balik Pelanggan)",
+          "value": "Analisis Umpan Balik Pelanggan"
+        },
         "Lainnya..."
       ],
       "default": "Generator Templat Respons",
@@ -42,9 +54,18 @@
             "label": "Nada Suara Respons",
             "type": "select",
             "options": [
-              "Empatik & Profesional",
-              "Cepat & Efisien",
-              "Sangat Sopan & Formal",
+              {
+                "label": "Empathetic & Professional (Empatik & Profesional)",
+                "value": "Empatik & Profesional"
+              },
+              {
+                "label": "Fast & Efficient (Cepat & Efisien)",
+                "value": "Cepat & Efisien"
+              },
+              {
+                "label": "Highly Polite & Formal (Sangat Sopan & Formal)",
+                "value": "Sangat Sopan & Formal"
+              },
               "Lainnya..."
             ],
             "default": "Empatik & Profesional",
@@ -84,6 +105,20 @@
             "type": "textarea",
             "placeholder": "Salin dan tempel beberapa ulasan pelanggan dari Google Reviews, App Store, atau survei di sini...",
             "info": "AI akan menganalisis teks ini untuk menemukan tema umum."
+          }
+        ],
+        "Lainnya...": [
+          {
+            "name": "custom_TUGAS_LAYANAN_PELANGGAN",
+            "label": "Sebutkan Tugas Layanan Pelanggan Lainnya",
+            "type": "text",
+            "description": "Tuliskan tugas dukungan pelanggan lain yang ingin Anda kerjakan.",
+            "placeholder": "Contoh: Audit quality assurance, pembuatan makro response, dsb.",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Wajib diisi saat memilih 'Lainnya...' agar AI memahami konteks kustom Anda."
           }
         ]
       }

@@ -18,9 +18,18 @@
       "default": "Deskripsikan Gambar",
       "optional": false,
       "options": [
-        "Deskripsikan Gambar",
-        "Transkripsikan Audio",
-        "Analisis Gambar dengan Konteks Teks",
+        {
+          "label": "Image Description (Deskripsikan Gambar)",
+          "value": "Deskripsikan Gambar"
+        },
+        {
+          "label": "Audio Transcription (Transkripsikan Audio)",
+          "value": "Transkripsikan Audio"
+        },
+        {
+          "label": "Vision + Text Analysis (Analisis Gambar dengan Konteks Teks)",
+          "value": "Analisis Gambar dengan Konteks Teks"
+        },
         "Lainnya..."
       ],
       "info": "Pilihan Anda akan menampilkan kolom input yang sesuai untuk tugas tersebut."
@@ -66,6 +75,20 @@
           "optional": false,
           "placeholder": "Contoh: Apa hubungan antara objek di latar depan dengan tulisan di latar belakang gambar ini?",
           "info": "Teks ini akan memberikan konteks kepada AI untuk menganalisis gambar lebih dalam."
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "custom_TUGAS_MULTIMODAL",
+          "label": "Sebutkan Tugas Analisis Lainnya",
+          "type": "text",
+          "description": "Tuliskan jenis tugas analisis lain yang Anda butuhkan jika tidak ada pada daftar.",
+          "placeholder": "Contoh: Deteksi kualitas cetakan, analisis watermark, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Kolom ini muncul otomatis ketika Anda memilih 'Lainnya...' dan wajib diisi."
         }
       ]
     }

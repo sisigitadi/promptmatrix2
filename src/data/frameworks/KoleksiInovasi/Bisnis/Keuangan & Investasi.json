@@ -15,10 +15,22 @@
       "label": "Jenis Analisis Keuangan",
       "type": "select",
       "options": [
-        "Perencanaan Strategi Investasi",
-        "Analisis Saham Tunggal",
-        "Perbandingan Produk Investasi",
-        "Simulasi Proyeksi Dana",
+        {
+          "label": "Investment Strategy Planning (Perencanaan Strategi Investasi)",
+          "value": "Perencanaan Strategi Investasi"
+        },
+        {
+          "label": "Single Stock Analysis (Analisis Saham Tunggal)",
+          "value": "Analisis Saham Tunggal"
+        },
+        {
+          "label": "Investment Product Comparison (Perbandingan Produk Investasi)",
+          "value": "Perbandingan Produk Investasi"
+        },
+        {
+          "label": "Fund Projection Simulation (Simulasi Proyeksi Dana)",
+          "value": "Simulasi Proyeksi Dana"
+        },
         "Lainnya..."
       ],
       "default": "Perencanaan Strategi Investasi",
@@ -49,9 +61,18 @@
             "label": "Toleransi Risiko Anda",
             "type": "select",
             "options": [
-              "Konservatif",
-              "Moderat",
-              "Agresif",
+              {
+                "label": "Conservative (Konservatif)",
+                "value": "Konservatif"
+              },
+              {
+                "label": "Moderate (Moderat)",
+                "value": "Moderat"
+              },
+              {
+                "label": "Aggressive (Agresif)",
+                "value": "Agresif"
+              },
               "Lainnya..."
             ],
             "default": "Moderat",
@@ -78,9 +99,18 @@
             "label": "Fokus Analisis",
             "type": "multiselect",
             "options": [
-              "Analisis Fundamental",
-              "Analisis Teknikal",
-              "Sentimen Berita",
+              {
+                "label": "Fundamental Analysis (Analisis Fundamental)",
+                "value": "Analisis Fundamental"
+              },
+              {
+                "label": "Technical Analysis (Analisis Teknikal)",
+                "value": "Analisis Teknikal"
+              },
+              {
+                "label": "News Sentiment (Sentimen Berita)",
+                "value": "Sentimen Berita"
+              },
               "Lainnya..."
             ],
             "default": [
@@ -109,10 +139,22 @@
             "label": "Metrik Perbandingan",
             "type": "multiselect",
             "options": [
-              "Imbal Hasil (1th, 3th, 5th)",
-              "Tingkat Risiko (Volatility)",
-              "Biaya Manajemen",
-              "Minimum Investasi",
+              {
+                "label": "Return Performance (1th, 3th, 5th)",
+                "value": "Imbal Hasil (1th, 3th, 5th)"
+              },
+              {
+                "label": "Risk Level (Volatility) (Tingkat Risiko (Volatility))",
+                "value": "Tingkat Risiko (Volatility)"
+              },
+              {
+                "label": "Management Fee (Biaya Manajemen)",
+                "value": "Biaya Manajemen"
+              },
+              {
+                "label": "Minimum Investment (Minimum Investasi)",
+                "value": "Minimum Investasi"
+              },
               "Lainnya..."
             ],
             "default": [
@@ -156,6 +198,20 @@
             "step": 1,
             "default": 8,
             "info": "Perkiraan rata-rata keuntungan investasi Anda per tahun."
+          }
+        ],
+        "Lainnya...": [
+          {
+            "name": "custom_TUGAS_ANALISIS_KEUANGAN",
+            "label": "Sebutkan Jenis Analisis Keuangan Lainnya",
+            "type": "text",
+            "description": "Tuliskan analisis keuangan lain yang Anda perlukan.",
+            "placeholder": "Contoh: Analisis obligasi hijau, evaluasi portofolio ESG, dsb.",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Wajib diisi jika Anda memilih 'Lainnya...'."
           }
         ]
       }

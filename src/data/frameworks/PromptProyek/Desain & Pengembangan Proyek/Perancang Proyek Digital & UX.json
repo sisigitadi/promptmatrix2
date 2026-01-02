@@ -8,10 +8,22 @@
       "label": "Jenis Dokumen Proyek",
       "type": "select",
       "options": [
-        "Struktur Website/Aplikasi",
-        "Desain Halaman/Slide",
-        "Konsep MVP/Database",
-        "Strategi Peluncuran",
+        {
+          "label": "Website/App Structure (Struktur Website/Aplikasi)",
+          "value": "Struktur Website/Aplikasi"
+        },
+        {
+          "label": "Page/Slide Design (Desain Halaman/Slide)",
+          "value": "Desain Halaman/Slide"
+        },
+        {
+          "label": "MVP/Database Concept (Konsep MVP/Database)",
+          "value": "Konsep MVP/Database"
+        },
+        {
+          "label": "Launch Strategy (Strategi Peluncuran)",
+          "value": "Strategi Peluncuran"
+        },
         "Lainnya..."
       ],
       "info": "Pilih jenis dokumen perencanaan yang Anda butuhkan."
@@ -179,6 +191,20 @@
           "validation": {
             "min_length": 5
           }
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "customDocumentType",
+          "label": "Sebutkan Dokumen Proyek Lainnya",
+          "type": "text",
+          "description": "Tuliskan jenis dokumen atau blueprint lain yang Anda perlukan.",
+          "placeholder": "Contoh: Rencana migrasi sistem, guideline aksesibilitas, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Wajib diisi saat memilih 'Lainnya...'."
         }
       ]
     }

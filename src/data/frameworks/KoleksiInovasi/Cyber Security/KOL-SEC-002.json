@@ -23,18 +23,54 @@
       "optional": false,
       "default": "Triase Peringatan Keamanan (Alert Triage)",
       "options": [
-        "Triase Peringatan Keamanan (Alert Triage)",
-        "Analisis Email Phishing (Phishing Email Analysis)",
-        "Manajemen Kerentanan (Vulnerability Management)",
-        "Investigasi Ancaman Identitas (Identity Threat Investigation)",
-        "Investigasi Host (Host Investigation)",
-        "Analisis Log Aplikasi & Server (App/Server Log Analysis)",
-        "Analisis Lalu Lintas Jaringan (Network Traffic Analysis)",
-        "Pemantauan Keamanan Cloud (Cloud Security Monitoring)",
-        "Perburuan Ancaman Proaktif (Proactive Threat Hunting)",
-        "Rekayasa Aturan Deteksi (Detection Rule Engineering)",
-        "Operasionalisasi Intelijen Ancaman (Threat Intelligence Operationalization)",
-        "Manajemen Respons Insiden & Forensik (DFIR Management)",
+        {
+          "label": "Alert Triage (Triase Peringatan Keamanan)",
+          "value": "Triase Peringatan Keamanan (Alert Triage)"
+        },
+        {
+          "label": "Phishing Email Analysis (Analisis Email Phishing)",
+          "value": "Analisis Email Phishing (Phishing Email Analysis)"
+        },
+        {
+          "label": "Vulnerability Management (Manajemen Kerentanan)",
+          "value": "Manajemen Kerentanan (Vulnerability Management)"
+        },
+        {
+          "label": "Identity Threat Investigation (Investigasi Ancaman Identitas)",
+          "value": "Investigasi Ancaman Identitas (Identity Threat Investigation)"
+        },
+        {
+          "label": "Host Investigation (Investigasi Host)",
+          "value": "Investigasi Host (Host Investigation)"
+        },
+        {
+          "label": "App/Server Log Analysis (Analisis Log Aplikasi & Server)",
+          "value": "Analisis Log Aplikasi & Server (App/Server Log Analysis)"
+        },
+        {
+          "label": "Network Traffic Analysis (Analisis Lalu Lintas Jaringan)",
+          "value": "Analisis Lalu Lintas Jaringan (Network Traffic Analysis)"
+        },
+        {
+          "label": "Cloud Security Monitoring (Pemantauan Keamanan Cloud)",
+          "value": "Pemantauan Keamanan Cloud (Cloud Security Monitoring)"
+        },
+        {
+          "label": "Proactive Threat Hunting (Perburuan Ancaman Proaktif)",
+          "value": "Perburuan Ancaman Proaktif (Proactive Threat Hunting)"
+        },
+        {
+          "label": "Detection Rule Engineering (Rekayasa Aturan Deteksi)",
+          "value": "Rekayasa Aturan Deteksi (Detection Rule Engineering)"
+        },
+        {
+          "label": "Threat Intelligence Operationalization (Operasionalisasi Intelijen Ancaman)",
+          "value": "Operasionalisasi Intelijen Ancaman (Threat Intelligence Operationalization)"
+        },
+        {
+          "label": "Incident Response & Forensics (Manajemen Respons Insiden & Forensik)",
+          "value": "Manajemen Respons Insiden & Forensik (DFIR Management)"
+        },
         "Lainnya..."
       ]
     }
@@ -363,6 +399,20 @@
           "default": "Identification",
           "optional": false,
           "description": "Fase siklus hidup respons insiden (NIST)."
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "custom_BLUE_TEAM_TASK",
+          "label": "Sebutkan Tugas Blue Team Lainnya",
+          "type": "text",
+          "description": "Tuliskan skenario investigasi atau tugas keamanan lain yang Anda inginkan.",
+          "placeholder": "Contoh: Penilaian zero trust, audit kontrol akses, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Isi kolom ini saat memilih 'Lainnya...' untuk menjelaskan kebutuhan kustom Anda."
         }
       ]
     }

@@ -15,10 +15,22 @@
       "label": "Tugas Akuntansi atau Keuangan",
       "type": "select",
       "options": [
-        "Pembuat Laporan Keuangan Sederhana",
-        "Generator Draf Faktur (Invoice)",
-        "Alat Analisis & Kategorisasi Biaya",
-        "Kalkulator Titik Impas (Break-Even Point)",
+        {
+          "label": "Simple Financial Statement Builder (Pembuat Laporan Keuangan Sederhana)",
+          "value": "Pembuat Laporan Keuangan Sederhana"
+        },
+        {
+          "label": "Invoice Draft Generator (Generator Draf Faktur (Invoice))",
+          "value": "Generator Draf Faktur (Invoice)"
+        },
+        {
+          "label": "Cost Analysis & Categorization Tool (Alat Analisis & Kategorisasi Biaya)",
+          "value": "Alat Analisis & Kategorisasi Biaya"
+        },
+        {
+          "label": "Break-Even Calculator (Kalkulator Titik Impas (Break-Even Point))",
+          "value": "Kalkulator Titik Impas (Break-Even Point)"
+        },
         "Lainnya..."
       ],
       "default": "Pembuat Laporan Keuangan Sederhana",
@@ -106,6 +118,20 @@
             "placeholder": "40000",
             "unit": "Rp",
             "info": "Biaya yang hanya muncul jika ada penjualan (bahan baku, komisi)."
+          }
+        ],
+        "Lainnya...": [
+          {
+            "name": "custom_TUGAS_AKUNTANSI",
+            "label": "Sebutkan Tugas Akuntansi Lainnya",
+            "type": "text",
+            "description": "Tuliskan tugas akuntansi atau keuangan lain yang Anda perlukan.",
+            "placeholder": "Contoh: Rekonsiliasi kas, audit internal ringan, dsb.",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Kolom ini aktif jika Anda memilih 'Lainnya...' dan harus diisi."
           }
         ]
       }

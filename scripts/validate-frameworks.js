@@ -72,6 +72,68 @@ for (const categoryKey in PROMPT_FRAMEWORKS) {
         });
         hasErrors = true;
       }
+
+      // Custom lint: ensure every option with "Lainnya" has a dynamic subcomponent
+      const dynamicBlocks = Array.isArray(framework.dynamicSubcomponents)
+        ? framework.dynamicSubcomponents
+        : framework.dynamicSubcomponents
+          ? [framework.dynamicSubcomponents]
+          : [];
+
+      const components = framework.components || [];
+      components.forEach((comp) => {
+        const options = comp.options || [];
+        const hasLainnya = options.some((opt) => {
+          if (typeof opt === "string") return opt.includes("Lainnya");
+          return (
+            opt.value?.includes("Lainnya") || opt.label?.includes("Lainnya")
+          );
+        });
+        if (!hasLainnya) return;
+
+        const matchingDynamic = dynamicBlocks.find(
+          (dyn) => dyn.trigger === comp.name,
+        );
+        if (!matchingDynamic) {
+          console.error(
+            `Missing dynamicSubcomponents for 'Lainnya...' on: ${categoryKey} > ${subcategoryKey} > ${frameworkKey} > ${comp.name}`,
+          );
+          hasErrors = true;
+          return;
+        }
+
+        const lainnyaOptions = Object.entries(
+          matchingDynamic.options || {},
+        ).filter(([key]) => key.includes("Lainnya"));
+
+        if (!lainnyaOptions.length) {
+          console.error(
+            `Dynamic subcomponent lacks 'Lainnya...' option for: ${categoryKey} > ${subcategoryKey} > ${frameworkKey} > ${comp.name}`,
+          );
+          hasErrors = true;
+          return;
+        }
+
+        const hasTextWithValidation = lainnyaOptions.some(([, val]) => {
+          const componentsList = Array.isArray(val) ? val : val.components;
+          return (
+            Array.isArray(componentsList) &&
+            componentsList.some(
+              (child) =>
+                (child.type === "text" || child.type === "textarea") &&
+                child.validation &&
+                typeof child.validation.min_length === "number",
+            )
+          );
+        });
+
+        if (!hasTextWithValidation) {
+          console.error(
+            `Dynamic 'Lainnya...' must include text input with min_length validation for: ${categoryKey} > ${subcategoryKey} > ${frameworkKey} > ${comp.name}`,
+          );
+          hasErrors = true;
+        }
+      });
     }
   }
 }

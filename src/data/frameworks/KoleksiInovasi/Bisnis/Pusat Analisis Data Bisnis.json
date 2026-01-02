@@ -15,10 +15,22 @@
       "label": "Tugas Analisis Data",
       "type": "select",
       "options": [
-        "Eksplorasi & Pembersihan Data",
-        "Analisis Statistik Deskriptif",
-        "Identifikasi Tren dan Pola",
-        "Rekomendasi Visualisasi Data",
+        {
+          "label": "Data Exploration & Cleaning (Eksplorasi & Pembersihan Data)",
+          "value": "Eksplorasi & Pembersihan Data"
+        },
+        {
+          "label": "Descriptive Statistics Analysis (Analisis Statistik Deskriptif)",
+          "value": "Analisis Statistik Deskriptif"
+        },
+        {
+          "label": "Trend & Pattern Identification (Identifikasi Tren dan Pola)",
+          "value": "Identifikasi Tren dan Pola"
+        },
+        {
+          "label": "Data Visualization Recommendations (Rekomendasi Visualisasi Data)",
+          "value": "Rekomendasi Visualisasi Data"
+        },
         "Lainnya..."
       ],
       "default": "Identifikasi Tren dan Pola",
@@ -84,6 +96,20 @@
             "type": "text",
             "placeholder": "Contoh: Saya ingin menunjukkan kategori produk mana yang paling cepat bertumbuh.",
             "info": "Apa cerita yang ingin Anda sampaikan dengan data ini?"
+          }
+        ],
+        "Lainnya...": [
+          {
+            "name": "custom_TUGAS_ANALISIS_DATA",
+            "label": "Sebutkan Tugas Analisis Data Lainnya",
+            "type": "text",
+            "description": "Tuliskan jenis analisis data lain yang Anda perlukan.",
+            "placeholder": "Contoh: Analisis churn pelanggan, segmentasi pelanggan, dsb.",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Diisi saat Anda memilih 'Lainnya...' untuk membuka kebutuhan khusus."
           }
         ]
       }

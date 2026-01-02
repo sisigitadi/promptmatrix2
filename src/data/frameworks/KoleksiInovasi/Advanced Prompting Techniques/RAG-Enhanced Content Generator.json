@@ -35,9 +35,18 @@
       "label": "Format Output Konten",
       "type": "select",
       "options": [
-        "Artikel Blog",
-        "Ringkasan Laporan",
-        "FAQ",
+        {
+          "label": "Blog Article (Artikel Blog)",
+          "value": "Artikel Blog"
+        },
+        {
+          "label": "Report Summary (Ringkasan Laporan)",
+          "value": "Ringkasan Laporan"
+        },
+        {
+          "label": "FAQ (Tanya Jawab)",
+          "value": "FAQ"
+        },
         "Lainnya..."
       ],
       "default": "Artikel Blog",
@@ -48,10 +57,22 @@
       "label": "Nada Bahasa",
       "type": "select",
       "options": [
-        "Formal",
-        "Informatif",
-        "Persuasif",
-        "Akademis",
+        {
+          "label": "Formal (Resmi)",
+          "value": "Formal"
+        },
+        {
+          "label": "Informative (Informatif)",
+          "value": "Informatif"
+        },
+        {
+          "label": "Persuasive (Persuasif)",
+          "value": "Persuasif"
+        },
+        {
+          "label": "Academic (Akademis)",
+          "value": "Akademis"
+        },
         "Lainnya..."
       ],
       "default": "Informatif",
@@ -68,6 +89,10 @@
             "label": "Sebutkan Format Output Lainnya",
             "type": "text",
             "placeholder": "Contoh: 'Naskah presentasi', 'Brosur'",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
             "info": "Sebutkan format kustom yang Anda inginkan."
           }
         ]

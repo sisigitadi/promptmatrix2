@@ -8,11 +8,26 @@
       "label": "Jenis Acara",
       "type": "select",
       "options": [
-        "Pernikahan",
-        "Bisnis/Resmi",
-        "Ulang Tahun/Personal",
-        "Workshop/Komunitas",
-        "Terima Kasih",
+        {
+          "label": "Wedding (Pernikahan)",
+          "value": "Pernikahan"
+        },
+        {
+          "label": "Business/Formal (Bisnis/Resmi)",
+          "value": "Bisnis/Resmi"
+        },
+        {
+          "label": "Birthday/Personal (Ulang Tahun/Personal)",
+          "value": "Ulang Tahun/Personal"
+        },
+        {
+          "label": "Workshop/Community (Workshop/Komunitas)",
+          "value": "Workshop/Komunitas"
+        },
+        {
+          "label": "Thank You (Terima Kasih)",
+          "value": "Terima Kasih"
+        },
         "Lainnya..."
       ],
       "info": "Pilih jenis acara untuk menentukan format dan nada.",
@@ -504,6 +519,20 @@
           "validation": {
             "min_length": 10
           }
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "customEventType",
+          "label": "Sebutkan Jenis Acara Lainnya",
+          "type": "text",
+          "description": "Tuliskan jenis acara lain untuk undangan atau kartu yang ingin dibuat.",
+          "placeholder": "Contoh: Baby shower, ulang tahun pernikahan, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Isi kolom ini saat memilih 'Lainnya...' agar nada dan format bisa disesuaikan."
         }
       ]
     }

@@ -48,10 +48,7 @@
             "Gambar/Video",
             "Lainnya..."
           ],
-          "info": "Pilih format konten yang akan dibuat.",
-          "validation": {
-            "regex": "^(?!Lainnya).*$"
-          }
+          "info": "Pilih format konten yang akan dibuat."
         },
         {
           "name": "topic",
@@ -75,10 +72,7 @@
             "Berbagi Berita",
             "Lainnya..."
           ],
-          "info": "Apa yang ingin Anda capai dengan postingan ini?",
-          "validation": {
-            "regex": "^(?!Lainnya).*$"
-          }
+          "info": "Apa yang ingin Anda capai dengan postingan ini?"
         },
         {
           "name": "hashtags",
@@ -268,6 +262,20 @@
           "validation": {
             "min_length": 3
           }
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "customPlatform",
+          "label": "Sebutkan Platform Lainnya",
+          "type": "text",
+          "description": "Tuliskan platform media sosial lain yang ingin Anda gunakan.",
+          "placeholder": "Contoh: Threads, BeReal, forum komunitas khusus, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Isi kolom ini saat memilih 'Lainnya...' agar format konten disesuaikan."
         }
       ]
     }

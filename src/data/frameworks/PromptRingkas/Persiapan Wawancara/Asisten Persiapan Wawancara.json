@@ -19,19 +19,19 @@
       "optional": false,
       "options": [
         {
-          "label": "Wawancara Kerja",
+          "label": "Job Interview (Wawancara Kerja)",
           "value": "Wawancara Kerja"
         },
         {
-          "label": "Wawancara Riset/Akademis",
+          "label": "Research/Academic Interview (Wawancara Riset/Akademis)",
           "value": "Wawancara Riset/Akademis"
         },
         {
-          "label": "Wawancara Berita/Jurnalistik",
+          "label": "News/Journalistic Interview (Wawancara Berita/Jurnalistik)",
           "value": "Wawancara Berita/Jurnalistik"
         },
         {
-          "label": "Wawancara Penilaian Kinerja",
+          "label": "Performance Review (Wawancara Penilaian Kinerja)",
           "value": "Wawancara Penilaian Kinerja"
         },
         {
@@ -50,11 +50,11 @@
       "optional": false,
       "options": [
         {
-          "label": "Diwawancarai (Kandidat)",
+          "label": "Interviewee/Candidate (Diwawancarai)",
           "value": "Diwawancarai (Kandidat)"
         },
         {
-          "label": "Pewawancara",
+          "label": "Interviewer (Pewawancara)",
           "value": "Pewawancara"
         },
         "Lainnya..."
@@ -98,23 +98,23 @@
       "optional": false,
       "options": [
         {
-          "label": "Pertanyaan Wawancara",
+          "label": "Interview Questions (Pertanyaan Wawancara)",
           "value": "Pertanyaan Wawancara"
         },
         {
-          "label": "Tips & Strategi",
+          "label": "Tips & Strategy (Tips & Strategi)",
           "value": "Tips & Strategi"
         },
         {
-          "label": "Struktur Wawancara",
+          "label": "Interview Structure (Struktur Wawancara)",
           "value": "Struktur Wawancara"
         },
         {
-          "label": "Latihan Jawaban (Metode STAR)",
+          "label": "Answer Practice - STAR (Latihan Jawaban (Metode STAR))",
           "value": "Latihan Jawaban (Metode STAR)"
         },
         {
-          "label": "Pertanyaan untuk Pewawancara",
+          "label": "Questions for Interviewer (Pertanyaan untuk Pewawancara)",
           "value": "Pertanyaan untuk Pewawancara"
         },
         {

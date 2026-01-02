@@ -15,10 +15,22 @@
       "label": "Tugas Desain UI/UX",
       "type": "select",
       "options": [
-        "Perancangan Alur Pengguna (User Flow)",
-        "Generator Konsep Tata Letak (Wireframe)",
-        "Analisis & Umpan Balik Desain",
-        "Generator Teks Antarmuka (UX Writing)",
+        {
+          "label": "User Flow Design (Perancangan Alur Pengguna (User Flow))",
+          "value": "Perancangan Alur Pengguna (User Flow)"
+        },
+        {
+          "label": "Wireframe Layout Generator (Generator Konsep Tata Letak (Wireframe))",
+          "value": "Generator Konsep Tata Letak (Wireframe)"
+        },
+        {
+          "label": "Design Review & Feedback (Analisis & Umpan Balik Desain)",
+          "value": "Analisis & Umpan Balik Desain"
+        },
+        {
+          "label": "UX Writing Generator (Generator Teks Antarmuka (UX Writing))",
+          "value": "Generator Teks Antarmuka (UX Writing)"
+        },
         "Lainnya..."
       ],
       "default": "Perancangan Alur Pengguna (User Flow)",
@@ -90,14 +102,40 @@
             "label": "Nada Suara (Tone of Voice)",
             "type": "select",
             "options": [
-              "Formal",
-              "Ramah",
-              "Jenaka",
-              "Profesional",
+              {
+                "label": "Formal (Resmi)",
+                "value": "Formal"
+              },
+              {
+                "label": "Friendly (Ramah)",
+                "value": "Ramah"
+              },
+              {
+                "label": "Playful (Jenaka)",
+                "value": "Jenaka"
+              },
+              {
+                "label": "Professional (Profesional)",
+                "value": "Profesional"
+              },
               "Lainnya..."
             ],
             "default": "Ramah",
             "info": "Pilih gaya bahasa yang sesuai dengan brand Anda."
+          }
+        ],
+        "Lainnya...": [
+          {
+            "name": "custom_TUGAS_DESAIN_UIUX",
+            "label": "Sebutkan Tugas Desain UI/UX Lainnya",
+            "type": "text",
+            "description": "Tuliskan tugas desain lain yang ingin Anda tangani.",
+            "placeholder": "Contoh: Audit aksesibilitas, microinteraction review, dsb.",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Kolom ini muncul saat memilih 'Lainnya...' dan wajib diisi."
           }
         ]
       }
