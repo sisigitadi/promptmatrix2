@@ -1,7 +1,7 @@
 {
   "id_kerangka": "KOL-PP-103",
   "nama_kerangka": "Generator Dokumentasi API",
-  "version": "1.0.0",
+  "version": "2.7.0",
   "kategori": [
     "Koleksi & Inovasi",
     "Pengembangan Perangkat Lunak"
@@ -124,5 +124,9 @@
   "contoh_kalimat": "Buatkan saya dokumentasi untuk API get user by id.",
   "output": "natural_language_prompt",
   "crossValidationRules": [],
-  "updated_at": "2025-12-23T06:59:22.819117"
+  "updated_at": "2026-01-02T12:50:20.253Z",
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40
 }
