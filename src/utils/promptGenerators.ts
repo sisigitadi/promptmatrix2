@@ -22,6 +22,123 @@ const cleanVerboseValue = (val: string) => {
   return cleaned.trim();
 };
 
+const getActiveComponents = (
+  framework: Framework,
+  params: FormData,
+): { components: FrameworkComponent[]; dynamicSubcomponents: any[] } => {
+  const components: FrameworkComponent[] = [...(framework.components || [])];
+  const dynamicSubcomponents = Array.isArray(framework.dynamicSubcomponents)
+    ? framework.dynamicSubcomponents
+    : framework.dynamicSubcomponents
+      ? [framework.dynamicSubcomponents]
+      : [];
+
+  dynamicSubcomponents.forEach((sub) => {
+    if (sub && sub.trigger) {
+      const triggerValue = params[sub.trigger];
+      const triggerValues = Array.isArray(triggerValue)
+        ? triggerValue
+        : [triggerValue];
+
+      triggerValues.forEach((value) => {
+        if (value && sub.options[value]) {
+          const optionValue = sub.options[value];
+          if (optionValue) {
+            if (
+              "components" in optionValue &&
+              Array.isArray(optionValue.components)
+            ) {
+              components.push(...optionValue.components);
+            } else if (Array.isArray(optionValue)) {
+              components.push(...(optionValue as FrameworkComponent[]));
+            }
+          }
+        }
+      });
+    }
+  });
+
+  return { components, dynamicSubcomponents };
+};
+
+const extractPlaceholderNames = (
+  templates: Array<string | undefined>,
+): Set<string> => {
+  const placeholderSet = new Set<string>();
+  templates.forEach((template) => {
+    if (!template) return;
+    const matches = template.match(/\{([a-zA-Z0-9_]+)\}/g);
+    if (matches) {
+      matches.forEach((match) =>
+        placeholderSet.add(match.replace(/\{|\}/g, "")),
+      );
+    }
+  });
+  return placeholderSet;
+};
+
+const formatComponentValue = (
+  comp: FrameworkComponent,
+  params: FormData,
+  customInputs: CustomInputs,
+): string => {
+  let value = params[comp.name];
+
+  if (value === "Lainnya...") {
+    value = customInputs[comp.name] || "";
+  }
+
+  if (Array.isArray(value)) {
+    const processedValues = value
+      .map((item) =>
+        item === "Lainnya..." ? customInputs[comp.name] || "" : item,
+      )
+      .map((item) => cleanVerboseValue(String(item)))
+      .filter(Boolean);
+    return processedValues.join(", ");
+  }
+
+  if (typeof value === "boolean") {
+    return value ? "Ya" : "Tidak";
+  }
+
+  if (typeof value === "string" || typeof value === "number") {
+    return cleanVerboseValue(String(value));
+  }
+
+  return "";
+};
+
+const collectUnreferencedInputs = (
+  components: FrameworkComponent[],
+  templates: Array<string | undefined>,
+  params: FormData,
+  customInputs: CustomInputs,
+) => {
+  const placeholderNames = extractPlaceholderNames(templates);
+  return components
+    .map((comp) => ({
+      comp,
+      value: formatComponentValue(comp, params, customInputs),
+    }))
+    .filter(
+      ({ comp, value }) =>
+        value && value.trim() !== "" && !placeholderNames.has(comp.name),
+    );
+};
+
+const collectFilledInputs = (
+  components: FrameworkComponent[],
+  params: FormData,
+  customInputs: CustomInputs,
+) =>
+  components
+    .map((comp) => ({
+      comp,
+      value: formatComponentValue(comp, params, customInputs),
+    }))
+    .filter(({ value }) => value && value.trim() !== "");
+
 // Helper: Process Conditional Blocks [...]
 const processConditionalBlocks = (
   template: string,
@@ -158,34 +275,7 @@ export const generatePrompt = (
   } = framework.komponen_prompt || {};
 
   // Combine static and active dynamic components to get all possible inputs.
-  const allComponents: FrameworkComponent[] = [...(framework.components || [])];
-  const subcomponents = Array.isArray(framework.dynamicSubcomponents)
-    ? framework.dynamicSubcomponents
-    : framework.dynamicSubcomponents
-      ? [framework.dynamicSubcomponents]
-      : [];
-
-  subcomponents.forEach((sub) => {
-    if (sub && sub.trigger) {
-      const triggerValue = params[sub.trigger];
-      if (triggerValue && sub.options[triggerValue]) {
-        const optionValue = sub.options[triggerValue];
-        if (optionValue) {
-          // New super-framework structure: optionValue is { components: [...] }
-          if (
-            "components" in optionValue &&
-            Array.isArray(optionValue.components)
-          ) {
-            allComponents.push(...optionValue.components);
-          }
-          // Old structure: optionValue is FrameworkComponent[]
-          else if (Array.isArray(optionValue)) {
-            allComponents.push(...(optionValue as FrameworkComponent[]));
-          }
-        }
-      }
-    }
-  });
+  const { components: allComponents } = getActiveComponents(framework, params);
 
   // Create a combined object of all input values for placeholder replacement.
   const allValues = { ...params };
@@ -265,31 +355,8 @@ export const generateUserPreviewPrompt = (
   if (!framework) return "";
 
   // Pre-calculate active components to check for inputs
-  const allComponents: FrameworkComponent[] = [...(framework.components || [])];
-  const subcomponents = Array.isArray(framework.dynamicSubcomponents)
-    ? framework.dynamicSubcomponents
-    : framework.dynamicSubcomponents
-      ? [framework.dynamicSubcomponents]
-      : [];
-
-  subcomponents.forEach((sub) => {
-    if (sub && sub.trigger) {
-      const triggerValue = params[sub.trigger];
-      if (triggerValue && sub.options[triggerValue]) {
-        const optionValue = sub.options[triggerValue];
-        if (optionValue) {
-          if (
-            "components" in optionValue &&
-            Array.isArray(optionValue.components)
-          ) {
-            allComponents.push(...optionValue.components);
-          } else if (Array.isArray(optionValue)) {
-            allComponents.push(...(optionValue as FrameworkComponent[]));
-          }
-        }
-      }
-    }
-  });
+  const { components: allComponents, dynamicSubcomponents: subcomponents } =
+    getActiveComponents(framework, params);
 
   // Check if any input has been filled
   let hasInputs = false;
@@ -312,26 +379,32 @@ export const generateUserPreviewPrompt = (
   subcomponents.forEach((sub) => {
     if (sub && sub.trigger) {
       const triggerValue = params[sub.trigger];
-      if (triggerValue && sub.options[triggerValue]) {
-        const optionValue = sub.options[triggerValue];
+      const triggerValues = Array.isArray(triggerValue)
+        ? triggerValue
+        : [triggerValue];
 
-        // Check if this option has komponen_prompt override
-        if (optionValue && "komponen_prompt" in optionValue) {
-          const dynamicPrompt = (optionValue as any).komponen_prompt;
+      triggerValues.forEach((value) => {
+        if (value && sub.options[value]) {
+          const optionValue = sub.options[value];
 
-          // Merge: Dynamic overrides root, but keep root fields if not overridden
-          effectiveKomponenPrompt = {
-            PERAN: dynamicPrompt.PERAN || effectiveKomponenPrompt.PERAN || "",
-            KONTEKS:
-              dynamicPrompt.KONTEKS || effectiveKomponenPrompt.KONTEKS || "",
-            TUGAS: dynamicPrompt.TUGAS || effectiveKomponenPrompt.TUGAS || "",
-            FORMAT_OUTPUT:
-              dynamicPrompt.FORMAT_OUTPUT ||
-              effectiveKomponenPrompt.FORMAT_OUTPUT ||
-              "",
-          };
+          // Check if this option has komponen_prompt override
+          if (optionValue && "komponen_prompt" in optionValue) {
+            const dynamicPrompt = (optionValue as any).komponen_prompt;
+
+            // Merge: Dynamic overrides root, but keep root fields if not overridden
+            effectiveKomponenPrompt = {
+              PERAN: dynamicPrompt.PERAN || effectiveKomponenPrompt.PERAN || "",
+              KONTEKS:
+                dynamicPrompt.KONTEKS || effectiveKomponenPrompt.KONTEKS || "",
+              TUGAS: dynamicPrompt.TUGAS || effectiveKomponenPrompt.TUGAS || "",
+              FORMAT_OUTPUT:
+                dynamicPrompt.FORMAT_OUTPUT ||
+                effectiveKomponenPrompt.FORMAT_OUTPUT ||
+                "",
+            };
+          }
         }
-      }
+      });
     }
   });
 
@@ -387,6 +460,25 @@ export const generateUserPreviewPrompt = (
   } else if (framework.ai_logic_description) {
     // Fallback untuk framework lama
     previewContent += `${framework.ai_logic_description.replace(/\*\*/g, "")}\n\n`;
+  }
+
+  const isPromptProyek = framework.kategori?.includes("Prompt Proyek");
+
+  if (hasInputs && isPromptProyek) {
+    const filledInputs = collectFilledInputs(
+      allComponents,
+      params,
+      customInputs,
+    );
+
+    if (filledInputs.length > 0) {
+      previewContent += `Ringkasan input yang Anda isi:\n`;
+      filledInputs.forEach(({ comp, value }) => {
+        const label = comp.label || comp.description || comp.name;
+        previewContent += `- ${label}: ${value}\n`;
+      });
+      previewContent += "\n";
+    }
   }
 
   // 3. NO "Detail Spesifikasi Tambahan" - Pure seamless storytelling
@@ -550,34 +642,7 @@ export const generateJsonPrompt = (
   params: FormData,
   customInputs: CustomInputs,
 ): string => {
-  const allComponents: FrameworkComponent[] = [...(framework.components || [])];
-  const subcomponents = Array.isArray(framework.dynamicSubcomponents)
-    ? framework.dynamicSubcomponents
-    : framework.dynamicSubcomponents
-      ? [framework.dynamicSubcomponents]
-      : [];
-
-  subcomponents.forEach((sub) => {
-    if (sub && sub.trigger) {
-      const triggerValue = params[sub.trigger];
-      if (triggerValue && sub.options[triggerValue]) {
-        const optionValue = sub.options[triggerValue];
-        if (optionValue) {
-          // New super-framework structure
-          if (
-            "components" in optionValue &&
-            Array.isArray(optionValue.components)
-          ) {
-            allComponents.push(...optionValue.components);
-          }
-          // Old structure
-          else if (Array.isArray(optionValue)) {
-            allComponents.push(...(optionValue as FrameworkComponent[]));
-          }
-        }
-      }
-    }
-  });
+  const { components: allComponents } = getActiveComponents(framework, params);
 
   const allValues = { ...params };
   allComponents.forEach((comp) => {
