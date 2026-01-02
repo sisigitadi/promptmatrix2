@@ -22,76 +22,69 @@
         "Lainnya..."
       ],
       "default": "Penulis Dokumen Persyaratan Produk (PRD)",
-      "info": "Pilih tugas manajemen produk yang ingin Anda selesaikan."
-    }
-  ],
-  "dynamicSubcomponents": [
+      "info": "Pilih tugas manajemen produk yang ingin Anda selesaikan.",
+      "optional": true
+    },
     {
-      "trigger": "TUGAS_MANAJEMEN_PRODUK",
-      "options": {
-        "Penulis Dokumen Persyaratan Produk (PRD)": [
-          {
-            "name": "PRD_NAMA_FITUR",
-            "label": "Nama Fitur atau Produk",
-            "type": "text",
-            "placeholder": "Contoh: Fitur 'Kolaborasi Tim Real-time'",
-            "info": "Fitur yang akan dibuatkan dokumen persyaratannya."
-          },
-          {
-            "name": "PRD_MASALAH_PENGGUNA",
-            "label": "Masalah Pengguna yang Diselesaikan",
-            "type": "textarea",
-            "placeholder": "Contoh: Tim yang bekerja remote kesulitan untuk berdiskusi secara sinkron.",
-            "info": "Jelaskan masalah yang ingin Anda pecahkan dengan fitur ini."
-          }
-        ],
-        "Generator Peta Jalan Produk (Roadmap)": [
-          {
-            "name": "ROADMAP_VISI_PRODUK",
-            "label": "Visi Produk (Jangka Panjang)",
-            "type": "text",
-            "placeholder": "Contoh: Menjadi platform kolaborasi nomor satu untuk tim kreatif.",
-            "info": "Apa tujuan besar dari produk Anda?"
-          },
-          {
-            "name": "ROADMAP_TUJUAN_BISNIS",
-            "label": "Tujuan Bisnis untuk 3-6 Bulan ke Depan",
-            "type": "textarea",
-            "placeholder": "Contoh: Meningkatkan retensi pengguna sebesar 15%",
-            "info": "Apa target bisnis yang ingin dicapai dalam waktu dekat?"
-          }
-        ],
-        "Asisten Prioritas Fitur": [
-          {
-            "name": "PRIORITAS_DAFTAR_FITUR",
-            "label": "Daftar Fitur (pisahkan dengan koma)",
-            "type": "textarea",
-            "placeholder": "Contoh: Fitur A, Fitur B, Fitur C",
-            "info": "Masukkan daftar fitur yang perlu diprioritaskan."
-          },
-          {
-            "name": "PRIORITAS_KERANGKA",
-            "label": "Kerangka Prioritas",
-            "type": "select",
-            "options": [
-              "RICE (Reach, Impact, Confidence, Effort)",
-              "MoSCoW (Must, Should, Could, Won't)",
-              "Lainnya..."
-            ],
-            "default": "RICE (Reach, Impact, Confidence, Effort)",
-            "info": "Pilih metode untuk membantu prioritas."
-          }
-        ],
-        "Penulis Cerita Pengguna (User Story)": [
-          {
-            "name": "USERSTORY_DESKRIPSI_FITUR",
-            "label": "Deskripsi Singkat Fitur",
-            "type": "textarea",
-            "placeholder": "Contoh: Pengguna ingin bisa memfilter produk berdasarkan warna agar lebih cepat menemukan barang.",
-            "info": "Jelaskan kebutuhan dari sudut pandang pengguna."
-          }
-        ]
-      }
+      "name": "PRD_NAMA_FITUR",
+      "label": "Nama Fitur atau Produk",
+      "type": "text",
+      "placeholder": "Contoh: Fitur 'Kolaborasi Tim Real-time'",
+      "info": "Fitur yang akan dibuatkan dokumen persyaratannya.",
+      "optional": true
+    },
+    {
+      "name": "PRD_MASALAH_PENGGUNA",
+      "label": "Masalah Pengguna yang Diselesaikan",
+      "type": "textarea",
+      "placeholder": "Contoh: Tim yang bekerja remote kesulitan untuk berdiskusi secara sinkron.",
+      "info": "Jelaskan masalah yang ingin Anda pecahkan dengan fitur ini.",
+      "optional": true
+    },
+    {
+      "name": "ROADMAP_VISI_PRODUK",
+      "label": "Visi Produk (Jangka Panjang)",
+      "type": "text",
+      "placeholder": "Contoh: Menjadi platform kolaborasi nomor satu untuk tim kreatif.",
+      "info": "Apa tujuan besar dari produk Anda?",
+      "optional": true
+    },
+    {
+      "name": "ROADMAP_TUJUAN_BISNIS",
+      "label": "Tujuan Bisnis untuk 3-6 Bulan ke Depan",
+      "type": "textarea",
+      "placeholder": "Contoh: Meningkatkan retensi pengguna sebesar 15%",
+      "info": "Apa target bisnis yang ingin dicapai dalam waktu dekat?",
+      "optional": true
+    },
+    {
+      "name": "PRIORITAS_DAFTAR_FITUR",
+      "label": "Daftar Fitur (pisahkan dengan koma)",
+      "type": "textarea",
+      "placeholder": "Contoh: Fitur A, Fitur B, Fitur C",
+      "info": "Masukkan daftar fitur yang perlu diprioritaskan.",
+      "optional": true
+    },
+    {
+      "name": "PRIORITAS_KERANGKA",
+      "label": "Kerangka Prioritas",
+      "type": "select",
+      "options": [
+        "RICE (Reach, Impact, Confidence, Effort)",
+        "MoSCoW (Must, Should, Could, Won't)",
+        "Lainnya..."
+      ],
+      "default": "RICE (Reach, Impact, Confidence, Effort)",
+      "info": "Pilih metode untuk membantu prioritas.",
+      "optional": true
+    },
+    {
+      "name": "USERSTORY_DESKRIPSI_FITUR",
+      "label": "Deskripsi Singkat Fitur",
+      "type": "textarea",
+      "placeholder": "Contoh: Pengguna ingin bisa memfilter produk berdasarkan warna agar lebih cepat menemukan barang.",
+      "info": "Jelaskan kebutuhan dari sudut pandang pengguna.",
+      "optional": true
     }
   ],
   "komponen_prompt": {

@@ -37,336 +37,307 @@
         "Manajemen Respons Insiden & Forensik (DFIR Management)",
         "Lainnya..."
       ]
+    },
+    {
+      "name": "ALERT_NAME",
+      "label": "Nama Peringatan (Alert Name)",
+      "type": "text",
+      "placeholder": "Contoh: 'Potentially Unwanted App Found', 'High Number of Failed Logins'",
+      "info": "Nama peringatan seperti yang muncul di SIEM atau konsol keamanan Anda.",
+      "optional": false,
+      "description": "Nama peringatan dari sistem keamanan."
+    },
+    {
+      "name": "ALERT_SOURCE",
+      "label": "Sumber Peringatan",
+      "type": "text",
+      "placeholder": "Contoh: Microsoft Defender for Endpoint, Splunk, Azure Sentinel",
+      "info": "Alat keamanan yang menghasilkan peringatan ini.",
+      "optional": false,
+      "description": "Sistem yang menghasilkan peringatan."
+    },
+    {
+      "name": "ALERT_KEY_INFO",
+      "label": "Informasi Kunci dari Peringatan",
+      "type": "textarea",
+      "placeholder": "Contoh: User: john.doe, IP: 192.168.1.100, Host: WKSTN-01, File Hash: <hash>",
+      "info": "Salin-tempel detail utama dari peringatan seperti pengguna, IP, nama host, atau hash file.",
+      "optional": false,
+      "description": "Detail utama peringatan (pengguna, IP, host, hash)."
+    },
+    {
+      "name": "PHISHING_HEADER",
+      "label": "Header Email",
+      "type": "textarea",
+      "placeholder": "Salin-tempel header lengkap dari email yang dicurigai.",
+      "info": "Header email berisi informasi penting tentang jalur email dan server pengirim.",
+      "optional": false,
+      "description": "Header lengkap dari email yang dicurigai."
+    },
+    {
+      "name": "PHISHING_LINKS_ATTACHMENTS",
+      "label": "URL atau Hash Lampiran",
+      "type": "textarea",
+      "placeholder": "Contoh: https://link-palsu.com/login, <hash_lampiran.zip>",
+      "info": "Sebutkan semua URL mencurigakan atau hash file dari lampiran email.",
+      "optional": true,
+      "description": "URL atau hash file dari lampiran yang mencurigakan."
+    },
+    {
+      "name": "VULN_ID",
+      "label": "ID Kerentanan (CVE)",
+      "type": "text",
+      "placeholder": "Contoh: CVE-2021-44228 (Log4Shell)",
+      "info": "ID CVE dari kerentanan yang perlu ditangani.",
+      "optional": false,
+      "description": "ID CVE dari kerentanan."
+    },
+    {
+      "name": "AFFECTED_ASSETS",
+      "label": "Aset yang Terdampak",
+      "type": "textarea",
+      "placeholder": "Contoh: Server Web (srv-web-01), Semua workstation dengan Java 8.",
+      "info": "Sebutkan aset, sistem, atau aplikasi yang diketahui rentan.",
+      "optional": false,
+      "description": "Aset atau sistem yang diketahui rentan."
+    },
+    {
+      "name": "IDENTITY_USER_ACCOUNT",
+      "label": "Akun Pengguna yang Dicurigai",
+      "type": "text",
+      "placeholder": "Contoh: jane.doe@example.com",
+      "info": "Akun pengguna yang menunjukkan aktivitas anomali.",
+      "optional": false,
+      "description": "Akun pengguna dengan aktivitas anomali."
+    },
+    {
+      "name": "IDENTITY_ANOMALY",
+      "label": "Aktivitas Anomali",
+      "type": "textarea",
+      "placeholder": "Contoh: Login dari lokasi geografis yang tidak biasa, eskalasi hak istimewa, beberapa upaya login gagal diikuti oleh keberhasilan.",
+      "info": "Jelaskan perilaku mencurigakan yang terkait dengan akun tersebut.",
+      "optional": false,
+      "description": "Perilaku mencurigakan yang terdeteksi."
+    },
+    {
+      "name": "IDENTITY_LOG_SOURCE",
+      "label": "Sumber Log",
+      "type": "text",
+      "placeholder": "Contoh: Azure AD Sign-in Logs, Active Directory Security Logs, Okta Logs.",
+      "info": "Platform atau sistem tempat log aktivitas identitas disimpan.",
+      "optional": true,
+      "description": "Sumber log aktivitas identitas."
+    },
+    {
+      "name": "HOST_ID",
+      "label": "Nama Host atau Alamat IP",
+      "type": "text",
+      "placeholder": "Contoh: WKSTN-FIN-05 atau 10.50.1.23",
+      "info": "Identifier unik dari host yang sedang diinvestigasi.",
+      "optional": false,
+      "description": "Identifier unik dari host."
+    },
+    {
+      "name": "HOST_SUSPICIOUS_ACTIVITY",
+      "label": "Aktivitas Mencurigakan yang Diamati",
+      "type": "textarea",
+      "placeholder": "Contoh: Proses 'svchost.exe' membuat koneksi jaringan ke IP yang tidak dikenal, file aneh dibuat di C:\\Temp, lonjakan penggunaan CPU.",
+      "info": "Gejala atau perilaku anomali yang memicu investigasi.",
+      "optional": false,
+      "description": "Gejala anomali yang memicu investigasi."
+    },
+    {
+      "name": "HOST_TOOL",
+      "label": "Alat Investigasi yang Tersedia",
+      "type": "text",
+      "placeholder": "Contoh: Microsoft Defender for Endpoint, CrowdStrike Falcon, Sysmon, PowerShell.",
+      "info": "Sebutkan EDR atau alat lain yang terpasang di host untuk investigasi.",
+      "optional": true,
+      "description": "Alat EDR atau investigasi lainnya."
+    },
+    {
+      "name": "LOG_SOURCE_TYPE",
+      "label": "Jenis Sumber Log",
+      "type": "text",
+      "placeholder": "Contoh: log server web IIS, log NGINX, log aplikasi kustom.",
+      "info": "Tentukan jenis log yang akan dianalisis.",
+      "optional": false,
+      "description": "Jenis log yang akan dianalisis."
+    },
+    {
+      "name": "LOG_TIME_FRAME",
+      "label": "Rentang Waktu Investigasi",
+      "type": "text",
+      "placeholder": "Contoh: 2 jam terakhir, 2023-10-27T10:00:00Z hingga 2023-10-27T12:00:00Z",
+      "info": "Fokuskan analisis pada rentang waktu tertentu.",
+      "optional": false,
+      "description": "Rentang waktu investigasi."
+    },
+    {
+      "name": "LOG_KEYWORDS",
+      "label": "Kata Kunci atau Pola Mencurigakan",
+      "type": "textarea",
+      "placeholder": "Contoh: error 500, 'UNION SELECT', '..%2F..%2Fetc%2Fpasswd', alamat IP eksternal.",
+      "info": "String atau pola spesifik yang ingin Anda cari di dalam log.",
+      "optional": true,
+      "description": "Kata kunci untuk pencarian log."
+    },
+    {
+      "name": "NET_SOURCE_IP",
+      "label": "Alamat IP Sumber",
+      "type": "text",
+      "placeholder": "Contoh: 192.168.1.100",
+      "info": "IP internal atau eksternal yang memulai komunikasi.",
+      "optional": true,
+      "description": "IP sumber komunikasi."
+    },
+    {
+      "name": "NET_DEST_IP",
+      "label": "Alamat IP Tujuan",
+      "type": "text",
+      "placeholder": "Contoh: 45.33.32.156 (scanme.nmap.org)",
+      "info": "IP tujuan komunikasi.",
+      "optional": true,
+      "description": "IP tujuan komunikasi."
+    },
+    {
+      "name": "NET_PROTOCOL_PORT",
+      "label": "Protokol & Port",
+      "type": "text",
+      "placeholder": "Contoh: TCP port 4444, UDP port 53.",
+      "info": "Fokus pada protokol atau port tertentu.",
+      "optional": true,
+      "description": "Protokol atau port spesifik."
+    },
+    {
+      "name": "NET_DATA_SOURCE",
+      "label": "Sumber Data Jaringan",
+      "type": "text",
+      "placeholder": "Contoh: PCAP dari Wireshark, log NetFlow, log firewall.",
+      "info": "Tentukan jenis data jaringan yang Anda miliki.",
+      "optional": false,
+      "description": "Jenis data jaringan yang tersedia."
+    },
+    {
+      "name": "CLOUD_PROVIDER",
+      "label": "Penyedia Cloud",
+      "type": "select",
+      "options": [
+        "AWS",
+        "Azure",
+        "Google Cloud Platform (GCP)",
+        "Lainnya..."
+      ],
+      "info": "Pilih lingkungan cloud tempat investigasi dilakukan.",
+      "default": "Azure",
+      "optional": false,
+      "description": "Lingkungan cloud investigasi."
+    },
+    {
+      "name": "CLOUD_SERVICE",
+      "label": "Layanan Cloud yang Dicurigai",
+      "type": "text",
+      "placeholder": "Contoh: AWS S3 Bucket, Azure VM, GCP Cloud Storage.",
+      "info": "Layanan spesifik yang menunjukkan aktivitas anomali.",
+      "optional": false,
+      "description": "Layanan cloud dengan aktivitas anomali."
+    },
+    {
+      "name": "CLOUD_LOG_SOURCE",
+      "label": "Sumber Log Cloud",
+      "type": "text",
+      "placeholder": "Contoh: AWS CloudTrail, Azure Activity Log, GCP Audit Logs.",
+      "info": "Log yang akan digunakan untuk investigasi.",
+      "optional": false,
+      "description": "Sumber log untuk investigasi."
+    },
+    {
+      "name": "HUNT_HYPOTHESIS",
+      "label": "Hipotesis Perburuan",
+      "type": "textarea",
+      "placeholder": "Contoh: 'Seorang penyerang mungkin menggunakan PowerShell untuk mengunduh file dari internet', 'Ada kemungkinan malware menggunakan DNS untuk komunikasi C2'.",
+      "info": "Buat asumsi atau pertanyaan yang akan Anda coba validasi melalui perburuan data.",
+      "optional": false,
+      "description": "Asumsi yang akan divalidasi."
+    },
+    {
+      "name": "HUNT_DATA_SOURCES",
+      "label": "Sumber Data untuk Perburuan",
+      "type": "textarea",
+      "placeholder": "Contoh: Log proses dari EDR, log DNS, log proxy, log autentikasi.",
+      "info": "Sebutkan kumpulan data yang akan Anda gunakan untuk mencari bukti hipotesis Anda.",
+      "optional": false,
+      "description": "Kumpulan data untuk validasi hipotesis."
+    },
+    {
+      "name": "DETECTION_THREAT_BEHAVIOR",
+      "label": "Perilaku Ancaman yang Akan Dideteksi",
+      "type": "textarea",
+      "placeholder": "Contoh: Proses 'lsass.exe' diakses oleh proses selain 'svchost.exe', eksekusi perintah WMI untuk gerakan lateral, pembuatan file dengan ekstensi ganda.",
+      "info": "Jelaskan secara spesifik perilaku jahat atau TTP (Tactic, Technique, and Procedure) yang ingin Anda deteksi.",
+      "optional": false,
+      "description": "Perilaku jahat atau TTP yang ingin dideteksi."
+    },
+    {
+      "name": "DETECTION_PLATFORM",
+      "label": "Platform Deteksi",
+      "type": "text",
+      "placeholder": "Contoh: Azure Sentinel, Splunk, Elastic SIEM.",
+      "info": "SIEM atau platform analitik tempat aturan deteksi akan diimplementasikan.",
+      "optional": false,
+      "description": "Platform SIEM untuk implementasi aturan."
+    },
+    {
+      "name": "THREAT_INTEL_IOC",
+      "label": "Indikator Kompromi (IOC)",
+      "type": "textarea",
+      "placeholder": "Contoh: Daftar alamat IP C2 dari grup APT X, hash file malware Y, domain phishing Z.",
+      "info": "Masukkan data intelijen ancaman (IOCs) yang baru diterima.",
+      "optional": false,
+      "description": "Data IOCs yang baru diterima."
+    },
+    {
+      "name": "THREAT_INTEL_GOAL",
+      "label": "Tujuan Operasionalisasi",
+      "type": "select",
+      "options": [
+        "Membuat aturan deteksi baru",
+        "Melakukan perburuan retroaktif",
+        "Memblokir di perimeter (Firewall/Proxy)",
+        "Lainnya..."
+      ],
+      "info": "Pilih bagaimana intelijen ancaman ini akan digunakan secara praktis.",
+      "optional": false,
+      "description": "Tujuan penggunaan intelijen ancaman."
+    },
+    {
+      "name": "DFIR_INCIDENT_SUMMARY",
+      "label": "Ringkasan Insiden",
+      "type": "textarea",
+      "placeholder": "Contoh: Terdeteksi aktivitas ransomware di beberapa server file pada tanggal X. Dampak awal: file terenkripsi, operasional terganggu.",
+      "info": "Berikan ringkasan singkat tentang insiden yang sedang ditangani.",
+      "optional": false,
+      "description": "Ringkasan singkat insiden."
+    },
+    {
+      "name": "DFIR_PHASE",
+      "label": "Fase Respons Insiden Saat Ini",
+      "type": "select",
+      "options": [
+        "Preparation",
+        "Identification",
+        "Containment",
+        "Eradication",
+        "Recovery",
+        "Lessons Learned",
+        "Lainnya..."
+      ],
+      "info": "Pilih fase dari siklus hidup respons insiden (NIST).",
+      "default": "Identification",
+      "optional": false,
+      "description": "Fase siklus hidup respons insiden (NIST)."
     }
   ],
-  "dynamicSubcomponents": {
-    "trigger": "BLUE_TEAM_TASK",
-    "options": {
-      "Triase Peringatan Keamanan (Alert Triage)": [
-        {
-          "name": "ALERT_NAME",
-          "label": "Nama Peringatan (Alert Name)",
-          "type": "text",
-          "placeholder": "Contoh: 'Potentially Unwanted App Found', 'High Number of Failed Logins'",
-          "info": "Nama peringatan seperti yang muncul di SIEM atau konsol keamanan Anda.",
-          "optional": false,
-          "description": "Nama peringatan dari sistem keamanan."
-        },
-        {
-          "name": "ALERT_SOURCE",
-          "label": "Sumber Peringatan",
-          "type": "text",
-          "placeholder": "Contoh: Microsoft Defender for Endpoint, Splunk, Azure Sentinel",
-          "info": "Alat keamanan yang menghasilkan peringatan ini.",
-          "optional": false,
-          "description": "Sistem yang menghasilkan peringatan."
-        },
-        {
-          "name": "ALERT_KEY_INFO",
-          "label": "Informasi Kunci dari Peringatan",
-          "type": "textarea",
-          "placeholder": "Contoh: User: john.doe, IP: 192.168.1.100, Host: WKSTN-01, File Hash: <hash>",
-          "info": "Salin-tempel detail utama dari peringatan seperti pengguna, IP, nama host, atau hash file.",
-          "optional": false,
-          "description": "Detail utama peringatan (pengguna, IP, host, hash)."
-        }
-      ],
-      "Analisis Email Phishing (Phishing Email Analysis)": [
-        {
-          "name": "PHISHING_HEADER",
-          "label": "Header Email",
-          "type": "textarea",
-          "placeholder": "Salin-tempel header lengkap dari email yang dicurigai.",
-          "info": "Header email berisi informasi penting tentang jalur email dan server pengirim.",
-          "optional": false,
-          "description": "Header lengkap dari email yang dicurigai."
-        },
-        {
-          "name": "PHISHING_LINKS_ATTACHMENTS",
-          "label": "URL atau Hash Lampiran",
-          "type": "textarea",
-          "placeholder": "Contoh: https://link-palsu.com/login, <hash_lampiran.zip>",
-          "info": "Sebutkan semua URL mencurigakan atau hash file dari lampiran email.",
-          "optional": true,
-          "description": "URL atau hash file dari lampiran yang mencurigakan."
-        }
-      ],
-      "Manajemen Kerentanan (Vulnerability Management)": [
-        {
-          "name": "VULN_ID",
-          "label": "ID Kerentanan (CVE)",
-          "type": "text",
-          "placeholder": "Contoh: CVE-2021-44228 (Log4Shell)",
-          "info": "ID CVE dari kerentanan yang perlu ditangani.",
-          "optional": false,
-          "description": "ID CVE dari kerentanan."
-        },
-        {
-          "name": "AFFECTED_ASSETS",
-          "label": "Aset yang Terdampak",
-          "type": "textarea",
-          "placeholder": "Contoh: Server Web (srv-web-01), Semua workstation dengan Java 8.",
-          "info": "Sebutkan aset, sistem, atau aplikasi yang diketahui rentan.",
-          "optional": false,
-          "description": "Aset atau sistem yang diketahui rentan."
-        }
-      ],
-      "Investigasi Ancaman Identitas (Identity Threat Investigation)": [
-        {
-          "name": "IDENTITY_USER_ACCOUNT",
-          "label": "Akun Pengguna yang Dicurigai",
-          "type": "text",
-          "placeholder": "Contoh: jane.doe@example.com",
-          "info": "Akun pengguna yang menunjukkan aktivitas anomali.",
-          "optional": false,
-          "description": "Akun pengguna dengan aktivitas anomali."
-        },
-        {
-          "name": "IDENTITY_ANOMALY",
-          "label": "Aktivitas Anomali",
-          "type": "textarea",
-          "placeholder": "Contoh: Login dari lokasi geografis yang tidak biasa, eskalasi hak istimewa, beberapa upaya login gagal diikuti oleh keberhasilan.",
-          "info": "Jelaskan perilaku mencurigakan yang terkait dengan akun tersebut.",
-          "optional": false,
-          "description": "Perilaku mencurigakan yang terdeteksi."
-        },
-        {
-          "name": "IDENTITY_LOG_SOURCE",
-          "label": "Sumber Log",
-          "type": "text",
-          "placeholder": "Contoh: Azure AD Sign-in Logs, Active Directory Security Logs, Okta Logs.",
-          "info": "Platform atau sistem tempat log aktivitas identitas disimpan.",
-          "optional": true,
-          "description": "Sumber log aktivitas identitas."
-        }
-      ],
-      "Investigasi Host (Host Investigation)": [
-        {
-          "name": "HOST_ID",
-          "label": "Nama Host atau Alamat IP",
-          "type": "text",
-          "placeholder": "Contoh: WKSTN-FIN-05 atau 10.50.1.23",
-          "info": "Identifier unik dari host yang sedang diinvestigasi.",
-          "optional": false,
-          "description": "Identifier unik dari host."
-        },
-        {
-          "name": "HOST_SUSPICIOUS_ACTIVITY",
-          "label": "Aktivitas Mencurigakan yang Diamati",
-          "type": "textarea",
-          "placeholder": "Contoh: Proses 'svchost.exe' membuat koneksi jaringan ke IP yang tidak dikenal, file aneh dibuat di C:\\Temp, lonjakan penggunaan CPU.",
-          "info": "Gejala atau perilaku anomali yang memicu investigasi.",
-          "optional": false,
-          "description": "Gejala anomali yang memicu investigasi."
-        },
-        {
-          "name": "HOST_TOOL",
-          "label": "Alat Investigasi yang Tersedia",
-          "type": "text",
-          "placeholder": "Contoh: Microsoft Defender for Endpoint, CrowdStrike Falcon, Sysmon, PowerShell.",
-          "info": "Sebutkan EDR atau alat lain yang terpasang di host untuk investigasi.",
-          "optional": true,
-          "description": "Alat EDR atau investigasi lainnya."
-        }
-      ],
-      "Analisis Log Aplikasi & Server (App/Server Log Analysis)": [
-        {
-          "name": "LOG_SOURCE_TYPE",
-          "label": "Jenis Sumber Log",
-          "type": "text",
-          "placeholder": "Contoh: log server web IIS, log NGINX, log aplikasi kustom.",
-          "info": "Tentukan jenis log yang akan dianalisis.",
-          "optional": false,
-          "description": "Jenis log yang akan dianalisis."
-        },
-        {
-          "name": "LOG_TIME_FRAME",
-          "label": "Rentang Waktu Investigasi",
-          "type": "text",
-          "placeholder": "Contoh: 2 jam terakhir, 2023-10-27T10:00:00Z hingga 2023-10-27T12:00:00Z",
-          "info": "Fokuskan analisis pada rentang waktu tertentu.",
-          "optional": false,
-          "description": "Rentang waktu investigasi."
-        },
-        {
-          "name": "LOG_KEYWORDS",
-          "label": "Kata Kunci atau Pola Mencurigakan",
-          "type": "textarea",
-          "placeholder": "Contoh: error 500, 'UNION SELECT', '..%2F..%2Fetc%2Fpasswd', alamat IP eksternal.",
-          "info": "String atau pola spesifik yang ingin Anda cari di dalam log.",
-          "optional": true,
-          "description": "Kata kunci untuk pencarian log."
-        }
-      ],
-      "Analisis Lalu Lintas Jaringan (Network Traffic Analysis)": [
-        {
-          "name": "NET_SOURCE_IP",
-          "label": "Alamat IP Sumber",
-          "type": "text",
-          "placeholder": "Contoh: 192.168.1.100",
-          "info": "IP internal atau eksternal yang memulai komunikasi.",
-          "optional": true,
-          "description": "IP sumber komunikasi."
-        },
-        {
-          "name": "NET_DEST_IP",
-          "label": "Alamat IP Tujuan",
-          "type": "text",
-          "placeholder": "Contoh: 45.33.32.156 (scanme.nmap.org)",
-          "info": "IP tujuan komunikasi.",
-          "optional": true,
-          "description": "IP tujuan komunikasi."
-        },
-        {
-          "name": "NET_PROTOCOL_PORT",
-          "label": "Protokol & Port",
-          "type": "text",
-          "placeholder": "Contoh: TCP port 4444, UDP port 53.",
-          "info": "Fokus pada protokol atau port tertentu.",
-          "optional": true,
-          "description": "Protokol atau port spesifik."
-        },
-        {
-          "name": "NET_DATA_SOURCE",
-          "label": "Sumber Data Jaringan",
-          "type": "text",
-          "placeholder": "Contoh: PCAP dari Wireshark, log NetFlow, log firewall.",
-          "info": "Tentukan jenis data jaringan yang Anda miliki.",
-          "optional": false,
-          "description": "Jenis data jaringan yang tersedia."
-        }
-      ],
-      "Pemantauan Keamanan Cloud (Cloud Security Monitoring)": [
-        {
-          "name": "CLOUD_PROVIDER",
-          "label": "Penyedia Cloud",
-          "type": "select",
-          "options": [
-            "AWS",
-            "Azure",
-            "Google Cloud Platform (GCP)",
-            "Lainnya..."
-          ],
-          "info": "Pilih lingkungan cloud tempat investigasi dilakukan.",
-          "default": "Azure",
-          "optional": false,
-          "description": "Lingkungan cloud investigasi."
-        },
-        {
-          "name": "CLOUD_SERVICE",
-          "label": "Layanan Cloud yang Dicurigai",
-          "type": "text",
-          "placeholder": "Contoh: AWS S3 Bucket, Azure VM, GCP Cloud Storage.",
-          "info": "Layanan spesifik yang menunjukkan aktivitas anomali.",
-          "optional": false,
-          "description": "Layanan cloud dengan aktivitas anomali."
-        },
-        {
-          "name": "CLOUD_LOG_SOURCE",
-          "label": "Sumber Log Cloud",
-          "type": "text",
-          "placeholder": "Contoh: AWS CloudTrail, Azure Activity Log, GCP Audit Logs.",
-          "info": "Log yang akan digunakan untuk investigasi.",
-          "optional": false,
-          "description": "Sumber log untuk investigasi."
-        }
-      ],
-      "Perburuan Ancaman Proaktif (Proactive Threat Hunting)": [
-        {
-          "name": "HUNT_HYPOTHESIS",
-          "label": "Hipotesis Perburuan",
-          "type": "textarea",
-          "placeholder": "Contoh: 'Seorang penyerang mungkin menggunakan PowerShell untuk mengunduh file dari internet', 'Ada kemungkinan malware menggunakan DNS untuk komunikasi C2'.",
-          "info": "Buat asumsi atau pertanyaan yang akan Anda coba validasi melalui perburuan data.",
-          "optional": false,
-          "description": "Asumsi yang akan divalidasi."
-        },
-        {
-          "name": "HUNT_DATA_SOURCES",
-          "label": "Sumber Data untuk Perburuan",
-          "type": "textarea",
-          "placeholder": "Contoh: Log proses dari EDR, log DNS, log proxy, log autentikasi.",
-          "info": "Sebutkan kumpulan data yang akan Anda gunakan untuk mencari bukti hipotesis Anda.",
-          "optional": false,
-          "description": "Kumpulan data untuk validasi hipotesis."
-        }
-      ],
-      "Rekayasa Aturan Deteksi (Detection Rule Engineering)": [
-        {
-          "name": "DETECTION_THREAT_BEHAVIOR",
-          "label": "Perilaku Ancaman yang Akan Dideteksi",
-          "type": "textarea",
-          "placeholder": "Contoh: Proses 'lsass.exe' diakses oleh proses selain 'svchost.exe', eksekusi perintah WMI untuk gerakan lateral, pembuatan file dengan ekstensi ganda.",
-          "info": "Jelaskan secara spesifik perilaku jahat atau TTP (Tactic, Technique, and Procedure) yang ingin Anda deteksi.",
-          "optional": false,
-          "description": "Perilaku jahat atau TTP yang ingin dideteksi."
-        },
-        {
-          "name": "DETECTION_PLATFORM",
-          "label": "Platform Deteksi",
-          "type": "text",
-          "placeholder": "Contoh: Azure Sentinel, Splunk, Elastic SIEM.",
-          "info": "SIEM atau platform analitik tempat aturan deteksi akan diimplementasikan.",
-          "optional": false,
-          "description": "Platform SIEM untuk implementasi aturan."
-        }
-      ],
-      "Operasionalisasi Intelijen Ancaman (Threat Intelligence Operationalization)": [
-        {
-          "name": "THREAT_INTEL_IOC",
-          "label": "Indikator Kompromi (IOC)",
-          "type": "textarea",
-          "placeholder": "Contoh: Daftar alamat IP C2 dari grup APT X, hash file malware Y, domain phishing Z.",
-          "info": "Masukkan data intelijen ancaman (IOCs) yang baru diterima.",
-          "optional": false,
-          "description": "Data IOCs yang baru diterima."
-        },
-        {
-          "name": "THREAT_INTEL_GOAL",
-          "label": "Tujuan Operasionalisasi",
-          "type": "select",
-          "options": [
-            "Membuat aturan deteksi baru",
-            "Melakukan perburuan retroaktif",
-            "Memblokir di perimeter (Firewall/Proxy)",
-            "Lainnya..."
-          ],
-          "info": "Pilih bagaimana intelijen ancaman ini akan digunakan secara praktis.",
-          "optional": false,
-          "description": "Tujuan penggunaan intelijen ancaman."
-        }
-      ],
-      "Manajemen Respons Insiden & Forensik (DFIR Management)": [
-        {
-          "name": "DFIR_INCIDENT_SUMMARY",
-          "label": "Ringkasan Insiden",
-          "type": "textarea",
-          "placeholder": "Contoh: Terdeteksi aktivitas ransomware di beberapa server file pada tanggal X. Dampak awal: file terenkripsi, operasional terganggu.",
-          "info": "Berikan ringkasan singkat tentang insiden yang sedang ditangani.",
-          "optional": false,
-          "description": "Ringkasan singkat insiden."
-        },
-        {
-          "name": "DFIR_PHASE",
-          "label": "Fase Respons Insiden Saat Ini",
-          "type": "select",
-          "options": [
-            "Preparation",
-            "Identification",
-            "Containment",
-            "Eradication",
-            "Recovery",
-            "Lessons Learned",
-            "Lainnya..."
-          ],
-          "info": "Pilih fase dari siklus hidup respons insiden (NIST).",
-          "default": "Identification",
-          "optional": false,
-          "description": "Fase siklus hidup respons insiden (NIST)."
-        }
-      ]
-    }
-  },
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Analis Senior SOC (Security Operations Center) yang berpengalaman, mahir dalam berbagai platform keamanan dan bahasa query seperti KQL, SPL, dan SQL.",
     "KONTEKS": "Input yang saya berikan: {BLUE_TEAM_TASK}.",

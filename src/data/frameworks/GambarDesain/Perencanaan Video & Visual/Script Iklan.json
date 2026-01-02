@@ -8,28 +8,32 @@
       "label": "Produk/Jasa yang Diiklankan",
       "type": "text",
       "placeholder": "e.g., 'Aplikasi Belajar Bahasa Asing'",
-      "info": "Produk yang menjadi fokus utama iklan."
+      "info": "Produk yang menjadi fokus utama iklan.",
+      "optional": true
     },
     {
       "name": "targetAudience",
       "label": "Target Audiens Iklan",
       "type": "text",
       "placeholder": "e.g., 'mahasiswa, profesional muda, orang tua'",
-      "info": "Siapa yang ingin Anda jangkau dengan iklan ini?"
+      "info": "Siapa yang ingin Anda jangkau dengan iklan ini?",
+      "optional": true
     },
     {
       "name": "duration",
       "label": "Durasi Iklan (detik)",
       "type": "number",
       "placeholder": "e.g., 30",
-      "info": "Durasi akan sangat mempengaruhi kepadatan naskah."
+      "info": "Durasi akan sangat mempengaruhi kepadatan naskah.",
+      "optional": true
     },
     {
       "name": "keyMessage",
       "label": "Pesan Kunci Iklan",
       "type": "textarea",
       "placeholder": "e.g., 'Belajar bahasa jadi mudah dan menyenangkan di mana saja.'",
-      "info": "Satu hal terpenting yang harus diingat audiens setelah melihat iklan."
+      "info": "Satu hal terpenting yang harus diingat audiens setelah melihat iklan.",
+      "optional": true
     },
     {
       "name": "platform",
@@ -42,14 +46,28 @@
         "TikTok/Reels/Shorts",
         "Lainnya..."
       ],
-      "info": "Platform akan mempengaruhi gaya dan kecepatan naskah."
+      "info": "Platform akan mempengaruhi gaya dan kecepatan naskah.",
+      "optional": true
     },
     {
       "name": "additionalContext",
       "label": "Konteks Tambahan & Instruksi Khusus",
       "type": "textarea",
       "placeholder": "Contoh: Tempo harus cepat dan energik. Sertakan anjuran untuk sound effect 'swoosh' saat produk muncul. Aktor harus terdengar antusias dan percaya diri.",
-      "info": "Instruksi tentang nuansa, tempo, atau elemen audio/visual yang harus dibayangkan oleh AI."
+      "info": "Instruksi tentang nuansa, tempo, atau elemen audio/visual yang harus dibayangkan oleh AI.",
+      "optional": true
+    },
+    {
+      "name": "custom_platform",
+      "label": "Sebutkan Platform Penayangan Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Platform Penayangan.",
+      "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Platform Penayangan standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -69,27 +87,6 @@
     "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
   },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "platform",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_platform",
-            "label": "Sebutkan Platform Penayangan Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Platform Penayangan.",
-            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Platform Penayangan standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "_review_notes": [
     "TODO: Apply hybrid format to 'Platform Penayangan' option 'TV'",
     "TODO: Apply hybrid format to 'Platform Penayangan' option 'Radio'",

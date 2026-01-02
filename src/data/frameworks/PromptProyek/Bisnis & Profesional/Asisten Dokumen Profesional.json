@@ -20,330 +20,340 @@
       "validation": {
         "regex": "^(?!Pilih Jenis Dokumen...).*$"
       }
+    },
+    {
+      "name": "jobTitle",
+      "label": "Posisi yang Dilamar",
+      "type": "text",
+      "placeholder": "e.g., 'Digital Marketing Specialist'",
+      "info": "Nama jabatan persis seperti yang tertulis di lowongan.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "companyName",
+      "label": "Nama Perusahaan",
+      "type": "text",
+      "placeholder": "e.g., 'PT Inovasi Digital'",
+      "info": "Perusahaan yang Anda tuju.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "keyRequirements",
+      "label": "Kualifikasi Utama dari Lowongan",
+      "type": "textarea",
+      "placeholder": "Salin-tempel poin-poin kualifikasi utama dari iklan lowongan kerja di sini.",
+      "info": "AI akan menggunakan ini untuk menyesuaikan surat Anda.",
+      "validation": {
+        "min_length": 20
+      },
+      "optional": true
+    },
+    {
+      "name": "mySkills",
+      "label": "Pengalaman & Keterampilan Relevan Saya",
+      "type": "textarea",
+      "placeholder": "e.g., 'Saya telah mengelola kampanye SEO untuk klien e-commerce selama 4 tahun.'",
+      "info": "Hubungkan pengalaman Anda secara langsung dengan apa yang dicari perusahaan.",
+      "validation": {
+        "min_length": 20
+      },
+      "optional": true
+    },
+    {
+      "name": "projectName",
+      "label": "Nama Proyek",
+      "type": "text",
+      "placeholder": "e.g., 'Pengembangan Aplikasi Mobile'",
+      "info": "Proyek yang akan dilaporkan.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "timePeriod",
+      "label": "Periode Laporan",
+      "type": "text",
+      "placeholder": "e.g., '1 - 7 Juli 2025'",
+      "info": "Cakupan waktu laporan.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "completedTasks",
+      "label": "Tugas yang Selesai",
+      "type": "textarea",
+      "placeholder": "e.g., 'Desain UI, Pengembangan API Login'",
+      "info": "Sebutkan tugas-tugas yang telah selesai pada periode ini.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "ongoingTasks",
+      "label": "Tugas yang Sedang Berjalan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Pengujian fitur X, Integrasi pembayaran'",
+      "info": "Sebutkan tugas-tugas yang masih dalam proses.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "blockers",
+      "label": "Hambatan (Blockers)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Menunggu akses ke server database'",
+      "info": "Sebutkan kendala yang menghambat kemajuan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "recipient",
+      "label": "Penerima Email",
+      "type": "text",
+      "placeholder": "e.g., 'Manajer Pemasaran, Calon Klien'",
+      "info": "Jelaskan siapa penerima dan hubungan Anda.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "subject",
+      "label": "Subjek Email",
+      "type": "text",
+      "placeholder": "e.g., 'Follow-up Rapat Mengenai Proyek X'",
+      "info": "Judul email yang jelas dan ringkas.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "keyMessage",
+      "label": "Pesan Kunci",
+      "type": "textarea",
+      "placeholder": "e.g., 'Meminta data penjualan Q3. Mengusulkan jadwal rapat.'",
+      "info": "Sebutkan semua poin penting yang harus ada dalam isi email.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "tone",
+      "label": "Gaya & Nada",
+      "type": "select",
+      "options": [
+        "Sangat Formal",
+        "Profesional Standar",
+        "Ramah tapi Jelas",
+        "Lainnya..."
+      ],
+      "info": "Pilih nada yang sesuai untuk email Anda.",
+      "optional": true
+    },
+    {
+      "name": "contractType",
+      "label": "Jenis Kontrak",
+      "type": "text",
+      "placeholder": "e.g., 'Perjanjian Kerahasiaan (NDA), Kontrak Freelance, Perjanjian Sewa'",
+      "info": "Sebutkan jenis kontrak yang ingin Anda buat.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "parties",
+      "label": "Pihak-pihak yang Terlibat",
+      "type": "textarea",
+      "placeholder": "e.g., 'Pihak 1: [Nama Perusahaan/Individu], Pihak 2: [Nama Perusahaan/Individu]'",
+      "info": "Sebutkan nama lengkap pihak-pihak yang akan menandatangani kontrak.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "keyTerms",
+      "label": "Syarat & Ketentuan Kunci",
+      "type": "textarea",
+      "placeholder": "e.g., 'Durasi: 1 tahun. Pembayaran: Rp 5.000.000 per bulan. Lingkup Pekerjaan: Pengembangan aplikasi mobile.'",
+      "info": "Poin-poin utama yang harus diatur dalam kontrak.",
+      "validation": {
+        "min_length": 20
+      },
+      "optional": true
+    },
+    {
+      "name": "governingLaw",
+      "label": "Hukum yang Mengatur (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Hukum Republik Indonesia'",
+      "info": "Yurisdiksi hukum yang berlaku untuk kontrak.",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "meetingTitle",
+      "label": "Judul Rapat",
+      "type": "text",
+      "placeholder": "e.g., 'Rapat Koordinasi Proyek Q3'",
+      "info": "Judul resmi rapat.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "dateTime",
+      "label": "Tanggal & Waktu Rapat",
+      "type": "text",
+      "placeholder": "e.g., '10 Juli 2025, 10:00 - 11:00 WIB'",
+      "info": "Kapan rapat dilaksanakan.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "attendees",
+      "label": "Daftar Peserta",
+      "type": "textarea",
+      "placeholder": "e.g., 'Andi (Ketua), Budi (Sekretaris), Citra, Doni'",
+      "info": "Sebutkan semua yang hadir dalam rapat.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "discussionPoints",
+      "label": "Poin Diskusi Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'Pembahasan anggaran, Progres pengembangan fitur X, Tantangan tim.'",
+      "info": "Topik-topik utama yang dibahas.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "decisionsMade",
+      "label": "Keputusan yang Diambil",
+      "type": "textarea",
+      "placeholder": "e.g., 'Anggaran disetujui. Fitur X ditunda 1 minggu.'",
+      "info": "Keputusan penting yang dihasilkan dari rapat.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "actionItems",
+      "label": "Daftar Tindakan (Action Items)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Andi: Siapkan laporan keuangan (Deadline: 15 Juli). Citra: Koordinasi dengan tim desain (Deadline: 12 Juli).'",
+      "info": "Tugas yang harus dilakukan, penanggung jawab, dan tenggat waktu.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "invoiceNumber",
+      "label": "Nomor Faktur",
+      "type": "text",
+      "placeholder": "e.g., 'INV-2025-001'",
+      "info": "Nomor unik untuk faktur ini.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "issueDate",
+      "label": "Tanggal Terbit",
+      "type": "text",
+      "placeholder": "e.g., '11 Juli 2025'",
+      "info": "Tanggal faktur dibuat.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "dueDate",
+      "label": "Tanggal Jatuh Tempo",
+      "type": "text",
+      "placeholder": "e.g., '25 Juli 2025'",
+      "info": "Batas waktu pembayaran.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "billTo",
+      "label": "Ditagihkan Kepada (Nama & Alamat)",
+      "type": "textarea",
+      "placeholder": "e.g., 'PT Maju Jaya\nJl. Contoh No. 10, Jakarta'",
+      "info": "Informasi pelanggan yang akan ditagih.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "items",
+      "label": "Daftar Item/Layanan (Nama, Jumlah, Harga Satuan)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Jasa Desain Logo, 1, Rp 5.000.000\nRevisi Desain, 2, Rp 500.000'",
+      "info": "Detail barang atau jasa yang ditagihkan.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "totalAmount",
+      "label": "Jumlah Total",
+      "type": "number",
+      "placeholder": "e.g., 6000000",
+      "info": "Total biaya keseluruhan.",
+      "validation": {
+        "min_value": 0
+      },
+      "optional": true
+    },
+    {
+      "name": "paymentInstructions",
+      "label": "Instruksi Pembayaran (Opsional)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Transfer ke Rekening BCA 1234567890 a.n. PT XYZ. Mohon konfirmasi setelah pembayaran.'",
+      "info": "Cara pembayaran yang diinginkan.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
     }
   ],
-  "dynamicSubcomponents": {
-    "trigger": "documentType",
-    "options": {
-      "Surat Lamaran Kerja": [
-        {
-          "name": "jobTitle",
-          "label": "Posisi yang Dilamar",
-          "type": "text",
-          "placeholder": "e.g., 'Digital Marketing Specialist'",
-          "info": "Nama jabatan persis seperti yang tertulis di lowongan.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "companyName",
-          "label": "Nama Perusahaan",
-          "type": "text",
-          "placeholder": "e.g., 'PT Inovasi Digital'",
-          "info": "Perusahaan yang Anda tuju.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "keyRequirements",
-          "label": "Kualifikasi Utama dari Lowongan",
-          "type": "textarea",
-          "placeholder": "Salin-tempel poin-poin kualifikasi utama dari iklan lowongan kerja di sini.",
-          "info": "AI akan menggunakan ini untuk menyesuaikan surat Anda.",
-          "validation": {
-            "min_length": 20
-          }
-        },
-        {
-          "name": "mySkills",
-          "label": "Pengalaman & Keterampilan Relevan Saya",
-          "type": "textarea",
-          "placeholder": "e.g., 'Saya telah mengelola kampanye SEO untuk klien e-commerce selama 4 tahun.'",
-          "info": "Hubungkan pengalaman Anda secara langsung dengan apa yang dicari perusahaan.",
-          "validation": {
-            "min_length": 20
-          }
-        }
-      ],
-      "Laporan Progres Proyek": [
-        {
-          "name": "projectName",
-          "label": "Nama Proyek",
-          "type": "text",
-          "placeholder": "e.g., 'Pengembangan Aplikasi Mobile'",
-          "info": "Proyek yang akan dilaporkan.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "timePeriod",
-          "label": "Periode Laporan",
-          "type": "text",
-          "placeholder": "e.g., '1 - 7 Juli 2025'",
-          "info": "Cakupan waktu laporan.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "completedTasks",
-          "label": "Tugas yang Selesai",
-          "type": "textarea",
-          "placeholder": "e.g., 'Desain UI, Pengembangan API Login'",
-          "info": "Sebutkan tugas-tugas yang telah selesai pada periode ini.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "ongoingTasks",
-          "label": "Tugas yang Sedang Berjalan",
-          "type": "textarea",
-          "placeholder": "e.g., 'Pengujian fitur X, Integrasi pembayaran'",
-          "info": "Sebutkan tugas-tugas yang masih dalam proses.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "blockers",
-          "label": "Hambatan (Blockers)",
-          "type": "textarea",
-          "placeholder": "e.g., 'Menunggu akses ke server database'",
-          "info": "Sebutkan kendala yang menghambat kemajuan.",
-          "optional": true,
-          "validation": {
-            "min_length": 10
-          }
-        }
-      ],
-      "Email Profesional": [
-        {
-          "name": "recipient",
-          "label": "Penerima Email",
-          "type": "text",
-          "placeholder": "e.g., 'Manajer Pemasaran, Calon Klien'",
-          "info": "Jelaskan siapa penerima dan hubungan Anda.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "subject",
-          "label": "Subjek Email",
-          "type": "text",
-          "placeholder": "e.g., 'Follow-up Rapat Mengenai Proyek X'",
-          "info": "Judul email yang jelas dan ringkas.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "keyMessage",
-          "label": "Pesan Kunci",
-          "type": "textarea",
-          "placeholder": "e.g., 'Meminta data penjualan Q3. Mengusulkan jadwal rapat.'",
-          "info": "Sebutkan semua poin penting yang harus ada dalam isi email.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "tone",
-          "label": "Gaya & Nada",
-          "type": "select",
-          "options": [
-            "Sangat Formal",
-            "Profesional Standar",
-            "Ramah tapi Jelas",
-            "Lainnya..."
-          ],
-          "info": "Pilih nada yang sesuai untuk email Anda."
-        }
-      ],
-      "Kontrak Sederhana": [
-        {
-          "name": "contractType",
-          "label": "Jenis Kontrak",
-          "type": "text",
-          "placeholder": "e.g., 'Perjanjian Kerahasiaan (NDA), Kontrak Freelance, Perjanjian Sewa'",
-          "info": "Sebutkan jenis kontrak yang ingin Anda buat.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "parties",
-          "label": "Pihak-pihak yang Terlibat",
-          "type": "textarea",
-          "placeholder": "e.g., 'Pihak 1: [Nama Perusahaan/Individu], Pihak 2: [Nama Perusahaan/Individu]'",
-          "info": "Sebutkan nama lengkap pihak-pihak yang akan menandatangani kontrak.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "keyTerms",
-          "label": "Syarat & Ketentuan Kunci",
-          "type": "textarea",
-          "placeholder": "e.g., 'Durasi: 1 tahun. Pembayaran: Rp 5.000.000 per bulan. Lingkup Pekerjaan: Pengembangan aplikasi mobile.'",
-          "info": "Poin-poin utama yang harus diatur dalam kontrak.",
-          "validation": {
-            "min_length": 20
-          }
-        },
-        {
-          "name": "governingLaw",
-          "label": "Hukum yang Mengatur (Opsional)",
-          "type": "text",
-          "placeholder": "e.g., 'Hukum Republik Indonesia'",
-          "info": "Yurisdiksi hukum yang berlaku untuk kontrak.",
-          "optional": true,
-          "validation": {
-            "min_length": 5
-          }
-        }
-      ],
-      "Notulen Rapat": [
-        {
-          "name": "meetingTitle",
-          "label": "Judul Rapat",
-          "type": "text",
-          "placeholder": "e.g., 'Rapat Koordinasi Proyek Q3'",
-          "info": "Judul resmi rapat.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "dateTime",
-          "label": "Tanggal & Waktu Rapat",
-          "type": "text",
-          "placeholder": "e.g., '10 Juli 2025, 10:00 - 11:00 WIB'",
-          "info": "Kapan rapat dilaksanakan.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "attendees",
-          "label": "Daftar Peserta",
-          "type": "textarea",
-          "placeholder": "e.g., 'Andi (Ketua), Budi (Sekretaris), Citra, Doni'",
-          "info": "Sebutkan semua yang hadir dalam rapat.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "discussionPoints",
-          "label": "Poin Diskusi Utama",
-          "type": "textarea",
-          "placeholder": "e.g., 'Pembahasan anggaran, Progres pengembangan fitur X, Tantangan tim.'",
-          "info": "Topik-topik utama yang dibahas.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "decisionsMade",
-          "label": "Keputusan yang Diambil",
-          "type": "textarea",
-          "placeholder": "e.g., 'Anggaran disetujui. Fitur X ditunda 1 minggu.'",
-          "info": "Keputusan penting yang dihasilkan dari rapat.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "actionItems",
-          "label": "Daftar Tindakan (Action Items)",
-          "type": "textarea",
-          "placeholder": "e.g., 'Andi: Siapkan laporan keuangan (Deadline: 15 Juli). Citra: Koordinasi dengan tim desain (Deadline: 12 Juli).'",
-          "info": "Tugas yang harus dilakukan, penanggung jawab, dan tenggat waktu.",
-          "validation": {
-            "min_length": 10
-          }
-        }
-      ],
-      "Faktur/Invoice": [
-        {
-          "name": "invoiceNumber",
-          "label": "Nomor Faktur",
-          "type": "text",
-          "placeholder": "e.g., 'INV-2025-001'",
-          "info": "Nomor unik untuk faktur ini.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "issueDate",
-          "label": "Tanggal Terbit",
-          "type": "text",
-          "placeholder": "e.g., '11 Juli 2025'",
-          "info": "Tanggal faktur dibuat.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "dueDate",
-          "label": "Tanggal Jatuh Tempo",
-          "type": "text",
-          "placeholder": "e.g., '25 Juli 2025'",
-          "info": "Batas waktu pembayaran.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "billTo",
-          "label": "Ditagihkan Kepada (Nama & Alamat)",
-          "type": "textarea",
-          "placeholder": "e.g., 'PT Maju Jaya\nJl. Contoh No. 10, Jakarta'",
-          "info": "Informasi pelanggan yang akan ditagih.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "items",
-          "label": "Daftar Item/Layanan (Nama, Jumlah, Harga Satuan)",
-          "type": "textarea",
-          "placeholder": "e.g., 'Jasa Desain Logo, 1, Rp 5.000.000\nRevisi Desain, 2, Rp 500.000'",
-          "info": "Detail barang atau jasa yang ditagihkan.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "totalAmount",
-          "label": "Jumlah Total",
-          "type": "number",
-          "placeholder": "e.g., 6000000",
-          "info": "Total biaya keseluruhan.",
-          "validation": {
-            "min_value": 0
-          }
-        },
-        {
-          "name": "paymentInstructions",
-          "label": "Instruksi Pembayaran (Opsional)",
-          "type": "textarea",
-          "placeholder": "e.g., 'Transfer ke Rekening BCA 1234567890 a.n. PT XYZ. Mohon konfirmasi setelah pembayaran.'",
-          "info": "Cara pembayaran yang diinginkan.",
-          "optional": true,
-          "validation": {
-            "min_length": 10
-          }
-        }
-      ]
-    }
-  },
   "konteks_tambahan_instruksi_khusus": "AI harus sangat peka terhadap `Gaya & Nada` yang diminta. Untuk dokumen legal seperti kontrak, AI wajib menyertakan disclaimer tebal: '**PENTING: Ini adalah template sederhana dan bukan merupakan nasihat hukum. Selalu konsultasikan dengan profesional hukum untuk kebutuhan spesifik Anda.**' Untuk laporan, prioritaskan kejelasan data. Untuk email, prioritaskan keringkasan dan kejelasan tujuan.",
   "kategori": [
     "Prompt Proyek",

@@ -8,7 +8,8 @@
       "label": "Lirik Lagu",
       "type": "textarea",
       "placeholder": "e.g., '[Verse 1]\nWalking through the city lights\n[Chorus]\nOh, I feel so alive tonight'",
-      "info": "Masukkan lirik lengkap dengan penanda bagian seperti [Verse] dan [Chorus]. Atau biarkan kosong dan jelaskan di deskripsi gaya."
+      "info": "Masukkan lirik lengkap dengan penanda bagian seperti [Verse] dan [Chorus]. Atau biarkan kosong dan jelaskan di deskripsi gaya.",
+      "optional": true
     },
     {
       "name": "model",
@@ -21,7 +22,8 @@
         "chirp-v3",
         "Lainnya..."
       ],
-      "info": "Pilih versi model Suno AI yang akan digunakan."
+      "info": "Pilih versi model Suno AI yang akan digunakan.",
+      "optional": true
     },
     {
       "name": "instrumental",
@@ -32,14 +34,16 @@
         "Ya",
         "Lainnya..."
       ],
-      "info": "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal."
+      "info": "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal.",
+      "optional": true
     },
     {
       "name": "styleOfMusic",
       "label": "Gaya Musik",
       "type": "text",
       "placeholder": "e.g., 'acoustic pop', '80s synthwave with female vocal', 'epic cinematic orchestral'",
-      "info": "Deskripsikan genre, mood, instrumen, dan tipe vokal yang Anda inginkan."
+      "info": "Deskripsikan genre, mood, instrumen, dan tipe vokal yang Anda inginkan.",
+      "optional": true
     },
     {
       "name": "makeInstrumental",
@@ -50,14 +54,52 @@
         "Ya",
         "Lainnya..."
       ],
-      "info": "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal."
+      "info": "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal.",
+      "optional": true
     },
     {
       "name": "additionalContext",
       "label": "Konteks Tambahan & Instruksi Khusus",
       "type": "textarea",
       "placeholder": "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan. Untuk hasil terbaik, gunakan model v3.5 atau v3.5-turbo.",
-      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada."
+      "info": "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+      "optional": true
+    },
+    {
+      "name": "custom_model",
+      "label": "Sebutkan Model Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Model.",
+      "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Model standar tidak tersedia."
+    },
+    {
+      "name": "custom_instrumental",
+      "label": "Sebutkan Instrumental? Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Instrumental?.",
+      "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Instrumental? standar tidak tersedia."
+    },
+    {
+      "name": "custom_makeInstrumental",
+      "label": "Sebutkan Buat Versi Instrumental? Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Buat Versi Instrumental?.",
+      "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Buat Versi Instrumental? standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -77,65 +119,6 @@
     "TUGAS": "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat."
   },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "model",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_model",
-            "label": "Sebutkan Model Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Model.",
-            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Model standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "instrumental",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_instrumental",
-            "label": "Sebutkan Instrumental? Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Instrumental?.",
-            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Instrumental? standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "makeInstrumental",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_makeInstrumental",
-            "label": "Sebutkan Buat Versi Instrumental? Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Buat Versi Instrumental?.",
-            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Buat Versi Instrumental? standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "_review_notes": [
     "TODO: Review options for hybrid localization (Technical EN + ID)"
   ]

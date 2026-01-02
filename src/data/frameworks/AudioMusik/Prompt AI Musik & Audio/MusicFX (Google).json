@@ -8,7 +8,8 @@
       "label": "Prompt Deskriptif",
       "type": "textarea",
       "placeholder": "e.g., 'lo-fi chill beat for studying', 'reggae song with a catchy bassline', 'epic rock anthem with electric guitar solos'",
-      "info": "Deskripsikan musik yang ingin Anda buat dengan fokus pada mood, genre, dan instrumen."
+      "info": "Deskripsikan musik yang ingin Anda buat dengan fokus pada mood, genre, dan instrumen.",
+      "optional": true
     },
     {
       "name": "duration",
@@ -20,14 +21,28 @@
         "70",
         "Lainnya..."
       ],
-      "info": "Pilih panjang loop musik yang akan dihasilkan."
+      "info": "Pilih panjang loop musik yang akan dihasilkan.",
+      "optional": true
     },
     {
       "name": "additionalContext",
       "label": "Konteks Tambahan & Instruksi Khusus",
       "type": "textarea",
       "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
-      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI.",
+      "optional": true
+    },
+    {
+      "name": "custom_duration",
+      "label": "Sebutkan Durasi (detik) Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Durasi (detik).",
+      "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Durasi (detik) standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -47,27 +62,6 @@
     "TUGAS": "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat."
   },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "duration",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_duration",
-            "label": "Sebutkan Durasi (detik) Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Durasi (detik).",
-            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Durasi (detik) standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "_review_notes": [
     "TODO: Review options for hybrid localization (Technical EN + ID)"
   ]

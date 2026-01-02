@@ -37,416 +37,364 @@
         "Perencanaan Kampanye Red Team (Red Team Campaign Plan)",
         "Lainnya..."
       ]
-    }
-  ],
-  "dynamicSubcomponents": [
-    {
-      "trigger": "RED_TEAM_TACTIC",
-      "options": {
-        "Intelijen Sumber Terbuka (OSINT)": [
-          {
-            "name": "OSINT_TARGET",
-            "label": "Target OSINT",
-            "type": "text",
-            "placeholder": "Contoh: Nama perusahaan, nama individu, domain website",
-            "info": "Tentukan entitas utama yang akan menjadi target pengumpulan informasi dari sumber terbuka.",
-            "optional": false,
-            "description": "Entitas utama yang akan diinvestigasi."
-          },
-          {
-            "name": "OSINT_OBJECTIVES",
-            "label": "Tujuan Pengumpulan Informasi",
-            "type": "textarea",
-            "placeholder": "Contoh: Mengidentifikasi alamat email karyawan, menemukan subdomain yang terekspos, memetakan teknologi yang digunakan.",
-            "info": "Sebutkan informasi spesifik apa yang ingin Anda dapatkan dari aktivitas OSINT.",
-            "optional": false,
-            "description": "Informasi spesifik yang ingin didapatkan."
-          },
-          {
-            "name": "OSINT_TOOLS",
-            "label": "Alat & Teknik yang Diusulkan",
-            "type": "textarea",
-            "placeholder": "Contoh: Google Dorking, Shodan, Maltego, theHarvester, analisis media sosial.",
-            "info": "Sebutkan alat atau metode spesifik yang ingin Anda gunakan atau pertimbangkan.",
-            "optional": true,
-            "description": "Alat atau metode yang diusulkan."
-          }
-        ],
-        "Pengintaian & Pemetaan Aset (Reconnaissance & Asset Discovery)": [
-          {
-            "name": "RECON_TARGET_SCOPE",
-            "label": "Lingkup Target Pengintaian",
-            "type": "textarea",
-            "placeholder": "Contoh: Blok CIDR (192.168.1.0/24), rentang IP, daftar domain/subdomain target.",
-            "info": "Definisikan batasan jaringan atau aset digital yang akan diintai.",
-            "optional": false,
-            "description": "Batasan jaringan atau aset yang akan diintai."
-          },
-          {
-            "name": "RECON_TYPE",
-            "label": "Jenis Pengintaian",
-            "type": "select",
-            "options": [
-              "Aktif (Active)",
-              "Pasif (Passive)",
-              "Lainnya..."
-            ],
-            "info": "Pilih antara pengintaian aktif (mis. port scanning) atau pasif (mis. analisis header DNS).",
-            "default": "Aktif (Active)",
-            "optional": false,
-            "description": "Metodologi pengintaian yang akan digunakan."
-          },
-          {
-            "name": "RECON_TOOLS",
-            "label": "Alat & Teknik yang Diusulkan",
-            "type": "textarea",
-            "placeholder": "Contoh: Nmap untuk port scanning, masscan, DNS enumeration, analisis sertifikat SSL.",
-            "info": "Sebutkan alat atau metode spesifik yang ingin Anda gunakan.",
-            "optional": true,
-            "description": "Alat atau metode spesifik yang diusulkan."
-          }
-        ],
-        "Pengujian Keamanan Aplikasi (Application Security Testing)": [
-          {
-            "name": "APPSEC_TARGET_URL",
-            "label": "URL Aplikasi Target",
-            "type": "text",
-            "placeholder": "Contoh: https://aplikasi-target.com",
-            "info": "URL lengkap dari aplikasi web atau mobile yang akan diuji.",
-            "optional": false,
-            "description": "URL aplikasi yang akan diuji."
-          },
-          {
-            "name": "APPSEC_TEST_TYPE",
-            "label": "Jenis Pengujian",
-            "type": "select",
-            "options": [
-              "Analisis Statis (SAST)",
-              "Analisis Dinamis (DAST)",
-              "Pengujian Interaktif (IAST)",
-              "Analisis Komposisi Perangkat Lunak (SCA)",
-              "Lainnya..."
-            ],
-            "info": "Pilih metodologi pengujian keamanan aplikasi yang akan digunakan.",
-            "default": "Analisis Dinamis (DAST)",
-            "optional": false,
-            "description": "Metodologi pengujian yang dipilih."
-          },
-          {
-            "name": "APPSEC_VULN_FOCUS",
-            "label": "Fokus Kerentanan",
-            "type": "textarea",
-            "placeholder": "Contoh: OWASP Top 10, SQL Injection, Cross-Site Scripting (XSS), otorisasi yang rusak.",
-            "info": "Sebutkan jenis kerentanan spesifik yang menjadi prioritas pengujian.",
-            "optional": true,
-            "description": "Prioritas kerentanan yang akan diuji."
-          }
-        ],
-        "Rekayasa Sosial (Social Engineering)": [
-          {
-            "name": "SE_CAMPAIGN_TYPE",
-            "label": "Jenis Kampanye",
-            "type": "select",
-            "options": [
-              "Phishing (Email)",
-              "Smishing (SMS)",
-              "Vishing (Voice Call)",
-              "Baiting (Umpan Fisik/Digital)",
-              "Lainnya..."
-            ],
-            "info": "Pilih vektor serangan rekayasa sosial yang akan digunakan.",
-            "default": "Phishing (Email)",
-            "optional": false,
-            "description": "Vektor serangan rekayasa sosial."
-          },
-          {
-            "name": "SE_TARGET_GROUP",
-            "label": "Grup Target",
-            "type": "text",
-            "placeholder": "Contoh: Departemen Keuangan, Tim HR, Administrator IT.",
-            "info": "Tentukan kelompok atau departemen yang akan menjadi target kampanye.",
-            "optional": false,
-            "description": "Kelompok atau departemen target."
-          },
-          {
-            "name": "SE_PRETEXT",
-            "label": "Skenario/Pretext",
-            "type": "textarea",
-            "placeholder": "Contoh: Email pemberitahuan pembaruan kata sandi palsu, telepon dari 'helpdesk IT', SMS undian berhadiah.",
-            "info": "Rancang cerita atau skenario palsu yang akan digunakan untuk mengelabui target.",
-            "optional": false,
-            "description": "Skenario palsu untuk mengelabui target."
-          }
-        ],
-        "Eksekusi Akses Awal (Initial Access Execution)": [
-          {
-            "name": "IA_VECTOR",
-            "label": "Vektor Akses Awal",
-            "type": "text",
-            "placeholder": "Contoh: Eksploitasi kerentanan publik (mis. Log4Shell), Spearphishing dengan lampiran berbahaya, kredensial yang dicuri.",
-            "info": "Tentukan metode utama yang akan digunakan untuk mendapatkan pijakan awal di jaringan target.",
-            "optional": false,
-            "description": "Metode utama untuk mendapatkan akses awal."
-          },
-          {
-            "name": "IA_PAYLOAD_TYPE",
-            "label": "Jenis Payload",
-            "type": "text",
-            "placeholder": "Contoh: Reverse shell, beacon Cobalt Strike, Meterpreter.",
-            "info": "Jelaskan jenis payload yang akan dieksekusi di mesin target setelah akses berhasil.",
-            "optional": false,
-            "description": "Payload yang akan dieksekusi di target."
-          },
-          {
-            "name": "IA_TARGET_SYSTEM",
-            "label": "Sistem Target",
-            "type": "text",
-            "placeholder": "Contoh: Server web publik, workstation karyawan, database server.",
-            "info": "Identifikasi sistem atau aset spesifik yang menjadi target utama untuk akses awal.",
-            "optional": true,
-            "description": "Sistem atau aset yang menjadi target utama."
-          }
-        ],
-        "Strategi Persistensi (Persistence Strategy)": [
-          {
-            "name": "PERSIST_TECHNIQUE",
-            "label": "Teknik Persistensi",
-            "type": "textarea",
-            "placeholder": "Contoh: Membuat scheduled task, menambahkan startup script, memodifikasi registry (T1547), membuat akun baru (T1136).",
-            "info": "Sebutkan teknik spesifik (jika mungkin dengan ID MITRE ATT&CK) yang akan digunakan untuk mempertahankan akses.",
-            "optional": false,
-            "description": "Teknik untuk mempertahankan akses (gunakan ID MITRE ATT&CK jika ada)."
-          },
-          {
-            "name": "PERSIST_TARGET_OS",
-            "label": "Sistem Operasi Target",
-            "type": "select",
-            "options": [
-              "Windows",
-              "Linux",
-              "macOS",
-              "Lainnya..."
-            ],
-            "info": "Pilih OS target karena teknik persistensi seringkali spesifik untuk OS tertentu.",
-            "default": "Windows",
-            "optional": false,
-            "description": "Sistem Operasi target."
-          },
-          {
-            "name": "PERSIST_IMPLANT_TYPE",
-            "label": "Jenis Implan/Backdoor",
-            "type": "text",
-            "placeholder": "Contoh: Webshell, cron job, service biner.",
-            "info": "Jelaskan artefak atau kode yang akan ditinggalkan di sistem untuk persistensi.",
-            "optional": true,
-            "description": "Artefak atau kode yang ditinggalkan di sistem."
-          }
-        ],
-        "Eskalasi Hak (Privilege Escalation)": [
-          {
-            "name": "PRIVILEGE_ESCALATION_TECHNIQUE",
-            "label": "Teknik Eskalasi Hak",
-            "type": "textarea",
-            "placeholder": "Contoh: Kernel exploit, miskonfigurasi SUID/GUID, kredensial yang disimpan dalam plain text, DLL hijacking.",
-            "info": "Sebutkan teknik spesifik yang akan digunakan untuk meningkatkan hak akses dari user biasa menjadi administrator/root.",
-            "optional": false,
-            "description": "Teknik untuk meningkatkan hak akses."
-          },
-          {
-            "name": "PRIVILEGE_ESCALATION_CURRENT_ACCESS",
-            "label": "Level Akses Saat Ini",
-            "type": "text",
-            "placeholder": "Contoh: User lokal tanpa hak admin, akun layanan dengan hak terbatas.",
-            "info": "Jelaskan tingkat hak akses yang dimiliki saat ini.",
-            "optional": false,
-            "description": "Tingkat hak akses saat ini."
-          },
-          {
-            "name": "PRIVILEGE_ESCALATION_TARGET_ACCESS",
-            "label": "Target Hak Akses",
-            "type": "text",
-            "placeholder": "Contoh: Administrator Domain, root, SYSTEM.",
-            "info": "Jelaskan tingkat hak akses yang ingin dicapai.",
-            "optional": false,
-            "description": "Tingkat hak akses yang ingin dicapai."
-          }
-        ],
-        "Penghindaran Pertahanan (Defense Evasion)": [
-          {
-            "name": "DEFENSE_EVASION_TECHNIQUE",
-            "label": "Teknik Penghindaran Pertahanan",
-            "type": "textarea",
-            "placeholder": "Contoh: Obfuscation/enkripsi payload, mematikan logging keamanan (T1562), masquerading sebagai proses sistem yang sah (T1036), penggunaan fileless malware.",
-            "info": "Sebutkan metode yang akan digunakan untuk menghindari deteksi oleh antivirus, EDR, atau SIEM.",
-            "optional": false,
-            "description": "Metode untuk menghindari deteksi keamanan."
-          },
-          {
-            "name": "DEFENSE_EVASION_TARGET_DEFENSE",
-            "label": "Target Pertahanan yang Dihindari",
-            "type": "text",
-            "placeholder": "Contoh: Windows Defender, Sysmon, Splunk, CrowdStrike Falcon.",
-            "info": "Sebutkan produk atau teknologi keamanan spesifik yang ingin dihindari.",
-            "optional": true,
-            "description": "Produk keamanan yang ingin dihindari."
-          }
-        ],
-        "Gerakan Lateral (Lateral Movement)": [
-          {
-            "name": "LATERAL_MOVEMENT_TECHNIQUE",
-            "label": "Teknik Gerakan Lateral",
-            "type": "textarea",
-            "placeholder": "Contoh: Pass-the-Hash (PtH), eksploitasi remote services (mis. SMB, RDP), penggunaan tool administrasi internal seperti PsExec.",
-            "info": "Sebutkan metode yang akan digunakan untuk berpindah dari satu sistem ke sistem lain di dalam jaringan.",
-            "optional": false,
-            "description": "Metode untuk berpindah antar sistem."
-          },
-          {
-            "name": "LATERAL_MOVEMENT_CURRENT_HOST",
-            "label": "Host Saat Ini",
-            "type": "text",
-            "placeholder": "Contoh: Workstation HR (WKSTN-HR-01)",
-            "info": "Host tempat Anda memulai gerakan lateral.",
-            "optional": false,
-            "description": "Host awal untuk gerakan lateral."
-          },
-          {
-            "name": "LATERAL_MOVEMENT_TARGET_HOST",
-            "label": "Host Tujuan",
-            "type": "text",
-            "placeholder": "Contoh: Domain Controller (DC-01), File Server (FS-02).",
-            "info": "Host yang menjadi target selanjutnya dalam gerakan lateral.",
-            "optional": false,
-            "description": "Host target untuk gerakan lateral."
-          }
-        ],
-        "Pengumpulan Data (Collection)": [
-          {
-            "name": "COLLECTION_DATA_TYPE",
-            "label": "Jenis Data yang Dikumpulkan",
-            "type": "textarea",
-            "placeholder": "Contoh: Kredensial dari memori (T1003), file dari file share, email dari Outlook, screenshot (T1113).",
-            "info": "Sebutkan jenis data spesifik yang menjadi target pengumpulan.",
-            "optional": false,
-            "description": "Jenis data yang akan dikumpulkan."
-          },
-          {
-            "name": "COLLECTION_SOURCE",
-            "label": "Sumber Data",
-            "type": "text",
-            "placeholder": "Contoh: File server, database pelanggan, workstation CEO.",
-            "info": "Lokasi atau sistem tempat data target berada.",
-            "optional": false,
-            "description": "Lokasi atau sistem sumber data."
-          }
-        ],
-        "Desain Infrastruktur C2 (C2 Infrastructure Design)": [
-          {
-            "name": "C2_FRAMEWORK",
-            "label": "Kerangka Kerja C2",
-            "type": "text",
-            "placeholder": "Contoh: Cobalt Strike, Metasploit, Empire, Sliver.",
-            "info": "Pilih kerangka kerja Command and Control (C2) yang akan digunakan.",
-            "optional": false,
-            "description": "Kerangka kerja C2 yang akan digunakan."
-          },
-          {
-            "name": "C2_COMMUNICATION_PROTOCOL",
-            "label": "Protokol Komunikasi",
-            "type": "text",
-            "placeholder": "Contoh: DNS over HTTPS (DoH), HTTP/S, SMB.",
-            "info": "Tentukan protokol yang akan digunakan untuk komunikasi antara implan dan server C2.",
-            "optional": false,
-            "description": "Protokol komunikasi C2."
-          },
-          {
-            "name": "C2_HOSTING_STRATEGY",
-            "label": "Strategi Hosting",
-            "type": "textarea",
-            "placeholder": "Contoh: Menggunakan VPS, domain fronting melalui CDN, redirector, kategori domain yang terlihat normal (mis. kesehatan, keuangan).",
-            "info": "Jelaskan bagaimana infrastruktur C2 akan disembunyikan atau dibuat agar terlihat sah.",
-            "optional": false,
-            "description": "Strategi hosting untuk infrastruktur C2."
-          }
-        ],
-        "Perencanaan Kampanye Red Team (Red Team Campaign Plan)": [
-          {
-            "name": "CAMPAIGN_OBJECTIVE",
-            "label": "Tujuan Utama Kampanye",
-            "type": "textarea",
-            "placeholder": "Contoh: Mensimulasikan Advanced Persistent Threat (APT) untuk mencuri data kekayaan intelektual dari R&D, menguji kemampuan deteksi dan respons SOC terhadap ransomware.",
-            "info": "Definisikan tujuan akhir tingkat tinggi dari keseluruhan kampanye Red Team.",
-            "optional": false,
-            "description": "Tujuan akhir dari kampanye."
-          },
-          {
-            "name": "CAMPAIGN_TARGET_ASSETS",
-            "label": "Aset Kritis Target",
-            "type": "textarea",
-            "placeholder": "Contoh: Database pelanggan, kode sumber produk, infrastruktur domain controller.",
-            "info": "'Crown jewels' atau aset paling berharga yang menjadi sasaran akhir simulasi.",
-            "optional": false,
-            "description": "Aset paling berharga yang menjadi target."
-          },
-          {
-            "name": "CAMPAIGN_ALLOWED_TECHNIQUES",
-            "label": "Teknik yang Diizinkan (Rules of Engagement)",
-            "type": "textarea",
-            "placeholder": "Contoh: Diizinkan melakukan phishing, dilarang melakukan serangan Denial-of-Service (DoS), eksploitasi hanya boleh dilakukan pada sistem staging.",
-            "info": "Batasan dan aturan main yang telah disepakati untuk kampanye ini.",
-            "optional": false,
-            "description": "Aturan main dan batasan kampanye."
-          }
-        ]
-      }
     },
     {
-      "trigger": "RECON_TYPE",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "RECON_TYPE_OTHER",
-            "label": "Sebutkan Jenis Pengintaian Lainnya",
-            "type": "text",
-            "placeholder": "Contoh: Analisis citra satelit",
-            "info": "Masukkan metode pengintaian kustom yang Anda usulkan.",
-            "optional": false,
-            "description": "Metode pengintaian kustom."
-          }
-        ]
-      }
+      "name": "OSINT_TARGET",
+      "label": "Target OSINT",
+      "type": "text",
+      "placeholder": "Contoh: Nama perusahaan, nama individu, domain website",
+      "info": "Tentukan entitas utama yang akan menjadi target pengumpulan informasi dari sumber terbuka.",
+      "optional": false,
+      "description": "Entitas utama yang akan diinvestigasi."
     },
     {
-      "trigger": "APPSEC_TEST_TYPE",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "APPSEC_TEST_TYPE_OTHER",
-            "label": "Sebutkan Jenis Pengujian Lainnya",
-            "type": "text",
-            "placeholder": "Contoh: Fuzzing",
-            "info": "Masukkan metodologi pengujian keamanan kustom.",
-            "optional": false,
-            "description": "Metodologi pengujian kustom."
-          }
-        ]
-      }
+      "name": "OSINT_OBJECTIVES",
+      "label": "Tujuan Pengumpulan Informasi",
+      "type": "textarea",
+      "placeholder": "Contoh: Mengidentifikasi alamat email karyawan, menemukan subdomain yang terekspos, memetakan teknologi yang digunakan.",
+      "info": "Sebutkan informasi spesifik apa yang ingin Anda dapatkan dari aktivitas OSINT.",
+      "optional": false,
+      "description": "Informasi spesifik yang ingin didapatkan."
     },
     {
-      "trigger": "SE_CAMPAIGN_TYPE",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "SE_CAMPAIGN_TYPE_OTHER",
-            "label": "Sebutkan Jenis Kampanye Lainnya",
-            "type": "text",
-            "placeholder": "Contoh: Tailgating",
-            "info": "Masukkan vektor serangan rekayasa sosial kustom.",
-            "optional": false,
-            "description": "Vektor rekayasa sosial kustom."
-          }
-        ]
-      }
+      "name": "OSINT_TOOLS",
+      "label": "Alat & Teknik yang Diusulkan",
+      "type": "textarea",
+      "placeholder": "Contoh: Google Dorking, Shodan, Maltego, theHarvester, analisis media sosial.",
+      "info": "Sebutkan alat atau metode spesifik yang ingin Anda gunakan atau pertimbangkan.",
+      "optional": true,
+      "description": "Alat atau metode yang diusulkan."
+    },
+    {
+      "name": "RECON_TARGET_SCOPE",
+      "label": "Lingkup Target Pengintaian",
+      "type": "textarea",
+      "placeholder": "Contoh: Blok CIDR (192.168.1.0/24), rentang IP, daftar domain/subdomain target.",
+      "info": "Definisikan batasan jaringan atau aset digital yang akan diintai.",
+      "optional": false,
+      "description": "Batasan jaringan atau aset yang akan diintai."
+    },
+    {
+      "name": "RECON_TYPE",
+      "label": "Jenis Pengintaian",
+      "type": "select",
+      "options": [
+        "Aktif (Active)",
+        "Pasif (Passive)",
+        "Lainnya..."
+      ],
+      "info": "Pilih antara pengintaian aktif (mis. port scanning) atau pasif (mis. analisis header DNS).",
+      "default": "Aktif (Active)",
+      "optional": false,
+      "description": "Metodologi pengintaian yang akan digunakan."
+    },
+    {
+      "name": "RECON_TOOLS",
+      "label": "Alat & Teknik yang Diusulkan",
+      "type": "textarea",
+      "placeholder": "Contoh: Nmap untuk port scanning, masscan, DNS enumeration, analisis sertifikat SSL.",
+      "info": "Sebutkan alat atau metode spesifik yang ingin Anda gunakan.",
+      "optional": true,
+      "description": "Alat atau metode spesifik yang diusulkan."
+    },
+    {
+      "name": "APPSEC_TARGET_URL",
+      "label": "URL Aplikasi Target",
+      "type": "text",
+      "placeholder": "Contoh: https://aplikasi-target.com",
+      "info": "URL lengkap dari aplikasi web atau mobile yang akan diuji.",
+      "optional": false,
+      "description": "URL aplikasi yang akan diuji."
+    },
+    {
+      "name": "APPSEC_TEST_TYPE",
+      "label": "Jenis Pengujian",
+      "type": "select",
+      "options": [
+        "Analisis Statis (SAST)",
+        "Analisis Dinamis (DAST)",
+        "Pengujian Interaktif (IAST)",
+        "Analisis Komposisi Perangkat Lunak (SCA)",
+        "Lainnya..."
+      ],
+      "info": "Pilih metodologi pengujian keamanan aplikasi yang akan digunakan.",
+      "default": "Analisis Dinamis (DAST)",
+      "optional": false,
+      "description": "Metodologi pengujian yang dipilih."
+    },
+    {
+      "name": "APPSEC_VULN_FOCUS",
+      "label": "Fokus Kerentanan",
+      "type": "textarea",
+      "placeholder": "Contoh: OWASP Top 10, SQL Injection, Cross-Site Scripting (XSS), otorisasi yang rusak.",
+      "info": "Sebutkan jenis kerentanan spesifik yang menjadi prioritas pengujian.",
+      "optional": true,
+      "description": "Prioritas kerentanan yang akan diuji."
+    },
+    {
+      "name": "SE_CAMPAIGN_TYPE",
+      "label": "Jenis Kampanye",
+      "type": "select",
+      "options": [
+        "Phishing (Email)",
+        "Smishing (SMS)",
+        "Vishing (Voice Call)",
+        "Baiting (Umpan Fisik/Digital)",
+        "Lainnya..."
+      ],
+      "info": "Pilih vektor serangan rekayasa sosial yang akan digunakan.",
+      "default": "Phishing (Email)",
+      "optional": false,
+      "description": "Vektor serangan rekayasa sosial."
+    },
+    {
+      "name": "SE_TARGET_GROUP",
+      "label": "Grup Target",
+      "type": "text",
+      "placeholder": "Contoh: Departemen Keuangan, Tim HR, Administrator IT.",
+      "info": "Tentukan kelompok atau departemen yang akan menjadi target kampanye.",
+      "optional": false,
+      "description": "Kelompok atau departemen target."
+    },
+    {
+      "name": "SE_PRETEXT",
+      "label": "Skenario/Pretext",
+      "type": "textarea",
+      "placeholder": "Contoh: Email pemberitahuan pembaruan kata sandi palsu, telepon dari 'helpdesk IT', SMS undian berhadiah.",
+      "info": "Rancang cerita atau skenario palsu yang akan digunakan untuk mengelabui target.",
+      "optional": false,
+      "description": "Skenario palsu untuk mengelabui target."
+    },
+    {
+      "name": "IA_VECTOR",
+      "label": "Vektor Akses Awal",
+      "type": "text",
+      "placeholder": "Contoh: Eksploitasi kerentanan publik (mis. Log4Shell), Spearphishing dengan lampiran berbahaya, kredensial yang dicuri.",
+      "info": "Tentukan metode utama yang akan digunakan untuk mendapatkan pijakan awal di jaringan target.",
+      "optional": false,
+      "description": "Metode utama untuk mendapatkan akses awal."
+    },
+    {
+      "name": "IA_PAYLOAD_TYPE",
+      "label": "Jenis Payload",
+      "type": "text",
+      "placeholder": "Contoh: Reverse shell, beacon Cobalt Strike, Meterpreter.",
+      "info": "Jelaskan jenis payload yang akan dieksekusi di mesin target setelah akses berhasil.",
+      "optional": false,
+      "description": "Payload yang akan dieksekusi di target."
+    },
+    {
+      "name": "IA_TARGET_SYSTEM",
+      "label": "Sistem Target",
+      "type": "text",
+      "placeholder": "Contoh: Server web publik, workstation karyawan, database server.",
+      "info": "Identifikasi sistem atau aset spesifik yang menjadi target utama untuk akses awal.",
+      "optional": true,
+      "description": "Sistem atau aset yang menjadi target utama."
+    },
+    {
+      "name": "PERSIST_TECHNIQUE",
+      "label": "Teknik Persistensi",
+      "type": "textarea",
+      "placeholder": "Contoh: Membuat scheduled task, menambahkan startup script, memodifikasi registry (T1547), membuat akun baru (T1136).",
+      "info": "Sebutkan teknik spesifik (jika mungkin dengan ID MITRE ATT&CK) yang akan digunakan untuk mempertahankan akses.",
+      "optional": false,
+      "description": "Teknik untuk mempertahankan akses (gunakan ID MITRE ATT&CK jika ada)."
+    },
+    {
+      "name": "PERSIST_TARGET_OS",
+      "label": "Sistem Operasi Target",
+      "type": "select",
+      "options": [
+        "Windows",
+        "Linux",
+        "macOS",
+        "Lainnya..."
+      ],
+      "info": "Pilih OS target karena teknik persistensi seringkali spesifik untuk OS tertentu.",
+      "default": "Windows",
+      "optional": false,
+      "description": "Sistem Operasi target."
+    },
+    {
+      "name": "PERSIST_IMPLANT_TYPE",
+      "label": "Jenis Implan/Backdoor",
+      "type": "text",
+      "placeholder": "Contoh: Webshell, cron job, service biner.",
+      "info": "Jelaskan artefak atau kode yang akan ditinggalkan di sistem untuk persistensi.",
+      "optional": true,
+      "description": "Artefak atau kode yang ditinggalkan di sistem."
+    },
+    {
+      "name": "PRIVILEGE_ESCALATION_TECHNIQUE",
+      "label": "Teknik Eskalasi Hak",
+      "type": "textarea",
+      "placeholder": "Contoh: Kernel exploit, miskonfigurasi SUID/GUID, kredensial yang disimpan dalam plain text, DLL hijacking.",
+      "info": "Sebutkan teknik spesifik yang akan digunakan untuk meningkatkan hak akses dari user biasa menjadi administrator/root.",
+      "optional": false,
+      "description": "Teknik untuk meningkatkan hak akses."
+    },
+    {
+      "name": "PRIVILEGE_ESCALATION_CURRENT_ACCESS",
+      "label": "Level Akses Saat Ini",
+      "type": "text",
+      "placeholder": "Contoh: User lokal tanpa hak admin, akun layanan dengan hak terbatas.",
+      "info": "Jelaskan tingkat hak akses yang dimiliki saat ini.",
+      "optional": false,
+      "description": "Tingkat hak akses saat ini."
+    },
+    {
+      "name": "PRIVILEGE_ESCALATION_TARGET_ACCESS",
+      "label": "Target Hak Akses",
+      "type": "text",
+      "placeholder": "Contoh: Administrator Domain, root, SYSTEM.",
+      "info": "Jelaskan tingkat hak akses yang ingin dicapai.",
+      "optional": false,
+      "description": "Tingkat hak akses yang ingin dicapai."
+    },
+    {
+      "name": "DEFENSE_EVASION_TECHNIQUE",
+      "label": "Teknik Penghindaran Pertahanan",
+      "type": "textarea",
+      "placeholder": "Contoh: Obfuscation/enkripsi payload, mematikan logging keamanan (T1562), masquerading sebagai proses sistem yang sah (T1036), penggunaan fileless malware.",
+      "info": "Sebutkan metode yang akan digunakan untuk menghindari deteksi oleh antivirus, EDR, atau SIEM.",
+      "optional": false,
+      "description": "Metode untuk menghindari deteksi keamanan."
+    },
+    {
+      "name": "DEFENSE_EVASION_TARGET_DEFENSE",
+      "label": "Target Pertahanan yang Dihindari",
+      "type": "text",
+      "placeholder": "Contoh: Windows Defender, Sysmon, Splunk, CrowdStrike Falcon.",
+      "info": "Sebutkan produk atau teknologi keamanan spesifik yang ingin dihindari.",
+      "optional": true,
+      "description": "Produk keamanan yang ingin dihindari."
+    },
+    {
+      "name": "LATERAL_MOVEMENT_TECHNIQUE",
+      "label": "Teknik Gerakan Lateral",
+      "type": "textarea",
+      "placeholder": "Contoh: Pass-the-Hash (PtH), eksploitasi remote services (mis. SMB, RDP), penggunaan tool administrasi internal seperti PsExec.",
+      "info": "Sebutkan metode yang akan digunakan untuk berpindah dari satu sistem ke sistem lain di dalam jaringan.",
+      "optional": false,
+      "description": "Metode untuk berpindah antar sistem."
+    },
+    {
+      "name": "LATERAL_MOVEMENT_CURRENT_HOST",
+      "label": "Host Saat Ini",
+      "type": "text",
+      "placeholder": "Contoh: Workstation HR (WKSTN-HR-01)",
+      "info": "Host tempat Anda memulai gerakan lateral.",
+      "optional": false,
+      "description": "Host awal untuk gerakan lateral."
+    },
+    {
+      "name": "LATERAL_MOVEMENT_TARGET_HOST",
+      "label": "Host Tujuan",
+      "type": "text",
+      "placeholder": "Contoh: Domain Controller (DC-01), File Server (FS-02).",
+      "info": "Host yang menjadi target selanjutnya dalam gerakan lateral.",
+      "optional": false,
+      "description": "Host target untuk gerakan lateral."
+    },
+    {
+      "name": "COLLECTION_DATA_TYPE",
+      "label": "Jenis Data yang Dikumpulkan",
+      "type": "textarea",
+      "placeholder": "Contoh: Kredensial dari memori (T1003), file dari file share, email dari Outlook, screenshot (T1113).",
+      "info": "Sebutkan jenis data spesifik yang menjadi target pengumpulan.",
+      "optional": false,
+      "description": "Jenis data yang akan dikumpulkan."
+    },
+    {
+      "name": "COLLECTION_SOURCE",
+      "label": "Sumber Data",
+      "type": "text",
+      "placeholder": "Contoh: File server, database pelanggan, workstation CEO.",
+      "info": "Lokasi atau sistem tempat data target berada.",
+      "optional": false,
+      "description": "Lokasi atau sistem sumber data."
+    },
+    {
+      "name": "C2_FRAMEWORK",
+      "label": "Kerangka Kerja C2",
+      "type": "text",
+      "placeholder": "Contoh: Cobalt Strike, Metasploit, Empire, Sliver.",
+      "info": "Pilih kerangka kerja Command and Control (C2) yang akan digunakan.",
+      "optional": false,
+      "description": "Kerangka kerja C2 yang akan digunakan."
+    },
+    {
+      "name": "C2_COMMUNICATION_PROTOCOL",
+      "label": "Protokol Komunikasi",
+      "type": "text",
+      "placeholder": "Contoh: DNS over HTTPS (DoH), HTTP/S, SMB.",
+      "info": "Tentukan protokol yang akan digunakan untuk komunikasi antara implan dan server C2.",
+      "optional": false,
+      "description": "Protokol komunikasi C2."
+    },
+    {
+      "name": "C2_HOSTING_STRATEGY",
+      "label": "Strategi Hosting",
+      "type": "textarea",
+      "placeholder": "Contoh: Menggunakan VPS, domain fronting melalui CDN, redirector, kategori domain yang terlihat normal (mis. kesehatan, keuangan).",
+      "info": "Jelaskan bagaimana infrastruktur C2 akan disembunyikan atau dibuat agar terlihat sah.",
+      "optional": false,
+      "description": "Strategi hosting untuk infrastruktur C2."
+    },
+    {
+      "name": "CAMPAIGN_OBJECTIVE",
+      "label": "Tujuan Utama Kampanye",
+      "type": "textarea",
+      "placeholder": "Contoh: Mensimulasikan Advanced Persistent Threat (APT) untuk mencuri data kekayaan intelektual dari R&D, menguji kemampuan deteksi dan respons SOC terhadap ransomware.",
+      "info": "Definisikan tujuan akhir tingkat tinggi dari keseluruhan kampanye Red Team.",
+      "optional": false,
+      "description": "Tujuan akhir dari kampanye."
+    },
+    {
+      "name": "CAMPAIGN_TARGET_ASSETS",
+      "label": "Aset Kritis Target",
+      "type": "textarea",
+      "placeholder": "Contoh: Database pelanggan, kode sumber produk, infrastruktur domain controller.",
+      "info": "'Crown jewels' atau aset paling berharga yang menjadi sasaran akhir simulasi.",
+      "optional": false,
+      "description": "Aset paling berharga yang menjadi target."
+    },
+    {
+      "name": "CAMPAIGN_ALLOWED_TECHNIQUES",
+      "label": "Teknik yang Diizinkan (Rules of Engagement)",
+      "type": "textarea",
+      "placeholder": "Contoh: Diizinkan melakukan phishing, dilarang melakukan serangan Denial-of-Service (DoS), eksploitasi hanya boleh dilakukan pada sistem staging.",
+      "info": "Batasan dan aturan main yang telah disepakati untuk kampanye ini.",
+      "optional": false,
+      "description": "Aturan main dan batasan kampanye."
+    },
+    {
+      "name": "RECON_TYPE_OTHER",
+      "label": "Sebutkan Jenis Pengintaian Lainnya",
+      "type": "text",
+      "placeholder": "Contoh: Analisis citra satelit",
+      "info": "Masukkan metode pengintaian kustom yang Anda usulkan.",
+      "optional": false,
+      "description": "Metode pengintaian kustom."
+    },
+    {
+      "name": "APPSEC_TEST_TYPE_OTHER",
+      "label": "Sebutkan Jenis Pengujian Lainnya",
+      "type": "text",
+      "placeholder": "Contoh: Fuzzing",
+      "info": "Masukkan metodologi pengujian keamanan kustom.",
+      "optional": false,
+      "description": "Metodologi pengujian kustom."
+    },
+    {
+      "name": "SE_CAMPAIGN_TYPE_OTHER",
+      "label": "Sebutkan Jenis Kampanye Lainnya",
+      "type": "text",
+      "placeholder": "Contoh: Tailgating",
+      "info": "Masukkan vektor serangan rekayasa sosial kustom.",
+      "optional": false,
+      "description": "Vektor rekayasa sosial kustom."
     }
   ],
   "komponen_prompt": {

@@ -18,7 +18,8 @@
       "info": "Topik utama yang ingin Anda bahas dalam konten.",
       "validation": {
         "min_length": 10
-      }
+      },
+      "optional": true
     },
     {
       "name": "SUMBER_EKSTERNAL",
@@ -28,7 +29,8 @@
       "info": "Sediakan sumber yang relevan agar AI dapat menghasilkan konten yang akurat dan terverifikasi.",
       "validation": {
         "min_length": 20
-      }
+      },
+      "optional": true
     },
     {
       "name": "FORMAT_OUTPUT_KONTEN",
@@ -41,7 +43,8 @@
         "Lainnya..."
       ],
       "default": "Artikel Blog",
-      "info": "Pilih format konten yang Anda inginkan."
+      "info": "Pilih format konten yang Anda inginkan.",
+      "optional": true
     },
     {
       "name": "NADA_BAHASA",
@@ -55,42 +58,28 @@
         "Lainnya..."
       ],
       "default": "Informatif",
-      "info": "Pilih nada yang sesuai untuk konten Anda."
-    }
-  ],
-  "dynamicSubcomponents": [
-    {
-      "trigger": "FORMAT_OUTPUT_KONTEN",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "FORMAT_OUTPUT_KONTEN_LAINNYA",
-            "label": "Sebutkan Format Output Lainnya",
-            "type": "text",
-            "placeholder": "Contoh: 'Naskah presentasi', 'Brosur'",
-            "info": "Sebutkan format kustom yang Anda inginkan."
-          }
-        ]
-      }
+      "info": "Pilih nada yang sesuai untuk konten Anda.",
+      "optional": true
     },
     {
-      "trigger": "NADA_BAHASA",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_NADA_BAHASA",
-            "label": "Sebutkan Nada Bahasa Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Nada Bahasa.",
-            "placeholder": "Contoh: Opsi kustom, kategori baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Nada Bahasa standar tidak tersedia."
-          }
-        ]
-      }
+      "name": "FORMAT_OUTPUT_KONTEN_LAINNYA",
+      "label": "Sebutkan Format Output Lainnya",
+      "type": "text",
+      "placeholder": "Contoh: 'Naskah presentasi', 'Brosur'",
+      "info": "Sebutkan format kustom yang Anda inginkan.",
+      "optional": true
+    },
+    {
+      "name": "custom_NADA_BAHASA",
+      "label": "Sebutkan Nada Bahasa Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Nada Bahasa.",
+      "placeholder": "Contoh: Opsi kustom, kategori baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Nada Bahasa standar tidak tersedia."
     }
   ],
   "komponen_prompt": {

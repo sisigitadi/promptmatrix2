@@ -22,91 +22,85 @@
         "Lainnya..."
       ],
       "default": "Pembuat Draf Perjanjian Dasar",
-      "info": "Pilih tugas legal yang Anda butuhkan."
-    }
-  ],
-  "dynamicSubcomponents": [
+      "info": "Pilih tugas legal yang Anda butuhkan.",
+      "optional": true
+    },
     {
-      "trigger": "TUGAS_BANTUAN_HUKUM",
-      "options": {
-        "Pembuat Draf Perjanjian Dasar": [
-          {
-            "name": "JENIS_PERJANJIAN",
-            "label": "Jenis Perjanjian",
-            "type": "select",
-            "options": [
-              "Perjanjian Kerja (PKWT)",
-              "Perjanjian Kerahasiaan (NDA)",
-              "Surat Perjanjian Kerja Sama (MoU)",
-              "Lainnya..."
-            ],
-            "default": "Perjanjian Kerja (PKWT)",
-            "info": "Pilih jenis dokumen yang ingin Anda buat drafnya."
-          },
-          {
-            "name": "PIHAK_PERTAMA",
-            "label": "Nama Pihak Pertama",
-            "type": "text",
-            "placeholder": "Contoh: PT Jaya Abadi",
-            "info": "Nama perusahaan atau individu pihak pertama."
-          },
-          {
-            "name": "PIHAK_KEDUA",
-            "label": "Nama Pihak Kedua",
-            "type": "text",
-            "placeholder": "Contoh: John Doe",
-            "info": "Nama perusahaan atau individu pihak kedua."
-          }
-        ],
-        "Generator Kebijakan Privasi & Syarat Layanan": [
-          {
-            "name": "NAMA_WEBSITE_APP",
-            "label": "Nama Website atau Aplikasi Anda",
-            "type": "text",
-            "placeholder": "Contoh: Aplikasi 'BelajarKuy'",
-            "info": "Nama layanan Anda untuk dicantumkan dalam kebijakan."
-          },
-          {
-            "name": "JENIS_DATA_PENGGUNA",
-            "label": "Jenis Data Pengguna yang Dikumpulkan",
-            "type": "textarea",
-            "placeholder": "Contoh: Nama, email, nomor telepon, data lokasi, riwayat pembelian.",
-            "info": "Sebutkan semua jenis data pribadi yang Anda kumpulkan dari pengguna."
-          }
-        ],
-        "Penerjemah Istilah Hukum": [
-          {
-            "name": "ISTILAH_HUKUM",
-            "label": "Istilah atau Klausul Hukum",
-            "type": "textarea",
-            "placeholder": "Contoh: Apa arti dari klausul 'force majeure'? atau salin-tempel satu klausul penuh di sini.",
-            "info": "Masukkan istilah atau klausul yang ingin Anda pahami."
-          }
-        ],
-        "Checklist Kepatuhan Bisnis": [
-          {
-            "name": "BENTUK_BADAN_USAHA",
-            "label": "Bentuk Badan Usaha",
-            "type": "select",
-            "options": [
-              "PT Perorangan",
-              "CV",
-              "Firma",
-              "UMKM Perorangan",
-              "Lainnya..."
-            ],
-            "default": "UMKM Perorangan",
-            "info": "Pilih bentuk badan usaha Anda."
-          },
-          {
-            "name": "BIDANG_USAHA",
-            "label": "Bidang Usaha",
-            "type": "text",
-            "placeholder": "Contoh: Kafe, Toko Online, Jasa Konsultasi IT",
-            "info": "Sebutkan bidang usaha spesifik Anda."
-          }
-        ]
-      }
+      "name": "JENIS_PERJANJIAN",
+      "label": "Jenis Perjanjian",
+      "type": "select",
+      "options": [
+        "Perjanjian Kerja (PKWT)",
+        "Perjanjian Kerahasiaan (NDA)",
+        "Surat Perjanjian Kerja Sama (MoU)",
+        "Lainnya..."
+      ],
+      "default": "Perjanjian Kerja (PKWT)",
+      "info": "Pilih jenis dokumen yang ingin Anda buat drafnya.",
+      "optional": true
+    },
+    {
+      "name": "PIHAK_PERTAMA",
+      "label": "Nama Pihak Pertama",
+      "type": "text",
+      "placeholder": "Contoh: PT Jaya Abadi",
+      "info": "Nama perusahaan atau individu pihak pertama.",
+      "optional": true
+    },
+    {
+      "name": "PIHAK_KEDUA",
+      "label": "Nama Pihak Kedua",
+      "type": "text",
+      "placeholder": "Contoh: John Doe",
+      "info": "Nama perusahaan atau individu pihak kedua.",
+      "optional": true
+    },
+    {
+      "name": "NAMA_WEBSITE_APP",
+      "label": "Nama Website atau Aplikasi Anda",
+      "type": "text",
+      "placeholder": "Contoh: Aplikasi 'BelajarKuy'",
+      "info": "Nama layanan Anda untuk dicantumkan dalam kebijakan.",
+      "optional": true
+    },
+    {
+      "name": "JENIS_DATA_PENGGUNA",
+      "label": "Jenis Data Pengguna yang Dikumpulkan",
+      "type": "textarea",
+      "placeholder": "Contoh: Nama, email, nomor telepon, data lokasi, riwayat pembelian.",
+      "info": "Sebutkan semua jenis data pribadi yang Anda kumpulkan dari pengguna.",
+      "optional": true
+    },
+    {
+      "name": "ISTILAH_HUKUM",
+      "label": "Istilah atau Klausul Hukum",
+      "type": "textarea",
+      "placeholder": "Contoh: Apa arti dari klausul 'force majeure'? atau salin-tempel satu klausul penuh di sini.",
+      "info": "Masukkan istilah atau klausul yang ingin Anda pahami.",
+      "optional": true
+    },
+    {
+      "name": "BENTUK_BADAN_USAHA",
+      "label": "Bentuk Badan Usaha",
+      "type": "select",
+      "options": [
+        "PT Perorangan",
+        "CV",
+        "Firma",
+        "UMKM Perorangan",
+        "Lainnya..."
+      ],
+      "default": "UMKM Perorangan",
+      "info": "Pilih bentuk badan usaha Anda.",
+      "optional": true
+    },
+    {
+      "name": "BIDANG_USAHA",
+      "label": "Bidang Usaha",
+      "type": "text",
+      "placeholder": "Contoh: Kafe, Toko Online, Jasa Konsultasi IT",
+      "info": "Sebutkan bidang usaha spesifik Anda.",
+      "optional": true
     }
   ],
   "komponen_prompt": {

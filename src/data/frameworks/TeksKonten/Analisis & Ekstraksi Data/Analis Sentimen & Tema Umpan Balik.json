@@ -11,7 +11,8 @@
       "info": "Semakin banyak data yang Anda berikan, semakin akurat analisisnya.",
       "validation": {
         "min_length": 50
-      }
+      },
+      "optional": true
     },
     {
       "name": "analysisType",
@@ -23,7 +24,8 @@
         "Keduanya",
         "Lainnya..."
       ],
-      "info": "Pilih apa yang ingin Anda ketahui dari data ini."
+      "info": "Pilih apa yang ingin Anda ketahui dari data ini.",
+      "optional": true
     },
     {
       "name": "outputFormat",
@@ -35,14 +37,40 @@
         "Tabel dengan Persentase Sentimen",
         "Lainnya..."
       ],
-      "info": "Pilih cara penyajian hasil analisis."
+      "info": "Pilih cara penyajian hasil analisis.",
+      "optional": true
     },
     {
       "name": "additionalContext",
       "label": "Konteks Tambahan & Instruksi Khusus",
       "type": "textarea",
       "placeholder": "Contoh: Kelompokkan tema ke dalam kategori 'Layanan', 'Produk', 'Harga'. Hitung berapa kali setiap tema disebutkan. Abaikan ulasan yang kurang dari 5 kata.",
-      "info": "Instruksi spesifik untuk proses analisis dan pelaporan."
+      "info": "Instruksi spesifik untuk proses analisis dan pelaporan.",
+      "optional": true
+    },
+    {
+      "name": "custom_analysisType",
+      "label": "Sebutkan Jenis Analisis Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Jenis Analisis.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
+    },
+    {
+      "name": "custom_outputFormat",
+      "label": "Sebutkan Format Laporan Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Format Laporan.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -61,45 +89,5 @@
     "KONTEKS": "Saya ingin create konten tertulis tentang {feedbackData} untuk {analysisType}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
     "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
-  },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "analysisType",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_analysisType",
-            "label": "Sebutkan Jenis Analisis Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Jenis Analisis.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "outputFormat",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_outputFormat",
-            "label": "Sebutkan Format Laporan Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Format Laporan.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ]
+  }
 }

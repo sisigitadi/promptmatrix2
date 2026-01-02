@@ -17,159 +17,150 @@
       "validation": {
         "regex": "^(?!Pilih Jenis Aset Branding...).*$"
       }
+    },
+    {
+      "name": "projectDescription",
+      "label": "Deskripsi Singkat Proyek",
+      "type": "textarea",
+      "placeholder": "e.g., 'Sebuah kedai kopi yang fokus pada biji lokal dan suasana yang nyaman untuk bekerja.'",
+      "info": "Jelaskan apa yang Anda lakukan atau tawarkan.",
+      "validation": {
+        "min_length": 20
+      },
+      "optional": true
+    },
+    {
+      "name": "brandPersonality",
+      "label": "Kepribadian & Nilai Brand",
+      "type": "text",
+      "placeholder": "e.g., 'Modern, minimalis, ramah, tepercaya'",
+      "info": "Sebutkan 3-5 kata yang mendeskripsikan brand Anda.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "keywords",
+      "label": "Kata Kunci untuk Disertakan",
+      "type": "text",
+      "placeholder": "e.g., 'Jawa, pagi, tenang'",
+      "info": "Kata atau ide yang ingin Anda sertakan dalam nama.",
+      "validation": {
+        "min_length": 3
+      },
+      "optional": true
+    },
+    {
+      "name": "nameStyle",
+      "label": "Gaya Nama",
+      "type": "select",
+      "options": [
+        "Modern & Singkat",
+        "Klasik & Elegan",
+        "Deskriptif",
+        "Imajinatif & Unik",
+        "Lainnya..."
+      ],
+      "info": "Pilih gaya nama yang Anda inginkan.",
+      "optional": true
+    },
+    {
+      "name": "projectName",
+      "label": "Nama Proyek/Bisnis",
+      "type": "text",
+      "placeholder": "e.g., 'Kopi Pagi'",
+      "info": "Nama yang akan diasosiasikan dengan slogan ini.",
+      "validation": {
+        "min_length": 3
+      },
+      "optional": true
+    },
+    {
+      "name": "coreBenefit",
+      "label": "Manfaat Utama",
+      "type": "text",
+      "placeholder": "e.g., 'Secangkir semangat untuk memulai hari Anda'",
+      "info": "Apa manfaat atau perasaan utama yang ingin disampaikan?",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Audiens",
+      "type": "text",
+      "placeholder": "e.g., 'Pekerja remote, mahasiswa'",
+      "info": "Siapa yang ingin Anda sapa dengan slogan ini?",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "sloganStyle",
+      "label": "Gaya Slogan",
+      "type": "select",
+      "options": [
+        "Singkat & Berkesan",
+        "Deskriptif & Jelas",
+        "Cerdas & Berima",
+        "Lainnya..."
+      ],
+      "info": "Pilih gaya slogan yang Anda inginkan.",
+      "optional": true
+    },
+    {
+      "name": "logoType",
+      "label": "Jenis Logo",
+      "type": "select",
+      "options": [
+        "Wordmark (teks saja)",
+        "Pictorial Mark (simbol/ikon)",
+        "Combination Mark (teks & simbol)",
+        "Emblem",
+        "Lainnya..."
+      ],
+      "info": "Pilih jenis struktur logo yang Anda inginkan.",
+      "optional": true
+    },
+    {
+      "name": "visualElements",
+      "label": "Elemen Visual yang Diinginkan",
+      "type": "text",
+      "placeholder": "e.g., 'Biji kopi, matahari terbit, cangkir'",
+      "info": "Sebutkan objek atau simbol yang ingin Anda lihat di logo.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "colorPalette",
+      "label": "Palet Warna",
+      "type": "text",
+      "placeholder": "e.g., 'Coklat hangat, oranye, krem'",
+      "info": "Warna-warna yang Anda inginkan untuk logo.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "styleAesthetic",
+      "label": "Gaya & Estetika",
+      "type": "select",
+      "options": [
+        "Minimalis & Modern",
+        "Vintage & Klasik",
+        "Hand-drawn & Organik",
+        "Lainnya..."
+      ],
+      "info": "Pilih gaya visual keseluruhan untuk logo.",
+      "optional": true
     }
   ],
-  "dynamicSubcomponents": {
-    "trigger": "assetType",
-    "options": {
-      "Nama Brand": [
-        {
-          "name": "projectDescription",
-          "label": "Deskripsi Singkat Proyek",
-          "type": "textarea",
-          "placeholder": "e.g., 'Sebuah kedai kopi yang fokus pada biji lokal dan suasana yang nyaman untuk bekerja.'",
-          "info": "Jelaskan apa yang Anda lakukan atau tawarkan.",
-          "validation": {
-            "min_length": 20
-          }
-        },
-        {
-          "name": "brandPersonality",
-          "label": "Kepribadian & Nilai Brand",
-          "type": "text",
-          "placeholder": "e.g., 'Modern, minimalis, ramah, tepercaya'",
-          "info": "Sebutkan 3-5 kata yang mendeskripsikan brand Anda.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "keywords",
-          "label": "Kata Kunci untuk Disertakan",
-          "type": "text",
-          "placeholder": "e.g., 'Jawa, pagi, tenang'",
-          "info": "Kata atau ide yang ingin Anda sertakan dalam nama.",
-          "validation": {
-            "min_length": 3
-          }
-        },
-        {
-          "name": "nameStyle",
-          "label": "Gaya Nama",
-          "type": "select",
-          "options": [
-            "Modern & Singkat",
-            "Klasik & Elegan",
-            "Deskriptif",
-            "Imajinatif & Unik",
-            "Lainnya..."
-          ],
-          "info": "Pilih gaya nama yang Anda inginkan."
-        }
-      ],
-      "Slogan/Tagline": [
-        {
-          "name": "projectName",
-          "label": "Nama Proyek/Bisnis",
-          "type": "text",
-          "placeholder": "e.g., 'Kopi Pagi'",
-          "info": "Nama yang akan diasosiasikan dengan slogan ini.",
-          "validation": {
-            "min_length": 3
-          }
-        },
-        {
-          "name": "coreBenefit",
-          "label": "Manfaat Utama",
-          "type": "text",
-          "placeholder": "e.g., 'Secangkir semangat untuk memulai hari Anda'",
-          "info": "Apa manfaat atau perasaan utama yang ingin disampaikan?",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "targetAudience",
-          "label": "Target Audiens",
-          "type": "text",
-          "placeholder": "e.g., 'Pekerja remote, mahasiswa'",
-          "info": "Siapa yang ingin Anda sapa dengan slogan ini?",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "sloganStyle",
-          "label": "Gaya Slogan",
-          "type": "select",
-          "options": [
-            "Singkat & Berkesan",
-            "Deskriptif & Jelas",
-            "Cerdas & Berima",
-            "Lainnya..."
-          ],
-          "info": "Pilih gaya slogan yang Anda inginkan."
-        }
-      ],
-      "Konsep Logo": [
-        {
-          "name": "projectName",
-          "label": "Nama Proyek/Bisnis",
-          "type": "text",
-          "placeholder": "e.g., 'Kopi Pagi'",
-          "info": "Teks utama yang mungkin ada di logo.",
-          "validation": {
-            "min_length": 3
-          }
-        },
-        {
-          "name": "logoType",
-          "label": "Jenis Logo",
-          "type": "select",
-          "options": [
-            "Wordmark (teks saja)",
-            "Pictorial Mark (simbol/ikon)",
-            "Combination Mark (teks & simbol)",
-            "Emblem",
-            "Lainnya..."
-          ],
-          "info": "Pilih jenis struktur logo yang Anda inginkan."
-        },
-        {
-          "name": "visualElements",
-          "label": "Elemen Visual yang Diinginkan",
-          "type": "text",
-          "placeholder": "e.g., 'Biji kopi, matahari terbit, cangkir'",
-          "info": "Sebutkan objek atau simbol yang ingin Anda lihat di logo.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "colorPalette",
-          "label": "Palet Warna",
-          "type": "text",
-          "placeholder": "e.g., 'Coklat hangat, oranye, krem'",
-          "info": "Warna-warna yang Anda inginkan untuk logo.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "styleAesthetic",
-          "label": "Gaya & Estetika",
-          "type": "select",
-          "options": [
-            "Minimalis & Modern",
-            "Vintage & Klasik",
-            "Hand-drawn & Organik",
-            "Lainnya..."
-          ],
-          "info": "Pilih gaya visual keseluruhan untuk logo."
-        }
-      ]
-    }
-  },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu memberikan beberapa opsi yang bervariasi dalam gaya dan pendekatan. Untuk nama, AI harus menyarankan nama yang terdengar baik saat diucapkan dan mudah dieja. Untuk slogan, prioritaskan keringkasan. Untuk konsep logo, fokus pada deskripsi yang bisa dipahami oleh desainer maupun non-desainer. Penting: Selalu sertakan disclaimer bahwa AI tidak dapat memeriksa ketersediaan merek dagang (trademark) atau domain, dan pengguna harus melakukan verifikasi sendiri.",
   "kategori": [
     "Prompt Proyek",

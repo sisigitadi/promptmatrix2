@@ -11,7 +11,8 @@
       "info": "Lokasi utama dari perjalanan Anda.",
       "validation": {
         "min_length": 3
-      }
+      },
+      "optional": true
     },
     {
       "name": "duration",
@@ -22,7 +23,8 @@
       "validation": {
         "min_value": 1,
         "max_value": 30
-      }
+      },
+      "optional": true
     },
     {
       "name": "interests",
@@ -32,7 +34,8 @@
       "info": "Jenis aktivitas apa yang paling Anda nikmati.",
       "validation": {
         "min_length": 5
-      }
+      },
+      "optional": true
     },
     {
       "name": "travelStyle",
@@ -46,7 +49,8 @@
         "Petualangan",
         "Lainnya..."
       ],
-      "info": "Pilih pendekatan umum untuk perjalanan Anda."
+      "info": "Pilih pendekatan umum untuk perjalanan Anda.",
+      "optional": true
     },
     {
       "name": "mustVisit",
@@ -66,6 +70,18 @@
       "validation": {
         "min_length": 10
       }
+    },
+    {
+      "name": "custom_travelStyle",
+      "label": "Sebutkan Gaya Perjalanan Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Gaya Perjalanan.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -84,26 +100,5 @@
     "KONTEKS": "Saya ingin create konten tertulis tentang {destination} untuk {duration}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
     "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
-  },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "travelStyle",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_travelStyle",
-            "label": "Sebutkan Gaya Perjalanan Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Gaya Perjalanan.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ]
+  }
 }

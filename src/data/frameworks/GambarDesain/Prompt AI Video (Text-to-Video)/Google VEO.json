@@ -11,7 +11,8 @@
       "info": "Tulis prompt yang kaya detail, seolah-olah mendeskripsikan adegan film.",
       "validation": {
         "min_length": 50
-      }
+      },
+      "optional": true
     },
     {
       "name": "aspectRatio",
@@ -23,7 +24,8 @@
         "1:1",
         "Lainnya..."
       ],
-      "info": "Nilai yang didukung adalah \"16:9\" (layar lebar, bagus untuk lanskap), \"9:16\" (potret/vertikal, bagus untuk objek tinggi), dan \"1:1\" (persegi). Default adalah \"16:9\"."
+      "info": "Nilai yang didukung adalah \"16:9\" (layar lebar, bagus untuk lanskap), \"9:16\" (potret/vertikal, bagus untuk objek tinggi), dan \"1:1\" (persegi). Default adalah \"16:9\".",
+      "optional": true
     },
     {
       "name": "personGeneration",
@@ -35,7 +37,8 @@
         "allow_adult",
         "Lainnya..."
       ],
-      "info": "Kontrol penyertaan orang dengan \"dont_allow\" atau \"allow_adult\"."
+      "info": "Kontrol penyertaan orang dengan \"dont_allow\" atau \"allow_adult\".",
+      "optional": true
     },
     {
       "name": "negativePrompt",
@@ -57,7 +60,8 @@
         "false",
         "Lainnya..."
       ],
-      "info": "Kontrol apakah audio dihasilkan untuk video."
+      "info": "Kontrol apakah audio dihasilkan untuk video.",
+      "optional": true
     },
     {
       "name": "image",
@@ -79,7 +83,8 @@
       "validation": {
         "min_value": 1,
         "max_value": 60
-      }
+      },
+      "optional": true
     },
     {
       "name": "resolution",
@@ -146,6 +151,42 @@
       "validation": {
         "min_length": 10
       }
+    },
+    {
+      "name": "custom_aspectRatio",
+      "label": "Sebutkan Aspect Ratio Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Aspect Ratio.",
+      "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Aspect Ratio standar tidak tersedia."
+    },
+    {
+      "name": "custom_personGeneration",
+      "label": "Sebutkan Generasi Orang Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Generasi Orang.",
+      "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Generasi Orang standar tidak tersedia."
+    },
+    {
+      "name": "custom_generateAudio",
+      "label": "Sebutkan Generate Audio Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Generate Audio.",
+      "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Generate Audio standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -165,65 +206,6 @@
     "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
   },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "aspectRatio",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_aspectRatio",
-            "label": "Sebutkan Aspect Ratio Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Aspect Ratio.",
-            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Aspect Ratio standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "personGeneration",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_personGeneration",
-            "label": "Sebutkan Generasi Orang Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Generasi Orang.",
-            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Generasi Orang standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "generateAudio",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_generateAudio",
-            "label": "Sebutkan Generate Audio Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Generate Audio.",
-            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Generate Audio standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "_review_notes": [
     "TODO: Apply hybrid format to 'Aspect Ratio' option '16:9'",
     "TODO: Apply hybrid format to 'Aspect Ratio' option '9:16'",

@@ -22,143 +22,142 @@
         "Lainnya..."
       ],
       "default": "Perencanaan Strategi Investasi",
-      "info": "Pilihan Anda akan menampilkan serangkaian input yang dirancang khusus untuk area tersebut."
-    }
-  ],
-  "dynamicSubcomponents": [
+      "info": "Pilihan Anda akan menampilkan serangkaian input yang dirancang khusus untuk area tersebut.",
+      "optional": true
+    },
     {
-      "trigger": "TUGAS_ANALISIS_KEUANGAN",
-      "options": {
-        "Perencanaan Strategi Investasi": [
-          {
-            "name": "TUJUAN_INVESTASI",
-            "label": "Tujuan Investasi Anda",
-            "type": "text",
-            "placeholder": "Contoh: Mempersiapkan dana pensiun dalam 20 tahun",
-            "info": "Tujuan yang spesifik akan menghasilkan rekomendasi yang lebih akurat."
-          },
-          {
-            "name": "MODAL_AWAL",
-            "label": "Modal Awal & Investasi Bulanan",
-            "type": "text",
-            "placeholder": "Contoh: Modal awal Rp 10.000.000, investasi bulanan Rp 1.000.000",
-            "info": "Sebutkan jumlah beserta mata uangnya."
-          },
-          {
-            "name": "TINGKAT_RISIKO",
-            "label": "Toleransi Risiko Anda",
-            "type": "select",
-            "options": [
-              "Konservatif",
-              "Moderat",
-              "Agresif",
-              "Lainnya..."
-            ],
-            "default": "Moderat",
-            "info": "Ini akan sangat mempengaruhi jenis instrumen investasi yang akan direkomendasikan."
-          },
-          {
-            "name": "HORIZON_WAKTU",
-            "label": "Horizon Waktu Investasi",
-            "type": "text",
-            "placeholder": "Contoh: 10 tahun",
-            "info": "Jangka waktu (pendek, menengah, panjang) sangat mempengaruhi strategi."
-          }
-        ],
-        "Analisis Saham Tunggal": [
-          {
-            "name": "KODE_SAHAM",
-            "label": "Kode Ticker atau Nama Saham",
-            "type": "text",
-            "placeholder": "Contoh: BBCA atau Bank Central Asia",
-            "info": "Masukkan kode saham (ticker) atau nama perusahaan yang ingin dianalisis."
-          },
-          {
-            "name": "FOKUS_ANALISIS_SAHAM",
-            "label": "Fokus Analisis",
-            "type": "multiselect",
-            "options": [
-              "Analisis Fundamental",
-              "Analisis Teknikal",
-              "Sentimen Berita",
-              "Lainnya..."
-            ],
-            "default": [
-              "Analisis Fundamental"
-            ],
-            "info": "Pilih aspek yang ingin Anda dalami dari saham tersebut."
-          }
-        ],
-        "Perbandingan Produk Investasi": [
-          {
-            "name": "PRODUK_A",
-            "label": "Nama Produk Investasi Pertama",
-            "type": "text",
-            "placeholder": "Contoh: Reksa Dana Saham Manulife",
-            "info": "Nama produk pertama yang akan dibandingkan."
-          },
-          {
-            "name": "PRODUK_B",
-            "label": "Nama Produk Investasi Kedua",
-            "type": "text",
-            "placeholder": "Contoh: Reksa Dana Indeks Batavia",
-            "info": "Nama produk kedua yang akan dibandingkan."
-          },
-          {
-            "name": "METRIK_PERBANDINGAN",
-            "label": "Metrik Perbandingan",
-            "type": "multiselect",
-            "options": [
-              "Imbal Hasil (1th, 3th, 5th)",
-              "Tingkat Risiko (Volatility)",
-              "Biaya Manajemen",
-              "Minimum Investasi",
-              "Lainnya..."
-            ],
-            "default": [
-              "Imbal Hasil (1th, 3th, 5th)",
-              "Tingkat Risiko (Volatility)"
-            ],
-            "info": "Pilih kriteria yang ingin Anda gunakan untuk membandingkan."
-          }
-        ],
-        "Simulasi Proyeksi Dana": [
-          {
-            "name": "TARGET_DANA",
-            "label": "Target Dana di Masa Depan",
-            "type": "number",
-            "placeholder": "1000000000",
-            "unit": "Rp",
-            "info": "Jumlah total dana yang ingin Anda capai."
-          },
-          {
-            "name": "SALDO_SAAT_INI",
-            "label": "Saldo Investasi Saat Ini",
-            "type": "number",
-            "placeholder": "50000000",
-            "unit": "Rp",
-            "info": "Jumlah dana yang sudah Anda miliki saat ini."
-          },
-          {
-            "name": "INVESTASI_BULANAN",
-            "label": "Investasi Rutin per Bulan",
-            "type": "number",
-            "placeholder": "1000000",
-            "unit": "Rp",
-            "info": "Jumlah yang akan Anda tambahkan setiap bulan."
-          },
-          {
-            "name": "ASUMSI_RETURN",
-            "label": "Asumsi Imbal Hasil Tahunan (%)",
-            "type": "slider",
-            "min": 1,
-            "max": 25,
-            "step": 1,
-            "default": 8,
-            "info": "Perkiraan rata-rata keuntungan investasi Anda per tahun."
-          }
-        ]
-      }
+      "name": "TUJUAN_INVESTASI",
+      "label": "Tujuan Investasi Anda",
+      "type": "text",
+      "placeholder": "Contoh: Mempersiapkan dana pensiun dalam 20 tahun",
+      "info": "Tujuan yang spesifik akan menghasilkan rekomendasi yang lebih akurat.",
+      "optional": true
+    },
+    {
+      "name": "MODAL_AWAL",
+      "label": "Modal Awal & Investasi Bulanan",
+      "type": "text",
+      "placeholder": "Contoh: Modal awal Rp 10.000.000, investasi bulanan Rp 1.000.000",
+      "info": "Sebutkan jumlah beserta mata uangnya.",
+      "optional": true
+    },
+    {
+      "name": "TINGKAT_RISIKO",
+      "label": "Toleransi Risiko Anda",
+      "type": "select",
+      "options": [
+        "Konservatif",
+        "Moderat",
+        "Agresif",
+        "Lainnya..."
+      ],
+      "default": "Moderat",
+      "info": "Ini akan sangat mempengaruhi jenis instrumen investasi yang akan direkomendasikan.",
+      "optional": true
+    },
+    {
+      "name": "HORIZON_WAKTU",
+      "label": "Horizon Waktu Investasi",
+      "type": "text",
+      "placeholder": "Contoh: 10 tahun",
+      "info": "Jangka waktu (pendek, menengah, panjang) sangat mempengaruhi strategi.",
+      "optional": true
+    },
+    {
+      "name": "KODE_SAHAM",
+      "label": "Kode Ticker atau Nama Saham",
+      "type": "text",
+      "placeholder": "Contoh: BBCA atau Bank Central Asia",
+      "info": "Masukkan kode saham (ticker) atau nama perusahaan yang ingin dianalisis.",
+      "optional": true
+    },
+    {
+      "name": "FOKUS_ANALISIS_SAHAM",
+      "label": "Fokus Analisis",
+      "type": "multiselect",
+      "options": [
+        "Analisis Fundamental",
+        "Analisis Teknikal",
+        "Sentimen Berita",
+        "Lainnya..."
+      ],
+      "default": [
+        "Analisis Fundamental"
+      ],
+      "info": "Pilih aspek yang ingin Anda dalami dari saham tersebut.",
+      "optional": true
+    },
+    {
+      "name": "PRODUK_A",
+      "label": "Nama Produk Investasi Pertama",
+      "type": "text",
+      "placeholder": "Contoh: Reksa Dana Saham Manulife",
+      "info": "Nama produk pertama yang akan dibandingkan.",
+      "optional": true
+    },
+    {
+      "name": "PRODUK_B",
+      "label": "Nama Produk Investasi Kedua",
+      "type": "text",
+      "placeholder": "Contoh: Reksa Dana Indeks Batavia",
+      "info": "Nama produk kedua yang akan dibandingkan.",
+      "optional": true
+    },
+    {
+      "name": "METRIK_PERBANDINGAN",
+      "label": "Metrik Perbandingan",
+      "type": "multiselect",
+      "options": [
+        "Imbal Hasil (1th, 3th, 5th)",
+        "Tingkat Risiko (Volatility)",
+        "Biaya Manajemen",
+        "Minimum Investasi",
+        "Lainnya..."
+      ],
+      "default": [
+        "Imbal Hasil (1th, 3th, 5th)",
+        "Tingkat Risiko (Volatility)"
+      ],
+      "info": "Pilih kriteria yang ingin Anda gunakan untuk membandingkan.",
+      "optional": true
+    },
+    {
+      "name": "TARGET_DANA",
+      "label": "Target Dana di Masa Depan",
+      "type": "number",
+      "placeholder": "1000000000",
+      "unit": "Rp",
+      "info": "Jumlah total dana yang ingin Anda capai.",
+      "optional": true
+    },
+    {
+      "name": "SALDO_SAAT_INI",
+      "label": "Saldo Investasi Saat Ini",
+      "type": "number",
+      "placeholder": "50000000",
+      "unit": "Rp",
+      "info": "Jumlah dana yang sudah Anda miliki saat ini.",
+      "optional": true
+    },
+    {
+      "name": "INVESTASI_BULANAN",
+      "label": "Investasi Rutin per Bulan",
+      "type": "number",
+      "placeholder": "1000000",
+      "unit": "Rp",
+      "info": "Jumlah yang akan Anda tambahkan setiap bulan.",
+      "optional": true
+    },
+    {
+      "name": "ASUMSI_RETURN",
+      "label": "Asumsi Imbal Hasil Tahunan (%)",
+      "type": "slider",
+      "min": 1,
+      "max": 25,
+      "step": 1,
+      "default": 8,
+      "info": "Perkiraan rata-rata keuntungan investasi Anda per tahun.",
+      "optional": true
     }
   ],
   "komponen_prompt": {

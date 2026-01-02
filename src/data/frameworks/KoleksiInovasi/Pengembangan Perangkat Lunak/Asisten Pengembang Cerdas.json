@@ -24,338 +24,193 @@
       ],
       "description": "Pilih tugas pengembangan utama yang ingin Anda lakukan.",
       "default": "Buat Kode Baru",
-      "info": "Pilih tugas utama yang ingin Anda lakukan. Pilihan Anda akan menampilkan opsi-opsi yang relevan di bawah."
-    }
-  ],
-  "dynamicSubcomponents": [
+      "info": "Pilih tugas utama yang ingin Anda lakukan. Pilihan Anda akan menampilkan opsi-opsi yang relevan di bawah.",
+      "optional": true
+    },
     {
-      "trigger": "TUGAS_PENGEMBANGAN",
-      "options": {
-        "Buat Kode Baru": [
-          {
-            "name": "functionalityDescription",
-            "label": "Deskripsi Fungsionalitas yang Diinginkan",
-            "type": "textarea",
-            "placeholder": "e.g., 'Fungsi Python untuk menghitung faktorial dari sebuah angka.'",
-            "description": "Jelaskan secara detail fungsionalitas kode yang Anda inginkan.",
-            "validation": {
-              "min_length": 20
-            },
-            "info": "Jelaskan secara detail fungsionalitas kode yang Anda inginkan."
-          },
-          {
-            "name": "programmingLanguage",
-            "label": "Bahasa Pemrograman",
-            "type": "select",
-            "options": [
-              "Python",
-              "JavaScript",
-              "Java",
-              "C#",
-              "Lainnya..."
-            ],
-            "description": "Pilih bahasa pemrograman untuk kode yang akan dihasilkan.",
-            "default": "Python",
-            "info": "Pilih bahasa pemrograman untuk kode yang akan dihasilkan."
-          },
-          {
-            "name": "codeStyle",
-            "label": "Gaya Kode (Opsional)",
-            "type": "text",
-            "placeholder": "e.g., 'Pythonic, ES6, Java Clean Code'",
-            "description": "Sebutkan preferensi gaya pengkodean (misalnya, PEP 8 untuk Python).",
-            "optional": true,
-            "info": "Sebutkan preferensi gaya pengkodean (misalnya, PEP 8 untuk Python)."
-          },
-          {
-            "name": "includeComments",
-            "label": "Sertakan Komentar?",
-            "type": "boolean",
-            "description": "Apakah Anda ingin kode disertai komentar penjelasan?",
-            "default": false,
-            "info": "Apakah Anda ingin kode disertai komentar penjelasan?"
-          },
-          {
-            "name": "additionalInstructions",
-            "label": "Instruksi Tambahan & Batasan",
-            "type": "textarea",
-            "placeholder": "e.g., 'Pastikan fungsi ini menangani input negatif. Gunakan rekursi.'",
-            "description": "Sebutkan batasan, kompleksitas, atau instruksi khusus lainnya untuk kode.",
-            "optional": true,
-            "info": "Sebutkan batasan, kompleksitas, atau instruksi khusus lainnya untuk kode."
-          }
-        ],
-        "Tinjau & Perbaiki Kode": [
-          {
-            "name": "codeSnippet",
-            "label": "Potongan Kode untuk Ditinjau",
-            "type": "code",
-            "placeholder": "e.g., 'function calculateTotal(price, quantity) { ... }'",
-            "description": "Tempelkan potongan kode yang ingin Anda tinjau di sini.",
-            "validation": {
-              "min_length": 10
-            },
-            "info": "Tempelkan potongan kode yang ingin Anda tinjau di sini."
-          },
-          {
-            "name": "programmingLanguage",
-            "label": "Bahasa Pemrograman",
-            "type": "select",
-            "options": [
-              "JavaScript",
-              "Python",
-              "Java",
-              "C++",
-              "Go",
-              "Ruby",
-              "PHP",
-              "Swift",
-              "Kotlin",
-              "TypeScript",
-              "Lainnya..."
-            ],
-            "description": "Pilih bahasa pemrograman dari potongan kode.",
-            "default": "Python",
-            "info": "Pilih bahasa pemrograman dari potongan kode."
-          },
-          {
-            "name": "reviewFocus",
-            "label": "Fokus Peninjauan & Refactoring",
-            "type": "multiselect",
-            "options": [
-              "Keterbacaan",
-              "Pemeliharaan",
-              "Skalabilitas",
-              "Efisiensi",
-              "Keamanan",
-              "Kepatuhan Standar",
-              "Struktur",
-              "Pengurangan Duplikasi",
-              "Lainnya..."
-            ],
-            "description": "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring.",
-            "default": [
-              "Keterbacaan",
-              "Efisiensi"
-            ],
-            "info": "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring."
-          },
-          {
-            "name": "userLevel",
-            "label": "Tingkat Keahlian Anda",
-            "type": "select",
-            "options": [
-              "Pemula",
-              "Menengah",
-              "Ahli",
-              "Lainnya..."
-            ],
-            "description": "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran.",
-            "default": "Menengah",
-            "info": "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran."
-          },
-          {
-            "name": "additionalInstructions",
-            "label": "Instruksi Tambahan & Gaya",
-            "type": "textarea",
-            "description": "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
-            "optional": true,
-            "placeholder": "e.g., 'Berikan contoh kode sebelum dan sesudah. Jelaskan manfaatnya secara bisnis.'",
-            "info": "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI."
-          }
-        ],
-        "Jelaskan Kode": [
-          {
-            "name": "codeSnippet",
-            "label": "Potongan Kode",
-            "type": "code",
-            "description": "Tempelkan potongan kode yang ingin Anda terjemahkan di sini.",
-            "validation": {
-              "min_length": 10
-            },
-            "placeholder": "e.g., function factorial(n) { ... }",
-            "info": "Tempelkan potongan kode yang ingin Anda terjemahkan di sini."
-          },
-          {
-            "name": "programmingLanguage",
-            "label": "Bahasa Pemrograman",
-            "type": "select",
-            "options": [
-              "JavaScript",
-              "Python",
-              "Java",
-              "C++",
-              "Go",
-              "Ruby",
-              "PHP",
-              "Swift",
-              "Kotlin",
-              "TypeScript",
-              "Lainnya..."
-            ],
-            "info": "Pilih bahasa pemrograman dari potongan kode."
-          },
-          {
-            "name": "targetAudience",
-            "label": "Target Audiens Penjelasan",
-            "type": "select",
-            "options": [
-              "Pemula (non-teknis)",
-              "Mahasiswa (dasar)",
-              "Pengembang Junior",
-              "Pengembang Senior",
-              "Manajer Proyek (non-teknis)",
-              "Lainnya..."
-            ],
-            "info": "Siapa yang akan membaca penjelasan ini?"
-          },
-          {
-            "name": "explanationDetailLevel",
-            "label": "Tingkat Detail Penjelasan",
-            "type": "select",
-            "options": [
-              "Sangat Sederhana (gambaran umum)",
-              "Menengah (konsep kunci)",
-              "Rinci (langkah demi langkah)",
-              "Lainnya..."
-            ],
-            "info": "Pilih seberapa detail penjelasan yang Anda inginkan."
-          },
-          {
-            "name": "additionalInstructions",
-            "label": "Instruksi Tambahan & Gaya",
-            "type": "textarea",
-            "description": "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
-            "optional": true,
-            "placeholder": "e.g., 'Gunakan analogi memasak. Jangan lebih dari 200 kata.'",
-            "info": "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI."
-          }
-        ],
-        "Buat Pengujian Otomatis": [
-          {
-            "name": "codeSnippet",
-            "label": "Potongan Kode/Fungsionalitas untuk Dites",
-            "type": "code",
-            "placeholder": "e.g., 'function validateEmail(email) { ... }'",
-            "description": "Tempelkan kode atau jelaskan fungsionalitas yang ingin Anda tulis tesnya.",
-            "validation": {
-              "min_length": 10
-            },
-            "info": "Tempelkan kode atau jelaskan fungsionalitas yang ingin Anda tulis tesnya."
-          },
-          {
-            "name": "programmingLanguage",
-            "label": "Bahasa Pemrograman",
-            "type": "select",
-            "options": [
-              "Python",
-              "JavaScript",
-              "Java",
-              "C#",
-              "Lainnya..."
-            ],
-            "description": "Pilih bahasa pemrograman dari kode.",
-            "default": "JavaScript",
-            "info": "Pilih bahasa pemrograman dari kode."
-          },
-          {
-            "name": "testType",
-            "label": "Jenis Tes",
-            "type": "select",
-            "options": [
-              "Unit Test",
-              "Integration Test",
-              "End-to-End Test",
-              "Lainnya..."
-            ],
-            "description": "Pilih jenis tes yang ingin Anda buat.",
-            "default": "Unit Test",
-            "info": "Pilih jenis tes yang ingin Anda buat."
-          },
-          {
-            "name": "testFramework",
-            "label": "Framework Tes (Opsional)",
-            "type": "text",
-            "placeholder": "e.g., 'Jest, Pytest, JUnit'",
-            "description": "Sebutkan framework tes yang Anda gunakan.",
-            "optional": true,
-            "info": "Sebutkan framework tes yang Anda gunakan."
-          },
-          {
-            "name": "additionalInstructions",
-            "label": "Instruksi Tambahan & Skenario",
-            "type": "textarea",
-            "placeholder": "e.g., 'Sertakan kasus uji untuk input yang tidak valid. Fokus pada skenario edge case.'",
-            "description": "Sebutkan skenario spesifik, batasan, atau instruksi khusus lainnya untuk tes.",
-            "optional": true,
-            "info": "Sebutkan skenario spesifik, batasan, atau instruksi khusus lainnya untuk tes."
-          }
-        ],
-        "Buat Dokumentasi Teknis": [
-          {
-            "name": "documentType",
-            "label": "Jenis Dokumen",
-            "type": "select",
-            "options": [
-              "README Proyek",
-              "Panduan API",
-              "Panduan Pengguna",
-              "Dokumentasi Kode Internal",
-              "Lainnya..."
-            ],
-            "placeholder": "Pilih jenis dokumen",
-            "info": "Pilih jenis dokumentasi yang ingin Anda buat."
-          },
-          {
-            "name": "projectDescription",
-            "label": "Deskripsi Proyek/Fungsionalitas",
-            "type": "textarea",
-            "placeholder": "e.g., 'Aplikasi web untuk manajemen tugas dengan fitur CRUD dan autentikasi pengguna.'",
-            "info": "Jelaskan proyek atau fungsionalitas yang ingin Anda dokumentasikan."
-          },
-          {
-            "name": "targetAudience",
-            "label": "Target Audiens Dokumen",
-            "type": "select",
-            "options": [
-              "Pengembang (Internal)",
-              "Pengembang (Eksternal/API User)",
-              "Pengguna Akhir",
-              "Manajer Proyek",
-              "Lainnya..."
-            ],
-            "placeholder": "Pilih target audiens",
-            "info": "Siapa yang akan membaca dokumentasi ini?"
-          },
-          {
-            "name": "codeSnippet",
-            "label": "Potongan Kode (Opsional)",
-            "type": "code",
-            "placeholder": "e.g., function createUser(name, email) { ... }",
-            "optional": true,
-            "info": "Tempelkan potongan kode yang relevan jika Anda ingin dokumentasi berfokus pada kode."
-          },
-          {
-            "name": "additionalInstructions",
-            "label": "Instruksi Tambahan & Gaya",
-            "type": "textarea",
-            "description": "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
-            "optional": true,
-            "placeholder": "e.g., 'Gunakan bahasa yang formal dan ringkas. Sertakan contoh penggunaan.'",
-            "info": "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI."
-          }
-        ],
-        "Lainnya...": [
-          {
-            "name": "customDevelopmentTask",
-            "label": "Sebutkan Tugas Pengembangan Lainnya",
-            "type": "textarea",
-            "description": "Jelaskan secara rinci tugas pengembangan spesifik yang ingin Anda lakukan.",
-            "placeholder": "e.g., 'Optimalkan query database untuk performa', 'Buat skema database untuk aplikasi e-commerce'",
-            "info": "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan."
-          }
-        ]
-      }
+      "name": "functionalityDescription",
+      "label": "Deskripsi Fungsionalitas yang Diinginkan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Fungsi Python untuk menghitung faktorial dari sebuah angka.'",
+      "description": "Jelaskan secara detail fungsionalitas kode yang Anda inginkan.",
+      "validation": {
+        "min_length": 20
+      },
+      "info": "Jelaskan secara detail fungsionalitas kode yang Anda inginkan.",
+      "optional": true
+    },
+    {
+      "name": "programmingLanguage",
+      "label": "Bahasa Pemrograman",
+      "type": "select",
+      "options": [
+        "Python",
+        "JavaScript",
+        "Java",
+        "C#",
+        "Lainnya..."
+      ],
+      "description": "Pilih bahasa pemrograman dari kode.",
+      "default": "JavaScript",
+      "info": "Pilih bahasa pemrograman dari kode.",
+      "optional": true
+    },
+    {
+      "name": "codeStyle",
+      "label": "Gaya Kode (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Pythonic, ES6, Java Clean Code'",
+      "description": "Sebutkan preferensi gaya pengkodean (misalnya, PEP 8 untuk Python).",
+      "optional": true,
+      "info": "Sebutkan preferensi gaya pengkodean (misalnya, PEP 8 untuk Python)."
+    },
+    {
+      "name": "includeComments",
+      "label": "Sertakan Komentar?",
+      "type": "boolean",
+      "description": "Apakah Anda ingin kode disertai komentar penjelasan?",
+      "default": false,
+      "info": "Apakah Anda ingin kode disertai komentar penjelasan?",
+      "optional": true
+    },
+    {
+      "name": "additionalInstructions",
+      "label": "Instruksi Tambahan & Gaya",
+      "type": "textarea",
+      "description": "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
+      "optional": true,
+      "placeholder": "e.g., 'Gunakan bahasa yang formal dan ringkas. Sertakan contoh penggunaan.'",
+      "info": "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI."
+    },
+    {
+      "name": "codeSnippet",
+      "label": "Potongan Kode (Opsional)",
+      "type": "code",
+      "placeholder": "e.g., function createUser(name, email) { ... }",
+      "optional": true,
+      "info": "Tempelkan potongan kode yang relevan jika Anda ingin dokumentasi berfokus pada kode."
+    },
+    {
+      "name": "reviewFocus",
+      "label": "Fokus Peninjauan & Refactoring",
+      "type": "multiselect",
+      "options": [
+        "Keterbacaan",
+        "Pemeliharaan",
+        "Skalabilitas",
+        "Efisiensi",
+        "Keamanan",
+        "Kepatuhan Standar",
+        "Struktur",
+        "Pengurangan Duplikasi",
+        "Lainnya..."
+      ],
+      "description": "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring.",
+      "default": [
+        "Keterbacaan",
+        "Efisiensi"
+      ],
+      "info": "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring.",
+      "optional": true
+    },
+    {
+      "name": "userLevel",
+      "label": "Tingkat Keahlian Anda",
+      "type": "select",
+      "options": [
+        "Pemula",
+        "Menengah",
+        "Ahli",
+        "Lainnya..."
+      ],
+      "description": "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran.",
+      "default": "Menengah",
+      "info": "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran.",
+      "optional": true
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Audiens Dokumen",
+      "type": "select",
+      "options": [
+        "Pengembang (Internal)",
+        "Pengembang (Eksternal/API User)",
+        "Pengguna Akhir",
+        "Manajer Proyek",
+        "Lainnya..."
+      ],
+      "placeholder": "Pilih target audiens",
+      "info": "Siapa yang akan membaca dokumentasi ini?",
+      "optional": true
+    },
+    {
+      "name": "explanationDetailLevel",
+      "label": "Tingkat Detail Penjelasan",
+      "type": "select",
+      "options": [
+        "Sangat Sederhana (gambaran umum)",
+        "Menengah (konsep kunci)",
+        "Rinci (langkah demi langkah)",
+        "Lainnya..."
+      ],
+      "info": "Pilih seberapa detail penjelasan yang Anda inginkan.",
+      "optional": true
+    },
+    {
+      "name": "testType",
+      "label": "Jenis Tes",
+      "type": "select",
+      "options": [
+        "Unit Test",
+        "Integration Test",
+        "End-to-End Test",
+        "Lainnya..."
+      ],
+      "description": "Pilih jenis tes yang ingin Anda buat.",
+      "default": "Unit Test",
+      "info": "Pilih jenis tes yang ingin Anda buat.",
+      "optional": true
+    },
+    {
+      "name": "testFramework",
+      "label": "Framework Tes (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Jest, Pytest, JUnit'",
+      "description": "Sebutkan framework tes yang Anda gunakan.",
+      "optional": true,
+      "info": "Sebutkan framework tes yang Anda gunakan."
+    },
+    {
+      "name": "documentType",
+      "label": "Jenis Dokumen",
+      "type": "select",
+      "options": [
+        "README Proyek",
+        "Panduan API",
+        "Panduan Pengguna",
+        "Dokumentasi Kode Internal",
+        "Lainnya..."
+      ],
+      "placeholder": "Pilih jenis dokumen",
+      "info": "Pilih jenis dokumentasi yang ingin Anda buat.",
+      "optional": true
+    },
+    {
+      "name": "projectDescription",
+      "label": "Deskripsi Proyek/Fungsionalitas",
+      "type": "textarea",
+      "placeholder": "e.g., 'Aplikasi web untuk manajemen tugas dengan fitur CRUD dan autentikasi pengguna.'",
+      "info": "Jelaskan proyek atau fungsionalitas yang ingin Anda dokumentasikan.",
+      "optional": true
+    },
+    {
+      "name": "customDevelopmentTask",
+      "label": "Sebutkan Tugas Pengembangan Lainnya",
+      "type": "textarea",
+      "description": "Jelaskan secara rinci tugas pengembangan spesifik yang ingin Anda lakukan.",
+      "placeholder": "e.g., 'Optimalkan query database untuk performa', 'Buat skema database untuk aplikasi e-commerce'",
+      "info": "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan.",
+      "optional": true
     }
   ],
   "komponen_prompt": {

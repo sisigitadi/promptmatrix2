@@ -24,52 +24,41 @@
         "Lainnya..."
       ],
       "info": "Pilihan Anda akan menampilkan kolom input yang sesuai untuk tugas tersebut."
+    },
+    {
+      "name": "GAMBAR_INPUT",
+      "label": "Unggah Gambar",
+      "type": "image",
+      "description": "Unggah gambar yang ingin Anda analisis.",
+      "optional": false,
+      "info": "AI akan menganalisis konten visual dari gambar ini."
+    },
+    {
+      "name": "AUDIO_INPUT",
+      "label": "Unggah File Audio",
+      "type": "file",
+      "description": "Unggah file audio (misalnya, .mp3, .wav) yang ingin Anda transkripsikan.",
+      "optional": false,
+      "info": "AI akan mencoba mentranskripsikan ucapan dari file audio ini."
+    },
+    {
+      "name": "GAMBAR_INPUT_ANALISIS",
+      "label": "Unggah Gambar untuk Dianalisis",
+      "type": "image",
+      "description": "Unggah gambar yang ingin Anda analisis.",
+      "optional": false,
+      "info": "Gambar yang akan menjadi subjek utama analisis."
+    },
+    {
+      "name": "TEKS_KONTEKS",
+      "label": "Teks Kontekstual",
+      "type": "textarea",
+      "description": "Berikan teks atau pertanyaan yang berhubungan dengan gambar.",
+      "optional": false,
+      "placeholder": "Contoh: Apa hubungan antara objek di latar depan dengan tulisan di latar belakang gambar ini?",
+      "info": "Teks ini akan memberikan konteks kepada AI untuk menganalisis gambar lebih dalam."
     }
   ],
-  "dynamicSubcomponents": {
-    "trigger": "TUGAS_MULTIMODAL",
-    "options": {
-      "Deskripsikan Gambar": [
-        {
-          "name": "GAMBAR_INPUT",
-          "label": "Unggah Gambar",
-          "type": "image",
-          "description": "Unggah gambar yang ingin Anda analisis.",
-          "optional": false,
-          "info": "AI akan menganalisis konten visual dari gambar ini."
-        }
-      ],
-      "Transkripsikan Audio": [
-        {
-          "name": "AUDIO_INPUT",
-          "label": "Unggah File Audio",
-          "type": "file",
-          "description": "Unggah file audio (misalnya, .mp3, .wav) yang ingin Anda transkripsikan.",
-          "optional": false,
-          "info": "AI akan mencoba mentranskripsikan ucapan dari file audio ini."
-        }
-      ],
-      "Analisis Gambar dengan Konteks Teks": [
-        {
-          "name": "GAMBAR_INPUT_ANALISIS",
-          "label": "Unggah Gambar untuk Dianalisis",
-          "type": "image",
-          "description": "Unggah gambar yang ingin Anda analisis.",
-          "optional": false,
-          "info": "Gambar yang akan menjadi subjek utama analisis."
-        },
-        {
-          "name": "TEKS_KONTEKS",
-          "label": "Teks Kontekstual",
-          "type": "textarea",
-          "description": "Berikan teks atau pertanyaan yang berhubungan dengan gambar.",
-          "optional": false,
-          "placeholder": "Contoh: Apa hubungan antara objek di latar depan dengan tulisan di latar belakang gambar ini?",
-          "info": "Teks ini akan memberikan konteks kepada AI untuk menganalisis gambar lebih dalam."
-        }
-      ]
-    }
-  },
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Analis Media Digital dengan kemampuan pemahaman multimodal (gambar dan audio) yang canggih.",
     "KONTEKS": "Saya ingin generate gambar/visual dengan deskripsi: {TUGAS_MULTIMODAL}.",

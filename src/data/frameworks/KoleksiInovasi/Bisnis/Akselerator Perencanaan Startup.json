@@ -22,78 +22,72 @@
         "Lainnya..."
       ],
       "default": "Generator Ide Bisnis",
-      "info": "Pilih tugas yang paling relevan dengan tahap Anda saat ini."
-    }
-  ],
-  "dynamicSubcomponents": [
+      "info": "Pilih tugas yang paling relevan dengan tahap Anda saat ini.",
+      "optional": true
+    },
     {
-      "trigger": "TUGAS_PERENCANAAN_STARTUP",
-      "options": {
-        "Generator Ide Bisnis": [
-          {
-            "name": "INDUSTRI_STARTUP",
-            "label": "Industri atau Sektor",
-            "type": "text",
-            "placeholder": "Contoh: Teknologi Pendidikan, Makanan & Minuman",
-            "info": "Sebutkan industri yang Anda minati."
-          },
-          {
-            "name": "MASALAH_STARTUP",
-            "label": "Masalah Spesifik yang Ingin Dipecahkan",
-            "type": "text",
-            "placeholder": "Contoh: Sulitnya mencari mentor berkualitas",
-            "info": "Masalah apa yang ingin Anda selesaikan dengan bisnis ini?"
-          }
-        ],
-        "Penyusun Model Bisnis Kanvas": [
-          {
-            "name": "BMC_PROPOSISI_NILAI",
-            "label": "Proposisi Nilai (Value Propositions)",
-            "type": "textarea",
-            "placeholder": "Contoh: Platform mentor on-demand yang terjangkau dan terverifikasi.",
-            "info": "Apa nilai unik yang Anda tawarkan kepada pelanggan?"
-          },
-          {
-            "name": "BMC_SEGMEN_PELANGGAN",
-            "label": "Segmen Pelanggan (Customer Segments)",
-            "type": "textarea",
-            "placeholder": "Contoh: Mahasiswa tingkat akhir dan profesional muda.",
-            "info": "Siapa target pelanggan utama Anda?"
-          }
-        ],
-        "Analisis Persaingan dan Pasar": [
-          {
-            "name": "ANALISIS_DESKRIPSI_BISNIS",
-            "label": "Deskripsi Singkat Bisnis Anda",
-            "type": "textarea",
-            "placeholder": "Contoh: Platform marketplace untuk menghubungkan mentor dengan mentee.",
-            "info": "Jelaskan bisnis Anda secara singkat untuk analisis."
-          },
-          {
-            "name": "ANALISIS_KOMPETITOR",
-            "label": "Nama 2-3 Kompetitor Utama",
-            "type": "text",
-            "placeholder": "Contoh: Top-Mentor, Mentor.io",
-            "info": "Sebutkan pemain utama lain di pasar Anda."
-          }
-        ],
-        "Pembuat Draf Konten Pitch Deck": [
-          {
-            "name": "PITCH_NAMA_STARTUP",
-            "label": "Nama Startup",
-            "type": "text",
-            "placeholder": "Contoh: MentorConnect",
-            "info": "Nama startup Anda untuk pitch deck."
-          },
-          {
-            "name": "PITCH_MASALAH_SOLUSI",
-            "label": "Masalah dan Solusi",
-            "type": "textarea",
-            "placeholder": "Masalah: Mahasiswa sulit menemukan mentor yang sesuai. Solusi: Aplikasi kami menggunakan AI untuk mencocokkan mereka secara instan.",
-            "info": "Jelaskan masalah yang ada dan bagaimana startup Anda menyelesaikannya."
-          }
-        ]
-      }
+      "name": "INDUSTRI_STARTUP",
+      "label": "Industri atau Sektor",
+      "type": "text",
+      "placeholder": "Contoh: Teknologi Pendidikan, Makanan & Minuman",
+      "info": "Sebutkan industri yang Anda minati.",
+      "optional": true
+    },
+    {
+      "name": "MASALAH_STARTUP",
+      "label": "Masalah Spesifik yang Ingin Dipecahkan",
+      "type": "text",
+      "placeholder": "Contoh: Sulitnya mencari mentor berkualitas",
+      "info": "Masalah apa yang ingin Anda selesaikan dengan bisnis ini?",
+      "optional": true
+    },
+    {
+      "name": "BMC_PROPOSISI_NILAI",
+      "label": "Proposisi Nilai (Value Propositions)",
+      "type": "textarea",
+      "placeholder": "Contoh: Platform mentor on-demand yang terjangkau dan terverifikasi.",
+      "info": "Apa nilai unik yang Anda tawarkan kepada pelanggan?",
+      "optional": true
+    },
+    {
+      "name": "BMC_SEGMEN_PELANGGAN",
+      "label": "Segmen Pelanggan (Customer Segments)",
+      "type": "textarea",
+      "placeholder": "Contoh: Mahasiswa tingkat akhir dan profesional muda.",
+      "info": "Siapa target pelanggan utama Anda?",
+      "optional": true
+    },
+    {
+      "name": "ANALISIS_DESKRIPSI_BISNIS",
+      "label": "Deskripsi Singkat Bisnis Anda",
+      "type": "textarea",
+      "placeholder": "Contoh: Platform marketplace untuk menghubungkan mentor dengan mentee.",
+      "info": "Jelaskan bisnis Anda secara singkat untuk analisis.",
+      "optional": true
+    },
+    {
+      "name": "ANALISIS_KOMPETITOR",
+      "label": "Nama 2-3 Kompetitor Utama",
+      "type": "text",
+      "placeholder": "Contoh: Top-Mentor, Mentor.io",
+      "info": "Sebutkan pemain utama lain di pasar Anda.",
+      "optional": true
+    },
+    {
+      "name": "PITCH_NAMA_STARTUP",
+      "label": "Nama Startup",
+      "type": "text",
+      "placeholder": "Contoh: MentorConnect",
+      "info": "Nama startup Anda untuk pitch deck.",
+      "optional": true
+    },
+    {
+      "name": "PITCH_MASALAH_SOLUSI",
+      "label": "Masalah dan Solusi",
+      "type": "textarea",
+      "placeholder": "Masalah: Mahasiswa sulit menemukan mentor yang sesuai. Solusi: Aplikasi kami menggunakan AI untuk mencocokkan mereka secara instan.",
+      "info": "Jelaskan masalah yang ada dan bagaimana startup Anda menyelesaikannya.",
+      "optional": true
     }
   ],
   "komponen_prompt": {

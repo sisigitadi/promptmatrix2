@@ -15,7 +15,8 @@
         "Sinematik",
         "Lainnya..."
       ],
-      "info": "Genre seringkali memiliki progresi kord yang khas."
+      "info": "Genre seringkali memiliki progresi kord yang khas.",
+      "optional": true
     },
     {
       "name": "mood",
@@ -29,14 +30,16 @@
         "Epik & Megah",
         "Lainnya..."
       ],
-      "info": "Pilihan kord (mayor/minor/dll) akan sangat dipengaruhi oleh mood."
+      "info": "Pilihan kord (mayor/minor/dll) akan sangat dipengaruhi oleh mood.",
+      "optional": true
     },
     {
       "name": "key",
       "label": "Kunci Nada (Opsional)",
       "type": "text",
       "placeholder": "e.g., 'C Major, A minor'",
-      "info": "Menentukan 'rumah' atau pusat tonal dari progresi."
+      "info": "Menentukan 'rumah' atau pusat tonal dari progresi.",
+      "optional": true
     },
     {
       "name": "complexity",
@@ -48,7 +51,8 @@
         "Kompleks (dengan kord ekstensi/substitusi)",
         "Lainnya..."
       ],
-      "info": "'Sederhana' untuk lagu pop, 'Kompleks' mungkin menyertakan kord 7, 9, atau substitusi."
+      "info": "'Sederhana' untuk lagu pop, 'Kompleks' mungkin menyertakan kord 7, 9, atau substitusi.",
+      "optional": true
     },
     {
       "name": "partOfSong",
@@ -61,14 +65,64 @@
         "Semua Bagian",
         "Lainnya..."
       ],
-      "info": "Progresi untuk chorus biasanya lebih kuat dan 'catchy' daripada verse."
+      "info": "Progresi untuk chorus biasanya lebih kuat dan 'catchy' daripada verse.",
+      "optional": true
     },
     {
       "name": "additionalContext",
       "label": "Konteks Tambahan & Instruksi Khusus",
       "type": "textarea",
       "placeholder": "Contoh: Sertakan setidaknya satu kord pinjaman dari minor paralel. Progresi harus cocok untuk dimainkan dengan gitar akustik. Buat bagian bridge yang terasa 'mengawang'.",
-      "info": "Instruksi teknis atau artistik tambahan untuk progresi kord yang dihasilkan."
+      "info": "Instruksi teknis atau artistik tambahan untuk progresi kord yang dihasilkan.",
+      "optional": true
+    },
+    {
+      "name": "custom_genre",
+      "label": "Sebutkan Genre Musik Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Genre Musik.",
+      "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Genre Musik standar tidak tersedia."
+    },
+    {
+      "name": "custom_mood",
+      "label": "Sebutkan Mood yang Diinginkan Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Mood yang Diinginkan.",
+      "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Mood yang Diinginkan standar tidak tersedia."
+    },
+    {
+      "name": "custom_complexity",
+      "label": "Sebutkan Tingkat Kompleksitas Kord Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Tingkat Kompleksitas Kord.",
+      "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Tingkat Kompleksitas Kord standar tidak tersedia."
+    },
+    {
+      "name": "custom_partOfSong",
+      "label": "Sebutkan Untuk Bagian Lagu Mana? Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Untuk Bagian Lagu Mana?.",
+      "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Untuk Bagian Lagu Mana? standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -88,84 +142,6 @@
     "TUGAS": "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat."
   },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "genre",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_genre",
-            "label": "Sebutkan Genre Musik Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Genre Musik.",
-            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Genre Musik standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "mood",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_mood",
-            "label": "Sebutkan Mood yang Diinginkan Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Mood yang Diinginkan.",
-            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Mood yang Diinginkan standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "complexity",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_complexity",
-            "label": "Sebutkan Tingkat Kompleksitas Kord Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Tingkat Kompleksitas Kord.",
-            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Tingkat Kompleksitas Kord standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "partOfSong",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_partOfSong",
-            "label": "Sebutkan Untuk Bagian Lagu Mana? Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Untuk Bagian Lagu Mana?.",
-            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Untuk Bagian Lagu Mana? standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "_review_notes": [
     "TODO: Review options for hybrid localization (Technical EN + ID)"
   ]

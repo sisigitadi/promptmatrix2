@@ -11,7 +11,8 @@
       "info": "Fokus utama dari video Anda.",
       "validation": {
         "min_length": 5
-      }
+      },
+      "optional": true
     },
     {
       "name": "style",
@@ -21,7 +22,8 @@
       "info": "Deskripsi gaya artistik yang Anda inginkan.",
       "validation": {
         "min_length": 10
-      }
+      },
+      "optional": true
     },
     {
       "name": "transformation",
@@ -44,7 +46,8 @@
         "1:1 (Square)",
         "Lainnya..."
       ],
-      "info": "Pilih orientasi video Anda."
+      "info": "Pilih orientasi video Anda.",
+      "optional": true
     },
     {
       "name": "additionalContext",
@@ -56,6 +59,18 @@
       "validation": {
         "min_length": 10
       }
+    },
+    {
+      "name": "custom_aspectRatio",
+      "label": "Sebutkan Aspect Ratio Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Aspect Ratio.",
+      "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Aspect Ratio standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -75,27 +90,6 @@
     "TUGAS": "Generate prompt visual yang menghasilkan image/video sesuai dengan deskripsi, style, dan parameter yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai."
   },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "aspectRatio",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_aspectRatio",
-            "label": "Sebutkan Aspect Ratio Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Aspect Ratio.",
-            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Aspect Ratio standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "_review_notes": [
     "TODO: Consider adding conditional blocks [...] for optional parameters"
   ]

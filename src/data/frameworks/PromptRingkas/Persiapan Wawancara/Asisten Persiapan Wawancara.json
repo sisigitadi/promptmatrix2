@@ -123,6 +123,44 @@
         }
       ],
       "info": "Pilih area spesifik di mana Anda membutuhkan bantuan persiapan."
+    },
+    {
+      "name": "jenis_wawancara_lainnya",
+      "label": "Jenis Wawancara Lainnya",
+      "type": "text",
+      "description": "Sebutkan jenis wawancara spesifik Anda jika memilih 'Lainnya'.",
+      "default": "",
+      "optional": false,
+      "placeholder": "Contoh: Wawancara Beasiswa, Wawancara Penjualan",
+      "info": "Jelaskan jenis wawancara tambahan yang ingin Anda persiapkan.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "fokus_bantuan_lainnya",
+      "label": "Fokus Bantuan Lainnya",
+      "type": "textarea",
+      "description": "Sebutkan fokus bantuan spesifik Anda jika memilih 'Lainnya'.",
+      "default": "",
+      "optional": false,
+      "placeholder": "Contoh: Cara negosiasi gaji, Etika wawancara online",
+      "info": "Jelaskan area bantuan spesifik yang Anda butuhkan.",
+      "validation": {
+        "min_length": 5
+      }
+    },
+    {
+      "name": "custom_peran_anda",
+      "label": "Sebutkan Peran Anda dalam Wawancara Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Peran Anda dalam Wawancara.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
     }
   ],
   "komponen_prompt": {
@@ -131,67 +169,6 @@
     "TUGAS": "Berdasarkan informasi di atas, berikan bantuan persiapan wawancara yang terperinci sesuai dengan fokus yang dipilih. Sajikan informasi dengan jelas dan mudah dipahami.\n\n**Jika 'Pertanyaan Wawancara' dipilih:**\n- Hasilkan daftar pertanyaan wawancara yang relevan dan spesifik untuk jenis wawancara dan topik/posisi yang disebutkan. Sertakan campuran pertanyaan umum, perilaku, dan situasional (jika relevan).\n\n**Jika 'Tips & Strategi' dipilih:**\n- Berikan tips dan strategi praktis untuk menghadapi wawancara, termasuk persiapan mental, bahasa tubuh, cara berkomunikasi, dan hal-hal yang harus dihindari.\n\n**Jika 'Struktur Wawancara' dipilih:**\n- Jelaskan struktur umum dari jenis wawancara yang dipilih, termasuk tahapan-tahapan dan apa yang diharapkan di setiap tahapan.\n\n**Jika 'Latihan Jawaban (Metode STAR)' dipilih:**\n- Berikan contoh pertanyaan perilaku dan panduan langkah demi langkah tentang cara menyusun jawaban menggunakan metode STAR (Situation, Task, Action, Result).\n\n**Jika 'Pertanyaan untuk Pewawancara' dipilih:**\n- Hasilkan daftar pertanyaan cerdas yang dapat diajukan oleh pengguna kepada pewawancara untuk menunjukkan minat dan mendapatkan informasi lebih lanjut.\n\n**Jika 'Lainnya...' dipilih untuk Fokus Bantuan:**\n- Berikan bantuan sesuai dengan 'Fokus Bantuan Lainnya' yang disebutkan.",
     "FORMAT_OUTPUT": "Sajikan output dalam format Markdown yang terstruktur dengan baik, menggunakan heading, bullet points, dan bold untuk keterbacaan yang maksimal. Pisahkan setiap bagian bantuan dengan jelas."
   },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "jenis_wawancara",
-      "options": {
-        "Lainnya": [
-          {
-            "name": "jenis_wawancara_lainnya",
-            "label": "Jenis Wawancara Lainnya",
-            "type": "text",
-            "description": "Sebutkan jenis wawancara spesifik Anda jika memilih 'Lainnya'.",
-            "default": "",
-            "optional": false,
-            "placeholder": "Contoh: Wawancara Beasiswa, Wawancara Penjualan",
-            "info": "Jelaskan jenis wawancara tambahan yang ingin Anda persiapkan.",
-            "validation": {
-              "min_length": 5
-            }
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "fokus_bantuan",
-      "options": {
-        "Lainnya": [
-          {
-            "name": "fokus_bantuan_lainnya",
-            "label": "Fokus Bantuan Lainnya",
-            "type": "textarea",
-            "description": "Sebutkan fokus bantuan spesifik Anda jika memilih 'Lainnya'.",
-            "default": "",
-            "optional": false,
-            "placeholder": "Contoh: Cara negosiasi gaji, Etika wawancara online",
-            "info": "Jelaskan area bantuan spesifik yang Anda butuhkan.",
-            "validation": {
-              "min_length": 5
-            }
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "peran_anda",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_peran_anda",
-            "label": "Sebutkan Peran Anda dalam Wawancara Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Peran Anda dalam Wawancara.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "toolType": "text",
   "konteks_tambahan_instruksi_khusus": "Pastikan semua saran dan pertanyaan relevan dengan jenis wawancara dan peran pengguna. Gunakan bahasa yang profesional, mendukung, dan mudah dipahami. Jika peran pengguna adalah 'Pewawancara', fokus pada cara menyusun pertanyaan yang efektif dan mengevaluasi jawaban. Jika 'Diwawancarai', fokus pada cara memberikan jawaban terbaik dan strategi untuk sukses.",
   "contoh_kalimat": "Bantu saya mempersiapkan wawancara kerja untuk posisi Manajer Pemasaran.",

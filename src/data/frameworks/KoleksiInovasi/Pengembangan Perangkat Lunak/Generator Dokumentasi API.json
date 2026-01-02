@@ -1,11 +1,15 @@
 {
   "id_kerangka": "KOL-PP-103",
   "nama_kerangka": "Generator Dokumentasi API",
-  "version": "1.0.0",
+  "version": "2.7.0",
   "kategori": [
     "Koleksi & Inovasi",
     "Pengembangan Perangkat Lunak"
   ],
+  "examples": [],
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "top_k": 40,
   "description": "Buat dokumentasi teknis yang jelas dan terstruktur untuk sebuah endpoint API berdasarkan spesifikasi yang diberikan.",
   "perspektif_user": "Saya seorang developer dan saya sudah selesai membuat sebuah endpoint API. Sekarang saya butuh bantuan untuk menulis dokumentasi yang lengkap dan mudah dipahami untuk rekan tim atau pengguna eksternal.",
   "ai_logic_description": "Persona AI: Anda adalah seorang Technical Writer ahli. Anda akan membuat dokumentasi untuk sebuah endpoint API, mencakup deskripsi, parameter, contoh request, dan contoh response sukses/error.",
@@ -18,7 +22,8 @@
       "info": "Masukkan path URL untuk endpoint, gunakan kurung kurawal {} untuk parameter path.",
       "validation": {
         "min_length": 3
-      }
+      },
+      "optional": true
     },
     {
       "name": "HTTP_METHOD",
@@ -33,7 +38,8 @@
         "Lainnya..."
       ],
       "default": "GET",
-      "info": "Pilih metode HTTP yang sesuai untuk endpoint ini."
+      "info": "Pilih metode HTTP yang sesuai untuk endpoint ini.",
+      "optional": true
     },
     {
       "name": "ENDPOINT_DESCRIPTION",
@@ -43,7 +49,8 @@
       "info": "Jelaskan secara singkat fungsi utama dari endpoint ini.",
       "validation": {
         "min_length": 10
-      }
+      },
+      "optional": true
     },
     {
       "name": "PATH_PARAMETERS",
@@ -75,7 +82,8 @@
       "info": "Tempelkan contoh response sukses (200 OK) dalam format JSON.",
       "validation": {
         "min_length": 10
-      }
+      },
+      "optional": true
     },
     {
       "name": "ERROR_RESPONSE",
@@ -96,23 +104,18 @@
         "Lainnya..."
       ],
       "default": "Tidak Ada",
-      "info": "Pilih metode autentikasi yang diperlukan untuk mengakses endpoint ini."
+      "info": "Pilih metode autentikasi yang diperlukan untuk mengakses endpoint ini.",
+      "optional": true
+    },
+    {
+      "name": "AUTH_METHOD_LAINNYA",
+      "label": "Sebutkan Metode Autentikasi Lainnya",
+      "type": "text",
+      "placeholder": "Contoh: Basic Auth",
+      "info": "Jelaskan metode autentikasi kustom Anda.",
+      "optional": true
     }
   ],
-  "dynamicSubcomponents": {
-    "trigger": "AUTH_METHOD",
-    "options": {
-      "Lainnya...": [
-        {
-          "name": "AUTH_METHOD_LAINNYA",
-          "label": "Sebutkan Metode Autentikasi Lainnya",
-          "type": "text",
-          "placeholder": "Contoh: Basic Auth",
-          "info": "Jelaskan metode autentikasi kustom Anda."
-        }
-      ]
-    }
-  },
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Technical Writer profesional yang sangat teliti, bertugas membuat dokumentasi API yang jelas, akurat, dan mudah diikuti untuk developer lain.",
     "KONTEKS": "Anda akan diberikan detail sebuah endpoint API. Tugas Anda adalah mengubah detail teknis ini menjadi blok dokumentasi Markdown yang terstruktur dengan baik dan siap digunakan.",
@@ -124,5 +127,5 @@
   "contoh_kalimat": "Buatkan saya dokumentasi untuk API get user by id.",
   "output": "natural_language_prompt",
   "crossValidationRules": [],
-  "updated_at": "2025-12-23T06:59:22.819117"
+  "updated_at": "2025-12-23T07:00:00.819117"
 }

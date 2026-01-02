@@ -8,21 +8,24 @@
       "label": "Sistem Permainan (Opsional)",
       "type": "text",
       "placeholder": "e.g., 'Dungeons & Dragons 5e', 'Pathfinder'",
-      "info": "Sistem permainan dapat mempengaruhi terminologi."
+      "info": "Sistem permainan dapat mempengaruhi terminologi.",
+      "optional": true
     },
     {
       "name": "characterClass",
       "label": "Kelas Karakter",
       "type": "text",
       "placeholder": "e.g., 'Rogue', 'Wizard', 'Paladin'",
-      "info": "Profesi atau peran karakter dalam petualangan."
+      "info": "Profesi atau peran karakter dalam petualangan.",
+      "optional": true
     },
     {
       "name": "characterRace",
       "label": "Ras Karakter",
       "type": "text",
       "placeholder": "e.g., 'Elf', 'Dwarf', 'Human'",
-      "info": "Asal-usul atau spesies dari karakter."
+      "info": "Asal-usul atau spesies dari karakter.",
+      "optional": true
     },
     {
       "name": "alignment",
@@ -40,21 +43,36 @@
         "Chaotic Evil",
         "Lainnya..."
       ],
-      "info": "Kompas moral dari karakter Anda."
+      "info": "Kompas moral dari karakter Anda.",
+      "optional": true
     },
     {
       "name": "keyTraits",
       "label": "Sifat Kunci/Keunikan",
       "type": "textarea",
       "placeholder": "e.g., 'Sangat takut pada laba-labar, memiliki bekas luka di mata kiri, selalu berbicara dengan sarkasme.'",
-      "info": "Berikan 2-3 detail unik untuk membuat karakter menonjol."
+      "info": "Berikan 2-3 detail unik untuk membuat karakter menonjol.",
+      "optional": true
     },
     {
       "name": "additionalContext",
       "label": "Konteks Tambahan & Instruksi Khusus",
       "type": "textarea",
       "placeholder": "Contoh: Buat latar belakang yang tragis. Hubungkan cerita karakter dengan sebuah artefak kuno. Karakternya harus berasal dari kota di padang pasir.",
-      "info": "Instruksi kreatif untuk memperkaya narasi karakter."
+      "info": "Instruksi kreatif untuk memperkaya narasi karakter.",
+      "optional": true
+    },
+    {
+      "name": "custom_alignment",
+      "label": "Sebutkan Alignment (Watak) Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Alignment (Watak).",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -73,26 +91,5 @@
     "KONTEKS": "Saya ingin create konten tertulis tentang {gameSystem} untuk {characterClass}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
     "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
-  },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "alignment",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_alignment",
-            "label": "Sebutkan Alignment (Watak) Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Alignment (Watak).",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ]
+  }
 }

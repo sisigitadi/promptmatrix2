@@ -29,109 +29,88 @@
         "Lainnya..."
       ],
       "info": "Pilih 'Deskripsikan Gambar' untuk mendapatkan deskripsi dari gambar yang Anda unggah, atau 'Hasilkan Gambar' untuk membuat gambar baru dari teks."
+    },
+    {
+      "name": "input_gambar_deskripsi",
+      "label": "Unggah Gambar untuk Deskripsi",
+      "type": "image",
+      "description": "Unggah gambar yang ingin Anda deskripsikan.",
+      "default": "",
+      "optional": false,
+      "placeholder": "Pilih file gambar...",
+      "info": "Unggah gambar dalam format JPG, PNG, atau WEBP. Maksimal ukuran file 5MB."
+    },
+    {
+      "name": "deskripsi_teks_gambar_generasi",
+      "label": "Deskripsi Teks Gambar",
+      "type": "textarea",
+      "description": "Masukkan deskripsi detail untuk gambar yang ingin Anda hasilkan.",
+      "default": "",
+      "optional": false,
+      "placeholder": "Contoh: 'Pemandangan kota futuristik saat matahari terbenam, dengan mobil terbang dan gedung pencakar langit yang berkilauan.'",
+      "info": "Berikan deskripsi yang jelas dan spesifik untuk hasil terbaik."
+    },
+    {
+      "name": "gaya_visual_generasi",
+      "label": "Gaya Visual",
+      "type": "select",
+      "description": "Pilih gaya visual untuk gambar yang dihasilkan.",
+      "default": "fotorealistik",
+      "optional": false,
+      "options": [
+        {
+          "label": "Fotorealistik",
+          "value": "fotorealistik"
+        },
+        {
+          "label": "Kartun",
+          "value": "kartun"
+        },
+        {
+          "label": "Abstrak",
+          "value": "abstrak"
+        },
+        {
+          "label": "Seni Digital",
+          "value": "seni_digital"
+        },
+        {
+          "label": "Lainnya...",
+          "value": "Lainnya..."
+        },
+        "Lainnya..."
+      ],
+      "info": "Pilih gaya yang paling sesuai dengan kebutuhan visual Anda."
+    },
+    {
+      "name": "rasio_aspek_generasi",
+      "label": "Rasio Aspek",
+      "type": "select",
+      "description": "Pilih rasio aspek untuk gambar yang dihasilkan.",
+      "default": "1:1",
+      "optional": false,
+      "options": [
+        {
+          "label": "1:1 (Persegi)",
+          "value": "1:1"
+        },
+        {
+          "label": "16:9 (Lanskap)",
+          "value": "16:9"
+        },
+        {
+          "label": "9:16 (Potret)",
+          "value": "9:16"
+        },
+        "Lainnya..."
+      ],
+      "info": "Rasio aspek menentukan orientasi dan proporsi gambar."
     }
   ],
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang seniman digital dan deskriptor visual.",
     "KONTEKS": "Pengguna ingin melakukan operasi visual.",
     "TUGAS": "Pilih mode operasi untuk melihat tugas spesifik."
-  },
-  "dynamicSubcomponents": {
-    "trigger": "mode_operasi",
-    "options": {
-      "deskripsikan_gambar": {
-        "komponen_prompt": {
-          "TUGAS": "Deskripsikan gambar berikut secara detail dan komprehensif, fokus pada objek, warna, suasana, dan gaya visual: {input_gambar_deskripsi}",
-          "FORMAT_OUTPUT": "Berikan deskripsi dalam format Markdown dengan poin-poin utama."
-        },
-        "components": [
-          {
-            "name": "input_gambar_deskripsi",
-            "label": "Unggah Gambar untuk Deskripsi",
-            "type": "image",
-            "description": "Unggah gambar yang ingin Anda deskripsikan.",
-            "default": "",
-            "optional": false,
-            "placeholder": "Pilih file gambar...",
-            "info": "Unggah gambar dalam format JPG, PNG, atau WEBP. Maksimal ukuran file 5MB."
-          }
-        ]
-      },
-      "hasilkan_gambar": {
-        "komponen_prompt": {
-          "TUGAS": "Hasilkan gambar berdasarkan deskripsi berikut: \"{deskripsi_teks_gambar_generasi}\". Gunakan gaya visual: \"{gaya_visual_generasi}\" dan rasio aspek: \"{rasio_aspek_generasi}\".",
-          "FORMAT_OUTPUT": "Sajikan output sebagai URL gambar yang dihasilkan atau instruksi untuk mengaksesnya."
-        },
-        "components": [
-          {
-            "name": "deskripsi_teks_gambar_generasi",
-            "label": "Deskripsi Teks Gambar",
-            "type": "textarea",
-            "description": "Masukkan deskripsi detail untuk gambar yang ingin Anda hasilkan.",
-            "default": "",
-            "optional": false,
-            "placeholder": "Contoh: 'Pemandangan kota futuristik saat matahari terbenam, dengan mobil terbang dan gedung pencakar langit yang berkilauan.'",
-            "info": "Berikan deskripsi yang jelas dan spesifik untuk hasil terbaik."
-          },
-          {
-            "name": "gaya_visual_generasi",
-            "label": "Gaya Visual",
-            "type": "select",
-            "description": "Pilih gaya visual untuk gambar yang dihasilkan.",
-            "default": "fotorealistik",
-            "optional": false,
-            "options": [
-              {
-                "label": "Fotorealistik",
-                "value": "fotorealistik"
-              },
-              {
-                "label": "Kartun",
-                "value": "kartun"
-              },
-              {
-                "label": "Abstrak",
-                "value": "abstrak"
-              },
-              {
-                "label": "Seni Digital",
-                "value": "seni_digital"
-              },
-              {
-                "label": "Lainnya...",
-                "value": "Lainnya..."
-              },
-              "Lainnya..."
-            ],
-            "info": "Pilih gaya yang paling sesuai dengan kebutuhan visual Anda."
-          },
-          {
-            "name": "rasio_aspek_generasi",
-            "label": "Rasio Aspek",
-            "type": "select",
-            "description": "Pilih rasio aspek untuk gambar yang dihasilkan.",
-            "default": "1:1",
-            "optional": false,
-            "options": [
-              {
-                "label": "1:1 (Persegi)",
-                "value": "1:1"
-              },
-              {
-                "label": "16:9 (Lanskap)",
-                "value": "16:9"
-              },
-              {
-                "label": "9:16 (Potret)",
-                "value": "9:16"
-              },
-              "Lainnya..."
-            ],
-            "info": "Rasio aspek menentukan orientasi dan proporsi gambar."
-          }
-        ]
-      }
-    }
   },
   "toolType": "image-generation",
   "konteks_tambahan_instruksi_khusus": "Untuk mode 'Deskripsikan Gambar', pastikan deskripsi sangat detail dan komprehensif. Untuk mode 'Hasilkan Gambar', fokus pada interpretasi kreatif dari deskripsi dan gaya yang diberikan.",
