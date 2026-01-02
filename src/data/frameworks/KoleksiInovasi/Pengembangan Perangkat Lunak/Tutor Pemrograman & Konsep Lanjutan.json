@@ -15,13 +15,34 @@
       "label": "Topik Pembelajaran",
       "type": "select",
       "options": [
-        "Pilih Bahasa Pemrograman Pertama",
-        "Dasar-Dasar Pemrograman",
-        "Visualisasi Algoritma & Struktur Data",
-        "Dasar-Dasar Keamanan Siber",
-        "Dasar-Dasar AI/Machine Learning",
-        "Dasar-Dasar Web3 & Blockchain",
-        "Panduan Debugging",
+        {
+          "label": "Choose First Programming Language (Pilih Bahasa Pemrograman Pertama)",
+          "value": "Pilih Bahasa Pemrograman Pertama"
+        },
+        {
+          "label": "Programming Fundamentals (Dasar-Dasar Pemrograman)",
+          "value": "Dasar-Dasar Pemrograman"
+        },
+        {
+          "label": "Algorithm & Data Structure Visualization (Visualisasi Algoritma & Struktur Data)",
+          "value": "Visualisasi Algoritma & Struktur Data"
+        },
+        {
+          "label": "Cybersecurity Basics (Dasar-Dasar Keamanan Siber)",
+          "value": "Dasar-Dasar Keamanan Siber"
+        },
+        {
+          "label": "AI/Machine Learning Basics (Dasar-Dasar AI/Machine Learning)",
+          "value": "Dasar-Dasar AI/Machine Learning"
+        },
+        {
+          "label": "Web3 & Blockchain Basics (Dasar-Dasar Web3 & Blockchain)",
+          "value": "Dasar-Dasar Web3 & Blockchain"
+        },
+        {
+          "label": "Debugging Guide (Panduan Debugging)",
+          "value": "Panduan Debugging"
+        },
         "Lainnya..."
       ],
       "description": "Pilih topik pembelajaran yang ingin Anda jelajahi.",
@@ -187,15 +208,19 @@
           }
         ],
         "Lainnya...": [
-          {
-            "name": "customLearningTopic",
-            "label": "Sebutkan Topik Pembelajaran Lainnya",
-            "type": "textarea",
-            "description": "Jelaskan secara rinci topik pembelajaran spesifik yang ingin Anda jelajahi.",
-            "placeholder": "e.g., 'Pengantar Komputasi Kuantum', 'Praktik Terbaik untuk Arsitektur Mikroservis'",
-            "info": "Jelaskan topik kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan."
-          }
-        ]
+        {
+          "name": "customLearningTopic",
+          "label": "Sebutkan Topik Pembelajaran Lainnya",
+          "type": "textarea",
+          "description": "Jelaskan secara rinci topik pembelajaran spesifik yang ingin Anda jelajahi.",
+          "placeholder": "e.g., 'Pengantar Komputasi Kuantum', 'Praktik Terbaik untuk Arsitektur Mikroservis'",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Jelaskan topik kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan."
+        }
+      ]
       }
     }
   ],

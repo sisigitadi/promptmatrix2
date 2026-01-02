@@ -15,9 +15,18 @@
       "label": "Jenis Dokumen yang Ingin Dibuat",
       "type": "select",
       "options": [
-        "Dokumen Desain Game (GDD)",
-        "Analisis Laporan Keuangan",
-        "Perencanaan Argumen Debat",
+        {
+          "label": "Game Design Document (Dokumen Desain Game - GDD)",
+          "value": "Dokumen Desain Game (GDD)"
+        },
+        {
+          "label": "Financial Statement Analysis (Analisis Laporan Keuangan)",
+          "value": "Analisis Laporan Keuangan"
+        },
+        {
+          "label": "Debate Argument Planning (Perencanaan Argumen Debat)",
+          "value": "Perencanaan Argumen Debat"
+        },
         "Lainnya..."
       ],
       "default": "Dokumen Desain Game (GDD)",
@@ -159,6 +168,20 @@
           "placeholder": "Contoh: AI akan menyebabkan pengangguran massal. Ada risiko penyalahgunaan AI untuk tujuan jahat.",
           "info": "Antisipasi argumen yang mungkin akan digunakan oleh pihak lawan.",
           "optional": true
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "custom_JENIS_DOKUMEN",
+          "label": "Sebutkan Jenis Dokumen Lainnya",
+          "type": "text",
+          "description": "Tuliskan jenis dokumen lain yang ingin Anda buat.",
+          "placeholder": "Contoh: SOP operasional, panduan etika, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Isi detail ini saat Anda memilih 'Lainnya...' agar dokumen dapat dipersonalisasi."
         }
       ]
     }

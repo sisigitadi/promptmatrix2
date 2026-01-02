@@ -8,13 +8,34 @@
       "label": "Jenis Dokumen Acara",
       "type": "select",
       "options": [
-        "Agenda/Itinerary",
-        "Ide Tema Pesta",
-        "Rencana Anggaran",
-        "Daftar Tamu & RSVP",
-        "Teks Pidato/Sambutan",
-        "Checklist Vendor",
-        "Ide Souvenir/Lomba",
+        {
+          "label": "Agenda/Itinerary",
+          "value": "Agenda/Itinerary"
+        },
+        {
+          "label": "Party Theme Ideas (Ide Tema Pesta)",
+          "value": "Ide Tema Pesta"
+        },
+        {
+          "label": "Budget Plan (Rencana Anggaran)",
+          "value": "Rencana Anggaran"
+        },
+        {
+          "label": "Guest List & RSVP (Daftar Tamu & RSVP)",
+          "value": "Daftar Tamu & RSVP"
+        },
+        {
+          "label": "Speech/Welcome Text (Teks Pidato/Sambutan)",
+          "value": "Teks Pidato/Sambutan"
+        },
+        {
+          "label": "Vendor Checklist (Checklist Vendor)",
+          "value": "Checklist Vendor"
+        },
+        {
+          "label": "Souvenir/Activity Ideas (Ide Souvenir/Lomba)",
+          "value": "Ide Souvenir/Lomba"
+        },
         "Lainnya..."
       ],
       "info": "Pilih dokumen perencanaan yang Anda butuhkan.",
@@ -358,6 +379,20 @@
             "Lainnya..."
           ],
           "info": "Apakah Anda mencari ide souvenir, lomba, atau keduanya?"
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "customDocumentType",
+          "label": "Sebutkan Dokumen Acara Lainnya",
+          "type": "text",
+          "description": "Tuliskan dokumen atau kebutuhan acara lain yang belum ada di daftar.",
+          "placeholder": "Contoh: Panduan keamanan, SOP volunteer, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Isi kolom ini saat memilih 'Lainnya...' agar output dapat disesuaikan."
         }
       ]
     }

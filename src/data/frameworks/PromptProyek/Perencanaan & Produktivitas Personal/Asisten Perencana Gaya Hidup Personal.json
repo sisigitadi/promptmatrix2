@@ -8,12 +8,30 @@
       "label": "Jenis Rencana",
       "type": "select",
       "options": [
-        "Rencana Menu Makan",
-        "Jadwal Olahraga",
-        "Daftar Tugas",
-        "Jadwal Kebersihan",
-        "Rencana Pengembangan Diri",
-        "Pelacak Kebiasaan",
+        {
+          "label": "Meal Plan (Rencana Menu Makan)",
+          "value": "Rencana Menu Makan"
+        },
+        {
+          "label": "Workout Schedule (Jadwal Olahraga)",
+          "value": "Jadwal Olahraga"
+        },
+        {
+          "label": "To-Do List (Daftar Tugas)",
+          "value": "Daftar Tugas"
+        },
+        {
+          "label": "Cleaning Schedule (Jadwal Kebersihan)",
+          "value": "Jadwal Kebersihan"
+        },
+        {
+          "label": "Self-Development Plan (Rencana Pengembangan Diri)",
+          "value": "Rencana Pengembangan Diri"
+        },
+        {
+          "label": "Habit Tracker (Pelacak Kebiasaan)",
+          "value": "Pelacak Kebiasaan"
+        },
         "Lainnya..."
       ],
       "info": "Pilih aspek kehidupan yang ingin Anda rencanakan.",
@@ -343,6 +361,20 @@
             "Lainnya..."
           ],
           "info": "Bagaimana Anda akan melacak kemajuan kebiasaan ini?"
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "customPlanType",
+          "label": "Sebutkan Jenis Rencana Lainnya",
+          "type": "text",
+          "description": "Tuliskan rencana gaya hidup lain yang ingin Anda buat.",
+          "placeholder": "Contoh: Rencana tidur, jadwal hobi kreatif, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Isi jika memilih 'Lainnya...' agar rencana dapat dipersonalisasi."
         }
       ]
     }

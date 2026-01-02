@@ -8,13 +8,34 @@
       "label": "Kategori Penamaan",
       "type": "select",
       "options": [
-        "Nama Bayi",
-        "Nama Hewan Peliharaan",
-        "Nama Bisnis/Produk",
-        "Nama Tim/Komunitas",
-        "Nama Karakter Fiksi",
-        "Judul Acara/Karya",
-        "Nama Domain/Hashtag",
+        {
+          "label": "Baby Name (Nama Bayi)",
+          "value": "Nama Bayi"
+        },
+        {
+          "label": "Pet Name (Nama Hewan Peliharaan)",
+          "value": "Nama Hewan Peliharaan"
+        },
+        {
+          "label": "Business/Product Name (Nama Bisnis/Produk)",
+          "value": "Nama Bisnis/Produk"
+        },
+        {
+          "label": "Team/Community Name (Nama Tim/Komunitas)",
+          "value": "Nama Tim/Komunitas"
+        },
+        {
+          "label": "Fictional Character Name (Nama Karakter Fiksi)",
+          "value": "Nama Karakter Fiksi"
+        },
+        {
+          "label": "Event/Work Title (Judul Acara/Karya)",
+          "value": "Judul Acara/Karya"
+        },
+        {
+          "label": "Domain/Hashtag Name (Nama Domain/Hashtag)",
+          "value": "Nama Domain/Hashtag"
+        },
         "Lainnya..."
       ],
       "info": "Pilih untuk apa nama ini akan digunakan."
@@ -348,6 +369,20 @@
           "validation": {
             "min_length": 10
           }
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "customCategory",
+          "label": "Sebutkan Kategori Penamaan Lainnya",
+          "type": "text",
+          "description": "Tuliskan konteks penamaan lain yang Anda perlukan.",
+          "placeholder": "Contoh: Nama program CSR, nama kampanye internal, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Gunakan kolom ini ketika memilih 'Lainnya...' untuk menjelaskan kebutuhan khusus."
         }
       ]
     }

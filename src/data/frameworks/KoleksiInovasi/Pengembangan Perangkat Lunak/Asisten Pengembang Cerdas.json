@@ -15,11 +15,26 @@
       "label": "Tugas Pengembangan",
       "type": "select",
       "options": [
-        "Buat Kode Baru",
-        "Tinjau & Perbaiki Kode",
-        "Jelaskan Kode",
-        "Buat Pengujian Otomatis",
-        "Buat Dokumentasi Teknis",
+        {
+          "label": "New Code Creation (Buat Kode Baru)",
+          "value": "Buat Kode Baru"
+        },
+        {
+          "label": "Code Review & Fix (Tinjau & Perbaiki Kode)",
+          "value": "Tinjau & Perbaiki Kode"
+        },
+        {
+          "label": "Code Explanation (Jelaskan Kode)",
+          "value": "Jelaskan Kode"
+        },
+        {
+          "label": "Automated Testing (Buat Pengujian Otomatis)",
+          "value": "Buat Pengujian Otomatis"
+        },
+        {
+          "label": "Technical Documentation (Buat Dokumentasi Teknis)",
+          "value": "Buat Dokumentasi Teknis"
+        },
         "Lainnya..."
       ],
       "description": "Pilih tugas pengembangan utama yang ingin Anda lakukan.",
@@ -352,6 +367,10 @@
             "type": "textarea",
             "description": "Jelaskan secara rinci tugas pengembangan spesifik yang ingin Anda lakukan.",
             "placeholder": "e.g., 'Optimalkan query database untuk performa', 'Buat skema database untuk aplikasi e-commerce'",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
             "info": "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan."
           }
         ]

@@ -8,12 +8,30 @@
       "label": "Jenis Dokumen",
       "type": "select",
       "options": [
-        "Surat Lamaran Kerja",
-        "Laporan Progres Proyek",
-        "Kontrak Sederhana",
-        "Notulen Rapat",
-        "Faktur/Invoice",
-        "Email Profesional",
+        {
+          "label": "Cover Letter (Surat Lamaran Kerja)",
+          "value": "Surat Lamaran Kerja"
+        },
+        {
+          "label": "Project Progress Report (Laporan Progres Proyek)",
+          "value": "Laporan Progres Proyek"
+        },
+        {
+          "label": "Simple Contract (Kontrak Sederhana)",
+          "value": "Kontrak Sederhana"
+        },
+        {
+          "label": "Meeting Minutes (Notulen Rapat)",
+          "value": "Notulen Rapat"
+        },
+        {
+          "label": "Invoice (Faktur/Invoice)",
+          "value": "Faktur/Invoice"
+        },
+        {
+          "label": "Professional Email (Email Profesional)",
+          "value": "Email Profesional"
+        },
         "Lainnya..."
       ],
       "info": "Pilih jenis dokumen bisnis yang Anda butuhkan.",
@@ -340,6 +358,20 @@
           "validation": {
             "min_length": 10
           }
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "customDocumentType",
+          "label": "Sebutkan Jenis Dokumen Lainnya",
+          "type": "text",
+          "description": "Tuliskan jenis dokumen lain yang ingin Anda buat.",
+          "placeholder": "Contoh: Proposal kemitraan, memo internal, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Isi kolom ini saat memilih 'Lainnya...' agar output bisa disesuaikan."
         }
       ]
     }

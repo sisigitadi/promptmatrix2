@@ -15,14 +15,38 @@
       "label": "Tugas Pemasaran Utama",
       "type": "select",
       "options": [
-        "Strategi SEO & SEM",
-        "Pengembangan Konten & Blog",
-        "Manajemen Media Sosial",
-        "Kampanye Pemasaran Email",
-        "Peluncuran Produk & Kampanye",
-        "Riset Pasar & Analisis Kompetitor",
-        "Branding & Hubungan Masyarakat (PR)",
-        "Optimasi Penjualan & Konversi",
+        {
+          "label": "SEO & SEM Strategy (Strategi SEO & SEM)",
+          "value": "Strategi SEO & SEM"
+        },
+        {
+          "label": "Content & Blog Development (Pengembangan Konten & Blog)",
+          "value": "Pengembangan Konten & Blog"
+        },
+        {
+          "label": "Social Media Management (Manajemen Media Sosial)",
+          "value": "Manajemen Media Sosial"
+        },
+        {
+          "label": "Email Marketing Campaigns (Kampanye Pemasaran Email)",
+          "value": "Kampanye Pemasaran Email"
+        },
+        {
+          "label": "Product Launch & Campaigns (Peluncuran Produk & Kampanye)",
+          "value": "Peluncuran Produk & Kampanye"
+        },
+        {
+          "label": "Market Research & Competitor Analysis (Riset Pasar & Analisis Kompetitor)",
+          "value": "Riset Pasar & Analisis Kompetitor"
+        },
+        {
+          "label": "Branding & Public Relations (Branding & Hubungan Masyarakat/PR)",
+          "value": "Branding & Hubungan Masyarakat (PR)"
+        },
+        {
+          "label": "Sales & Conversion Optimization (Optimasi Penjualan & Konversi)",
+          "value": "Optimasi Penjualan & Konversi"
+        },
         "Lainnya..."
       ],
       "default": "Strategi SEO & SEM",
@@ -308,6 +332,20 @@
           ],
           "default": "Copy Halaman Arahan (Landing Page)",
           "info": "Pilih aset penjualan yang ingin Anda buat."
+        }
+      ],
+      "Lainnya...": [
+        {
+          "name": "custom_TUGAS_PEMASARAN_UTAMA",
+          "label": "Sebutkan Tugas Pemasaran Lainnya",
+          "type": "text",
+          "description": "Tuliskan tugas pemasaran lain yang ingin Anda eksekusi.",
+          "placeholder": "Contoh: Program loyalitas, kemitraan afiliasi, dsb.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Wajib diisi saat Anda memilih 'Lainnya...' untuk menjelaskan kebutuhan khusus."
         }
       ]
     }

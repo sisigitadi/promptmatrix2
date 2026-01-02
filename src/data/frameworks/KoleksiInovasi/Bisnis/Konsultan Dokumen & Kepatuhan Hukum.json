@@ -15,10 +15,22 @@
       "label": "Jenis Bantuan Hukum",
       "type": "select",
       "options": [
-        "Pembuat Draf Perjanjian Dasar",
-        "Generator Kebijakan Privasi & Syarat Layanan",
-        "Penerjemah Istilah Hukum",
-        "Checklist Kepatuhan Bisnis",
+        {
+          "label": "Basic Agreement Drafter (Pembuat Draf Perjanjian Dasar)",
+          "value": "Pembuat Draf Perjanjian Dasar"
+        },
+        {
+          "label": "Privacy Policy & Terms Generator (Generator Kebijakan Privasi & Syarat Layanan)",
+          "value": "Generator Kebijakan Privasi & Syarat Layanan"
+        },
+        {
+          "label": "Legal Term Translator (Penerjemah Istilah Hukum)",
+          "value": "Penerjemah Istilah Hukum"
+        },
+        {
+          "label": "Business Compliance Checklist (Checklist Kepatuhan Bisnis)",
+          "value": "Checklist Kepatuhan Bisnis"
+        },
         "Lainnya..."
       ],
       "default": "Pembuat Draf Perjanjian Dasar",
@@ -89,10 +101,22 @@
             "label": "Bentuk Badan Usaha",
             "type": "select",
             "options": [
-              "PT Perorangan",
-              "CV",
-              "Firma",
-              "UMKM Perorangan",
+              {
+                "label": "Sole-Owned PT (PT Perorangan)",
+                "value": "PT Perorangan"
+              },
+              {
+                "label": "Limited Partnership (CV)",
+                "value": "CV"
+              },
+              {
+                "label": "Firm/Partnership (Firma)",
+                "value": "Firma"
+              },
+              {
+                "label": "Micro & Small Business (UMKM Perorangan)",
+                "value": "UMKM Perorangan"
+              },
               "Lainnya..."
             ],
             "default": "UMKM Perorangan",
@@ -104,6 +128,20 @@
             "type": "text",
             "placeholder": "Contoh: Kafe, Toko Online, Jasa Konsultasi IT",
             "info": "Sebutkan bidang usaha spesifik Anda."
+          }
+        ],
+        "Lainnya...": [
+          {
+            "name": "custom_TUGAS_BANTUAN_HUKUM",
+            "label": "Sebutkan Jenis Bantuan Hukum Lainnya",
+            "type": "text",
+            "description": "Tuliskan bantuan hukum lain yang Anda perlukan.",
+            "placeholder": "Contoh: Audit kontrak pihak ketiga, draf SOP kepatuhan, dsb.",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Wajib diisi saat memilih 'Lainnya...'."
           }
         ]
       }

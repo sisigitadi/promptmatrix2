@@ -15,10 +15,22 @@
       "label": "Tugas Perencanaan Startup",
       "type": "select",
       "options": [
-        "Generator Ide Bisnis",
-        "Penyusun Model Bisnis Kanvas",
-        "Analisis Persaingan dan Pasar",
-        "Pembuat Draf Konten Pitch Deck",
+        {
+          "label": "Business Idea Generator (Generator Ide Bisnis)",
+          "value": "Generator Ide Bisnis"
+        },
+        {
+          "label": "Business Model Canvas Builder (Penyusun Model Bisnis Kanvas)",
+          "value": "Penyusun Model Bisnis Kanvas"
+        },
+        {
+          "label": "Market & Competitor Analysis (Analisis Persaingan dan Pasar)",
+          "value": "Analisis Persaingan dan Pasar"
+        },
+        {
+          "label": "Pitch Deck Content Draft (Pembuat Draf Konten Pitch Deck)",
+          "value": "Pembuat Draf Konten Pitch Deck"
+        },
         "Lainnya..."
       ],
       "default": "Generator Ide Bisnis",
@@ -91,6 +103,20 @@
             "type": "textarea",
             "placeholder": "Masalah: Mahasiswa sulit menemukan mentor yang sesuai. Solusi: Aplikasi kami menggunakan AI untuk mencocokkan mereka secara instan.",
             "info": "Jelaskan masalah yang ada dan bagaimana startup Anda menyelesaikannya."
+          }
+        ],
+        "Lainnya...": [
+          {
+            "name": "custom_TUGAS_PERENCANAAN_STARTUP",
+            "label": "Sebutkan Tugas Perencanaan Startup Lainnya",
+            "type": "text",
+            "description": "Tuliskan tugas perencanaan lain yang ingin Anda tangani.",
+            "placeholder": "Contoh: Rencana ekspansi internasional, audit produk, dsb.",
+            "optional": false,
+            "validation": {
+              "min_length": 3
+            },
+            "info": "Kolom ini muncul ketika Anda memilih 'Lainnya...' dan wajib diisi."
           }
         ]
       }

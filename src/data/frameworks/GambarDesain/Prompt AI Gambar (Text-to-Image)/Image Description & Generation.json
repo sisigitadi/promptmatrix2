@@ -19,11 +19,11 @@
       "optional": false,
       "options": [
         {
-          "label": "Deskripsikan Gambar",
+          "label": "Image Description (Deskripsikan Gambar)",
           "value": "deskripsikan_gambar"
         },
         {
-          "label": "Hasilkan Gambar",
+          "label": "Image Generation (Hasilkan Gambar)",
           "value": "hasilkan_gambar"
         },
         "Lainnya..."
@@ -130,7 +130,21 @@
             "info": "Rasio aspek menentukan orientasi dan proporsi gambar."
           }
         ]
-      }
+      },
+      "Lainnya...": [
+        {
+          "name": "custom_mode_operasi",
+          "label": "Sebutkan Mode Operasi Lainnya",
+          "type": "text",
+          "description": "Tuliskan mode operasi lain jika tidak ada di daftar.",
+          "placeholder": "Contoh: Variasi gaya multi-model, konversi sketsa ke gambar.",
+          "optional": false,
+          "validation": {
+            "min_length": 3
+          },
+          "info": "Kolom ini wajib diisi saat memilih 'Lainnya...'."
+        }
+      ]
     }
   },
   "toolType": "image-generation",
