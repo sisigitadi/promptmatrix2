@@ -20,333 +20,336 @@
       "validation": {
         "regex": "^(?!Pilih Jenis Rencana...).*$"
       }
+    },
+    {
+      "name": "dietaryPreferences",
+      "label": "Preferensi Diet",
+      "type": "select",
+      "options": [
+        "Omnivore",
+        "Vegetarian",
+        "Vegan",
+        "Keto",
+        "Paleo",
+        "Lainnya..."
+      ],
+      "info": "Pilih jenis diet yang Anda ikuti.",
+      "optional": true
+    },
+    {
+      "name": "allergies",
+      "label": "Alergi atau Pantangan",
+      "type": "text",
+      "placeholder": "e.g., 'Kacang, gluten, susu'",
+      "info": "Sebutkan makanan yang harus dihindari.",
+      "optional": true,
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "healthGoal",
+      "label": "Tujuan Kesehatan",
+      "type": "text",
+      "placeholder": "e.g., 'Menurunkan berat badan, menambah massa otot'",
+      "info": "Apa tujuan utama dari rencana makan ini?",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "numberOfMeals",
+      "label": "Jumlah Makanan per Hari",
+      "type": "number",
+      "placeholder": "e.g., 3",
+      "info": "Berapa kali Anda makan dalam sehari?",
+      "validation": {
+        "min_value": 1,
+        "max_value": 6
+      },
+      "optional": true
+    },
+    {
+      "name": "cookTime",
+      "label": "Waktu Memasak Maksimal (menit)",
+      "type": "number",
+      "placeholder": "e.g., 30",
+      "info": "Berapa lama waktu yang Anda miliki untuk memasak?",
+      "validation": {
+        "min_value": 5,
+        "max_value": 180
+      },
+      "optional": true
+    },
+    {
+      "name": "fitnessLevel",
+      "label": "Tingkat Kebugaran",
+      "type": "select",
+      "options": [
+        "Pemula",
+        "Menengah",
+        "Mahir",
+        "Lainnya..."
+      ],
+      "info": "Pilih tingkat kebugaran Anda saat ini.",
+      "optional": true
+    },
+    {
+      "name": "workoutFrequency",
+      "label": "Frekuensi Olahraga (hari/minggu)",
+      "type": "number",
+      "placeholder": "e.g., 3",
+      "info": "Berapa hari dalam seminggu Anda bisa berolahraga?",
+      "validation": {
+        "min_value": 1,
+        "max_value": 7
+      },
+      "optional": true
+    },
+    {
+      "name": "workoutDuration",
+      "label": "Durasi Olahraga (menit)",
+      "type": "number",
+      "placeholder": "e.g., 45",
+      "info": "Berapa lama waktu yang Anda miliki untuk setiap sesi?",
+      "validation": {
+        "min_value": 15,
+        "max_value": 180
+      },
+      "optional": true
+    },
+    {
+      "name": "workoutType",
+      "label": "Jenis Olahraga yang Disukai",
+      "type": "text",
+      "placeholder": "e.g., 'Angkat beban, lari, yoga'",
+      "info": "Sebutkan jenis olahraga yang Anda nikmati.",
+      "validation": {
+        "min_length": 3
+      },
+      "optional": true
+    },
+    {
+      "name": "equipment",
+      "label": "Peralatan yang Tersedia",
+      "type": "text",
+      "placeholder": "e.g., 'Dumbbell, matras yoga, tidak ada alat'",
+      "info": "Sebutkan peralatan yang Anda miliki.",
+      "optional": true,
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "mainProject",
+      "label": "Proyek atau Tujuan Utama",
+      "type": "text",
+      "placeholder": "e.g., 'Menyelesaikan laporan kuartalan'",
+      "info": "Apa tujuan besar yang ingin Anda capai?",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "deadline",
+      "label": "Tenggat Waktu",
+      "type": "text",
+      "placeholder": "e.g., 'Jumat ini'",
+      "info": "Kapan proyek ini harus selesai?",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "priorityLevel",
+      "label": "Tingkat Prioritas",
+      "type": "select",
+      "options": [
+        "Tinggi",
+        "Sedang",
+        "Rendah",
+        "Lainnya..."
+      ],
+      "info": "Seberapa penting proyek ini?",
+      "optional": true
+    },
+    {
+      "name": "subtasks",
+      "label": "Tugas-tugas Kecil (jika sudah ada)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Kumpulkan data, buat draf, revisi'",
+      "info": "Sebutkan langkah-langkah yang sudah Anda ketahui.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "cleaningFrequency",
+      "label": "Frekuensi Kebersihan",
+      "type": "select",
+      "options": [
+        "Harian",
+        "Mingguan",
+        "Bulanan",
+        "Musiman",
+        "Lainnya..."
+      ],
+      "info": "Seberapa sering Anda ingin membersihkan?",
+      "optional": true
+    },
+    {
+      "name": "areasToClean",
+      "label": "Area yang Akan Dibersihkan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Dapur, Kamar Mandi, Ruang Tamu, Kamar Tidur'",
+      "info": "Sebutkan area spesifik di rumah atau kantor yang perlu dibersihkan.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "specificTasks",
+      "label": "Tugas Spesifik per Area (Opsional)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Dapur: cuci piring, lap meja, buang sampah. Kamar Mandi: sikat toilet, bersihkan wastafel.'",
+      "info": "Detail tugas kebersihan untuk setiap area.",
+      "optional": true,
+      "validation": {
+        "min_length": 10
+      }
+    },
+    {
+      "name": "timePerTask",
+      "label": "Estimasi Waktu per Tugas (menit)",
+      "type": "number",
+      "placeholder": "e.g., 15",
+      "info": "Perkiraan waktu yang dibutuhkan untuk setiap tugas kebersihan.",
+      "optional": true,
+      "validation": {
+        "min_value": 1,
+        "max_value": 240
+      }
+    },
+    {
+      "name": "developmentArea",
+      "label": "Area Pengembangan",
+      "type": "text",
+      "placeholder": "e.g., 'Keterampilan Komunikasi, Manajemen Waktu, Belajar Bahasa Baru'",
+      "info": "Aspek diri yang ingin Anda tingkatkan.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "currentLevel",
+      "label": "Tingkat Saat Ini",
+      "type": "text",
+      "placeholder": "e.g., 'Pemula, Cukup Baik, Perlu Peningkatan Signifikan'",
+      "info": "Evaluasi diri Anda saat ini di area tersebut.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "desiredOutcome",
+      "label": "Hasil yang Diinginkan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Mampu presentasi dengan percaya diri di depan 50 orang. Menguasai percakapan dasar bahasa Mandarin.'",
+      "info": "Apa yang ingin Anda capai secara spesifik dan terukur?",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "actionSteps",
+      "label": "Langkah-Langkah Tindakan",
+      "type": "textarea",
+      "placeholder": "e.g., 'Minggu 1: Ikuti kursus online. Minggu 2: Latihan berbicara dengan native speaker.'",
+      "info": "Langkah-langkah konkret yang akan Anda ambil untuk mencapai tujuan.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "resources",
+      "label": "Sumber Daya yang Dibutuhkan (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Buku, kursus online, mentor'",
+      "info": "Daftar sumber daya yang mungkin diperlukan.",
+      "optional": true,
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "habitName",
+      "label": "Nama Kebiasaan",
+      "type": "text",
+      "placeholder": "e.g., 'Minum 8 gelas air', 'Membaca 30 menit'",
+      "info": "Kebiasaan yang ingin Anda bangun atau lacak.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "frequency",
+      "label": "Frekuensi",
+      "type": "select",
+      "options": [
+        "Harian",
+        "Mingguan",
+        "Beberapa Kali Seminggu",
+        "Lainnya..."
+      ],
+      "info": "Seberapa sering kebiasaan ini akan dilakukan?",
+      "optional": true
+    },
+    {
+      "name": "trigger",
+      "label": "Pemicu (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Setelah bangun tidur', 'Sebelum makan malam'",
+      "info": "Apa yang akan memicu Anda untuk melakukan kebiasaan ini?",
+      "optional": true,
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "reward",
+      "label": "Hadiah (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., 'Menonton episode serial favorit', 'Makan camilan sehat'",
+      "info": "Hadiah kecil untuk memotivasi diri setelah berhasil.",
+      "optional": true,
+      "validation": {
+        "min_length": 3
+      }
+    },
+    {
+      "name": "trackingMethod",
+      "label": "Metode Pelacakan",
+      "type": "select",
+      "options": [
+        "Checklist Harian",
+        "Aplikasi Mobile",
+        "Jurnal",
+        "Lainnya..."
+      ],
+      "info": "Bagaimana Anda akan melacak kemajuan kebiasaan ini?",
+      "optional": true
     }
   ],
-  "dynamicSubcomponents": {
-    "trigger": "planType",
-    "options": {
-      "Rencana Menu Makan": [
-        {
-          "name": "dietaryPreferences",
-          "label": "Preferensi Diet",
-          "type": "select",
-          "options": [
-            "Omnivore",
-            "Vegetarian",
-            "Vegan",
-            "Keto",
-            "Paleo",
-            "Lainnya..."
-          ],
-          "info": "Pilih jenis diet yang Anda ikuti."
-        },
-        {
-          "name": "allergies",
-          "label": "Alergi atau Pantangan",
-          "type": "text",
-          "placeholder": "e.g., 'Kacang, gluten, susu'",
-          "info": "Sebutkan makanan yang harus dihindari.",
-          "optional": true,
-          "validation": {
-            "min_length": 3
-          }
-        },
-        {
-          "name": "healthGoal",
-          "label": "Tujuan Kesehatan",
-          "type": "text",
-          "placeholder": "e.g., 'Menurunkan berat badan, menambah massa otot'",
-          "info": "Apa tujuan utama dari rencana makan ini?",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "numberOfMeals",
-          "label": "Jumlah Makanan per Hari",
-          "type": "number",
-          "placeholder": "e.g., 3",
-          "info": "Berapa kali Anda makan dalam sehari?",
-          "validation": {
-            "min_value": 1,
-            "max_value": 6
-          }
-        },
-        {
-          "name": "cookTime",
-          "label": "Waktu Memasak Maksimal (menit)",
-          "type": "number",
-          "placeholder": "e.g., 30",
-          "info": "Berapa lama waktu yang Anda miliki untuk memasak?",
-          "validation": {
-            "min_value": 5,
-            "max_value": 180
-          }
-        }
-      ],
-      "Jadwal Olahraga": [
-        {
-          "name": "fitnessLevel",
-          "label": "Tingkat Kebugaran",
-          "type": "select",
-          "options": [
-            "Pemula",
-            "Menengah",
-            "Mahir",
-            "Lainnya..."
-          ],
-          "info": "Pilih tingkat kebugaran Anda saat ini."
-        },
-        {
-          "name": "workoutFrequency",
-          "label": "Frekuensi Olahraga (hari/minggu)",
-          "type": "number",
-          "placeholder": "e.g., 3",
-          "info": "Berapa hari dalam seminggu Anda bisa berolahraga?",
-          "validation": {
-            "min_value": 1,
-            "max_value": 7
-          }
-        },
-        {
-          "name": "workoutDuration",
-          "label": "Durasi Olahraga (menit)",
-          "type": "number",
-          "placeholder": "e.g., 45",
-          "info": "Berapa lama waktu yang Anda miliki untuk setiap sesi?",
-          "validation": {
-            "min_value": 15,
-            "max_value": 180
-          }
-        },
-        {
-          "name": "workoutType",
-          "label": "Jenis Olahraga yang Disukai",
-          "type": "text",
-          "placeholder": "e.g., 'Angkat beban, lari, yoga'",
-          "info": "Sebutkan jenis olahraga yang Anda nikmati.",
-          "validation": {
-            "min_length": 3
-          }
-        },
-        {
-          "name": "equipment",
-          "label": "Peralatan yang Tersedia",
-          "type": "text",
-          "placeholder": "e.g., 'Dumbbell, matras yoga, tidak ada alat'",
-          "info": "Sebutkan peralatan yang Anda miliki.",
-          "optional": true,
-          "validation": {
-            "min_length": 3
-          }
-        }
-      ],
-      "Daftar Tugas": [
-        {
-          "name": "mainProject",
-          "label": "Proyek atau Tujuan Utama",
-          "type": "text",
-          "placeholder": "e.g., 'Menyelesaikan laporan kuartalan'",
-          "info": "Apa tujuan besar yang ingin Anda capai?",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "deadline",
-          "label": "Tenggat Waktu",
-          "type": "text",
-          "placeholder": "e.g., 'Jumat ini'",
-          "info": "Kapan proyek ini harus selesai?",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "priorityLevel",
-          "label": "Tingkat Prioritas",
-          "type": "select",
-          "options": [
-            "Tinggi",
-            "Sedang",
-            "Rendah",
-            "Lainnya..."
-          ],
-          "info": "Seberapa penting proyek ini?"
-        },
-        {
-          "name": "subtasks",
-          "label": "Tugas-tugas Kecil (jika sudah ada)",
-          "type": "textarea",
-          "placeholder": "e.g., 'Kumpulkan data, buat draf, revisi'",
-          "info": "Sebutkan langkah-langkah yang sudah Anda ketahui.",
-          "optional": true,
-          "validation": {
-            "min_length": 10
-          }
-        }
-      ],
-      "Jadwal Kebersihan": [
-        {
-          "name": "cleaningFrequency",
-          "label": "Frekuensi Kebersihan",
-          "type": "select",
-          "options": [
-            "Harian",
-            "Mingguan",
-            "Bulanan",
-            "Musiman",
-            "Lainnya..."
-          ],
-          "info": "Seberapa sering Anda ingin membersihkan?"
-        },
-        {
-          "name": "areasToClean",
-          "label": "Area yang Akan Dibersihkan",
-          "type": "textarea",
-          "placeholder": "e.g., 'Dapur, Kamar Mandi, Ruang Tamu, Kamar Tidur'",
-          "info": "Sebutkan area spesifik di rumah atau kantor yang perlu dibersihkan.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "specificTasks",
-          "label": "Tugas Spesifik per Area (Opsional)",
-          "type": "textarea",
-          "placeholder": "e.g., 'Dapur: cuci piring, lap meja, buang sampah. Kamar Mandi: sikat toilet, bersihkan wastafel.'",
-          "info": "Detail tugas kebersihan untuk setiap area.",
-          "optional": true,
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "timePerTask",
-          "label": "Estimasi Waktu per Tugas (menit)",
-          "type": "number",
-          "placeholder": "e.g., 15",
-          "info": "Perkiraan waktu yang dibutuhkan untuk setiap tugas kebersihan.",
-          "optional": true,
-          "validation": {
-            "min_value": 1,
-            "max_value": 240
-          }
-        }
-      ],
-      "Rencana Pengembangan Diri": [
-        {
-          "name": "developmentArea",
-          "label": "Area Pengembangan",
-          "type": "text",
-          "placeholder": "e.g., 'Keterampilan Komunikasi, Manajemen Waktu, Belajar Bahasa Baru'",
-          "info": "Aspek diri yang ingin Anda tingkatkan.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "currentLevel",
-          "label": "Tingkat Saat Ini",
-          "type": "text",
-          "placeholder": "e.g., 'Pemula, Cukup Baik, Perlu Peningkatan Signifikan'",
-          "info": "Evaluasi diri Anda saat ini di area tersebut.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "desiredOutcome",
-          "label": "Hasil yang Diinginkan",
-          "type": "textarea",
-          "placeholder": "e.g., 'Mampu presentasi dengan percaya diri di depan 50 orang. Menguasai percakapan dasar bahasa Mandarin.'",
-          "info": "Apa yang ingin Anda capai secara spesifik dan terukur?",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "actionSteps",
-          "label": "Langkah-Langkah Tindakan",
-          "type": "textarea",
-          "placeholder": "e.g., 'Minggu 1: Ikuti kursus online. Minggu 2: Latihan berbicara dengan native speaker.'",
-          "info": "Langkah-langkah konkret yang akan Anda ambil untuk mencapai tujuan.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "resources",
-          "label": "Sumber Daya yang Dibutuhkan (Opsional)",
-          "type": "text",
-          "placeholder": "e.g., 'Buku, kursus online, mentor'",
-          "info": "Daftar sumber daya yang mungkin diperlukan.",
-          "optional": true,
-          "validation": {
-            "min_length": 3
-          }
-        }
-      ],
-      "Pelacak Kebiasaan": [
-        {
-          "name": "habitName",
-          "label": "Nama Kebiasaan",
-          "type": "text",
-          "placeholder": "e.g., 'Minum 8 gelas air', 'Membaca 30 menit'",
-          "info": "Kebiasaan yang ingin Anda bangun atau lacak.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "frequency",
-          "label": "Frekuensi",
-          "type": "select",
-          "options": [
-            "Harian",
-            "Mingguan",
-            "Beberapa Kali Seminggu",
-            "Lainnya..."
-          ],
-          "info": "Seberapa sering kebiasaan ini akan dilakukan?"
-        },
-        {
-          "name": "trigger",
-          "label": "Pemicu (Opsional)",
-          "type": "text",
-          "placeholder": "e.g., 'Setelah bangun tidur', 'Sebelum makan malam'",
-          "info": "Apa yang akan memicu Anda untuk melakukan kebiasaan ini?",
-          "optional": true,
-          "validation": {
-            "min_length": 3
-          }
-        },
-        {
-          "name": "reward",
-          "label": "Hadiah (Opsional)",
-          "type": "text",
-          "placeholder": "e.g., 'Menonton episode serial favorit', 'Makan camilan sehat'",
-          "info": "Hadiah kecil untuk memotivasi diri setelah berhasil.",
-          "optional": true,
-          "validation": {
-            "min_length": 3
-          }
-        },
-        {
-          "name": "trackingMethod",
-          "label": "Metode Pelacakan",
-          "type": "select",
-          "options": [
-            "Checklist Harian",
-            "Aplikasi Mobile",
-            "Jurnal",
-            "Lainnya..."
-          ],
-          "info": "Bagaimana Anda akan melacak kemajuan kebiasaan ini?"
-        }
-      ]
-    }
-  },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu memberikan nasihat yang positif dan memotivasi. Untuk rencana terkait kesehatan (diet & olahraga), AI wajib menyertakan disclaimer: 'Saya adalah asisten AI dan bukan profesional medis. Selalu konsultasikan dengan dokter atau ahli gizi/pelatih bersertifikat sebelum memulai program kesehatan baru.' Jika pengguna memberikan batasan yang tidak realistis, AI harus memberikan saran yang lebih masuk akal dengan cara yang suportif.",
   "kategori": [
     "Prompt Proyek",

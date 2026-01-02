@@ -15,174 +15,175 @@
         "Lainnya..."
       ],
       "info": "Pilih jenis dokumen perencanaan yang Anda butuhkan."
+    },
+    {
+      "name": "projectType",
+      "label": "Jenis Proyek",
+      "type": "select",
+      "options": [
+        "Website",
+        "Aplikasi Mobile",
+        "Aplikasi Web",
+        "Lainnya..."
+      ],
+      "info": "Pilih jenis proyek yang akan dirancang.",
+      "optional": true
+    },
+    {
+      "name": "mainGoal",
+      "label": "Tujuan Utama Proyek",
+      "type": "text",
+      "placeholder": "e.g., 'Meningkatkan penjualan online'",
+      "info": "Apa tujuan utama dari proyek ini?",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "mainPages",
+      "label": "Halaman/Fitur Utama",
+      "type": "textarea",
+      "placeholder": "e.g., 'Beranda, Produk, Tentang Kami, Kontak'",
+      "info": "Sebutkan halaman atau fitur utama yang harus ada.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "pageName",
+      "label": "Nama Halaman/Slide",
+      "type": "text",
+      "placeholder": "e.g., 'Halaman Beranda'",
+      "info": "Halaman atau slide spesifik yang akan dirancang.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "sections",
+      "label": "Bagian-bagian Halaman/Slide",
+      "type": "textarea",
+      "placeholder": "e.g., 'Header, Hero, Testimoni, Footer'",
+      "info": "Sebutkan bagian-bagian utama dari atas ke bawah.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "keyInfo",
+      "label": "Informasi Kunci per Bagian",
+      "type": "textarea",
+      "placeholder": "e.g., 'Hero: Judul yang menarik, gambar produk. Testimoni: 3 kutipan dari klien.'",
+      "info": "Jelaskan konten utama untuk setiap bagian.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "appName",
+      "label": "Nama Aplikasi",
+      "type": "text",
+      "placeholder": "e.g., 'Aplikasi Resep MasakYuk'",
+      "info": "Nama aplikasi yang akan dibuat.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "coreFeatures",
+      "label": "Fitur Inti MVP",
+      "type": "textarea",
+      "placeholder": "e.g., 'Pencarian resep, simpan resep, daftar belanja'",
+      "info": "Sebutkan 3-5 fitur paling penting untuk versi pertama.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "dataModels",
+      "label": "Model Data Utama",
+      "type": "text",
+      "placeholder": "e.g., 'User, Recipe, Ingredient'",
+      "info": "Sebutkan entitas data utama dalam sistem.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "productName",
+      "label": "Nama Produk/Aplikasi",
+      "type": "text",
+      "placeholder": "e.g., 'Aplikasi Meditasi Tenang'",
+      "info": "Nama produk atau aplikasi yang akan diluncurkan.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "launchDate",
+      "label": "Target Tanggal Peluncuran",
+      "type": "text",
+      "placeholder": "e.g., '1 September 2025'",
+      "info": "Tanggal yang direncanakan untuk peluncuran.",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "targetAudience",
+      "label": "Target Audiens",
+      "type": "text",
+      "placeholder": "e.g., 'Profesional muda yang stres, mahasiswa'",
+      "info": "Siapa target utama peluncuran ini?",
+      "validation": {
+        "min_length": 5
+      },
+      "optional": true
+    },
+    {
+      "name": "marketingChannels",
+      "label": "Kanal Pemasaran",
+      "type": "textarea",
+      "placeholder": "e.g., 'Media Sosial (Instagram, TikTok), Influencer Marketing, Iklan Google, PR'",
+      "info": "Saluran yang akan digunakan untuk mempromosikan peluncuran.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "keyMessages",
+      "label": "Pesan Kunci Peluncuran",
+      "type": "textarea",
+      "placeholder": "e.g., 'Temukan ketenangan dalam genggaman Anda. Kurangi stres dengan meditasi 5 menit sehari.'",
+      "info": "Pesan utama yang ingin disampaikan kepada audiens.",
+      "validation": {
+        "min_length": 10
+      },
+      "optional": true
+    },
+    {
+      "name": "successMetrics",
+      "label": "Metrik Keberhasilan (Opsional)",
+      "type": "text",
+      "placeholder": "e.g., '10.000 unduhan dalam bulan pertama, 500 ulasan positif'",
+      "info": "Bagaimana Anda akan mengukur keberhasilan peluncuran?",
+      "optional": true,
+      "validation": {
+        "min_length": 5
+      }
     }
   ],
-  "dynamicSubcomponents": {
-    "trigger": "documentType",
-    "options": {
-      "Struktur Website/Aplikasi": [
-        {
-          "name": "projectType",
-          "label": "Jenis Proyek",
-          "type": "select",
-          "options": [
-            "Website",
-            "Aplikasi Mobile",
-            "Aplikasi Web",
-            "Lainnya..."
-          ],
-          "info": "Pilih jenis proyek yang akan dirancang."
-        },
-        {
-          "name": "mainGoal",
-          "label": "Tujuan Utama Proyek",
-          "type": "text",
-          "placeholder": "e.g., 'Meningkatkan penjualan online'",
-          "info": "Apa tujuan utama dari proyek ini?",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "mainPages",
-          "label": "Halaman/Fitur Utama",
-          "type": "textarea",
-          "placeholder": "e.g., 'Beranda, Produk, Tentang Kami, Kontak'",
-          "info": "Sebutkan halaman atau fitur utama yang harus ada.",
-          "validation": {
-            "min_length": 10
-          }
-        }
-      ],
-      "Desain Halaman/Slide": [
-        {
-          "name": "pageName",
-          "label": "Nama Halaman/Slide",
-          "type": "text",
-          "placeholder": "e.g., 'Halaman Beranda'",
-          "info": "Halaman atau slide spesifik yang akan dirancang.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "sections",
-          "label": "Bagian-bagian Halaman/Slide",
-          "type": "textarea",
-          "placeholder": "e.g., 'Header, Hero, Testimoni, Footer'",
-          "info": "Sebutkan bagian-bagian utama dari atas ke bawah.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "keyInfo",
-          "label": "Informasi Kunci per Bagian",
-          "type": "textarea",
-          "placeholder": "e.g., 'Hero: Judul yang menarik, gambar produk. Testimoni: 3 kutipan dari klien.'",
-          "info": "Jelaskan konten utama untuk setiap bagian.",
-          "validation": {
-            "min_length": 10
-          }
-        }
-      ],
-      "Konsep MVP/Database": [
-        {
-          "name": "appName",
-          "label": "Nama Aplikasi",
-          "type": "text",
-          "placeholder": "e.g., 'Aplikasi Resep MasakYuk'",
-          "info": "Nama aplikasi yang akan dibuat.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "coreFeatures",
-          "label": "Fitur Inti MVP",
-          "type": "textarea",
-          "placeholder": "e.g., 'Pencarian resep, simpan resep, daftar belanja'",
-          "info": "Sebutkan 3-5 fitur paling penting untuk versi pertama.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "dataModels",
-          "label": "Model Data Utama",
-          "type": "text",
-          "placeholder": "e.g., 'User, Recipe, Ingredient'",
-          "info": "Sebutkan entitas data utama dalam sistem.",
-          "validation": {
-            "min_length": 5
-          }
-        }
-      ],
-      "Strategi Peluncuran": [
-        {
-          "name": "productName",
-          "label": "Nama Produk/Aplikasi",
-          "type": "text",
-          "placeholder": "e.g., 'Aplikasi Meditasi Tenang'",
-          "info": "Nama produk atau aplikasi yang akan diluncurkan.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "launchDate",
-          "label": "Target Tanggal Peluncuran",
-          "type": "text",
-          "placeholder": "e.g., '1 September 2025'",
-          "info": "Tanggal yang direncanakan untuk peluncuran.",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "targetAudience",
-          "label": "Target Audiens",
-          "type": "text",
-          "placeholder": "e.g., 'Profesional muda yang stres, mahasiswa'",
-          "info": "Siapa target utama peluncuran ini?",
-          "validation": {
-            "min_length": 5
-          }
-        },
-        {
-          "name": "marketingChannels",
-          "label": "Kanal Pemasaran",
-          "type": "textarea",
-          "placeholder": "e.g., 'Media Sosial (Instagram, TikTok), Influencer Marketing, Iklan Google, PR'",
-          "info": "Saluran yang akan digunakan untuk mempromosikan peluncuran.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "keyMessages",
-          "label": "Pesan Kunci Peluncuran",
-          "type": "textarea",
-          "placeholder": "e.g., 'Temukan ketenangan dalam genggaman Anda. Kurangi stres dengan meditasi 5 menit sehari.'",
-          "info": "Pesan utama yang ingin disampaikan kepada audiens.",
-          "validation": {
-            "min_length": 10
-          }
-        },
-        {
-          "name": "successMetrics",
-          "label": "Metrik Keberhasilan (Opsional)",
-          "type": "text",
-          "placeholder": "e.g., '10.000 unduhan dalam bulan pertama, 500 ulasan positif'",
-          "info": "Bagaimana Anda akan mengukur keberhasilan peluncuran?",
-          "optional": true,
-          "validation": {
-            "min_length": 5
-          }
-        }
-      ]
-    }
-  },
   "konteks_tambahan_instruksi_khusus": "AI harus selalu menekankan bahwa output ini adalah untuk tujuan perencanaan dan konseptual, bukan kode atau desain final. Untuk database, gunakan format yang mudah dibaca. Untuk user flow, gunakan penomoran dan panah (->) untuk menunjukkan alur. Selalu gunakan bahasa yang jelas dan hindari jargon teknis yang berlebihan.",
   "kategori": [
     "Prompt Proyek",

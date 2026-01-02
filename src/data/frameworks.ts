@@ -9424,341 +9424,350 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               regex: "^(?!Pilih Jenis Dokumen...).*$",
             },
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "documentType",
-          options: {
-            "Surat Lamaran Kerja": [
-              {
-                name: "jobTitle",
-                label: "Posisi yang Dilamar",
-                type: "text",
-                placeholder: "e.g., 'Digital Marketing Specialist'",
-                info: "Nama jabatan persis seperti yang tertulis di lowongan.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "companyName",
-                label: "Nama Perusahaan",
-                type: "text",
-                placeholder: "e.g., 'PT Inovasi Digital'",
-                info: "Perusahaan yang Anda tuju.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "keyRequirements",
-                label: "Kualifikasi Utama dari Lowongan",
-                type: "textarea",
-                placeholder:
-                  "Salin-tempel poin-poin kualifikasi utama dari iklan lowongan kerja di sini.",
-                info: "AI akan menggunakan ini untuk menyesuaikan surat Anda.",
-                validation: {
-                  min_length: 20,
-                },
-              },
-              {
-                name: "mySkills",
-                label: "Pengalaman & Keterampilan Relevan Saya",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Saya telah mengelola kampanye SEO untuk klien e-commerce selama 4 tahun.'",
-                info: "Hubungkan pengalaman Anda secara langsung dengan apa yang dicari perusahaan.",
-                validation: {
-                  min_length: 20,
-                },
-              },
-            ],
-            "Laporan Progres Proyek": [
-              {
-                name: "projectName",
-                label: "Nama Proyek",
-                type: "text",
-                placeholder: "e.g., 'Pengembangan Aplikasi Mobile'",
-                info: "Proyek yang akan dilaporkan.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "timePeriod",
-                label: "Periode Laporan",
-                type: "text",
-                placeholder: "e.g., '1 - 7 Juli 2025'",
-                info: "Cakupan waktu laporan.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "completedTasks",
-                label: "Tugas yang Selesai",
-                type: "textarea",
-                placeholder: "e.g., 'Desain UI, Pengembangan API Login'",
-                info: "Sebutkan tugas-tugas yang telah selesai pada periode ini.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "ongoingTasks",
-                label: "Tugas yang Sedang Berjalan",
-                type: "textarea",
-                placeholder: "e.g., 'Pengujian fitur X, Integrasi pembayaran'",
-                info: "Sebutkan tugas-tugas yang masih dalam proses.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "blockers",
-                label: "Hambatan (Blockers)",
-                type: "textarea",
-                placeholder: "e.g., 'Menunggu akses ke server database'",
-                info: "Sebutkan kendala yang menghambat kemajuan.",
-                optional: true,
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
-            "Email Profesional": [
-              {
-                name: "recipient",
-                label: "Penerima Email",
-                type: "text",
-                placeholder: "e.g., 'Manajer Pemasaran, Calon Klien'",
-                info: "Jelaskan siapa penerima dan hubungan Anda.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "subject",
-                label: "Subjek Email",
-                type: "text",
-                placeholder: "e.g., 'Follow-up Rapat Mengenai Proyek X'",
-                info: "Judul email yang jelas dan ringkas.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "keyMessage",
-                label: "Pesan Kunci",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Meminta data penjualan Q3. Mengusulkan jadwal rapat.'",
-                info: "Sebutkan semua poin penting yang harus ada dalam isi email.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "tone",
-                label: "Gaya & Nada",
-                type: "select",
-                options: [
-                  "Sangat Formal",
-                  "Profesional Standar",
-                  "Ramah tapi Jelas",
-                  "Lainnya...",
-                ],
-                info: "Pilih nada yang sesuai untuk email Anda.",
-              },
-            ],
-            "Kontrak Sederhana": [
-              {
-                name: "contractType",
-                label: "Jenis Kontrak",
-                type: "text",
-                placeholder:
-                  "e.g., 'Perjanjian Kerahasiaan (NDA), Kontrak Freelance, Perjanjian Sewa'",
-                info: "Sebutkan jenis kontrak yang ingin Anda buat.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "parties",
-                label: "Pihak-pihak yang Terlibat",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Pihak 1: [Nama Perusahaan/Individu], Pihak 2: [Nama Perusahaan/Individu]'",
-                info: "Sebutkan nama lengkap pihak-pihak yang akan menandatangani kontrak.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "keyTerms",
-                label: "Syarat & Ketentuan Kunci",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Durasi: 1 tahun. Pembayaran: Rp 5.000.000 per bulan. Lingkup Pekerjaan: Pengembangan aplikasi mobile.'",
-                info: "Poin-poin utama yang harus diatur dalam kontrak.",
-                validation: {
-                  min_length: 20,
-                },
-              },
-              {
-                name: "governingLaw",
-                label: "Hukum yang Mengatur (Opsional)",
-                type: "text",
-                placeholder: "e.g., 'Hukum Republik Indonesia'",
-                info: "Yurisdiksi hukum yang berlaku untuk kontrak.",
-                optional: true,
-                validation: {
-                  min_length: 5,
-                },
-              },
-            ],
-            "Notulen Rapat": [
-              {
-                name: "meetingTitle",
-                label: "Judul Rapat",
-                type: "text",
-                placeholder: "e.g., 'Rapat Koordinasi Proyek Q3'",
-                info: "Judul resmi rapat.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "dateTime",
-                label: "Tanggal & Waktu Rapat",
-                type: "text",
-                placeholder: "e.g., '10 Juli 2025, 10:00 - 11:00 WIB'",
-                info: "Kapan rapat dilaksanakan.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "attendees",
-                label: "Daftar Peserta",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Andi (Ketua), Budi (Sekretaris), Citra, Doni'",
-                info: "Sebutkan semua yang hadir dalam rapat.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "discussionPoints",
-                label: "Poin Diskusi Utama",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Pembahasan anggaran, Progres pengembangan fitur X, Tantangan tim.'",
-                info: "Topik-topik utama yang dibahas.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "decisionsMade",
-                label: "Keputusan yang Diambil",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Anggaran disetujui. Fitur X ditunda 1 minggu.'",
-                info: "Keputusan penting yang dihasilkan dari rapat.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "actionItems",
-                label: "Daftar Tindakan (Action Items)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Andi: Siapkan laporan keuangan (Deadline: 15 Juli). Citra: Koordinasi dengan tim desain (Deadline: 12 Juli).'",
-                info: "Tugas yang harus dilakukan, penanggung jawab, dan tenggat waktu.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
-            "Faktur/Invoice": [
-              {
-                name: "invoiceNumber",
-                label: "Nomor Faktur",
-                type: "text",
-                placeholder: "e.g., 'INV-2025-001'",
-                info: "Nomor unik untuk faktur ini.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "issueDate",
-                label: "Tanggal Terbit",
-                type: "text",
-                placeholder: "e.g., '11 Juli 2025'",
-                info: "Tanggal faktur dibuat.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "dueDate",
-                label: "Tanggal Jatuh Tempo",
-                type: "text",
-                placeholder: "e.g., '25 Juli 2025'",
-                info: "Batas waktu pembayaran.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "billTo",
-                label: "Ditagihkan Kepada (Nama & Alamat)",
-                type: "textarea",
-                placeholder: "e.g., 'PT Maju Jaya\nJl. Contoh No. 10, Jakarta'",
-                info: "Informasi pelanggan yang akan ditagih.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "items",
-                label: "Daftar Item/Layanan (Nama, Jumlah, Harga Satuan)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Jasa Desain Logo, 1, Rp 5.000.000\nRevisi Desain, 2, Rp 500.000'",
-                info: "Detail barang atau jasa yang ditagihkan.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "totalAmount",
-                label: "Jumlah Total",
-                type: "number",
-                placeholder: "e.g., 6000000",
-                info: "Total biaya keseluruhan.",
-                validation: {
-                  min_value: 0,
-                },
-              },
-              {
-                name: "paymentInstructions",
-                label: "Instruksi Pembayaran (Opsional)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Transfer ke Rekening BCA 1234567890 a.n. PT XYZ. Mohon konfirmasi setelah pembayaran.'",
-                info: "Cara pembayaran yang diinginkan.",
-                optional: true,
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
+          {
+            name: "jobTitle",
+            label: "Posisi yang Dilamar",
+            type: "text",
+            placeholder: "e.g., 'Digital Marketing Specialist'",
+            info: "Nama jabatan persis seperti yang tertulis di lowongan.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
           },
-        },
+          {
+            name: "companyName",
+            label: "Nama Perusahaan",
+            type: "text",
+            placeholder: "e.g., 'PT Inovasi Digital'",
+            info: "Perusahaan yang Anda tuju.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "keyRequirements",
+            label: "Kualifikasi Utama dari Lowongan",
+            type: "textarea",
+            placeholder:
+              "Salin-tempel poin-poin kualifikasi utama dari iklan lowongan kerja di sini.",
+            info: "AI akan menggunakan ini untuk menyesuaikan surat Anda.",
+            validation: {
+              min_length: 20,
+            },
+            optional: true,
+          },
+          {
+            name: "mySkills",
+            label: "Pengalaman & Keterampilan Relevan Saya",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Saya telah mengelola kampanye SEO untuk klien e-commerce selama 4 tahun.'",
+            info: "Hubungkan pengalaman Anda secara langsung dengan apa yang dicari perusahaan.",
+            validation: {
+              min_length: 20,
+            },
+            optional: true,
+          },
+          {
+            name: "projectName",
+            label: "Nama Proyek",
+            type: "text",
+            placeholder: "e.g., 'Pengembangan Aplikasi Mobile'",
+            info: "Proyek yang akan dilaporkan.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "timePeriod",
+            label: "Periode Laporan",
+            type: "text",
+            placeholder: "e.g., '1 - 7 Juli 2025'",
+            info: "Cakupan waktu laporan.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "completedTasks",
+            label: "Tugas yang Selesai",
+            type: "textarea",
+            placeholder: "e.g., 'Desain UI, Pengembangan API Login'",
+            info: "Sebutkan tugas-tugas yang telah selesai pada periode ini.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "ongoingTasks",
+            label: "Tugas yang Sedang Berjalan",
+            type: "textarea",
+            placeholder: "e.g., 'Pengujian fitur X, Integrasi pembayaran'",
+            info: "Sebutkan tugas-tugas yang masih dalam proses.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "blockers",
+            label: "Hambatan (Blockers)",
+            type: "textarea",
+            placeholder: "e.g., 'Menunggu akses ke server database'",
+            info: "Sebutkan kendala yang menghambat kemajuan.",
+            optional: true,
+            validation: {
+              min_length: 10,
+            },
+          },
+          {
+            name: "recipient",
+            label: "Penerima Email",
+            type: "text",
+            placeholder: "e.g., 'Manajer Pemasaran, Calon Klien'",
+            info: "Jelaskan siapa penerima dan hubungan Anda.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "subject",
+            label: "Subjek Email",
+            type: "text",
+            placeholder: "e.g., 'Follow-up Rapat Mengenai Proyek X'",
+            info: "Judul email yang jelas dan ringkas.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "keyMessage",
+            label: "Pesan Kunci",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Meminta data penjualan Q3. Mengusulkan jadwal rapat.'",
+            info: "Sebutkan semua poin penting yang harus ada dalam isi email.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "tone",
+            label: "Gaya & Nada",
+            type: "select",
+            options: [
+              "Sangat Formal",
+              "Profesional Standar",
+              "Ramah tapi Jelas",
+              "Lainnya...",
+            ],
+            info: "Pilih nada yang sesuai untuk email Anda.",
+            optional: true,
+          },
+          {
+            name: "contractType",
+            label: "Jenis Kontrak",
+            type: "text",
+            placeholder:
+              "e.g., 'Perjanjian Kerahasiaan (NDA), Kontrak Freelance, Perjanjian Sewa'",
+            info: "Sebutkan jenis kontrak yang ingin Anda buat.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "parties",
+            label: "Pihak-pihak yang Terlibat",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Pihak 1: [Nama Perusahaan/Individu], Pihak 2: [Nama Perusahaan/Individu]'",
+            info: "Sebutkan nama lengkap pihak-pihak yang akan menandatangani kontrak.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "keyTerms",
+            label: "Syarat & Ketentuan Kunci",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Durasi: 1 tahun. Pembayaran: Rp 5.000.000 per bulan. Lingkup Pekerjaan: Pengembangan aplikasi mobile.'",
+            info: "Poin-poin utama yang harus diatur dalam kontrak.",
+            validation: {
+              min_length: 20,
+            },
+            optional: true,
+          },
+          {
+            name: "governingLaw",
+            label: "Hukum yang Mengatur (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Hukum Republik Indonesia'",
+            info: "Yurisdiksi hukum yang berlaku untuk kontrak.",
+            optional: true,
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "meetingTitle",
+            label: "Judul Rapat",
+            type: "text",
+            placeholder: "e.g., 'Rapat Koordinasi Proyek Q3'",
+            info: "Judul resmi rapat.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "dateTime",
+            label: "Tanggal & Waktu Rapat",
+            type: "text",
+            placeholder: "e.g., '10 Juli 2025, 10:00 - 11:00 WIB'",
+            info: "Kapan rapat dilaksanakan.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "attendees",
+            label: "Daftar Peserta",
+            type: "textarea",
+            placeholder: "e.g., 'Andi (Ketua), Budi (Sekretaris), Citra, Doni'",
+            info: "Sebutkan semua yang hadir dalam rapat.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "discussionPoints",
+            label: "Poin Diskusi Utama",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Pembahasan anggaran, Progres pengembangan fitur X, Tantangan tim.'",
+            info: "Topik-topik utama yang dibahas.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "decisionsMade",
+            label: "Keputusan yang Diambil",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Anggaran disetujui. Fitur X ditunda 1 minggu.'",
+            info: "Keputusan penting yang dihasilkan dari rapat.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "actionItems",
+            label: "Daftar Tindakan (Action Items)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Andi: Siapkan laporan keuangan (Deadline: 15 Juli). Citra: Koordinasi dengan tim desain (Deadline: 12 Juli).'",
+            info: "Tugas yang harus dilakukan, penanggung jawab, dan tenggat waktu.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "invoiceNumber",
+            label: "Nomor Faktur",
+            type: "text",
+            placeholder: "e.g., 'INV-2025-001'",
+            info: "Nomor unik untuk faktur ini.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "issueDate",
+            label: "Tanggal Terbit",
+            type: "text",
+            placeholder: "e.g., '11 Juli 2025'",
+            info: "Tanggal faktur dibuat.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "dueDate",
+            label: "Tanggal Jatuh Tempo",
+            type: "text",
+            placeholder: "e.g., '25 Juli 2025'",
+            info: "Batas waktu pembayaran.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "billTo",
+            label: "Ditagihkan Kepada (Nama & Alamat)",
+            type: "textarea",
+            placeholder: "e.g., 'PT Maju Jaya\nJl. Contoh No. 10, Jakarta'",
+            info: "Informasi pelanggan yang akan ditagih.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "items",
+            label: "Daftar Item/Layanan (Nama, Jumlah, Harga Satuan)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Jasa Desain Logo, 1, Rp 5.000.000\nRevisi Desain, 2, Rp 500.000'",
+            info: "Detail barang atau jasa yang ditagihkan.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "totalAmount",
+            label: "Jumlah Total",
+            type: "number",
+            placeholder: "e.g., 6000000",
+            info: "Total biaya keseluruhan.",
+            validation: {
+              min_value: 0,
+            },
+            optional: true,
+          },
+          {
+            name: "paymentInstructions",
+            label: "Instruksi Pembayaran (Opsional)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Transfer ke Rekening BCA 1234567890 a.n. PT XYZ. Mohon konfirmasi setelah pembayaran.'",
+            info: "Cara pembayaran yang diinginkan.",
+            optional: true,
+            validation: {
+              min_length: 10,
+            },
+          },
+        ],
         konteks_tambahan_instruksi_khusus:
           "AI harus sangat peka terhadap `Gaya & Nada` yang diminta. Untuk dokumen legal seperti kontrak, AI wajib menyertakan disclaimer tebal: '**PENTING: Ini adalah template sederhana dan bukan merupakan nasihat hukum. Selalu konsultasikan dengan profesional hukum untuk kebutuhan spesifik Anda.**' Untuk laporan, prioritaskan kejelasan data. Untuk email, prioritaskan keringkasan dan kejelasan tujuan.",
         kategori: ["Prompt Proyek", "Bisnis & Profesional"],
@@ -9803,160 +9812,150 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               regex: "^(?!Pilih Jenis Aset Branding...).*$",
             },
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "assetType",
-          options: {
-            "Nama Brand": [
-              {
-                name: "projectDescription",
-                label: "Deskripsi Singkat Proyek",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Sebuah kedai kopi yang fokus pada biji lokal dan suasana yang nyaman untuk bekerja.'",
-                info: "Jelaskan apa yang Anda lakukan atau tawarkan.",
-                validation: {
-                  min_length: 20,
-                },
-              },
-              {
-                name: "brandPersonality",
-                label: "Kepribadian & Nilai Brand",
-                type: "text",
-                placeholder: "e.g., 'Modern, minimalis, ramah, tepercaya'",
-                info: "Sebutkan 3-5 kata yang mendeskripsikan brand Anda.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "keywords",
-                label: "Kata Kunci untuk Disertakan",
-                type: "text",
-                placeholder: "e.g., 'Jawa, pagi, tenang'",
-                info: "Kata atau ide yang ingin Anda sertakan dalam nama.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "nameStyle",
-                label: "Gaya Nama",
-                type: "select",
-                options: [
-                  "Modern & Singkat",
-                  "Klasik & Elegan",
-                  "Deskriptif",
-                  "Imajinatif & Unik",
-                  "Lainnya...",
-                ],
-                info: "Pilih gaya nama yang Anda inginkan.",
-              },
-            ],
-            "Slogan/Tagline": [
-              {
-                name: "projectName",
-                label: "Nama Proyek/Bisnis",
-                type: "text",
-                placeholder: "e.g., 'Kopi Pagi'",
-                info: "Nama yang akan diasosiasikan dengan slogan ini.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "coreBenefit",
-                label: "Manfaat Utama",
-                type: "text",
-                placeholder:
-                  "e.g., 'Secangkir semangat untuk memulai hari Anda'",
-                info: "Apa manfaat atau perasaan utama yang ingin disampaikan?",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "targetAudience",
-                label: "Target Audiens",
-                type: "text",
-                placeholder: "e.g., 'Pekerja remote, mahasiswa'",
-                info: "Siapa yang ingin Anda sapa dengan slogan ini?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "sloganStyle",
-                label: "Gaya Slogan",
-                type: "select",
-                options: [
-                  "Singkat & Berkesan",
-                  "Deskriptif & Jelas",
-                  "Cerdas & Berima",
-                  "Lainnya...",
-                ],
-                info: "Pilih gaya slogan yang Anda inginkan.",
-              },
-            ],
-            "Konsep Logo": [
-              {
-                name: "projectName",
-                label: "Nama Proyek/Bisnis",
-                type: "text",
-                placeholder: "e.g., 'Kopi Pagi'",
-                info: "Teks utama yang mungkin ada di logo.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "logoType",
-                label: "Jenis Logo",
-                type: "select",
-                options: [
-                  "Wordmark (teks saja)",
-                  "Pictorial Mark (simbol/ikon)",
-                  "Combination Mark (teks & simbol)",
-                  "Emblem",
-                  "Lainnya...",
-                ],
-                info: "Pilih jenis struktur logo yang Anda inginkan.",
-              },
-              {
-                name: "visualElements",
-                label: "Elemen Visual yang Diinginkan",
-                type: "text",
-                placeholder: "e.g., 'Biji kopi, matahari terbit, cangkir'",
-                info: "Sebutkan objek atau simbol yang ingin Anda lihat di logo.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "colorPalette",
-                label: "Palet Warna",
-                type: "text",
-                placeholder: "e.g., 'Coklat hangat, oranye, krem'",
-                info: "Warna-warna yang Anda inginkan untuk logo.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "styleAesthetic",
-                label: "Gaya & Estetika",
-                type: "select",
-                options: [
-                  "Minimalis & Modern",
-                  "Vintage & Klasik",
-                  "Hand-drawn & Organik",
-                  "Lainnya...",
-                ],
-                info: "Pilih gaya visual keseluruhan untuk logo.",
-              },
-            ],
+          {
+            name: "projectDescription",
+            label: "Deskripsi Singkat Proyek",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Sebuah kedai kopi yang fokus pada biji lokal dan suasana yang nyaman untuk bekerja.'",
+            info: "Jelaskan apa yang Anda lakukan atau tawarkan.",
+            validation: {
+              min_length: 20,
+            },
+            optional: true,
           },
-        },
+          {
+            name: "brandPersonality",
+            label: "Kepribadian & Nilai Brand",
+            type: "text",
+            placeholder: "e.g., 'Modern, minimalis, ramah, tepercaya'",
+            info: "Sebutkan 3-5 kata yang mendeskripsikan brand Anda.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "keywords",
+            label: "Kata Kunci untuk Disertakan",
+            type: "text",
+            placeholder: "e.g., 'Jawa, pagi, tenang'",
+            info: "Kata atau ide yang ingin Anda sertakan dalam nama.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "nameStyle",
+            label: "Gaya Nama",
+            type: "select",
+            options: [
+              "Modern & Singkat",
+              "Klasik & Elegan",
+              "Deskriptif",
+              "Imajinatif & Unik",
+              "Lainnya...",
+            ],
+            info: "Pilih gaya nama yang Anda inginkan.",
+            optional: true,
+          },
+          {
+            name: "projectName",
+            label: "Nama Proyek/Bisnis",
+            type: "text",
+            placeholder: "e.g., 'Kopi Pagi'",
+            info: "Nama yang akan diasosiasikan dengan slogan ini.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "coreBenefit",
+            label: "Manfaat Utama",
+            type: "text",
+            placeholder: "e.g., 'Secangkir semangat untuk memulai hari Anda'",
+            info: "Apa manfaat atau perasaan utama yang ingin disampaikan?",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "targetAudience",
+            label: "Target Audiens",
+            type: "text",
+            placeholder: "e.g., 'Pekerja remote, mahasiswa'",
+            info: "Siapa yang ingin Anda sapa dengan slogan ini?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "sloganStyle",
+            label: "Gaya Slogan",
+            type: "select",
+            options: [
+              "Singkat & Berkesan",
+              "Deskriptif & Jelas",
+              "Cerdas & Berima",
+              "Lainnya...",
+            ],
+            info: "Pilih gaya slogan yang Anda inginkan.",
+            optional: true,
+          },
+          {
+            name: "logoType",
+            label: "Jenis Logo",
+            type: "select",
+            options: [
+              "Wordmark (teks saja)",
+              "Pictorial Mark (simbol/ikon)",
+              "Combination Mark (teks & simbol)",
+              "Emblem",
+              "Lainnya...",
+            ],
+            info: "Pilih jenis struktur logo yang Anda inginkan.",
+            optional: true,
+          },
+          {
+            name: "visualElements",
+            label: "Elemen Visual yang Diinginkan",
+            type: "text",
+            placeholder: "e.g., 'Biji kopi, matahari terbit, cangkir'",
+            info: "Sebutkan objek atau simbol yang ingin Anda lihat di logo.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "colorPalette",
+            label: "Palet Warna",
+            type: "text",
+            placeholder: "e.g., 'Coklat hangat, oranye, krem'",
+            info: "Warna-warna yang Anda inginkan untuk logo.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "styleAesthetic",
+            label: "Gaya & Estetika",
+            type: "select",
+            options: [
+              "Minimalis & Modern",
+              "Vintage & Klasik",
+              "Hand-drawn & Organik",
+              "Lainnya...",
+            ],
+            info: "Pilih gaya visual keseluruhan untuk logo.",
+            optional: true,
+          },
+        ],
         konteks_tambahan_instruksi_khusus:
           "AI harus selalu memberikan beberapa opsi yang bervariasi dalam gaya dan pendekatan. Untuk nama, AI harus menyarankan nama yang terdengar baik saat diucapkan dan mudah dieja. Untuk slogan, prioritaskan keringkasan. Untuk konsep logo, fokus pada deskripsi yang bisa dipahami oleh desainer maupun non-desainer. Penting: Selalu sertakan disclaimer bahwa AI tidak dapat memeriksa ketersediaan merek dagang (trademark) atau domain, dan pengguna harus melakukan verifikasi sendiri.",
         kategori: ["Prompt Proyek", "Branding & Identitas"],
@@ -10000,178 +9999,179 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "Pilih jenis dokumen perencanaan yang Anda butuhkan.",
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "documentType",
-          options: {
-            "Struktur Website/Aplikasi": [
-              {
-                name: "projectType",
-                label: "Jenis Proyek",
-                type: "select",
-                options: [
-                  "Website",
-                  "Aplikasi Mobile",
-                  "Aplikasi Web",
-                  "Lainnya...",
-                ],
-                info: "Pilih jenis proyek yang akan dirancang.",
-              },
-              {
-                name: "mainGoal",
-                label: "Tujuan Utama Proyek",
-                type: "text",
-                placeholder: "e.g., 'Meningkatkan penjualan online'",
-                info: "Apa tujuan utama dari proyek ini?",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "mainPages",
-                label: "Halaman/Fitur Utama",
-                type: "textarea",
-                placeholder: "e.g., 'Beranda, Produk, Tentang Kami, Kontak'",
-                info: "Sebutkan halaman atau fitur utama yang harus ada.",
-                validation: {
-                  min_length: 10,
-                },
-              },
+          {
+            name: "projectType",
+            label: "Jenis Proyek",
+            type: "select",
+            options: [
+              "Website",
+              "Aplikasi Mobile",
+              "Aplikasi Web",
+              "Lainnya...",
             ],
-            "Desain Halaman/Slide": [
-              {
-                name: "pageName",
-                label: "Nama Halaman/Slide",
-                type: "text",
-                placeholder: "e.g., 'Halaman Beranda'",
-                info: "Halaman atau slide spesifik yang akan dirancang.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "sections",
-                label: "Bagian-bagian Halaman/Slide",
-                type: "textarea",
-                placeholder: "e.g., 'Header, Hero, Testimoni, Footer'",
-                info: "Sebutkan bagian-bagian utama dari atas ke bawah.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "keyInfo",
-                label: "Informasi Kunci per Bagian",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Hero: Judul yang menarik, gambar produk. Testimoni: 3 kutipan dari klien.'",
-                info: "Jelaskan konten utama untuk setiap bagian.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
-            "Konsep MVP/Database": [
-              {
-                name: "appName",
-                label: "Nama Aplikasi",
-                type: "text",
-                placeholder: "e.g., 'Aplikasi Resep MasakYuk'",
-                info: "Nama aplikasi yang akan dibuat.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "coreFeatures",
-                label: "Fitur Inti MVP",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Pencarian resep, simpan resep, daftar belanja'",
-                info: "Sebutkan 3-5 fitur paling penting untuk versi pertama.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "dataModels",
-                label: "Model Data Utama",
-                type: "text",
-                placeholder: "e.g., 'User, Recipe, Ingredient'",
-                info: "Sebutkan entitas data utama dalam sistem.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-            ],
-            "Strategi Peluncuran": [
-              {
-                name: "productName",
-                label: "Nama Produk/Aplikasi",
-                type: "text",
-                placeholder: "e.g., 'Aplikasi Meditasi Tenang'",
-                info: "Nama produk atau aplikasi yang akan diluncurkan.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "launchDate",
-                label: "Target Tanggal Peluncuran",
-                type: "text",
-                placeholder: "e.g., '1 September 2025'",
-                info: "Tanggal yang direncanakan untuk peluncuran.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "targetAudience",
-                label: "Target Audiens",
-                type: "text",
-                placeholder: "e.g., 'Profesional muda yang stres, mahasiswa'",
-                info: "Siapa target utama peluncuran ini?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "marketingChannels",
-                label: "Kanal Pemasaran",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Media Sosial (Instagram, TikTok), Influencer Marketing, Iklan Google, PR'",
-                info: "Saluran yang akan digunakan untuk mempromosikan peluncuran.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "keyMessages",
-                label: "Pesan Kunci Peluncuran",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Temukan ketenangan dalam genggaman Anda. Kurangi stres dengan meditasi 5 menit sehari.'",
-                info: "Pesan utama yang ingin disampaikan kepada audiens.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "successMetrics",
-                label: "Metrik Keberhasilan (Opsional)",
-                type: "text",
-                placeholder:
-                  "e.g., '10.000 unduhan dalam bulan pertama, 500 ulasan positif'",
-                info: "Bagaimana Anda akan mengukur keberhasilan peluncuran?",
-                optional: true,
-                validation: {
-                  min_length: 5,
-                },
-              },
-            ],
+            info: "Pilih jenis proyek yang akan dirancang.",
+            optional: true,
           },
-        },
+          {
+            name: "mainGoal",
+            label: "Tujuan Utama Proyek",
+            type: "text",
+            placeholder: "e.g., 'Meningkatkan penjualan online'",
+            info: "Apa tujuan utama dari proyek ini?",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "mainPages",
+            label: "Halaman/Fitur Utama",
+            type: "textarea",
+            placeholder: "e.g., 'Beranda, Produk, Tentang Kami, Kontak'",
+            info: "Sebutkan halaman atau fitur utama yang harus ada.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "pageName",
+            label: "Nama Halaman/Slide",
+            type: "text",
+            placeholder: "e.g., 'Halaman Beranda'",
+            info: "Halaman atau slide spesifik yang akan dirancang.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "sections",
+            label: "Bagian-bagian Halaman/Slide",
+            type: "textarea",
+            placeholder: "e.g., 'Header, Hero, Testimoni, Footer'",
+            info: "Sebutkan bagian-bagian utama dari atas ke bawah.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "keyInfo",
+            label: "Informasi Kunci per Bagian",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Hero: Judul yang menarik, gambar produk. Testimoni: 3 kutipan dari klien.'",
+            info: "Jelaskan konten utama untuk setiap bagian.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "appName",
+            label: "Nama Aplikasi",
+            type: "text",
+            placeholder: "e.g., 'Aplikasi Resep MasakYuk'",
+            info: "Nama aplikasi yang akan dibuat.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "coreFeatures",
+            label: "Fitur Inti MVP",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Pencarian resep, simpan resep, daftar belanja'",
+            info: "Sebutkan 3-5 fitur paling penting untuk versi pertama.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "dataModels",
+            label: "Model Data Utama",
+            type: "text",
+            placeholder: "e.g., 'User, Recipe, Ingredient'",
+            info: "Sebutkan entitas data utama dalam sistem.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "productName",
+            label: "Nama Produk/Aplikasi",
+            type: "text",
+            placeholder: "e.g., 'Aplikasi Meditasi Tenang'",
+            info: "Nama produk atau aplikasi yang akan diluncurkan.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "launchDate",
+            label: "Target Tanggal Peluncuran",
+            type: "text",
+            placeholder: "e.g., '1 September 2025'",
+            info: "Tanggal yang direncanakan untuk peluncuran.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "targetAudience",
+            label: "Target Audiens",
+            type: "text",
+            placeholder: "e.g., 'Profesional muda yang stres, mahasiswa'",
+            info: "Siapa target utama peluncuran ini?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "marketingChannels",
+            label: "Kanal Pemasaran",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Media Sosial (Instagram, TikTok), Influencer Marketing, Iklan Google, PR'",
+            info: "Saluran yang akan digunakan untuk mempromosikan peluncuran.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "keyMessages",
+            label: "Pesan Kunci Peluncuran",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Temukan ketenangan dalam genggaman Anda. Kurangi stres dengan meditasi 5 menit sehari.'",
+            info: "Pesan utama yang ingin disampaikan kepada audiens.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "successMetrics",
+            label: "Metrik Keberhasilan (Opsional)",
+            type: "text",
+            placeholder:
+              "e.g., '10.000 unduhan dalam bulan pertama, 500 ulasan positif'",
+            info: "Bagaimana Anda akan mengukur keberhasilan peluncuran?",
+            optional: true,
+            validation: {
+              min_length: 5,
+            },
+          },
+        ],
         konteks_tambahan_instruksi_khusus:
           "AI harus selalu menekankan bahwa output ini adalah untuk tujuan perencanaan dan konseptual, bukan kode atau desain final. Untuk database, gunakan format yang mudah dibaca. Untuk user flow, gunakan penomoran dan panah (->) untuk menunjukkan alur. Selalu gunakan bahasa yang jelas dan hindari jargon teknis yang berlebihan.",
         kategori: ["Prompt Proyek", "Desain & Pengembangan Proyek"],
@@ -10217,324 +10217,270 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "Pilih untuk apa nama ini akan digunakan.",
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "category",
-          options: {
-            "Nama Bayi": [
-              {
-                name: "gender",
-                label: "Jenis Kelamin",
-                type: "select",
-                options: ["Laki-laki", "Perempuan", "Unisex", "Lainnya..."],
-                info: "Pilih jenis kelamin.",
-              },
-              {
-                name: "origin",
-                label: "Asal Bahasa/Budaya (Opsional)",
-                type: "text",
-                placeholder: "e.g., 'Sansekerta, Latin, Jepang'",
-                info: "Sebutkan asal nama yang Anda inginkan.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "meaning",
-                label: "Makna yang Diinginkan",
-                type: "text",
-                placeholder: "e.g., 'Cahaya, bijaksana, kuat'",
-                info: "Sebutkan makna atau harapan yang terkandung dalam nama.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "nameStyle",
-                label: "Gaya Nama",
-                type: "select",
-                options: [
-                  "Klasik & Populer",
-                  "Modern & Unik",
-                  "Singkat & Manis",
-                  "Lainnya...",
-                ],
-                info: "Pilih gaya nama yang Anda inginkan.",
-              },
-            ],
-            "Nama Bisnis/Produk": [
-              {
-                name: "industry",
-                label: "Industri/Bidang Usaha",
-                type: "text",
-                placeholder: "e.g., 'Teknologi, kuliner, fashion'",
-                info: "Sebutkan industri tempat bisnis Anda beroperasi.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "coreConcept",
-                label: "Konsep Inti",
-                type: "text",
-                placeholder: "e.g., 'Aplikasi untuk belajar investasi saham'",
-                info: "Jelaskan secara singkat apa yang dilakukan bisnis/produk Anda.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "brandPersonality",
-                label: "Kepribadian Brand",
-                type: "text",
-                placeholder: "e.g., 'Modern, tepercaya, mudah diakses'",
-                info: "Sebutkan 3-5 kata yang mendeskripsikan brand Anda.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "keywords",
-                label: "Kata Kunci untuk Disertakan",
-                type: "text",
-                placeholder: "e.g., 'Invest, dana, cerdas'",
-                info: "Kata atau ide yang ingin Anda sertakan dalam nama.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-            ],
-            "Nama Karakter Fiksi": [
-              {
-                name: "genre",
-                label: "Genre Cerita",
-                type: "text",
-                placeholder: "e.g., 'Fantasi, fiksi ilmiah, misteri'",
-                info: "Sebutkan genre cerita karakter Anda.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "role",
-                label: "Peran Karakter",
-                type: "select",
-                options: ["Protagonis", "Antagonis", "Pendukung", "Lainnya..."],
-                info: "Pilih peran karakter dalam cerita.",
-              },
-              {
-                name: "traits",
-                label: "Sifat & Ciri Khas",
-                type: "text",
-                placeholder:
-                  "e.g., 'Pemberani, misterius, memiliki kekuatan sihir'",
-                info: "Sebutkan sifat-sifat utama karakter.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "origin",
-                label: "Asal-usul/Ras Karakter",
-                type: "text",
-                placeholder:
-                  "e.g., 'Elf dari hutan kuno, manusia dari kota metropolitan'",
-                info: "Sebutkan latar belakang karakter.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-            ],
-            "Nama Hewan Peliharaan": [
-              {
-                name: "animalType",
-                label: "Jenis Hewan",
-                type: "text",
-                placeholder: "e.g., 'Kucing, Anjing, Burung'",
-                info: "Jenis hewan peliharaan Anda.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "gender",
-                label: "Jenis Kelamin (Opsional)",
-                type: "select",
-                options: ["Jantan", "Betina", "Tidak Tahu", "Lainnya..."],
-                info: "Jenis kelamin hewan peliharaan.",
-              },
-              {
-                name: "personalityTraits",
-                label: "Sifat/Ciri Khas",
-                type: "textarea",
-                placeholder: "e.g., 'Lucu, Pemberani, Tenang, Aktif'",
-                info: "Sifat atau ciri khas yang menonjol dari hewan peliharaan Anda.",
-                optional: true,
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "nameStyle",
-                label: "Gaya Nama",
-                type: "select",
-                options: [
-                  "Klasik",
-                  "Modern",
-                  "Unik",
-                  "Lucu",
-                  "Berdasarkan Makanan",
-                  "Lainnya...",
-                ],
-                info: "Pilih gaya nama yang Anda inginkan.",
-              },
-            ],
-            "Nama Tim/Komunitas": [
-              {
-                name: "teamPurpose",
-                label: "Tujuan Tim/Komunitas",
-                type: "text",
-                placeholder: "e.g., 'Tim Olahraga, Proyek IT, Komunitas Hobi'",
-                info: "Tujuan utama dari tim atau komunitas ini.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "teamVibe",
-                label: "Suasana/Vibe Tim",
-                type: "select",
-                options: [
-                  "Profesional",
-                  "Santai & Kreatif",
-                  "Kompetitif",
-                  "Inklusif",
-                  "Lainnya...",
-                ],
-                info: "Nuansa atau atmosfer yang ingin dibangun dalam tim/komunitas.",
-              },
-              {
-                name: "keywords",
-                label: "Kata Kunci untuk Disertakan (Opsional)",
-                type: "text",
-                placeholder: "e.g., 'Inovasi, Juara, Bersama, Solidaritas'",
-                info: "Kata atau ide yang ingin Anda sertakan dalam nama tim/komunitas.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "memberCount",
-                label: "Jumlah Anggota (Opsional)",
-                type: "number",
-                placeholder: "e.g., 5, 20, 100+",
-                info: "Perkiraan jumlah anggota tim atau komunitas.",
-                optional: true,
-                validation: {
-                  min_value: 1,
-                },
-              },
-            ],
-            "Judul Acara/Karya": [
-              {
-                name: "eventType",
-                label: "Jenis Acara/Karya",
-                type: "select",
-                options: [
-                  "Seminar",
-                  "Workshop",
-                  "Konser Musik",
-                  "Pameran Seni",
-                  "Buku",
-                  "Film",
-                  "Podcast",
-                  "Lainnya...",
-                ],
-                info: "Pilih jenis acara atau karya yang akan diberi judul.",
-              },
-              {
-                name: "mainTopic",
-                label: "Topik Utama",
-                type: "text",
-                placeholder:
-                  "e.g., 'Masa Depan AI', 'Seni Melukis Abstrak', 'Perjalanan Kuliner Indonesia'",
-                info: "Inti dari acara atau karya tersebut.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "targetAudience",
-                label: "Target Audiens",
-                type: "text",
-                placeholder: "e.g., 'Developer, Seniman, Pecinta Kuliner'",
-                info: "Siapa target audiens utama untuk judul ini?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "mood",
-                label: "Suasana/Mood",
-                type: "select",
-                options: [
-                  "Inspiratif",
-                  "Edukatif",
-                  "Menghibur",
-                  "Misterius",
-                  "Serius",
-                  "Lainnya...",
-                ],
-                info: "Suasana atau emosi yang ingin disampaikan oleh judul.",
-              },
-            ],
-            "Nama Domain/Hashtag": [
-              {
-                name: "purpose",
-                label: "Tujuan",
-                type: "text",
-                placeholder:
-                  "e.g., 'Website Pribadi, Kampanye Pemasaran, Toko Online'",
-                info: "Untuk apa nama domain atau hashtag ini akan digunakan?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "keywords",
-                label: "Kata Kunci Utama",
-                type: "text",
-                placeholder: "e.g., 'fotografi, jakarta, kuliner'",
-                info: "Kata kunci yang relevan dengan tujuan Anda.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "lengthPreference",
-                label: "Preferensi Panjang",
-                type: "select",
-                options: ["Singkat", "Sedang", "Panjang", "Lainnya..."],
-                info: "Apakah Anda menginginkan nama yang singkat, sedang, atau panjang?",
-              },
-              {
-                name: "callToAction",
-                label: "Saran untuk Cek Ketersediaan",
-                type: "text",
-                placeholder:
-                  "e.g., 'Pastikan untuk memeriksa ketersediaan domain (.com, .id) dan handle media sosial (Instagram, Twitter) sebelum memutuskan.'",
-                info: "Penting untuk selalu memeriksa ketersediaan nama yang dihasilkan.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
+          {
+            name: "gender",
+            label: "Jenis Kelamin",
+            type: "select",
+            options: ["Laki-laki", "Perempuan", "Unisex", "Lainnya..."],
+            info: "Pilih jenis kelamin.",
+            optional: true,
           },
-        },
+          {
+            name: "origin",
+            label: "Asal Bahasa/Budaya (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Sansekerta, Latin, Jepang'",
+            info: "Sebutkan asal nama yang Anda inginkan.",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "meaning",
+            label: "Makna yang Diinginkan",
+            type: "text",
+            placeholder: "e.g., 'Cahaya, bijaksana, kuat'",
+            info: "Sebutkan makna atau harapan yang terkandung dalam nama.",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "nameStyle",
+            label: "Gaya Nama",
+            type: "select",
+            options: [
+              "Klasik & Populer",
+              "Modern & Unik",
+              "Singkat & Manis",
+              "Lainnya...",
+            ],
+            info: "Pilih gaya nama yang Anda inginkan.",
+            optional: true,
+          },
+          {
+            name: "industry",
+            label: "Industri/Bidang Usaha",
+            type: "text",
+            placeholder: "e.g., 'Teknologi, kuliner, fashion'",
+            info: "Sebutkan industri tempat bisnis Anda beroperasi.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "coreConcept",
+            label: "Konsep Inti",
+            type: "text",
+            placeholder: "e.g., 'Aplikasi untuk belajar investasi saham'",
+            info: "Jelaskan secara singkat apa yang dilakukan bisnis/produk Anda.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "brandPersonality",
+            label: "Kepribadian Brand",
+            type: "text",
+            placeholder: "e.g., 'Modern, tepercaya, mudah diakses'",
+            info: "Sebutkan 3-5 kata yang mendeskripsikan brand Anda.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "keywords",
+            label: "Kata Kunci untuk Disertakan",
+            type: "text",
+            placeholder: "e.g., 'Invest, dana, cerdas'",
+            info: "Kata atau ide yang ingin Anda sertakan dalam nama.",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "genre",
+            label: "Genre Cerita",
+            type: "text",
+            placeholder: "e.g., 'Fantasi, fiksi ilmiah, misteri'",
+            info: "Sebutkan genre cerita karakter Anda.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "role",
+            label: "Peran Karakter",
+            type: "select",
+            options: ["Protagonis", "Antagonis", "Pendukung", "Lainnya..."],
+            info: "Pilih peran karakter dalam cerita.",
+            optional: true,
+          },
+          {
+            name: "traits",
+            label: "Sifat & Ciri Khas",
+            type: "text",
+            placeholder:
+              "e.g., 'Pemberani, misterius, memiliki kekuatan sihir'",
+            info: "Sebutkan sifat-sifat utama karakter.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "animalType",
+            label: "Jenis Hewan",
+            type: "text",
+            placeholder: "e.g., 'Kucing, Anjing, Burung'",
+            info: "Jenis hewan peliharaan Anda.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "personalityTraits",
+            label: "Sifat/Ciri Khas",
+            type: "textarea",
+            placeholder: "e.g., 'Lucu, Pemberani, Tenang, Aktif'",
+            info: "Sifat atau ciri khas yang menonjol dari hewan peliharaan Anda.",
+            optional: true,
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "teamPurpose",
+            label: "Tujuan Tim/Komunitas",
+            type: "text",
+            placeholder: "e.g., 'Tim Olahraga, Proyek IT, Komunitas Hobi'",
+            info: "Tujuan utama dari tim atau komunitas ini.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "teamVibe",
+            label: "Suasana/Vibe Tim",
+            type: "select",
+            options: [
+              "Profesional",
+              "Santai & Kreatif",
+              "Kompetitif",
+              "Inklusif",
+              "Lainnya...",
+            ],
+            info: "Nuansa atau atmosfer yang ingin dibangun dalam tim/komunitas.",
+            optional: true,
+          },
+          {
+            name: "memberCount",
+            label: "Jumlah Anggota (Opsional)",
+            type: "number",
+            placeholder: "e.g., 5, 20, 100+",
+            info: "Perkiraan jumlah anggota tim atau komunitas.",
+            optional: true,
+            validation: {
+              min_value: 1,
+            },
+          },
+          {
+            name: "eventType",
+            label: "Jenis Acara/Karya",
+            type: "select",
+            options: [
+              "Seminar",
+              "Workshop",
+              "Konser Musik",
+              "Pameran Seni",
+              "Buku",
+              "Film",
+              "Podcast",
+              "Lainnya...",
+            ],
+            info: "Pilih jenis acara atau karya yang akan diberi judul.",
+            optional: true,
+          },
+          {
+            name: "mainTopic",
+            label: "Topik Utama",
+            type: "text",
+            placeholder:
+              "e.g., 'Masa Depan AI', 'Seni Melukis Abstrak', 'Perjalanan Kuliner Indonesia'",
+            info: "Inti dari acara atau karya tersebut.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "targetAudience",
+            label: "Target Audiens",
+            type: "text",
+            placeholder: "e.g., 'Developer, Seniman, Pecinta Kuliner'",
+            info: "Siapa target audiens utama untuk judul ini?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "mood",
+            label: "Suasana/Mood",
+            type: "select",
+            options: [
+              "Inspiratif",
+              "Edukatif",
+              "Menghibur",
+              "Misterius",
+              "Serius",
+              "Lainnya...",
+            ],
+            info: "Suasana atau emosi yang ingin disampaikan oleh judul.",
+            optional: true,
+          },
+          {
+            name: "purpose",
+            label: "Tujuan",
+            type: "text",
+            placeholder:
+              "e.g., 'Website Pribadi, Kampanye Pemasaran, Toko Online'",
+            info: "Untuk apa nama domain atau hashtag ini akan digunakan?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "lengthPreference",
+            label: "Preferensi Panjang",
+            type: "select",
+            options: ["Singkat", "Sedang", "Panjang", "Lainnya..."],
+            info: "Apakah Anda menginginkan nama yang singkat, sedang, atau panjang?",
+            optional: true,
+          },
+          {
+            name: "callToAction",
+            label: "Saran untuk Cek Ketersediaan",
+            type: "text",
+            placeholder:
+              "e.g., 'Pastikan untuk memeriksa ketersediaan domain (.com, .id) dan handle media sosial (Instagram, Twitter) sebelum memutuskan.'",
+            info: "Penting untuk selalu memeriksa ketersediaan nama yang dihasilkan.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+        ],
         konteks_tambahan_instruksi_khusus:
           "AI harus selalu memberikan variasi nama yang luas, dari yang aman hingga yang lebih berani. Untuk nama bisnis/produk, sertakan saran untuk memeriksa ketersediaan domain dan media sosial. Untuk nama personal, pertimbangkan kemudahan pengucapan. Disclaimer wajib: 'Nama yang dihasilkan adalah saran kreatif. Pastikan untuk memeriksa ketersediaan merek dagang, domain, dan handle media sosial secara mandiri sebelum mengadopsi sebuah nama.'",
         kategori: ["Prompt Proyek", "Generator Nama & Ide Kreatif"],
@@ -10580,416 +10526,348 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "Pilih jenis konten yang ingin Anda hasilkan.",
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "contentType",
-          options: {
-            "Artikel Blog": [
-              {
-                name: "topic",
-                label: "Topik/Judul Utama",
-                type: "text",
-                placeholder: "e.g., 'Manfaat Kopi Organik'",
-                info: "Inti dari konten yang akan dibuat.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "targetAudience",
-                label: "Target Audiens",
-                type: "text",
-                placeholder: "e.g., 'Profesional muda, Ibu rumah tangga'",
-                info: "Siapa yang akan mengonsumsi konten ini?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "keywords",
-                label: "Kata Kunci SEO",
-                type: "text",
-                placeholder: "e.g., 'kopi organik, kesehatan, produktivitas'",
-                info: "Kata kunci untuk optimasi mesin pencari.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "tone",
-                label: "Gaya & Nada",
-                type: "select",
-                options: [
-                  "Informatif",
-                  "Profesional",
-                  "Kasual",
-                  "Persuasif",
-                  "Lainnya...",
-                ],
-                info: "Pilih nuansa yang diinginkan untuk artikel Anda.",
-              },
-              {
-                name: "cta",
-                label: "Tujuan/Call to Action (CTA)",
-                type: "text",
-                placeholder:
-                  "e.g., 'Kunjungi website kami untuk info lebih lanjut'",
-                info: "Tindakan apa yang Anda ingin pembaca lakukan?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-            ],
-            "Post Media Sosial": [
-              {
-                name: "platform",
-                label: "Platform Spesifik",
-                type: "select",
-                options: [
-                  "Instagram",
-                  "Facebook",
-                  "Twitter/X",
-                  "LinkedIn",
-                  "TikTok",
-                  "Lainnya...",
-                ],
-                info: "Pilih platform media sosial yang dituju.",
-              },
-              {
-                name: "topic",
-                label: "Pesan Utama Postingan",
-                type: "text",
-                placeholder: "e.g., 'Diskon 50% untuk produk baru kami!'",
-                info: "Inti dari pesan yang ingin disampaikan.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "visualIdea",
-                label: "Ide Visual",
-                type: "text",
-                placeholder: "e.g., 'Foto produk dengan latar belakang cerah'",
-                info: "Deskripsikan gambar atau video yang akan menyertai teks.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "tone",
-                label: "Gaya & Nada",
-                type: "select",
-                options: [
-                  "Menarik & Singkat",
-                  "Humoris",
-                  "Inspiratif",
-                  "Informatif",
-                  "Lainnya...",
-                ],
-                info: "Pilih nuansa yang sesuai dengan platform.",
-              },
-              {
-                name: "hashtagSuggestions",
-                label: "Saran Hashtag",
-                type: "text",
-                placeholder: "e.g., '#promo #diskon #produkkecantikan'",
-                info: "Saran hashtag untuk meningkatkan jangkauan.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-            ],
-            "Deskripsi Produk": [
-              {
-                name: "productName",
-                label: "Nama Produk",
-                type: "text",
-                placeholder: "e.g., 'Sepatu Lari Cepat X2000'",
-                info: "Nama lengkap produk.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "features",
-                label: "Fitur-Fitur Utama",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Sol responsif, bahan ringan, desain aerodinamis'",
-                info: "Sebutkan fitur-fitur utama produk.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "benefits",
-                label: "Manfaat untuk Pelanggan",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Lari lebih cepat, mengurangi risiko cedera, nyaman dipakai seharian'",
-                info: "Jelaskan bagaimana fitur tersebut menguntungkan pelanggan.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "targetAudience",
-                label: "Target Pelanggan",
-                type: "text",
-                placeholder: "e.g., 'Pelari profesional, penggemar olahraga'",
-                info: "Siapa target pasar utama produk ini?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "tone",
-                label: "Gaya & Nada",
-                type: "select",
-                options: [
-                  "Persuasif & Menjual",
-                  "Teknis & Detail",
-                  "Mewah & Eksklusif",
-                  "Lainnya...",
-                ],
-                info: "Pilih nuansa yang sesuai dengan citra merek Anda.",
-              },
-            ],
-            "Skrip Video Pendek": [
-              {
-                name: "videoTopic",
-                label: "Topik Video",
-                type: "text",
-                placeholder: "e.g., 'Tutorial makeup 5 menit'",
-                info: "Judul atau ide utama video.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "hook",
-                label: "Hook (3 Detik Pertama)",
-                type: "text",
-                placeholder: "e.g., 'Tampil cantik dalam 5 menit? Bisa!'",
-                info: "Kalimat pembuka yang menarik perhatian.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "keyScenes",
-                label: "Adegan-Adegan Kunci",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Scene 1: Tampilkan semua produk. Scene 2: Langkah pertama. Scene 3: Hasil akhir.'",
-                info: "Urutan adegan utama dalam video.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "duration",
-                label: "Target Durasi (detik)",
-                type: "number",
-                placeholder: "e.g., 60",
-                info: "Perkiraan panjang video.",
-                validation: {
-                  min_value: 5,
-                  max_value: 300,
-                },
-              },
-              {
-                name: "cta",
-                label: "Call to Action di Akhir",
-                type: "text",
-                placeholder: "e.g., 'Jangan lupa like dan follow!'",
-                info: "Ajak penonton untuk berinteraksi.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-            ],
-            Resensi: [
-              {
-                name: "itemToReview",
-                label: "Item yang Diresensi",
-                type: "text",
-                placeholder:
-                  "e.g., 'Buku 'Filosofi Teras', Film 'Parasite', Smartphone XYZ'",
-                info: "Produk, buku, film, atau layanan yang akan diresensi.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "reviewType",
-                label: "Jenis Resensi",
-                type: "select",
-                options: [
-                  "Positif",
-                  "Negatif",
-                  "Seimbang",
-                  "Perbandingan",
-                  "Lainnya...",
-                ],
-                info: "Fokus resensi (misal: menyoroti kelebihan, kekurangan, atau perbandingan).",
-              },
-              {
-                name: "keyPoints",
-                label: "Poin-Poin Kunci yang Ingin Disampaikan",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Kelebihan: plot twist tak terduga, akting memukau. Kekurangan: pacing lambat di awal.'",
-                info: "Sebutkan aspek-aspek utama yang ingin Anda bahas.",
-                validation: {
-                  min_length: 20,
-                },
-              },
-              {
-                name: "rating",
-                label: "Rating (Opsional)",
-                type: "text",
-                placeholder: "e.g., '4/5 bintang', 'Sangat Direkomendasikan'",
-                info: "Penilaian keseluruhan jika ada.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "targetAudience",
-                label: "Target Pembaca Resensi",
-                type: "text",
-                placeholder:
-                  "e.g., 'Penggemar film horor, calon pembeli gadget'",
-                info: "Siapa yang akan membaca resensi ini?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-            ],
-            "Lirik Lagu": [
-              {
-                name: "songTitle",
-                label: "Judul Lagu (Opsional)",
-                type: "text",
-                placeholder: "e.g., 'Senja di Batas Kota'",
-                info: "Judul lagu jika sudah ada.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "genre",
-                label: "Genre Musik",
-                type: "select",
-                options: [
-                  "Pop",
-                  "Rock",
-                  "R&B",
-                  "Folk",
-                  "Hip-Hop",
-                  "Electronic",
-                  "Lainnya...",
-                ],
-                info: "Genre akan mempengaruhi gaya bahasa dan struktur lirik.",
-              },
-              {
-                name: "theme",
-                label: "Tema Lagu",
-                type: "text",
-                placeholder:
-                  "e.g., 'cinta pertama, patah hati, perjalanan hidup'",
-                info: "Gagasan atau cerita utama di balik lagu.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "mood",
-                label: "Suasana Hati Lagu",
-                type: "select",
-                options: [
-                  "Senang & Ceria",
-                  "Sedih & Melankolis",
-                  "Energik & Memotivasi",
-                  "Romantis & Intim",
-                  "Lainnya...",
-                ],
-                info: "Emosi utama yang ingin disampaikan melalui lirik.",
-              },
-              {
-                name: "keyElements",
-                label: "Elemen/Kata Kunci Wajib",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'sebutkan kata 'bintang', 'malam', 'harapan'",
-                info: "Gambar, kata, atau frasa spesifik yang harus ada dalam lirik.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-            ],
-            "Naskah Iklan": [
-              {
-                name: "adPlatform",
-                label: "Platform Iklan",
-                type: "select",
-                options: [
-                  "Google Ads",
-                  "Facebook/Instagram Ads",
-                  "TikTok Ads",
-                  "YouTube Ads",
-                  "Lainnya...",
-                ],
-                info: "Platform akan mempengaruhi batasan karakter dan format.",
-              },
-              {
-                name: "productService",
-                label: "Produk/Layanan yang Diiklankan",
-                type: "text",
-                placeholder: "e.g., 'Kursus Online Bahasa Inggris'",
-                info: "Apa yang Anda promosikan?",
-              },
-              {
-                name: "targetAudience",
-                label: "Target Audiens Iklan",
-                type: "text",
-                placeholder: "e.g., 'Pelajar SMA, Profesional Muda'",
-                info: "Siapa yang ingin Anda jangkau dengan iklan ini?",
-              },
-              {
-                name: "uniqueSellingPoint",
-                label: "Unique Selling Point (USP)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Metode belajar interaktif, garansi mahir dalam 3 bulan.'",
-                info: "Apa yang membuat produk/layanan Anda unik dan lebih baik?",
-              },
-              {
-                name: "callToAction",
-                label: "Call to Action (CTA)",
-                type: "text",
-                placeholder:
-                  "e.g., 'Daftar Sekarang!', 'Unduh Aplikasi Gratis!'",
-                info: "Tindakan spesifik yang Anda ingin audiens lakukan.",
-              },
-              {
-                name: "adLength",
-                label: "Panjang Iklan",
-                type: "select",
-                options: [
-                  "Sangat Singkat (Headline & Deskripsi)",
-                  "Singkat (Beberapa Kalimat)",
-                  "Sedang (Paragraf Singkat)",
-                  "Lainnya...",
-                ],
-                info: "Pilih panjang teks iklan yang diinginkan.",
-              },
-            ],
+          {
+            name: "topic",
+            label: "Topik/Judul Utama",
+            type: "text",
+            placeholder: "e.g., 'Manfaat Kopi Organik'",
+            info: "Inti dari konten yang akan dibuat.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
           },
-        },
+          {
+            name: "targetAudience",
+            label: "Target Audiens",
+            type: "text",
+            placeholder: "e.g., 'Profesional muda, Ibu rumah tangga'",
+            info: "Siapa yang akan mengonsumsi konten ini?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "keywords",
+            label: "Kata Kunci SEO",
+            type: "text",
+            placeholder: "e.g., 'kopi organik, kesehatan, produktivitas'",
+            info: "Kata kunci untuk optimasi mesin pencari.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "tone",
+            label: "Gaya & Nada",
+            type: "select",
+            options: [
+              "Informatif",
+              "Profesional",
+              "Kasual",
+              "Persuasif",
+              "Lainnya...",
+            ],
+            info: "Pilih nuansa yang diinginkan untuk artikel Anda.",
+            optional: true,
+          },
+          {
+            name: "cta",
+            label: "Tujuan/Call to Action (CTA)",
+            type: "text",
+            placeholder:
+              "e.g., 'Kunjungi website kami untuk info lebih lanjut'",
+            info: "Tindakan apa yang Anda ingin pembaca lakukan?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "platform",
+            label: "Platform Spesifik",
+            type: "select",
+            options: [
+              "Instagram",
+              "Facebook",
+              "Twitter/X",
+              "LinkedIn",
+              "TikTok",
+              "Lainnya...",
+            ],
+            info: "Pilih platform media sosial yang dituju.",
+            optional: true,
+          },
+          {
+            name: "visualIdea",
+            label: "Ide Visual",
+            type: "text",
+            placeholder: "e.g., 'Foto produk dengan latar belakang cerah'",
+            info: "Deskripsikan gambar atau video yang akan menyertai teks.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "hashtagSuggestions",
+            label: "Saran Hashtag",
+            type: "text",
+            placeholder: "e.g., '#promo #diskon #produkkecantikan'",
+            info: "Saran hashtag untuk meningkatkan jangkauan.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "productName",
+            label: "Nama Produk",
+            type: "text",
+            placeholder: "e.g., 'Sepatu Lari Cepat X2000'",
+            info: "Nama lengkap produk.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "features",
+            label: "Fitur-Fitur Utama",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Sol responsif, bahan ringan, desain aerodinamis'",
+            info: "Sebutkan fitur-fitur utama produk.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "benefits",
+            label: "Manfaat untuk Pelanggan",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Lari lebih cepat, mengurangi risiko cedera, nyaman dipakai seharian'",
+            info: "Jelaskan bagaimana fitur tersebut menguntungkan pelanggan.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "videoTopic",
+            label: "Topik Video",
+            type: "text",
+            placeholder: "e.g., 'Tutorial makeup 5 menit'",
+            info: "Judul atau ide utama video.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "hook",
+            label: "Hook (3 Detik Pertama)",
+            type: "text",
+            placeholder: "e.g., 'Tampil cantik dalam 5 menit? Bisa!'",
+            info: "Kalimat pembuka yang menarik perhatian.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "keyScenes",
+            label: "Adegan-Adegan Kunci",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Scene 1: Tampilkan semua produk. Scene 2: Langkah pertama. Scene 3: Hasil akhir.'",
+            info: "Urutan adegan utama dalam video.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "duration",
+            label: "Target Durasi (detik)",
+            type: "number",
+            placeholder: "e.g., 60",
+            info: "Perkiraan panjang video.",
+            validation: {
+              min_value: 5,
+              max_value: 300,
+            },
+            optional: true,
+          },
+          {
+            name: "itemToReview",
+            label: "Item yang Diresensi",
+            type: "text",
+            placeholder:
+              "e.g., 'Buku 'Filosofi Teras', Film 'Parasite', Smartphone XYZ'",
+            info: "Produk, buku, film, atau layanan yang akan diresensi.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "reviewType",
+            label: "Jenis Resensi",
+            type: "select",
+            options: [
+              "Positif",
+              "Negatif",
+              "Seimbang",
+              "Perbandingan",
+              "Lainnya...",
+            ],
+            info: "Fokus resensi (misal: menyoroti kelebihan, kekurangan, atau perbandingan).",
+            optional: true,
+          },
+          {
+            name: "keyPoints",
+            label: "Poin-Poin Kunci yang Ingin Disampaikan",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Kelebihan: plot twist tak terduga, akting memukau. Kekurangan: pacing lambat di awal.'",
+            info: "Sebutkan aspek-aspek utama yang ingin Anda bahas.",
+            validation: {
+              min_length: 20,
+            },
+            optional: true,
+          },
+          {
+            name: "rating",
+            label: "Rating (Opsional)",
+            type: "text",
+            placeholder: "e.g., '4/5 bintang', 'Sangat Direkomendasikan'",
+            info: "Penilaian keseluruhan jika ada.",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "songTitle",
+            label: "Judul Lagu (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Senja di Batas Kota'",
+            info: "Judul lagu jika sudah ada.",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "genre",
+            label: "Genre Musik",
+            type: "select",
+            options: [
+              "Pop",
+              "Rock",
+              "R&B",
+              "Folk",
+              "Hip-Hop",
+              "Electronic",
+              "Lainnya...",
+            ],
+            info: "Genre akan mempengaruhi gaya bahasa dan struktur lirik.",
+            optional: true,
+          },
+          {
+            name: "theme",
+            label: "Tema Lagu",
+            type: "text",
+            placeholder: "e.g., 'cinta pertama, patah hati, perjalanan hidup'",
+            info: "Gagasan atau cerita utama di balik lagu.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "mood",
+            label: "Suasana Hati Lagu",
+            type: "select",
+            options: [
+              "Senang & Ceria",
+              "Sedih & Melankolis",
+              "Energik & Memotivasi",
+              "Romantis & Intim",
+              "Lainnya...",
+            ],
+            info: "Emosi utama yang ingin disampaikan melalui lirik.",
+            optional: true,
+          },
+          {
+            name: "keyElements",
+            label: "Elemen/Kata Kunci Wajib",
+            type: "textarea",
+            placeholder: "e.g., 'sebutkan kata 'bintang', 'malam', 'harapan'",
+            info: "Gambar, kata, atau frasa spesifik yang harus ada dalam lirik.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "adPlatform",
+            label: "Platform Iklan",
+            type: "select",
+            options: [
+              "Google Ads",
+              "Facebook/Instagram Ads",
+              "TikTok Ads",
+              "YouTube Ads",
+              "Lainnya...",
+            ],
+            info: "Platform akan mempengaruhi batasan karakter dan format.",
+            optional: true,
+          },
+          {
+            name: "productService",
+            label: "Produk/Layanan yang Diiklankan",
+            type: "text",
+            placeholder: "e.g., 'Kursus Online Bahasa Inggris'",
+            info: "Apa yang Anda promosikan?",
+            optional: true,
+          },
+          {
+            name: "uniqueSellingPoint",
+            label: "Unique Selling Point (USP)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Metode belajar interaktif, garansi mahir dalam 3 bulan.'",
+            info: "Apa yang membuat produk/layanan Anda unik dan lebih baik?",
+            optional: true,
+          },
+          {
+            name: "callToAction",
+            label: "Call to Action (CTA)",
+            type: "text",
+            placeholder: "e.g., 'Daftar Sekarang!', 'Unduh Aplikasi Gratis!'",
+            info: "Tindakan spesifik yang Anda ingin audiens lakukan.",
+            optional: true,
+          },
+          {
+            name: "adLength",
+            label: "Panjang Iklan",
+            type: "select",
+            options: [
+              "Sangat Singkat (Headline & Deskripsi)",
+              "Singkat (Beberapa Kalimat)",
+              "Sedang (Paragraf Singkat)",
+              "Lainnya...",
+            ],
+            info: "Pilih panjang teks iklan yang diinginkan.",
+            optional: true,
+          },
+        ],
         konteks_tambahan_instruksi_khusus:
           "AI harus proaktif. Jika pengguna meminta 'Post Media Sosial' tanpa menyebut platform, buat versi untuk Instagram sebagai default. Jika tidak ada 'Gaya & Nada', pilih yang paling umum untuk 'Jenis Konten' (misal: 'Informatif' untuk Blog, 'Persuasif' untuk Deskripsi Produk). Selalu prioritaskan kejelasan, keringkasan, dan dampak sesuai dengan tujuan akhir konten (menjual, mengedukasi, atau menghibur). Untuk konten kreatif seperti lirik, jangan takut untuk menjadi lebih puitis dan abstrak.",
         kategori: ["Prompt Proyek", "Konten & Pemasaran"],
@@ -11037,509 +10915,394 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               regex: "^(?!Pilih Jenis Acara...).*$",
             },
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "eventType",
-          options: {
-            Pernikahan: [
-              {
-                name: "coupleNames",
-                label: "Nama Pasangan",
-                type: "text",
-                placeholder: "e.g., 'Sarah & David'",
-                info: "Nama kedua mempelai.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "hosting_info",
-                label: "Penyelenggara Acara",
-                type: "text",
-                placeholder: "e.g., 'Bersama kedua orang tua'",
-                info: "Siapa yang mengundang? (misal: 'Mr. & Mrs. Budiman mengundang...')",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "weddingStyle",
-                label: "Gaya Pernikahan",
-                type: "select",
-                options: [
-                  "Formal & Tradisional",
-                  "Modern & Minimalis",
-                  "Rustic & Santai",
-                  "Bohemian & Unik",
-                  "Lainnya...",
-                ],
-                info: "Gaya keseluruhan akan mempengaruhi pilihan kata.",
-              },
-              {
-                name: "ceremonyDateTime",
-                label: "Tanggal & Waktu Akad/Pemberkatan",
-                type: "text",
-                placeholder: "e.g., 'Sabtu, 28 Desember 2025, Pukul 09:00'",
-                info: "Waktu untuk acara inti.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "ceremonyLocation",
-                label: "Lokasi Akad/Pemberkatan",
-                type: "text",
-                placeholder: "e.g., 'Masjid Istiqlal, Jakarta'",
-                info: "Tempat acara inti.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "receptionDateTime",
-                label: "Tanggal & Waktu Resepsi",
-                type: "text",
-                placeholder: "e.g., 'Sabtu, 28 Desember 2025, Pukul 19:00'",
-                info: "Waktu untuk perayaan.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "receptionLocation",
-                label: "Lokasi Resepsi",
-                type: "text",
-                placeholder:
-                  "e.g., 'Gedung Serbaguna ABC, Jl. Merdeka No. 123'",
-                info: "Tempat perayaan.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "dressCode",
-                label: "Aturan Berpakaian (Dress Code)",
-                type: "text",
-                placeholder: "e.g., 'Batik, Jas Formal'",
-                info: "Pakaian yang disarankan untuk tamu.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "rsvpInfo",
-                label: "Informasi RSVP",
-                type: "text",
-                placeholder:
-                  "e.g., 'Mohon konfirmasi ke 0812-3456-7890 (WhatsApp) sebelum 1 Desember'",
-                info: "Cara dan batas waktu konfirmasi kehadiran.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "googleMapsLink",
-                label: "Tautan Google Maps",
-                type: "text",
-                placeholder: "e.g., 'https://maps.app.goo.gl/xyz'",
-                info: "Tautan Google Maps untuk lokasi acara.",
-              },
-            ],
-            "Bisnis/Resmi": [
-              {
-                name: "eventName",
-                label: "Nama Acara",
-                type: "text",
-                placeholder: "e.g., 'Konferensi Pers Tahunan'",
-                info: "Judul resmi acara.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "organizer",
-                label: "Penyelenggara",
-                type: "text",
-                placeholder: "e.g., 'PT Jaya Abadi'",
-                info: "Organisasi atau departemen yang bertanggung jawab.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "objective",
-                label: "Tujuan Acara",
-                type: "text",
-                placeholder: "e.g., 'Meluncurkan produk baru'",
-                info: "Apa tujuan utama dari acara ini?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "keySpeaker",
-                label: "Pembicara Utama",
-                type: "text",
-                placeholder: "e.g., 'Dr. Budi Santoso, CEO'",
-                info: "Tokoh penting yang akan berbicara.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "dateTime",
-                label: "Tanggal & Waktu",
-                type: "text",
-                placeholder:
-                  "e.g., 'Senin, 20 Oktober 2025, 10:00 - 12:00 WIB'",
-                info: "Waktu pelaksanaan acara.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "location",
-                label: "Lokasi/Platform",
-                type: "text",
-                placeholder: "e.g., 'Ballroom Hotel Indonesia / Zoom Webinar'",
-                info: "Tempat fisik atau platform virtual.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "agenda",
-                label: "Agenda Singkat",
-                type: "textarea",
-                placeholder:
-                  "e.g., '10:00 - Pembukaan\n10:15 - Sambutan CEO\n10:30 - Demo Produk'",
-                info: "Rundown singkat acara.",
-                validation: {
-                  min_length: 20,
-                },
-              },
-              {
-                name: "registrationLink",
-                label: "Tautan Pendaftaran/RSVP",
-                type: "text",
-                placeholder: "e.g., 'bit.ly/DaftarAcaraXYZ'",
-                info: "Link untuk konfirmasi atau pendaftaran.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "googleMapsLink",
-                label: "Tautan Google Maps",
-                type: "text",
-                placeholder: "e.g., 'https://maps.app.goo.gl/xyz'",
-                info: "Tautan Google Maps untuk lokasi acara.",
-              },
-            ],
-            "Ulang Tahun/Personal": [
-              {
-                name: "personBeingCelebrated",
-                label: "Nama yang Berulang Tahun",
-                type: "text",
-                placeholder: "e.g., 'Andi'",
-                info: "Siapa yang merayakan?",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "age",
-                label: "Ulang Tahun ke- (Opsional)",
-                type: "number",
-                placeholder: "e.g., 30",
-                info: "Perayaan ulang tahun yang ke berapa.",
-                validation: {
-                  min_value: 1,
-                  max_value: 120,
-                },
-              },
-              {
-                name: "theme",
-                label: "Tema Pesta",
-                type: "text",
-                placeholder: "e.g., 'Pesta Topeng, 90-an, Superhero'",
-                info: "Tema spesifik untuk kostum atau dekorasi.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "dateTime",
-                label: "Tanggal & Waktu",
-                type: "text",
-                placeholder: "e.g., 'Sabtu, 15 November 2025, Pukul 19:00'",
-                info: "Kapan pesta akan diadakan?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "location",
-                label: "Lokasi Pesta",
-                type: "text",
-                placeholder: "e.g., 'Rumah Andi, Jl. Bahagia No. 5'",
-                info: "Di mana pesta akan diadakan?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "dressCode",
-                label: "Aturan Berpakaian (Dress Code)",
-                type: "text",
-                placeholder: "e.g., 'Santai, Sesuai tema'",
-                info: "Pakaian yang disarankan.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "rsvpContact",
-                label: "Kontak RSVP",
-                type: "text",
-                placeholder: "e.g., 'Hubungi Budi di 0811-2233-4455'",
-                info: "Siapa yang harus dihubungi untuk konfirmasi.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "giftInfo",
-                label: "Informasi Kado (Opsional)",
-                type: "text",
-                placeholder:
-                  "e.g., 'Tidak perlu membawa kado, kehadiranmu adalah hadiah terbaik!'",
-                info: "Petunjuk mengenai hadiah.",
-                optional: true,
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "googleMapsLink",
-                label: "Tautan Google Maps",
-                type: "text",
-                placeholder: "e.g., 'https://maps.app.goo.gl/xyz'",
-                info: "Tautan Google Maps untuk lokasi acara.",
-                optional: true,
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
-            "Workshop/Komunitas": [
-              {
-                name: "eventName",
-                label: "Nama Workshop/Acara",
-                type: "text",
-                placeholder: "e.g., 'Workshop Desain UI/UX Dasar'",
-                info: "Judul lengkap workshop atau acara komunitas.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "organizer",
-                label: "Penyelenggara",
-                type: "text",
-                placeholder: "e.g., 'Komunitas Developer Jakarta'",
-                info: "Nama organisasi atau individu yang menyelenggarakan acara.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "shortDescription",
-                label: "Deskripsi Singkat Acara",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Pelajari dasar-dasar desain antarmuka pengguna dan pengalaman pengguna dalam workshop interaktif ini.'",
-                info: "Ringkasan singkat tentang apa yang akan dipelajari atau dilakukan peserta.",
-                validation: {
-                  min_length: 20,
-                },
-              },
-              {
-                name: "dateTime",
-                label: "Tanggal & Waktu",
-                type: "text",
-                placeholder:
-                  "e.g., 'Sabtu, 10 Agustus 2025, Pukul 09:00 - 16:00 WIB'",
-                info: "Waktu pelaksanaan acara.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "location",
-                label: "Lokasi/Platform",
-                type: "text",
-                placeholder:
-                  "e.g., 'Co-working Space X, Jl. Sudirman No. 10 / Zoom Webinar'",
-                info: "Tempat fisik atau platform virtual.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "speakers",
-                label: "Pembicara/Fasilitator (Opsional)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Andi Wijaya (Desainer Senior), Budi Santoso (Praktisi UX)'",
-                info: "Nama dan peran pembicara atau fasilitator.",
-                optional: true,
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "agenda",
-                label: "Agenda/Materi Kunci (Opsional)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Sesi 1: Pengantar UI/UX. Sesi 2: Prinsip Desain. Sesi 3: Studi Kasus & Praktik.'",
-                info: "Poin-poin utama atau jadwal singkat acara.",
-                optional: true,
-                validation: {
-                  min_length: 20,
-                },
-              },
-              {
-                name: "targetAudience",
-                label: "Target Audiens",
-                type: "text",
-                placeholder:
-                  "e.g., 'Mahasiswa desain, pemula di bidang IT, anggota komunitas umum'",
-                info: "Siapa yang dituju oleh workshop/acara ini?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "registrationFee",
-                label: "Biaya Pendaftaran (Opsional)",
-                type: "text",
-                placeholder:
-                  "e.g., 'Gratis', 'Rp 50.000 (termasuk sertifikat)'",
-                info: "Informasi biaya dan apa yang didapatkan peserta.",
-                optional: true,
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "registrationLink",
-                label: "Tautan Pendaftaran/RSVP",
-                type: "text",
-                placeholder: "e.g., 'bit.ly/DaftarWorkshopUIUX'",
-                info: "Link untuk pendaftaran atau konfirmasi kehadiran.",
-                optional: true,
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "contactInfo",
-                label: "Kontak Informasi",
-                type: "text",
-                placeholder: "e.g., 'admin@komunitas.com / 0812-3456-7890'",
-                info: "Informasi kontak untuk pertanyaan lebih lanjut.",
-                optional: true,
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "googleMapsLink",
-                label: "Tautan Google Maps (Opsional)",
-                type: "text",
-                placeholder: "e.g., 'https://maps.app.goo.gl/xyz'",
-                info: "Tautan Google Maps untuk lokasi acara fisik.",
-                optional: true,
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
-            "Terima Kasih": [
-              {
-                name: "senderName",
-                label: "Nama Pengirim",
-                type: "text",
-                placeholder: "e.g., 'Sarah & David', 'Tim XYZ'",
-                info: "Siapa yang mengucapkan terima kasih.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "recipientName",
-                label: "Nama Penerima (Opsional)",
-                type: "text",
-                placeholder: "e.g., 'Bapak/Ibu Budi', 'Para Tamu Undangan'",
-                info: "Jika ingin personalisasi, sebutkan nama penerima.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "reason",
-                label: "Alasan Ucapan Terima Kasih",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'atas kehadiran Anda di pernikahan kami', 'atas dukungan Anda pada proyek ini', 'atas hadiah yang indah'",
-                info: "Jelaskan secara spesifik mengapa Anda berterima kasih.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "eventReference",
-                label: "Referensi Acara (Opsional)",
-                type: "text",
-                placeholder:
-                  "e.g., 'Pernikahan kami pada 28 Desember', 'Acara peluncuran produk'",
-                info: "Jika ucapan terima kasih terkait acara tertentu.",
-                optional: true,
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "messageTone",
-                label: "Gaya & Nada Pesan",
-                type: "select",
-                options: [
-                  "Tulus & Hangat",
-                  "Formal & Profesional",
-                  "Singkat & Efisien",
-                  "Penuh Sukacita",
-                  "Lainnya...",
-                ],
-                info: "Pilih nuansa pesan yang ingin disampaikan.",
-              },
-              {
-                name: "additionalDetails",
-                label: "Detail Tambahan (Opsional)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Sertakan foto kami berdua.', 'Sebutkan harapan untuk kolaborasi di masa depan.'",
-                info: "Informasi atau instruksi spesifik lainnya.",
-                optional: true,
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
+          {
+            name: "coupleNames",
+            label: "Nama Pasangan",
+            type: "text",
+            placeholder: "e.g., 'Sarah & David'",
+            info: "Nama kedua mempelai.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
           },
-        },
+          {
+            name: "hosting_info",
+            label: "Penyelenggara Acara",
+            type: "text",
+            placeholder: "e.g., 'Bersama kedua orang tua'",
+            info: "Siapa yang mengundang? (misal: 'Mr. & Mrs. Budiman mengundang...')",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "weddingStyle",
+            label: "Gaya Pernikahan",
+            type: "select",
+            options: [
+              "Formal & Tradisional",
+              "Modern & Minimalis",
+              "Rustic & Santai",
+              "Bohemian & Unik",
+              "Lainnya...",
+            ],
+            info: "Gaya keseluruhan akan mempengaruhi pilihan kata.",
+            optional: true,
+          },
+          {
+            name: "ceremonyDateTime",
+            label: "Tanggal & Waktu Akad/Pemberkatan",
+            type: "text",
+            placeholder: "e.g., 'Sabtu, 28 Desember 2025, Pukul 09:00'",
+            info: "Waktu untuk acara inti.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "ceremonyLocation",
+            label: "Lokasi Akad/Pemberkatan",
+            type: "text",
+            placeholder: "e.g., 'Masjid Istiqlal, Jakarta'",
+            info: "Tempat acara inti.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "receptionDateTime",
+            label: "Tanggal & Waktu Resepsi",
+            type: "text",
+            placeholder: "e.g., 'Sabtu, 28 Desember 2025, Pukul 19:00'",
+            info: "Waktu untuk perayaan.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "receptionLocation",
+            label: "Lokasi Resepsi",
+            type: "text",
+            placeholder: "e.g., 'Gedung Serbaguna ABC, Jl. Merdeka No. 123'",
+            info: "Tempat perayaan.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "dressCode",
+            label: "Aturan Berpakaian (Dress Code)",
+            type: "text",
+            placeholder: "e.g., 'Batik, Jas Formal'",
+            info: "Pakaian yang disarankan untuk tamu.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "rsvpInfo",
+            label: "Informasi RSVP",
+            type: "text",
+            placeholder:
+              "e.g., 'Mohon konfirmasi ke 0812-3456-7890 (WhatsApp) sebelum 1 Desember'",
+            info: "Cara dan batas waktu konfirmasi kehadiran.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "googleMapsLink",
+            label: "Tautan Google Maps",
+            type: "text",
+            placeholder: "e.g., 'https://maps.app.goo.gl/xyz'",
+            info: "Tautan Google Maps untuk lokasi acara.",
+            optional: true,
+          },
+          {
+            name: "eventName",
+            label: "Nama Acara",
+            type: "text",
+            placeholder: "e.g., 'Konferensi Pers Tahunan'",
+            info: "Judul resmi acara.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "organizer",
+            label: "Penyelenggara",
+            type: "text",
+            placeholder: "e.g., 'PT Jaya Abadi'",
+            info: "Organisasi atau departemen yang bertanggung jawab.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "objective",
+            label: "Tujuan Acara",
+            type: "text",
+            placeholder: "e.g., 'Meluncurkan produk baru'",
+            info: "Apa tujuan utama dari acara ini?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "keySpeaker",
+            label: "Pembicara Utama",
+            type: "text",
+            placeholder: "e.g., 'Dr. Budi Santoso, CEO'",
+            info: "Tokoh penting yang akan berbicara.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "dateTime",
+            label: "Tanggal & Waktu",
+            type: "text",
+            placeholder: "e.g., 'Senin, 20 Oktober 2025, 10:00 - 12:00 WIB'",
+            info: "Waktu pelaksanaan acara.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "location",
+            label: "Lokasi/Platform",
+            type: "text",
+            placeholder: "e.g., 'Ballroom Hotel Indonesia / Zoom Webinar'",
+            info: "Tempat fisik atau platform virtual.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "agenda",
+            label: "Agenda Singkat",
+            type: "textarea",
+            placeholder:
+              "e.g., '10:00 - Pembukaan\n10:15 - Sambutan CEO\n10:30 - Demo Produk'",
+            info: "Rundown singkat acara.",
+            validation: {
+              min_length: 20,
+            },
+            optional: true,
+          },
+          {
+            name: "registrationLink",
+            label: "Tautan Pendaftaran/RSVP",
+            type: "text",
+            placeholder: "e.g., 'bit.ly/DaftarAcaraXYZ'",
+            info: "Link untuk konfirmasi atau pendaftaran.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "personBeingCelebrated",
+            label: "Nama yang Berulang Tahun",
+            type: "text",
+            placeholder: "e.g., 'Andi'",
+            info: "Siapa yang merayakan?",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "age",
+            label: "Ulang Tahun ke- (Opsional)",
+            type: "number",
+            placeholder: "e.g., 30",
+            info: "Perayaan ulang tahun yang ke berapa.",
+            validation: {
+              min_value: 1,
+              max_value: 120,
+            },
+            optional: true,
+          },
+          {
+            name: "theme",
+            label: "Tema Pesta",
+            type: "text",
+            placeholder: "e.g., 'Pesta Topeng, 90-an, Superhero'",
+            info: "Tema spesifik untuk kostum atau dekorasi.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "rsvpContact",
+            label: "Kontak RSVP",
+            type: "text",
+            placeholder: "e.g., 'Hubungi Budi di 0811-2233-4455'",
+            info: "Siapa yang harus dihubungi untuk konfirmasi.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "giftInfo",
+            label: "Informasi Kado (Opsional)",
+            type: "text",
+            placeholder:
+              "e.g., 'Tidak perlu membawa kado, kehadiranmu adalah hadiah terbaik!'",
+            info: "Petunjuk mengenai hadiah.",
+            optional: true,
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "shortDescription",
+            label: "Deskripsi Singkat Acara",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Pelajari dasar-dasar desain antarmuka pengguna dan pengalaman pengguna dalam workshop interaktif ini.'",
+            info: "Ringkasan singkat tentang apa yang akan dipelajari atau dilakukan peserta.",
+            validation: {
+              min_length: 20,
+            },
+            optional: true,
+          },
+          {
+            name: "speakers",
+            label: "Pembicara/Fasilitator (Opsional)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Andi Wijaya (Desainer Senior), Budi Santoso (Praktisi UX)'",
+            info: "Nama dan peran pembicara atau fasilitator.",
+            optional: true,
+            validation: {
+              min_length: 10,
+            },
+          },
+          {
+            name: "targetAudience",
+            label: "Target Audiens",
+            type: "text",
+            placeholder:
+              "e.g., 'Mahasiswa desain, pemula di bidang IT, anggota komunitas umum'",
+            info: "Siapa yang dituju oleh workshop/acara ini?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "registrationFee",
+            label: "Biaya Pendaftaran (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Gratis', 'Rp 50.000 (termasuk sertifikat)'",
+            info: "Informasi biaya dan apa yang didapatkan peserta.",
+            optional: true,
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "contactInfo",
+            label: "Kontak Informasi",
+            type: "text",
+            placeholder: "e.g., 'admin@komunitas.com / 0812-3456-7890'",
+            info: "Informasi kontak untuk pertanyaan lebih lanjut.",
+            optional: true,
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "senderName",
+            label: "Nama Pengirim",
+            type: "text",
+            placeholder: "e.g., 'Sarah & David', 'Tim XYZ'",
+            info: "Siapa yang mengucapkan terima kasih.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "recipientName",
+            label: "Nama Penerima (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Bapak/Ibu Budi', 'Para Tamu Undangan'",
+            info: "Jika ingin personalisasi, sebutkan nama penerima.",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "reason",
+            label: "Alasan Ucapan Terima Kasih",
+            type: "textarea",
+            placeholder:
+              "e.g., 'atas kehadiran Anda di pernikahan kami', 'atas dukungan Anda pada proyek ini', 'atas hadiah yang indah'",
+            info: "Jelaskan secara spesifik mengapa Anda berterima kasih.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "eventReference",
+            label: "Referensi Acara (Opsional)",
+            type: "text",
+            placeholder:
+              "e.g., 'Pernikahan kami pada 28 Desember', 'Acara peluncuran produk'",
+            info: "Jika ucapan terima kasih terkait acara tertentu.",
+            optional: true,
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "messageTone",
+            label: "Gaya & Nada Pesan",
+            type: "select",
+            options: [
+              "Tulus & Hangat",
+              "Formal & Profesional",
+              "Singkat & Efisien",
+              "Penuh Sukacita",
+              "Lainnya...",
+            ],
+            info: "Pilih nuansa pesan yang ingin disampaikan.",
+            optional: true,
+          },
+          {
+            name: "additionalDetails",
+            label: "Detail Tambahan (Opsional)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Sertakan foto kami berdua.', 'Sebutkan harapan untuk kolaborasi di masa depan.'",
+            info: "Informasi atau instruksi spesifik lainnya.",
+            optional: true,
+            validation: {
+              min_length: 10,
+            },
+          },
+        ],
         konteks_tambahan_instruksi_khusus:
           "AI harus sangat peka terhadap `Jenis Acara`. Jika pengguna tidak memberikan `Gaya & Nada`, AI harus memilih yang paling sesuai secara default (misal: 'Elegan' untuk Pernikahan, 'Profesional' untuk Bisnis). Tujuan utamanya adalah menghasilkan output yang terasa otentik dan dibuat khusus untuk acara tersebut, bukan hasil dari template generik.",
         kategori: ["Prompt Proyek", "Kreasi Digital Personal & Acara"],
@@ -11769,6 +11532,50 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "tujuan_leadgen_lainnya",
+            label: "Tujuan Lead Generation Lainnya",
+            type: "text",
+            description:
+              "Sebutkan tujuan Lead Generation spesifik Anda jika memilih 'Lainnya'.",
+            default: "",
+            optional: false,
+            placeholder:
+              "Contoh: Mendapatkan 1000 pendaftar webinar dalam 1 bulan.",
+            info: "Jelaskan tujuan Lead Generation Anda secara spesifik jika tidak ada dalam pilihan yang tersedia.",
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "saluran_pemasaran_lainnya",
+            label: "Saluran Pemasaran Lainnya",
+            type: "textarea",
+            description:
+              "Sebutkan saluran pemasaran spesifik Anda jika memilih 'Lainnya'.",
+            default: "",
+            optional: false,
+            placeholder:
+              "Contoh: Kemitraan dengan influencer industri, podcast.",
+            info: "Jelaskan saluran pemasaran tambahan yang ingin Anda pertimbangkan.",
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "jenis_konten_penawaran_lainnya",
+            label: "Jenis Konten/Penawaran Lainnya",
+            type: "textarea",
+            description:
+              "Sebutkan jenis konten/penawaran spesifik Anda jika memilih 'Lainnya'.",
+            default: "",
+            optional: false,
+            placeholder: "Contoh: Kuis interaktif, demo produk personal.",
+            info: "Jelaskan jenis konten atau penawaran tambahan yang ingin Anda gunakan.",
+            validation: {
+              min_length: 5,
+            },
+          },
         ],
         komponen_prompt: {
           PERAN:
@@ -11780,73 +11587,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan strategi dalam format Markdown yang terstruktur dengan baik, menggunakan heading, bullet points, dan bold untuk keterbacaan yang maksimal.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "tujuan_leadgen",
-            options: {
-              Lainnya: [
-                {
-                  name: "tujuan_leadgen_lainnya",
-                  label: "Tujuan Lead Generation Lainnya",
-                  type: "text",
-                  description:
-                    "Sebutkan tujuan Lead Generation spesifik Anda jika memilih 'Lainnya'.",
-                  default: "",
-                  optional: false,
-                  placeholder:
-                    "Contoh: Mendapatkan 1000 pendaftar webinar dalam 1 bulan.",
-                  info: "Jelaskan tujuan Lead Generation Anda secara spesifik jika tidak ada dalam pilihan yang tersedia.",
-                  validation: {
-                    min_length: 5,
-                  },
-                },
-              ],
-            },
-          },
-          {
-            trigger: "saluran_pemasaran",
-            options: {
-              Lainnya: [
-                {
-                  name: "saluran_pemasaran_lainnya",
-                  label: "Saluran Pemasaran Lainnya",
-                  type: "textarea",
-                  description:
-                    "Sebutkan saluran pemasaran spesifik Anda jika memilih 'Lainnya'.",
-                  default: "",
-                  optional: false,
-                  placeholder:
-                    "Contoh: Kemitraan dengan influencer industri, podcast.",
-                  info: "Jelaskan saluran pemasaran tambahan yang ingin Anda pertimbangkan.",
-                  validation: {
-                    min_length: 5,
-                  },
-                },
-              ],
-            },
-          },
-          {
-            trigger: "jenis_konten_penawaran",
-            options: {
-              Lainnya: [
-                {
-                  name: "jenis_konten_penawaran_lainnya",
-                  label: "Jenis Konten/Penawaran Lainnya",
-                  type: "textarea",
-                  description:
-                    "Sebutkan jenis konten/penawaran spesifik Anda jika memilih 'Lainnya'.",
-                  default: "",
-                  optional: false,
-                  placeholder: "Contoh: Kuis interaktif, demo produk personal.",
-                  info: "Jelaskan jenis konten atau penawaran tambahan yang ingin Anda gunakan.",
-                  validation: {
-                    min_length: 5,
-                  },
-                },
-              ],
-            },
-          },
-        ],
         toolType: "text",
         konteks_tambahan_instruksi_khusus:
           "Pastikan strategi yang dihasilkan relevan dengan industri dan target audiens yang disebutkan. Berikan saran yang praktis dan dapat ditindaklanjuti. Hindari jargon yang tidak perlu dan fokus pada kejelasan.",
@@ -11910,194 +11650,179 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               regex: "^(?!Pilih Jenis Bantuan Akademik...).*$",
             },
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "assistanceType",
-          options: {
-            "Rencana Belajar": [
-              {
-                name: "subject",
-                label: "Mata Pelajaran/Ujian",
-                type: "text",
-                placeholder: "e.g., 'Ujian Akhir Semester Matematika'",
-                info: "Sebutkan subjek atau ujian yang akan dihadapi.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "timeframe",
-                label: "Jangka Waktu Belajar",
-                type: "text",
-                placeholder: "e.g., '2 minggu'",
-                info: "Berapa lama waktu yang Anda miliki untuk belajar?",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "studyHoursPerDay",
-                label: "Jam Belajar per Hari",
-                type: "number",
-                placeholder: "e.g., 2",
-                info: "Berapa jam sehari Anda bisa fokus belajar?",
-                validation: {
-                  min_value: 1,
-                  max_value: 24,
-                },
-              },
-              {
-                name: "topicsToCover",
-                label: "Topik-topik yang Harus Dipelajari",
-                type: "textarea",
-                placeholder: "e.g., 'Aljabar, Geometri, Kalkulus Dasar'",
-                info: "Sebutkan semua materi yang perlu dipelajari.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
-            "Materi Belajar (Kuis/Flashcard)": [
-              {
-                name: "sourceMaterial",
-                label: "Materi Sumber",
-                type: "textarea",
-                placeholder: "Tempelkan teks atau poin-poin materi di sini",
-                info: "AI akan menggunakan ini untuk membuat materi belajar.",
-                validation: {
-                  min_length: 20,
-                },
-              },
-              {
-                name: "materialType",
-                label: "Jenis Materi",
-                type: "select",
-                options: [
-                  "Soal Pilihan Ganda",
-                  "Flashcard (Tanya-Jawab)",
-                  "Soal Esai Singkat",
-                  "Lainnya...",
-                ],
-                info: "Pilih jenis materi belajar yang ingin dibuat.",
-              },
-              {
-                name: "numberOfItems",
-                label: "Jumlah Soal/Kartu",
-                type: "number",
-                placeholder: "e.g., 10",
-                info: "Berapa banyak soal atau kartu yang ingin dibuat?",
-                validation: {
-                  min_value: 1,
-                  max_value: 50,
-                },
-              },
-            ],
-            "Rencana Mengajar (RPP)": [
-              {
-                name: "subject",
-                label: "Mata Pelajaran",
-                type: "text",
-                placeholder: "e.g., 'Biologi'",
-                info: "Sebutkan mata pelajaran yang akan diajarkan.",
-                validation: {
-                  min_length: 2,
-                },
-              },
-              {
-                name: "gradeLevel",
-                label: "Tingkat Kelas",
-                type: "text",
-                placeholder: "e.g., 'Kelas 10 SMA'",
-                info: "Untuk kelas berapa RPP ini dibuat?",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "topic",
-                label: "Topik Spesifik",
-                type: "text",
-                placeholder: "e.g., 'Fotosintesis'",
-                info: "Sebutkan topik spesifik yang akan dibahas.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "duration",
-                label: "Alokasi Waktu (menit)",
-                type: "number",
-                placeholder: "e.g., 90",
-                info: "Berapa lama sesi pengajaran akan berlangsung?",
-                validation: {
-                  min_value: 15,
-                  max_value: 240,
-                },
-              },
-            ],
-            "Ide Topik Diskusi": [
-              {
-                name: "discussionSubject",
-                label: "Subjek Diskusi",
-                type: "text",
-                placeholder:
-                  "e.g., 'Etika AI, Perubahan Iklim, Dampak Media Sosial'",
-                info: "Topik utama yang ingin didiskusikan.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "discussionGoal",
-                label: "Tujuan Diskusi",
-                type: "select",
-                options: [
-                  "Membangun Pemahaman",
-                  "Mencari Solusi",
-                  "Debat/Perdebatan",
-                  "Brainstorming Ide",
-                  "Lainnya...",
-                ],
-                info: "Apa yang ingin dicapai dari diskusi ini?",
-              },
-              {
-                name: "targetAudience",
-                label: "Target Audiens Diskusi",
-                type: "text",
-                placeholder: "e.g., 'Mahasiswa, Profesional, Komunitas Umum'",
-                info: "Siapa peserta diskusi ini?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "discussionFormat",
-                label: "Format Diskusi",
-                type: "select",
-                options: [
-                  "Terbuka",
-                  "Terstruktur",
-                  "Panel",
-                  "Debat",
-                  "Lainnya...",
-                ],
-                info: "Bagaimana diskusi akan dijalankan?",
-              },
-              {
-                name: "keyQuestions",
-                label: "Pertanyaan Kunci (Opsional)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Bagaimana AI mempengaruhi pekerjaan di masa depan? Apa peran individu dalam mengatasi perubahan iklim?'",
-                info: "Pertanyaan-pertanyaan pemicu untuk memulai atau memandu diskusi.",
-                optional: true,
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
+          {
+            name: "subject",
+            label: "Mata Pelajaran/Ujian",
+            type: "text",
+            placeholder: "e.g., 'Ujian Akhir Semester Matematika'",
+            info: "Sebutkan subjek atau ujian yang akan dihadapi.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
           },
-        },
+          {
+            name: "timeframe",
+            label: "Jangka Waktu Belajar",
+            type: "text",
+            placeholder: "e.g., '2 minggu'",
+            info: "Berapa lama waktu yang Anda miliki untuk belajar?",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "studyHoursPerDay",
+            label: "Jam Belajar per Hari",
+            type: "number",
+            placeholder: "e.g., 2",
+            info: "Berapa jam sehari Anda bisa fokus belajar?",
+            validation: {
+              min_value: 1,
+              max_value: 24,
+            },
+            optional: true,
+          },
+          {
+            name: "topicsToCover",
+            label: "Topik-topik yang Harus Dipelajari",
+            type: "textarea",
+            placeholder: "e.g., 'Aljabar, Geometri, Kalkulus Dasar'",
+            info: "Sebutkan semua materi yang perlu dipelajari.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "sourceMaterial",
+            label: "Materi Sumber",
+            type: "textarea",
+            placeholder: "Tempelkan teks atau poin-poin materi di sini",
+            info: "AI akan menggunakan ini untuk membuat materi belajar.",
+            validation: {
+              min_length: 20,
+            },
+            optional: true,
+          },
+          {
+            name: "materialType",
+            label: "Jenis Materi",
+            type: "select",
+            options: [
+              "Soal Pilihan Ganda",
+              "Flashcard (Tanya-Jawab)",
+              "Soal Esai Singkat",
+              "Lainnya...",
+            ],
+            info: "Pilih jenis materi belajar yang ingin dibuat.",
+            optional: true,
+          },
+          {
+            name: "numberOfItems",
+            label: "Jumlah Soal/Kartu",
+            type: "number",
+            placeholder: "e.g., 10",
+            info: "Berapa banyak soal atau kartu yang ingin dibuat?",
+            validation: {
+              min_value: 1,
+              max_value: 50,
+            },
+            optional: true,
+          },
+          {
+            name: "gradeLevel",
+            label: "Tingkat Kelas",
+            type: "text",
+            placeholder: "e.g., 'Kelas 10 SMA'",
+            info: "Untuk kelas berapa RPP ini dibuat?",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "topic",
+            label: "Topik Spesifik",
+            type: "text",
+            placeholder: "e.g., 'Fotosintesis'",
+            info: "Sebutkan topik spesifik yang akan dibahas.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "duration",
+            label: "Alokasi Waktu (menit)",
+            type: "number",
+            placeholder: "e.g., 90",
+            info: "Berapa lama sesi pengajaran akan berlangsung?",
+            validation: {
+              min_value: 15,
+              max_value: 240,
+            },
+            optional: true,
+          },
+          {
+            name: "discussionSubject",
+            label: "Subjek Diskusi",
+            type: "text",
+            placeholder:
+              "e.g., 'Etika AI, Perubahan Iklim, Dampak Media Sosial'",
+            info: "Topik utama yang ingin didiskusikan.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "discussionGoal",
+            label: "Tujuan Diskusi",
+            type: "select",
+            options: [
+              "Membangun Pemahaman",
+              "Mencari Solusi",
+              "Debat/Perdebatan",
+              "Brainstorming Ide",
+              "Lainnya...",
+            ],
+            info: "Apa yang ingin dicapai dari diskusi ini?",
+            optional: true,
+          },
+          {
+            name: "targetAudience",
+            label: "Target Audiens Diskusi",
+            type: "text",
+            placeholder: "e.g., 'Mahasiswa, Profesional, Komunitas Umum'",
+            info: "Siapa peserta diskusi ini?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "discussionFormat",
+            label: "Format Diskusi",
+            type: "select",
+            options: ["Terbuka", "Terstruktur", "Panel", "Debat", "Lainnya..."],
+            info: "Bagaimana diskusi akan dijalankan?",
+            optional: true,
+          },
+          {
+            name: "keyQuestions",
+            label: "Pertanyaan Kunci (Opsional)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Bagaimana AI mempengaruhi pekerjaan di masa depan? Apa peran individu dalam mengatasi perubahan iklim?'",
+            info: "Pertanyaan-pertanyaan pemicu untuk memulai atau memandu diskusi.",
+            optional: true,
+            validation: {
+              min_length: 10,
+            },
+          },
+        ],
         konteks_tambahan_instruksi_khusus:
           "AI harus selalu menekankan pentingnya pemahaman konsep di atas hafalan. Untuk pembuatan soal, pastikan tingkat kesulitan sesuai dengan tingkat audiens yang diberikan. Untuk RPP, sarankan variasi aktivitas untuk menjaga keterlibatan siswa. Wajib sertakan disclaimer: 'Materi yang dihasilkan adalah alat bantu. Guru/pelajar disarankan untuk memverifikasi informasi dan menyesuaikannya dengan kurikulum atau kebutuhan belajar yang spesifik.'",
         kategori: ["Prompt Proyek", "Pendidikan & Pembelajaran"],
@@ -12189,6 +11914,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "Pilih tingkat detail yang sesuai dengan kebutuhan perencanaan Anda.",
           },
+          {
+            name: "custom_output_detail_level",
+            label: "Sebutkan Tingkat Detail Output Lainnya",
+            type: "text",
+            description: "Input kustom untuk Tingkat Detail Output.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         komponen_prompt: {
           PERAN:
@@ -12212,27 +11949,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         top_p: 0.9,
         top_k: 40,
         updated_at: "2025-12-23T06:59:22.969282",
-        dynamicSubcomponents: [
-          {
-            trigger: "output_detail_level",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_output_detail_level",
-                  label: "Sebutkan Tingkat Detail Output Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Tingkat Detail Output.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
     },
     "Perencanaan & Produktivitas Personal": {
@@ -12261,331 +11977,325 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               regex: "^(?!Pilih Jenis Rencana...).*$",
             },
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "planType",
-          options: {
-            "Rencana Menu Makan": [
-              {
-                name: "dietaryPreferences",
-                label: "Preferensi Diet",
-                type: "select",
-                options: [
-                  "Omnivore",
-                  "Vegetarian",
-                  "Vegan",
-                  "Keto",
-                  "Paleo",
-                  "Lainnya...",
-                ],
-                info: "Pilih jenis diet yang Anda ikuti.",
-              },
-              {
-                name: "allergies",
-                label: "Alergi atau Pantangan",
-                type: "text",
-                placeholder: "e.g., 'Kacang, gluten, susu'",
-                info: "Sebutkan makanan yang harus dihindari.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "healthGoal",
-                label: "Tujuan Kesehatan",
-                type: "text",
-                placeholder:
-                  "e.g., 'Menurunkan berat badan, menambah massa otot'",
-                info: "Apa tujuan utama dari rencana makan ini?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "numberOfMeals",
-                label: "Jumlah Makanan per Hari",
-                type: "number",
-                placeholder: "e.g., 3",
-                info: "Berapa kali Anda makan dalam sehari?",
-                validation: {
-                  min_value: 1,
-                  max_value: 6,
-                },
-              },
-              {
-                name: "cookTime",
-                label: "Waktu Memasak Maksimal (menit)",
-                type: "number",
-                placeholder: "e.g., 30",
-                info: "Berapa lama waktu yang Anda miliki untuk memasak?",
-                validation: {
-                  min_value: 5,
-                  max_value: 180,
-                },
-              },
+          {
+            name: "dietaryPreferences",
+            label: "Preferensi Diet",
+            type: "select",
+            options: [
+              "Omnivore",
+              "Vegetarian",
+              "Vegan",
+              "Keto",
+              "Paleo",
+              "Lainnya...",
             ],
-            "Jadwal Olahraga": [
-              {
-                name: "fitnessLevel",
-                label: "Tingkat Kebugaran",
-                type: "select",
-                options: ["Pemula", "Menengah", "Mahir", "Lainnya..."],
-                info: "Pilih tingkat kebugaran Anda saat ini.",
-              },
-              {
-                name: "workoutFrequency",
-                label: "Frekuensi Olahraga (hari/minggu)",
-                type: "number",
-                placeholder: "e.g., 3",
-                info: "Berapa hari dalam seminggu Anda bisa berolahraga?",
-                validation: {
-                  min_value: 1,
-                  max_value: 7,
-                },
-              },
-              {
-                name: "workoutDuration",
-                label: "Durasi Olahraga (menit)",
-                type: "number",
-                placeholder: "e.g., 45",
-                info: "Berapa lama waktu yang Anda miliki untuk setiap sesi?",
-                validation: {
-                  min_value: 15,
-                  max_value: 180,
-                },
-              },
-              {
-                name: "workoutType",
-                label: "Jenis Olahraga yang Disukai",
-                type: "text",
-                placeholder: "e.g., 'Angkat beban, lari, yoga'",
-                info: "Sebutkan jenis olahraga yang Anda nikmati.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "equipment",
-                label: "Peralatan yang Tersedia",
-                type: "text",
-                placeholder: "e.g., 'Dumbbell, matras yoga, tidak ada alat'",
-                info: "Sebutkan peralatan yang Anda miliki.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-            ],
-            "Daftar Tugas": [
-              {
-                name: "mainProject",
-                label: "Proyek atau Tujuan Utama",
-                type: "text",
-                placeholder: "e.g., 'Menyelesaikan laporan kuartalan'",
-                info: "Apa tujuan besar yang ingin Anda capai?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "deadline",
-                label: "Tenggat Waktu",
-                type: "text",
-                placeholder: "e.g., 'Jumat ini'",
-                info: "Kapan proyek ini harus selesai?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "priorityLevel",
-                label: "Tingkat Prioritas",
-                type: "select",
-                options: ["Tinggi", "Sedang", "Rendah", "Lainnya..."],
-                info: "Seberapa penting proyek ini?",
-              },
-              {
-                name: "subtasks",
-                label: "Tugas-tugas Kecil (jika sudah ada)",
-                type: "textarea",
-                placeholder: "e.g., 'Kumpulkan data, buat draf, revisi'",
-                info: "Sebutkan langkah-langkah yang sudah Anda ketahui.",
-                optional: true,
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
-            "Jadwal Kebersihan": [
-              {
-                name: "cleaningFrequency",
-                label: "Frekuensi Kebersihan",
-                type: "select",
-                options: [
-                  "Harian",
-                  "Mingguan",
-                  "Bulanan",
-                  "Musiman",
-                  "Lainnya...",
-                ],
-                info: "Seberapa sering Anda ingin membersihkan?",
-              },
-              {
-                name: "areasToClean",
-                label: "Area yang Akan Dibersihkan",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Dapur, Kamar Mandi, Ruang Tamu, Kamar Tidur'",
-                info: "Sebutkan area spesifik di rumah atau kantor yang perlu dibersihkan.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "specificTasks",
-                label: "Tugas Spesifik per Area (Opsional)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Dapur: cuci piring, lap meja, buang sampah. Kamar Mandi: sikat toilet, bersihkan wastafel.'",
-                info: "Detail tugas kebersihan untuk setiap area.",
-                optional: true,
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "timePerTask",
-                label: "Estimasi Waktu per Tugas (menit)",
-                type: "number",
-                placeholder: "e.g., 15",
-                info: "Perkiraan waktu yang dibutuhkan untuk setiap tugas kebersihan.",
-                optional: true,
-                validation: {
-                  min_value: 1,
-                  max_value: 240,
-                },
-              },
-            ],
-            "Rencana Pengembangan Diri": [
-              {
-                name: "developmentArea",
-                label: "Area Pengembangan",
-                type: "text",
-                placeholder:
-                  "e.g., 'Keterampilan Komunikasi, Manajemen Waktu, Belajar Bahasa Baru'",
-                info: "Aspek diri yang ingin Anda tingkatkan.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "currentLevel",
-                label: "Tingkat Saat Ini",
-                type: "text",
-                placeholder:
-                  "e.g., 'Pemula, Cukup Baik, Perlu Peningkatan Signifikan'",
-                info: "Evaluasi diri Anda saat ini di area tersebut.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "desiredOutcome",
-                label: "Hasil yang Diinginkan",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Mampu presentasi dengan percaya diri di depan 50 orang. Menguasai percakapan dasar bahasa Mandarin.'",
-                info: "Apa yang ingin Anda capai secara spesifik dan terukur?",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "actionSteps",
-                label: "Langkah-Langkah Tindakan",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Minggu 1: Ikuti kursus online. Minggu 2: Latihan berbicara dengan native speaker.'",
-                info: "Langkah-langkah konkret yang akan Anda ambil untuk mencapai tujuan.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "resources",
-                label: "Sumber Daya yang Dibutuhkan (Opsional)",
-                type: "text",
-                placeholder: "e.g., 'Buku, kursus online, mentor'",
-                info: "Daftar sumber daya yang mungkin diperlukan.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-            ],
-            "Pelacak Kebiasaan": [
-              {
-                name: "habitName",
-                label: "Nama Kebiasaan",
-                type: "text",
-                placeholder: "e.g., 'Minum 8 gelas air', 'Membaca 30 menit'",
-                info: "Kebiasaan yang ingin Anda bangun atau lacak.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "frequency",
-                label: "Frekuensi",
-                type: "select",
-                options: [
-                  "Harian",
-                  "Mingguan",
-                  "Beberapa Kali Seminggu",
-                  "Lainnya...",
-                ],
-                info: "Seberapa sering kebiasaan ini akan dilakukan?",
-              },
-              {
-                name: "trigger",
-                label: "Pemicu (Opsional)",
-                type: "text",
-                placeholder:
-                  "e.g., 'Setelah bangun tidur', 'Sebelum makan malam'",
-                info: "Apa yang akan memicu Anda untuk melakukan kebiasaan ini?",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "reward",
-                label: "Hadiah (Opsional)",
-                type: "text",
-                placeholder:
-                  "e.g., 'Menonton episode serial favorit', 'Makan camilan sehat'",
-                info: "Hadiah kecil untuk memotivasi diri setelah berhasil.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "trackingMethod",
-                label: "Metode Pelacakan",
-                type: "select",
-                options: [
-                  "Checklist Harian",
-                  "Aplikasi Mobile",
-                  "Jurnal",
-                  "Lainnya...",
-                ],
-                info: "Bagaimana Anda akan melacak kemajuan kebiasaan ini?",
-              },
-            ],
+            info: "Pilih jenis diet yang Anda ikuti.",
+            optional: true,
           },
-        },
+          {
+            name: "allergies",
+            label: "Alergi atau Pantangan",
+            type: "text",
+            placeholder: "e.g., 'Kacang, gluten, susu'",
+            info: "Sebutkan makanan yang harus dihindari.",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "healthGoal",
+            label: "Tujuan Kesehatan",
+            type: "text",
+            placeholder: "e.g., 'Menurunkan berat badan, menambah massa otot'",
+            info: "Apa tujuan utama dari rencana makan ini?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "numberOfMeals",
+            label: "Jumlah Makanan per Hari",
+            type: "number",
+            placeholder: "e.g., 3",
+            info: "Berapa kali Anda makan dalam sehari?",
+            validation: {
+              min_value: 1,
+              max_value: 6,
+            },
+            optional: true,
+          },
+          {
+            name: "cookTime",
+            label: "Waktu Memasak Maksimal (menit)",
+            type: "number",
+            placeholder: "e.g., 30",
+            info: "Berapa lama waktu yang Anda miliki untuk memasak?",
+            validation: {
+              min_value: 5,
+              max_value: 180,
+            },
+            optional: true,
+          },
+          {
+            name: "fitnessLevel",
+            label: "Tingkat Kebugaran",
+            type: "select",
+            options: ["Pemula", "Menengah", "Mahir", "Lainnya..."],
+            info: "Pilih tingkat kebugaran Anda saat ini.",
+            optional: true,
+          },
+          {
+            name: "workoutFrequency",
+            label: "Frekuensi Olahraga (hari/minggu)",
+            type: "number",
+            placeholder: "e.g., 3",
+            info: "Berapa hari dalam seminggu Anda bisa berolahraga?",
+            validation: {
+              min_value: 1,
+              max_value: 7,
+            },
+            optional: true,
+          },
+          {
+            name: "workoutDuration",
+            label: "Durasi Olahraga (menit)",
+            type: "number",
+            placeholder: "e.g., 45",
+            info: "Berapa lama waktu yang Anda miliki untuk setiap sesi?",
+            validation: {
+              min_value: 15,
+              max_value: 180,
+            },
+            optional: true,
+          },
+          {
+            name: "workoutType",
+            label: "Jenis Olahraga yang Disukai",
+            type: "text",
+            placeholder: "e.g., 'Angkat beban, lari, yoga'",
+            info: "Sebutkan jenis olahraga yang Anda nikmati.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "equipment",
+            label: "Peralatan yang Tersedia",
+            type: "text",
+            placeholder: "e.g., 'Dumbbell, matras yoga, tidak ada alat'",
+            info: "Sebutkan peralatan yang Anda miliki.",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "mainProject",
+            label: "Proyek atau Tujuan Utama",
+            type: "text",
+            placeholder: "e.g., 'Menyelesaikan laporan kuartalan'",
+            info: "Apa tujuan besar yang ingin Anda capai?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "deadline",
+            label: "Tenggat Waktu",
+            type: "text",
+            placeholder: "e.g., 'Jumat ini'",
+            info: "Kapan proyek ini harus selesai?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "priorityLevel",
+            label: "Tingkat Prioritas",
+            type: "select",
+            options: ["Tinggi", "Sedang", "Rendah", "Lainnya..."],
+            info: "Seberapa penting proyek ini?",
+            optional: true,
+          },
+          {
+            name: "subtasks",
+            label: "Tugas-tugas Kecil (jika sudah ada)",
+            type: "textarea",
+            placeholder: "e.g., 'Kumpulkan data, buat draf, revisi'",
+            info: "Sebutkan langkah-langkah yang sudah Anda ketahui.",
+            optional: true,
+            validation: {
+              min_length: 10,
+            },
+          },
+          {
+            name: "cleaningFrequency",
+            label: "Frekuensi Kebersihan",
+            type: "select",
+            options: ["Harian", "Mingguan", "Bulanan", "Musiman", "Lainnya..."],
+            info: "Seberapa sering Anda ingin membersihkan?",
+            optional: true,
+          },
+          {
+            name: "areasToClean",
+            label: "Area yang Akan Dibersihkan",
+            type: "textarea",
+            placeholder: "e.g., 'Dapur, Kamar Mandi, Ruang Tamu, Kamar Tidur'",
+            info: "Sebutkan area spesifik di rumah atau kantor yang perlu dibersihkan.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "specificTasks",
+            label: "Tugas Spesifik per Area (Opsional)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Dapur: cuci piring, lap meja, buang sampah. Kamar Mandi: sikat toilet, bersihkan wastafel.'",
+            info: "Detail tugas kebersihan untuk setiap area.",
+            optional: true,
+            validation: {
+              min_length: 10,
+            },
+          },
+          {
+            name: "timePerTask",
+            label: "Estimasi Waktu per Tugas (menit)",
+            type: "number",
+            placeholder: "e.g., 15",
+            info: "Perkiraan waktu yang dibutuhkan untuk setiap tugas kebersihan.",
+            optional: true,
+            validation: {
+              min_value: 1,
+              max_value: 240,
+            },
+          },
+          {
+            name: "developmentArea",
+            label: "Area Pengembangan",
+            type: "text",
+            placeholder:
+              "e.g., 'Keterampilan Komunikasi, Manajemen Waktu, Belajar Bahasa Baru'",
+            info: "Aspek diri yang ingin Anda tingkatkan.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "currentLevel",
+            label: "Tingkat Saat Ini",
+            type: "text",
+            placeholder:
+              "e.g., 'Pemula, Cukup Baik, Perlu Peningkatan Signifikan'",
+            info: "Evaluasi diri Anda saat ini di area tersebut.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "desiredOutcome",
+            label: "Hasil yang Diinginkan",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Mampu presentasi dengan percaya diri di depan 50 orang. Menguasai percakapan dasar bahasa Mandarin.'",
+            info: "Apa yang ingin Anda capai secara spesifik dan terukur?",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "actionSteps",
+            label: "Langkah-Langkah Tindakan",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Minggu 1: Ikuti kursus online. Minggu 2: Latihan berbicara dengan native speaker.'",
+            info: "Langkah-langkah konkret yang akan Anda ambil untuk mencapai tujuan.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "resources",
+            label: "Sumber Daya yang Dibutuhkan (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Buku, kursus online, mentor'",
+            info: "Daftar sumber daya yang mungkin diperlukan.",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "habitName",
+            label: "Nama Kebiasaan",
+            type: "text",
+            placeholder: "e.g., 'Minum 8 gelas air', 'Membaca 30 menit'",
+            info: "Kebiasaan yang ingin Anda bangun atau lacak.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "frequency",
+            label: "Frekuensi",
+            type: "select",
+            options: [
+              "Harian",
+              "Mingguan",
+              "Beberapa Kali Seminggu",
+              "Lainnya...",
+            ],
+            info: "Seberapa sering kebiasaan ini akan dilakukan?",
+            optional: true,
+          },
+          {
+            name: "trigger",
+            label: "Pemicu (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Setelah bangun tidur', 'Sebelum makan malam'",
+            info: "Apa yang akan memicu Anda untuk melakukan kebiasaan ini?",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "reward",
+            label: "Hadiah (Opsional)",
+            type: "text",
+            placeholder:
+              "e.g., 'Menonton episode serial favorit', 'Makan camilan sehat'",
+            info: "Hadiah kecil untuk memotivasi diri setelah berhasil.",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "trackingMethod",
+            label: "Metode Pelacakan",
+            type: "select",
+            options: [
+              "Checklist Harian",
+              "Aplikasi Mobile",
+              "Jurnal",
+              "Lainnya...",
+            ],
+            info: "Bagaimana Anda akan melacak kemajuan kebiasaan ini?",
+            optional: true,
+          },
+        ],
         konteks_tambahan_instruksi_khusus:
           "AI harus selalu memberikan nasihat yang positif dan memotivasi. Untuk rencana terkait kesehatan (diet & olahraga), AI wajib menyertakan disclaimer: 'Saya adalah asisten AI dan bukan profesional medis. Selalu konsultasikan dengan dokter atau ahli gizi/pelatih bersertifikat sebelum memulai program kesehatan baru.' Jika pengguna memberikan batasan yang tidak realistis, AI harus memberikan saran yang lebih masuk akal dengan cara yang suportif.",
         kategori: ["Prompt Proyek", "Perencanaan & Produktivitas Personal"],
@@ -12634,338 +12344,309 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               regex: "^(?!Pilih Jenis Dokumen Acara...).*$",
             },
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "documentType",
-          options: {
-            "Agenda/Itinerary": [
-              {
-                name: "eventType",
-                label: "Jenis Acara",
-                type: "text",
-                placeholder: "e.g., 'Konferensi Bisnis'",
-                info: "Sebutkan jenis acara untuk konteks.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "startTime",
-                label: "Waktu Mulai Acara",
-                type: "text",
-                placeholder: "e.g., '09:00'",
-                info: "Jam dimulainya acara.",
-                validation: {
-                  min_length: 4,
-                },
-              },
-              {
-                name: "endTime",
-                label: "Waktu Selesai Acara",
-                type: "text",
-                placeholder: "e.g., '17:00'",
-                info: "Jam berakhirnya acara.",
-                validation: {
-                  min_length: 4,
-                },
-              },
-              {
-                name: "keyActivities",
-                label: "Aktivitas Utama & Durasi (menit)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Registrasi:30, Pembukaan:15, Sesi 1:60, Makan Siang:60'",
-                info: "Sebutkan aktivitas utama dan perkiraan durasinya.",
-                validation: {
-                  min_length: 20,
-                },
-              },
-            ],
-            "Rencana Anggaran": [
-              {
-                name: "totalBudget",
-                label: "Total Anggaran",
-                type: "number",
-                placeholder: "e.g., 50000000",
-                info: "Jumlah total dana yang tersedia.",
-                validation: {
-                  min_value: 100000,
-                },
-              },
-              {
-                name: "expenseCategories",
-                label: "Kategori Pengeluaran Utama",
-                type: "text",
-                placeholder: "e.g., 'Venue, Katering, Pemasaran, Hiburan'",
-                info: "Sebutkan pos-pos pengeluaran utama.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "priority",
-                label: "Prioritas Anggaran",
-                type: "select",
-                options: [
-                  "Pengalaman Tamu",
-                  "Pemasaran & Jangkauan",
-                  "Hemat Biaya",
-                  "Lainnya...",
-                ],
-                info: "Pilih area yang menjadi prioritas utama dalam pengalokasian dana.",
-              },
-            ],
-            "Teks Pidato/Sambutan": [
-              {
-                name: "speakerRole",
-                label: "Peran Pembicara",
-                type: "text",
-                placeholder: "e.g., 'Ayah mempelai wanita, CEO, Ketua Panitia'",
-                info: "Siapa yang akan memberikan pidato?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "speechGoal",
-                label: "Tujuan Pidato",
-                type: "text",
-                placeholder: "e.g., 'Mengharukan, memotivasi, menyambut tamu'",
-                info: "Apa pesan utama yang ingin disampaikan?",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "speechTone",
-                label: "Gaya & Nada Pidato",
-                type: "select",
-                options: [
-                  "Formal",
-                  "Santai & Humoris",
-                  "Inspiratif",
-                  "Lainnya...",
-                ],
-                info: "Pilih nuansa yang diinginkan untuk pidato.",
-              },
-              {
-                name: "duration",
-                label: "Target Durasi (menit)",
-                type: "number",
-                placeholder: "e.g., 5",
-                info: "Perkiraan panjang pidato.",
-                validation: {
-                  min_value: 1,
-                  max_value: 60,
-                },
-              },
-            ],
-            "Ide Tema Pesta": [
-              {
-                name: "partyType",
-                label: "Jenis Pesta",
-                type: "text",
-                placeholder:
-                  "e.g., 'Ulang Tahun Anak, Pesta Kantor, Baby Shower'",
-                info: "Jenis acara yang akan dirayakan.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "ageGroup",
-                label: "Kelompok Usia Tamu",
-                type: "text",
-                placeholder: "e.g., 'Anak-anak (5-10 tahun), Remaja, Dewasa'",
-                info: "Membantu menyesuaikan tema dan aktivitas.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "budgetLevel",
-                label: "Tingkat Anggaran",
-                type: "select",
-                options: ["Hemat", "Menengah", "Mewah", "Lainnya..."],
-                info: "Estimasi anggaran untuk pesta.",
-              },
-              {
-                name: "interests",
-                label: "Minat/Hobi (Opsional)",
-                type: "text",
-                placeholder:
-                  "e.g., 'Superheroes, Luar Angkasa, Vintage, Musik 80-an'",
-                info: "Minat khusus yang bisa menjadi inspirasi tema.",
-                optional: true,
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "locationType",
-                label: "Jenis Lokasi (Opsional)",
-                type: "select",
-                options: ["Indoor", "Outdoor", "Keduanya", "Lainnya..."],
-                info: "Apakah pesta akan diadakan di dalam atau luar ruangan?",
-              },
-            ],
-            "Daftar Tamu & RSVP": [
-              {
-                name: "eventType",
-                label: "Jenis Acara",
-                type: "text",
-                placeholder: "e.g., 'Pernikahan, Pesta Ulang Tahun'",
-                info: "Acara yang daftar tamunya akan dibuat.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "totalGuests",
-                label: "Perkiraan Jumlah Tamu",
-                type: "number",
-                placeholder: "e.g., 100",
-                info: "Estimasi jumlah tamu yang diundang.",
-                validation: {
-                  min_value: 1,
-                },
-              },
-              {
-                name: "rsvpDeadline",
-                label: "Batas Waktu RSVP",
-                type: "text",
-                placeholder: "e.g., '1 November 2025'",
-                info: "Tanggal terakhir untuk konfirmasi kehadiran.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "contactMethod",
-                label: "Metode Kontak RSVP",
-                type: "select",
-                options: [
-                  "Email",
-                  "Telepon/WhatsApp",
-                  "Formulir Online",
-                  "Lainnya...",
-                ],
-                info: "Bagaimana tamu harus mengkonfirmasi kehadiran?",
-              },
-              {
-                name: "additionalInfo",
-                label: "Informasi Tambahan (Opsional)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Sertakan kolom untuk alergi makanan. Minta konfirmasi jumlah anak-anak.'",
-                info: "Detail lain yang perlu dikumpulkan dari tamu.",
-                optional: true,
-                validation: {
-                  min_length: 10,
-                },
-              },
-            ],
-            "Checklist Vendor": [
-              {
-                name: "eventType",
-                label: "Jenis Acara",
-                type: "text",
-                placeholder: "e.g., 'Pernikahan, Konferensi'",
-                info: "Acara yang vendornya akan dikelola.",
-              },
-              {
-                name: "vendorCategory",
-                label: "Kategori Vendor",
-                type: "select",
-                options: [
-                  "Katering",
-                  "Venue",
-                  "Fotografi/Videografi",
-                  "Hiburan",
-                  "Dekorasi",
-                  "Logistik",
-                  "Lainnya...",
-                ],
-                info: "Pilih kategori vendor yang ingin Anda buat checklist-nya.",
-              },
-              {
-                name: "keyTasks",
-                label: "Tugas Kunci per Vendor",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Katering: Penawaran menu, food tasting, jadwal pengiriman. Venue: Ketersediaan, kapasitas, fasilitas.'",
-                info: "Daftar tugas atau poin penting yang harus dibahas dengan vendor.",
-              },
-              {
-                name: "contactPerson",
-                label: "Kontak Person Vendor (Opsional)",
-                type: "text",
-                placeholder: "e.g., 'Nama, Telepon, Email'",
-                info: "Informasi kontak utama vendor.",
-              },
-              {
-                name: "notes",
-                label: "Catatan Tambahan (Opsional)",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Perlu diskon khusus. Pastikan ada opsi vegetarian.'",
-                info: "Catatan atau persyaratan khusus untuk vendor.",
-              },
-            ],
-            "Ide Souvenir/Lomba": [
-              {
-                name: "eventType",
-                label: "Jenis Acara",
-                type: "text",
-                placeholder:
-                  "e.g., 'Ulang Tahun Anak, Pernikahan, Gathering Kantor'",
-                info: "Acara yang membutuhkan ide souvenir atau lomba.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "targetAudience",
-                label: "Target Audiens",
-                type: "text",
-                placeholder: "e.g., 'Anak-anak, Dewasa, Campuran'",
-                info: "Siapa yang akan menerima souvenir atau mengikuti lomba?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "budgetPerItem",
-                label: "Anggaran per Item (Opsional)",
-                type: "text",
-                placeholder: "e.g., 'Rp 10.000 - Rp 25.000'",
-                info: "Estimasi biaya per souvenir atau hadiah lomba.",
-                optional: true,
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "theme",
-                label: "Tema Acara (Opsional)",
-                type: "text",
-                placeholder: "e.g., 'Tropical, Vintage, Futuristik'",
-                info: "Tema acara jika ada, untuk menyesuaikan ide.",
-                optional: true,
-                validation: {
-                  min_length: 3,
-                },
-              },
-              {
-                name: "ideaType",
-                label: "Jenis Ide",
-                type: "select",
-                options: ["Souvenir", "Lomba", "Keduanya", "Lainnya..."],
-                info: "Apakah Anda mencari ide souvenir, lomba, atau keduanya?",
-              },
-            ],
+          {
+            name: "eventType",
+            label: "Jenis Acara",
+            type: "text",
+            placeholder: "e.g., 'Konferensi Bisnis'",
+            info: "Sebutkan jenis acara untuk konteks.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
           },
-        },
+          {
+            name: "startTime",
+            label: "Waktu Mulai Acara",
+            type: "text",
+            placeholder: "e.g., '09:00'",
+            info: "Jam dimulainya acara.",
+            validation: {
+              min_length: 4,
+            },
+            optional: true,
+          },
+          {
+            name: "endTime",
+            label: "Waktu Selesai Acara",
+            type: "text",
+            placeholder: "e.g., '17:00'",
+            info: "Jam berakhirnya acara.",
+            validation: {
+              min_length: 4,
+            },
+            optional: true,
+          },
+          {
+            name: "keyActivities",
+            label: "Aktivitas Utama & Durasi (menit)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Registrasi:30, Pembukaan:15, Sesi 1:60, Makan Siang:60'",
+            info: "Sebutkan aktivitas utama dan perkiraan durasinya.",
+            validation: {
+              min_length: 20,
+            },
+            optional: true,
+          },
+          {
+            name: "totalBudget",
+            label: "Total Anggaran",
+            type: "number",
+            placeholder: "e.g., 50000000",
+            info: "Jumlah total dana yang tersedia.",
+            validation: {
+              min_value: 100000,
+            },
+            optional: true,
+          },
+          {
+            name: "expenseCategories",
+            label: "Kategori Pengeluaran Utama",
+            type: "text",
+            placeholder: "e.g., 'Venue, Katering, Pemasaran, Hiburan'",
+            info: "Sebutkan pos-pos pengeluaran utama.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "priority",
+            label: "Prioritas Anggaran",
+            type: "select",
+            options: [
+              "Pengalaman Tamu",
+              "Pemasaran & Jangkauan",
+              "Hemat Biaya",
+              "Lainnya...",
+            ],
+            info: "Pilih area yang menjadi prioritas utama dalam pengalokasian dana.",
+            optional: true,
+          },
+          {
+            name: "speakerRole",
+            label: "Peran Pembicara",
+            type: "text",
+            placeholder: "e.g., 'Ayah mempelai wanita, CEO, Ketua Panitia'",
+            info: "Siapa yang akan memberikan pidato?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "speechGoal",
+            label: "Tujuan Pidato",
+            type: "text",
+            placeholder: "e.g., 'Mengharukan, memotivasi, menyambut tamu'",
+            info: "Apa pesan utama yang ingin disampaikan?",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "speechTone",
+            label: "Gaya & Nada Pidato",
+            type: "select",
+            options: ["Formal", "Santai & Humoris", "Inspiratif", "Lainnya..."],
+            info: "Pilih nuansa yang diinginkan untuk pidato.",
+            optional: true,
+          },
+          {
+            name: "duration",
+            label: "Target Durasi (menit)",
+            type: "number",
+            placeholder: "e.g., 5",
+            info: "Perkiraan panjang pidato.",
+            validation: {
+              min_value: 1,
+              max_value: 60,
+            },
+            optional: true,
+          },
+          {
+            name: "partyType",
+            label: "Jenis Pesta",
+            type: "text",
+            placeholder: "e.g., 'Ulang Tahun Anak, Pesta Kantor, Baby Shower'",
+            info: "Jenis acara yang akan dirayakan.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "ageGroup",
+            label: "Kelompok Usia Tamu",
+            type: "text",
+            placeholder: "e.g., 'Anak-anak (5-10 tahun), Remaja, Dewasa'",
+            info: "Membantu menyesuaikan tema dan aktivitas.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "budgetLevel",
+            label: "Tingkat Anggaran",
+            type: "select",
+            options: ["Hemat", "Menengah", "Mewah", "Lainnya..."],
+            info: "Estimasi anggaran untuk pesta.",
+            optional: true,
+          },
+          {
+            name: "interests",
+            label: "Minat/Hobi (Opsional)",
+            type: "text",
+            placeholder:
+              "e.g., 'Superheroes, Luar Angkasa, Vintage, Musik 80-an'",
+            info: "Minat khusus yang bisa menjadi inspirasi tema.",
+            optional: true,
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "locationType",
+            label: "Jenis Lokasi (Opsional)",
+            type: "select",
+            options: ["Indoor", "Outdoor", "Keduanya", "Lainnya..."],
+            info: "Apakah pesta akan diadakan di dalam atau luar ruangan?",
+            optional: true,
+          },
+          {
+            name: "totalGuests",
+            label: "Perkiraan Jumlah Tamu",
+            type: "number",
+            placeholder: "e.g., 100",
+            info: "Estimasi jumlah tamu yang diundang.",
+            validation: {
+              min_value: 1,
+            },
+            optional: true,
+          },
+          {
+            name: "rsvpDeadline",
+            label: "Batas Waktu RSVP",
+            type: "text",
+            placeholder: "e.g., '1 November 2025'",
+            info: "Tanggal terakhir untuk konfirmasi kehadiran.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "contactMethod",
+            label: "Metode Kontak RSVP",
+            type: "select",
+            options: [
+              "Email",
+              "Telepon/WhatsApp",
+              "Formulir Online",
+              "Lainnya...",
+            ],
+            info: "Bagaimana tamu harus mengkonfirmasi kehadiran?",
+            optional: true,
+          },
+          {
+            name: "additionalInfo",
+            label: "Informasi Tambahan (Opsional)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Sertakan kolom untuk alergi makanan. Minta konfirmasi jumlah anak-anak.'",
+            info: "Detail lain yang perlu dikumpulkan dari tamu.",
+            optional: true,
+            validation: {
+              min_length: 10,
+            },
+          },
+          {
+            name: "vendorCategory",
+            label: "Kategori Vendor",
+            type: "select",
+            options: [
+              "Katering",
+              "Venue",
+              "Fotografi/Videografi",
+              "Hiburan",
+              "Dekorasi",
+              "Logistik",
+              "Lainnya...",
+            ],
+            info: "Pilih kategori vendor yang ingin Anda buat checklist-nya.",
+            optional: true,
+          },
+          {
+            name: "keyTasks",
+            label: "Tugas Kunci per Vendor",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Katering: Penawaran menu, food tasting, jadwal pengiriman. Venue: Ketersediaan, kapasitas, fasilitas.'",
+            info: "Daftar tugas atau poin penting yang harus dibahas dengan vendor.",
+            optional: true,
+          },
+          {
+            name: "contactPerson",
+            label: "Kontak Person Vendor (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Nama, Telepon, Email'",
+            info: "Informasi kontak utama vendor.",
+            optional: true,
+          },
+          {
+            name: "notes",
+            label: "Catatan Tambahan (Opsional)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Perlu diskon khusus. Pastikan ada opsi vegetarian.'",
+            info: "Catatan atau persyaratan khusus untuk vendor.",
+            optional: true,
+          },
+          {
+            name: "targetAudience",
+            label: "Target Audiens",
+            type: "text",
+            placeholder: "e.g., 'Anak-anak, Dewasa, Campuran'",
+            info: "Siapa yang akan menerima souvenir atau mengikuti lomba?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "budgetPerItem",
+            label: "Anggaran per Item (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Rp 10.000 - Rp 25.000'",
+            info: "Estimasi biaya per souvenir atau hadiah lomba.",
+            optional: true,
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "theme",
+            label: "Tema Acara (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Tropical, Vintage, Futuristik'",
+            info: "Tema acara jika ada, untuk menyesuaikan ide.",
+            optional: true,
+            validation: {
+              min_length: 3,
+            },
+          },
+          {
+            name: "ideaType",
+            label: "Jenis Ide",
+            type: "select",
+            options: ["Souvenir", "Lomba", "Keduanya", "Lainnya..."],
+            info: "Apakah Anda mencari ide souvenir, lomba, atau keduanya?",
+            optional: true,
+          },
+        ],
         konteks_tambahan_instruksi_khusus:
           "AI harus selalu memberikan saran yang praktis dan realistis. Untuk anggaran, jika tidak ada input, berikan persentase alokasi yang umum sebagai contoh. Untuk checklist, berikan pertanyaan-pertanyaan kunci yang sering terlupakan. Untuk ide tema, berikan 3-5 opsi yang bervariasi dari segi biaya dan kompleksitas. Selalu akhiri dengan kalimat yang memotivasi dan mengurangi stres pengguna, seperti 'Perencanaan adalah kunci, nikmati setiap langkahnya!'",
         kategori: ["Prompt Proyek", "Perencanaan Acara & Manajemen"],

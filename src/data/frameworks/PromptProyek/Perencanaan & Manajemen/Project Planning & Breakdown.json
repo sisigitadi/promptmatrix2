@@ -62,6 +62,18 @@
         "Lainnya..."
       ],
       "info": "Pilih tingkat detail yang sesuai dengan kebutuhan perencanaan Anda."
+    },
+    {
+      "name": "custom_output_detail_level",
+      "label": "Sebutkan Tingkat Detail Output Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Tingkat Detail Output.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
     }
   ],
   "komponen_prompt": {
@@ -79,26 +91,5 @@
   "temperature": 0.7,
   "top_p": 0.9,
   "top_k": 40,
-  "updated_at": "2025-12-23T06:59:22.969282",
-  "dynamicSubcomponents": [
-    {
-      "trigger": "output_detail_level",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_output_detail_level",
-            "label": "Sebutkan Tingkat Detail Output Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Tingkat Detail Output.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ]
+  "updated_at": "2025-12-23T06:59:22.969282"
 }
