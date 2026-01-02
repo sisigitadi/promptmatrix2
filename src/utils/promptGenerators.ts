@@ -36,19 +36,25 @@ const getActiveComponents = (
   dynamicSubcomponents.forEach((sub) => {
     if (sub && sub.trigger) {
       const triggerValue = params[sub.trigger];
-      if (triggerValue && sub.options[triggerValue]) {
-        const optionValue = sub.options[triggerValue];
-        if (optionValue) {
-          if (
-            "components" in optionValue &&
-            Array.isArray(optionValue.components)
-          ) {
-            components.push(...optionValue.components);
-          } else if (Array.isArray(optionValue)) {
-            components.push(...(optionValue as FrameworkComponent[]));
+      const triggerValues = Array.isArray(triggerValue)
+        ? triggerValue
+        : [triggerValue];
+
+      triggerValues.forEach((value) => {
+        if (value && sub.options[value]) {
+          const optionValue = sub.options[value];
+          if (optionValue) {
+            if (
+              "components" in optionValue &&
+              Array.isArray(optionValue.components)
+            ) {
+              components.push(...optionValue.components);
+            } else if (Array.isArray(optionValue)) {
+              components.push(...(optionValue as FrameworkComponent[]));
+            }
           }
         }
-      }
+      });
     }
   });
 
@@ -373,26 +379,32 @@ export const generateUserPreviewPrompt = (
   subcomponents.forEach((sub) => {
     if (sub && sub.trigger) {
       const triggerValue = params[sub.trigger];
-      if (triggerValue && sub.options[triggerValue]) {
-        const optionValue = sub.options[triggerValue];
+      const triggerValues = Array.isArray(triggerValue)
+        ? triggerValue
+        : [triggerValue];
 
-        // Check if this option has komponen_prompt override
-        if (optionValue && "komponen_prompt" in optionValue) {
-          const dynamicPrompt = (optionValue as any).komponen_prompt;
+      triggerValues.forEach((value) => {
+        if (value && sub.options[value]) {
+          const optionValue = sub.options[value];
 
-          // Merge: Dynamic overrides root, but keep root fields if not overridden
-          effectiveKomponenPrompt = {
-            PERAN: dynamicPrompt.PERAN || effectiveKomponenPrompt.PERAN || "",
-            KONTEKS:
-              dynamicPrompt.KONTEKS || effectiveKomponenPrompt.KONTEKS || "",
-            TUGAS: dynamicPrompt.TUGAS || effectiveKomponenPrompt.TUGAS || "",
-            FORMAT_OUTPUT:
-              dynamicPrompt.FORMAT_OUTPUT ||
-              effectiveKomponenPrompt.FORMAT_OUTPUT ||
-              "",
-          };
+          // Check if this option has komponen_prompt override
+          if (optionValue && "komponen_prompt" in optionValue) {
+            const dynamicPrompt = (optionValue as any).komponen_prompt;
+
+            // Merge: Dynamic overrides root, but keep root fields if not overridden
+            effectiveKomponenPrompt = {
+              PERAN: dynamicPrompt.PERAN || effectiveKomponenPrompt.PERAN || "",
+              KONTEKS:
+                dynamicPrompt.KONTEKS || effectiveKomponenPrompt.KONTEKS || "",
+              TUGAS: dynamicPrompt.TUGAS || effectiveKomponenPrompt.TUGAS || "",
+              FORMAT_OUTPUT:
+                dynamicPrompt.FORMAT_OUTPUT ||
+                effectiveKomponenPrompt.FORMAT_OUTPUT ||
+                "",
+            };
+          }
         }
-      }
+      });
     }
   });
 
