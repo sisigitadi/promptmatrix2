@@ -21,148 +21,153 @@
         "Lainnya..."
       ],
       "default": "Dokumen Desain Game (GDD)",
-      "info": "Pilih jenis dokumen terstruktur yang ingin Anda hasilkan. Pilihan Anda akan menampilkan kolom input yang sesuai."
+      "info": "Pilih jenis dokumen terstruktur yang ingin Anda hasilkan. Pilihan Anda akan menampilkan kolom input yang sesuai.",
+      "optional": true
+    },
+    {
+      "name": "NAMA_GAME",
+      "label": "Judul Game",
+      "type": "text",
+      "placeholder": "Contoh: Chrono Weavers",
+      "info": "Judul kerja atau judul final dari game Anda.",
+      "optional": true
+    },
+    {
+      "name": "GENRE_GAME",
+      "label": "Genre Utama & Sub-genre",
+      "type": "text",
+      "placeholder": "Contoh: RPG, Platformer, Puzzle, Strategy",
+      "info": "Sebutkan genre utama dan sub-genre jika ada (misal: RPG Aksi).",
+      "optional": true
+    },
+    {
+      "name": "KONSEP_UTAMA",
+      "label": "Konsep Inti & Unique Selling Point (USP)",
+      "type": "textarea",
+      "placeholder": "Contoh: Sebuah game puzzle di mana pemain mengendalikan waktu untuk menyelesaikan rintangan, dengan narasi non-linear.",
+      "info": "Jelaskan dalam 1-2 kalimat apa yang membuat game Anda unik dan menarik.",
+      "optional": true
+    },
+    {
+      "name": "MEKANIK_INTI",
+      "label": "Mekanik Gameplay Inti",
+      "type": "textarea",
+      "placeholder": "Contoh: Pemain bisa memundurkan waktu 5 detik. Ada sistem crafting sederhana. Pertarungan berbasis giliran.",
+      "info": "Sebutkan 2-3 mekanik utama yang menjadi dasar permainan.",
+      "optional": true
+    },
+    {
+      "name": "NARASI_RINGKAS",
+      "label": "Ringkasan Cerita & Latar Belakang Dunia",
+      "type": "textarea",
+      "placeholder": "Contoh: Di sebuah dunia yang hancur, seorang pahlawan harus mengumpulkan artefak waktu untuk menyelamatkan peradaban.",
+      "info": "Berikan gambaran umum tentang plot dan dunia game.",
+      "optional": true
+    },
+    {
+      "name": "GAYA_VISUAL",
+      "label": "Gaya Visual & Mood",
+      "type": "text",
+      "placeholder": "Contoh: Seni piksel (pixel art) dengan nuansa gelap, fantasi cat air (watercolor fantasy), 3D realistis.",
+      "info": "Jelaskan estetika visual dan suasana yang ingin Anda capai.",
+      "optional": true
+    },
+    {
+      "name": "NAMA_PERUSAHAAN",
+      "label": "Nama Perusahaan",
+      "type": "text",
+      "placeholder": "Contoh: PT Sejahtera Abadi Tbk.",
+      "info": "Nama perusahaan yang laporan keuangannya akan dianalisis.",
+      "optional": true
+    },
+    {
+      "name": "PERIODE_LAPORAN",
+      "label": "Periode Laporan",
+      "type": "text",
+      "placeholder": "Contoh: Laporan Tahunan 2024 atau Laporan Kuartal 3 2025",
+      "info": "Cakupan waktu dari laporan yang dianalisis.",
+      "optional": true
+    },
+    {
+      "name": "DATA_LABA_RUGI",
+      "label": "Data Laba Rugi (Income Statement)",
+      "type": "textarea",
+      "placeholder": "Contoh: Pendapatan: 1 Miliar, HPP: 600 Juta, Laba Kotor: 400 Juta, Biaya Operasional: 250 Juta, Laba Bersih: 150 Juta.",
+      "info": "Masukkan poin-poin utama dari laporan laba rugi.",
+      "optional": true
+    },
+    {
+      "name": "DATA_NERACA",
+      "label": "Data Neraca (Balance Sheet)",
+      "type": "textarea",
+      "placeholder": "Contoh: Aset Lancar: 500 Juta, Aset Tetap: 1.2 Miliar, Total Aset: 1.7 Miliar. Liabilitas Jangka Pendek: 300 Juta, Liabilitas Jangka Panjang: 700 Juta, Ekuitas: 700 Juta.",
+      "info": "Masukkan poin-poin utama dari neraca keuangan.",
+      "optional": true
+    },
+    {
+      "name": "DATA_ARUS_KAS",
+      "label": "Data Arus Kas (Cash Flow Statement)",
+      "type": "textarea",
+      "placeholder": "Contoh: Arus Kas dari Operasi: 200 Juta, Arus Kas dari Investasi: -150 Juta, Arus Kas dari Pendanaan: -50 Juta.",
+      "info": "Masukkan poin-poin utama dari laporan arus kas.",
+      "optional": true
+    },
+    {
+      "name": "FOKUS_ANALISIS",
+      "label": "Fokus Analisis",
+      "type": "multiselect",
+      "options": [
+        "Analisis Rasio Profitabilitas",
+        "Analisis Rasio Likuiditas",
+        "Analisis Rasio Solvabilitas",
+        "Identifikasi Red Flags",
+        "Lainnya..."
+      ],
+      "default": [
+        "Analisis Rasio Profitabilitas",
+        "Analisis Rasio Likuiditas"
+      ],
+      "info": "Pilih aspek analisis yang paling penting bagi Anda.",
+      "optional": true
+    },
+    {
+      "name": "MOSI_DEBAT",
+      "label": "Mosi atau Topik Debat",
+      "type": "text",
+      "placeholder": "Contoh: 'Kecerdasan Buatan Lebih Banyak Membawa Manfaat Daripada Mudarat'",
+      "info": "Tuliskan pernyataan atau topik yang akan diperdebatkan.",
+      "optional": true
+    },
+    {
+      "name": "POSISI_SAYA",
+      "label": "Posisi Anda",
+      "type": "select",
+      "options": [
+        "Pro (Setuju)",
+        "Kontra (Tidak Setuju)",
+        "Lainnya..."
+      ],
+      "default": "Pro (Setuju)",
+      "info": "Pilih sisi argumen yang akan Anda bela.",
+      "optional": true
+    },
+    {
+      "name": "ARGUMEN_UTAMA_SAYA",
+      "label": "Poin-poin Argumen Utama Anda",
+      "type": "textarea",
+      "placeholder": "Contoh: 1. AI meningkatkan efisiensi di berbagai industri. 2. AI mempercepat penemuan ilmiah. 3. AI membuka lapangan kerja baru.",
+      "info": "Sebutkan 2-3 poin utama yang mendukung posisi Anda.",
+      "optional": true
+    },
+    {
+      "name": "POTENSI_ARGUMEN_LAWAN",
+      "label": "Potensi Argumen Lawan (Opsional)",
+      "type": "textarea",
+      "placeholder": "Contoh: AI akan menyebabkan pengangguran massal. Ada risiko penyalahgunaan AI untuk tujuan jahat.",
+      "info": "Antisipasi argumen yang mungkin akan digunakan oleh pihak lawan.",
+      "optional": true
     }
   ],
-  "dynamicSubcomponents": {
-    "trigger": "JENIS_DOKUMEN",
-    "options": {
-      "Dokumen Desain Game (GDD)": [
-        {
-          "name": "NAMA_GAME",
-          "label": "Judul Game",
-          "type": "text",
-          "placeholder": "Contoh: Chrono Weavers",
-          "info": "Judul kerja atau judul final dari game Anda."
-        },
-        {
-          "name": "GENRE_GAME",
-          "label": "Genre Utama & Sub-genre",
-          "type": "text",
-          "placeholder": "Contoh: RPG, Platformer, Puzzle, Strategy",
-          "info": "Sebutkan genre utama dan sub-genre jika ada (misal: RPG Aksi)."
-        },
-        {
-          "name": "KONSEP_UTAMA",
-          "label": "Konsep Inti & Unique Selling Point (USP)",
-          "type": "textarea",
-          "placeholder": "Contoh: Sebuah game puzzle di mana pemain mengendalikan waktu untuk menyelesaikan rintangan, dengan narasi non-linear.",
-          "info": "Jelaskan dalam 1-2 kalimat apa yang membuat game Anda unik dan menarik."
-        },
-        {
-          "name": "MEKANIK_INTI",
-          "label": "Mekanik Gameplay Inti",
-          "type": "textarea",
-          "placeholder": "Contoh: Pemain bisa memundurkan waktu 5 detik. Ada sistem crafting sederhana. Pertarungan berbasis giliran.",
-          "info": "Sebutkan 2-3 mekanik utama yang menjadi dasar permainan."
-        },
-        {
-          "name": "NARASI_RINGKAS",
-          "label": "Ringkasan Cerita & Latar Belakang Dunia",
-          "type": "textarea",
-          "placeholder": "Contoh: Di sebuah dunia yang hancur, seorang pahlawan harus mengumpulkan artefak waktu untuk menyelamatkan peradaban.",
-          "info": "Berikan gambaran umum tentang plot dan dunia game."
-        },
-        {
-          "name": "GAYA_VISUAL",
-          "label": "Gaya Visual & Mood",
-          "type": "text",
-          "placeholder": "Contoh: Seni piksel (pixel art) dengan nuansa gelap, fantasi cat air (watercolor fantasy), 3D realistis.",
-          "info": "Jelaskan estetika visual dan suasana yang ingin Anda capai."
-        }
-      ],
-      "Analisis Laporan Keuangan": [
-        {
-          "name": "NAMA_PERUSAHAAN",
-          "label": "Nama Perusahaan",
-          "type": "text",
-          "placeholder": "Contoh: PT Sejahtera Abadi Tbk.",
-          "info": "Nama perusahaan yang laporan keuangannya akan dianalisis."
-        },
-        {
-          "name": "PERIODE_LAPORAN",
-          "label": "Periode Laporan",
-          "type": "text",
-          "placeholder": "Contoh: Laporan Tahunan 2024 atau Laporan Kuartal 3 2025",
-          "info": "Cakupan waktu dari laporan yang dianalisis."
-        },
-        {
-          "name": "DATA_LABA_RUGI",
-          "label": "Data Laba Rugi (Income Statement)",
-          "type": "textarea",
-          "placeholder": "Contoh: Pendapatan: 1 Miliar, HPP: 600 Juta, Laba Kotor: 400 Juta, Biaya Operasional: 250 Juta, Laba Bersih: 150 Juta.",
-          "info": "Masukkan poin-poin utama dari laporan laba rugi."
-        },
-        {
-          "name": "DATA_NERACA",
-          "label": "Data Neraca (Balance Sheet)",
-          "type": "textarea",
-          "placeholder": "Contoh: Aset Lancar: 500 Juta, Aset Tetap: 1.2 Miliar, Total Aset: 1.7 Miliar. Liabilitas Jangka Pendek: 300 Juta, Liabilitas Jangka Panjang: 700 Juta, Ekuitas: 700 Juta.",
-          "info": "Masukkan poin-poin utama dari neraca keuangan."
-        },
-        {
-          "name": "DATA_ARUS_KAS",
-          "label": "Data Arus Kas (Cash Flow Statement)",
-          "type": "textarea",
-          "placeholder": "Contoh: Arus Kas dari Operasi: 200 Juta, Arus Kas dari Investasi: -150 Juta, Arus Kas dari Pendanaan: -50 Juta.",
-          "info": "Masukkan poin-poin utama dari laporan arus kas."
-        },
-        {
-          "name": "FOKUS_ANALISIS",
-          "label": "Fokus Analisis",
-          "type": "multiselect",
-          "options": [
-            "Analisis Rasio Profitabilitas",
-            "Analisis Rasio Likuiditas",
-            "Analisis Rasio Solvabilitas",
-            "Identifikasi Red Flags",
-            "Lainnya..."
-          ],
-          "default": [
-            "Analisis Rasio Profitabilitas",
-            "Analisis Rasio Likuiditas"
-          ],
-          "info": "Pilih aspek analisis yang paling penting bagi Anda."
-        }
-      ],
-      "Perencanaan Argumen Debat": [
-        {
-          "name": "MOSI_DEBAT",
-          "label": "Mosi atau Topik Debat",
-          "type": "text",
-          "placeholder": "Contoh: 'Kecerdasan Buatan Lebih Banyak Membawa Manfaat Daripada Mudarat'",
-          "info": "Tuliskan pernyataan atau topik yang akan diperdebatkan."
-        },
-        {
-          "name": "POSISI_SAYA",
-          "label": "Posisi Anda",
-          "type": "select",
-          "options": [
-            "Pro (Setuju)",
-            "Kontra (Tidak Setuju)",
-            "Lainnya..."
-          ],
-          "default": "Pro (Setuju)",
-          "info": "Pilih sisi argumen yang akan Anda bela."
-        },
-        {
-          "name": "ARGUMEN_UTAMA_SAYA",
-          "label": "Poin-poin Argumen Utama Anda",
-          "type": "textarea",
-          "placeholder": "Contoh: 1. AI meningkatkan efisiensi di berbagai industri. 2. AI mempercepat penemuan ilmiah. 3. AI membuka lapangan kerja baru.",
-          "info": "Sebutkan 2-3 poin utama yang mendukung posisi Anda."
-        },
-        {
-          "name": "POTENSI_ARGUMEN_LAWAN",
-          "label": "Potensi Argumen Lawan (Opsional)",
-          "type": "textarea",
-          "placeholder": "Contoh: AI akan menyebabkan pengangguran massal. Ada risiko penyalahgunaan AI untuk tujuan jahat.",
-          "info": "Antisipasi argumen yang mungkin akan digunakan oleh pihak lawan.",
-          "optional": true
-        }
-      ]
-    }
-  },
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang konsultan ahli multi-disiplin. Bergantung pada pilihan pengguna, Anda akan bertindak sebagai Game Designer, Analis Keuangan, atau Pelatih Debat untuk menghasilkan dokumen yang diminta.",
     "KONTEKS": "Input yang saya berikan: {JENIS_DOKUMEN}.",

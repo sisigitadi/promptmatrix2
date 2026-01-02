@@ -48,6 +48,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Genre seringkali memiliki progresi kord yang khas.",
+            optional: true,
           },
           {
             name: "mood",
@@ -62,6 +63,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilihan kord (mayor/minor/dll) akan sangat dipengaruhi oleh mood.",
+            optional: true,
           },
           {
             name: "key",
@@ -69,6 +71,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "text",
             placeholder: "e.g., 'C Major, A minor'",
             info: "Menentukan 'rumah' atau pusat tonal dari progresi.",
+            optional: true,
           },
           {
             name: "complexity",
@@ -81,6 +84,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "'Sederhana' untuk lagu pop, 'Kompleks' mungkin menyertakan kord 7, 9, atau substitusi.",
+            optional: true,
           },
           {
             name: "partOfSong",
@@ -94,6 +98,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Progresi untuk chorus biasanya lebih kuat dan 'catchy' daripada verse.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -102,6 +107,58 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Sertakan setidaknya satu kord pinjaman dari minor paralel. Progresi harus cocok untuk dimainkan dengan gitar akustik. Buat bagian bridge yang terasa 'mengawang'.",
             info: "Instruksi teknis atau artistik tambahan untuk progresi kord yang dihasilkan.",
+            optional: true,
+          },
+          {
+            name: "custom_genre",
+            label: "Sebutkan Genre Musik Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Genre Musik.",
+            placeholder: "Contoh: Platform kustom, tool baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Genre Musik standar tidak tersedia.",
+          },
+          {
+            name: "custom_mood",
+            label: "Sebutkan Mood yang Diinginkan Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Mood yang Diinginkan.",
+            placeholder: "Contoh: Platform kustom, tool baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Mood yang Diinginkan standar tidak tersedia.",
+          },
+          {
+            name: "custom_complexity",
+            label: "Sebutkan Tingkat Kompleksitas Kord Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Tingkat Kompleksitas Kord.",
+            placeholder: "Contoh: Platform kustom, tool baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tingkat Kompleksitas Kord standar tidak tersedia.",
+          },
+          {
+            name: "custom_partOfSong",
+            label: "Sebutkan Untuk Bagian Lagu Mana? Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Untuk Bagian Lagu Mana?.",
+            placeholder: "Contoh: Platform kustom, tool baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Untuk Bagian Lagu Mana? standar tidak tersedia.",
           },
         ],
         kategori: ["Audio & Musik", "Alat Bantu Komposisi"],
@@ -122,87 +179,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "genre",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_genre",
-                  label: "Sebutkan Genre Musik Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Genre Musik.",
-                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Genre Musik standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "mood",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_mood",
-                  label: "Sebutkan Mood yang Diinginkan Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Mood yang Diinginkan.",
-                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Mood yang Diinginkan standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "complexity",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_complexity",
-                  label: "Sebutkan Tingkat Kompleksitas Kord Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Kord.",
-                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tingkat Kompleksitas Kord standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "partOfSong",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_partOfSong",
-                  label: "Sebutkan Untuk Bagian Lagu Mana? Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Untuk Bagian Lagu Mana?.",
-                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Untuk Bagian Lagu Mana? standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Review options for hybrid localization (Technical EN + ID)",
         ],
@@ -228,6 +204,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Genre akan mempengaruhi gaya bahasa dan struktur lirik.",
+            optional: true,
           },
           {
             name: "theme",
@@ -236,6 +213,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'cinta pertama, patah hati, perjalanan hidup, protes sosial'",
             info: "Gagasan atau cerita utama di balik lagu.",
+            optional: true,
           },
           {
             name: "mood",
@@ -250,6 +228,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Emosi utama yang ingin disampaikan melalui lirik.",
+            optional: true,
           },
           {
             name: "structure",
@@ -257,6 +236,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "text",
             placeholder: "e.g., 'Verse-Chorus-Verse-Chorus-Bridge-Chorus'",
             info: "Tentukan urutan bagian-bagian lagu jika Anda punya preferensi.",
+            optional: true,
           },
           {
             name: "keyElements",
@@ -264,6 +244,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "textarea",
             placeholder: "e.g., 'sebutkan kata 'bintang', 'malam', 'harapan''",
             info: "Gambar, kata, atau frasa spesifik yang harus ada dalam lirik.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -272,6 +253,31 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Gunakan banyak metafora alam (laut, gunung, hutan). Hindari rima yang terlalu klise. Cerita harus berkembang dari sedih menjadi penuh harapan di bagian akhir.",
             info: "Detail artistik atau batasan kreatif untuk AI. Misalnya, penggunaan metafora atau majas tertentu.",
+            optional: true,
+          },
+          {
+            name: "custom_genre",
+            label: "Sebutkan Genre Musik Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Genre Musik.",
+            placeholder: "Contoh: Platform kustom, tool baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Genre Musik standar tidak tersedia.",
+          },
+          {
+            name: "custom_mood",
+            label: "Sebutkan Suasana Hati Lagu Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Suasana Hati Lagu.",
+            placeholder: "Contoh: Platform kustom, tool baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Suasana Hati Lagu standar tidak tersedia.",
           },
         ],
         kategori: ["Audio & Musik", "Alat Bantu Komposisi"],
@@ -292,47 +298,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "genre",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_genre",
-                  label: "Sebutkan Genre Musik Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Genre Musik.",
-                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Genre Musik standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "mood",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_mood",
-                  label: "Sebutkan Suasana Hati Lagu Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Suasana Hati Lagu.",
-                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Suasana Hati Lagu standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Review options for hybrid localization (Technical EN + ID)",
         ],
@@ -405,6 +370,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'lo-fi chill beat for studying', 'reggae song with a catchy bassline', 'epic rock anthem with electric guitar solos'",
             info: "Deskripsikan musik yang ingin Anda buat dengan fokus pada mood, genre, dan instrumen.",
+            optional: true,
           },
           {
             name: "duration",
@@ -412,6 +378,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "select",
             options: ["30", "50", "70", "Lainnya..."],
             info: "Pilih panjang loop musik yang akan dihasilkan.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -420,6 +387,19 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
             info: "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI.",
+            optional: true,
+          },
+          {
+            name: "custom_duration",
+            label: "Sebutkan Durasi (detik) Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Durasi (detik).",
+            placeholder: "Contoh: Platform kustom, tool baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Durasi (detik) standar tidak tersedia.",
           },
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
@@ -440,28 +420,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "duration",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_duration",
-                  label: "Sebutkan Durasi (detik) Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Durasi (detik).",
-                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Durasi (detik) standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Review options for hybrid localization (Technical EN + ID)",
         ],
@@ -540,6 +498,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., '[Verse 1]\nWalking through the city lights\n[Chorus]\nOh, I feel so alive tonight'",
             info: "Masukkan lirik lengkap dengan penanda bagian seperti [Verse] dan [Chorus]. Atau biarkan kosong dan jelaskan di deskripsi gaya.",
+            optional: true,
           },
           {
             name: "model",
@@ -553,6 +512,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih versi model Suno AI yang akan digunakan.",
+            optional: true,
           },
           {
             name: "instrumental",
@@ -560,6 +520,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "select",
             options: ["Tidak", "Ya", "Lainnya..."],
             info: "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal.",
+            optional: true,
           },
           {
             name: "styleOfMusic",
@@ -568,6 +529,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'acoustic pop', '80s synthwave with female vocal', 'epic cinematic orchestral'",
             info: "Deskripsikan genre, mood, instrumen, dan tipe vokal yang Anda inginkan.",
+            optional: true,
           },
           {
             name: "makeInstrumental",
@@ -575,6 +537,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "select",
             options: ["Tidak", "Ya", "Lainnya..."],
             info: "Pilih 'Ya' jika Anda hanya ingin musik tanpa vokal.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -583,6 +546,44 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan. Untuk hasil terbaik, gunakan model v3.5 atau v3.5-turbo.",
             info: "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
+            optional: true,
+          },
+          {
+            name: "custom_model",
+            label: "Sebutkan Model Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Model.",
+            placeholder: "Contoh: Platform kustom, tool baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Model standar tidak tersedia.",
+          },
+          {
+            name: "custom_instrumental",
+            label: "Sebutkan Instrumental? Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Instrumental?.",
+            placeholder: "Contoh: Platform kustom, tool baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Instrumental? standar tidak tersedia.",
+          },
+          {
+            name: "custom_makeInstrumental",
+            label: "Sebutkan Buat Versi Instrumental? Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Buat Versi Instrumental?.",
+            placeholder: "Contoh: Platform kustom, tool baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Buat Versi Instrumental? standar tidak tersedia.",
           },
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
@@ -603,66 +604,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "model",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_model",
-                  label: "Sebutkan Model Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Model.",
-                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Model standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "instrumental",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_instrumental",
-                  label: "Sebutkan Instrumental? Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Instrumental?.",
-                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Instrumental? standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "makeInstrumental",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_makeInstrumental",
-                  label: "Sebutkan Buat Versi Instrumental? Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Buat Versi Instrumental?.",
-                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Buat Versi Instrumental? standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Review options for hybrid localization (Technical EN + ID)",
         ],
@@ -681,6 +622,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'A soulful blues track about a long road trip, with harmonica solos, male vocals, and a steady drum beat'",
             info: "Deskripsikan musik Anda secara detail, termasuk genre, instrumen, mood, dan tema.",
+            optional: true,
           },
           {
             name: "lyrics",
@@ -688,6 +630,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "textarea",
             placeholder: "e.g., '[Verse]\nSunrise on the highway...'",
             info: "Masukkan lirik jika Anda punya, atau biarkan Udio yang membuatnya.",
+            optional: true,
           },
           {
             name: "instrumental",
@@ -695,6 +638,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "select",
             options: ["Tidak", "Ya", "Lainnya..."],
             info: "Pilih 'Ya' untuk membuat lagu tanpa vokal.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -703,6 +647,19 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
             info: "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI.",
+            optional: true,
+          },
+          {
+            name: "custom_instrumental",
+            label: "Sebutkan Instrumental? Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Instrumental?.",
+            placeholder: "Contoh: Platform kustom, tool baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Instrumental? standar tidak tersedia.",
           },
         ],
         kategori: ["Audio & Musik", "Prompt AI Musik & Audio"],
@@ -723,27 +680,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "instrumental",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_instrumental",
-                  label: "Sebutkan Instrumental? Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Instrumental?.",
-                  placeholder: "Contoh: Platform kustom, tool baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Instrumental? standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Review options for hybrid localization (Technical EN + ID)",
         ],
@@ -780,54 +716,43 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "Pilihan Anda akan menampilkan kolom input yang sesuai untuk tugas tersebut.",
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "TUGAS_MULTIMODAL",
-          options: {
-            "Deskripsikan Gambar": [
-              {
-                name: "GAMBAR_INPUT",
-                label: "Unggah Gambar",
-                type: "image",
-                description: "Unggah gambar yang ingin Anda analisis.",
-                optional: false,
-                info: "AI akan menganalisis konten visual dari gambar ini.",
-              },
-            ],
-            "Transkripsikan Audio": [
-              {
-                name: "AUDIO_INPUT",
-                label: "Unggah File Audio",
-                type: "file",
-                description:
-                  "Unggah file audio (misalnya, .mp3, .wav) yang ingin Anda transkripsikan.",
-                optional: false,
-                info: "AI akan mencoba mentranskripsikan ucapan dari file audio ini.",
-              },
-            ],
-            "Analisis Gambar dengan Konteks Teks": [
-              {
-                name: "GAMBAR_INPUT_ANALISIS",
-                label: "Unggah Gambar untuk Dianalisis",
-                type: "image",
-                description: "Unggah gambar yang ingin Anda analisis.",
-                optional: false,
-                info: "Gambar yang akan menjadi subjek utama analisis.",
-              },
-              {
-                name: "TEKS_KONTEKS",
-                label: "Teks Kontekstual",
-                type: "textarea",
-                description:
-                  "Berikan teks atau pertanyaan yang berhubungan dengan gambar.",
-                optional: false,
-                placeholder:
-                  "Contoh: Apa hubungan antara objek di latar depan dengan tulisan di latar belakang gambar ini?",
-                info: "Teks ini akan memberikan konteks kepada AI untuk menganalisis gambar lebih dalam.",
-              },
-            ],
+          {
+            name: "GAMBAR_INPUT",
+            label: "Unggah Gambar",
+            type: "image",
+            description: "Unggah gambar yang ingin Anda analisis.",
+            optional: false,
+            info: "AI akan menganalisis konten visual dari gambar ini.",
           },
-        },
+          {
+            name: "AUDIO_INPUT",
+            label: "Unggah File Audio",
+            type: "file",
+            description:
+              "Unggah file audio (misalnya, .mp3, .wav) yang ingin Anda transkripsikan.",
+            optional: false,
+            info: "AI akan mencoba mentranskripsikan ucapan dari file audio ini.",
+          },
+          {
+            name: "GAMBAR_INPUT_ANALISIS",
+            label: "Unggah Gambar untuk Dianalisis",
+            type: "image",
+            description: "Unggah gambar yang ingin Anda analisis.",
+            optional: false,
+            info: "Gambar yang akan menjadi subjek utama analisis.",
+          },
+          {
+            name: "TEKS_KONTEKS",
+            label: "Teks Kontekstual",
+            type: "textarea",
+            description:
+              "Berikan teks atau pertanyaan yang berhubungan dengan gambar.",
+            optional: false,
+            placeholder:
+              "Contoh: Apa hubungan antara objek di latar depan dengan tulisan di latar belakang gambar ini?",
+            info: "Teks ini akan memberikan konteks kepada AI untuk menganalisis gambar lebih dalam.",
+          },
+        ],
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang Analis Media Digital dengan kemampuan pemahaman multimodal (gambar dan audio) yang canggih.",
@@ -877,6 +802,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Platform menentukan format, durasi, dan gaya konten.",
+            optional: true,
           },
           {
             name: "niche",
@@ -885,6 +811,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'memasak untuk pemula, review gadget, keuangan pribadi'",
             info: "Fokus utama dari channel atau akun Anda.",
+            optional: true,
           },
           {
             name: "videoFormat",
@@ -900,6 +827,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih jenis struktur video yang diinginkan.",
+            optional: true,
           },
           {
             name: "desiredOutcome",
@@ -908,6 +836,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'meningkatkan subscriber, mendapatkan engagement tinggi, mengarahkan trafik ke website'",
             info: "Apa hasil yang ingin Anda capai dengan video ini?",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -916,6 +845,31 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Saya ingin ide yang bisa dikolaborasikan dengan kreator lain. Fokus pada budget produksi rendah. Hindari topik politik.",
             info: "Detail tambahan yang bisa mengarahkan ide AI menjadi lebih unik dan sesuai dengan channel Anda.",
+            optional: true,
+          },
+          {
+            name: "custom_platform",
+            label: "Sebutkan Platform Video Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Platform Video.",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Platform Video standar tidak tersedia.",
+          },
+          {
+            name: "custom_videoFormat",
+            label: "Sebutkan Format Video Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Format Video.",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Format Video standar tidak tersedia.",
           },
         ],
         kategori: ["Gambar & Desain", "Perencanaan Video & Visual"],
@@ -936,47 +890,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan prompt dengan scene breakdown, camera movements, dan transition details yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "platform",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_platform",
-                  label: "Sebutkan Platform Video Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Platform Video.",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Platform Video standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "videoFormat",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_videoFormat",
-                  label: "Sebutkan Format Video Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Format Video.",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Format Video standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Apply hybrid format to 'Platform Video' option 'YouTube'",
           "TODO: Apply hybrid format to 'Platform Video' option 'TikTok'",
@@ -1002,6 +915,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "text",
             placeholder: "e.g., 'Aplikasi Belajar Bahasa Asing'",
             info: "Produk yang menjadi fokus utama iklan.",
+            optional: true,
           },
           {
             name: "targetAudience",
@@ -1009,6 +923,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "text",
             placeholder: "e.g., 'mahasiswa, profesional muda, orang tua'",
             info: "Siapa yang ingin Anda jangkau dengan iklan ini?",
+            optional: true,
           },
           {
             name: "duration",
@@ -1016,6 +931,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "number",
             placeholder: "e.g., 30",
             info: "Durasi akan sangat mempengaruhi kepadatan naskah.",
+            optional: true,
           },
           {
             name: "keyMessage",
@@ -1024,6 +940,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'Belajar bahasa jadi mudah dan menyenangkan di mana saja.'",
             info: "Satu hal terpenting yang harus diingat audiens setelah melihat iklan.",
+            optional: true,
           },
           {
             name: "platform",
@@ -1037,6 +954,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Platform akan mempengaruhi gaya dan kecepatan naskah.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -1045,6 +963,19 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Tempo harus cepat dan energik. Sertakan anjuran untuk sound effect 'swoosh' saat produk muncul. Aktor harus terdengar antusias dan percaya diri.",
             info: "Instruksi tentang nuansa, tempo, atau elemen audio/visual yang harus dibayangkan oleh AI.",
+            optional: true,
+          },
+          {
+            name: "custom_platform",
+            label: "Sebutkan Platform Penayangan Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Platform Penayangan.",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Platform Penayangan standar tidak tersedia.",
           },
         ],
         kategori: ["Gambar & Desain", "Perencanaan Video & Visual"],
@@ -1065,28 +996,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "platform",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_platform",
-                  label: "Sebutkan Platform Penayangan Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Platform Penayangan.",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Platform Penayangan standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Apply hybrid format to 'Platform Penayangan' option 'TV'",
           "TODO: Apply hybrid format to 'Platform Penayangan' option 'Radio'",
@@ -1116,6 +1025,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih jenis dokumen atau format desain yang Anda butuhkan.",
+            optional: true,
           },
           {
             name: "description",
@@ -1127,6 +1037,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "contentToInclude",
@@ -1138,6 +1049,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -1150,6 +1062,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_designType",
+            label: "Sebutkan Jenis Desain Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Jenis Desain.",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Jenis Desain standar tidak tersedia.",
           },
         ],
         kategori: ["Gambar & Desain", "Platform Desain Berbasis AI"],
@@ -1170,27 +1094,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "designType",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_designType",
-                  label: "Sebutkan Jenis Desain Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Jenis Desain.",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Jenis Desain standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Apply hybrid format to 'Jenis Desain' option 'Presentasi'",
           "TODO: Apply hybrid format to 'Jenis Desain' option 'Postingan Instagram'",
@@ -1570,116 +1473,89 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "Pilih 'Deskripsikan Gambar' untuk mendapatkan deskripsi dari gambar yang Anda unggah, atau 'Hasilkan Gambar' untuk membuat gambar baru dari teks.",
           },
+          {
+            name: "input_gambar_deskripsi",
+            label: "Unggah Gambar untuk Deskripsi",
+            type: "image",
+            description: "Unggah gambar yang ingin Anda deskripsikan.",
+            default: "",
+            optional: false,
+            placeholder: "Pilih file gambar...",
+            info: "Unggah gambar dalam format JPG, PNG, atau WEBP. Maksimal ukuran file 5MB.",
+          },
+          {
+            name: "deskripsi_teks_gambar_generasi",
+            label: "Deskripsi Teks Gambar",
+            type: "textarea",
+            description:
+              "Masukkan deskripsi detail untuk gambar yang ingin Anda hasilkan.",
+            default: "",
+            optional: false,
+            placeholder:
+              "Contoh: 'Pemandangan kota futuristik saat matahari terbenam, dengan mobil terbang dan gedung pencakar langit yang berkilauan.'",
+            info: "Berikan deskripsi yang jelas dan spesifik untuk hasil terbaik.",
+          },
+          {
+            name: "gaya_visual_generasi",
+            label: "Gaya Visual",
+            type: "select",
+            description: "Pilih gaya visual untuk gambar yang dihasilkan.",
+            default: "fotorealistik",
+            optional: false,
+            options: [
+              {
+                label: "Fotorealistik",
+                value: "fotorealistik",
+              },
+              {
+                label: "Kartun",
+                value: "kartun",
+              },
+              {
+                label: "Abstrak",
+                value: "abstrak",
+              },
+              {
+                label: "Seni Digital",
+                value: "seni_digital",
+              },
+              {
+                label: "Lainnya...",
+                value: "Lainnya...",
+              },
+              "Lainnya...",
+            ],
+            info: "Pilih gaya yang paling sesuai dengan kebutuhan visual Anda.",
+          },
+          {
+            name: "rasio_aspek_generasi",
+            label: "Rasio Aspek",
+            type: "select",
+            description: "Pilih rasio aspek untuk gambar yang dihasilkan.",
+            default: "1:1",
+            optional: false,
+            options: [
+              {
+                label: "1:1 (Persegi)",
+                value: "1:1",
+              },
+              {
+                label: "16:9 (Lanskap)",
+                value: "16:9",
+              },
+              {
+                label: "9:16 (Potret)",
+                value: "9:16",
+              },
+              "Lainnya...",
+            ],
+            info: "Rasio aspek menentukan orientasi dan proporsi gambar.",
+          },
         ],
         komponen_prompt: {
           PERAN: "Anda adalah seorang seniman digital dan deskriptor visual.",
           KONTEKS: "Pengguna ingin melakukan operasi visual.",
           TUGAS: "Pilih mode operasi untuk melihat tugas spesifik.",
-        },
-        dynamicSubcomponents: {
-          trigger: "mode_operasi",
-          options: {
-            deskripsikan_gambar: {
-              komponen_prompt: {
-                TUGAS:
-                  "Deskripsikan gambar berikut secara detail dan komprehensif, fokus pada objek, warna, suasana, dan gaya visual: {input_gambar_deskripsi}",
-                FORMAT_OUTPUT:
-                  "Berikan deskripsi dalam format Markdown dengan poin-poin utama.",
-              },
-              components: [
-                {
-                  name: "input_gambar_deskripsi",
-                  label: "Unggah Gambar untuk Deskripsi",
-                  type: "image",
-                  description: "Unggah gambar yang ingin Anda deskripsikan.",
-                  default: "",
-                  optional: false,
-                  placeholder: "Pilih file gambar...",
-                  info: "Unggah gambar dalam format JPG, PNG, atau WEBP. Maksimal ukuran file 5MB.",
-                },
-              ],
-            },
-            hasilkan_gambar: {
-              komponen_prompt: {
-                TUGAS:
-                  'Hasilkan gambar berdasarkan deskripsi berikut: "{deskripsi_teks_gambar_generasi}". Gunakan gaya visual: "{gaya_visual_generasi}" dan rasio aspek: "{rasio_aspek_generasi}".',
-                FORMAT_OUTPUT:
-                  "Sajikan output sebagai URL gambar yang dihasilkan atau instruksi untuk mengaksesnya.",
-              },
-              components: [
-                {
-                  name: "deskripsi_teks_gambar_generasi",
-                  label: "Deskripsi Teks Gambar",
-                  type: "textarea",
-                  description:
-                    "Masukkan deskripsi detail untuk gambar yang ingin Anda hasilkan.",
-                  default: "",
-                  optional: false,
-                  placeholder:
-                    "Contoh: 'Pemandangan kota futuristik saat matahari terbenam, dengan mobil terbang dan gedung pencakar langit yang berkilauan.'",
-                  info: "Berikan deskripsi yang jelas dan spesifik untuk hasil terbaik.",
-                },
-                {
-                  name: "gaya_visual_generasi",
-                  label: "Gaya Visual",
-                  type: "select",
-                  description:
-                    "Pilih gaya visual untuk gambar yang dihasilkan.",
-                  default: "fotorealistik",
-                  optional: false,
-                  options: [
-                    {
-                      label: "Fotorealistik",
-                      value: "fotorealistik",
-                    },
-                    {
-                      label: "Kartun",
-                      value: "kartun",
-                    },
-                    {
-                      label: "Abstrak",
-                      value: "abstrak",
-                    },
-                    {
-                      label: "Seni Digital",
-                      value: "seni_digital",
-                    },
-                    {
-                      label: "Lainnya...",
-                      value: "Lainnya...",
-                    },
-                    "Lainnya...",
-                  ],
-                  info: "Pilih gaya yang paling sesuai dengan kebutuhan visual Anda.",
-                },
-                {
-                  name: "rasio_aspek_generasi",
-                  label: "Rasio Aspek",
-                  type: "select",
-                  description:
-                    "Pilih rasio aspek untuk gambar yang dihasilkan.",
-                  default: "1:1",
-                  optional: false,
-                  options: [
-                    {
-                      label: "1:1 (Persegi)",
-                      value: "1:1",
-                    },
-                    {
-                      label: "16:9 (Lanskap)",
-                      value: "16:9",
-                    },
-                    {
-                      label: "9:16 (Potret)",
-                      value: "9:16",
-                    },
-                    "Lainnya...",
-                  ],
-                  info: "Rasio aspek menentukan orientasi dan proporsi gambar.",
-                },
-              ],
-            },
-          },
         },
         toolType: "image-generation",
         konteks_tambahan_instruksi_khusus:
@@ -1817,6 +1693,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "style",
@@ -1828,6 +1705,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "aspectRatio",
@@ -1841,6 +1719,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Rasio lebar dan tinggi gambar.",
+            optional: true,
           },
           {
             name: "version",
@@ -1848,6 +1727,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "select",
             options: ["6.0", "5.2", "5.1", "niji 5", "6.1", "Lainnya..."],
             info: "Versi model Midjourney yang akan digunakan.",
+            optional: true,
           },
           {
             name: "p",
@@ -1858,6 +1738,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 3,
             },
+            optional: true,
           },
           {
             name: "chaos",
@@ -1869,6 +1750,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 0,
               max_value: 100,
             },
+            optional: true,
           },
           {
             name: "quality",
@@ -1880,6 +1762,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 0.25,
               max_value: 2,
             },
+            optional: true,
           },
           {
             name: "stylize",
@@ -1891,6 +1774,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 0,
               max_value: 1000,
             },
+            optional: true,
           },
           {
             name: "weird",
@@ -1902,6 +1786,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 0,
               max_value: 3000,
             },
+            optional: true,
           },
           {
             name: "negativePrompt",
@@ -1912,6 +1797,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "sref",
@@ -1922,6 +1808,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "sw",
@@ -1933,6 +1820,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 0,
               max_value: 1000,
             },
+            optional: true,
           },
           {
             name: "cref",
@@ -1943,6 +1831,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "cw",
@@ -1954,6 +1843,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 0,
               max_value: 100,
             },
+            optional: true,
           },
           {
             name: "seed",
@@ -1965,6 +1855,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 0,
               max_value: 4294967295,
             },
+            optional: true,
           },
           {
             name: "stop",
@@ -1976,6 +1867,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 10,
               max_value: 100,
             },
+            optional: true,
           },
           {
             name: "repeat",
@@ -1987,6 +1879,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 1,
               max_value: 40,
             },
+            optional: true,
           },
           {
             name: "tile",
@@ -1994,6 +1887,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "select",
             options: ["No", "Yes", "Lainnya..."],
             info: "Buat gambar yang bisa di-tile secara seamless.",
+            optional: true,
           },
           {
             name: "styleRaw",
@@ -2001,12 +1895,63 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "select",
             options: ["No", "Yes", "Lainnya..."],
             info: "Mengurangi beautifikasi otomatis, membuat gambar lebih akurat terhadap prompt dan umumnya lebih fotorealistik. Dapat juga digunakan dengan kode gaya (misalnya, `--style raw --sref random`) untuk menerapkan estetika tertentu.",
+            optional: true,
           },
           {
             name: "inputImage",
             label: "Input Gambar (Opsional)",
             type: "image",
             info: "Unggah gambar untuk digunakan sebagai referensi visual atau input untuk AI.",
+            optional: true,
+          },
+          {
+            name: "custom_aspectRatio",
+            label: "Sebutkan Aspect Ratio (--ar) Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Aspect Ratio (--ar).",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Aspect Ratio (--ar) standar tidak tersedia.",
+          },
+          {
+            name: "custom_version",
+            label: "Sebutkan Model Version (--v) Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Model Version (--v).",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Model Version (--v) standar tidak tersedia.",
+          },
+          {
+            name: "custom_tile",
+            label: "Sebutkan Tile (--tile) Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Tile (--tile).",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tile (--tile) standar tidak tersedia.",
+          },
+          {
+            name: "custom_styleRaw",
+            label: "Sebutkan Style Raw (--style raw) Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Style Raw (--style raw).",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Style Raw (--style raw) standar tidak tersedia.",
           },
         ],
         kategori: ["Gambar & Desain", "Prompt AI Gambar (Text-to-Image)"],
@@ -2017,87 +1962,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         top_k: 40,
         version: "2.0.0",
         updated_at: "2025-12-23T05:07:55.231364",
-        dynamicSubcomponents: [
-          {
-            trigger: "aspectRatio",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_aspectRatio",
-                  label: "Sebutkan Aspect Ratio (--ar) Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Aspect Ratio (--ar).",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Aspect Ratio (--ar) standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "version",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_version",
-                  label: "Sebutkan Model Version (--v) Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Model Version (--v).",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Model Version (--v) standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "tile",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_tile",
-                  label: "Sebutkan Tile (--tile) Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Tile (--tile).",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tile (--tile) standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "styleRaw",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_styleRaw",
-                  label: "Sebutkan Style Raw (--style raw) Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Style Raw (--style raw).",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Style Raw (--style raw) standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Apply hybrid format to 'Model Version (--v)' option '6.0'",
           "TODO: Apply hybrid format to 'Model Version (--v)' option '5.2'",
@@ -2341,6 +2205,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 50,
             },
+            optional: true,
           },
           {
             name: "aspectRatio",
@@ -2348,6 +2213,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "select",
             options: ["16:9", "9:16", "1:1", "Lainnya..."],
             info: 'Nilai yang didukung adalah "16:9" (layar lebar, bagus untuk lanskap), "9:16" (potret/vertikal, bagus untuk objek tinggi), dan "1:1" (persegi). Default adalah "16:9".',
+            optional: true,
           },
           {
             name: "personGeneration",
@@ -2355,6 +2221,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "select",
             options: ["allow", "dont_allow", "allow_adult", "Lainnya..."],
             info: 'Kontrol penyertaan orang dengan "dont_allow" atau "allow_adult".',
+            optional: true,
           },
           {
             name: "negativePrompt",
@@ -2373,6 +2240,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "select",
             options: ["true", "false", "Lainnya..."],
             info: "Kontrol apakah audio dihasilkan untuk video.",
+            optional: true,
           },
           {
             name: "image",
@@ -2395,6 +2263,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 1,
               max_value: 60,
             },
+            optional: true,
           },
           {
             name: "resolution",
@@ -2466,6 +2335,42 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_aspectRatio",
+            label: "Sebutkan Aspect Ratio Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Aspect Ratio.",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Aspect Ratio standar tidak tersedia.",
+          },
+          {
+            name: "custom_personGeneration",
+            label: "Sebutkan Generasi Orang Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Generasi Orang.",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Generasi Orang standar tidak tersedia.",
+          },
+          {
+            name: "custom_generateAudio",
+            label: "Sebutkan Generate Audio Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Generate Audio.",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Generate Audio standar tidak tersedia.",
+          },
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
         nama_kerangka: "Google VEO",
@@ -2485,67 +2390,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "aspectRatio",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_aspectRatio",
-                  label: "Sebutkan Aspect Ratio Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Aspect Ratio.",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Aspect Ratio standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "personGeneration",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_personGeneration",
-                  label: "Sebutkan Generasi Orang Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Generasi Orang.",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Generasi Orang standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "generateAudio",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_generateAudio",
-                  label: "Sebutkan Generate Audio Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Generate Audio.",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Generate Audio standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Apply hybrid format to 'Aspect Ratio' option '16:9'",
           "TODO: Apply hybrid format to 'Aspect Ratio' option '9:16'",
@@ -2574,6 +2418,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "style",
@@ -2585,6 +2430,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "transformation",
@@ -2608,6 +2454,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih orientasi video Anda.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -2620,6 +2467,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_aspectRatio",
+            label: "Sebutkan Aspect Ratio Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Aspect Ratio.",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Aspect Ratio standar tidak tersedia.",
           },
         ],
         kategori: ["Gambar & Desain", "Prompt AI Video (Text-to-Video)"],
@@ -2640,27 +2499,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "aspectRatio",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_aspectRatio",
-                  label: "Sebutkan Aspect Ratio Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Aspect Ratio.",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Aspect Ratio standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Consider adding conditional blocks [...] for optional parameters",
         ],
@@ -2950,6 +2788,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih alat spesifik yang ingin Anda gunakan.",
+            optional: true,
           },
           {
             name: "prompt",
@@ -2961,6 +2800,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "imageInput",
@@ -2985,6 +2825,19 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_tool",
+            label: "Sebutkan Alat Clipdrop yang Digunakan Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Alat Clipdrop yang Digunakan.",
+            placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Alat Clipdrop yang Digunakan standar tidak tersedia.",
+          },
         ],
         kategori: ["Gambar & Desain", "Utilitas & Penyuntingan AI"],
         nama_kerangka: "Clipdrop",
@@ -3004,28 +2857,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan prompt dalam format yang optimal untuk AI image/video generation, dengan detail visual yang jelas dan technical parameters yang sesuai.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "tool",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_tool",
-                  label: "Sebutkan Alat Clipdrop yang Digunakan Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Alat Clipdrop yang Digunakan.",
-                  placeholder: "Contoh: Gaya kustom, teknik baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Alat Clipdrop yang Digunakan standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Stable Diffusion XL'",
           "TODO: Apply hybrid format to 'Alat Clipdrop yang Digunakan' option 'Uncrop'",
@@ -3064,6 +2895,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "programmingLanguage",
@@ -3072,6 +2904,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             options: ["Python", "JavaScript", "Java", "C#", "Go", "Lainnya..."],
             default: "Python",
             info: "Pilih bahasa pemrograman dari potongan kode.",
+            optional: true,
           },
           {
             name: "reviewFocus",
@@ -3086,6 +2919,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: ["Keamanan", "Kinerja", "Keterbacaan"],
             info: "Pilih aspek yang ingin Anda fokuskan dalam tinjauan.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -3095,6 +2929,31 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "e.g., 'Fokus pada potensi kerentanan SQL Injection. Pertimbangkan skalabilitas untuk 1 juta pengguna.'",
             optional: true,
             info: "Sebutkan batasan, preferensi, atau instruksi khusus lainnya untuk tim AI.",
+          },
+          {
+            name: "custom_programmingLanguage",
+            label: "Sebutkan Bahasa Pemrograman Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Bahasa Pemrograman.",
+            placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Bahasa Pemrograman standar tidak tersedia.",
+          },
+          {
+            name: "custom_reviewFocus",
+            label: "Sebutkan Fokus Tinjauan (Pilih satu atau lebih) Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Fokus Tinjauan (Pilih satu atau lebih).",
+            placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Fokus Tinjauan (Pilih satu atau lebih) standar tidak tersedia.",
           },
         ],
         komponen_prompt: {
@@ -3119,49 +2978,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         top_p: 0.9,
         top_k: 40,
         updated_at: "2025-12-23T06:59:22.640679",
-        dynamicSubcomponents: [
-          {
-            trigger: "programmingLanguage",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_programmingLanguage",
-                  label: "Sebutkan Bahasa Pemrograman Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Bahasa Pemrograman.",
-                  placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Bahasa Pemrograman standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "reviewFocus",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_reviewFocus",
-                  label:
-                    "Sebutkan Fokus Tinjauan (Pilih satu atau lebih) Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Fokus Tinjauan (Pilih satu atau lebih).",
-                  placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Fokus Tinjauan (Pilih satu atau lebih) standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         _review_notes: [
           "HYBRID: Bahasa Pemrograman → 'Python' (add English technical term if applicable)",
           "HYBRID: Bahasa Pemrograman → 'JavaScript' (add English technical term if applicable)",
@@ -3196,6 +3012,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "SUMBER_EKSTERNAL",
@@ -3207,6 +3024,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "FORMAT_OUTPUT_KONTEN",
@@ -3215,6 +3033,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             options: ["Artikel Blog", "Ringkasan Laporan", "FAQ", "Lainnya..."],
             default: "Artikel Blog",
             info: "Pilih format konten yang Anda inginkan.",
+            optional: true,
           },
           {
             name: "NADA_BAHASA",
@@ -3229,41 +3048,27 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Informatif",
             info: "Pilih nada yang sesuai untuk konten Anda.",
-          },
-        ],
-        dynamicSubcomponents: [
-          {
-            trigger: "FORMAT_OUTPUT_KONTEN",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "FORMAT_OUTPUT_KONTEN_LAINNYA",
-                  label: "Sebutkan Format Output Lainnya",
-                  type: "text",
-                  placeholder: "Contoh: 'Naskah presentasi', 'Brosur'",
-                  info: "Sebutkan format kustom yang Anda inginkan.",
-                },
-              ],
-            },
+            optional: true,
           },
           {
-            trigger: "NADA_BAHASA",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_NADA_BAHASA",
-                  label: "Sebutkan Nada Bahasa Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Nada Bahasa.",
-                  placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Nada Bahasa standar tidak tersedia.",
-                },
-              ],
+            name: "FORMAT_OUTPUT_KONTEN_LAINNYA",
+            label: "Sebutkan Format Output Lainnya",
+            type: "text",
+            placeholder: "Contoh: 'Naskah presentasi', 'Brosur'",
+            info: "Sebutkan format kustom yang Anda inginkan.",
+            optional: true,
+          },
+          {
+            name: "custom_NADA_BAHASA",
+            label: "Sebutkan Nada Bahasa Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Nada Bahasa.",
+            placeholder: "Contoh: Opsi kustom, kategori baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
             },
+            info: "Input manual jika pilihan Nada Bahasa standar tidak tersedia.",
           },
         ],
         komponen_prompt: {
@@ -3326,82 +3131,75 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Generator Ide Bisnis",
             info: "Pilih tugas yang paling relevan dengan tahap Anda saat ini.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TUGAS_PERENCANAAN_STARTUP",
-            options: {
-              "Generator Ide Bisnis": [
-                {
-                  name: "INDUSTRI_STARTUP",
-                  label: "Industri atau Sektor",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Teknologi Pendidikan, Makanan & Minuman",
-                  info: "Sebutkan industri yang Anda minati.",
-                },
-                {
-                  name: "MASALAH_STARTUP",
-                  label: "Masalah Spesifik yang Ingin Dipecahkan",
-                  type: "text",
-                  placeholder: "Contoh: Sulitnya mencari mentor berkualitas",
-                  info: "Masalah apa yang ingin Anda selesaikan dengan bisnis ini?",
-                },
-              ],
-              "Penyusun Model Bisnis Kanvas": [
-                {
-                  name: "BMC_PROPOSISI_NILAI",
-                  label: "Proposisi Nilai (Value Propositions)",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Platform mentor on-demand yang terjangkau dan terverifikasi.",
-                  info: "Apa nilai unik yang Anda tawarkan kepada pelanggan?",
-                },
-                {
-                  name: "BMC_SEGMEN_PELANGGAN",
-                  label: "Segmen Pelanggan (Customer Segments)",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Mahasiswa tingkat akhir dan profesional muda.",
-                  info: "Siapa target pelanggan utama Anda?",
-                },
-              ],
-              "Analisis Persaingan dan Pasar": [
-                {
-                  name: "ANALISIS_DESKRIPSI_BISNIS",
-                  label: "Deskripsi Singkat Bisnis Anda",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Platform marketplace untuk menghubungkan mentor dengan mentee.",
-                  info: "Jelaskan bisnis Anda secara singkat untuk analisis.",
-                },
-                {
-                  name: "ANALISIS_KOMPETITOR",
-                  label: "Nama 2-3 Kompetitor Utama",
-                  type: "text",
-                  placeholder: "Contoh: Top-Mentor, Mentor.io",
-                  info: "Sebutkan pemain utama lain di pasar Anda.",
-                },
-              ],
-              "Pembuat Draf Konten Pitch Deck": [
-                {
-                  name: "PITCH_NAMA_STARTUP",
-                  label: "Nama Startup",
-                  type: "text",
-                  placeholder: "Contoh: MentorConnect",
-                  info: "Nama startup Anda untuk pitch deck.",
-                },
-                {
-                  name: "PITCH_MASALAH_SOLUSI",
-                  label: "Masalah dan Solusi",
-                  type: "textarea",
-                  placeholder:
-                    "Masalah: Mahasiswa sulit menemukan mentor yang sesuai. Solusi: Aplikasi kami menggunakan AI untuk mencocokkan mereka secara instan.",
-                  info: "Jelaskan masalah yang ada dan bagaimana startup Anda menyelesaikannya.",
-                },
-              ],
-            },
+            name: "INDUSTRI_STARTUP",
+            label: "Industri atau Sektor",
+            type: "text",
+            placeholder: "Contoh: Teknologi Pendidikan, Makanan & Minuman",
+            info: "Sebutkan industri yang Anda minati.",
+            optional: true,
+          },
+          {
+            name: "MASALAH_STARTUP",
+            label: "Masalah Spesifik yang Ingin Dipecahkan",
+            type: "text",
+            placeholder: "Contoh: Sulitnya mencari mentor berkualitas",
+            info: "Masalah apa yang ingin Anda selesaikan dengan bisnis ini?",
+            optional: true,
+          },
+          {
+            name: "BMC_PROPOSISI_NILAI",
+            label: "Proposisi Nilai (Value Propositions)",
+            type: "textarea",
+            placeholder:
+              "Contoh: Platform mentor on-demand yang terjangkau dan terverifikasi.",
+            info: "Apa nilai unik yang Anda tawarkan kepada pelanggan?",
+            optional: true,
+          },
+          {
+            name: "BMC_SEGMEN_PELANGGAN",
+            label: "Segmen Pelanggan (Customer Segments)",
+            type: "textarea",
+            placeholder:
+              "Contoh: Mahasiswa tingkat akhir dan profesional muda.",
+            info: "Siapa target pelanggan utama Anda?",
+            optional: true,
+          },
+          {
+            name: "ANALISIS_DESKRIPSI_BISNIS",
+            label: "Deskripsi Singkat Bisnis Anda",
+            type: "textarea",
+            placeholder:
+              "Contoh: Platform marketplace untuk menghubungkan mentor dengan mentee.",
+            info: "Jelaskan bisnis Anda secara singkat untuk analisis.",
+            optional: true,
+          },
+          {
+            name: "ANALISIS_KOMPETITOR",
+            label: "Nama 2-3 Kompetitor Utama",
+            type: "text",
+            placeholder: "Contoh: Top-Mentor, Mentor.io",
+            info: "Sebutkan pemain utama lain di pasar Anda.",
+            optional: true,
+          },
+          {
+            name: "PITCH_NAMA_STARTUP",
+            label: "Nama Startup",
+            type: "text",
+            placeholder: "Contoh: MentorConnect",
+            info: "Nama startup Anda untuk pitch deck.",
+            optional: true,
+          },
+          {
+            name: "PITCH_MASALAH_SOLUSI",
+            label: "Masalah dan Solusi",
+            type: "textarea",
+            placeholder:
+              "Masalah: Mahasiswa sulit menemukan mentor yang sesuai. Solusi: Aplikasi kami menggunakan AI untuk mencocokkan mereka secara instan.",
+            info: "Jelaskan masalah yang ada dan bagaimana startup Anda menyelesaikannya.",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -3458,95 +3256,90 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Pembuat Laporan Keuangan Sederhana",
             info: "Pilih tugas keuangan yang ingin Anda selesaikan.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TUGAS_AKUNTANSI",
-            options: {
-              "Pembuat Laporan Keuangan Sederhana": [
-                {
-                  name: "ACC_JENIS_LAPORAN",
-                  label: "Jenis Laporan Keuangan",
-                  type: "select",
-                  options: [
-                    "Laporan Laba Rugi",
-                    "Laporan Arus Kas Sederhana",
-                    "Lainnya...",
-                  ],
-                  default: "Laporan Laba Rugi",
-                  info: "Pilih jenis laporan yang ingin Anda buat.",
-                },
-                {
-                  name: "ACC_PERIODE",
-                  label: "Periode Laporan",
-                  type: "text",
-                  placeholder: "Contoh: Bulan Juli 2025",
-                  info: "Sebutkan periode waktu yang dicakup laporan.",
-                },
-                {
-                  name: "ACC_DATA_RINGKAS",
-                  label: "Data Keuangan Ringkas",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh L/R: Total Pendapatan: 50jt, HPP: 20jt, Biaya Operasional: 15jt",
-                  info: "Masukkan data keuangan ringkas sesuai jenis laporan.",
-                },
-              ],
-              "Generator Draf Faktur (Invoice)": [
-                {
-                  name: "INV_NAMA_KLIEN",
-                  label: "Nama Klien",
-                  type: "text",
-                  placeholder: "Contoh: PT Sejahtera Makmur",
-                  info: "Nama klien yang akan ditagih.",
-                },
-                {
-                  name: "INV_DETAIL_TAGIHAN",
-                  label: "Detail Barang/Jasa (pisahkan baris)",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Desain Logo (1, Rp 2.000.000)\nJasa Konsultasi (2 jam, Rp 500.000/jam)",
-                  info: "Masukkan setiap item, kuantitas, dan harga.",
-                },
-              ],
-              "Alat Analisis & Kategorisasi Biaya": [
-                {
-                  name: "BIAYA_DAFTAR",
-                  label: "Tempelkan Daftar Pengeluaran Anda",
-                  type: "textarea",
-                  placeholder:
-                    "- Sewa kantor 5.000.000\n- Gaji staf 15.000.000\n- Iklan online 2.000.000",
-                  info: "Masukkan daftar pengeluaran Anda, satu per baris.",
-                },
-              ],
-              "Kalkulator Titik Impas (Break-Even Point)": [
-                {
-                  name: "BEP_BIAYA_TETAP",
-                  label: "Total Biaya Tetap per Bulan",
-                  type: "number",
-                  placeholder: "20000000",
-                  unit: "Rp",
-                  info: "Biaya yang selalu sama, tidak peduli penjualan (gaji, sewa).",
-                },
-                {
-                  name: "BEP_HARGA_JUAL",
-                  label: "Harga Jual per Unit",
-                  type: "number",
-                  placeholder: "100000",
-                  unit: "Rp",
-                  info: "Harga jual satu unit produk/jasa Anda.",
-                },
-                {
-                  name: "BEP_BIAYA_VARIABEL",
-                  label: "Biaya Variabel per Unit",
-                  type: "number",
-                  placeholder: "40000",
-                  unit: "Rp",
-                  info: "Biaya yang hanya muncul jika ada penjualan (bahan baku, komisi).",
-                },
-              ],
-            },
+            name: "ACC_JENIS_LAPORAN",
+            label: "Jenis Laporan Keuangan",
+            type: "select",
+            options: [
+              "Laporan Laba Rugi",
+              "Laporan Arus Kas Sederhana",
+              "Lainnya...",
+            ],
+            default: "Laporan Laba Rugi",
+            info: "Pilih jenis laporan yang ingin Anda buat.",
+            optional: true,
+          },
+          {
+            name: "ACC_PERIODE",
+            label: "Periode Laporan",
+            type: "text",
+            placeholder: "Contoh: Bulan Juli 2025",
+            info: "Sebutkan periode waktu yang dicakup laporan.",
+            optional: true,
+          },
+          {
+            name: "ACC_DATA_RINGKAS",
+            label: "Data Keuangan Ringkas",
+            type: "textarea",
+            placeholder:
+              "Contoh L/R: Total Pendapatan: 50jt, HPP: 20jt, Biaya Operasional: 15jt",
+            info: "Masukkan data keuangan ringkas sesuai jenis laporan.",
+            optional: true,
+          },
+          {
+            name: "INV_NAMA_KLIEN",
+            label: "Nama Klien",
+            type: "text",
+            placeholder: "Contoh: PT Sejahtera Makmur",
+            info: "Nama klien yang akan ditagih.",
+            optional: true,
+          },
+          {
+            name: "INV_DETAIL_TAGIHAN",
+            label: "Detail Barang/Jasa (pisahkan baris)",
+            type: "textarea",
+            placeholder:
+              "Contoh: Desain Logo (1, Rp 2.000.000)\nJasa Konsultasi (2 jam, Rp 500.000/jam)",
+            info: "Masukkan setiap item, kuantitas, dan harga.",
+            optional: true,
+          },
+          {
+            name: "BIAYA_DAFTAR",
+            label: "Tempelkan Daftar Pengeluaran Anda",
+            type: "textarea",
+            placeholder:
+              "- Sewa kantor 5.000.000\n- Gaji staf 15.000.000\n- Iklan online 2.000.000",
+            info: "Masukkan daftar pengeluaran Anda, satu per baris.",
+            optional: true,
+          },
+          {
+            name: "BEP_BIAYA_TETAP",
+            label: "Total Biaya Tetap per Bulan",
+            type: "number",
+            placeholder: "20000000",
+            unit: "Rp",
+            info: "Biaya yang selalu sama, tidak peduli penjualan (gaji, sewa).",
+            optional: true,
+          },
+          {
+            name: "BEP_HARGA_JUAL",
+            label: "Harga Jual per Unit",
+            type: "number",
+            placeholder: "100000",
+            unit: "Rp",
+            info: "Harga jual satu unit produk/jasa Anda.",
+            optional: true,
+          },
+          {
+            name: "BEP_BIAYA_VARIABEL",
+            label: "Biaya Variabel per Unit",
+            type: "number",
+            placeholder: "40000",
+            unit: "Rp",
+            info: "Biaya yang hanya muncul jika ada penjualan (bahan baku, komisi).",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -3601,86 +3394,79 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Pembuat Deskripsi Pekerjaan",
             info: "Pilih tugas SDM yang ingin Anda kerjakan.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TUGAS_SDM",
-            options: {
-              "Pembuat Deskripsi Pekerjaan": [
-                {
-                  name: "HR_POSISI_JABATAN",
-                  label: "Posisi Jabatan dan Level",
-                  type: "text",
-                  placeholder: "Contoh: Senior Graphic Designer",
-                  info: "Sebutkan jabatan yang sedang dibuka.",
-                },
-                {
-                  name: "HR_TANGGUNG_JAWAB",
-                  label: "3-5 Tanggung Jawab Utama",
-                  type: "textarea",
-                  placeholder:
-                    "- Membuat desain untuk media sosial\n- Mengembangkan konsep visual untuk kampanye",
-                  info: "Sebutkan poin-poin tanggung jawab terpenting.",
-                },
-              ],
-              "Generator Pertanyaan Wawancara": [
-                {
-                  name: "HR_POSISI_WAWANCARA",
-                  label: "Posisi Jabatan",
-                  type: "text",
-                  placeholder: "Contoh: Customer Service, Software Engineer",
-                  info: "Posisi yang akan diwawancarai.",
-                },
-                {
-                  name: "HR_SOFT_SKILL",
-                  label: "Soft Skill yang Dicari",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Kemampuan memecahkan masalah, kolaborasi tim",
-                  info: "Karakteristik perilaku yang penting untuk posisi ini.",
-                },
-              ],
-              "Penyusun Rencana Onboarding": [
-                {
-                  name: "HR_POSISI_ONBOARDING",
-                  label: "Posisi Jabatan Karyawan Baru",
-                  type: "text",
-                  placeholder: "Contoh: Junior Accountant",
-                  info: "Posisi karyawan yang akan menjalani orientasi.",
-                },
-                {
-                  name: "HR_TUJUAN_30_HARI",
-                  label: "Tujuan Utama untuk 30 Hari Pertama",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Memahami alur kerja tim dan berhasil menangani 5 klien kecil.",
-                  info: "Apa target utama yang harus dicapai karyawan baru di bulan pertama?",
-                },
-              ],
-              "Pembuat Draf Email Rekrutmen": [
-                {
-                  name: "HR_JENIS_EMAIL",
-                  label: "Jenis Email",
-                  type: "select",
-                  options: [
-                    "Undangan Wawancara",
-                    "Surat Penolakan Kandidat",
-                    "Surat Penawaran Kerja",
-                    "Lainnya...",
-                  ],
-                  default: "Undangan Wawancara",
-                  info: "Pilih templat email yang Anda butuhkan.",
-                },
-                {
-                  name: "HR_NAMA_KANDIDAT",
-                  label: "Nama Kandidat",
-                  type: "text",
-                  placeholder: "Contoh: Budi Santoso",
-                  info: "Nama kandidat untuk personalisasi email.",
-                },
-              ],
-            },
+            name: "HR_POSISI_JABATAN",
+            label: "Posisi Jabatan dan Level",
+            type: "text",
+            placeholder: "Contoh: Senior Graphic Designer",
+            info: "Sebutkan jabatan yang sedang dibuka.",
+            optional: true,
+          },
+          {
+            name: "HR_TANGGUNG_JAWAB",
+            label: "3-5 Tanggung Jawab Utama",
+            type: "textarea",
+            placeholder:
+              "- Membuat desain untuk media sosial\n- Mengembangkan konsep visual untuk kampanye",
+            info: "Sebutkan poin-poin tanggung jawab terpenting.",
+            optional: true,
+          },
+          {
+            name: "HR_POSISI_WAWANCARA",
+            label: "Posisi Jabatan",
+            type: "text",
+            placeholder: "Contoh: Customer Service, Software Engineer",
+            info: "Posisi yang akan diwawancarai.",
+            optional: true,
+          },
+          {
+            name: "HR_SOFT_SKILL",
+            label: "Soft Skill yang Dicari",
+            type: "text",
+            placeholder: "Contoh: Kemampuan memecahkan masalah, kolaborasi tim",
+            info: "Karakteristik perilaku yang penting untuk posisi ini.",
+            optional: true,
+          },
+          {
+            name: "HR_POSISI_ONBOARDING",
+            label: "Posisi Jabatan Karyawan Baru",
+            type: "text",
+            placeholder: "Contoh: Junior Accountant",
+            info: "Posisi karyawan yang akan menjalani orientasi.",
+            optional: true,
+          },
+          {
+            name: "HR_TUJUAN_30_HARI",
+            label: "Tujuan Utama untuk 30 Hari Pertama",
+            type: "text",
+            placeholder:
+              "Contoh: Memahami alur kerja tim dan berhasil menangani 5 klien kecil.",
+            info: "Apa target utama yang harus dicapai karyawan baru di bulan pertama?",
+            optional: true,
+          },
+          {
+            name: "HR_JENIS_EMAIL",
+            label: "Jenis Email",
+            type: "select",
+            options: [
+              "Undangan Wawancara",
+              "Surat Penolakan Kandidat",
+              "Surat Penawaran Kerja",
+              "Lainnya...",
+            ],
+            default: "Undangan Wawancara",
+            info: "Pilih templat email yang Anda butuhkan.",
+            optional: true,
+          },
+          {
+            name: "HR_NAMA_KANDIDAT",
+            label: "Nama Kandidat",
+            type: "text",
+            placeholder: "Contoh: Budi Santoso",
+            info: "Nama kandidat untuk personalisasi email.",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -3737,137 +3523,135 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Perencanaan Strategi Investasi",
             info: "Pilihan Anda akan menampilkan serangkaian input yang dirancang khusus untuk area tersebut.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TUGAS_ANALISIS_KEUANGAN",
-            options: {
-              "Perencanaan Strategi Investasi": [
-                {
-                  name: "TUJUAN_INVESTASI",
-                  label: "Tujuan Investasi Anda",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Mempersiapkan dana pensiun dalam 20 tahun",
-                  info: "Tujuan yang spesifik akan menghasilkan rekomendasi yang lebih akurat.",
-                },
-                {
-                  name: "MODAL_AWAL",
-                  label: "Modal Awal & Investasi Bulanan",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Modal awal Rp 10.000.000, investasi bulanan Rp 1.000.000",
-                  info: "Sebutkan jumlah beserta mata uangnya.",
-                },
-                {
-                  name: "TINGKAT_RISIKO",
-                  label: "Toleransi Risiko Anda",
-                  type: "select",
-                  options: ["Konservatif", "Moderat", "Agresif", "Lainnya..."],
-                  default: "Moderat",
-                  info: "Ini akan sangat mempengaruhi jenis instrumen investasi yang akan direkomendasikan.",
-                },
-                {
-                  name: "HORIZON_WAKTU",
-                  label: "Horizon Waktu Investasi",
-                  type: "text",
-                  placeholder: "Contoh: 10 tahun",
-                  info: "Jangka waktu (pendek, menengah, panjang) sangat mempengaruhi strategi.",
-                },
-              ],
-              "Analisis Saham Tunggal": [
-                {
-                  name: "KODE_SAHAM",
-                  label: "Kode Ticker atau Nama Saham",
-                  type: "text",
-                  placeholder: "Contoh: BBCA atau Bank Central Asia",
-                  info: "Masukkan kode saham (ticker) atau nama perusahaan yang ingin dianalisis.",
-                },
-                {
-                  name: "FOKUS_ANALISIS_SAHAM",
-                  label: "Fokus Analisis",
-                  type: "multiselect",
-                  options: [
-                    "Analisis Fundamental",
-                    "Analisis Teknikal",
-                    "Sentimen Berita",
-                    "Lainnya...",
-                  ],
-                  default: ["Analisis Fundamental"],
-                  info: "Pilih aspek yang ingin Anda dalami dari saham tersebut.",
-                },
-              ],
-              "Perbandingan Produk Investasi": [
-                {
-                  name: "PRODUK_A",
-                  label: "Nama Produk Investasi Pertama",
-                  type: "text",
-                  placeholder: "Contoh: Reksa Dana Saham Manulife",
-                  info: "Nama produk pertama yang akan dibandingkan.",
-                },
-                {
-                  name: "PRODUK_B",
-                  label: "Nama Produk Investasi Kedua",
-                  type: "text",
-                  placeholder: "Contoh: Reksa Dana Indeks Batavia",
-                  info: "Nama produk kedua yang akan dibandingkan.",
-                },
-                {
-                  name: "METRIK_PERBANDINGAN",
-                  label: "Metrik Perbandingan",
-                  type: "multiselect",
-                  options: [
-                    "Imbal Hasil (1th, 3th, 5th)",
-                    "Tingkat Risiko (Volatility)",
-                    "Biaya Manajemen",
-                    "Minimum Investasi",
-                    "Lainnya...",
-                  ],
-                  default: [
-                    "Imbal Hasil (1th, 3th, 5th)",
-                    "Tingkat Risiko (Volatility)",
-                  ],
-                  info: "Pilih kriteria yang ingin Anda gunakan untuk membandingkan.",
-                },
-              ],
-              "Simulasi Proyeksi Dana": [
-                {
-                  name: "TARGET_DANA",
-                  label: "Target Dana di Masa Depan",
-                  type: "number",
-                  placeholder: "1000000000",
-                  unit: "Rp",
-                  info: "Jumlah total dana yang ingin Anda capai.",
-                },
-                {
-                  name: "SALDO_SAAT_INI",
-                  label: "Saldo Investasi Saat Ini",
-                  type: "number",
-                  placeholder: "50000000",
-                  unit: "Rp",
-                  info: "Jumlah dana yang sudah Anda miliki saat ini.",
-                },
-                {
-                  name: "INVESTASI_BULANAN",
-                  label: "Investasi Rutin per Bulan",
-                  type: "number",
-                  placeholder: "1000000",
-                  unit: "Rp",
-                  info: "Jumlah yang akan Anda tambahkan setiap bulan.",
-                },
-                {
-                  name: "ASUMSI_RETURN",
-                  label: "Asumsi Imbal Hasil Tahunan (%)",
-                  type: "slider",
-                  min: 1,
-                  max: 25,
-                  step: 1,
-                  default: 8,
-                  info: "Perkiraan rata-rata keuntungan investasi Anda per tahun.",
-                },
-              ],
-            },
+            name: "TUJUAN_INVESTASI",
+            label: "Tujuan Investasi Anda",
+            type: "text",
+            placeholder: "Contoh: Mempersiapkan dana pensiun dalam 20 tahun",
+            info: "Tujuan yang spesifik akan menghasilkan rekomendasi yang lebih akurat.",
+            optional: true,
+          },
+          {
+            name: "MODAL_AWAL",
+            label: "Modal Awal & Investasi Bulanan",
+            type: "text",
+            placeholder:
+              "Contoh: Modal awal Rp 10.000.000, investasi bulanan Rp 1.000.000",
+            info: "Sebutkan jumlah beserta mata uangnya.",
+            optional: true,
+          },
+          {
+            name: "TINGKAT_RISIKO",
+            label: "Toleransi Risiko Anda",
+            type: "select",
+            options: ["Konservatif", "Moderat", "Agresif", "Lainnya..."],
+            default: "Moderat",
+            info: "Ini akan sangat mempengaruhi jenis instrumen investasi yang akan direkomendasikan.",
+            optional: true,
+          },
+          {
+            name: "HORIZON_WAKTU",
+            label: "Horizon Waktu Investasi",
+            type: "text",
+            placeholder: "Contoh: 10 tahun",
+            info: "Jangka waktu (pendek, menengah, panjang) sangat mempengaruhi strategi.",
+            optional: true,
+          },
+          {
+            name: "KODE_SAHAM",
+            label: "Kode Ticker atau Nama Saham",
+            type: "text",
+            placeholder: "Contoh: BBCA atau Bank Central Asia",
+            info: "Masukkan kode saham (ticker) atau nama perusahaan yang ingin dianalisis.",
+            optional: true,
+          },
+          {
+            name: "FOKUS_ANALISIS_SAHAM",
+            label: "Fokus Analisis",
+            type: "multiselect",
+            options: [
+              "Analisis Fundamental",
+              "Analisis Teknikal",
+              "Sentimen Berita",
+              "Lainnya...",
+            ],
+            default: ["Analisis Fundamental"],
+            info: "Pilih aspek yang ingin Anda dalami dari saham tersebut.",
+            optional: true,
+          },
+          {
+            name: "PRODUK_A",
+            label: "Nama Produk Investasi Pertama",
+            type: "text",
+            placeholder: "Contoh: Reksa Dana Saham Manulife",
+            info: "Nama produk pertama yang akan dibandingkan.",
+            optional: true,
+          },
+          {
+            name: "PRODUK_B",
+            label: "Nama Produk Investasi Kedua",
+            type: "text",
+            placeholder: "Contoh: Reksa Dana Indeks Batavia",
+            info: "Nama produk kedua yang akan dibandingkan.",
+            optional: true,
+          },
+          {
+            name: "METRIK_PERBANDINGAN",
+            label: "Metrik Perbandingan",
+            type: "multiselect",
+            options: [
+              "Imbal Hasil (1th, 3th, 5th)",
+              "Tingkat Risiko (Volatility)",
+              "Biaya Manajemen",
+              "Minimum Investasi",
+              "Lainnya...",
+            ],
+            default: [
+              "Imbal Hasil (1th, 3th, 5th)",
+              "Tingkat Risiko (Volatility)",
+            ],
+            info: "Pilih kriteria yang ingin Anda gunakan untuk membandingkan.",
+            optional: true,
+          },
+          {
+            name: "TARGET_DANA",
+            label: "Target Dana di Masa Depan",
+            type: "number",
+            placeholder: "1000000000",
+            unit: "Rp",
+            info: "Jumlah total dana yang ingin Anda capai.",
+            optional: true,
+          },
+          {
+            name: "SALDO_SAAT_INI",
+            label: "Saldo Investasi Saat Ini",
+            type: "number",
+            placeholder: "50000000",
+            unit: "Rp",
+            info: "Jumlah dana yang sudah Anda miliki saat ini.",
+            optional: true,
+          },
+          {
+            name: "INVESTASI_BULANAN",
+            label: "Investasi Rutin per Bulan",
+            type: "number",
+            placeholder: "1000000",
+            unit: "Rp",
+            info: "Jumlah yang akan Anda tambahkan setiap bulan.",
+            optional: true,
+          },
+          {
+            name: "ASUMSI_RETURN",
+            label: "Asumsi Imbal Hasil Tahunan (%)",
+            type: "slider",
+            min: 1,
+            max: 25,
+            step: 1,
+            default: 8,
+            info: "Perkiraan rata-rata keuntungan investasi Anda per tahun.",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -3924,92 +3708,86 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Pembuat Draf Perjanjian Dasar",
             info: "Pilih tugas legal yang Anda butuhkan.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TUGAS_BANTUAN_HUKUM",
-            options: {
-              "Pembuat Draf Perjanjian Dasar": [
-                {
-                  name: "JENIS_PERJANJIAN",
-                  label: "Jenis Perjanjian",
-                  type: "select",
-                  options: [
-                    "Perjanjian Kerja (PKWT)",
-                    "Perjanjian Kerahasiaan (NDA)",
-                    "Surat Perjanjian Kerja Sama (MoU)",
-                    "Lainnya...",
-                  ],
-                  default: "Perjanjian Kerja (PKWT)",
-                  info: "Pilih jenis dokumen yang ingin Anda buat drafnya.",
-                },
-                {
-                  name: "PIHAK_PERTAMA",
-                  label: "Nama Pihak Pertama",
-                  type: "text",
-                  placeholder: "Contoh: PT Jaya Abadi",
-                  info: "Nama perusahaan atau individu pihak pertama.",
-                },
-                {
-                  name: "PIHAK_KEDUA",
-                  label: "Nama Pihak Kedua",
-                  type: "text",
-                  placeholder: "Contoh: John Doe",
-                  info: "Nama perusahaan atau individu pihak kedua.",
-                },
-              ],
-              "Generator Kebijakan Privasi & Syarat Layanan": [
-                {
-                  name: "NAMA_WEBSITE_APP",
-                  label: "Nama Website atau Aplikasi Anda",
-                  type: "text",
-                  placeholder: "Contoh: Aplikasi 'BelajarKuy'",
-                  info: "Nama layanan Anda untuk dicantumkan dalam kebijakan.",
-                },
-                {
-                  name: "JENIS_DATA_PENGGUNA",
-                  label: "Jenis Data Pengguna yang Dikumpulkan",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Nama, email, nomor telepon, data lokasi, riwayat pembelian.",
-                  info: "Sebutkan semua jenis data pribadi yang Anda kumpulkan dari pengguna.",
-                },
-              ],
-              "Penerjemah Istilah Hukum": [
-                {
-                  name: "ISTILAH_HUKUM",
-                  label: "Istilah atau Klausul Hukum",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Apa arti dari klausul 'force majeure'? atau salin-tempel satu klausul penuh di sini.",
-                  info: "Masukkan istilah atau klausul yang ingin Anda pahami.",
-                },
-              ],
-              "Checklist Kepatuhan Bisnis": [
-                {
-                  name: "BENTUK_BADAN_USAHA",
-                  label: "Bentuk Badan Usaha",
-                  type: "select",
-                  options: [
-                    "PT Perorangan",
-                    "CV",
-                    "Firma",
-                    "UMKM Perorangan",
-                    "Lainnya...",
-                  ],
-                  default: "UMKM Perorangan",
-                  info: "Pilih bentuk badan usaha Anda.",
-                },
-                {
-                  name: "BIDANG_USAHA",
-                  label: "Bidang Usaha",
-                  type: "text",
-                  placeholder: "Contoh: Kafe, Toko Online, Jasa Konsultasi IT",
-                  info: "Sebutkan bidang usaha spesifik Anda.",
-                },
-              ],
-            },
+            name: "JENIS_PERJANJIAN",
+            label: "Jenis Perjanjian",
+            type: "select",
+            options: [
+              "Perjanjian Kerja (PKWT)",
+              "Perjanjian Kerahasiaan (NDA)",
+              "Surat Perjanjian Kerja Sama (MoU)",
+              "Lainnya...",
+            ],
+            default: "Perjanjian Kerja (PKWT)",
+            info: "Pilih jenis dokumen yang ingin Anda buat drafnya.",
+            optional: true,
+          },
+          {
+            name: "PIHAK_PERTAMA",
+            label: "Nama Pihak Pertama",
+            type: "text",
+            placeholder: "Contoh: PT Jaya Abadi",
+            info: "Nama perusahaan atau individu pihak pertama.",
+            optional: true,
+          },
+          {
+            name: "PIHAK_KEDUA",
+            label: "Nama Pihak Kedua",
+            type: "text",
+            placeholder: "Contoh: John Doe",
+            info: "Nama perusahaan atau individu pihak kedua.",
+            optional: true,
+          },
+          {
+            name: "NAMA_WEBSITE_APP",
+            label: "Nama Website atau Aplikasi Anda",
+            type: "text",
+            placeholder: "Contoh: Aplikasi 'BelajarKuy'",
+            info: "Nama layanan Anda untuk dicantumkan dalam kebijakan.",
+            optional: true,
+          },
+          {
+            name: "JENIS_DATA_PENGGUNA",
+            label: "Jenis Data Pengguna yang Dikumpulkan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Nama, email, nomor telepon, data lokasi, riwayat pembelian.",
+            info: "Sebutkan semua jenis data pribadi yang Anda kumpulkan dari pengguna.",
+            optional: true,
+          },
+          {
+            name: "ISTILAH_HUKUM",
+            label: "Istilah atau Klausul Hukum",
+            type: "textarea",
+            placeholder:
+              "Contoh: Apa arti dari klausul 'force majeure'? atau salin-tempel satu klausul penuh di sini.",
+            info: "Masukkan istilah atau klausul yang ingin Anda pahami.",
+            optional: true,
+          },
+          {
+            name: "BENTUK_BADAN_USAHA",
+            label: "Bentuk Badan Usaha",
+            type: "select",
+            options: [
+              "PT Perorangan",
+              "CV",
+              "Firma",
+              "UMKM Perorangan",
+              "Lainnya...",
+            ],
+            default: "UMKM Perorangan",
+            info: "Pilih bentuk badan usaha Anda.",
+            optional: true,
+          },
+          {
+            name: "BIDANG_USAHA",
+            label: "Bidang Usaha",
+            type: "text",
+            placeholder: "Contoh: Kafe, Toko Online, Jasa Konsultasi IT",
+            info: "Sebutkan bidang usaha spesifik Anda.",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -4066,79 +3844,71 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Penulis Dokumen Persyaratan Produk (PRD)",
             info: "Pilih tugas manajemen produk yang ingin Anda selesaikan.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TUGAS_MANAJEMEN_PRODUK",
-            options: {
-              "Penulis Dokumen Persyaratan Produk (PRD)": [
-                {
-                  name: "PRD_NAMA_FITUR",
-                  label: "Nama Fitur atau Produk",
-                  type: "text",
-                  placeholder: "Contoh: Fitur 'Kolaborasi Tim Real-time'",
-                  info: "Fitur yang akan dibuatkan dokumen persyaratannya.",
-                },
-                {
-                  name: "PRD_MASALAH_PENGGUNA",
-                  label: "Masalah Pengguna yang Diselesaikan",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Tim yang bekerja remote kesulitan untuk berdiskusi secara sinkron.",
-                  info: "Jelaskan masalah yang ingin Anda pecahkan dengan fitur ini.",
-                },
-              ],
-              "Generator Peta Jalan Produk (Roadmap)": [
-                {
-                  name: "ROADMAP_VISI_PRODUK",
-                  label: "Visi Produk (Jangka Panjang)",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Menjadi platform kolaborasi nomor satu untuk tim kreatif.",
-                  info: "Apa tujuan besar dari produk Anda?",
-                },
-                {
-                  name: "ROADMAP_TUJUAN_BISNIS",
-                  label: "Tujuan Bisnis untuk 3-6 Bulan ke Depan",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Meningkatkan retensi pengguna sebesar 15%",
-                  info: "Apa target bisnis yang ingin dicapai dalam waktu dekat?",
-                },
-              ],
-              "Asisten Prioritas Fitur": [
-                {
-                  name: "PRIORITAS_DAFTAR_FITUR",
-                  label: "Daftar Fitur (pisahkan dengan koma)",
-                  type: "textarea",
-                  placeholder: "Contoh: Fitur A, Fitur B, Fitur C",
-                  info: "Masukkan daftar fitur yang perlu diprioritaskan.",
-                },
-                {
-                  name: "PRIORITAS_KERANGKA",
-                  label: "Kerangka Prioritas",
-                  type: "select",
-                  options: [
-                    "RICE (Reach, Impact, Confidence, Effort)",
-                    "MoSCoW (Must, Should, Could, Won't)",
-                    "Lainnya...",
-                  ],
-                  default: "RICE (Reach, Impact, Confidence, Effort)",
-                  info: "Pilih metode untuk membantu prioritas.",
-                },
-              ],
-              "Penulis Cerita Pengguna (User Story)": [
-                {
-                  name: "USERSTORY_DESKRIPSI_FITUR",
-                  label: "Deskripsi Singkat Fitur",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Pengguna ingin bisa memfilter produk berdasarkan warna agar lebih cepat menemukan barang.",
-                  info: "Jelaskan kebutuhan dari sudut pandang pengguna.",
-                },
-              ],
-            },
+            name: "PRD_NAMA_FITUR",
+            label: "Nama Fitur atau Produk",
+            type: "text",
+            placeholder: "Contoh: Fitur 'Kolaborasi Tim Real-time'",
+            info: "Fitur yang akan dibuatkan dokumen persyaratannya.",
+            optional: true,
+          },
+          {
+            name: "PRD_MASALAH_PENGGUNA",
+            label: "Masalah Pengguna yang Diselesaikan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Tim yang bekerja remote kesulitan untuk berdiskusi secara sinkron.",
+            info: "Jelaskan masalah yang ingin Anda pecahkan dengan fitur ini.",
+            optional: true,
+          },
+          {
+            name: "ROADMAP_VISI_PRODUK",
+            label: "Visi Produk (Jangka Panjang)",
+            type: "text",
+            placeholder:
+              "Contoh: Menjadi platform kolaborasi nomor satu untuk tim kreatif.",
+            info: "Apa tujuan besar dari produk Anda?",
+            optional: true,
+          },
+          {
+            name: "ROADMAP_TUJUAN_BISNIS",
+            label: "Tujuan Bisnis untuk 3-6 Bulan ke Depan",
+            type: "textarea",
+            placeholder: "Contoh: Meningkatkan retensi pengguna sebesar 15%",
+            info: "Apa target bisnis yang ingin dicapai dalam waktu dekat?",
+            optional: true,
+          },
+          {
+            name: "PRIORITAS_DAFTAR_FITUR",
+            label: "Daftar Fitur (pisahkan dengan koma)",
+            type: "textarea",
+            placeholder: "Contoh: Fitur A, Fitur B, Fitur C",
+            info: "Masukkan daftar fitur yang perlu diprioritaskan.",
+            optional: true,
+          },
+          {
+            name: "PRIORITAS_KERANGKA",
+            label: "Kerangka Prioritas",
+            type: "select",
+            options: [
+              "RICE (Reach, Impact, Confidence, Effort)",
+              "MoSCoW (Must, Should, Could, Won't)",
+              "Lainnya...",
+            ],
+            default: "RICE (Reach, Impact, Confidence, Effort)",
+            info: "Pilih metode untuk membantu prioritas.",
+            optional: true,
+          },
+          {
+            name: "USERSTORY_DESKRIPSI_FITUR",
+            label: "Deskripsi Singkat Fitur",
+            type: "textarea",
+            placeholder:
+              "Contoh: Pengguna ingin bisa memfilter produk berdasarkan warna agar lebih cepat menemukan barang.",
+            info: "Jelaskan kebutuhan dari sudut pandang pengguna.",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -4192,76 +3962,68 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Identifikasi Tren dan Pola",
             info: "Pilih jenis analisis yang ingin Anda lakukan.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TUGAS_ANALISIS_DATA",
-            options: {
-              "Eksplorasi & Pembersihan Data": [
-                {
-                  name: "DATA_SAMPEL_EKSPLORASI",
-                  label: "Tempelkan Sampel Data Anda",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: salin beberapa baris dari file CSV atau Excel Anda di sini.",
-                  info: "Berikan sampel data untuk dianalisis kesehatannya.",
-                },
-              ],
-              "Analisis Statistik Deskriptif": [
-                {
-                  name: "DATA_SAMPEL_STATISTIK",
-                  label: "Tempelkan Sampel Data Anda",
-                  type: "textarea",
-                  placeholder: "Contoh: salin data numerik Anda di sini.",
-                  info: "Data untuk dihitung statistik dasarnya.",
-                },
-                {
-                  name: "KOLOM_STATISTIK",
-                  label: "Nama Kolom yang Dianalisis",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Kolom 'Pendapatan' dan 'Usia Pelanggan'",
-                  info: "Sebutkan kolom mana yang ingin Anda hitung statistiknya.",
-                },
-              ],
-              "Identifikasi Tren dan Pola": [
-                {
-                  name: "DATA_SAMPEL_TREN",
-                  label: "Tempelkan Sampel Data Anda",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: salin data time-series atau data kategorikal Anda.",
-                  info: "Data yang akan dianalisis untuk menemukan pola.",
-                },
-                {
-                  name: "PERTANYAAN_BISNIS_TREN",
-                  label: "Pertanyaan Bisnis yang Ingin Dijawab",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Bagaimana tren penjualan produk A selama 6 bulan terakhir?",
-                  info: "Pertanyaan spesifik akan mengarahkan analisis.",
-                },
-              ],
-              "Rekomendasi Visualisasi Data": [
-                {
-                  name: "DATA_VISUALISASI",
-                  label: "Jelaskan Data yang Ingin Divisualisasikan",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Saya punya data penjualan bulanan per kategori produk.",
-                  info: "Deskripsi data Anda.",
-                },
-                {
-                  name: "PESAN_VISUALISASI",
-                  label: "Pesan Utama yang Ingin Disampaikan",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Saya ingin menunjukkan kategori produk mana yang paling cepat bertumbuh.",
-                  info: "Apa cerita yang ingin Anda sampaikan dengan data ini?",
-                },
-              ],
-            },
+            name: "DATA_SAMPEL_EKSPLORASI",
+            label: "Tempelkan Sampel Data Anda",
+            type: "textarea",
+            placeholder:
+              "Contoh: salin beberapa baris dari file CSV atau Excel Anda di sini.",
+            info: "Berikan sampel data untuk dianalisis kesehatannya.",
+            optional: true,
+          },
+          {
+            name: "DATA_SAMPEL_STATISTIK",
+            label: "Tempelkan Sampel Data Anda",
+            type: "textarea",
+            placeholder: "Contoh: salin data numerik Anda di sini.",
+            info: "Data untuk dihitung statistik dasarnya.",
+            optional: true,
+          },
+          {
+            name: "KOLOM_STATISTIK",
+            label: "Nama Kolom yang Dianalisis",
+            type: "text",
+            placeholder: "Contoh: Kolom 'Pendapatan' dan 'Usia Pelanggan'",
+            info: "Sebutkan kolom mana yang ingin Anda hitung statistiknya.",
+            optional: true,
+          },
+          {
+            name: "DATA_SAMPEL_TREN",
+            label: "Tempelkan Sampel Data Anda",
+            type: "textarea",
+            placeholder:
+              "Contoh: salin data time-series atau data kategorikal Anda.",
+            info: "Data yang akan dianalisis untuk menemukan pola.",
+            optional: true,
+          },
+          {
+            name: "PERTANYAAN_BISNIS_TREN",
+            label: "Pertanyaan Bisnis yang Ingin Dijawab",
+            type: "text",
+            placeholder:
+              "Contoh: Bagaimana tren penjualan produk A selama 6 bulan terakhir?",
+            info: "Pertanyaan spesifik akan mengarahkan analisis.",
+            optional: true,
+          },
+          {
+            name: "DATA_VISUALISASI",
+            label: "Jelaskan Data yang Ingin Divisualisasikan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Saya punya data penjualan bulanan per kategori produk.",
+            info: "Deskripsi data Anda.",
+            optional: true,
+          },
+          {
+            name: "PESAN_VISUALISASI",
+            label: "Pesan Utama yang Ingin Disampaikan",
+            type: "text",
+            placeholder:
+              "Contoh: Saya ingin menunjukkan kategori produk mana yang paling cepat bertumbuh.",
+            info: "Apa cerita yang ingin Anda sampaikan dengan data ini?",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -4318,74 +4080,65 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Generator Templat Respons",
             info: "Pilih tugas yang ingin Anda optimalkan.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TUGAS_LAYANAN_PELANGGAN",
-            options: {
-              "Generator Templat Respons": [
-                {
-                  name: "CS_SKENARIO",
-                  label: "Skenario Pelanggan",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Keluhan produk rusak, Pertanyaan status pengiriman",
-                  info: "Jelaskan situasi umum yang dihadapi agen Anda.",
-                },
-                {
-                  name: "CS_TONE",
-                  label: "Nada Suara Respons",
-                  type: "select",
-                  options: [
-                    "Empatik & Profesional",
-                    "Cepat & Efisien",
-                    "Sangat Sopan & Formal",
-                    "Lainnya...",
-                  ],
-                  default: "Empatik & Profesional",
-                  info: "Pilih gaya bahasa untuk respons.",
-                },
-              ],
-              "Penyusun Skrip Eskalasi Masalah": [
-                {
-                  name: "CS_MASALAH_ESKALASI",
-                  label: "Jenis Masalah yang Perlu Eskalasi",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Masalah teknis kompleks, Pelanggan yang sangat tidak puas",
-                  info: "Sebutkan situasi yang memerlukan penanganan tim senior.",
-                },
-              ],
-              "Pembuat Konten Halaman FAQ": [
-                {
-                  name: "CS_PRODUK_FAQ",
-                  label: "Produk atau Layanan",
-                  type: "text",
-                  placeholder: "Contoh: Layanan langganan premium kami",
-                  info: "Produk yang akan dibuatkan halaman FAQ-nya.",
-                },
-                {
-                  name: "CS_PERTANYAAN_UMUM",
-                  label: "Contoh Pertanyaan Umum (Opsional)",
-                  type: "textarea",
-                  placeholder:
-                    "- Bagaimana cara membatalkan langganan?\n- Apakah ada refund?",
-                  info: "Jika Anda sudah punya daftar, masukkan di sini. Jika tidak, AI akan membuatnya.",
-                  optional: true,
-                },
-              ],
-              "Analisis Umpan Balik Pelanggan": [
-                {
-                  name: "CS_UMPAN_BALIK",
-                  label: "Tempelkan Umpan Balik Pelanggan",
-                  type: "textarea",
-                  placeholder:
-                    "Salin dan tempel beberapa ulasan pelanggan dari Google Reviews, App Store, atau survei di sini...",
-                  info: "AI akan menganalisis teks ini untuk menemukan tema umum.",
-                },
-              ],
-            },
+            name: "CS_SKENARIO",
+            label: "Skenario Pelanggan",
+            type: "text",
+            placeholder:
+              "Contoh: Keluhan produk rusak, Pertanyaan status pengiriman",
+            info: "Jelaskan situasi umum yang dihadapi agen Anda.",
+            optional: true,
+          },
+          {
+            name: "CS_TONE",
+            label: "Nada Suara Respons",
+            type: "select",
+            options: [
+              "Empatik & Profesional",
+              "Cepat & Efisien",
+              "Sangat Sopan & Formal",
+              "Lainnya...",
+            ],
+            default: "Empatik & Profesional",
+            info: "Pilih gaya bahasa untuk respons.",
+            optional: true,
+          },
+          {
+            name: "CS_MASALAH_ESKALASI",
+            label: "Jenis Masalah yang Perlu Eskalasi",
+            type: "text",
+            placeholder:
+              "Contoh: Masalah teknis kompleks, Pelanggan yang sangat tidak puas",
+            info: "Sebutkan situasi yang memerlukan penanganan tim senior.",
+            optional: true,
+          },
+          {
+            name: "CS_PRODUK_FAQ",
+            label: "Produk atau Layanan",
+            type: "text",
+            placeholder: "Contoh: Layanan langganan premium kami",
+            info: "Produk yang akan dibuatkan halaman FAQ-nya.",
+            optional: true,
+          },
+          {
+            name: "CS_PERTANYAAN_UMUM",
+            label: "Contoh Pertanyaan Umum (Opsional)",
+            type: "textarea",
+            placeholder:
+              "- Bagaimana cara membatalkan langganan?\n- Apakah ada refund?",
+            info: "Jika Anda sudah punya daftar, masukkan di sini. Jika tidak, AI akan membuatnya.",
+            optional: true,
+          },
+          {
+            name: "CS_UMPAN_BALIK",
+            label: "Tempelkan Umpan Balik Pelanggan",
+            type: "textarea",
+            placeholder:
+              "Salin dan tempel beberapa ulasan pelanggan dari Google Reviews, App Store, atau survei di sini...",
+            info: "AI akan menganalisis teks ini untuk menemukan tema umum.",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -4443,89 +4196,77 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Perancangan Alur Pengguna (User Flow)",
             info: "Pilih jenis bantuan desain yang Anda perlukan.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TUGAS_DESAIN_UIUX",
-            options: {
-              "Perancangan Alur Pengguna (User Flow)": [
-                {
-                  name: "FLOW_TUGAS_PENGGUNA",
-                  label: "Tugas Utama Pengguna",
-                  type: "text",
-                  placeholder: "Contoh: Melakukan pendaftaran akun baru",
-                  info: "Jelaskan tugas yang ingin Anda petakan alurnya.",
-                },
-                {
-                  name: "FLOW_TITIK_AWAL_AKHIR",
-                  label: "Titik Awal dan Akhir Alur",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Dari halaman utama hingga halaman 'selamat datang'",
-                  info: "Sebutkan dari mana alur dimulai dan di mana berakhir.",
-                },
-              ],
-              "Generator Konsep Tata Letak (Wireframe)": [
-                {
-                  name: "WIREFRAME_JENIS_HALAMAN",
-                  label: "Jenis Halaman/Layar",
-                  type: "text",
-                  placeholder: "Contoh: Halaman Beranda, Layar Login",
-                  info: "Sebutkan halaman yang ingin dibuatkan konsep tata letaknya.",
-                },
-                {
-                  name: "WIREFRAME_ELEMEN_KUNCI",
-                  label: "Elemen-elemen Kunci",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Logo, Tombol Login, Banner Promo, Daftar Produk",
-                  info: "Sebutkan semua elemen yang wajib ada di halaman tersebut.",
-                },
-              ],
-              "Analisis & Umpan Balik Desain": [
-                {
-                  name: "ANALISIS_DESKRIPSI_DESAIN",
-                  label: "Deskripsi atau Link ke Desain Anda",
-                  type: "textarea",
-                  placeholder:
-                    "Jelaskan desain Anda saat ini atau tempelkan link ke gambar (misal: Imgur).",
-                  info: "Berikan konteks sebanyak mungkin tentang desain yang ingin dianalisis.",
-                },
-                {
-                  name: "ANALISIS_TUJUAN_DESAIN",
-                  label: "Tujuan Utama Halaman/Desain",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Meyakinkan pengguna untuk menekan tombol 'Daftar Gratis'",
-                  info: "Apa aksi terpenting yang diharapkan dari pengguna di halaman ini?",
-                },
-              ],
-              "Generator Teks Antarmuka (UX Writing)": [
-                {
-                  name: "UXWRITING_KONTEKS",
-                  label: "Konteks dan Elemen UI",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Pesan error untuk form login, Teks untuk tombol konfirmasi",
-                  info: "Jelaskan di mana teks ini akan muncul.",
-                },
-                {
-                  name: "UXWRITING_TONE",
-                  label: "Nada Suara (Tone of Voice)",
-                  type: "select",
-                  options: [
-                    "Formal",
-                    "Ramah",
-                    "Jenaka",
-                    "Profesional",
-                    "Lainnya...",
-                  ],
-                  default: "Ramah",
-                  info: "Pilih gaya bahasa yang sesuai dengan brand Anda.",
-                },
-              ],
-            },
+            name: "FLOW_TUGAS_PENGGUNA",
+            label: "Tugas Utama Pengguna",
+            type: "text",
+            placeholder: "Contoh: Melakukan pendaftaran akun baru",
+            info: "Jelaskan tugas yang ingin Anda petakan alurnya.",
+            optional: true,
+          },
+          {
+            name: "FLOW_TITIK_AWAL_AKHIR",
+            label: "Titik Awal dan Akhir Alur",
+            type: "text",
+            placeholder:
+              "Contoh: Dari halaman utama hingga halaman 'selamat datang'",
+            info: "Sebutkan dari mana alur dimulai dan di mana berakhir.",
+            optional: true,
+          },
+          {
+            name: "WIREFRAME_JENIS_HALAMAN",
+            label: "Jenis Halaman/Layar",
+            type: "text",
+            placeholder: "Contoh: Halaman Beranda, Layar Login",
+            info: "Sebutkan halaman yang ingin dibuatkan konsep tata letaknya.",
+            optional: true,
+          },
+          {
+            name: "WIREFRAME_ELEMEN_KUNCI",
+            label: "Elemen-elemen Kunci",
+            type: "textarea",
+            placeholder:
+              "Contoh: Logo, Tombol Login, Banner Promo, Daftar Produk",
+            info: "Sebutkan semua elemen yang wajib ada di halaman tersebut.",
+            optional: true,
+          },
+          {
+            name: "ANALISIS_DESKRIPSI_DESAIN",
+            label: "Deskripsi atau Link ke Desain Anda",
+            type: "textarea",
+            placeholder:
+              "Jelaskan desain Anda saat ini atau tempelkan link ke gambar (misal: Imgur).",
+            info: "Berikan konteks sebanyak mungkin tentang desain yang ingin dianalisis.",
+            optional: true,
+          },
+          {
+            name: "ANALISIS_TUJUAN_DESAIN",
+            label: "Tujuan Utama Halaman/Desain",
+            type: "text",
+            placeholder:
+              "Contoh: Meyakinkan pengguna untuk menekan tombol 'Daftar Gratis'",
+            info: "Apa aksi terpenting yang diharapkan dari pengguna di halaman ini?",
+            optional: true,
+          },
+          {
+            name: "UXWRITING_KONTEKS",
+            label: "Konteks dan Elemen UI",
+            type: "text",
+            placeholder:
+              "Contoh: Pesan error untuk form login, Teks untuk tombol konfirmasi",
+            info: "Jelaskan di mana teks ini akan muncul.",
+            optional: true,
+          },
+          {
+            name: "UXWRITING_TONE",
+            label: "Nada Suara (Tone of Voice)",
+            type: "select",
+            options: ["Formal", "Ramah", "Jenaka", "Profesional", "Lainnya..."],
+            default: "Ramah",
+            info: "Pilih gaya bahasa yang sesuai dengan brand Anda.",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -4587,6 +4328,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Jenis alur bisnis apa yang ingin diotomatisasi?",
+            optional: true,
           },
           {
             name: "ENTRY_POINT",
@@ -4603,6 +4345,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Dari mana proses ini dimulai?",
+            optional: true,
           },
           {
             name: "ACTION_GOAL",
@@ -4620,6 +4363,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Apa hasil akhir yang diharapkan dari robot ini?",
+            optional: true,
           },
           {
             name: "OPTIMIZATION_GOAL",
@@ -4635,6 +4379,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             description:
               "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
             info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+            optional: true,
           },
           {
             name: "PLATFORM_OTOMASI",
@@ -4655,6 +4400,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             description: "Platform mana yang akan digunakan?",
             info: "Platform tempat workflow ini akan dibangun.",
+            optional: true,
           },
           {
             name: "COMPLEXITY",
@@ -4671,6 +4417,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+            optional: true,
           },
           {
             name: "INDUSTRY_SECTOR",
@@ -4691,6 +4438,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Industri target untuk menyesuaikan terminologi bisnis.",
+            optional: true,
           },
           {
             name: "DATA_VOLUME",
@@ -4705,6 +4453,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+            optional: true,
           },
           {
             name: "ADDITIONAL_INSTRUCTIONS",
@@ -4717,6 +4466,94 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             optional: true,
             info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
           },
+          {
+            name: "custom_REVENUE_FOCUS",
+            label: "Sebutkan Fokus Utama Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Fokus Utama.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Fokus Utama standar tidak tersedia.",
+          },
+          {
+            name: "custom_ENTRY_POINT",
+            label: "Sebutkan Sumber Pemicu (Trigger) Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Sumber Pemicu (Trigger).",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Sumber Pemicu (Trigger) standar tidak tersedia.",
+          },
+          {
+            name: "custom_ACTION_GOAL",
+            label: "Sebutkan Tujuan/Aksi Utama Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Tujuan/Aksi Utama.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tujuan/Aksi Utama standar tidak tersedia.",
+          },
+          {
+            name: "custom_PLATFORM_OTOMASI",
+            label: "Sebutkan Platform Otomasi Utama Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+          },
+          {
+            name: "custom_COMPLEXITY",
+            label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+          },
+          {
+            name: "custom_INDUSTRY_SECTOR",
+            label: "Sebutkan Sektor Industri Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Sektor Industri.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+          },
+          {
+            name: "custom_DATA_VOLUME",
+            label: "Sebutkan Perkiraan Volume Data Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+          },
         ],
         komponen_prompt: {
           PERAN:
@@ -4728,147 +4565,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "REVENUE_FOCUS",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_REVENUE_FOCUS",
-                  label: "Sebutkan Fokus Utama Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Fokus Utama.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Fokus Utama standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "ENTRY_POINT",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_ENTRY_POINT",
-                  label: "Sebutkan Sumber Pemicu (Trigger) Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Sumber Pemicu (Trigger).",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Sumber Pemicu (Trigger) standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "ACTION_GOAL",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_ACTION_GOAL",
-                  label: "Sebutkan Tujuan/Aksi Utama Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tujuan/Aksi Utama.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tujuan/Aksi Utama standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "PLATFORM_OTOMASI",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_PLATFORM_OTOMASI",
-                  label: "Sebutkan Platform Otomasi Utama Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "COMPLEXITY",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_COMPLEXITY",
-                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "INDUSTRY_SECTOR",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_INDUSTRY_SECTOR",
-                  label: "Sebutkan Sektor Industri Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Sektor Industri.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "DATA_VOLUME",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_DATA_VOLUME",
-                  label: "Sebutkan Perkiraan Volume Data Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         konteks_tambahan_instruksi_khusus:
           "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
         examples: [],
@@ -4907,6 +4603,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Jenis mesin konten/komunitas apa yang ingin dibangun?",
+            optional: true,
           },
           {
             name: "SOURCE_MATERIAL",
@@ -4921,6 +4618,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Apa input mentah yang akan diolah oleh AI?",
+            optional: true,
           },
           {
             name: "DISTRIBUTION_CHANNELS",
@@ -4935,6 +4633,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Di mana hasil akhirnya akan tayang atau dikirim?",
+            optional: true,
           },
           {
             name: "OPTIMIZATION_GOAL",
@@ -4950,6 +4649,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             description:
               "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
             info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+            optional: true,
           },
           {
             name: "PLATFORM_OTOMASI",
@@ -4970,6 +4670,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             description: "Platform mana yang akan digunakan?",
             info: "Platform tempat workflow ini akan dibangun.",
+            optional: true,
           },
           {
             name: "COMPLEXITY",
@@ -4986,6 +4687,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+            optional: true,
           },
           {
             name: "INDUSTRY_SECTOR",
@@ -5006,6 +4708,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Industri target untuk menyesuaikan terminologi bisnis.",
+            optional: true,
           },
           {
             name: "DATA_VOLUME",
@@ -5020,6 +4723,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+            optional: true,
           },
           {
             name: "ADDITIONAL_INSTRUCTIONS",
@@ -5032,6 +4736,93 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             optional: true,
             info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
           },
+          {
+            name: "custom_CONTENT_GOAL",
+            label: "Sebutkan Tujuan Workflow Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Tujuan Workflow.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tujuan Workflow standar tidak tersedia.",
+          },
+          {
+            name: "custom_SOURCE_MATERIAL",
+            label: "Sebutkan Bahan Baku / Pemicu Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Bahan Baku / Pemicu.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Bahan Baku / Pemicu standar tidak tersedia.",
+          },
+          {
+            name: "custom_DISTRIBUTION_CHANNELS",
+            label: "Sebutkan Output / Aksi Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Output / Aksi.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Output / Aksi standar tidak tersedia.",
+          },
+          {
+            name: "custom_PLATFORM_OTOMASI",
+            label: "Sebutkan Platform Otomasi Utama Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+          },
+          {
+            name: "custom_COMPLEXITY",
+            label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+          },
+          {
+            name: "custom_INDUSTRY_SECTOR",
+            label: "Sebutkan Sektor Industri Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Sektor Industri.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+          },
+          {
+            name: "custom_DATA_VOLUME",
+            label: "Sebutkan Perkiraan Volume Data Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+          },
         ],
         komponen_prompt: {
           PERAN:
@@ -5043,147 +4834,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "CONTENT_GOAL",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_CONTENT_GOAL",
-                  label: "Sebutkan Tujuan Workflow Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tujuan Workflow.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tujuan Workflow standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "SOURCE_MATERIAL",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_SOURCE_MATERIAL",
-                  label: "Sebutkan Bahan Baku / Pemicu Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Bahan Baku / Pemicu.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Bahan Baku / Pemicu standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "DISTRIBUTION_CHANNELS",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_DISTRIBUTION_CHANNELS",
-                  label: "Sebutkan Output / Aksi Lainnya",
-                  type: "text",
-                  description: "Ketik manual nilai kustom untuk Output / Aksi.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Output / Aksi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "PLATFORM_OTOMASI",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_PLATFORM_OTOMASI",
-                  label: "Sebutkan Platform Otomasi Utama Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "COMPLEXITY",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_COMPLEXITY",
-                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "INDUSTRY_SECTOR",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_INDUSTRY_SECTOR",
-                  label: "Sebutkan Sektor Industri Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Sektor Industri.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "DATA_VOLUME",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_DATA_VOLUME",
-                  label: "Sebutkan Perkiraan Volume Data Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         konteks_tambahan_instruksi_khusus:
           "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
         examples: [],
@@ -5222,6 +4872,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Apa insight strategis yang ingin didapatkan?",
+            optional: true,
           },
           {
             name: "DATA_SOURCE",
@@ -5237,6 +4888,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Dari mana data mentah akan diambil?",
+            optional: true,
           },
           {
             name: "ANALYSIS_FRAMEWORK",
@@ -5252,6 +4904,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Model mental apa yang harus digunakan AI?",
+            optional: true,
           },
           {
             name: "OPTIMIZATION_GOAL",
@@ -5267,6 +4920,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             description:
               "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
             info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+            optional: true,
           },
           {
             name: "PLATFORM_OTOMASI",
@@ -5287,6 +4941,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             description: "Platform mana yang akan digunakan?",
             info: "Platform tempat workflow ini akan dibangun.",
+            optional: true,
           },
           {
             name: "COMPLEXITY",
@@ -5303,6 +4958,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+            optional: true,
           },
           {
             name: "INDUSTRY_SECTOR",
@@ -5323,6 +4979,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Industri target untuk menyesuaikan terminologi bisnis.",
+            optional: true,
           },
           {
             name: "DATA_VOLUME",
@@ -5337,6 +4994,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+            optional: true,
           },
           {
             name: "ADDITIONAL_INSTRUCTIONS",
@@ -5349,6 +5007,93 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             optional: true,
             info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
           },
+          {
+            name: "custom_RESEARCH_MISSION",
+            label: "Sebutkan Tujuan Riset (Misi) Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Tujuan Riset (Misi).",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tujuan Riset (Misi) standar tidak tersedia.",
+          },
+          {
+            name: "custom_DATA_SOURCE",
+            label: "Sebutkan Sumber Data Target Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Sumber Data Target.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Sumber Data Target standar tidak tersedia.",
+          },
+          {
+            name: "custom_ANALYSIS_FRAMEWORK",
+            label: "Sebutkan Kerangka Analisis Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Kerangka Analisis.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Kerangka Analisis standar tidak tersedia.",
+          },
+          {
+            name: "custom_PLATFORM_OTOMASI",
+            label: "Sebutkan Platform Otomasi Utama Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+          },
+          {
+            name: "custom_COMPLEXITY",
+            label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+          },
+          {
+            name: "custom_INDUSTRY_SECTOR",
+            label: "Sebutkan Sektor Industri Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Sektor Industri.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+          },
+          {
+            name: "custom_DATA_VOLUME",
+            label: "Sebutkan Perkiraan Volume Data Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+          },
         ],
         komponen_prompt: {
           PERAN:
@@ -5360,148 +5105,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "RESEARCH_MISSION",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_RESEARCH_MISSION",
-                  label: "Sebutkan Tujuan Riset (Misi) Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tujuan Riset (Misi).",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tujuan Riset (Misi) standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "DATA_SOURCE",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_DATA_SOURCE",
-                  label: "Sebutkan Sumber Data Target Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Sumber Data Target.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Sumber Data Target standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "ANALYSIS_FRAMEWORK",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_ANALYSIS_FRAMEWORK",
-                  label: "Sebutkan Kerangka Analisis Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Kerangka Analisis.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Kerangka Analisis standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "PLATFORM_OTOMASI",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_PLATFORM_OTOMASI",
-                  label: "Sebutkan Platform Otomasi Utama Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "COMPLEXITY",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_COMPLEXITY",
-                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "INDUSTRY_SECTOR",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_INDUSTRY_SECTOR",
-                  label: "Sebutkan Sektor Industri Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Sektor Industri.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "DATA_VOLUME",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_DATA_VOLUME",
-                  label: "Sebutkan Perkiraan Volume Data Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         konteks_tambahan_instruksi_khusus:
           "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
         examples: [],
@@ -5541,6 +5144,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Masalah operasional apa yang ingin diselesaikan?",
+            optional: true,
           },
           {
             name: "TECH_STACK",
@@ -5558,6 +5162,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Tools apa saja yang terlibat?",
+            optional: true,
           },
           {
             name: "ENGINEERING_LOGIC",
@@ -5573,6 +5178,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Logika spesifik apa yang harus dijalankan?",
+            optional: true,
           },
           {
             name: "OPTIMIZATION_GOAL",
@@ -5588,6 +5194,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             description:
               "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
             info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+            optional: true,
           },
           {
             name: "PLATFORM_OTOMASI",
@@ -5608,6 +5215,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             description: "Platform mana yang akan digunakan?",
             info: "Platform tempat workflow ini akan dibangun.",
+            optional: true,
           },
           {
             name: "COMPLEXITY",
@@ -5624,6 +5232,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+            optional: true,
           },
           {
             name: "INDUSTRY_SECTOR",
@@ -5644,6 +5253,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Industri target untuk menyesuaikan terminologi bisnis.",
+            optional: true,
           },
           {
             name: "DATA_VOLUME",
@@ -5658,6 +5268,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+            optional: true,
           },
           {
             name: "ADDITIONAL_INSTRUCTIONS",
@@ -5670,6 +5281,93 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             optional: true,
             info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
           },
+          {
+            name: "custom_TECH_MISSION",
+            label: "Sebutkan Misi Teknikal (Ops) Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Misi Teknikal (Ops).",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Misi Teknikal (Ops) standar tidak tersedia.",
+          },
+          {
+            name: "custom_TECH_STACK",
+            label: "Sebutkan Tech Stack / Tools Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Tech Stack / Tools.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tech Stack / Tools standar tidak tersedia.",
+          },
+          {
+            name: "custom_ENGINEERING_LOGIC",
+            label: "Sebutkan Logika Pemrosesan Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Logika Pemrosesan.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Logika Pemrosesan standar tidak tersedia.",
+          },
+          {
+            name: "custom_PLATFORM_OTOMASI",
+            label: "Sebutkan Platform Otomasi Utama Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+          },
+          {
+            name: "custom_COMPLEXITY",
+            label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+          },
+          {
+            name: "custom_INDUSTRY_SECTOR",
+            label: "Sebutkan Sektor Industri Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Sektor Industri.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+          },
+          {
+            name: "custom_DATA_VOLUME",
+            label: "Sebutkan Perkiraan Volume Data Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+          },
         ],
         komponen_prompt: {
           PERAN:
@@ -5681,148 +5379,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "TECH_MISSION",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_TECH_MISSION",
-                  label: "Sebutkan Misi Teknikal (Ops) Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Misi Teknikal (Ops).",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Misi Teknikal (Ops) standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "TECH_STACK",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_TECH_STACK",
-                  label: "Sebutkan Tech Stack / Tools Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tech Stack / Tools.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tech Stack / Tools standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "ENGINEERING_LOGIC",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_ENGINEERING_LOGIC",
-                  label: "Sebutkan Logika Pemrosesan Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Logika Pemrosesan.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Logika Pemrosesan standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "PLATFORM_OTOMASI",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_PLATFORM_OTOMASI",
-                  label: "Sebutkan Platform Otomasi Utama Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "COMPLEXITY",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_COMPLEXITY",
-                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "INDUSTRY_SECTOR",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_INDUSTRY_SECTOR",
-                  label: "Sebutkan Sektor Industri Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Sektor Industri.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "DATA_VOLUME",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_DATA_VOLUME",
-                  label: "Sebutkan Perkiraan Volume Data Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         konteks_tambahan_instruksi_khusus:
           "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
         examples: [],
@@ -5862,6 +5418,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Proses admin apa yang lambat dan perlu diotomatisasi?",
+            optional: true,
           },
           {
             name: "DOCUMENT_TYPE",
@@ -5877,6 +5434,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Jenis dokumen apa yang menjadi input utama?",
+            optional: true,
           },
           {
             name: "COMPLIANCE_CHECK",
@@ -5892,6 +5450,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Apa yang harus divalidasi oleh AI?",
+            optional: true,
           },
           {
             name: "OPTIMIZATION_GOAL",
@@ -5907,6 +5466,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             description:
               "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
             info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+            optional: true,
           },
           {
             name: "PLATFORM_OTOMASI",
@@ -5927,6 +5487,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             description: "Platform mana yang akan digunakan?",
             info: "Platform tempat workflow ini akan dibangun.",
+            optional: true,
           },
           {
             name: "COMPLEXITY",
@@ -5943,6 +5504,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+            optional: true,
           },
           {
             name: "INDUSTRY_SECTOR",
@@ -5963,6 +5525,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Industri target untuk menyesuaikan terminologi bisnis.",
+            optional: true,
           },
           {
             name: "DATA_VOLUME",
@@ -5977,6 +5540,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+            optional: true,
           },
           {
             name: "ADDITIONAL_INSTRUCTIONS",
@@ -5989,6 +5553,93 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             optional: true,
             info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
           },
+          {
+            name: "custom_ADMIN_GOAL",
+            label: "Sebutkan Tujuan Administrasi Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Tujuan Administrasi.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tujuan Administrasi standar tidak tersedia.",
+          },
+          {
+            name: "custom_DOCUMENT_TYPE",
+            label: "Sebutkan Dokumen Terkait Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Dokumen Terkait.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Dokumen Terkait standar tidak tersedia.",
+          },
+          {
+            name: "custom_COMPLIANCE_CHECK",
+            label: "Sebutkan Standar / Poin Cek Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Standar / Poin Cek.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Standar / Poin Cek standar tidak tersedia.",
+          },
+          {
+            name: "custom_PLATFORM_OTOMASI",
+            label: "Sebutkan Platform Otomasi Utama Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+          },
+          {
+            name: "custom_COMPLEXITY",
+            label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+          },
+          {
+            name: "custom_INDUSTRY_SECTOR",
+            label: "Sebutkan Sektor Industri Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Sektor Industri.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+          },
+          {
+            name: "custom_DATA_VOLUME",
+            label: "Sebutkan Perkiraan Volume Data Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+          },
         ],
         komponen_prompt: {
           PERAN:
@@ -6000,148 +5651,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "ADMIN_GOAL",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_ADMIN_GOAL",
-                  label: "Sebutkan Tujuan Administrasi Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tujuan Administrasi.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tujuan Administrasi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "DOCUMENT_TYPE",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_DOCUMENT_TYPE",
-                  label: "Sebutkan Dokumen Terkait Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Dokumen Terkait.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Dokumen Terkait standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "COMPLIANCE_CHECK",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_COMPLIANCE_CHECK",
-                  label: "Sebutkan Standar / Poin Cek Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Standar / Poin Cek.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Standar / Poin Cek standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "PLATFORM_OTOMASI",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_PLATFORM_OTOMASI",
-                  label: "Sebutkan Platform Otomasi Utama Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "COMPLEXITY",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_COMPLEXITY",
-                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "INDUSTRY_SECTOR",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_INDUSTRY_SECTOR",
-                  label: "Sebutkan Sektor Industri Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Sektor Industri.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "DATA_VOLUME",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_DATA_VOLUME",
-                  label: "Sebutkan Perkiraan Volume Data Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         konteks_tambahan_instruksi_khusus:
           "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
         examples: [],
@@ -6172,6 +5681,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "textarea",
             placeholder: "Jelaskan detail apa yang ingin diotomatisasi...",
             info: "Jelaskan use-case unik Anda secara spesifik.",
+            optional: true,
           },
           {
             name: "APP_LIST",
@@ -6179,6 +5689,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "text",
             placeholder: "Gmail, Slack, Custom API, dll",
             info: "Daftar aplikasi yang perlu dihubungkan.",
+            optional: true,
           },
           {
             name: "OPTIMIZATION_GOAL",
@@ -6194,6 +5705,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             description:
               "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
             info: "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+            optional: true,
           },
           {
             name: "PLATFORM_OTOMASI",
@@ -6214,6 +5726,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             description: "Platform mana yang akan digunakan?",
             info: "Platform tempat workflow ini akan dibangun.",
+            optional: true,
           },
           {
             name: "COMPLEXITY",
@@ -6230,6 +5743,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Seberapa rumit logika workflow yang Anda bayangkan?",
+            optional: true,
           },
           {
             name: "INDUSTRY_SECTOR",
@@ -6250,6 +5764,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Industri target untuk menyesuaikan terminologi bisnis.",
+            optional: true,
           },
           {
             name: "DATA_VOLUME",
@@ -6264,6 +5779,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Estimasi beban kerja untuk perhitungan biaya server/API.",
+            optional: true,
           },
           {
             name: "ADDITIONAL_INSTRUCTIONS",
@@ -6276,6 +5792,57 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             optional: true,
             info: "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas.",
           },
+          {
+            name: "custom_PLATFORM_OTOMASI",
+            label: "Sebutkan Platform Otomasi Utama Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
+          },
+          {
+            name: "custom_COMPLEXITY",
+            label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
+          },
+          {
+            name: "custom_INDUSTRY_SECTOR",
+            label: "Sebutkan Sektor Industri Lainnya",
+            type: "text",
+            description: "Ketik manual nilai kustom untuk Sektor Industri.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
+          },
+          {
+            name: "custom_DATA_VOLUME",
+            label: "Sebutkan Perkiraan Volume Data Lainnya",
+            type: "text",
+            description:
+              "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+            placeholder: "Contoh: API Kustom, App Baru, dll...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
+          },
         ],
         komponen_prompt: {
           PERAN:
@@ -6287,88 +5854,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "PLATFORM_OTOMASI",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_PLATFORM_OTOMASI",
-                  label: "Sebutkan Platform Otomasi Utama Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "COMPLEXITY",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_COMPLEXITY",
-                  label: "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "INDUSTRY_SECTOR",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_INDUSTRY_SECTOR",
-                  label: "Sebutkan Sektor Industri Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Sektor Industri.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Sektor Industri standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "DATA_VOLUME",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_DATA_VOLUME",
-                  label: "Sebutkan Perkiraan Volume Data Lainnya",
-                  type: "text",
-                  description:
-                    "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
-                  placeholder: "Contoh: API Kustom, App Baru, dll...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         konteks_tambahan_instruksi_khusus:
           "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
         examples: [],
@@ -6422,438 +5907,379 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "RED_TEAM_TACTIC",
-            options: {
-              "Intelijen Sumber Terbuka (OSINT)": [
-                {
-                  name: "OSINT_TARGET",
-                  label: "Target OSINT",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Nama perusahaan, nama individu, domain website",
-                  info: "Tentukan entitas utama yang akan menjadi target pengumpulan informasi dari sumber terbuka.",
-                  optional: false,
-                  description: "Entitas utama yang akan diinvestigasi.",
-                },
-                {
-                  name: "OSINT_OBJECTIVES",
-                  label: "Tujuan Pengumpulan Informasi",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Mengidentifikasi alamat email karyawan, menemukan subdomain yang terekspos, memetakan teknologi yang digunakan.",
-                  info: "Sebutkan informasi spesifik apa yang ingin Anda dapatkan dari aktivitas OSINT.",
-                  optional: false,
-                  description: "Informasi spesifik yang ingin didapatkan.",
-                },
-                {
-                  name: "OSINT_TOOLS",
-                  label: "Alat & Teknik yang Diusulkan",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Google Dorking, Shodan, Maltego, theHarvester, analisis media sosial.",
-                  info: "Sebutkan alat atau metode spesifik yang ingin Anda gunakan atau pertimbangkan.",
-                  optional: true,
-                  description: "Alat atau metode yang diusulkan.",
-                },
-              ],
-              "Pengintaian & Pemetaan Aset (Reconnaissance & Asset Discovery)":
-                [
-                  {
-                    name: "RECON_TARGET_SCOPE",
-                    label: "Lingkup Target Pengintaian",
-                    type: "textarea",
-                    placeholder:
-                      "Contoh: Blok CIDR (192.168.1.0/24), rentang IP, daftar domain/subdomain target.",
-                    info: "Definisikan batasan jaringan atau aset digital yang akan diintai.",
-                    optional: false,
-                    description:
-                      "Batasan jaringan atau aset yang akan diintai.",
-                  },
-                  {
-                    name: "RECON_TYPE",
-                    label: "Jenis Pengintaian",
-                    type: "select",
-                    options: [
-                      "Aktif (Active)",
-                      "Pasif (Passive)",
-                      "Lainnya...",
-                    ],
-                    info: "Pilih antara pengintaian aktif (mis. port scanning) atau pasif (mis. analisis header DNS).",
-                    default: "Aktif (Active)",
-                    optional: false,
-                    description: "Metodologi pengintaian yang akan digunakan.",
-                  },
-                  {
-                    name: "RECON_TOOLS",
-                    label: "Alat & Teknik yang Diusulkan",
-                    type: "textarea",
-                    placeholder:
-                      "Contoh: Nmap untuk port scanning, masscan, DNS enumeration, analisis sertifikat SSL.",
-                    info: "Sebutkan alat atau metode spesifik yang ingin Anda gunakan.",
-                    optional: true,
-                    description: "Alat atau metode spesifik yang diusulkan.",
-                  },
-                ],
-              "Pengujian Keamanan Aplikasi (Application Security Testing)": [
-                {
-                  name: "APPSEC_TARGET_URL",
-                  label: "URL Aplikasi Target",
-                  type: "text",
-                  placeholder: "Contoh: https://aplikasi-target.com",
-                  info: "URL lengkap dari aplikasi web atau mobile yang akan diuji.",
-                  optional: false,
-                  description: "URL aplikasi yang akan diuji.",
-                },
-                {
-                  name: "APPSEC_TEST_TYPE",
-                  label: "Jenis Pengujian",
-                  type: "select",
-                  options: [
-                    "Analisis Statis (SAST)",
-                    "Analisis Dinamis (DAST)",
-                    "Pengujian Interaktif (IAST)",
-                    "Analisis Komposisi Perangkat Lunak (SCA)",
-                    "Lainnya...",
-                  ],
-                  info: "Pilih metodologi pengujian keamanan aplikasi yang akan digunakan.",
-                  default: "Analisis Dinamis (DAST)",
-                  optional: false,
-                  description: "Metodologi pengujian yang dipilih.",
-                },
-                {
-                  name: "APPSEC_VULN_FOCUS",
-                  label: "Fokus Kerentanan",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: OWASP Top 10, SQL Injection, Cross-Site Scripting (XSS), otorisasi yang rusak.",
-                  info: "Sebutkan jenis kerentanan spesifik yang menjadi prioritas pengujian.",
-                  optional: true,
-                  description: "Prioritas kerentanan yang akan diuji.",
-                },
-              ],
-              "Rekayasa Sosial (Social Engineering)": [
-                {
-                  name: "SE_CAMPAIGN_TYPE",
-                  label: "Jenis Kampanye",
-                  type: "select",
-                  options: [
-                    "Phishing (Email)",
-                    "Smishing (SMS)",
-                    "Vishing (Voice Call)",
-                    "Baiting (Umpan Fisik/Digital)",
-                    "Lainnya...",
-                  ],
-                  info: "Pilih vektor serangan rekayasa sosial yang akan digunakan.",
-                  default: "Phishing (Email)",
-                  optional: false,
-                  description: "Vektor serangan rekayasa sosial.",
-                },
-                {
-                  name: "SE_TARGET_GROUP",
-                  label: "Grup Target",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Departemen Keuangan, Tim HR, Administrator IT.",
-                  info: "Tentukan kelompok atau departemen yang akan menjadi target kampanye.",
-                  optional: false,
-                  description: "Kelompok atau departemen target.",
-                },
-                {
-                  name: "SE_PRETEXT",
-                  label: "Skenario/Pretext",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Email pemberitahuan pembaruan kata sandi palsu, telepon dari 'helpdesk IT', SMS undian berhadiah.",
-                  info: "Rancang cerita atau skenario palsu yang akan digunakan untuk mengelabui target.",
-                  optional: false,
-                  description: "Skenario palsu untuk mengelabui target.",
-                },
-              ],
-              "Eksekusi Akses Awal (Initial Access Execution)": [
-                {
-                  name: "IA_VECTOR",
-                  label: "Vektor Akses Awal",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Eksploitasi kerentanan publik (mis. Log4Shell), Spearphishing dengan lampiran berbahaya, kredensial yang dicuri.",
-                  info: "Tentukan metode utama yang akan digunakan untuk mendapatkan pijakan awal di jaringan target.",
-                  optional: false,
-                  description: "Metode utama untuk mendapatkan akses awal.",
-                },
-                {
-                  name: "IA_PAYLOAD_TYPE",
-                  label: "Jenis Payload",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Reverse shell, beacon Cobalt Strike, Meterpreter.",
-                  info: "Jelaskan jenis payload yang akan dieksekusi di mesin target setelah akses berhasil.",
-                  optional: false,
-                  description: "Payload yang akan dieksekusi di target.",
-                },
-                {
-                  name: "IA_TARGET_SYSTEM",
-                  label: "Sistem Target",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Server web publik, workstation karyawan, database server.",
-                  info: "Identifikasi sistem atau aset spesifik yang menjadi target utama untuk akses awal.",
-                  optional: true,
-                  description: "Sistem atau aset yang menjadi target utama.",
-                },
-              ],
-              "Strategi Persistensi (Persistence Strategy)": [
-                {
-                  name: "PERSIST_TECHNIQUE",
-                  label: "Teknik Persistensi",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Membuat scheduled task, menambahkan startup script, memodifikasi registry (T1547), membuat akun baru (T1136).",
-                  info: "Sebutkan teknik spesifik (jika mungkin dengan ID MITRE ATT&CK) yang akan digunakan untuk mempertahankan akses.",
-                  optional: false,
-                  description:
-                    "Teknik untuk mempertahankan akses (gunakan ID MITRE ATT&CK jika ada).",
-                },
-                {
-                  name: "PERSIST_TARGET_OS",
-                  label: "Sistem Operasi Target",
-                  type: "select",
-                  options: ["Windows", "Linux", "macOS", "Lainnya..."],
-                  info: "Pilih OS target karena teknik persistensi seringkali spesifik untuk OS tertentu.",
-                  default: "Windows",
-                  optional: false,
-                  description: "Sistem Operasi target.",
-                },
-                {
-                  name: "PERSIST_IMPLANT_TYPE",
-                  label: "Jenis Implan/Backdoor",
-                  type: "text",
-                  placeholder: "Contoh: Webshell, cron job, service biner.",
-                  info: "Jelaskan artefak atau kode yang akan ditinggalkan di sistem untuk persistensi.",
-                  optional: true,
-                  description: "Artefak atau kode yang ditinggalkan di sistem.",
-                },
-              ],
-              "Eskalasi Hak (Privilege Escalation)": [
-                {
-                  name: "PRIVILEGE_ESCALATION_TECHNIQUE",
-                  label: "Teknik Eskalasi Hak",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Kernel exploit, miskonfigurasi SUID/GUID, kredensial yang disimpan dalam plain text, DLL hijacking.",
-                  info: "Sebutkan teknik spesifik yang akan digunakan untuk meningkatkan hak akses dari user biasa menjadi administrator/root.",
-                  optional: false,
-                  description: "Teknik untuk meningkatkan hak akses.",
-                },
-                {
-                  name: "PRIVILEGE_ESCALATION_CURRENT_ACCESS",
-                  label: "Level Akses Saat Ini",
-                  type: "text",
-                  placeholder:
-                    "Contoh: User lokal tanpa hak admin, akun layanan dengan hak terbatas.",
-                  info: "Jelaskan tingkat hak akses yang dimiliki saat ini.",
-                  optional: false,
-                  description: "Tingkat hak akses saat ini.",
-                },
-                {
-                  name: "PRIVILEGE_ESCALATION_TARGET_ACCESS",
-                  label: "Target Hak Akses",
-                  type: "text",
-                  placeholder: "Contoh: Administrator Domain, root, SYSTEM.",
-                  info: "Jelaskan tingkat hak akses yang ingin dicapai.",
-                  optional: false,
-                  description: "Tingkat hak akses yang ingin dicapai.",
-                },
-              ],
-              "Penghindaran Pertahanan (Defense Evasion)": [
-                {
-                  name: "DEFENSE_EVASION_TECHNIQUE",
-                  label: "Teknik Penghindaran Pertahanan",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Obfuscation/enkripsi payload, mematikan logging keamanan (T1562), masquerading sebagai proses sistem yang sah (T1036), penggunaan fileless malware.",
-                  info: "Sebutkan metode yang akan digunakan untuk menghindari deteksi oleh antivirus, EDR, atau SIEM.",
-                  optional: false,
-                  description: "Metode untuk menghindari deteksi keamanan.",
-                },
-                {
-                  name: "DEFENSE_EVASION_TARGET_DEFENSE",
-                  label: "Target Pertahanan yang Dihindari",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Windows Defender, Sysmon, Splunk, CrowdStrike Falcon.",
-                  info: "Sebutkan produk atau teknologi keamanan spesifik yang ingin dihindari.",
-                  optional: true,
-                  description: "Produk keamanan yang ingin dihindari.",
-                },
-              ],
-              "Gerakan Lateral (Lateral Movement)": [
-                {
-                  name: "LATERAL_MOVEMENT_TECHNIQUE",
-                  label: "Teknik Gerakan Lateral",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Pass-the-Hash (PtH), eksploitasi remote services (mis. SMB, RDP), penggunaan tool administrasi internal seperti PsExec.",
-                  info: "Sebutkan metode yang akan digunakan untuk berpindah dari satu sistem ke sistem lain di dalam jaringan.",
-                  optional: false,
-                  description: "Metode untuk berpindah antar sistem.",
-                },
-                {
-                  name: "LATERAL_MOVEMENT_CURRENT_HOST",
-                  label: "Host Saat Ini",
-                  type: "text",
-                  placeholder: "Contoh: Workstation HR (WKSTN-HR-01)",
-                  info: "Host tempat Anda memulai gerakan lateral.",
-                  optional: false,
-                  description: "Host awal untuk gerakan lateral.",
-                },
-                {
-                  name: "LATERAL_MOVEMENT_TARGET_HOST",
-                  label: "Host Tujuan",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Domain Controller (DC-01), File Server (FS-02).",
-                  info: "Host yang menjadi target selanjutnya dalam gerakan lateral.",
-                  optional: false,
-                  description: "Host target untuk gerakan lateral.",
-                },
-              ],
-              "Pengumpulan Data (Collection)": [
-                {
-                  name: "COLLECTION_DATA_TYPE",
-                  label: "Jenis Data yang Dikumpulkan",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Kredensial dari memori (T1003), file dari file share, email dari Outlook, screenshot (T1113).",
-                  info: "Sebutkan jenis data spesifik yang menjadi target pengumpulan.",
-                  optional: false,
-                  description: "Jenis data yang akan dikumpulkan.",
-                },
-                {
-                  name: "COLLECTION_SOURCE",
-                  label: "Sumber Data",
-                  type: "text",
-                  placeholder:
-                    "Contoh: File server, database pelanggan, workstation CEO.",
-                  info: "Lokasi atau sistem tempat data target berada.",
-                  optional: false,
-                  description: "Lokasi atau sistem sumber data.",
-                },
-              ],
-              "Desain Infrastruktur C2 (C2 Infrastructure Design)": [
-                {
-                  name: "C2_FRAMEWORK",
-                  label: "Kerangka Kerja C2",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Cobalt Strike, Metasploit, Empire, Sliver.",
-                  info: "Pilih kerangka kerja Command and Control (C2) yang akan digunakan.",
-                  optional: false,
-                  description: "Kerangka kerja C2 yang akan digunakan.",
-                },
-                {
-                  name: "C2_COMMUNICATION_PROTOCOL",
-                  label: "Protokol Komunikasi",
-                  type: "text",
-                  placeholder: "Contoh: DNS over HTTPS (DoH), HTTP/S, SMB.",
-                  info: "Tentukan protokol yang akan digunakan untuk komunikasi antara implan dan server C2.",
-                  optional: false,
-                  description: "Protokol komunikasi C2.",
-                },
-                {
-                  name: "C2_HOSTING_STRATEGY",
-                  label: "Strategi Hosting",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Menggunakan VPS, domain fronting melalui CDN, redirector, kategori domain yang terlihat normal (mis. kesehatan, keuangan).",
-                  info: "Jelaskan bagaimana infrastruktur C2 akan disembunyikan atau dibuat agar terlihat sah.",
-                  optional: false,
-                  description: "Strategi hosting untuk infrastruktur C2.",
-                },
-              ],
-              "Perencanaan Kampanye Red Team (Red Team Campaign Plan)": [
-                {
-                  name: "CAMPAIGN_OBJECTIVE",
-                  label: "Tujuan Utama Kampanye",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Mensimulasikan Advanced Persistent Threat (APT) untuk mencuri data kekayaan intelektual dari R&D, menguji kemampuan deteksi dan respons SOC terhadap ransomware.",
-                  info: "Definisikan tujuan akhir tingkat tinggi dari keseluruhan kampanye Red Team.",
-                  optional: false,
-                  description: "Tujuan akhir dari kampanye.",
-                },
-                {
-                  name: "CAMPAIGN_TARGET_ASSETS",
-                  label: "Aset Kritis Target",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Database pelanggan, kode sumber produk, infrastruktur domain controller.",
-                  info: "'Crown jewels' atau aset paling berharga yang menjadi sasaran akhir simulasi.",
-                  optional: false,
-                  description: "Aset paling berharga yang menjadi target.",
-                },
-                {
-                  name: "CAMPAIGN_ALLOWED_TECHNIQUES",
-                  label: "Teknik yang Diizinkan (Rules of Engagement)",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Diizinkan melakukan phishing, dilarang melakukan serangan Denial-of-Service (DoS), eksploitasi hanya boleh dilakukan pada sistem staging.",
-                  info: "Batasan dan aturan main yang telah disepakati untuk kampanye ini.",
-                  optional: false,
-                  description: "Aturan main dan batasan kampanye.",
-                },
-              ],
-            },
+            name: "OSINT_TARGET",
+            label: "Target OSINT",
+            type: "text",
+            placeholder:
+              "Contoh: Nama perusahaan, nama individu, domain website",
+            info: "Tentukan entitas utama yang akan menjadi target pengumpulan informasi dari sumber terbuka.",
+            optional: false,
+            description: "Entitas utama yang akan diinvestigasi.",
           },
           {
-            trigger: "RECON_TYPE",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "RECON_TYPE_OTHER",
-                  label: "Sebutkan Jenis Pengintaian Lainnya",
-                  type: "text",
-                  placeholder: "Contoh: Analisis citra satelit",
-                  info: "Masukkan metode pengintaian kustom yang Anda usulkan.",
-                  optional: false,
-                  description: "Metode pengintaian kustom.",
-                },
-              ],
-            },
+            name: "OSINT_OBJECTIVES",
+            label: "Tujuan Pengumpulan Informasi",
+            type: "textarea",
+            placeholder:
+              "Contoh: Mengidentifikasi alamat email karyawan, menemukan subdomain yang terekspos, memetakan teknologi yang digunakan.",
+            info: "Sebutkan informasi spesifik apa yang ingin Anda dapatkan dari aktivitas OSINT.",
+            optional: false,
+            description: "Informasi spesifik yang ingin didapatkan.",
           },
           {
-            trigger: "APPSEC_TEST_TYPE",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "APPSEC_TEST_TYPE_OTHER",
-                  label: "Sebutkan Jenis Pengujian Lainnya",
-                  type: "text",
-                  placeholder: "Contoh: Fuzzing",
-                  info: "Masukkan metodologi pengujian keamanan kustom.",
-                  optional: false,
-                  description: "Metodologi pengujian kustom.",
-                },
-              ],
-            },
+            name: "OSINT_TOOLS",
+            label: "Alat & Teknik yang Diusulkan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Google Dorking, Shodan, Maltego, theHarvester, analisis media sosial.",
+            info: "Sebutkan alat atau metode spesifik yang ingin Anda gunakan atau pertimbangkan.",
+            optional: true,
+            description: "Alat atau metode yang diusulkan.",
           },
           {
-            trigger: "SE_CAMPAIGN_TYPE",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "SE_CAMPAIGN_TYPE_OTHER",
-                  label: "Sebutkan Jenis Kampanye Lainnya",
-                  type: "text",
-                  placeholder: "Contoh: Tailgating",
-                  info: "Masukkan vektor serangan rekayasa sosial kustom.",
-                  optional: false,
-                  description: "Vektor rekayasa sosial kustom.",
-                },
-              ],
-            },
+            name: "RECON_TARGET_SCOPE",
+            label: "Lingkup Target Pengintaian",
+            type: "textarea",
+            placeholder:
+              "Contoh: Blok CIDR (192.168.1.0/24), rentang IP, daftar domain/subdomain target.",
+            info: "Definisikan batasan jaringan atau aset digital yang akan diintai.",
+            optional: false,
+            description: "Batasan jaringan atau aset yang akan diintai.",
+          },
+          {
+            name: "RECON_TYPE",
+            label: "Jenis Pengintaian",
+            type: "select",
+            options: ["Aktif (Active)", "Pasif (Passive)", "Lainnya..."],
+            info: "Pilih antara pengintaian aktif (mis. port scanning) atau pasif (mis. analisis header DNS).",
+            default: "Aktif (Active)",
+            optional: false,
+            description: "Metodologi pengintaian yang akan digunakan.",
+          },
+          {
+            name: "RECON_TOOLS",
+            label: "Alat & Teknik yang Diusulkan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Nmap untuk port scanning, masscan, DNS enumeration, analisis sertifikat SSL.",
+            info: "Sebutkan alat atau metode spesifik yang ingin Anda gunakan.",
+            optional: true,
+            description: "Alat atau metode spesifik yang diusulkan.",
+          },
+          {
+            name: "APPSEC_TARGET_URL",
+            label: "URL Aplikasi Target",
+            type: "text",
+            placeholder: "Contoh: https://aplikasi-target.com",
+            info: "URL lengkap dari aplikasi web atau mobile yang akan diuji.",
+            optional: false,
+            description: "URL aplikasi yang akan diuji.",
+          },
+          {
+            name: "APPSEC_TEST_TYPE",
+            label: "Jenis Pengujian",
+            type: "select",
+            options: [
+              "Analisis Statis (SAST)",
+              "Analisis Dinamis (DAST)",
+              "Pengujian Interaktif (IAST)",
+              "Analisis Komposisi Perangkat Lunak (SCA)",
+              "Lainnya...",
+            ],
+            info: "Pilih metodologi pengujian keamanan aplikasi yang akan digunakan.",
+            default: "Analisis Dinamis (DAST)",
+            optional: false,
+            description: "Metodologi pengujian yang dipilih.",
+          },
+          {
+            name: "APPSEC_VULN_FOCUS",
+            label: "Fokus Kerentanan",
+            type: "textarea",
+            placeholder:
+              "Contoh: OWASP Top 10, SQL Injection, Cross-Site Scripting (XSS), otorisasi yang rusak.",
+            info: "Sebutkan jenis kerentanan spesifik yang menjadi prioritas pengujian.",
+            optional: true,
+            description: "Prioritas kerentanan yang akan diuji.",
+          },
+          {
+            name: "SE_CAMPAIGN_TYPE",
+            label: "Jenis Kampanye",
+            type: "select",
+            options: [
+              "Phishing (Email)",
+              "Smishing (SMS)",
+              "Vishing (Voice Call)",
+              "Baiting (Umpan Fisik/Digital)",
+              "Lainnya...",
+            ],
+            info: "Pilih vektor serangan rekayasa sosial yang akan digunakan.",
+            default: "Phishing (Email)",
+            optional: false,
+            description: "Vektor serangan rekayasa sosial.",
+          },
+          {
+            name: "SE_TARGET_GROUP",
+            label: "Grup Target",
+            type: "text",
+            placeholder:
+              "Contoh: Departemen Keuangan, Tim HR, Administrator IT.",
+            info: "Tentukan kelompok atau departemen yang akan menjadi target kampanye.",
+            optional: false,
+            description: "Kelompok atau departemen target.",
+          },
+          {
+            name: "SE_PRETEXT",
+            label: "Skenario/Pretext",
+            type: "textarea",
+            placeholder:
+              "Contoh: Email pemberitahuan pembaruan kata sandi palsu, telepon dari 'helpdesk IT', SMS undian berhadiah.",
+            info: "Rancang cerita atau skenario palsu yang akan digunakan untuk mengelabui target.",
+            optional: false,
+            description: "Skenario palsu untuk mengelabui target.",
+          },
+          {
+            name: "IA_VECTOR",
+            label: "Vektor Akses Awal",
+            type: "text",
+            placeholder:
+              "Contoh: Eksploitasi kerentanan publik (mis. Log4Shell), Spearphishing dengan lampiran berbahaya, kredensial yang dicuri.",
+            info: "Tentukan metode utama yang akan digunakan untuk mendapatkan pijakan awal di jaringan target.",
+            optional: false,
+            description: "Metode utama untuk mendapatkan akses awal.",
+          },
+          {
+            name: "IA_PAYLOAD_TYPE",
+            label: "Jenis Payload",
+            type: "text",
+            placeholder:
+              "Contoh: Reverse shell, beacon Cobalt Strike, Meterpreter.",
+            info: "Jelaskan jenis payload yang akan dieksekusi di mesin target setelah akses berhasil.",
+            optional: false,
+            description: "Payload yang akan dieksekusi di target.",
+          },
+          {
+            name: "IA_TARGET_SYSTEM",
+            label: "Sistem Target",
+            type: "text",
+            placeholder:
+              "Contoh: Server web publik, workstation karyawan, database server.",
+            info: "Identifikasi sistem atau aset spesifik yang menjadi target utama untuk akses awal.",
+            optional: true,
+            description: "Sistem atau aset yang menjadi target utama.",
+          },
+          {
+            name: "PERSIST_TECHNIQUE",
+            label: "Teknik Persistensi",
+            type: "textarea",
+            placeholder:
+              "Contoh: Membuat scheduled task, menambahkan startup script, memodifikasi registry (T1547), membuat akun baru (T1136).",
+            info: "Sebutkan teknik spesifik (jika mungkin dengan ID MITRE ATT&CK) yang akan digunakan untuk mempertahankan akses.",
+            optional: false,
+            description:
+              "Teknik untuk mempertahankan akses (gunakan ID MITRE ATT&CK jika ada).",
+          },
+          {
+            name: "PERSIST_TARGET_OS",
+            label: "Sistem Operasi Target",
+            type: "select",
+            options: ["Windows", "Linux", "macOS", "Lainnya..."],
+            info: "Pilih OS target karena teknik persistensi seringkali spesifik untuk OS tertentu.",
+            default: "Windows",
+            optional: false,
+            description: "Sistem Operasi target.",
+          },
+          {
+            name: "PERSIST_IMPLANT_TYPE",
+            label: "Jenis Implan/Backdoor",
+            type: "text",
+            placeholder: "Contoh: Webshell, cron job, service biner.",
+            info: "Jelaskan artefak atau kode yang akan ditinggalkan di sistem untuk persistensi.",
+            optional: true,
+            description: "Artefak atau kode yang ditinggalkan di sistem.",
+          },
+          {
+            name: "PRIVILEGE_ESCALATION_TECHNIQUE",
+            label: "Teknik Eskalasi Hak",
+            type: "textarea",
+            placeholder:
+              "Contoh: Kernel exploit, miskonfigurasi SUID/GUID, kredensial yang disimpan dalam plain text, DLL hijacking.",
+            info: "Sebutkan teknik spesifik yang akan digunakan untuk meningkatkan hak akses dari user biasa menjadi administrator/root.",
+            optional: false,
+            description: "Teknik untuk meningkatkan hak akses.",
+          },
+          {
+            name: "PRIVILEGE_ESCALATION_CURRENT_ACCESS",
+            label: "Level Akses Saat Ini",
+            type: "text",
+            placeholder:
+              "Contoh: User lokal tanpa hak admin, akun layanan dengan hak terbatas.",
+            info: "Jelaskan tingkat hak akses yang dimiliki saat ini.",
+            optional: false,
+            description: "Tingkat hak akses saat ini.",
+          },
+          {
+            name: "PRIVILEGE_ESCALATION_TARGET_ACCESS",
+            label: "Target Hak Akses",
+            type: "text",
+            placeholder: "Contoh: Administrator Domain, root, SYSTEM.",
+            info: "Jelaskan tingkat hak akses yang ingin dicapai.",
+            optional: false,
+            description: "Tingkat hak akses yang ingin dicapai.",
+          },
+          {
+            name: "DEFENSE_EVASION_TECHNIQUE",
+            label: "Teknik Penghindaran Pertahanan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Obfuscation/enkripsi payload, mematikan logging keamanan (T1562), masquerading sebagai proses sistem yang sah (T1036), penggunaan fileless malware.",
+            info: "Sebutkan metode yang akan digunakan untuk menghindari deteksi oleh antivirus, EDR, atau SIEM.",
+            optional: false,
+            description: "Metode untuk menghindari deteksi keamanan.",
+          },
+          {
+            name: "DEFENSE_EVASION_TARGET_DEFENSE",
+            label: "Target Pertahanan yang Dihindari",
+            type: "text",
+            placeholder:
+              "Contoh: Windows Defender, Sysmon, Splunk, CrowdStrike Falcon.",
+            info: "Sebutkan produk atau teknologi keamanan spesifik yang ingin dihindari.",
+            optional: true,
+            description: "Produk keamanan yang ingin dihindari.",
+          },
+          {
+            name: "LATERAL_MOVEMENT_TECHNIQUE",
+            label: "Teknik Gerakan Lateral",
+            type: "textarea",
+            placeholder:
+              "Contoh: Pass-the-Hash (PtH), eksploitasi remote services (mis. SMB, RDP), penggunaan tool administrasi internal seperti PsExec.",
+            info: "Sebutkan metode yang akan digunakan untuk berpindah dari satu sistem ke sistem lain di dalam jaringan.",
+            optional: false,
+            description: "Metode untuk berpindah antar sistem.",
+          },
+          {
+            name: "LATERAL_MOVEMENT_CURRENT_HOST",
+            label: "Host Saat Ini",
+            type: "text",
+            placeholder: "Contoh: Workstation HR (WKSTN-HR-01)",
+            info: "Host tempat Anda memulai gerakan lateral.",
+            optional: false,
+            description: "Host awal untuk gerakan lateral.",
+          },
+          {
+            name: "LATERAL_MOVEMENT_TARGET_HOST",
+            label: "Host Tujuan",
+            type: "text",
+            placeholder:
+              "Contoh: Domain Controller (DC-01), File Server (FS-02).",
+            info: "Host yang menjadi target selanjutnya dalam gerakan lateral.",
+            optional: false,
+            description: "Host target untuk gerakan lateral.",
+          },
+          {
+            name: "COLLECTION_DATA_TYPE",
+            label: "Jenis Data yang Dikumpulkan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Kredensial dari memori (T1003), file dari file share, email dari Outlook, screenshot (T1113).",
+            info: "Sebutkan jenis data spesifik yang menjadi target pengumpulan.",
+            optional: false,
+            description: "Jenis data yang akan dikumpulkan.",
+          },
+          {
+            name: "COLLECTION_SOURCE",
+            label: "Sumber Data",
+            type: "text",
+            placeholder:
+              "Contoh: File server, database pelanggan, workstation CEO.",
+            info: "Lokasi atau sistem tempat data target berada.",
+            optional: false,
+            description: "Lokasi atau sistem sumber data.",
+          },
+          {
+            name: "C2_FRAMEWORK",
+            label: "Kerangka Kerja C2",
+            type: "text",
+            placeholder: "Contoh: Cobalt Strike, Metasploit, Empire, Sliver.",
+            info: "Pilih kerangka kerja Command and Control (C2) yang akan digunakan.",
+            optional: false,
+            description: "Kerangka kerja C2 yang akan digunakan.",
+          },
+          {
+            name: "C2_COMMUNICATION_PROTOCOL",
+            label: "Protokol Komunikasi",
+            type: "text",
+            placeholder: "Contoh: DNS over HTTPS (DoH), HTTP/S, SMB.",
+            info: "Tentukan protokol yang akan digunakan untuk komunikasi antara implan dan server C2.",
+            optional: false,
+            description: "Protokol komunikasi C2.",
+          },
+          {
+            name: "C2_HOSTING_STRATEGY",
+            label: "Strategi Hosting",
+            type: "textarea",
+            placeholder:
+              "Contoh: Menggunakan VPS, domain fronting melalui CDN, redirector, kategori domain yang terlihat normal (mis. kesehatan, keuangan).",
+            info: "Jelaskan bagaimana infrastruktur C2 akan disembunyikan atau dibuat agar terlihat sah.",
+            optional: false,
+            description: "Strategi hosting untuk infrastruktur C2.",
+          },
+          {
+            name: "CAMPAIGN_OBJECTIVE",
+            label: "Tujuan Utama Kampanye",
+            type: "textarea",
+            placeholder:
+              "Contoh: Mensimulasikan Advanced Persistent Threat (APT) untuk mencuri data kekayaan intelektual dari R&D, menguji kemampuan deteksi dan respons SOC terhadap ransomware.",
+            info: "Definisikan tujuan akhir tingkat tinggi dari keseluruhan kampanye Red Team.",
+            optional: false,
+            description: "Tujuan akhir dari kampanye.",
+          },
+          {
+            name: "CAMPAIGN_TARGET_ASSETS",
+            label: "Aset Kritis Target",
+            type: "textarea",
+            placeholder:
+              "Contoh: Database pelanggan, kode sumber produk, infrastruktur domain controller.",
+            info: "'Crown jewels' atau aset paling berharga yang menjadi sasaran akhir simulasi.",
+            optional: false,
+            description: "Aset paling berharga yang menjadi target.",
+          },
+          {
+            name: "CAMPAIGN_ALLOWED_TECHNIQUES",
+            label: "Teknik yang Diizinkan (Rules of Engagement)",
+            type: "textarea",
+            placeholder:
+              "Contoh: Diizinkan melakukan phishing, dilarang melakukan serangan Denial-of-Service (DoS), eksploitasi hanya boleh dilakukan pada sistem staging.",
+            info: "Batasan dan aturan main yang telah disepakati untuk kampanye ini.",
+            optional: false,
+            description: "Aturan main dan batasan kampanye.",
+          },
+          {
+            name: "RECON_TYPE_OTHER",
+            label: "Sebutkan Jenis Pengintaian Lainnya",
+            type: "text",
+            placeholder: "Contoh: Analisis citra satelit",
+            info: "Masukkan metode pengintaian kustom yang Anda usulkan.",
+            optional: false,
+            description: "Metode pengintaian kustom.",
+          },
+          {
+            name: "APPSEC_TEST_TYPE_OTHER",
+            label: "Sebutkan Jenis Pengujian Lainnya",
+            type: "text",
+            placeholder: "Contoh: Fuzzing",
+            info: "Masukkan metodologi pengujian keamanan kustom.",
+            optional: false,
+            description: "Metodologi pengujian kustom.",
+          },
+          {
+            name: "SE_CAMPAIGN_TYPE_OTHER",
+            label: "Sebutkan Jenis Kampanye Lainnya",
+            type: "text",
+            placeholder: "Contoh: Tailgating",
+            info: "Masukkan vektor serangan rekayasa sosial kustom.",
+            optional: false,
+            description: "Vektor rekayasa sosial kustom.",
           },
         ],
         komponen_prompt: {
@@ -6917,359 +6343,326 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "BLUE_TEAM_TASK",
-          options: {
-            "Triase Peringatan Keamanan (Alert Triage)": [
-              {
-                name: "ALERT_NAME",
-                label: "Nama Peringatan (Alert Name)",
-                type: "text",
-                placeholder:
-                  "Contoh: 'Potentially Unwanted App Found', 'High Number of Failed Logins'",
-                info: "Nama peringatan seperti yang muncul di SIEM atau konsol keamanan Anda.",
-                optional: false,
-                description: "Nama peringatan dari sistem keamanan.",
-              },
-              {
-                name: "ALERT_SOURCE",
-                label: "Sumber Peringatan",
-                type: "text",
-                placeholder:
-                  "Contoh: Microsoft Defender for Endpoint, Splunk, Azure Sentinel",
-                info: "Alat keamanan yang menghasilkan peringatan ini.",
-                optional: false,
-                description: "Sistem yang menghasilkan peringatan.",
-              },
-              {
-                name: "ALERT_KEY_INFO",
-                label: "Informasi Kunci dari Peringatan",
-                type: "textarea",
-                placeholder:
-                  "Contoh: User: john.doe, IP: 192.168.1.100, Host: WKSTN-01, File Hash: <hash>",
-                info: "Salin-tempel detail utama dari peringatan seperti pengguna, IP, nama host, atau hash file.",
-                optional: false,
-                description:
-                  "Detail utama peringatan (pengguna, IP, host, hash).",
-              },
-            ],
-            "Analisis Email Phishing (Phishing Email Analysis)": [
-              {
-                name: "PHISHING_HEADER",
-                label: "Header Email",
-                type: "textarea",
-                placeholder:
-                  "Salin-tempel header lengkap dari email yang dicurigai.",
-                info: "Header email berisi informasi penting tentang jalur email dan server pengirim.",
-                optional: false,
-                description: "Header lengkap dari email yang dicurigai.",
-              },
-              {
-                name: "PHISHING_LINKS_ATTACHMENTS",
-                label: "URL atau Hash Lampiran",
-                type: "textarea",
-                placeholder:
-                  "Contoh: https://link-palsu.com/login, <hash_lampiran.zip>",
-                info: "Sebutkan semua URL mencurigakan atau hash file dari lampiran email.",
-                optional: true,
-                description:
-                  "URL atau hash file dari lampiran yang mencurigakan.",
-              },
-            ],
-            "Manajemen Kerentanan (Vulnerability Management)": [
-              {
-                name: "VULN_ID",
-                label: "ID Kerentanan (CVE)",
-                type: "text",
-                placeholder: "Contoh: CVE-2021-44228 (Log4Shell)",
-                info: "ID CVE dari kerentanan yang perlu ditangani.",
-                optional: false,
-                description: "ID CVE dari kerentanan.",
-              },
-              {
-                name: "AFFECTED_ASSETS",
-                label: "Aset yang Terdampak",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Server Web (srv-web-01), Semua workstation dengan Java 8.",
-                info: "Sebutkan aset, sistem, atau aplikasi yang diketahui rentan.",
-                optional: false,
-                description: "Aset atau sistem yang diketahui rentan.",
-              },
-            ],
-            "Investigasi Ancaman Identitas (Identity Threat Investigation)": [
-              {
-                name: "IDENTITY_USER_ACCOUNT",
-                label: "Akun Pengguna yang Dicurigai",
-                type: "text",
-                placeholder: "Contoh: jane.doe@example.com",
-                info: "Akun pengguna yang menunjukkan aktivitas anomali.",
-                optional: false,
-                description: "Akun pengguna dengan aktivitas anomali.",
-              },
-              {
-                name: "IDENTITY_ANOMALY",
-                label: "Aktivitas Anomali",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Login dari lokasi geografis yang tidak biasa, eskalasi hak istimewa, beberapa upaya login gagal diikuti oleh keberhasilan.",
-                info: "Jelaskan perilaku mencurigakan yang terkait dengan akun tersebut.",
-                optional: false,
-                description: "Perilaku mencurigakan yang terdeteksi.",
-              },
-              {
-                name: "IDENTITY_LOG_SOURCE",
-                label: "Sumber Log",
-                type: "text",
-                placeholder:
-                  "Contoh: Azure AD Sign-in Logs, Active Directory Security Logs, Okta Logs.",
-                info: "Platform atau sistem tempat log aktivitas identitas disimpan.",
-                optional: true,
-                description: "Sumber log aktivitas identitas.",
-              },
-            ],
-            "Investigasi Host (Host Investigation)": [
-              {
-                name: "HOST_ID",
-                label: "Nama Host atau Alamat IP",
-                type: "text",
-                placeholder: "Contoh: WKSTN-FIN-05 atau 10.50.1.23",
-                info: "Identifier unik dari host yang sedang diinvestigasi.",
-                optional: false,
-                description: "Identifier unik dari host.",
-              },
-              {
-                name: "HOST_SUSPICIOUS_ACTIVITY",
-                label: "Aktivitas Mencurigakan yang Diamati",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Proses 'svchost.exe' membuat koneksi jaringan ke IP yang tidak dikenal, file aneh dibuat di C:\\Temp, lonjakan penggunaan CPU.",
-                info: "Gejala atau perilaku anomali yang memicu investigasi.",
-                optional: false,
-                description: "Gejala anomali yang memicu investigasi.",
-              },
-              {
-                name: "HOST_TOOL",
-                label: "Alat Investigasi yang Tersedia",
-                type: "text",
-                placeholder:
-                  "Contoh: Microsoft Defender for Endpoint, CrowdStrike Falcon, Sysmon, PowerShell.",
-                info: "Sebutkan EDR atau alat lain yang terpasang di host untuk investigasi.",
-                optional: true,
-                description: "Alat EDR atau investigasi lainnya.",
-              },
-            ],
-            "Analisis Log Aplikasi & Server (App/Server Log Analysis)": [
-              {
-                name: "LOG_SOURCE_TYPE",
-                label: "Jenis Sumber Log",
-                type: "text",
-                placeholder:
-                  "Contoh: log server web IIS, log NGINX, log aplikasi kustom.",
-                info: "Tentukan jenis log yang akan dianalisis.",
-                optional: false,
-                description: "Jenis log yang akan dianalisis.",
-              },
-              {
-                name: "LOG_TIME_FRAME",
-                label: "Rentang Waktu Investigasi",
-                type: "text",
-                placeholder:
-                  "Contoh: 2 jam terakhir, 2023-10-27T10:00:00Z hingga 2023-10-27T12:00:00Z",
-                info: "Fokuskan analisis pada rentang waktu tertentu.",
-                optional: false,
-                description: "Rentang waktu investigasi.",
-              },
-              {
-                name: "LOG_KEYWORDS",
-                label: "Kata Kunci atau Pola Mencurigakan",
-                type: "textarea",
-                placeholder:
-                  "Contoh: error 500, 'UNION SELECT', '..%2F..%2Fetc%2Fpasswd', alamat IP eksternal.",
-                info: "String atau pola spesifik yang ingin Anda cari di dalam log.",
-                optional: true,
-                description: "Kata kunci untuk pencarian log.",
-              },
-            ],
-            "Analisis Lalu Lintas Jaringan (Network Traffic Analysis)": [
-              {
-                name: "NET_SOURCE_IP",
-                label: "Alamat IP Sumber",
-                type: "text",
-                placeholder: "Contoh: 192.168.1.100",
-                info: "IP internal atau eksternal yang memulai komunikasi.",
-                optional: true,
-                description: "IP sumber komunikasi.",
-              },
-              {
-                name: "NET_DEST_IP",
-                label: "Alamat IP Tujuan",
-                type: "text",
-                placeholder: "Contoh: 45.33.32.156 (scanme.nmap.org)",
-                info: "IP tujuan komunikasi.",
-                optional: true,
-                description: "IP tujuan komunikasi.",
-              },
-              {
-                name: "NET_PROTOCOL_PORT",
-                label: "Protokol & Port",
-                type: "text",
-                placeholder: "Contoh: TCP port 4444, UDP port 53.",
-                info: "Fokus pada protokol atau port tertentu.",
-                optional: true,
-                description: "Protokol atau port spesifik.",
-              },
-              {
-                name: "NET_DATA_SOURCE",
-                label: "Sumber Data Jaringan",
-                type: "text",
-                placeholder:
-                  "Contoh: PCAP dari Wireshark, log NetFlow, log firewall.",
-                info: "Tentukan jenis data jaringan yang Anda miliki.",
-                optional: false,
-                description: "Jenis data jaringan yang tersedia.",
-              },
-            ],
-            "Pemantauan Keamanan Cloud (Cloud Security Monitoring)": [
-              {
-                name: "CLOUD_PROVIDER",
-                label: "Penyedia Cloud",
-                type: "select",
-                options: [
-                  "AWS",
-                  "Azure",
-                  "Google Cloud Platform (GCP)",
-                  "Lainnya...",
-                ],
-                info: "Pilih lingkungan cloud tempat investigasi dilakukan.",
-                default: "Azure",
-                optional: false,
-                description: "Lingkungan cloud investigasi.",
-              },
-              {
-                name: "CLOUD_SERVICE",
-                label: "Layanan Cloud yang Dicurigai",
-                type: "text",
-                placeholder:
-                  "Contoh: AWS S3 Bucket, Azure VM, GCP Cloud Storage.",
-                info: "Layanan spesifik yang menunjukkan aktivitas anomali.",
-                optional: false,
-                description: "Layanan cloud dengan aktivitas anomali.",
-              },
-              {
-                name: "CLOUD_LOG_SOURCE",
-                label: "Sumber Log Cloud",
-                type: "text",
-                placeholder:
-                  "Contoh: AWS CloudTrail, Azure Activity Log, GCP Audit Logs.",
-                info: "Log yang akan digunakan untuk investigasi.",
-                optional: false,
-                description: "Sumber log untuk investigasi.",
-              },
-            ],
-            "Perburuan Ancaman Proaktif (Proactive Threat Hunting)": [
-              {
-                name: "HUNT_HYPOTHESIS",
-                label: "Hipotesis Perburuan",
-                type: "textarea",
-                placeholder:
-                  "Contoh: 'Seorang penyerang mungkin menggunakan PowerShell untuk mengunduh file dari internet', 'Ada kemungkinan malware menggunakan DNS untuk komunikasi C2'.",
-                info: "Buat asumsi atau pertanyaan yang akan Anda coba validasi melalui perburuan data.",
-                optional: false,
-                description: "Asumsi yang akan divalidasi.",
-              },
-              {
-                name: "HUNT_DATA_SOURCES",
-                label: "Sumber Data untuk Perburuan",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Log proses dari EDR, log DNS, log proxy, log autentikasi.",
-                info: "Sebutkan kumpulan data yang akan Anda gunakan untuk mencari bukti hipotesis Anda.",
-                optional: false,
-                description: "Kumpulan data untuk validasi hipotesis.",
-              },
-            ],
-            "Rekayasa Aturan Deteksi (Detection Rule Engineering)": [
-              {
-                name: "DETECTION_THREAT_BEHAVIOR",
-                label: "Perilaku Ancaman yang Akan Dideteksi",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Proses 'lsass.exe' diakses oleh proses selain 'svchost.exe', eksekusi perintah WMI untuk gerakan lateral, pembuatan file dengan ekstensi ganda.",
-                info: "Jelaskan secara spesifik perilaku jahat atau TTP (Tactic, Technique, and Procedure) yang ingin Anda deteksi.",
-                optional: false,
-                description: "Perilaku jahat atau TTP yang ingin dideteksi.",
-              },
-              {
-                name: "DETECTION_PLATFORM",
-                label: "Platform Deteksi",
-                type: "text",
-                placeholder: "Contoh: Azure Sentinel, Splunk, Elastic SIEM.",
-                info: "SIEM atau platform analitik tempat aturan deteksi akan diimplementasikan.",
-                optional: false,
-                description: "Platform SIEM untuk implementasi aturan.",
-              },
-            ],
-            "Operasionalisasi Intelijen Ancaman (Threat Intelligence Operationalization)":
-              [
-                {
-                  name: "THREAT_INTEL_IOC",
-                  label: "Indikator Kompromi (IOC)",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Daftar alamat IP C2 dari grup APT X, hash file malware Y, domain phishing Z.",
-                  info: "Masukkan data intelijen ancaman (IOCs) yang baru diterima.",
-                  optional: false,
-                  description: "Data IOCs yang baru diterima.",
-                },
-                {
-                  name: "THREAT_INTEL_GOAL",
-                  label: "Tujuan Operasionalisasi",
-                  type: "select",
-                  options: [
-                    "Membuat aturan deteksi baru",
-                    "Melakukan perburuan retroaktif",
-                    "Memblokir di perimeter (Firewall/Proxy)",
-                    "Lainnya...",
-                  ],
-                  info: "Pilih bagaimana intelijen ancaman ini akan digunakan secara praktis.",
-                  optional: false,
-                  description: "Tujuan penggunaan intelijen ancaman.",
-                },
-              ],
-            "Manajemen Respons Insiden & Forensik (DFIR Management)": [
-              {
-                name: "DFIR_INCIDENT_SUMMARY",
-                label: "Ringkasan Insiden",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Terdeteksi aktivitas ransomware di beberapa server file pada tanggal X. Dampak awal: file terenkripsi, operasional terganggu.",
-                info: "Berikan ringkasan singkat tentang insiden yang sedang ditangani.",
-                optional: false,
-                description: "Ringkasan singkat insiden.",
-              },
-              {
-                name: "DFIR_PHASE",
-                label: "Fase Respons Insiden Saat Ini",
-                type: "select",
-                options: [
-                  "Preparation",
-                  "Identification",
-                  "Containment",
-                  "Eradication",
-                  "Recovery",
-                  "Lessons Learned",
-                  "Lainnya...",
-                ],
-                info: "Pilih fase dari siklus hidup respons insiden (NIST).",
-                default: "Identification",
-                optional: false,
-                description: "Fase siklus hidup respons insiden (NIST).",
-              },
-            ],
+          {
+            name: "ALERT_NAME",
+            label: "Nama Peringatan (Alert Name)",
+            type: "text",
+            placeholder:
+              "Contoh: 'Potentially Unwanted App Found', 'High Number of Failed Logins'",
+            info: "Nama peringatan seperti yang muncul di SIEM atau konsol keamanan Anda.",
+            optional: false,
+            description: "Nama peringatan dari sistem keamanan.",
           },
-        },
+          {
+            name: "ALERT_SOURCE",
+            label: "Sumber Peringatan",
+            type: "text",
+            placeholder:
+              "Contoh: Microsoft Defender for Endpoint, Splunk, Azure Sentinel",
+            info: "Alat keamanan yang menghasilkan peringatan ini.",
+            optional: false,
+            description: "Sistem yang menghasilkan peringatan.",
+          },
+          {
+            name: "ALERT_KEY_INFO",
+            label: "Informasi Kunci dari Peringatan",
+            type: "textarea",
+            placeholder:
+              "Contoh: User: john.doe, IP: 192.168.1.100, Host: WKSTN-01, File Hash: <hash>",
+            info: "Salin-tempel detail utama dari peringatan seperti pengguna, IP, nama host, atau hash file.",
+            optional: false,
+            description: "Detail utama peringatan (pengguna, IP, host, hash).",
+          },
+          {
+            name: "PHISHING_HEADER",
+            label: "Header Email",
+            type: "textarea",
+            placeholder:
+              "Salin-tempel header lengkap dari email yang dicurigai.",
+            info: "Header email berisi informasi penting tentang jalur email dan server pengirim.",
+            optional: false,
+            description: "Header lengkap dari email yang dicurigai.",
+          },
+          {
+            name: "PHISHING_LINKS_ATTACHMENTS",
+            label: "URL atau Hash Lampiran",
+            type: "textarea",
+            placeholder:
+              "Contoh: https://link-palsu.com/login, <hash_lampiran.zip>",
+            info: "Sebutkan semua URL mencurigakan atau hash file dari lampiran email.",
+            optional: true,
+            description: "URL atau hash file dari lampiran yang mencurigakan.",
+          },
+          {
+            name: "VULN_ID",
+            label: "ID Kerentanan (CVE)",
+            type: "text",
+            placeholder: "Contoh: CVE-2021-44228 (Log4Shell)",
+            info: "ID CVE dari kerentanan yang perlu ditangani.",
+            optional: false,
+            description: "ID CVE dari kerentanan.",
+          },
+          {
+            name: "AFFECTED_ASSETS",
+            label: "Aset yang Terdampak",
+            type: "textarea",
+            placeholder:
+              "Contoh: Server Web (srv-web-01), Semua workstation dengan Java 8.",
+            info: "Sebutkan aset, sistem, atau aplikasi yang diketahui rentan.",
+            optional: false,
+            description: "Aset atau sistem yang diketahui rentan.",
+          },
+          {
+            name: "IDENTITY_USER_ACCOUNT",
+            label: "Akun Pengguna yang Dicurigai",
+            type: "text",
+            placeholder: "Contoh: jane.doe@example.com",
+            info: "Akun pengguna yang menunjukkan aktivitas anomali.",
+            optional: false,
+            description: "Akun pengguna dengan aktivitas anomali.",
+          },
+          {
+            name: "IDENTITY_ANOMALY",
+            label: "Aktivitas Anomali",
+            type: "textarea",
+            placeholder:
+              "Contoh: Login dari lokasi geografis yang tidak biasa, eskalasi hak istimewa, beberapa upaya login gagal diikuti oleh keberhasilan.",
+            info: "Jelaskan perilaku mencurigakan yang terkait dengan akun tersebut.",
+            optional: false,
+            description: "Perilaku mencurigakan yang terdeteksi.",
+          },
+          {
+            name: "IDENTITY_LOG_SOURCE",
+            label: "Sumber Log",
+            type: "text",
+            placeholder:
+              "Contoh: Azure AD Sign-in Logs, Active Directory Security Logs, Okta Logs.",
+            info: "Platform atau sistem tempat log aktivitas identitas disimpan.",
+            optional: true,
+            description: "Sumber log aktivitas identitas.",
+          },
+          {
+            name: "HOST_ID",
+            label: "Nama Host atau Alamat IP",
+            type: "text",
+            placeholder: "Contoh: WKSTN-FIN-05 atau 10.50.1.23",
+            info: "Identifier unik dari host yang sedang diinvestigasi.",
+            optional: false,
+            description: "Identifier unik dari host.",
+          },
+          {
+            name: "HOST_SUSPICIOUS_ACTIVITY",
+            label: "Aktivitas Mencurigakan yang Diamati",
+            type: "textarea",
+            placeholder:
+              "Contoh: Proses 'svchost.exe' membuat koneksi jaringan ke IP yang tidak dikenal, file aneh dibuat di C:\\Temp, lonjakan penggunaan CPU.",
+            info: "Gejala atau perilaku anomali yang memicu investigasi.",
+            optional: false,
+            description: "Gejala anomali yang memicu investigasi.",
+          },
+          {
+            name: "HOST_TOOL",
+            label: "Alat Investigasi yang Tersedia",
+            type: "text",
+            placeholder:
+              "Contoh: Microsoft Defender for Endpoint, CrowdStrike Falcon, Sysmon, PowerShell.",
+            info: "Sebutkan EDR atau alat lain yang terpasang di host untuk investigasi.",
+            optional: true,
+            description: "Alat EDR atau investigasi lainnya.",
+          },
+          {
+            name: "LOG_SOURCE_TYPE",
+            label: "Jenis Sumber Log",
+            type: "text",
+            placeholder:
+              "Contoh: log server web IIS, log NGINX, log aplikasi kustom.",
+            info: "Tentukan jenis log yang akan dianalisis.",
+            optional: false,
+            description: "Jenis log yang akan dianalisis.",
+          },
+          {
+            name: "LOG_TIME_FRAME",
+            label: "Rentang Waktu Investigasi",
+            type: "text",
+            placeholder:
+              "Contoh: 2 jam terakhir, 2023-10-27T10:00:00Z hingga 2023-10-27T12:00:00Z",
+            info: "Fokuskan analisis pada rentang waktu tertentu.",
+            optional: false,
+            description: "Rentang waktu investigasi.",
+          },
+          {
+            name: "LOG_KEYWORDS",
+            label: "Kata Kunci atau Pola Mencurigakan",
+            type: "textarea",
+            placeholder:
+              "Contoh: error 500, 'UNION SELECT', '..%2F..%2Fetc%2Fpasswd', alamat IP eksternal.",
+            info: "String atau pola spesifik yang ingin Anda cari di dalam log.",
+            optional: true,
+            description: "Kata kunci untuk pencarian log.",
+          },
+          {
+            name: "NET_SOURCE_IP",
+            label: "Alamat IP Sumber",
+            type: "text",
+            placeholder: "Contoh: 192.168.1.100",
+            info: "IP internal atau eksternal yang memulai komunikasi.",
+            optional: true,
+            description: "IP sumber komunikasi.",
+          },
+          {
+            name: "NET_DEST_IP",
+            label: "Alamat IP Tujuan",
+            type: "text",
+            placeholder: "Contoh: 45.33.32.156 (scanme.nmap.org)",
+            info: "IP tujuan komunikasi.",
+            optional: true,
+            description: "IP tujuan komunikasi.",
+          },
+          {
+            name: "NET_PROTOCOL_PORT",
+            label: "Protokol & Port",
+            type: "text",
+            placeholder: "Contoh: TCP port 4444, UDP port 53.",
+            info: "Fokus pada protokol atau port tertentu.",
+            optional: true,
+            description: "Protokol atau port spesifik.",
+          },
+          {
+            name: "NET_DATA_SOURCE",
+            label: "Sumber Data Jaringan",
+            type: "text",
+            placeholder:
+              "Contoh: PCAP dari Wireshark, log NetFlow, log firewall.",
+            info: "Tentukan jenis data jaringan yang Anda miliki.",
+            optional: false,
+            description: "Jenis data jaringan yang tersedia.",
+          },
+          {
+            name: "CLOUD_PROVIDER",
+            label: "Penyedia Cloud",
+            type: "select",
+            options: [
+              "AWS",
+              "Azure",
+              "Google Cloud Platform (GCP)",
+              "Lainnya...",
+            ],
+            info: "Pilih lingkungan cloud tempat investigasi dilakukan.",
+            default: "Azure",
+            optional: false,
+            description: "Lingkungan cloud investigasi.",
+          },
+          {
+            name: "CLOUD_SERVICE",
+            label: "Layanan Cloud yang Dicurigai",
+            type: "text",
+            placeholder: "Contoh: AWS S3 Bucket, Azure VM, GCP Cloud Storage.",
+            info: "Layanan spesifik yang menunjukkan aktivitas anomali.",
+            optional: false,
+            description: "Layanan cloud dengan aktivitas anomali.",
+          },
+          {
+            name: "CLOUD_LOG_SOURCE",
+            label: "Sumber Log Cloud",
+            type: "text",
+            placeholder:
+              "Contoh: AWS CloudTrail, Azure Activity Log, GCP Audit Logs.",
+            info: "Log yang akan digunakan untuk investigasi.",
+            optional: false,
+            description: "Sumber log untuk investigasi.",
+          },
+          {
+            name: "HUNT_HYPOTHESIS",
+            label: "Hipotesis Perburuan",
+            type: "textarea",
+            placeholder:
+              "Contoh: 'Seorang penyerang mungkin menggunakan PowerShell untuk mengunduh file dari internet', 'Ada kemungkinan malware menggunakan DNS untuk komunikasi C2'.",
+            info: "Buat asumsi atau pertanyaan yang akan Anda coba validasi melalui perburuan data.",
+            optional: false,
+            description: "Asumsi yang akan divalidasi.",
+          },
+          {
+            name: "HUNT_DATA_SOURCES",
+            label: "Sumber Data untuk Perburuan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Log proses dari EDR, log DNS, log proxy, log autentikasi.",
+            info: "Sebutkan kumpulan data yang akan Anda gunakan untuk mencari bukti hipotesis Anda.",
+            optional: false,
+            description: "Kumpulan data untuk validasi hipotesis.",
+          },
+          {
+            name: "DETECTION_THREAT_BEHAVIOR",
+            label: "Perilaku Ancaman yang Akan Dideteksi",
+            type: "textarea",
+            placeholder:
+              "Contoh: Proses 'lsass.exe' diakses oleh proses selain 'svchost.exe', eksekusi perintah WMI untuk gerakan lateral, pembuatan file dengan ekstensi ganda.",
+            info: "Jelaskan secara spesifik perilaku jahat atau TTP (Tactic, Technique, and Procedure) yang ingin Anda deteksi.",
+            optional: false,
+            description: "Perilaku jahat atau TTP yang ingin dideteksi.",
+          },
+          {
+            name: "DETECTION_PLATFORM",
+            label: "Platform Deteksi",
+            type: "text",
+            placeholder: "Contoh: Azure Sentinel, Splunk, Elastic SIEM.",
+            info: "SIEM atau platform analitik tempat aturan deteksi akan diimplementasikan.",
+            optional: false,
+            description: "Platform SIEM untuk implementasi aturan.",
+          },
+          {
+            name: "THREAT_INTEL_IOC",
+            label: "Indikator Kompromi (IOC)",
+            type: "textarea",
+            placeholder:
+              "Contoh: Daftar alamat IP C2 dari grup APT X, hash file malware Y, domain phishing Z.",
+            info: "Masukkan data intelijen ancaman (IOCs) yang baru diterima.",
+            optional: false,
+            description: "Data IOCs yang baru diterima.",
+          },
+          {
+            name: "THREAT_INTEL_GOAL",
+            label: "Tujuan Operasionalisasi",
+            type: "select",
+            options: [
+              "Membuat aturan deteksi baru",
+              "Melakukan perburuan retroaktif",
+              "Memblokir di perimeter (Firewall/Proxy)",
+              "Lainnya...",
+            ],
+            info: "Pilih bagaimana intelijen ancaman ini akan digunakan secara praktis.",
+            optional: false,
+            description: "Tujuan penggunaan intelijen ancaman.",
+          },
+          {
+            name: "DFIR_INCIDENT_SUMMARY",
+            label: "Ringkasan Insiden",
+            type: "textarea",
+            placeholder:
+              "Contoh: Terdeteksi aktivitas ransomware di beberapa server file pada tanggal X. Dampak awal: file terenkripsi, operasional terganggu.",
+            info: "Berikan ringkasan singkat tentang insiden yang sedang ditangani.",
+            optional: false,
+            description: "Ringkasan singkat insiden.",
+          },
+          {
+            name: "DFIR_PHASE",
+            label: "Fase Respons Insiden Saat Ini",
+            type: "select",
+            options: [
+              "Preparation",
+              "Identification",
+              "Containment",
+              "Eradication",
+              "Recovery",
+              "Lessons Learned",
+              "Lainnya...",
+            ],
+            info: "Pilih fase dari siklus hidup respons insiden (NIST).",
+            default: "Identification",
+            optional: false,
+            description: "Fase siklus hidup respons insiden (NIST).",
+          },
+        ],
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang Analis Senior SOC (Security Operations Center) yang berpengalaman, mahir dalam berbagai platform keamanan dan bahasa query seperti KQL, SPL, dan SQL.",
@@ -7331,427 +6724,393 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "PURPLE_TEAM_ACTIVITY",
-          options: {
-            "Validasi Deteksi Taktis (Tactical Detection Validation)": [
-              {
-                name: "VALIDATION_TTP_ID",
-                label: "Taktik/Teknik yang Divalidasi (ID TTP)",
-                type: "text",
-                placeholder:
-                  "Contoh: T1059.001 (PowerShell), T1548.002 (Bypass UAC).",
-                info: "Sebutkan ID Taktik, Teknik, dan Prosedur (TTP) dari MITRE ATT&CK yang akan diuji.",
-                optional: false,
-                description: "ID TTP yang akan diuji.",
-              },
-              {
-                name: "VALIDATION_RED_TEAM_TOOL",
-                label: "Alat Red Team yang Digunakan",
-                type: "text",
-                placeholder:
-                  "Contoh: Atomic Red Team, skrip PowerShell kustom, Cobalt Strike.",
-                info: "Alat yang akan digunakan Red Team untuk mengeksekusi TTP.",
-                optional: false,
-                description: "Alat yang digunakan Red Team.",
-              },
-              {
-                name: "VALIDATION_BLUE_TEAM_TOOL",
-                label: "Alat Blue Team untuk Observasi",
-                type: "text",
-                placeholder: "Contoh: Sysmon, Azure Sentinel, CrowdStrike.",
-                info: "Alat yang akan dipantau oleh Blue Team untuk melihat jejak serangan.",
-                optional: false,
-                description: "Alat yang dipantau Blue Team.",
-              },
-            ],
-            "Penyesuaian & Pengoptimalan Aturan (Rule Tuning & Optimization)": [
-              {
-                name: "TUNING_RULE_ID",
-                label: "ID atau Nama Aturan Deteksi",
-                type: "text",
-                placeholder:
-                  "Contoh: 'Deteksi Eksekusi PowerShell dari Office App', Rule ID: 5a4b...",
-                info: "Aturan spesifik di SIEM atau EDR yang akan disesuaikan.",
-                optional: false,
-                description: "ID atau nama aturan deteksi.",
-              },
-              {
-                name: "TUNING_PROBLEM",
-                label: "Masalah yang Dihadapi",
-                type: "select",
-                options: [
-                  "Terlalu Banyak False Positive",
-                  "Terjadi False Negative (Gagal Mendeteksi)",
-                  "Performa Aturan Lambat",
-                  "Lainnya...",
-                ],
-                info: "Pilih masalah utama yang terkait dengan aturan deteksi saat ini.",
-                optional: false,
-                description: "Masalah terkait aturan deteksi.",
-              },
-              {
-                name: "TUNING_CONTEXT",
-                label: "Konteks Tambahan",
-                type: "textarea",
-                placeholder:
-                  "Contoh: False positive terjadi karena skrip login yang sah. Serangan asli dengan TTP X gagal terdeteksi saat simulasi.",
-                info: "Berikan detail tentang skenario false positive atau false negative.",
-                optional: true,
-                description: "Detail skenario false positive/negative.",
-              },
-            ],
-            "Evaluasi Alat Keamanan (Security Tooling Evaluation)": [
-              {
-                name: "EVAL_TOOL_NAME",
-                label: "Nama Alat Keamanan",
-                type: "text",
-                placeholder: "Contoh: EDR X, SIEM Y, Firewall Z.",
-                info: "Sebutkan alat keamanan yang akan dievaluasi.",
-                optional: false,
-                description: "Alat keamanan yang dievaluasi.",
-              },
-              {
-                name: "EVAL_CRITERIA",
-                label: "Kriteria Evaluasi",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Kemampuan deteksi TTP A, B, C; integrasi dengan SIEM; kemudahan penggunaan.",
-                info: "Definisikan kriteria yang akan digunakan untuk menilai alat tersebut.",
-                optional: false,
-                description: "Kriteria penilaian alat.",
-              },
-              {
-                name: "EVAL_PURPOSE",
-                label: "Tujuan Evaluasi",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Memilih EDR baru, memvalidasi fitur terbaru dari SIEM yang ada.",
-                info: "Jelaskan mengapa evaluasi ini dilakukan.",
-                optional: false,
-                description: "Tujuan utama evaluasi.",
-              },
-            ],
-            "Pemodelan Ancaman Kolaboratif (Collaborative Threat Modeling)": [
-              {
-                name: "THREAT_MODEL_TARGET_APP",
-                label: "Aplikasi atau Sistem Target",
-                type: "text",
-                placeholder:
-                  "Contoh: Aplikasi perbankan online baru, arsitektur microservices 'X'.",
-                info: "Aplikasi atau sistem yang akan dimodelkan ancamannya.",
-                optional: false,
-                description: "Target pemodelan ancaman.",
-              },
-              {
-                name: "THREAT_MODEL_METHODOLOGY",
-                label: "Metodologi Pemodelan Ancaman",
-                type: "select",
-                options: ["STRIDE", "PASTA", "DREAD", "Lainnya..."],
-                info: "Pilih kerangka kerja pemodelan ancaman yang akan digunakan.",
-                default: "STRIDE",
-                optional: false,
-                description: "Metodologi pemodelan ancaman.",
-              },
-              {
-                name: "THREAT_MODEL_SCOPE",
-                label: "Lingkup Pemodelan",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Hanya modul autentikasi, seluruh layanan backend.",
-                info: "Definisikan bagian spesifik dari aplikasi/sistem yang akan dianalisis.",
-                optional: false,
-                description: "Lingkup analisis ancaman.",
-              },
-            ],
-            "Sesi Rekayasa Deteksi (Detection Engineering Session)": [
-              {
-                name: "DE_SESSION_GOAL",
-                label: "Tujuan Sesi",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Membuat deteksi baru untuk teknik 'Kerberoasting', meningkatkan cakupan deteksi untuk gerakan lateral.",
-                info: "Apa hasil yang diharapkan dari sesi rekayasa deteksi ini?",
-                optional: false,
-                description: "Hasil yang diharapkan dari sesi.",
-              },
-              {
-                name: "DE_SESSION_LOG_SOURCES",
-                label: "Sumber Log yang Diperlukan",
-                type: "text",
-                placeholder:
-                  "Contoh: Log Keamanan Windows (4769), log jaringan dari Zeek/Corelight.",
-                info: "Data apa yang diperlukan untuk membangun dan memvalidasi deteksi baru?",
-                optional: false,
-                description: "Data yang diperlukan untuk deteksi baru.",
-              },
-              {
-                name: "DE_SESSION_ATTACK_SIM",
-                label: "Simulasi Serangan yang Direncanakan",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Eksekusi Mimikatz pada domain controller, penggunaan PsExec untuk gerakan lateral.",
-                info: "Tindakan Red Team yang akan disimulasikan selama sesi untuk menguji deteksi.",
-                optional: false,
-                description: "Simulasi serangan Red Team.",
-              },
-            ],
-            "Desain Skenario BAS (BAS Scenario Design)": [
-              {
-                name: "BAS_TARGET_TTP",
-                label: "TTP Target (MITRE ATT&CK ID)",
-                type: "text",
-                placeholder:
-                  "Contoh: T1059.003 (Windows Command Shell), T1566.001 (Spearphishing Attachment).",
-                info: "Sebutkan ID TTP spesifik yang ingin diuji oleh skenario BAS.",
-                optional: false,
-                description: "ID TTP yang akan diuji.",
-              },
-              {
-                name: "BAS_OBJECTIVE",
-                label: "Tujuan Skenario BAS",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Memvalidasi deteksi EDR terhadap eksekusi remote shell, mengukur efektivitas filter email terhadap lampiran berbahaya.",
-                info: "Apa yang ingin Anda capai dengan menjalankan skenario BAS ini?",
-                optional: false,
-                description: "Tujuan skenario BAS.",
-              },
-              {
-                name: "BAS_TOOL",
-                label: "Alat BAS yang Digunakan",
-                type: "text",
-                placeholder: "Contoh: AttackIQ, Cymulate, Picus Security.",
-                info: "Sebutkan platform Breach and Attack Simulation (BAS) yang akan digunakan.",
-                optional: false,
-                description: "Platform BAS yang digunakan.",
-              },
-            ],
-            "Sesi Perburuan Terpandu (Guided Hunting Session)": [
-              {
-                name: "HUNT_SESSION_THREAT",
-                label: "Ancaman yang Dicari",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Ancaman yang menggunakan teknik 'Living Off The Land Binaries' (LOLBAS), aktivitas post-eksploitasi dari ransomware.",
-                info: "Jelaskan jenis ancaman atau perilaku spesifik yang akan menjadi fokus perburuan.",
-                optional: false,
-                description: "Jenis ancaman yang menjadi fokus.",
-              },
-              {
-                name: "HUNT_SESSION_HYPOTHESIS",
-                label: "Hipotesis Perburuan",
-                type: "textarea",
-                placeholder:
-                  "Contoh: 'Penyerang mungkin telah menggunakan `certutil.exe` untuk mengunduh payload dari internet', 'Ada akun layanan yang melakukan login interaktif'.",
-                info: "Asumsi yang akan divalidasi atau dibantah selama sesi perburuan.",
-                optional: false,
-                description: "Asumsi yang akan divalidasi.",
-              },
-              {
-                name: "HUNT_SESSION_DATA",
-                label: "Sumber Data yang Akan Digunakan",
-                type: "text",
-                placeholder:
-                  "Contoh: Log proses EDR, log Sysmon, log autentikasi AD.",
-                info: "Sebutkan sumber data yang akan digunakan untuk mencari indikator ancaman.",
-                optional: false,
-                description: "Sumber data untuk perburuan ancaman.",
-              },
-            ],
-            "Pengujian Efektivitas Kontrol Keamanan (Security Control Efficacy Testing)":
-              [
-                {
-                  name: "CONTROL_TEST_NAME",
-                  label: "Nama Kontrol Keamanan",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Aturan Firewall IPS, Kebijakan DLP, Fungsi Antivirus EDR.",
-                  info: "Sebutkan kontrol keamanan yang akan diuji efektivitasnya.",
-                  optional: false,
-                  description: "Kontrol keamanan yang diuji.",
-                },
-                {
-                  name: "CONTROL_TEST_METHOD",
-                  label: "Metode Pengujian",
-                  type: "select",
-                  options: [
-                    "Simulasi Serangan (Red Team)",
-                    "Uji Konfigurasi (Audit)",
-                    "Analisis Log (Blue Team)",
-                    "Lainnya...",
-                  ],
-                  info: "Pilih metode yang akan digunakan untuk menguji kontrol.",
-                  optional: false,
-                  description: "Metode yang digunakan untuk pengujian.",
-                },
-                {
-                  name: "CONTROL_TEST_EXPECTED",
-                  label: "Hasil yang Diharapkan",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Serangan diblokir, peringatan dihasilkan di SIEM, file dienkripsi setelah tindakan tertentu.",
-                  info: "Jelaskan perilaku yang diinginkan dari kontrol keamanan saat diuji.",
-                  optional: false,
-                  description:
-                    "Perilaku yang diharapkan dari kontrol keamanan.",
-                },
-              ],
-            "Analisis Kesenjangan Pertahanan (Defense Gap Analysis)": [
-              {
-                name: "GAP_ANALYSIS_FRAMEWORK",
-                label: "Kerangka Kerja Acuan",
-                type: "text",
-                placeholder: "Contoh: MITRE ATT&CK, CIS Controls v8.",
-                info: "Kerangka kerja yang akan digunakan untuk memetakan kemampuan pertahanan saat ini.",
-                optional: false,
-                description: "Kerangka kerja acuan untuk analisis.",
-              },
-              {
-                name: "GAP_ANALYSIS_CURRENT_COVERAGE",
-                label: "Cakupan Deteksi Saat Ini",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Hasil dari ATT&CK Navigator, laporan dari alat BAS.",
-                info: "Informasi tentang cakupan TTP yang sudah dimiliki saat ini.",
-                optional: true,
-                description: "Cakupan TTP yang ada saat ini.",
-              },
-              {
-                name: "GAP_ANALYSIS_TARGET",
-                label: "Target Kesenjangan",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Area 'Persistensi', semua teknik 'Defense Evasion'.",
-                info: "Fokus analisis pada area atau taktik spesifik.",
-                optional: false,
-                description: "Area fokus analisis kesenjangan.",
-              },
-            ],
-            "Post-Mortem Insiden Kolaboratif (Collaborative Incident Post-Mortem)":
-              [
-                {
-                  name: "POSTMORTEM_INCIDENT_ID",
-                  label: "ID Insiden",
-                  type: "text",
-                  placeholder: "Contoh: INC-20240315-001.",
-                  info: "ID unik dari insiden yang sedang dianalisis.",
-                  optional: false,
-                  description: "ID unik insiden.",
-                },
-                {
-                  name: "POSTMORTEM_SUMMARY",
-                  label: "Ringkasan Insiden",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Serangan ransomware yang berhasil mengenkripsi server file, insiden kebocoran data dari aplikasi web.",
-                  info: "Berikan ringkasan singkat tentang insiden dan dampaknya.",
-                  optional: false,
-                  description: "Ringkasan insiden dan dampaknya.",
-                },
-                {
-                  name: "POSTMORTEM_FINDINGS_RED",
-                  label: "Temuan dari Perspektif Red Team",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Vektor akses awal yang berhasil, metode eskalasi hak yang digunakan.",
-                  info: "Apa yang Red Team pelajari dari sudut pandang penyerang?",
-                  optional: false,
-                  description: "Pembelajaran Red Team dari insiden.",
-                },
-                {
-                  name: "POSTMORTEM_FINDINGS_BLUE",
-                  label: "Temuan dari Perspektif Blue Team",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Titik kegagalan deteksi, waktu respons, area peningkatan tim SOC.",
-                  info: "Apa yang Blue Team pelajari dari sudut pandang pembela?",
-                  optional: false,
-                  description: "Pembelajaran Blue Team dari insiden.",
-                },
-              ],
-            "Debriefing & Laporan Latihan Gabungan (Joint Exercise Debrief & Reporting)":
-              [
-                {
-                  name: "DEBRIEF_EXERCISE_NAME",
-                  label: "Nama Latihan Gabungan",
-                  type: "text",
-                  placeholder: "Contoh: 'Operasi Solar Flare Q3 2024'",
-                  info: "Nama atau kode dari latihan yang telah dilaksanakan.",
-                  optional: false,
-                  description: "Nama latihan gabungan.",
-                },
-                {
-                  name: "DEBRIEF_FINDINGS_RED",
-                  label: "Temuan Utama dari Red Team",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Berhasil mendapatkan akses awal melalui CVE-XXXX. Mampu bergerak lateral menggunakan Pass-the-Hash.",
-                  info: "Ringkasan keberhasilan dan tantangan dari tim ofensif.",
-                  optional: false,
-                  description: "Keberhasilan dan tantangan Red Team.",
-                },
-                {
-                  name: "DEBRIEF_FINDINGS_BLUE",
-                  label: "Temuan Utama dari Blue Team",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Deteksi berhasil pada tahap akses awal, namun gagal melihat gerakan lateral. Waktu respons 15 menit.",
-                  info: "Ringkasan keberhasilan dan tantangan dari tim defensif.",
-                  optional: false,
-                  description: "Keberhasilan dan tantangan Blue Team.",
-                },
-                {
-                  name: "DEBRIEF_RECOMMENDATIONS",
-                  label: "Rekomendasi Utama",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Perbarui aturan deteksi untuk T1059.001. Latih analis SOC tentang deteksi gerakan lateral.",
-                  info: "Sebutkan rekomendasi utama untuk peningkatan yang muncul dari debriefing.",
-                  optional: false,
-                  description: "Rekomendasi peningkatan dari debriefing.",
-                },
-              ],
-            "Pengukuran & Pelaporan Program Keamanan (Security Program Metrics & Reporting)":
-              [
-                {
-                  name: "METRICS_REPORT_SCOPE",
-                  label: "Lingkup Laporan",
-                  type: "text",
-                  placeholder:
-                    "Contoh: Kinerja SOC Q3, Efektivitas Program Manajemen Kerentanan.",
-                  info: "Definisikan area program keamanan yang akan diukur dan dilaporkan.",
-                  optional: false,
-                  description: "Area program keamanan yang dilaporkan.",
-                },
-                {
-                  name: "METRICS_KEY_METRICS",
-                  label: "Metrik Kunci yang Dilaporkan",
-                  type: "textarea",
-                  placeholder:
-                    "Contoh: Waktu Rata-rata untuk Deteksi (MTTD), Waktu Rata-rata untuk Respons (MTTR), Jumlah Kerentanan Kritis yang Belum Ditambal.",
-                  info: "Sebutkan metrik spesifik yang relevan dengan laporan ini.",
-                  optional: false,
-                  description: "Metrik keamanan yang akan dilaporkan.",
-                },
-                {
-                  name: "METRICS_AUDIENCE",
-                  label: "Audiens Laporan",
-                  type: "select",
-                  options: [
-                    "Manajemen Teknis",
-                    "Eksekutif C-Level",
-                    "Tim Keamanan Internal",
-                    "Lainnya...",
-                  ],
-                  info: "Siapa yang akan menerima laporan ini? Ini akan mempengaruhi tingkat detail dan bahasa yang digunakan.",
-                  optional: false,
-                  description: "Audiens utama laporan.",
-                },
-              ],
+          {
+            name: "VALIDATION_TTP_ID",
+            label: "Taktik/Teknik yang Divalidasi (ID TTP)",
+            type: "text",
+            placeholder:
+              "Contoh: T1059.001 (PowerShell), T1548.002 (Bypass UAC).",
+            info: "Sebutkan ID Taktik, Teknik, dan Prosedur (TTP) dari MITRE ATT&CK yang akan diuji.",
+            optional: false,
+            description: "ID TTP yang akan diuji.",
           },
-        },
+          {
+            name: "VALIDATION_RED_TEAM_TOOL",
+            label: "Alat Red Team yang Digunakan",
+            type: "text",
+            placeholder:
+              "Contoh: Atomic Red Team, skrip PowerShell kustom, Cobalt Strike.",
+            info: "Alat yang akan digunakan Red Team untuk mengeksekusi TTP.",
+            optional: false,
+            description: "Alat yang digunakan Red Team.",
+          },
+          {
+            name: "VALIDATION_BLUE_TEAM_TOOL",
+            label: "Alat Blue Team untuk Observasi",
+            type: "text",
+            placeholder: "Contoh: Sysmon, Azure Sentinel, CrowdStrike.",
+            info: "Alat yang akan dipantau oleh Blue Team untuk melihat jejak serangan.",
+            optional: false,
+            description: "Alat yang dipantau Blue Team.",
+          },
+          {
+            name: "TUNING_RULE_ID",
+            label: "ID atau Nama Aturan Deteksi",
+            type: "text",
+            placeholder:
+              "Contoh: 'Deteksi Eksekusi PowerShell dari Office App', Rule ID: 5a4b...",
+            info: "Aturan spesifik di SIEM atau EDR yang akan disesuaikan.",
+            optional: false,
+            description: "ID atau nama aturan deteksi.",
+          },
+          {
+            name: "TUNING_PROBLEM",
+            label: "Masalah yang Dihadapi",
+            type: "select",
+            options: [
+              "Terlalu Banyak False Positive",
+              "Terjadi False Negative (Gagal Mendeteksi)",
+              "Performa Aturan Lambat",
+              "Lainnya...",
+            ],
+            info: "Pilih masalah utama yang terkait dengan aturan deteksi saat ini.",
+            optional: false,
+            description: "Masalah terkait aturan deteksi.",
+          },
+          {
+            name: "TUNING_CONTEXT",
+            label: "Konteks Tambahan",
+            type: "textarea",
+            placeholder:
+              "Contoh: False positive terjadi karena skrip login yang sah. Serangan asli dengan TTP X gagal terdeteksi saat simulasi.",
+            info: "Berikan detail tentang skenario false positive atau false negative.",
+            optional: true,
+            description: "Detail skenario false positive/negative.",
+          },
+          {
+            name: "EVAL_TOOL_NAME",
+            label: "Nama Alat Keamanan",
+            type: "text",
+            placeholder: "Contoh: EDR X, SIEM Y, Firewall Z.",
+            info: "Sebutkan alat keamanan yang akan dievaluasi.",
+            optional: false,
+            description: "Alat keamanan yang dievaluasi.",
+          },
+          {
+            name: "EVAL_CRITERIA",
+            label: "Kriteria Evaluasi",
+            type: "textarea",
+            placeholder:
+              "Contoh: Kemampuan deteksi TTP A, B, C; integrasi dengan SIEM; kemudahan penggunaan.",
+            info: "Definisikan kriteria yang akan digunakan untuk menilai alat tersebut.",
+            optional: false,
+            description: "Kriteria penilaian alat.",
+          },
+          {
+            name: "EVAL_PURPOSE",
+            label: "Tujuan Evaluasi",
+            type: "textarea",
+            placeholder:
+              "Contoh: Memilih EDR baru, memvalidasi fitur terbaru dari SIEM yang ada.",
+            info: "Jelaskan mengapa evaluasi ini dilakukan.",
+            optional: false,
+            description: "Tujuan utama evaluasi.",
+          },
+          {
+            name: "THREAT_MODEL_TARGET_APP",
+            label: "Aplikasi atau Sistem Target",
+            type: "text",
+            placeholder:
+              "Contoh: Aplikasi perbankan online baru, arsitektur microservices 'X'.",
+            info: "Aplikasi atau sistem yang akan dimodelkan ancamannya.",
+            optional: false,
+            description: "Target pemodelan ancaman.",
+          },
+          {
+            name: "THREAT_MODEL_METHODOLOGY",
+            label: "Metodologi Pemodelan Ancaman",
+            type: "select",
+            options: ["STRIDE", "PASTA", "DREAD", "Lainnya..."],
+            info: "Pilih kerangka kerja pemodelan ancaman yang akan digunakan.",
+            default: "STRIDE",
+            optional: false,
+            description: "Metodologi pemodelan ancaman.",
+          },
+          {
+            name: "THREAT_MODEL_SCOPE",
+            label: "Lingkup Pemodelan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Hanya modul autentikasi, seluruh layanan backend.",
+            info: "Definisikan bagian spesifik dari aplikasi/sistem yang akan dianalisis.",
+            optional: false,
+            description: "Lingkup analisis ancaman.",
+          },
+          {
+            name: "DE_SESSION_GOAL",
+            label: "Tujuan Sesi",
+            type: "textarea",
+            placeholder:
+              "Contoh: Membuat deteksi baru untuk teknik 'Kerberoasting', meningkatkan cakupan deteksi untuk gerakan lateral.",
+            info: "Apa hasil yang diharapkan dari sesi rekayasa deteksi ini?",
+            optional: false,
+            description: "Hasil yang diharapkan dari sesi.",
+          },
+          {
+            name: "DE_SESSION_LOG_SOURCES",
+            label: "Sumber Log yang Diperlukan",
+            type: "text",
+            placeholder:
+              "Contoh: Log Keamanan Windows (4769), log jaringan dari Zeek/Corelight.",
+            info: "Data apa yang diperlukan untuk membangun dan memvalidasi deteksi baru?",
+            optional: false,
+            description: "Data yang diperlukan untuk deteksi baru.",
+          },
+          {
+            name: "DE_SESSION_ATTACK_SIM",
+            label: "Simulasi Serangan yang Direncanakan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Eksekusi Mimikatz pada domain controller, penggunaan PsExec untuk gerakan lateral.",
+            info: "Tindakan Red Team yang akan disimulasikan selama sesi untuk menguji deteksi.",
+            optional: false,
+            description: "Simulasi serangan Red Team.",
+          },
+          {
+            name: "BAS_TARGET_TTP",
+            label: "TTP Target (MITRE ATT&CK ID)",
+            type: "text",
+            placeholder:
+              "Contoh: T1059.003 (Windows Command Shell), T1566.001 (Spearphishing Attachment).",
+            info: "Sebutkan ID TTP spesifik yang ingin diuji oleh skenario BAS.",
+            optional: false,
+            description: "ID TTP yang akan diuji.",
+          },
+          {
+            name: "BAS_OBJECTIVE",
+            label: "Tujuan Skenario BAS",
+            type: "textarea",
+            placeholder:
+              "Contoh: Memvalidasi deteksi EDR terhadap eksekusi remote shell, mengukur efektivitas filter email terhadap lampiran berbahaya.",
+            info: "Apa yang ingin Anda capai dengan menjalankan skenario BAS ini?",
+            optional: false,
+            description: "Tujuan skenario BAS.",
+          },
+          {
+            name: "BAS_TOOL",
+            label: "Alat BAS yang Digunakan",
+            type: "text",
+            placeholder: "Contoh: AttackIQ, Cymulate, Picus Security.",
+            info: "Sebutkan platform Breach and Attack Simulation (BAS) yang akan digunakan.",
+            optional: false,
+            description: "Platform BAS yang digunakan.",
+          },
+          {
+            name: "HUNT_SESSION_THREAT",
+            label: "Ancaman yang Dicari",
+            type: "textarea",
+            placeholder:
+              "Contoh: Ancaman yang menggunakan teknik 'Living Off The Land Binaries' (LOLBAS), aktivitas post-eksploitasi dari ransomware.",
+            info: "Jelaskan jenis ancaman atau perilaku spesifik yang akan menjadi fokus perburuan.",
+            optional: false,
+            description: "Jenis ancaman yang menjadi fokus.",
+          },
+          {
+            name: "HUNT_SESSION_HYPOTHESIS",
+            label: "Hipotesis Perburuan",
+            type: "textarea",
+            placeholder:
+              "Contoh: 'Penyerang mungkin telah menggunakan `certutil.exe` untuk mengunduh payload dari internet', 'Ada akun layanan yang melakukan login interaktif'.",
+            info: "Asumsi yang akan divalidasi atau dibantah selama sesi perburuan.",
+            optional: false,
+            description: "Asumsi yang akan divalidasi.",
+          },
+          {
+            name: "HUNT_SESSION_DATA",
+            label: "Sumber Data yang Akan Digunakan",
+            type: "text",
+            placeholder:
+              "Contoh: Log proses EDR, log Sysmon, log autentikasi AD.",
+            info: "Sebutkan sumber data yang akan digunakan untuk mencari indikator ancaman.",
+            optional: false,
+            description: "Sumber data untuk perburuan ancaman.",
+          },
+          {
+            name: "CONTROL_TEST_NAME",
+            label: "Nama Kontrol Keamanan",
+            type: "text",
+            placeholder:
+              "Contoh: Aturan Firewall IPS, Kebijakan DLP, Fungsi Antivirus EDR.",
+            info: "Sebutkan kontrol keamanan yang akan diuji efektivitasnya.",
+            optional: false,
+            description: "Kontrol keamanan yang diuji.",
+          },
+          {
+            name: "CONTROL_TEST_METHOD",
+            label: "Metode Pengujian",
+            type: "select",
+            options: [
+              "Simulasi Serangan (Red Team)",
+              "Uji Konfigurasi (Audit)",
+              "Analisis Log (Blue Team)",
+              "Lainnya...",
+            ],
+            info: "Pilih metode yang akan digunakan untuk menguji kontrol.",
+            optional: false,
+            description: "Metode yang digunakan untuk pengujian.",
+          },
+          {
+            name: "CONTROL_TEST_EXPECTED",
+            label: "Hasil yang Diharapkan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Serangan diblokir, peringatan dihasilkan di SIEM, file dienkripsi setelah tindakan tertentu.",
+            info: "Jelaskan perilaku yang diinginkan dari kontrol keamanan saat diuji.",
+            optional: false,
+            description: "Perilaku yang diharapkan dari kontrol keamanan.",
+          },
+          {
+            name: "GAP_ANALYSIS_FRAMEWORK",
+            label: "Kerangka Kerja Acuan",
+            type: "text",
+            placeholder: "Contoh: MITRE ATT&CK, CIS Controls v8.",
+            info: "Kerangka kerja yang akan digunakan untuk memetakan kemampuan pertahanan saat ini.",
+            optional: false,
+            description: "Kerangka kerja acuan untuk analisis.",
+          },
+          {
+            name: "GAP_ANALYSIS_CURRENT_COVERAGE",
+            label: "Cakupan Deteksi Saat Ini",
+            type: "textarea",
+            placeholder:
+              "Contoh: Hasil dari ATT&CK Navigator, laporan dari alat BAS.",
+            info: "Informasi tentang cakupan TTP yang sudah dimiliki saat ini.",
+            optional: true,
+            description: "Cakupan TTP yang ada saat ini.",
+          },
+          {
+            name: "GAP_ANALYSIS_TARGET",
+            label: "Target Kesenjangan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Area 'Persistensi', semua teknik 'Defense Evasion'.",
+            info: "Fokus analisis pada area atau taktik spesifik.",
+            optional: false,
+            description: "Area fokus analisis kesenjangan.",
+          },
+          {
+            name: "POSTMORTEM_INCIDENT_ID",
+            label: "ID Insiden",
+            type: "text",
+            placeholder: "Contoh: INC-20240315-001.",
+            info: "ID unik dari insiden yang sedang dianalisis.",
+            optional: false,
+            description: "ID unik insiden.",
+          },
+          {
+            name: "POSTMORTEM_SUMMARY",
+            label: "Ringkasan Insiden",
+            type: "textarea",
+            placeholder:
+              "Contoh: Serangan ransomware yang berhasil mengenkripsi server file, insiden kebocoran data dari aplikasi web.",
+            info: "Berikan ringkasan singkat tentang insiden dan dampaknya.",
+            optional: false,
+            description: "Ringkasan insiden dan dampaknya.",
+          },
+          {
+            name: "POSTMORTEM_FINDINGS_RED",
+            label: "Temuan dari Perspektif Red Team",
+            type: "textarea",
+            placeholder:
+              "Contoh: Vektor akses awal yang berhasil, metode eskalasi hak yang digunakan.",
+            info: "Apa yang Red Team pelajari dari sudut pandang penyerang?",
+            optional: false,
+            description: "Pembelajaran Red Team dari insiden.",
+          },
+          {
+            name: "POSTMORTEM_FINDINGS_BLUE",
+            label: "Temuan dari Perspektif Blue Team",
+            type: "textarea",
+            placeholder:
+              "Contoh: Titik kegagalan deteksi, waktu respons, area peningkatan tim SOC.",
+            info: "Apa yang Blue Team pelajari dari sudut pandang pembela?",
+            optional: false,
+            description: "Pembelajaran Blue Team dari insiden.",
+          },
+          {
+            name: "DEBRIEF_EXERCISE_NAME",
+            label: "Nama Latihan Gabungan",
+            type: "text",
+            placeholder: "Contoh: 'Operasi Solar Flare Q3 2024'",
+            info: "Nama atau kode dari latihan yang telah dilaksanakan.",
+            optional: false,
+            description: "Nama latihan gabungan.",
+          },
+          {
+            name: "DEBRIEF_FINDINGS_RED",
+            label: "Temuan Utama dari Red Team",
+            type: "textarea",
+            placeholder:
+              "Contoh: Berhasil mendapatkan akses awal melalui CVE-XXXX. Mampu bergerak lateral menggunakan Pass-the-Hash.",
+            info: "Ringkasan keberhasilan dan tantangan dari tim ofensif.",
+            optional: false,
+            description: "Keberhasilan dan tantangan Red Team.",
+          },
+          {
+            name: "DEBRIEF_FINDINGS_BLUE",
+            label: "Temuan Utama dari Blue Team",
+            type: "textarea",
+            placeholder:
+              "Contoh: Deteksi berhasil pada tahap akses awal, namun gagal melihat gerakan lateral. Waktu respons 15 menit.",
+            info: "Ringkasan keberhasilan dan tantangan dari tim defensif.",
+            optional: false,
+            description: "Keberhasilan dan tantangan Blue Team.",
+          },
+          {
+            name: "DEBRIEF_RECOMMENDATIONS",
+            label: "Rekomendasi Utama",
+            type: "textarea",
+            placeholder:
+              "Contoh: Perbarui aturan deteksi untuk T1059.001. Latih analis SOC tentang deteksi gerakan lateral.",
+            info: "Sebutkan rekomendasi utama untuk peningkatan yang muncul dari debriefing.",
+            optional: false,
+            description: "Rekomendasi peningkatan dari debriefing.",
+          },
+          {
+            name: "METRICS_REPORT_SCOPE",
+            label: "Lingkup Laporan",
+            type: "text",
+            placeholder:
+              "Contoh: Kinerja SOC Q3, Efektivitas Program Manajemen Kerentanan.",
+            info: "Definisikan area program keamanan yang akan diukur dan dilaporkan.",
+            optional: false,
+            description: "Area program keamanan yang dilaporkan.",
+          },
+          {
+            name: "METRICS_KEY_METRICS",
+            label: "Metrik Kunci yang Dilaporkan",
+            type: "textarea",
+            placeholder:
+              "Contoh: Waktu Rata-rata untuk Deteksi (MTTD), Waktu Rata-rata untuk Respons (MTTR), Jumlah Kerentanan Kritis yang Belum Ditambal.",
+            info: "Sebutkan metrik spesifik yang relevan dengan laporan ini.",
+            optional: false,
+            description: "Metrik keamanan yang akan dilaporkan.",
+          },
+          {
+            name: "METRICS_AUDIENCE",
+            label: "Audiens Laporan",
+            type: "select",
+            options: [
+              "Manajemen Teknis",
+              "Eksekutif C-Level",
+              "Tim Keamanan Internal",
+              "Lainnya...",
+            ],
+            info: "Siapa yang akan menerima laporan ini? Ini akan mempengaruhi tingkat detail dan bahasa yang digunakan.",
+            optional: false,
+            description: "Audiens utama laporan.",
+          },
+        ],
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang Koordinator Purple Team yang ahli dalam memfasilitasi kolaborasi antara tim ofensif dan defensif untuk meningkatkan postur keamanan secara keseluruhan.",
@@ -7796,158 +7155,159 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Dokumen Desain Game (GDD)",
             info: "Pilih jenis dokumen terstruktur yang ingin Anda hasilkan. Pilihan Anda akan menampilkan kolom input yang sesuai.",
+            optional: true,
+          },
+          {
+            name: "NAMA_GAME",
+            label: "Judul Game",
+            type: "text",
+            placeholder: "Contoh: Chrono Weavers",
+            info: "Judul kerja atau judul final dari game Anda.",
+            optional: true,
+          },
+          {
+            name: "GENRE_GAME",
+            label: "Genre Utama & Sub-genre",
+            type: "text",
+            placeholder: "Contoh: RPG, Platformer, Puzzle, Strategy",
+            info: "Sebutkan genre utama dan sub-genre jika ada (misal: RPG Aksi).",
+            optional: true,
+          },
+          {
+            name: "KONSEP_UTAMA",
+            label: "Konsep Inti & Unique Selling Point (USP)",
+            type: "textarea",
+            placeholder:
+              "Contoh: Sebuah game puzzle di mana pemain mengendalikan waktu untuk menyelesaikan rintangan, dengan narasi non-linear.",
+            info: "Jelaskan dalam 1-2 kalimat apa yang membuat game Anda unik dan menarik.",
+            optional: true,
+          },
+          {
+            name: "MEKANIK_INTI",
+            label: "Mekanik Gameplay Inti",
+            type: "textarea",
+            placeholder:
+              "Contoh: Pemain bisa memundurkan waktu 5 detik. Ada sistem crafting sederhana. Pertarungan berbasis giliran.",
+            info: "Sebutkan 2-3 mekanik utama yang menjadi dasar permainan.",
+            optional: true,
+          },
+          {
+            name: "NARASI_RINGKAS",
+            label: "Ringkasan Cerita & Latar Belakang Dunia",
+            type: "textarea",
+            placeholder:
+              "Contoh: Di sebuah dunia yang hancur, seorang pahlawan harus mengumpulkan artefak waktu untuk menyelamatkan peradaban.",
+            info: "Berikan gambaran umum tentang plot dan dunia game.",
+            optional: true,
+          },
+          {
+            name: "GAYA_VISUAL",
+            label: "Gaya Visual & Mood",
+            type: "text",
+            placeholder:
+              "Contoh: Seni piksel (pixel art) dengan nuansa gelap, fantasi cat air (watercolor fantasy), 3D realistis.",
+            info: "Jelaskan estetika visual dan suasana yang ingin Anda capai.",
+            optional: true,
+          },
+          {
+            name: "NAMA_PERUSAHAAN",
+            label: "Nama Perusahaan",
+            type: "text",
+            placeholder: "Contoh: PT Sejahtera Abadi Tbk.",
+            info: "Nama perusahaan yang laporan keuangannya akan dianalisis.",
+            optional: true,
+          },
+          {
+            name: "PERIODE_LAPORAN",
+            label: "Periode Laporan",
+            type: "text",
+            placeholder:
+              "Contoh: Laporan Tahunan 2024 atau Laporan Kuartal 3 2025",
+            info: "Cakupan waktu dari laporan yang dianalisis.",
+            optional: true,
+          },
+          {
+            name: "DATA_LABA_RUGI",
+            label: "Data Laba Rugi (Income Statement)",
+            type: "textarea",
+            placeholder:
+              "Contoh: Pendapatan: 1 Miliar, HPP: 600 Juta, Laba Kotor: 400 Juta, Biaya Operasional: 250 Juta, Laba Bersih: 150 Juta.",
+            info: "Masukkan poin-poin utama dari laporan laba rugi.",
+            optional: true,
+          },
+          {
+            name: "DATA_NERACA",
+            label: "Data Neraca (Balance Sheet)",
+            type: "textarea",
+            placeholder:
+              "Contoh: Aset Lancar: 500 Juta, Aset Tetap: 1.2 Miliar, Total Aset: 1.7 Miliar. Liabilitas Jangka Pendek: 300 Juta, Liabilitas Jangka Panjang: 700 Juta, Ekuitas: 700 Juta.",
+            info: "Masukkan poin-poin utama dari neraca keuangan.",
+            optional: true,
+          },
+          {
+            name: "DATA_ARUS_KAS",
+            label: "Data Arus Kas (Cash Flow Statement)",
+            type: "textarea",
+            placeholder:
+              "Contoh: Arus Kas dari Operasi: 200 Juta, Arus Kas dari Investasi: -150 Juta, Arus Kas dari Pendanaan: -50 Juta.",
+            info: "Masukkan poin-poin utama dari laporan arus kas.",
+            optional: true,
+          },
+          {
+            name: "FOKUS_ANALISIS",
+            label: "Fokus Analisis",
+            type: "multiselect",
+            options: [
+              "Analisis Rasio Profitabilitas",
+              "Analisis Rasio Likuiditas",
+              "Analisis Rasio Solvabilitas",
+              "Identifikasi Red Flags",
+              "Lainnya...",
+            ],
+            default: [
+              "Analisis Rasio Profitabilitas",
+              "Analisis Rasio Likuiditas",
+            ],
+            info: "Pilih aspek analisis yang paling penting bagi Anda.",
+            optional: true,
+          },
+          {
+            name: "MOSI_DEBAT",
+            label: "Mosi atau Topik Debat",
+            type: "text",
+            placeholder:
+              "Contoh: 'Kecerdasan Buatan Lebih Banyak Membawa Manfaat Daripada Mudarat'",
+            info: "Tuliskan pernyataan atau topik yang akan diperdebatkan.",
+            optional: true,
+          },
+          {
+            name: "POSISI_SAYA",
+            label: "Posisi Anda",
+            type: "select",
+            options: ["Pro (Setuju)", "Kontra (Tidak Setuju)", "Lainnya..."],
+            default: "Pro (Setuju)",
+            info: "Pilih sisi argumen yang akan Anda bela.",
+            optional: true,
+          },
+          {
+            name: "ARGUMEN_UTAMA_SAYA",
+            label: "Poin-poin Argumen Utama Anda",
+            type: "textarea",
+            placeholder:
+              "Contoh: 1. AI meningkatkan efisiensi di berbagai industri. 2. AI mempercepat penemuan ilmiah. 3. AI membuka lapangan kerja baru.",
+            info: "Sebutkan 2-3 poin utama yang mendukung posisi Anda.",
+            optional: true,
+          },
+          {
+            name: "POTENSI_ARGUMEN_LAWAN",
+            label: "Potensi Argumen Lawan (Opsional)",
+            type: "textarea",
+            placeholder:
+              "Contoh: AI akan menyebabkan pengangguran massal. Ada risiko penyalahgunaan AI untuk tujuan jahat.",
+            info: "Antisipasi argumen yang mungkin akan digunakan oleh pihak lawan.",
+            optional: true,
           },
         ],
-        dynamicSubcomponents: {
-          trigger: "JENIS_DOKUMEN",
-          options: {
-            "Dokumen Desain Game (GDD)": [
-              {
-                name: "NAMA_GAME",
-                label: "Judul Game",
-                type: "text",
-                placeholder: "Contoh: Chrono Weavers",
-                info: "Judul kerja atau judul final dari game Anda.",
-              },
-              {
-                name: "GENRE_GAME",
-                label: "Genre Utama & Sub-genre",
-                type: "text",
-                placeholder: "Contoh: RPG, Platformer, Puzzle, Strategy",
-                info: "Sebutkan genre utama dan sub-genre jika ada (misal: RPG Aksi).",
-              },
-              {
-                name: "KONSEP_UTAMA",
-                label: "Konsep Inti & Unique Selling Point (USP)",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Sebuah game puzzle di mana pemain mengendalikan waktu untuk menyelesaikan rintangan, dengan narasi non-linear.",
-                info: "Jelaskan dalam 1-2 kalimat apa yang membuat game Anda unik dan menarik.",
-              },
-              {
-                name: "MEKANIK_INTI",
-                label: "Mekanik Gameplay Inti",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Pemain bisa memundurkan waktu 5 detik. Ada sistem crafting sederhana. Pertarungan berbasis giliran.",
-                info: "Sebutkan 2-3 mekanik utama yang menjadi dasar permainan.",
-              },
-              {
-                name: "NARASI_RINGKAS",
-                label: "Ringkasan Cerita & Latar Belakang Dunia",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Di sebuah dunia yang hancur, seorang pahlawan harus mengumpulkan artefak waktu untuk menyelamatkan peradaban.",
-                info: "Berikan gambaran umum tentang plot dan dunia game.",
-              },
-              {
-                name: "GAYA_VISUAL",
-                label: "Gaya Visual & Mood",
-                type: "text",
-                placeholder:
-                  "Contoh: Seni piksel (pixel art) dengan nuansa gelap, fantasi cat air (watercolor fantasy), 3D realistis.",
-                info: "Jelaskan estetika visual dan suasana yang ingin Anda capai.",
-              },
-            ],
-            "Analisis Laporan Keuangan": [
-              {
-                name: "NAMA_PERUSAHAAN",
-                label: "Nama Perusahaan",
-                type: "text",
-                placeholder: "Contoh: PT Sejahtera Abadi Tbk.",
-                info: "Nama perusahaan yang laporan keuangannya akan dianalisis.",
-              },
-              {
-                name: "PERIODE_LAPORAN",
-                label: "Periode Laporan",
-                type: "text",
-                placeholder:
-                  "Contoh: Laporan Tahunan 2024 atau Laporan Kuartal 3 2025",
-                info: "Cakupan waktu dari laporan yang dianalisis.",
-              },
-              {
-                name: "DATA_LABA_RUGI",
-                label: "Data Laba Rugi (Income Statement)",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Pendapatan: 1 Miliar, HPP: 600 Juta, Laba Kotor: 400 Juta, Biaya Operasional: 250 Juta, Laba Bersih: 150 Juta.",
-                info: "Masukkan poin-poin utama dari laporan laba rugi.",
-              },
-              {
-                name: "DATA_NERACA",
-                label: "Data Neraca (Balance Sheet)",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Aset Lancar: 500 Juta, Aset Tetap: 1.2 Miliar, Total Aset: 1.7 Miliar. Liabilitas Jangka Pendek: 300 Juta, Liabilitas Jangka Panjang: 700 Juta, Ekuitas: 700 Juta.",
-                info: "Masukkan poin-poin utama dari neraca keuangan.",
-              },
-              {
-                name: "DATA_ARUS_KAS",
-                label: "Data Arus Kas (Cash Flow Statement)",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Arus Kas dari Operasi: 200 Juta, Arus Kas dari Investasi: -150 Juta, Arus Kas dari Pendanaan: -50 Juta.",
-                info: "Masukkan poin-poin utama dari laporan arus kas.",
-              },
-              {
-                name: "FOKUS_ANALISIS",
-                label: "Fokus Analisis",
-                type: "multiselect",
-                options: [
-                  "Analisis Rasio Profitabilitas",
-                  "Analisis Rasio Likuiditas",
-                  "Analisis Rasio Solvabilitas",
-                  "Identifikasi Red Flags",
-                  "Lainnya...",
-                ],
-                default: [
-                  "Analisis Rasio Profitabilitas",
-                  "Analisis Rasio Likuiditas",
-                ],
-                info: "Pilih aspek analisis yang paling penting bagi Anda.",
-              },
-            ],
-            "Perencanaan Argumen Debat": [
-              {
-                name: "MOSI_DEBAT",
-                label: "Mosi atau Topik Debat",
-                type: "text",
-                placeholder:
-                  "Contoh: 'Kecerdasan Buatan Lebih Banyak Membawa Manfaat Daripada Mudarat'",
-                info: "Tuliskan pernyataan atau topik yang akan diperdebatkan.",
-              },
-              {
-                name: "POSISI_SAYA",
-                label: "Posisi Anda",
-                type: "select",
-                options: [
-                  "Pro (Setuju)",
-                  "Kontra (Tidak Setuju)",
-                  "Lainnya...",
-                ],
-                default: "Pro (Setuju)",
-                info: "Pilih sisi argumen yang akan Anda bela.",
-              },
-              {
-                name: "ARGUMEN_UTAMA_SAYA",
-                label: "Poin-poin Argumen Utama Anda",
-                type: "textarea",
-                placeholder:
-                  "Contoh: 1. AI meningkatkan efisiensi di berbagai industri. 2. AI mempercepat penemuan ilmiah. 3. AI membuka lapangan kerja baru.",
-                info: "Sebutkan 2-3 poin utama yang mendukung posisi Anda.",
-              },
-              {
-                name: "POTENSI_ARGUMEN_LAWAN",
-                label: "Potensi Argumen Lawan (Opsional)",
-                type: "textarea",
-                placeholder:
-                  "Contoh: AI akan menyebabkan pengangguran massal. Ada risiko penyalahgunaan AI untuk tujuan jahat.",
-                info: "Antisipasi argumen yang mungkin akan digunakan oleh pihak lawan.",
-                optional: true,
-              },
-            ],
-          },
-        },
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang konsultan ahli multi-disiplin. Bergantung pada pilihan pengguna, Anda akan bertindak sebagai Game Designer, Analis Keuangan, atau Pelatih Debat untuk menghasilkan dokumen yang diminta.",
@@ -8005,285 +7365,289 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Strategi SEO & SEM",
             info: "Pilihan Anda akan menampilkan serangkaian input yang dirancang khusus untuk area tersebut.",
+            optional: true,
+          },
+          {
+            name: "TOPIK_UTAMA",
+            label: "Topik Utama / Kata Kunci Target",
+            type: "text",
+            placeholder: "Contoh: software akuntansi untuk UMKM",
+            info: "Masukkan topik inti atau kata kunci utama yang ingin Anda targetkan.",
+            optional: true,
+          },
+          {
+            name: "TARGET_AUDIENS_SEO",
+            label: "Deskripsi Target Audiens",
+            type: "textarea",
+            placeholder:
+              "Contoh: Pemilik bisnis kecil yang tidak punya latar belakang akuntansi",
+            info: "Siapa target audiens untuk strategi SEO/SEM ini?",
+            optional: true,
+          },
+          {
+            name: "FOKUS_STRATEGI_SEO",
+            label: "Fokus Strategi",
+            type: "multiselect",
+            options: [
+              "Riset Kata Kunci",
+              "Analisis SERP",
+              "Outline Konten SEO",
+              "Ide Iklan SEM",
+              "Lainnya...",
+            ],
+            default: ["Riset Kata Kunci", "Outline Konten SEO"],
+            info: "Pilih aspek yang ingin Anda dalami.",
+            optional: true,
+          },
+          {
+            name: "JENIS_KONTEN",
+            label: "Jenis Konten yang Diinginkan",
+            type: "select",
+            options: [
+              "Artikel Blog",
+              "Naskah Video",
+              "Utas Media Sosial",
+              "Lainnya...",
+            ],
+            default: "Artikel Blog",
+            info: "Pilih format konten yang ingin dibuat.",
+            optional: true,
+          },
+          {
+            name: "JUDUL_KONTEN",
+            label: "Judul atau Ide Utama Konten",
+            type: "text",
+            placeholder: "Contoh: 5 Cara Mengelola Keuangan Bisnis",
+            info: "Apa topik utama konten Anda?",
+            optional: true,
+          },
+          {
+            name: "POIN_KUNCI_KONTEN",
+            label: "Poin-Poin Kunci",
+            type: "textarea",
+            placeholder:
+              "1. Pisahkan rekening pribadi & bisnis\n2. Gunakan software akuntansi\n3. ...",
+            info: "Sebutkan poin-poin utama yang harus ada dalam konten.",
+            optional: true,
+          },
+          {
+            name: "GAYA_BAHASA_KONTEN",
+            label: "Gaya Bahasa dan Nada",
+            type: "select",
+            options: [
+              "Profesional",
+              "Santai & Ramah",
+              "Edukasi & Informatif",
+              "Menghibur",
+              "Lainnya...",
+            ],
+            default: "Profesional",
+            info: "Pilih tone yang sesuai dengan brand Anda.",
+            optional: true,
+          },
+          {
+            name: "PLATFORM_TARGET",
+            label: "Platform Media Sosial",
+            type: "multiselect",
+            options: [
+              "Instagram",
+              "TikTok",
+              "LinkedIn",
+              "X/Twitter",
+              "Facebook",
+              "Lainnya...",
+            ],
+            default: ["Instagram", "LinkedIn"],
+            info: "Pilih platform di mana Anda ingin aktif.",
+            optional: true,
+          },
+          {
+            name: "TUJUAN_POSTING",
+            label: "Tujuan Utama Posting",
+            type: "select",
+            options: [
+              "Meningkatkan Awareness",
+              "Mendorong Engagement",
+              "Memicu Konversi",
+              "Lainnya...",
+            ],
+            default: "Meningkatkan Awareness",
+            info: "Apa gol dari aktivitas media sosial Anda?",
+            optional: true,
+          },
+          {
+            name: "DESKRIPSI_BRAND_MEDSOS",
+            label: "Deskripsi Singkat Brand/Produk",
+            type: "textarea",
+            placeholder:
+              "Contoh: Kami adalah brand kopi spesialti yang fokus pada biji lokal.",
+            info: "Berikan konteks tentang brand Anda untuk pembuatan konten.",
+            optional: true,
+          },
+          {
+            name: "JENIS_KAMPANYE_EMAIL",
+            label: "Jenis Kampanye Email",
+            type: "select",
+            options: [
+              "Welcome Email Series",
+              "Newsletter Bulanan",
+              "Email Promosi",
+              "Email Re-engagement",
+              "Lainnya...",
+            ],
+            default: "Welcome Email Series",
+            info: "Pilih jenis kampanye email yang ingin Anda buat.",
+            optional: true,
+          },
+          {
+            name: "NAMA_BRAND_EMAIL",
+            label: "Nama Brand Anda",
+            type: "text",
+            placeholder: "Contoh: Kopi Aroma Pagi",
+            info: "Nama brand untuk personalisasi email.",
+            optional: true,
+          },
+          {
+            name: "PENAWARAN_UTAMA_EMAIL",
+            label: "Penawaran Utama (jika ada)",
+            type: "text",
+            placeholder: "Contoh: Diskon 20% untuk pembelian pertama",
+            info: "Sebutkan insentif yang ingin ditawarkan.",
+            optional: true,
+          },
+          {
+            name: "NAMA_PRODUK_BARU",
+            label: "Nama Produk/Kampanye Baru",
+            type: "text",
+            placeholder: "Contoh: Aplikasi TaskMaster Pro",
+            info: "Nama resmi produk atau kampanye Anda.",
+            optional: true,
+          },
+          {
+            name: "USP_PRODUK",
+            label: "Unique Selling Proposition (USP)",
+            type: "textarea",
+            placeholder:
+              "Contoh: Satu-satunya aplikasi to-do-list dengan prediksi waktu selesai tugas.",
+            info: "Apa yang membuat produk Anda unik dan lebih baik dari yang lain?",
+            optional: true,
+          },
+          {
+            name: "ASET_KAMPANYE",
+            label: "Aset Kampanye yang Dibutuhkan",
+            type: "multiselect",
+            options: [
+              "Siaran Pers (Press Release)",
+              "Email Pengumuman",
+              "Paket Konten Media Sosial",
+              "Draf Iklan Digital",
+              "Lainnya...",
+            ],
+            default: ["Email Pengumuman", "Paket Konten Media Sosial"],
+            info: "Pilih materi komunikasi yang ingin Anda hasilkan.",
+            optional: true,
+          },
+          {
+            name: "NAMA_BISNIS_RISET",
+            label: "Nama Bisnis/Produk Anda",
+            type: "text",
+            placeholder: "Contoh: Kedai Kopi 'Aroma Pagi'",
+            info: "Bisnis yang akan menjadi subjek analisis.",
+            optional: true,
+          },
+          {
+            name: "DESKRIPSI_BISNIS_RISET",
+            label: "Deskripsi Singkat Bisnis",
+            type: "textarea",
+            placeholder:
+              "Contoh: Kedai kopi di Jakarta Selatan yang fokus pada biji lokal dan suasana kerja nyaman.",
+            info: "Berikan konteks untuk analisis SWOT.",
+            optional: true,
+          },
+          {
+            name: "URL_KOMPETITOR_RISET",
+            label: "URL atau Nama Kompetitor Utama",
+            type: "textarea",
+            placeholder: "https://www.kompetitor.com\nKopi Kenangan",
+            info: "Sebutkan pemain utama lain di pasar Anda.",
+            optional: true,
+          },
+          {
+            name: "FOKUS_RISET",
+            label: "Fokus Riset",
+            type: "multiselect",
+            options: [
+              "Analisis SWOT",
+              "Analisis Kompetitor",
+              "Pembuatan Buyer Persona",
+              "Lainnya...",
+            ],
+            default: ["Analisis SWOT", "Analisis Kompetitor"],
+            info: "Pilih jenis analisis yang Anda butuhkan.",
+            optional: true,
+          },
+          {
+            name: "NAMA_BRAND_PR",
+            label: "Nama Brand",
+            type: "text",
+            placeholder: "Contoh: EcoRun Shoes",
+            info: "Brand yang akan dibangun citranya.",
+            optional: true,
+          },
+          {
+            name: "NILAI_INTI_BRAND",
+            label: "3 Nilai Inti Brand",
+            type: "text",
+            placeholder: "Contoh: Keberlanjutan, Performa, Komunitas",
+            info: "Sebutkan 3 pilar utama brand Anda.",
+            optional: true,
+          },
+          {
+            name: "TUGAS_BRANDING_PR",
+            label: "Tugas Branding/PR",
+            type: "select",
+            options: [
+              "Platform Identitas Merek",
+              "Draf Siaran Pers",
+              "Rencana Komunikasi Krisis",
+              "Lainnya...",
+            ],
+            default: "Platform Identitas Merek",
+            info: "Pilih output yang Anda butuhkan.",
+            optional: true,
+          },
+          {
+            name: "PRODUK_DIJUAL",
+            label: "Produk/Layanan yang Dijual",
+            type: "text",
+            placeholder: "Contoh: Langganan software SaaS",
+            info: "Apa yang Anda tawarkan kepada pelanggan?",
+            optional: true,
+          },
+          {
+            name: "TARGET_PROSPEK",
+            label: "Deskripsi Target Prospek",
+            type: "textarea",
+            placeholder:
+              "Contoh: Manajer marketing di perusahaan startup teknologi.",
+            info: "Siapa yang ingin Anda jangkau dengan pesan penjualan ini?",
+            optional: true,
+          },
+          {
+            name: "FOKUS_OPTIMASI_PENJUALAN",
+            label: "Fokus Optimasi",
+            type: "select",
+            options: [
+              "Naskah Penjualan (Sales Script)",
+              "Copy Halaman Arahan (Landing Page)",
+              "Ide Lead Magnet",
+              "Lainnya...",
+            ],
+            default: "Copy Halaman Arahan (Landing Page)",
+            info: "Pilih aset penjualan yang ingin Anda buat.",
+            optional: true,
           },
         ],
-        dynamicSubcomponents: {
-          trigger: "TUGAS_PEMASARAN_UTAMA",
-          options: {
-            "Strategi SEO & SEM": [
-              {
-                name: "TOPIK_UTAMA",
-                label: "Topik Utama / Kata Kunci Target",
-                type: "text",
-                placeholder: "Contoh: software akuntansi untuk UMKM",
-                info: "Masukkan topik inti atau kata kunci utama yang ingin Anda targetkan.",
-              },
-              {
-                name: "TARGET_AUDIENS_SEO",
-                label: "Deskripsi Target Audiens",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Pemilik bisnis kecil yang tidak punya latar belakang akuntansi",
-                info: "Siapa target audiens untuk strategi SEO/SEM ini?",
-              },
-              {
-                name: "FOKUS_STRATEGI_SEO",
-                label: "Fokus Strategi",
-                type: "multiselect",
-                options: [
-                  "Riset Kata Kunci",
-                  "Analisis SERP",
-                  "Outline Konten SEO",
-                  "Ide Iklan SEM",
-                  "Lainnya...",
-                ],
-                default: ["Riset Kata Kunci", "Outline Konten SEO"],
-                info: "Pilih aspek yang ingin Anda dalami.",
-              },
-            ],
-            "Pengembangan Konten & Blog": [
-              {
-                name: "JENIS_KONTEN",
-                label: "Jenis Konten yang Diinginkan",
-                type: "select",
-                options: [
-                  "Artikel Blog",
-                  "Naskah Video",
-                  "Utas Media Sosial",
-                  "Lainnya...",
-                ],
-                default: "Artikel Blog",
-                info: "Pilih format konten yang ingin dibuat.",
-              },
-              {
-                name: "JUDUL_KONTEN",
-                label: "Judul atau Ide Utama Konten",
-                type: "text",
-                placeholder: "Contoh: 5 Cara Mengelola Keuangan Bisnis",
-                info: "Apa topik utama konten Anda?",
-              },
-              {
-                name: "POIN_KUNCI_KONTEN",
-                label: "Poin-Poin Kunci",
-                type: "textarea",
-                placeholder:
-                  "1. Pisahkan rekening pribadi & bisnis\n2. Gunakan software akuntansi\n3. ...",
-                info: "Sebutkan poin-poin utama yang harus ada dalam konten.",
-              },
-              {
-                name: "GAYA_BAHASA_KONTEN",
-                label: "Gaya Bahasa dan Nada",
-                type: "select",
-                options: [
-                  "Profesional",
-                  "Santai & Ramah",
-                  "Edukasi & Informatif",
-                  "Menghibur",
-                  "Lainnya...",
-                ],
-                default: "Profesional",
-                info: "Pilih tone yang sesuai dengan brand Anda.",
-              },
-            ],
-            "Manajemen Media Sosial": [
-              {
-                name: "PLATFORM_TARGET",
-                label: "Platform Media Sosial",
-                type: "multiselect",
-                options: [
-                  "Instagram",
-                  "TikTok",
-                  "LinkedIn",
-                  "X/Twitter",
-                  "Facebook",
-                  "Lainnya...",
-                ],
-                default: ["Instagram", "LinkedIn"],
-                info: "Pilih platform di mana Anda ingin aktif.",
-              },
-              {
-                name: "TUJUAN_POSTING",
-                label: "Tujuan Utama Posting",
-                type: "select",
-                options: [
-                  "Meningkatkan Awareness",
-                  "Mendorong Engagement",
-                  "Memicu Konversi",
-                  "Lainnya...",
-                ],
-                default: "Meningkatkan Awareness",
-                info: "Apa gol dari aktivitas media sosial Anda?",
-              },
-              {
-                name: "DESKRIPSI_BRAND_MEDSOS",
-                label: "Deskripsi Singkat Brand/Produk",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Kami adalah brand kopi spesialti yang fokus pada biji lokal.",
-                info: "Berikan konteks tentang brand Anda untuk pembuatan konten.",
-              },
-            ],
-            "Kampanye Pemasaran Email": [
-              {
-                name: "JENIS_KAMPANYE_EMAIL",
-                label: "Jenis Kampanye Email",
-                type: "select",
-                options: [
-                  "Welcome Email Series",
-                  "Newsletter Bulanan",
-                  "Email Promosi",
-                  "Email Re-engagement",
-                  "Lainnya...",
-                ],
-                default: "Welcome Email Series",
-                info: "Pilih jenis kampanye email yang ingin Anda buat.",
-              },
-              {
-                name: "NAMA_BRAND_EMAIL",
-                label: "Nama Brand Anda",
-                type: "text",
-                placeholder: "Contoh: Kopi Aroma Pagi",
-                info: "Nama brand untuk personalisasi email.",
-              },
-              {
-                name: "PENAWARAN_UTAMA_EMAIL",
-                label: "Penawaran Utama (jika ada)",
-                type: "text",
-                placeholder: "Contoh: Diskon 20% untuk pembelian pertama",
-                info: "Sebutkan insentif yang ingin ditawarkan.",
-                optional: true,
-              },
-            ],
-            "Peluncuran Produk & Kampanye": [
-              {
-                name: "NAMA_PRODUK_BARU",
-                label: "Nama Produk/Kampanye Baru",
-                type: "text",
-                placeholder: "Contoh: Aplikasi TaskMaster Pro",
-                info: "Nama resmi produk atau kampanye Anda.",
-              },
-              {
-                name: "USP_PRODUK",
-                label: "Unique Selling Proposition (USP)",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Satu-satunya aplikasi to-do-list dengan prediksi waktu selesai tugas.",
-                info: "Apa yang membuat produk Anda unik dan lebih baik dari yang lain?",
-              },
-              {
-                name: "ASET_KAMPANYE",
-                label: "Aset Kampanye yang Dibutuhkan",
-                type: "multiselect",
-                options: [
-                  "Siaran Pers (Press Release)",
-                  "Email Pengumuman",
-                  "Paket Konten Media Sosial",
-                  "Draf Iklan Digital",
-                  "Lainnya...",
-                ],
-                default: ["Email Pengumuman", "Paket Konten Media Sosial"],
-                info: "Pilih materi komunikasi yang ingin Anda hasilkan.",
-              },
-            ],
-            "Riset Pasar & Analisis Kompetitor": [
-              {
-                name: "NAMA_BISNIS_RISET",
-                label: "Nama Bisnis/Produk Anda",
-                type: "text",
-                placeholder: "Contoh: Kedai Kopi 'Aroma Pagi'",
-                info: "Bisnis yang akan menjadi subjek analisis.",
-              },
-              {
-                name: "DESKRIPSI_BISNIS_RISET",
-                label: "Deskripsi Singkat Bisnis",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Kedai kopi di Jakarta Selatan yang fokus pada biji lokal dan suasana kerja nyaman.",
-                info: "Berikan konteks untuk analisis SWOT.",
-              },
-              {
-                name: "URL_KOMPETITOR_RISET",
-                label: "URL atau Nama Kompetitor Utama",
-                type: "textarea",
-                placeholder: "https://www.kompetitor.com\nKopi Kenangan",
-                info: "Sebutkan pemain utama lain di pasar Anda.",
-                optional: true,
-              },
-              {
-                name: "FOKUS_RISET",
-                label: "Fokus Riset",
-                type: "multiselect",
-                options: [
-                  "Analisis SWOT",
-                  "Analisis Kompetitor",
-                  "Pembuatan Buyer Persona",
-                  "Lainnya...",
-                ],
-                default: ["Analisis SWOT", "Analisis Kompetitor"],
-                info: "Pilih jenis analisis yang Anda butuhkan.",
-              },
-            ],
-            "Branding & Hubungan Masyarakat (PR)": [
-              {
-                name: "NAMA_BRAND_PR",
-                label: "Nama Brand",
-                type: "text",
-                placeholder: "Contoh: EcoRun Shoes",
-                info: "Brand yang akan dibangun citranya.",
-              },
-              {
-                name: "NILAI_INTI_BRAND",
-                label: "3 Nilai Inti Brand",
-                type: "text",
-                placeholder: "Contoh: Keberlanjutan, Performa, Komunitas",
-                info: "Sebutkan 3 pilar utama brand Anda.",
-              },
-              {
-                name: "TUGAS_BRANDING_PR",
-                label: "Tugas Branding/PR",
-                type: "select",
-                options: [
-                  "Platform Identitas Merek",
-                  "Draf Siaran Pers",
-                  "Rencana Komunikasi Krisis",
-                  "Lainnya...",
-                ],
-                default: "Platform Identitas Merek",
-                info: "Pilih output yang Anda butuhkan.",
-              },
-            ],
-            "Optimasi Penjualan & Konversi": [
-              {
-                name: "PRODUK_DIJUAL",
-                label: "Produk/Layanan yang Dijual",
-                type: "text",
-                placeholder: "Contoh: Langganan software SaaS",
-                info: "Apa yang Anda tawarkan kepada pelanggan?",
-              },
-              {
-                name: "TARGET_PROSPEK",
-                label: "Deskripsi Target Prospek",
-                type: "textarea",
-                placeholder:
-                  "Contoh: Manajer marketing di perusahaan startup teknologi.",
-                info: "Siapa yang ingin Anda jangkau dengan pesan penjualan ini?",
-              },
-              {
-                name: "FOKUS_OPTIMASI_PENJUALAN",
-                label: "Fokus Optimasi",
-                type: "select",
-                options: [
-                  "Naskah Penjualan (Sales Script)",
-                  "Copy Halaman Arahan (Landing Page)",
-                  "Ide Lead Magnet",
-                  "Lainnya...",
-                ],
-                default: "Copy Halaman Arahan (Landing Page)",
-                info: "Pilih aset penjualan yang ingin Anda buat.",
-              },
-            ],
-          },
-        },
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang Ahli Strategi Pemasaran 360° yang serbaguna.",
@@ -8347,341 +7711,188 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Pilih tugas pengembangan utama yang ingin Anda lakukan.",
             default: "Buat Kode Baru",
             info: "Pilih tugas utama yang ingin Anda lakukan. Pilihan Anda akan menampilkan opsi-opsi yang relevan di bawah.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TUGAS_PENGEMBANGAN",
-            options: {
-              "Buat Kode Baru": [
-                {
-                  name: "functionalityDescription",
-                  label: "Deskripsi Fungsionalitas yang Diinginkan",
-                  type: "textarea",
-                  placeholder:
-                    "e.g., 'Fungsi Python untuk menghitung faktorial dari sebuah angka.'",
-                  description:
-                    "Jelaskan secara detail fungsionalitas kode yang Anda inginkan.",
-                  validation: {
-                    min_length: 20,
-                  },
-                  info: "Jelaskan secara detail fungsionalitas kode yang Anda inginkan.",
-                },
-                {
-                  name: "programmingLanguage",
-                  label: "Bahasa Pemrograman",
-                  type: "select",
-                  options: ["Python", "JavaScript", "Java", "C#", "Lainnya..."],
-                  description:
-                    "Pilih bahasa pemrograman untuk kode yang akan dihasilkan.",
-                  default: "Python",
-                  info: "Pilih bahasa pemrograman untuk kode yang akan dihasilkan.",
-                },
-                {
-                  name: "codeStyle",
-                  label: "Gaya Kode (Opsional)",
-                  type: "text",
-                  placeholder: "e.g., 'Pythonic, ES6, Java Clean Code'",
-                  description:
-                    "Sebutkan preferensi gaya pengkodean (misalnya, PEP 8 untuk Python).",
-                  optional: true,
-                  info: "Sebutkan preferensi gaya pengkodean (misalnya, PEP 8 untuk Python).",
-                },
-                {
-                  name: "includeComments",
-                  label: "Sertakan Komentar?",
-                  type: "boolean",
-                  description:
-                    "Apakah Anda ingin kode disertai komentar penjelasan?",
-                  default: false,
-                  info: "Apakah Anda ingin kode disertai komentar penjelasan?",
-                },
-                {
-                  name: "additionalInstructions",
-                  label: "Instruksi Tambahan & Batasan",
-                  type: "textarea",
-                  placeholder:
-                    "e.g., 'Pastikan fungsi ini menangani input negatif. Gunakan rekursi.'",
-                  description:
-                    "Sebutkan batasan, kompleksitas, atau instruksi khusus lainnya untuk kode.",
-                  optional: true,
-                  info: "Sebutkan batasan, kompleksitas, atau instruksi khusus lainnya untuk kode.",
-                },
-              ],
-              "Tinjau & Perbaiki Kode": [
-                {
-                  name: "codeSnippet",
-                  label: "Potongan Kode untuk Ditinjau",
-                  type: "code",
-                  placeholder:
-                    "e.g., 'function calculateTotal(price, quantity) { ... }'",
-                  description:
-                    "Tempelkan potongan kode yang ingin Anda tinjau di sini.",
-                  validation: {
-                    min_length: 10,
-                  },
-                  info: "Tempelkan potongan kode yang ingin Anda tinjau di sini.",
-                },
-                {
-                  name: "programmingLanguage",
-                  label: "Bahasa Pemrograman",
-                  type: "select",
-                  options: [
-                    "JavaScript",
-                    "Python",
-                    "Java",
-                    "C++",
-                    "Go",
-                    "Ruby",
-                    "PHP",
-                    "Swift",
-                    "Kotlin",
-                    "TypeScript",
-                    "Lainnya...",
-                  ],
-                  description: "Pilih bahasa pemrograman dari potongan kode.",
-                  default: "Python",
-                  info: "Pilih bahasa pemrograman dari potongan kode.",
-                },
-                {
-                  name: "reviewFocus",
-                  label: "Fokus Peninjauan & Refactoring",
-                  type: "multiselect",
-                  options: [
-                    "Keterbacaan",
-                    "Pemeliharaan",
-                    "Skalabilitas",
-                    "Efisiensi",
-                    "Keamanan",
-                    "Kepatuhan Standar",
-                    "Struktur",
-                    "Pengurangan Duplikasi",
-                    "Lainnya...",
-                  ],
-                  description:
-                    "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring.",
-                  default: ["Keterbacaan", "Efisiensi"],
-                  info: "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring.",
-                },
-                {
-                  name: "userLevel",
-                  label: "Tingkat Keahlian Anda",
-                  type: "select",
-                  options: ["Pemula", "Menengah", "Ahli", "Lainnya..."],
-                  description:
-                    "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran.",
-                  default: "Menengah",
-                  info: "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran.",
-                },
-                {
-                  name: "additionalInstructions",
-                  label: "Instruksi Tambahan & Gaya",
-                  type: "textarea",
-                  description:
-                    "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
-                  optional: true,
-                  placeholder:
-                    "e.g., 'Berikan contoh kode sebelum dan sesudah. Jelaskan manfaatnya secara bisnis.'",
-                  info: "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
-                },
-              ],
-              "Jelaskan Kode": [
-                {
-                  name: "codeSnippet",
-                  label: "Potongan Kode",
-                  type: "code",
-                  description:
-                    "Tempelkan potongan kode yang ingin Anda terjemahkan di sini.",
-                  validation: {
-                    min_length: 10,
-                  },
-                  placeholder: "e.g., function factorial(n) { ... }",
-                  info: "Tempelkan potongan kode yang ingin Anda terjemahkan di sini.",
-                },
-                {
-                  name: "programmingLanguage",
-                  label: "Bahasa Pemrograman",
-                  type: "select",
-                  options: [
-                    "JavaScript",
-                    "Python",
-                    "Java",
-                    "C++",
-                    "Go",
-                    "Ruby",
-                    "PHP",
-                    "Swift",
-                    "Kotlin",
-                    "TypeScript",
-                    "Lainnya...",
-                  ],
-                  info: "Pilih bahasa pemrograman dari potongan kode.",
-                },
-                {
-                  name: "targetAudience",
-                  label: "Target Audiens Penjelasan",
-                  type: "select",
-                  options: [
-                    "Pemula (non-teknis)",
-                    "Mahasiswa (dasar)",
-                    "Pengembang Junior",
-                    "Pengembang Senior",
-                    "Manajer Proyek (non-teknis)",
-                    "Lainnya...",
-                  ],
-                  info: "Siapa yang akan membaca penjelasan ini?",
-                },
-                {
-                  name: "explanationDetailLevel",
-                  label: "Tingkat Detail Penjelasan",
-                  type: "select",
-                  options: [
-                    "Sangat Sederhana (gambaran umum)",
-                    "Menengah (konsep kunci)",
-                    "Rinci (langkah demi langkah)",
-                    "Lainnya...",
-                  ],
-                  info: "Pilih seberapa detail penjelasan yang Anda inginkan.",
-                },
-                {
-                  name: "additionalInstructions",
-                  label: "Instruksi Tambahan & Gaya",
-                  type: "textarea",
-                  description:
-                    "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
-                  optional: true,
-                  placeholder:
-                    "e.g., 'Gunakan analogi memasak. Jangan lebih dari 200 kata.'",
-                  info: "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
-                },
-              ],
-              "Buat Pengujian Otomatis": [
-                {
-                  name: "codeSnippet",
-                  label: "Potongan Kode/Fungsionalitas untuk Dites",
-                  type: "code",
-                  placeholder: "e.g., 'function validateEmail(email) { ... }'",
-                  description:
-                    "Tempelkan kode atau jelaskan fungsionalitas yang ingin Anda tulis tesnya.",
-                  validation: {
-                    min_length: 10,
-                  },
-                  info: "Tempelkan kode atau jelaskan fungsionalitas yang ingin Anda tulis tesnya.",
-                },
-                {
-                  name: "programmingLanguage",
-                  label: "Bahasa Pemrograman",
-                  type: "select",
-                  options: ["Python", "JavaScript", "Java", "C#", "Lainnya..."],
-                  description: "Pilih bahasa pemrograman dari kode.",
-                  default: "JavaScript",
-                  info: "Pilih bahasa pemrograman dari kode.",
-                },
-                {
-                  name: "testType",
-                  label: "Jenis Tes",
-                  type: "select",
-                  options: [
-                    "Unit Test",
-                    "Integration Test",
-                    "End-to-End Test",
-                    "Lainnya...",
-                  ],
-                  description: "Pilih jenis tes yang ingin Anda buat.",
-                  default: "Unit Test",
-                  info: "Pilih jenis tes yang ingin Anda buat.",
-                },
-                {
-                  name: "testFramework",
-                  label: "Framework Tes (Opsional)",
-                  type: "text",
-                  placeholder: "e.g., 'Jest, Pytest, JUnit'",
-                  description: "Sebutkan framework tes yang Anda gunakan.",
-                  optional: true,
-                  info: "Sebutkan framework tes yang Anda gunakan.",
-                },
-                {
-                  name: "additionalInstructions",
-                  label: "Instruksi Tambahan & Skenario",
-                  type: "textarea",
-                  placeholder:
-                    "e.g., 'Sertakan kasus uji untuk input yang tidak valid. Fokus pada skenario edge case.'",
-                  description:
-                    "Sebutkan skenario spesifik, batasan, atau instruksi khusus lainnya untuk tes.",
-                  optional: true,
-                  info: "Sebutkan skenario spesifik, batasan, atau instruksi khusus lainnya untuk tes.",
-                },
-              ],
-              "Buat Dokumentasi Teknis": [
-                {
-                  name: "documentType",
-                  label: "Jenis Dokumen",
-                  type: "select",
-                  options: [
-                    "README Proyek",
-                    "Panduan API",
-                    "Panduan Pengguna",
-                    "Dokumentasi Kode Internal",
-                    "Lainnya...",
-                  ],
-                  placeholder: "Pilih jenis dokumen",
-                  info: "Pilih jenis dokumentasi yang ingin Anda buat.",
-                },
-                {
-                  name: "projectDescription",
-                  label: "Deskripsi Proyek/Fungsionalitas",
-                  type: "textarea",
-                  placeholder:
-                    "e.g., 'Aplikasi web untuk manajemen tugas dengan fitur CRUD dan autentikasi pengguna.'",
-                  info: "Jelaskan proyek atau fungsionalitas yang ingin Anda dokumentasikan.",
-                },
-                {
-                  name: "targetAudience",
-                  label: "Target Audiens Dokumen",
-                  type: "select",
-                  options: [
-                    "Pengembang (Internal)",
-                    "Pengembang (Eksternal/API User)",
-                    "Pengguna Akhir",
-                    "Manajer Proyek",
-                    "Lainnya...",
-                  ],
-                  placeholder: "Pilih target audiens",
-                  info: "Siapa yang akan membaca dokumentasi ini?",
-                },
-                {
-                  name: "codeSnippet",
-                  label: "Potongan Kode (Opsional)",
-                  type: "code",
-                  placeholder: "e.g., function createUser(name, email) { ... }",
-                  optional: true,
-                  info: "Tempelkan potongan kode yang relevan jika Anda ingin dokumentasi berfokus pada kode.",
-                },
-                {
-                  name: "additionalInstructions",
-                  label: "Instruksi Tambahan & Gaya",
-                  type: "textarea",
-                  description:
-                    "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
-                  optional: true,
-                  placeholder:
-                    "e.g., 'Gunakan bahasa yang formal dan ringkas. Sertakan contoh penggunaan.'",
-                  info: "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
-                },
-              ],
-              "Lainnya...": [
-                {
-                  name: "customDevelopmentTask",
-                  label: "Sebutkan Tugas Pengembangan Lainnya",
-                  type: "textarea",
-                  description:
-                    "Jelaskan secara rinci tugas pengembangan spesifik yang ingin Anda lakukan.",
-                  placeholder:
-                    "e.g., 'Optimalkan query database untuk performa', 'Buat skema database untuk aplikasi e-commerce'",
-                  info: "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan.",
-                },
-              ],
+            name: "functionalityDescription",
+            label: "Deskripsi Fungsionalitas yang Diinginkan",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Fungsi Python untuk menghitung faktorial dari sebuah angka.'",
+            description:
+              "Jelaskan secara detail fungsionalitas kode yang Anda inginkan.",
+            validation: {
+              min_length: 20,
             },
+            info: "Jelaskan secara detail fungsionalitas kode yang Anda inginkan.",
+            optional: true,
+          },
+          {
+            name: "programmingLanguage",
+            label: "Bahasa Pemrograman",
+            type: "select",
+            options: ["Python", "JavaScript", "Java", "C#", "Lainnya..."],
+            description: "Pilih bahasa pemrograman dari kode.",
+            default: "JavaScript",
+            info: "Pilih bahasa pemrograman dari kode.",
+            optional: true,
+          },
+          {
+            name: "codeStyle",
+            label: "Gaya Kode (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Pythonic, ES6, Java Clean Code'",
+            description:
+              "Sebutkan preferensi gaya pengkodean (misalnya, PEP 8 untuk Python).",
+            optional: true,
+            info: "Sebutkan preferensi gaya pengkodean (misalnya, PEP 8 untuk Python).",
+          },
+          {
+            name: "includeComments",
+            label: "Sertakan Komentar?",
+            type: "boolean",
+            description: "Apakah Anda ingin kode disertai komentar penjelasan?",
+            default: false,
+            info: "Apakah Anda ingin kode disertai komentar penjelasan?",
+            optional: true,
+          },
+          {
+            name: "additionalInstructions",
+            label: "Instruksi Tambahan & Gaya",
+            type: "textarea",
+            description:
+              "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
+            optional: true,
+            placeholder:
+              "e.g., 'Gunakan bahasa yang formal dan ringkas. Sertakan contoh penggunaan.'",
+            info: "Sebutkan preferensi gaya, batasan, atau instruksi khusus lainnya untuk AI.",
+          },
+          {
+            name: "codeSnippet",
+            label: "Potongan Kode (Opsional)",
+            type: "code",
+            placeholder: "e.g., function createUser(name, email) { ... }",
+            optional: true,
+            info: "Tempelkan potongan kode yang relevan jika Anda ingin dokumentasi berfokus pada kode.",
+          },
+          {
+            name: "reviewFocus",
+            label: "Fokus Peninjauan & Refactoring",
+            type: "multiselect",
+            options: [
+              "Keterbacaan",
+              "Pemeliharaan",
+              "Skalabilitas",
+              "Efisiensi",
+              "Keamanan",
+              "Kepatuhan Standar",
+              "Struktur",
+              "Pengurangan Duplikasi",
+              "Lainnya...",
+            ],
+            description:
+              "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring.",
+            default: ["Keterbacaan", "Efisiensi"],
+            info: "Pilih aspek yang ingin Anda fokuskan dalam peninjauan dan refactoring.",
+            optional: true,
+          },
+          {
+            name: "userLevel",
+            label: "Tingkat Keahlian Anda",
+            type: "select",
+            options: ["Pemula", "Menengah", "Ahli", "Lainnya..."],
+            description:
+              "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran.",
+            default: "Menengah",
+            info: "Tingkat keahlian Anda akan mempengaruhi kedalaman penjelasan dan saran.",
+            optional: true,
+          },
+          {
+            name: "targetAudience",
+            label: "Target Audiens Dokumen",
+            type: "select",
+            options: [
+              "Pengembang (Internal)",
+              "Pengembang (Eksternal/API User)",
+              "Pengguna Akhir",
+              "Manajer Proyek",
+              "Lainnya...",
+            ],
+            placeholder: "Pilih target audiens",
+            info: "Siapa yang akan membaca dokumentasi ini?",
+            optional: true,
+          },
+          {
+            name: "explanationDetailLevel",
+            label: "Tingkat Detail Penjelasan",
+            type: "select",
+            options: [
+              "Sangat Sederhana (gambaran umum)",
+              "Menengah (konsep kunci)",
+              "Rinci (langkah demi langkah)",
+              "Lainnya...",
+            ],
+            info: "Pilih seberapa detail penjelasan yang Anda inginkan.",
+            optional: true,
+          },
+          {
+            name: "testType",
+            label: "Jenis Tes",
+            type: "select",
+            options: [
+              "Unit Test",
+              "Integration Test",
+              "End-to-End Test",
+              "Lainnya...",
+            ],
+            description: "Pilih jenis tes yang ingin Anda buat.",
+            default: "Unit Test",
+            info: "Pilih jenis tes yang ingin Anda buat.",
+            optional: true,
+          },
+          {
+            name: "testFramework",
+            label: "Framework Tes (Opsional)",
+            type: "text",
+            placeholder: "e.g., 'Jest, Pytest, JUnit'",
+            description: "Sebutkan framework tes yang Anda gunakan.",
+            optional: true,
+            info: "Sebutkan framework tes yang Anda gunakan.",
+          },
+          {
+            name: "documentType",
+            label: "Jenis Dokumen",
+            type: "select",
+            options: [
+              "README Proyek",
+              "Panduan API",
+              "Panduan Pengguna",
+              "Dokumentasi Kode Internal",
+              "Lainnya...",
+            ],
+            placeholder: "Pilih jenis dokumen",
+            info: "Pilih jenis dokumentasi yang ingin Anda buat.",
+            optional: true,
+          },
+          {
+            name: "projectDescription",
+            label: "Deskripsi Proyek/Fungsionalitas",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Aplikasi web untuk manajemen tugas dengan fitur CRUD dan autentikasi pengguna.'",
+            info: "Jelaskan proyek atau fungsionalitas yang ingin Anda dokumentasikan.",
+            optional: true,
+          },
+          {
+            name: "customDevelopmentTask",
+            label: "Sebutkan Tugas Pengembangan Lainnya",
+            type: "textarea",
+            description:
+              "Jelaskan secara rinci tugas pengembangan spesifik yang ingin Anda lakukan.",
+            placeholder:
+              "e.g., 'Optimalkan query database untuk performa', 'Buat skema database untuk aplikasi e-commerce'",
+            info: "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan.",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -8739,6 +7950,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 3,
             },
+            optional: true,
           },
           {
             name: "HTTP_METHOD",
@@ -8747,6 +7959,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             options: ["GET", "POST", "PUT", "DELETE", "PATCH", "Lainnya..."],
             default: "GET",
             info: "Pilih metode HTTP yang sesuai untuk endpoint ini.",
+            optional: true,
           },
           {
             name: "ENDPOINT_DESCRIPTION",
@@ -8758,6 +7971,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "PATH_PARAMETERS",
@@ -8791,6 +8005,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "ERROR_RESPONSE",
@@ -8812,22 +8027,17 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             default: "Tidak Ada",
             info: "Pilih metode autentikasi yang diperlukan untuk mengakses endpoint ini.",
+            optional: true,
+          },
+          {
+            name: "AUTH_METHOD_LAINNYA",
+            label: "Sebutkan Metode Autentikasi Lainnya",
+            type: "text",
+            placeholder: "Contoh: Basic Auth",
+            info: "Jelaskan metode autentikasi kustom Anda.",
+            optional: true,
           },
         ],
-        dynamicSubcomponents: {
-          trigger: "AUTH_METHOD",
-          options: {
-            "Lainnya...": [
-              {
-                name: "AUTH_METHOD_LAINNYA",
-                label: "Sebutkan Metode Autentikasi Lainnya",
-                type: "text",
-                placeholder: "Contoh: Basic Auth",
-                info: "Jelaskan metode autentikasi kustom Anda.",
-              },
-            ],
-          },
-        },
         komponen_prompt: {
           PERAN:
             "Anda adalah seorang Technical Writer profesional yang sangat teliti, bertugas membuat dokumentasi API yang jelas, akurat, dan mudah diikuti untuk developer lain.",
@@ -8880,276 +8090,250 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Pilih tugas operasional utama yang ingin Anda lakukan.",
             default: "Manajemen Proyek Agile",
             info: "Pilih tugas utama yang ingin Anda lakukan. Pilihan Anda akan menampilkan opsi-opsi yang relevan di bawah.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TUGAS_OPERASIONAL",
-            options: {
-              "Manajemen Proyek Agile": [
-                {
-                  name: "agileFramework",
-                  label: "Kerangka Kerja Agile",
-                  type: "select",
-                  options: ["Scrum", "Kanban", "Lainnya..."],
-                  default: "Scrum",
-                  info: "Pilih kerangka kerja Agile yang Anda gunakan.",
-                },
-                {
-                  name: "projectGoal",
-                  label: "Tujuan Proyek/Sprint",
-                  type: "textarea",
-                  placeholder:
-                    "e.g., 'Mengembangkan fitur autentikasi pengguna baru'",
-                  info: "Jelaskan tujuan utama dari proyek atau sprint ini.",
-                },
-                {
-                  name: "teamSize",
-                  label: "Ukuran Tim",
-                  type: "number",
-                  placeholder: "e.g., 5",
-                  info: "Masukkan jumlah anggota dalam tim Anda.",
-                },
-              ],
-              "Manajemen Dependensi & Versi": [
-                {
-                  name: "helpTopic",
-                  label: "Topik Bantuan",
-                  type: "select",
-                  options: [
-                    "Manajemen Dependensi",
-                    "Kontrol Versi (Git)",
-                    "Keduanya",
-                    "Lainnya...",
-                  ],
-                  default: "Kontrol Versi (Git)",
-                  info: "Pilih topik yang Anda butuhkan bantuan.",
-                },
-                {
-                  name: "programmingLanguage",
-                  label: "Bahasa/Ekosistem Pemrograman (Opsional)",
-                  type: "text",
-                  placeholder:
-                    "e.g., 'Node.js (npm), Python (pip), Java (Maven/Gradle)'",
-                  optional: true,
-                  info: "Sebutkan bahasa atau ekosistem pemrograman Anda.",
-                },
-                {
-                  name: "specificProblem",
-                  label: "Masalah Spesifik (Opsional)",
-                  type: "textarea",
-                  placeholder:
-                    "e.g., 'Saya tidak tahu cara menggabungkan dua branch di Git tanpa konflik.'",
-                  optional: true,
-                  info: "Jelaskan masalah spesifik yang Anda hadapi.",
-                },
-              ],
-              "Containerization & Deployment": [
-                {
-                  name: "taskType",
-                  label: "Jenis Tugas",
-                  type: "select",
-                  options: [
-                    "Membuat Dockerfile",
-                    "Membangun Image Docker",
-                    "Menjalankan Kontainer",
-                    "Deployment ke Cloud",
-                    "Lainnya...",
-                  ],
-                  default: "Membuat Dockerfile",
-                  info: "Pilih tugas yang ingin Anda lakukan.",
-                },
-                {
-                  name: "applicationType",
-                  label: "Jenis Aplikasi",
-                  type: "text",
-                  placeholder:
-                    "e.g., 'Aplikasi web Node.js', 'API Python dengan Flask'",
-                  info: "Jelaskan jenis aplikasi Anda.",
-                },
-                {
-                  name: "programmingLanguage",
-                  label: "Bahasa Pemrograman",
-                  type: "select",
-                  options: ["Node.js", "Python", "Java", "Go", "Lainnya..."],
-                  default: "Node.js",
-                  info: "Pilih bahasa pemrograman aplikasi Anda.",
-                },
-              ],
-              "Bangun CI/CD Pipeline": [
-                {
-                  name: "ciCdPlatform",
-                  label: "Platform CI/CD",
-                  type: "select",
-                  options: [
-                    "GitHub Actions",
-                    "GitLab CI/CD",
-                    "Jenkins",
-                    "CircleCI",
-                    "Lainnya...",
-                  ],
-                  default: "GitHub Actions",
-                  info: "Pilih platform CI/CD yang ingin Anda gunakan.",
-                },
-                {
-                  name: "projectType",
-                  label: "Jenis Proyek",
-                  type: "text",
-                  placeholder:
-                    "e.g., 'Aplikasi web frontend', 'API backend', 'Library Python'",
-                  info: "Jelaskan jenis proyek Anda.",
-                },
-                {
-                  name: "pipelineStages",
-                  label: "Tahapan Pipeline yang Diinginkan",
-                  type: "multiselect",
-                  options: [
-                    "Linting",
-                    "Testing",
-                    "Building",
-                    "Deployment",
-                    "Notifikasi",
-                    "Lainnya...",
-                  ],
-                  default: ["Linting", "Testing", "Building", "Deployment"],
-                  info: "Pilih tahapan yang ingin Anda sertakan dalam pipeline.",
-                },
-              ],
-              "Monitoring & Logging": [
-                {
-                  name: "monitoringTool",
-                  label: "Alat Pemantauan/Pencatatan",
-                  type: "select",
-                  options: [
-                    "Prometheus & Grafana",
-                    "ELK Stack (Elasticsearch, Logstash, Kibana)",
-                    "Datadog",
-                    "New Relic",
-                    "Lainnya...",
-                  ],
-                  default: "Prometheus & Grafana",
-                  info: "Pilih alat yang ingin Anda gunakan.",
-                },
-                {
-                  name: "applicationType",
-                  label: "Jenis Aplikasi",
-                  type: "text",
-                  placeholder:
-                    "e.g., 'Aplikasi web Node.js', 'Microservice Java'",
-                  info: "Jelaskan jenis aplikasi yang akan dipantau.",
-                },
-                {
-                  name: "metricsToTrack",
-                  label: "Metrik Kunci yang Ingin Dilacak",
-                  type: "multiselect",
-                  options: [
-                    "Penggunaan CPU",
-                    "Penggunaan Memori",
-                    "Latensi Permintaan",
-                    "Jumlah Error",
-                    "Trafik Jaringan",
-                    "Lainnya...",
-                  ],
-                  default: [
-                    "Penggunaan CPU",
-                    "Latensi Permintaan",
-                    "Jumlah Error",
-                  ],
-                  info: "Pilih metrik yang paling penting untuk Anda.",
-                },
-              ],
-              "Infrastructure as Code (IaC)": [
-                {
-                  name: "iacTool",
-                  label: "Alat IaC",
-                  type: "select",
-                  options: [
-                    "Terraform",
-                    "AWS CloudFormation",
-                    "Azure Resource Manager (ARM)",
-                    "Pulumi",
-                    "Lainnya...",
-                  ],
-                  default: "Terraform",
-                  info: "Pilih alat Infrastructure as Code yang ingin Anda gunakan.",
-                },
-                {
-                  name: "cloudProvider",
-                  label: "Penyedia Cloud",
-                  type: "select",
-                  options: [
-                    "AWS",
-                    "Azure",
-                    "Google Cloud Platform (GCP)",
-                    "Lainnya...",
-                  ],
-                  default: "AWS",
-                  info: "Pilih penyedia layanan cloud Anda.",
-                },
-                {
-                  name: "resourceType",
-                  label: "Jenis Sumber Daya",
-                  type: "multiselect",
-                  options: [
-                    "Virtual Machine (VM)",
-                    "Database",
-                    "Jaringan (VPC/VNet)",
-                    "Penyimpanan (Storage)",
-                    "Load Balancer",
-                    "Lainnya...",
-                  ],
-                  default: ["Virtual Machine (VM)", "Jaringan (VPC/VNet)"],
-                  info: "Pilih jenis sumber daya yang ingin Anda definisikan.",
-                },
-              ],
-              "Alur Kerja Data Science": [
-                {
-                  name: "workflowTask",
-                  label: "Tugas Alur Kerja",
-                  type: "select",
-                  options: [
-                    "Pengumpulan Data",
-                    "Pembersihan & Pra-pemrosesan Data",
-                    "Eksplorasi Data (EDA)",
-                    "Pelatihan Model",
-                    "Evaluasi Model",
-                    "Deployment Model",
-                    "Lainnya...",
-                  ],
-                  default: "Eksplorasi Data (EDA)",
-                  info: "Pilih tugas dalam alur kerja data science yang Anda butuhkan bantuan.",
-                },
-                {
-                  name: "datasetDescription",
-                  label: "Deskripsi Dataset (Opsional)",
-                  type: "textarea",
-                  placeholder:
-                    "e.g., 'Dataset berisi data transaksi pelanggan selama 1 tahun.'",
-                  optional: true,
-                  info: "Jelaskan secara singkat tentang dataset yang Anda gunakan.",
-                },
-                {
-                  name: "goal",
-                  label: "Tujuan Analisis/Model",
-                  type: "textarea",
-                  placeholder:
-                    "e.g., 'Memprediksi churn pelanggan', 'Mengelompokkan pelanggan berdasarkan perilaku pembelian'",
-                  info: "Jelaskan tujuan akhir dari analisis atau model yang ingin Anda bangun.",
-                },
-              ],
-              "Lainnya...": [
-                {
-                  name: "customOperationalTask",
-                  label: "Sebutkan Tugas Operasional Lainnya",
-                  type: "textarea",
-                  description:
-                    "Jelaskan secara rinci tugas operasional spesifik yang ingin Anda lakukan.",
-                  placeholder:
-                    "e.g., 'Melakukan audit keamanan pada infrastruktur cloud', 'Merancang strategi pemulihan bencana'",
-                  info: "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan.",
-                },
-              ],
-            },
+            name: "agileFramework",
+            label: "Kerangka Kerja Agile",
+            type: "select",
+            options: ["Scrum", "Kanban", "Lainnya..."],
+            default: "Scrum",
+            info: "Pilih kerangka kerja Agile yang Anda gunakan.",
+            optional: true,
+          },
+          {
+            name: "projectGoal",
+            label: "Tujuan Proyek/Sprint",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Mengembangkan fitur autentikasi pengguna baru'",
+            info: "Jelaskan tujuan utama dari proyek atau sprint ini.",
+            optional: true,
+          },
+          {
+            name: "teamSize",
+            label: "Ukuran Tim",
+            type: "number",
+            placeholder: "e.g., 5",
+            info: "Masukkan jumlah anggota dalam tim Anda.",
+            optional: true,
+          },
+          {
+            name: "helpTopic",
+            label: "Topik Bantuan",
+            type: "select",
+            options: [
+              "Manajemen Dependensi",
+              "Kontrol Versi (Git)",
+              "Keduanya",
+              "Lainnya...",
+            ],
+            default: "Kontrol Versi (Git)",
+            info: "Pilih topik yang Anda butuhkan bantuan.",
+            optional: true,
+          },
+          {
+            name: "programmingLanguage",
+            label: "Bahasa Pemrograman",
+            type: "select",
+            options: ["Node.js", "Python", "Java", "Go", "Lainnya..."],
+            default: "Node.js",
+            info: "Pilih bahasa pemrograman aplikasi Anda.",
+            optional: true,
+          },
+          {
+            name: "specificProblem",
+            label: "Masalah Spesifik (Opsional)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Saya tidak tahu cara menggabungkan dua branch di Git tanpa konflik.'",
+            optional: true,
+            info: "Jelaskan masalah spesifik yang Anda hadapi.",
+          },
+          {
+            name: "taskType",
+            label: "Jenis Tugas",
+            type: "select",
+            options: [
+              "Membuat Dockerfile",
+              "Membangun Image Docker",
+              "Menjalankan Kontainer",
+              "Deployment ke Cloud",
+              "Lainnya...",
+            ],
+            default: "Membuat Dockerfile",
+            info: "Pilih tugas yang ingin Anda lakukan.",
+            optional: true,
+          },
+          {
+            name: "applicationType",
+            label: "Jenis Aplikasi",
+            type: "text",
+            placeholder: "e.g., 'Aplikasi web Node.js', 'Microservice Java'",
+            info: "Jelaskan jenis aplikasi yang akan dipantau.",
+            optional: true,
+          },
+          {
+            name: "ciCdPlatform",
+            label: "Platform CI/CD",
+            type: "select",
+            options: [
+              "GitHub Actions",
+              "GitLab CI/CD",
+              "Jenkins",
+              "CircleCI",
+              "Lainnya...",
+            ],
+            default: "GitHub Actions",
+            info: "Pilih platform CI/CD yang ingin Anda gunakan.",
+            optional: true,
+          },
+          {
+            name: "projectType",
+            label: "Jenis Proyek",
+            type: "text",
+            placeholder:
+              "e.g., 'Aplikasi web frontend', 'API backend', 'Library Python'",
+            info: "Jelaskan jenis proyek Anda.",
+            optional: true,
+          },
+          {
+            name: "pipelineStages",
+            label: "Tahapan Pipeline yang Diinginkan",
+            type: "multiselect",
+            options: [
+              "Linting",
+              "Testing",
+              "Building",
+              "Deployment",
+              "Notifikasi",
+              "Lainnya...",
+            ],
+            default: ["Linting", "Testing", "Building", "Deployment"],
+            info: "Pilih tahapan yang ingin Anda sertakan dalam pipeline.",
+            optional: true,
+          },
+          {
+            name: "monitoringTool",
+            label: "Alat Pemantauan/Pencatatan",
+            type: "select",
+            options: [
+              "Prometheus & Grafana",
+              "ELK Stack (Elasticsearch, Logstash, Kibana)",
+              "Datadog",
+              "New Relic",
+              "Lainnya...",
+            ],
+            default: "Prometheus & Grafana",
+            info: "Pilih alat yang ingin Anda gunakan.",
+            optional: true,
+          },
+          {
+            name: "metricsToTrack",
+            label: "Metrik Kunci yang Ingin Dilacak",
+            type: "multiselect",
+            options: [
+              "Penggunaan CPU",
+              "Penggunaan Memori",
+              "Latensi Permintaan",
+              "Jumlah Error",
+              "Trafik Jaringan",
+              "Lainnya...",
+            ],
+            default: ["Penggunaan CPU", "Latensi Permintaan", "Jumlah Error"],
+            info: "Pilih metrik yang paling penting untuk Anda.",
+            optional: true,
+          },
+          {
+            name: "iacTool",
+            label: "Alat IaC",
+            type: "select",
+            options: [
+              "Terraform",
+              "AWS CloudFormation",
+              "Azure Resource Manager (ARM)",
+              "Pulumi",
+              "Lainnya...",
+            ],
+            default: "Terraform",
+            info: "Pilih alat Infrastructure as Code yang ingin Anda gunakan.",
+            optional: true,
+          },
+          {
+            name: "cloudProvider",
+            label: "Penyedia Cloud",
+            type: "select",
+            options: [
+              "AWS",
+              "Azure",
+              "Google Cloud Platform (GCP)",
+              "Lainnya...",
+            ],
+            default: "AWS",
+            info: "Pilih penyedia layanan cloud Anda.",
+            optional: true,
+          },
+          {
+            name: "resourceType",
+            label: "Jenis Sumber Daya",
+            type: "multiselect",
+            options: [
+              "Virtual Machine (VM)",
+              "Database",
+              "Jaringan (VPC/VNet)",
+              "Penyimpanan (Storage)",
+              "Load Balancer",
+              "Lainnya...",
+            ],
+            default: ["Virtual Machine (VM)", "Jaringan (VPC/VNet)"],
+            info: "Pilih jenis sumber daya yang ingin Anda definisikan.",
+            optional: true,
+          },
+          {
+            name: "workflowTask",
+            label: "Tugas Alur Kerja",
+            type: "select",
+            options: [
+              "Pengumpulan Data",
+              "Pembersihan & Pra-pemrosesan Data",
+              "Eksplorasi Data (EDA)",
+              "Pelatihan Model",
+              "Evaluasi Model",
+              "Deployment Model",
+              "Lainnya...",
+            ],
+            default: "Eksplorasi Data (EDA)",
+            info: "Pilih tugas dalam alur kerja data science yang Anda butuhkan bantuan.",
+            optional: true,
+          },
+          {
+            name: "datasetDescription",
+            label: "Deskripsi Dataset (Opsional)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Dataset berisi data transaksi pelanggan selama 1 tahun.'",
+            optional: true,
+            info: "Jelaskan secara singkat tentang dataset yang Anda gunakan.",
+          },
+          {
+            name: "goal",
+            label: "Tujuan Analisis/Model",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Memprediksi churn pelanggan', 'Mengelompokkan pelanggan berdasarkan perilaku pembelian'",
+            info: "Jelaskan tujuan akhir dari analisis atau model yang ingin Anda bangun.",
+            optional: true,
+          },
+          {
+            name: "customOperationalTask",
+            label: "Sebutkan Tugas Operasional Lainnya",
+            type: "textarea",
+            description:
+              "Jelaskan secara rinci tugas operasional spesifik yang ingin Anda lakukan.",
+            placeholder:
+              "e.g., 'Melakukan audit keamanan pada infrastruktur cloud', 'Merancang strategi pemulihan bencana'",
+            info: "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan.",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -9202,179 +8386,145 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             description: "Pilih topik pembelajaran yang ingin Anda jelajahi.",
             default: "Dasar-Dasar Pemrograman",
             info: "Pilih topik utama yang ingin Anda pelajari. Pilihan Anda akan menampilkan opsi-opsi yang relevan di bawah.",
+            optional: true,
           },
-        ],
-        dynamicSubcomponents: [
           {
-            trigger: "TOPIK_PEMBELAJARAN",
-            options: {
-              "Pilih Bahasa Pemrograman Pertama": [
-                {
-                  name: "userInterests",
-                  label: "Minat Anda",
-                  type: "text",
-                  placeholder: "e.g., 'Pengembangan web, game, analisis data'",
-                  info: "Sebutkan area minat Anda dalam pemrograman.",
-                },
-                {
-                  name: "careerGoals",
-                  label: "Tujuan Karir",
-                  type: "text",
-                  placeholder:
-                    "e.g., 'Menjadi full-stack developer, ilmuwan data'",
-                  info: "Sebutkan tujuan karir jangka panjang Anda.",
-                },
-              ],
-              "Dasar-Dasar Pemrograman": [
-                {
-                  name: "programmingLanguage",
-                  label: "Bahasa Pemrograman",
-                  type: "select",
-                  options: [
-                    "Python",
-                    "JavaScript",
-                    "Java",
-                    "C++",
-                    "Lainnya...",
-                  ],
-                  default: "Python",
-                  info: "Pilih bahasa pemrograman yang ingin Anda pelajari.",
-                },
-                {
-                  name: "focusConcepts",
-                  label: "Konsep yang Ingin Dipelajari",
-                  type: "multiselect",
-                  options: [
-                    "Variabel",
-                    "Tipe Data",
-                    "Kondisi (if/else)",
-                    "Loop (for/while)",
-                    "Fungsi",
-                    "Lainnya...",
-                  ],
-                  default: ["Variabel", "Kondisi (if/else)"],
-                  info: "Pilih konsep dasar yang ingin Anda fokuskan.",
-                },
-              ],
-              "Visualisasi Algoritma & Struktur Data": [
-                {
-                  name: "specificConcept",
-                  label: "Konsep Spesifik",
-                  type: "text",
-                  placeholder:
-                    "e.g., 'Bubble Sort', 'Linked List', 'Binary Tree'",
-                  info: "Sebutkan algoritma atau struktur data yang ingin divisualisasikan.",
-                },
-                {
-                  name: "inputData",
-                  label: "Data Input (Opsional)",
-                  type: "text",
-                  placeholder: "e.g., '5, 2, 8, 1, 9'",
-                  optional: true,
-                  info: "Masukkan data yang akan digunakan untuk visualisasi (pisahkan dengan koma).",
-                },
-              ],
-              "Dasar-Dasar Keamanan Siber": [
-                {
-                  name: "securityTopic",
-                  label: "Topik Keamanan",
-                  type: "select",
-                  options: [
-                    "Pencegahan Injeksi SQL",
-                    "Cross-Site Scripting (XSS)",
-                    "Manajemen Kata Sandi yang Aman",
-                    "Lainnya...",
-                  ],
-                  default: "Pencegahan Injeksi SQL",
-                  info: "Pilih topik keamanan siber yang ingin Anda pelajari.",
-                },
-                {
-                  name: "codeSnippet",
-                  label: "Contoh Kode Rentan (Opsional)",
-                  type: "code",
-                  placeholder: "Tempelkan contoh kode yang mungkin rentan...",
-                  optional: true,
-                  info: "Jika Anda memiliki contoh kode, tempelkan di sini untuk dianalisis.",
-                },
-              ],
-              "Dasar-Dasar AI/Machine Learning": [
-                {
-                  name: "mlConcept",
-                  label: "Konsep AI/ML",
-                  type: "select",
-                  options: [
-                    "Regresi Linear",
-                    "Klasifikasi",
-                    "Clustering",
-                    "Jaringan Saraf Tiruan",
-                    "Lainnya...",
-                  ],
-                  default: "Regresi Linear",
-                  info: "Pilih konsep AI/ML yang ingin Anda pelajari.",
-                },
-                {
-                  name: "datasetDescription",
-                  label: "Deskripsi Dataset (Opsional)",
-                  type: "textarea",
-                  placeholder:
-                    "e.g., 'Dataset harga rumah dengan fitur luas tanah dan jumlah kamar.'",
-                  optional: true,
-                  info: "Jelaskan dataset yang ingin Anda gunakan untuk membangun model.",
-                },
-              ],
-              "Dasar-Dasar Web3 & Blockchain": [
-                {
-                  name: "blockchainConcept",
-                  label: "Konsep Web3/Blockchain",
-                  type: "select",
-                  options: [
-                    "Apa itu Blockchain?",
-                    "Smart Contract",
-                    "Decentralized Applications (dApps)",
-                    "NFT",
-                    "Lainnya...",
-                  ],
-                  default: "Apa itu Blockchain?",
-                  info: "Pilih konsep Web3/Blockchain yang ingin Anda pelajari.",
-                },
-              ],
-              "Panduan Debugging": [
-                {
-                  name: "problemDescription",
-                  label: "Jelaskan Masalah Debugging",
-                  type: "textarea",
-                  placeholder:
-                    "e.g., 'Aplikasi saya crash saat mencoba menyimpan data, dengan pesan error 'NullPointerException'.",
-                  info: "Jelaskan masalah atau error yang Anda hadapi.",
-                },
-                {
-                  name: "programmingLanguage",
-                  label: "Bahasa Pemrograman",
-                  type: "select",
-                  options: [
-                    "Python",
-                    "JavaScript",
-                    "Java",
-                    "C++",
-                    "Lainnya...",
-                  ],
-                  default: "Python",
-                  info: "Pilih bahasa pemrograman yang relevan.",
-                },
-              ],
-              "Lainnya...": [
-                {
-                  name: "customLearningTopic",
-                  label: "Sebutkan Topik Pembelajaran Lainnya",
-                  type: "textarea",
-                  description:
-                    "Jelaskan secara rinci topik pembelajaran spesifik yang ingin Anda jelajahi.",
-                  placeholder:
-                    "e.g., 'Pengantar Komputasi Kuantum', 'Praktik Terbaik untuk Arsitektur Mikroservis'",
-                  info: "Jelaskan topik kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan.",
-                },
-              ],
-            },
+            name: "userInterests",
+            label: "Minat Anda",
+            type: "text",
+            placeholder: "e.g., 'Pengembangan web, game, analisis data'",
+            info: "Sebutkan area minat Anda dalam pemrograman.",
+            optional: true,
+          },
+          {
+            name: "careerGoals",
+            label: "Tujuan Karir",
+            type: "text",
+            placeholder: "e.g., 'Menjadi full-stack developer, ilmuwan data'",
+            info: "Sebutkan tujuan karir jangka panjang Anda.",
+            optional: true,
+          },
+          {
+            name: "programmingLanguage",
+            label: "Bahasa Pemrograman",
+            type: "select",
+            options: ["Python", "JavaScript", "Java", "C++", "Lainnya..."],
+            default: "Python",
+            info: "Pilih bahasa pemrograman yang relevan.",
+            optional: true,
+          },
+          {
+            name: "focusConcepts",
+            label: "Konsep yang Ingin Dipelajari",
+            type: "multiselect",
+            options: [
+              "Variabel",
+              "Tipe Data",
+              "Kondisi (if/else)",
+              "Loop (for/while)",
+              "Fungsi",
+              "Lainnya...",
+            ],
+            default: ["Variabel", "Kondisi (if/else)"],
+            info: "Pilih konsep dasar yang ingin Anda fokuskan.",
+            optional: true,
+          },
+          {
+            name: "specificConcept",
+            label: "Konsep Spesifik",
+            type: "text",
+            placeholder: "e.g., 'Bubble Sort', 'Linked List', 'Binary Tree'",
+            info: "Sebutkan algoritma atau struktur data yang ingin divisualisasikan.",
+            optional: true,
+          },
+          {
+            name: "inputData",
+            label: "Data Input (Opsional)",
+            type: "text",
+            placeholder: "e.g., '5, 2, 8, 1, 9'",
+            optional: true,
+            info: "Masukkan data yang akan digunakan untuk visualisasi (pisahkan dengan koma).",
+          },
+          {
+            name: "securityTopic",
+            label: "Topik Keamanan",
+            type: "select",
+            options: [
+              "Pencegahan Injeksi SQL",
+              "Cross-Site Scripting (XSS)",
+              "Manajemen Kata Sandi yang Aman",
+              "Lainnya...",
+            ],
+            default: "Pencegahan Injeksi SQL",
+            info: "Pilih topik keamanan siber yang ingin Anda pelajari.",
+            optional: true,
+          },
+          {
+            name: "codeSnippet",
+            label: "Contoh Kode Rentan (Opsional)",
+            type: "code",
+            placeholder: "Tempelkan contoh kode yang mungkin rentan...",
+            optional: true,
+            info: "Jika Anda memiliki contoh kode, tempelkan di sini untuk dianalisis.",
+          },
+          {
+            name: "mlConcept",
+            label: "Konsep AI/ML",
+            type: "select",
+            options: [
+              "Regresi Linear",
+              "Klasifikasi",
+              "Clustering",
+              "Jaringan Saraf Tiruan",
+              "Lainnya...",
+            ],
+            default: "Regresi Linear",
+            info: "Pilih konsep AI/ML yang ingin Anda pelajari.",
+            optional: true,
+          },
+          {
+            name: "datasetDescription",
+            label: "Deskripsi Dataset (Opsional)",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Dataset harga rumah dengan fitur luas tanah dan jumlah kamar.'",
+            optional: true,
+            info: "Jelaskan dataset yang ingin Anda gunakan untuk membangun model.",
+          },
+          {
+            name: "blockchainConcept",
+            label: "Konsep Web3/Blockchain",
+            type: "select",
+            options: [
+              "Apa itu Blockchain?",
+              "Smart Contract",
+              "Decentralized Applications (dApps)",
+              "NFT",
+              "Lainnya...",
+            ],
+            default: "Apa itu Blockchain?",
+            info: "Pilih konsep Web3/Blockchain yang ingin Anda pelajari.",
+            optional: true,
+          },
+          {
+            name: "problemDescription",
+            label: "Jelaskan Masalah Debugging",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Aplikasi saya crash saat mencoba menyimpan data, dengan pesan error 'NullPointerException'.",
+            info: "Jelaskan masalah atau error yang Anda hadapi.",
+            optional: true,
+          },
+          {
+            name: "customLearningTopic",
+            label: "Sebutkan Topik Pembelajaran Lainnya",
+            type: "textarea",
+            description:
+              "Jelaskan secara rinci topik pembelajaran spesifik yang ingin Anda jelajahi.",
+            placeholder:
+              "e.g., 'Pengantar Komputasi Kuantum', 'Praktik Terbaik untuk Arsitektur Mikroservis'",
+            info: "Jelaskan topik kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan.",
+            optional: true,
           },
         ],
         komponen_prompt: {
@@ -13933,6 +13083,46 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "Pilih area spesifik di mana Anda membutuhkan bantuan persiapan.",
           },
+          {
+            name: "jenis_wawancara_lainnya",
+            label: "Jenis Wawancara Lainnya",
+            type: "text",
+            description:
+              "Sebutkan jenis wawancara spesifik Anda jika memilih 'Lainnya'.",
+            default: "",
+            optional: false,
+            placeholder: "Contoh: Wawancara Beasiswa, Wawancara Penjualan",
+            info: "Jelaskan jenis wawancara tambahan yang ingin Anda persiapkan.",
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "fokus_bantuan_lainnya",
+            label: "Fokus Bantuan Lainnya",
+            type: "textarea",
+            description:
+              "Sebutkan fokus bantuan spesifik Anda jika memilih 'Lainnya'.",
+            default: "",
+            optional: false,
+            placeholder: "Contoh: Cara negosiasi gaji, Etika wawancara online",
+            info: "Jelaskan area bantuan spesifik yang Anda butuhkan.",
+            validation: {
+              min_length: 5,
+            },
+          },
+          {
+            name: "custom_peran_anda",
+            label: "Sebutkan Peran Anda dalam Wawancara Lainnya",
+            type: "text",
+            description: "Input kustom untuk Peran Anda dalam Wawancara.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         komponen_prompt: {
           PERAN:
@@ -13944,71 +13134,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan output dalam format Markdown yang terstruktur dengan baik, menggunakan heading, bullet points, dan bold untuk keterbacaan yang maksimal. Pisahkan setiap bagian bantuan dengan jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "jenis_wawancara",
-            options: {
-              Lainnya: [
-                {
-                  name: "jenis_wawancara_lainnya",
-                  label: "Jenis Wawancara Lainnya",
-                  type: "text",
-                  description:
-                    "Sebutkan jenis wawancara spesifik Anda jika memilih 'Lainnya'.",
-                  default: "",
-                  optional: false,
-                  placeholder:
-                    "Contoh: Wawancara Beasiswa, Wawancara Penjualan",
-                  info: "Jelaskan jenis wawancara tambahan yang ingin Anda persiapkan.",
-                  validation: {
-                    min_length: 5,
-                  },
-                },
-              ],
-            },
-          },
-          {
-            trigger: "fokus_bantuan",
-            options: {
-              Lainnya: [
-                {
-                  name: "fokus_bantuan_lainnya",
-                  label: "Fokus Bantuan Lainnya",
-                  type: "textarea",
-                  description:
-                    "Sebutkan fokus bantuan spesifik Anda jika memilih 'Lainnya'.",
-                  default: "",
-                  optional: false,
-                  placeholder:
-                    "Contoh: Cara negosiasi gaji, Etika wawancara online",
-                  info: "Jelaskan area bantuan spesifik yang Anda butuhkan.",
-                  validation: {
-                    min_length: 5,
-                  },
-                },
-              ],
-            },
-          },
-          {
-            trigger: "peran_anda",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_peran_anda",
-                  label: "Sebutkan Peran Anda dalam Wawancara Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Peran Anda dalam Wawancara.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
         toolType: "text",
         konteks_tambahan_instruksi_khusus:
           "Pastikan semua saran dan pertanyaan relevan dengan jenis wawancara dan peran pengguna. Gunakan bahasa yang profesional, mendukung, dan mudah dipahami. Jika peran pengguna adalah 'Pewawancara', fokus pada cara menyusun pertanyaan yang efektif dan mengevaluasi jawaban. Jika 'Diwawancarai', fokus pada cara memberikan jawaban terbaik dan strategi untuk sukses.",
@@ -14636,6 +13761,42 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "AI akan menyesuaikan struktur dan panjang konten sesuai format yang dipilih.",
           },
+          {
+            name: "custom_TARGET_AUDIENS_KEAHLIAN",
+            label: "Sebutkan Tingkat Keahlian Audiens Lainnya",
+            type: "text",
+            description: "Input kustom untuk Tingkat Keahlian Audiens.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_TARGET_AUDIENS_GAYA",
+            label: "Sebutkan Gaya Bahasa Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Bahasa.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_JENIS_OUTPUT",
+            label: "Sebutkan Format Output Konten Lainnya",
+            type: "text",
+            description: "Input kustom untuk Format Output Konten.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         komponen_prompt: {
           PERAN:
@@ -14659,65 +13820,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
         top_p: 0.9,
         top_k: 40,
         updated_at: "2025-12-23T05:50:19.401622",
-        dynamicSubcomponents: [
-          {
-            trigger: "TARGET_AUDIENS_KEAHLIAN",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_TARGET_AUDIENS_KEAHLIAN",
-                  label: "Sebutkan Tingkat Keahlian Audiens Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Tingkat Keahlian Audiens.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "TARGET_AUDIENS_GAYA",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_TARGET_AUDIENS_GAYA",
-                  label: "Sebutkan Gaya Bahasa Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Bahasa.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "JENIS_OUTPUT",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_JENIS_OUTPUT",
-                  label: "Sebutkan Format Output Konten Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Format Output Konten.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
     },
     "Refleksi & Peningkatan Prompt": {
@@ -15137,6 +14239,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "myStance",
@@ -15148,6 +14251,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "supportingPoints",
@@ -15173,6 +14277,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Jenis esai akan menentukan struktur dan pendekatan.",
+            optional: true,
           },
           {
             name: "outputToGenerate",
@@ -15185,6 +14290,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih bagian mana dari esai yang Anda perlukan bantuannya.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -15197,6 +14303,30 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_essayType",
+            label: "Sebutkan Jenis Esai Lainnya",
+            type: "text",
+            description: "Input kustom untuk Jenis Esai.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_outputToGenerate",
+            label: "Sebutkan Output yang Diinginkan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Output yang Diinginkan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Akademis & Edukasi"],
@@ -15217,46 +14347,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "essayType",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_essayType",
-                  label: "Sebutkan Jenis Esai Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Jenis Esai.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "outputToGenerate",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_outputToGenerate",
-                  label: "Sebutkan Output yang Diinginkan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Output yang Diinginkan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Rencana Pembelajaran (Lesson Plan)": {
         description:
@@ -15388,6 +14478,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 3,
             },
+            optional: true,
           },
           {
             name: "questionType",
@@ -15402,6 +14493,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih format soal yang Anda butuhkan.",
+            optional: true,
           },
           {
             name: "numberOfQuestions",
@@ -15413,6 +14505,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 1,
               max_value: 20,
             },
+            optional: true,
           },
           {
             name: "difficultyLevel",
@@ -15425,6 +14518,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Tingkat kesulitan akan mempengaruhi kompleksitas soal.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -15437,6 +14531,30 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_questionType",
+            label: "Sebutkan Jenis Soal Lainnya",
+            type: "text",
+            description: "Input kustom untuk Jenis Soal.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_difficultyLevel",
+            label: "Sebutkan Tingkat Kesulitan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Tingkat Kesulitan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Akademis & Edukasi"],
@@ -15457,46 +14575,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "questionType",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_questionType",
-                  label: "Sebutkan Jenis Soal Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Jenis Soal.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "difficultyLevel",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_difficultyLevel",
-                  label: "Sebutkan Tingkat Kesulitan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Tingkat Kesulitan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Pembuat Abstrak Penelitian": {
         description:
@@ -15610,6 +14688,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "experienceLevel",
@@ -15624,6 +14703,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Tingkat pengalaman Anda saat ini.",
+            optional: true,
           },
           {
             name: "sectionToGenerate",
@@ -15636,6 +14716,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih bagian CV yang ingin Anda tulis atau perbaiki.",
+            optional: true,
           },
           {
             name: "keySkills",
@@ -15646,6 +14727,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "achievements",
@@ -15657,6 +14739,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -15669,6 +14752,30 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_experienceLevel",
+            label: "Sebutkan Tingkat Pengalaman Lainnya",
+            type: "text",
+            description: "Input kustom untuk Tingkat Pengalaman.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_sectionToGenerate",
+            label: "Sebutkan Bagian yang Akan Dibuat Lainnya",
+            type: "text",
+            description: "Input kustom untuk Bagian yang Akan Dibuat.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
@@ -15689,46 +14796,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "experienceLevel",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_experienceLevel",
-                  label: "Sebutkan Tingkat Pengalaman Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Tingkat Pengalaman.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "sectionToGenerate",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_sectionToGenerate",
-                  label: "Sebutkan Bagian yang Akan Dibuat Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Bagian yang Akan Dibuat.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator FAQ (Frequently Asked Questions)": {
         description:
@@ -15747,6 +14814,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "targetAudience",
@@ -15758,6 +14826,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "questionStyle",
@@ -15770,6 +14839,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih bagaimana pertanyaan harus dirumuskan.",
+            optional: true,
           },
           {
             name: "answerStyle",
@@ -15782,6 +14852,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih bagaimana jawaban harus disampaikan.",
+            optional: true,
           },
           {
             name: "faqCount",
@@ -15807,6 +14878,30 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_questionStyle",
+            label: "Sebutkan Gaya Pertanyaan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Pertanyaan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_answerStyle",
+            label: "Sebutkan Gaya Jawaban Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Jawaban.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
         nama_kerangka: "Generator FAQ (Frequently Asked Questions)",
@@ -15826,46 +14921,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "questionStyle",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_questionStyle",
-                  label: "Sebutkan Gaya Pertanyaan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Pertanyaan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "answerStyle",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_answerStyle",
-                  label: "Sebutkan Gaya Jawaban Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Jawaban.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Judul & Headline": {
         description:
@@ -15884,6 +14939,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 5,
               max_length: 50,
             },
+            optional: true,
           },
           {
             name: "keywords",
@@ -15894,6 +14950,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 3,
             },
+            optional: true,
           },
           {
             name: "headlineStyle",
@@ -15909,6 +14966,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih pendekatan psikologis yang ingin Anda gunakan.",
+            optional: true,
           },
           {
             name: "numberOfOptions",
@@ -15920,6 +14978,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 1,
               max_value: 10,
             },
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -15932,6 +14991,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_headlineStyle",
+            label: "Sebutkan Gaya Headline Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Headline.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
@@ -15952,27 +15023,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "headlineStyle",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_headlineStyle",
-                  label: "Sebutkan Gaya Headline Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Headline.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Meta Deskripsi SEO": {
         description:
@@ -16072,6 +15122,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "improvementGoal",
@@ -16085,6 +15136,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih aspek utama yang ingin Anda perbaiki dari tulisan ini.",
+            optional: true,
           },
           {
             name: "targetAudience",
@@ -16095,6 +15147,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -16107,6 +15160,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_improvementGoal",
+            label: "Sebutkan Fokus Penyempurnaan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Fokus Penyempurnaan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
@@ -16127,27 +15192,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "improvementGoal",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_improvementGoal",
-                  label: "Sebutkan Fokus Penyempurnaan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Fokus Penyempurnaan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Penulis Ulang & Parafraser": {
         description:
@@ -16166,6 +15210,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "rewriteGoal",
@@ -16180,6 +15225,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih hasil akhir yang Anda inginkan dari teks baru.",
+            optional: true,
           },
           {
             name: "targetAudience",
@@ -16190,6 +15236,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "keywordsToKeep",
@@ -16219,6 +15266,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_rewriteGoal",
+            label: "Sebutkan Tujuan Penulisan Ulang Lainnya",
+            type: "text",
+            description: "Input kustom untuk Tujuan Penulisan Ulang.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Alat Bantu Menulis"],
         nama_kerangka: "Penulis Ulang & Parafraser",
@@ -16238,27 +15297,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "rewriteGoal",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_rewriteGoal",
-                  label: "Sebutkan Tujuan Penulisan Ulang Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Tujuan Penulisan Ulang.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Peringkas Teks & Artikel": {
         description:
@@ -16277,6 +15315,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 50,
             },
+            optional: true,
           },
           {
             name: "summaryLength",
@@ -16289,6 +15328,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih format dan panjang output yang paling sesuai kebutuhan Anda.",
+            optional: true,
           },
           {
             name: "focus",
@@ -16310,6 +15350,19 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_summaryLength",
+            label: "Sebutkan Panjang Ringkasan yang Diinginkan Lainnya",
+            type: "text",
+            description:
+              "Input kustom untuk Panjang Ringkasan yang Diinginkan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         crossValidationRules: [
@@ -16340,28 +15393,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "summaryLength",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_summaryLength",
-                  label: "Sebutkan Panjang Ringkasan yang Diinginkan Lainnya",
-                  type: "text",
-                  description:
-                    "Input kustom untuk Panjang Ringkasan yang Diinginkan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
     },
     "Analisis & Ekstraksi Data": {
@@ -16382,6 +15413,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 50,
             },
+            optional: true,
           },
           {
             name: "analysisType",
@@ -16394,6 +15426,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih apa yang ingin Anda ketahui dari data ini.",
+            optional: true,
           },
           {
             name: "outputFormat",
@@ -16406,6 +15439,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih cara penyajian hasil analisis.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -16414,6 +15448,31 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Kelompokkan tema ke dalam kategori 'Layanan', 'Produk', 'Harga'. Hitung berapa kali setiap tema disebutkan. Abaikan ulasan yang kurang dari 5 kata.",
             info: "Instruksi spesifik untuk proses analisis dan pelaporan.",
+            optional: true,
+          },
+          {
+            name: "custom_analysisType",
+            label: "Sebutkan Jenis Analisis Lainnya",
+            type: "text",
+            description: "Input kustom untuk Jenis Analisis.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_outputFormat",
+            label: "Sebutkan Format Laporan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Format Laporan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Analisis & Ekstraksi Data"],
@@ -16434,46 +15493,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "analysisType",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_analysisType",
-                  label: "Sebutkan Jenis Analisis Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Jenis Analisis.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "outputFormat",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_outputFormat",
-                  label: "Sebutkan Format Laporan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Format Laporan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Ekstraktor Entitas dari Teks": {
         description:
@@ -16492,6 +15511,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 50,
             },
+            optional: true,
           },
           {
             name: "entitiesToExtract",
@@ -16500,6 +15520,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'Nama Orang, Nama Organisasi, Lokasi, Tanggal, Produk, Uang'",
             info: "Jenis informasi apa yang Anda cari di dalam teks?",
+            optional: true,
           },
           {
             name: "outputFormat",
@@ -16512,6 +15533,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih cara penyajian data yang diekstrak.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -16520,6 +15542,19 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Abaikan nama orang yang hanya disebutkan sekali. Kelompokkan semua lokasi berdasarkan negara. Pastikan format tanggal konsisten (YYYY-MM-DD).",
             info: "Aturan spesifik untuk proses ekstraksi dan pemformatan.",
+            optional: true,
+          },
+          {
+            name: "custom_outputFormat",
+            label: "Sebutkan FORMAT_OUTPUT Lainnya",
+            type: "text",
+            description: "Input kustom untuk FORMAT_OUTPUT.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Analisis & Ekstraksi Data"],
@@ -16540,27 +15575,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "outputFormat",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_outputFormat",
-                  label: "Sebutkan FORMAT_OUTPUT Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk FORMAT_OUTPUT.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
     },
     "Hiburan & Permainan": {
@@ -16577,6 +15591,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "text",
             placeholder: "e.g., 'Dungeons & Dragons 5e', 'Pathfinder'",
             info: "Sistem permainan dapat mempengaruhi terminologi.",
+            optional: true,
           },
           {
             name: "characterClass",
@@ -16584,6 +15599,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "text",
             placeholder: "e.g., 'Rogue', 'Wizard', 'Paladin'",
             info: "Profesi atau peran karakter dalam petualangan.",
+            optional: true,
           },
           {
             name: "characterRace",
@@ -16591,6 +15607,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "text",
             placeholder: "e.g., 'Elf', 'Dwarf', 'Human'",
             info: "Asal-usul atau spesies dari karakter.",
+            optional: true,
           },
           {
             name: "alignment",
@@ -16609,6 +15626,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Kompas moral dari karakter Anda.",
+            optional: true,
           },
           {
             name: "keyTraits",
@@ -16617,6 +15635,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'Sangat takut pada laba-labar, memiliki bekas luka di mata kiri, selalu berbicara dengan sarkasme.'",
             info: "Berikan 2-3 detail unik untuk membuat karakter menonjol.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -16625,6 +15644,19 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Buat latar belakang yang tragis. Hubungkan cerita karakter dengan sebuah artefak kuno. Karakternya harus berasal dari kota di padang pasir.",
             info: "Instruksi kreatif untuk memperkaya narasi karakter.",
+            optional: true,
+          },
+          {
+            name: "custom_alignment",
+            label: "Sebutkan Alignment (Watak) Lainnya",
+            type: "text",
+            description: "Input kustom untuk Alignment (Watak).",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Hiburan & Permainan"],
@@ -16645,27 +15677,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "alignment",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_alignment",
-                  label: "Sebutkan Alignment (Watak) Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Alignment (Watak).",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Teka-teki & Riddle": {
         description:
@@ -16685,6 +15696,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih jenis tantangan yang ingin Anda buat.",
+            optional: true,
           },
           {
             name: "answer",
@@ -16692,6 +15704,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "text",
             placeholder: "e.g., 'Sebuah gema', 'Waktu', 'Papan catur'",
             info: "Apa jawaban dari teka-teki yang akan dibuat?",
+            optional: true,
           },
           {
             name: "difficultyLevel",
@@ -16705,6 +15718,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Seberapa menantang teka-teki yang Anda inginkan?",
+            optional: true,
           },
           {
             name: "theme",
@@ -16713,6 +15727,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'Alam', 'Teknologi', 'Fantasi Abad Pertengahan'",
             info: "Tema akan mempengaruhi pilihan kata dan kiasan.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -16721,6 +15736,31 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Teka-teki harus berima. Buat dalam bentuk dialog. Jawaban tidak boleh disebutkan secara langsung di dalam teka-teki. Sertakan satu petunjuk palsu.",
             info: "Aturan atau batasan spesifik untuk pembuatan teka-teki.",
+            optional: true,
+          },
+          {
+            name: "custom_puzzleType",
+            label: "Sebutkan Jenis Teka-teki Lainnya",
+            type: "text",
+            description: "Input kustom untuk Jenis Teka-teki.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_difficultyLevel",
+            label: "Sebutkan Tingkat Kesulitan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Tingkat Kesulitan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Hiburan & Permainan"],
@@ -16741,46 +15781,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "puzzleType",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_puzzleType",
-                  label: "Sebutkan Jenis Teka-teki Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Jenis Teka-teki.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "difficultyLevel",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_difficultyLevel",
-                  label: "Sebutkan Tingkat Kesulitan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Tingkat Kesulitan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
     },
     "Kehidupan & Produktivitas": {
@@ -16800,6 +15800,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "pantryStaples",
@@ -16826,6 +15827,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih profil rasa yang Anda inginkan.",
+            optional: true,
           },
           {
             name: "dietaryRestrictions",
@@ -16846,6 +15848,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Berapa banyak waktu dan usaha yang ingin Anda curahkan?",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -16858,6 +15861,30 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_cuisineType",
+            label: "Sebutkan Jenis Masakan yang Diinginkan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Jenis Masakan yang Diinginkan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_difficultyLevel",
+            label: "Sebutkan Tingkat Kesulitan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Tingkat Kesulitan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Kehidupan & Produktivitas"],
@@ -16878,47 +15905,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "cuisineType",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_cuisineType",
-                  label: "Sebutkan Jenis Masakan yang Diinginkan Lainnya",
-                  type: "text",
-                  description:
-                    "Input kustom untuk Jenis Masakan yang Diinginkan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "difficultyLevel",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_difficultyLevel",
-                  label: "Sebutkan Tingkat Kesulitan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Tingkat Kesulitan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Template Balasan Cepat": {
         description:
@@ -16937,6 +15923,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "myRole",
@@ -16948,6 +15935,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "keyMessage",
@@ -16959,6 +15947,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "tone",
@@ -16972,6 +15961,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih nada yang sesuai dengan peran dan audiens Anda.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -16984,6 +15974,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+          },
+          {
+            name: "custom_tone",
+            label: "Sebutkan Gaya Bahasa Template Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Bahasa Template.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Kehidupan & Produktivitas"],
@@ -17004,27 +16006,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "tone",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_tone",
-                  label: "Sebutkan Gaya Bahasa Template Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Bahasa Template.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Perencana Perjalanan (Itinerary Planner)": {
         description:
@@ -17042,6 +16023,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 3,
             },
+            optional: true,
           },
           {
             name: "duration",
@@ -17053,6 +16035,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 1,
               max_value: 30,
             },
+            optional: true,
           },
           {
             name: "interests",
@@ -17064,6 +16047,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "travelStyle",
@@ -17078,6 +16062,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih pendekatan umum untuk perjalanan Anda.",
+            optional: true,
           },
           {
             name: "mustVisit",
@@ -17099,6 +16084,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_travelStyle",
+            label: "Sebutkan Gaya Perjalanan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Perjalanan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Kehidupan & Produktivitas"],
         nama_kerangka: "Perencana Perjalanan (Itinerary Planner)",
@@ -17118,27 +16115,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "travelStyle",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_travelStyle",
-                  label: "Sebutkan Gaya Perjalanan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Perjalanan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Perencana Tujuan Pribadi": {
         description:
@@ -17157,6 +16133,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "timeframe",
@@ -17167,6 +16144,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "currentSituation",
@@ -17178,6 +16156,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "planningFramework",
@@ -17190,6 +16169,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih metode perencanaan yang ingin digunakan.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -17202,6 +16182,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_planningFramework",
+            label: "Sebutkan Kerangka Perencanaan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Kerangka Perencanaan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Kehidupan & Produktivitas"],
@@ -17222,27 +16214,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "planningFramework",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_planningFramework",
-                  label: "Sebutkan Kerangka Perencanaan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Kerangka Perencanaan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
     },
     "Komunikasi Profesional": {
@@ -17261,6 +16232,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "productName",
@@ -17271,6 +16243,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "recipientSegment",
@@ -17281,6 +16254,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "senderPersona",
@@ -17291,6 +16265,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "callToAction",
@@ -17301,6 +16276,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "tone",
@@ -17315,6 +16291,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Nuansa pesan yang ingin disampaikan dalam email.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -17327,6 +16304,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_tone",
+            label: "Sebutkan Gaya Bahasa Email Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Bahasa Email.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
@@ -17347,27 +16336,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "tone",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_tone",
-                  label: "Sebutkan Gaya Bahasa Email Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Bahasa Email.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator 'Icebreaker' untuk Rapat": {
         description:
@@ -17386,6 +16354,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "teamProfile",
@@ -17397,6 +16366,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "icebreakerType",
@@ -17410,6 +16380,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih jenis interaksi yang Anda inginkan.",
+            optional: true,
           },
           {
             name: "timeLimit",
@@ -17421,6 +16392,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 1,
               max_value: 30,
             },
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -17433,6 +16405,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_icebreakerType",
+            label: "Sebutkan Jenis Icebreaker Lainnya",
+            type: "text",
+            description: "Input kustom untuk Jenis Icebreaker.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
@@ -17453,27 +16437,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "icebreakerType",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_icebreakerType",
-                  label: "Sebutkan Jenis Icebreaker Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Jenis Icebreaker.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Naskah Pidato/Presentasi": {
         description:
@@ -17492,6 +16455,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "coreMessage",
@@ -17503,6 +16467,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "deliveryStyle",
@@ -17516,6 +16481,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih nuansa yang paling sesuai dengan pesan dan audiens Anda.",
+            optional: true,
           },
           {
             name: "duration",
@@ -17527,6 +16493,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 1,
               max_value: 60,
             },
+            optional: true,
           },
           {
             name: "keyPoints",
@@ -17552,6 +16519,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_deliveryStyle",
+            label: "Sebutkan Gaya Penyampaian Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Penyampaian.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
         nama_kerangka: "Generator Naskah Pidato/Presentasi",
@@ -17571,27 +16550,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "deliveryStyle",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_deliveryStyle",
-                  label: "Sebutkan Gaya Penyampaian Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Penyampaian.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Respon Ulasan Pelanggan": {
         description:
@@ -17609,6 +16567,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "sentiment",
@@ -17623,6 +16582,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Bagaimana perasaan pelanggan dalam ulasan tersebut?",
+            optional: true,
           },
           {
             name: "businessName",
@@ -17633,6 +16593,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "solutionOffered",
@@ -17655,6 +16616,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih nada yang paling sesuai dengan citra brand Anda.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -17667,6 +16629,30 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_sentiment",
+            label: "Sebutkan Sentimen Ulasan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Sentimen Ulasan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_tone",
+            label: "Sebutkan Gaya Bahasa Balasan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Bahasa Balasan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
@@ -17687,46 +16673,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "sentiment",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_sentiment",
-                  label: "Sebutkan Sentimen Ulasan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Sentimen Ulasan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "tone",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_tone",
-                  label: "Sebutkan Gaya Bahasa Balasan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Bahasa Balasan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Ringkasan Rapat (Meeting Summarizer)": {
         description:
@@ -17745,6 +16691,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 50,
             },
+            optional: true,
           },
           {
             name: "attendees",
@@ -17765,6 +16712,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih format output yang paling sesuai dengan kebutuhan Anda.",
+            optional: true,
           },
           {
             name: "keyTopics",
@@ -17795,6 +16743,30 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_summaryStyle",
+            label: "Sebutkan Gaya Ringkasan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Ringkasan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_actionItemsToExtract",
+            label: "Sebutkan Fokus Ekstraksi 'Action Items' Lainnya",
+            type: "text",
+            description: "Input kustom untuk Fokus Ekstraksi 'Action Items'.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
         nama_kerangka: "Generator Ringkasan Rapat (Meeting Summarizer)",
@@ -17814,47 +16786,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "summaryStyle",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_summaryStyle",
-                  label: "Sebutkan Gaya Ringkasan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Ringkasan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "actionItemsToExtract",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_actionItemsToExtract",
-                  label: "Sebutkan Fokus Ekstraksi 'Action Items' Lainnya",
-                  type: "text",
-                  description:
-                    "Input kustom untuk Fokus Ekstraksi 'Action Items'.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Penulis Email Profesional": {
         description:
@@ -17876,6 +16807,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih tujuan utama dari email Anda.",
+            optional: true,
           },
           {
             name: "recipient",
@@ -17887,6 +16819,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "keyInfo",
@@ -17898,6 +16831,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "tone",
@@ -17911,6 +16845,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Sesuaikan nada email dengan budaya perusahaan dan hubungan Anda dengan penerima.",
+            optional: true,
           },
           {
             name: "desiredAction",
@@ -17921,6 +16856,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -17933,6 +16869,30 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_scenario",
+            label: "Sebutkan Skenario Email Lainnya",
+            type: "text",
+            description: "Input kustom untuk Skenario Email.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_tone",
+            label: "Sebutkan Tingkat Formalitas Lainnya",
+            type: "text",
+            description: "Input kustom untuk Tingkat Formalitas.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
@@ -17953,46 +16913,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "scenario",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_scenario",
-                  label: "Sebutkan Skenario Email Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Skenario Email.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "tone",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_tone",
-                  label: "Sebutkan Tingkat Formalitas Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Tingkat Formalitas.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Penulis Memo & Pengumuman Internal": {
         description:
@@ -18100,6 +17020,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "companyName",
@@ -18110,6 +17031,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "keyRequirements",
@@ -18121,6 +17043,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "mySkillsAndExperience",
@@ -18132,6 +17055,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "companyKnowledge",
@@ -18154,6 +17078,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Sesuaikan dengan budaya perusahaan yang Anda persepsikan.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -18166,6 +17091,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_tone",
+            label: "Sebutkan Gaya Bahasa Surat Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Bahasa Surat.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Komunikasi Profesional"],
@@ -18186,27 +17123,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "tone",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_tone",
-                  label: "Sebutkan Gaya Bahasa Surat Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Bahasa Surat.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
     },
     "Kreatif & Ideasi": {
@@ -18226,6 +17142,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "brainstormingFocus",
@@ -18240,6 +17157,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih area spesifik yang ingin Anda gali idenya.",
+            optional: true,
           },
           {
             name: "numberOfIdeas",
@@ -18251,6 +17169,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 1,
               max_value: 20,
             },
+            optional: true,
           },
           {
             name: "constraints",
@@ -18272,6 +17191,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_brainstormingFocus",
+            label: "Sebutkan Fokus Brainstorming Lainnya",
+            type: "text",
+            description: "Input kustom untuk Fokus Brainstorming.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Kreatif & Ideasi"],
         nama_kerangka: "Asisten Brainstorming",
@@ -18291,27 +17222,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "brainstormingFocus",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_brainstormingFocus",
-                  label: "Sebutkan Fokus Brainstorming Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Fokus Brainstorming.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Ide Cerita & Plot": {
         description:
@@ -18336,6 +17246,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Genre akan menentukan konvensi dan ekspektasi pembaca.",
+            optional: true,
           },
           {
             name: "mainCharacter",
@@ -18347,6 +17258,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "setting",
@@ -18358,6 +17270,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "mainConflict",
@@ -18369,6 +17282,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "twist",
@@ -18393,6 +17307,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_genre",
+            label: "Sebutkan Genre Cerita Lainnya",
+            type: "text",
+            description: "Input kustom untuk Genre Cerita.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Kreatif & Ideasi"],
         nama_kerangka: "Generator Ide Cerita & Plot",
@@ -18412,27 +17338,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "genre",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_genre",
-                  label: "Sebutkan Genre Cerita Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Genre Cerita.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Nama Brand/Produk": {
         description:
@@ -18451,6 +17356,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "coreValues",
@@ -18461,6 +17367,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "nameStyle",
@@ -18474,6 +17381,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih jenis nuansa nama yang Anda cari.",
+            optional: true,
           },
           {
             name: "keywordsToInclude",
@@ -18503,6 +17411,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_nameStyle",
+            label: "Sebutkan Gaya Nama yang Diinginkan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Nama yang Diinginkan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Kreatif & Ideasi"],
         nama_kerangka: "Generator Nama Brand/Produk",
@@ -18522,27 +17442,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "nameStyle",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_nameStyle",
-                  label: "Sebutkan Gaya Nama yang Diinginkan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Nama yang Diinginkan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Premis Film/Serial TV": {
         description:
@@ -18637,6 +17536,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "coreBenefit",
@@ -18648,6 +17548,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "targetAudience",
@@ -18658,6 +17559,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "sloganStyle",
@@ -18672,6 +17574,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih nuansa atau jenis slogan yang Anda inginkan.",
+            optional: true,
           },
           {
             name: "keywordsToInclude",
@@ -18696,6 +17599,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_sloganStyle",
+            label: "Sebutkan Gaya Slogan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Slogan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Kreatif & Ideasi"],
         nama_kerangka: "Generator Slogan/Tagline",
@@ -18715,27 +17630,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "sloganStyle",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_sloganStyle",
-                  label: "Sebutkan Gaya Slogan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Slogan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
     },
     "Pemasaran & Penjualan": {
@@ -19043,6 +17937,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih tujuan utama dari rangkaian email ini.",
+            optional: true,
           },
           {
             name: "product",
@@ -19053,6 +17948,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "numberOfEmails",
@@ -19064,6 +17960,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 1,
               max_value: 10,
             },
+            optional: true,
           },
           {
             name: "sequenceGoal",
@@ -19075,6 +17972,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "emailTopics",
@@ -19100,6 +17998,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_sequenceType",
+            label: "Sebutkan Jenis Urutan Email Lainnya",
+            type: "text",
+            description: "Input kustom untuk Jenis Urutan Email.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Pemasaran & Penjualan"],
         nama_kerangka: "Pembuat Urutan Email Otomatis",
@@ -19119,27 +18029,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "sequenceType",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_sequenceType",
-                  label: "Sebutkan Jenis Urutan Email Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Jenis Urutan Email.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Penulis Teks Iklan (Ad Copy)": {
         description:
@@ -19160,6 +18049,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Setiap platform memiliki batasan karakter dan format yang berbeda.",
+            optional: true,
           },
           {
             name: "product",
@@ -19170,6 +18060,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "targetAudience",
@@ -19180,6 +18071,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "uniqueBenefit",
@@ -19190,6 +18082,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "callToAction",
@@ -19200,6 +18093,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -19212,6 +18106,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_platform",
+            label: "Sebutkan Platform Iklan Lainnya",
+            type: "text",
+            description: "Input kustom untuk Platform Iklan.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Pemasaran & Penjualan"],
@@ -19232,27 +18138,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "platform",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_platform",
-                  label: "Sebutkan Platform Iklan Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Platform Iklan.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Postingan Media Sosial": {
         description:
@@ -19277,6 +18162,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               regex: "^(?!Pilih Platform...).*$",
             },
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -19290,253 +18176,200 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
-        ],
-        dynamicSubcomponents: {
-          trigger: "platform",
-          options: {
-            LinkedIn: [
-              {
-                name: "postType",
-                label: "Jenis Postingan LinkedIn",
-                type: "select",
-                options: [
-                  "Teks Saja",
-                  "Artikel",
-                  "Polling",
-                  "Berbagi Link",
-                  "Gambar/Video",
-                  "Lainnya...",
-                ],
-                info: "Pilih format konten yang akan dibuat.",
-                validation: {
-                  regex: "^(?!Lainnya).*$",
-                },
-              },
-              {
-                name: "topic",
-                label: "Topik Pembahasan",
-                type: "text",
-                placeholder: "e.g., 'Tren terbaru dalam AI generatif'",
-                info: "Inti dari pesan yang ingin Anda sampaikan.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "objective",
-                label: "Tujuan Postingan",
-                type: "select",
-                options: [
-                  "Thought Leadership",
-                  "Networking",
-                  "Promosi Layanan",
-                  "Merekrut Talenta",
-                  "Berbagi Berita",
-                  "Lainnya...",
-                ],
-                info: "Apa yang ingin Anda capai dengan postingan ini?",
-                validation: {
-                  regex: "^(?!Lainnya).*$",
-                },
-              },
-              {
-                name: "hashtags",
-                label: "Hashtag Relevan (pisahkan koma)",
-                type: "text",
-                placeholder: "e.g., '#AI, #FutureOfWork, #Innovation'",
-                info: "Membantu postingan Anda ditemukan oleh audiens yang lebih luas.",
-                validation: {
-                  min_length: 3,
-                },
-              },
+          {
+            name: "postType",
+            label: "Jenis Postingan Facebook",
+            type: "select",
+            options: [
+              "Berbagi Cerita",
+              "Update Produk",
+              "Bertanya",
+              "Berbagi Link/Artikel",
+              "Event",
+              "Lainnya...",
             ],
-            Instagram: [
-              {
-                name: "visualDescription",
-                label: "Deskripsi Visual Foto/Reel",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Sebuah foto flat-lay meja kerja yang rapi dengan laptop, secangkir kopi, dan tanaman hias.'",
-                info: "Jelaskan elemen visual agar AI bisa membuat caption yang relevan.",
-                validation: {
-                  min_length: 20,
-                },
-              },
-              {
-                name: "captionStyle",
-                label: "Gaya Caption Instagram",
-                type: "select",
-                options: [
-                  "Informatif",
-                  "Inspiratif",
-                  "Storytelling",
-                  "Singkat & Tajam",
-                  "Humoris",
-                  "Lainnya...",
-                ],
-                info: "Pilih nuansa teks yang cocok dengan visual Anda.",
-              },
-              {
-                name: "callToAction",
-                label: "Call To Action",
-                type: "text",
-                placeholder:
-                  "e.g., 'Simpan postingan ini!', 'Komentari pendapatmu!'",
-                info: "Ajak audiens untuk berinteraksi.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "hashtags",
-                label: "Hashtag (pisahkan koma)",
-                type: "text",
-                placeholder: "e.g., '#workfromhome, #productivity, #desksetup'",
-                info: "Gunakan campuran hashtag populer dan niche.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-            ],
-            "Twitter (X)": [
-              {
-                name: "tweetFormat",
-                label: "Format Tweet",
-                type: "select",
-                options: [
-                  "Single Tweet",
-                  "Thread (Rangkaian Tweet)",
-                  "Lainnya...",
-                ],
-                info: "Apakah ini tweet tunggal atau rangkaian bersambung?",
-              },
-              {
-                name: "topic",
-                label: "Topik Utama",
-                type: "text",
-                placeholder: "e.g., 'Kesan pertama menggunakan produk Y'",
-                info: "Poin utama dari tweet atau thread Anda.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "hook",
-                label: "Kalimat Pembuka (Hook)",
-                type: "text",
-                placeholder:
-                  "e.g., 'Saya baru saja mencoba Y dan ini hasilnya...'",
-                info: "Kalimat pertama yang membuat orang berhenti scrolling.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "tone",
-                label: "Gaya Bahasa Twitter",
-                type: "select",
-                options: [
-                  "Santai",
-                  "Profesional",
-                  "Humoris",
-                  "Provokatif",
-                  "Informatif",
-                  "Lainnya...",
-                ],
-                info: "Sesuaikan gaya bahasa dengan audiens Twitter.",
-              },
-            ],
-            Facebook: [
-              {
-                name: "postType",
-                label: "Jenis Postingan Facebook",
-                type: "select",
-                options: [
-                  "Berbagi Cerita",
-                  "Update Produk",
-                  "Bertanya",
-                  "Berbagi Link/Artikel",
-                  "Event",
-                  "Lainnya...",
-                ],
-                info: "Pilih format yang paling sesuai dengan pesan Anda.",
-              },
-              {
-                name: "targetAudience",
-                label: "Target Audiens Facebook",
-                type: "text",
-                placeholder:
-                  "e.g., 'Anggota grup Komunitas Z', 'Pengikut Halaman'",
-                info: "Siapa audiens spesifik yang Anda sapa?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "visualIdea",
-                label: "Ide Visual Pendamping",
-                type: "text",
-                placeholder:
-                  "e.g., 'Album foto acara kemarin, infografis sederhana'",
-                info: "Deskripsikan gambar atau video yang akan menyertai teks.",
-                validation: {
-                  min_length: 10,
-                },
-              },
-              {
-                name: "interactionGoal",
-                label: "Tujuan Interaksi",
-                type: "text",
-                placeholder: "e.g., 'Memicu diskusi di kolom komentar'",
-                info: "Jenis respons apa yang Anda harapkan?",
-                validation: {
-                  min_length: 5,
-                },
-              },
-            ],
-            TikTok: [
-              {
-                name: "videoConcept",
-                label: "Konsep Video Singkat",
-                type: "textarea",
-                placeholder:
-                  "e.g., 'Transisi sebelum dan sesudah menggunakan produk X dengan lagu yang sedang tren.'",
-                info: "Jelaskan alur cerita atau konsep visual video Anda.",
-                validation: {
-                  min_length: 20,
-                },
-              },
-              {
-                name: "trendingSound",
-                label: "Saran Suara/Lagu Tren",
-                type: "text",
-                placeholder: "e.g., 'Gunakan lagu 'xyz' yang sedang viral'",
-                info: "Sebutkan nama lagu atau jenis suara untuk meningkatkan jangkauan.",
-                optional: true,
-              },
-              {
-                name: "caption",
-                label: "Teks Caption TikTok",
-                type: "text",
-                placeholder: "e.g., 'Jangan kaget sama hasilnya! ✨'",
-                info: "Buat caption yang singkat, menarik, dan relevan dengan video.",
-                validation: {
-                  min_length: 5,
-                },
-              },
-              {
-                name: "hashtags",
-                label: "Hashtag FYP (pisahkan koma)",
-                type: "text",
-                placeholder: "e.g., '#fyp, #productreview, #lifehack'",
-                info: "Gunakan hashtag yang sedang tren untuk masuk For You Page.",
-                validation: {
-                  min_length: 3,
-                },
-              },
-            ],
+            info: "Pilih format yang paling sesuai dengan pesan Anda.",
+            optional: true,
           },
-        },
+          {
+            name: "topic",
+            label: "Topik Utama",
+            type: "text",
+            placeholder: "e.g., 'Kesan pertama menggunakan produk Y'",
+            info: "Poin utama dari tweet atau thread Anda.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "objective",
+            label: "Tujuan Postingan",
+            type: "select",
+            options: [
+              "Thought Leadership",
+              "Networking",
+              "Promosi Layanan",
+              "Merekrut Talenta",
+              "Berbagi Berita",
+              "Lainnya...",
+            ],
+            info: "Apa yang ingin Anda capai dengan postingan ini?",
+            validation: {
+              regex: "^(?!Lainnya).*$",
+            },
+            optional: true,
+          },
+          {
+            name: "hashtags",
+            label: "Hashtag FYP (pisahkan koma)",
+            type: "text",
+            placeholder: "e.g., '#fyp, #productreview, #lifehack'",
+            info: "Gunakan hashtag yang sedang tren untuk masuk For You Page.",
+            validation: {
+              min_length: 3,
+            },
+            optional: true,
+          },
+          {
+            name: "visualDescription",
+            label: "Deskripsi Visual Foto/Reel",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Sebuah foto flat-lay meja kerja yang rapi dengan laptop, secangkir kopi, dan tanaman hias.'",
+            info: "Jelaskan elemen visual agar AI bisa membuat caption yang relevan.",
+            validation: {
+              min_length: 20,
+            },
+            optional: true,
+          },
+          {
+            name: "captionStyle",
+            label: "Gaya Caption Instagram",
+            type: "select",
+            options: [
+              "Informatif",
+              "Inspiratif",
+              "Storytelling",
+              "Singkat & Tajam",
+              "Humoris",
+              "Lainnya...",
+            ],
+            info: "Pilih nuansa teks yang cocok dengan visual Anda.",
+            optional: true,
+          },
+          {
+            name: "callToAction",
+            label: "Call To Action",
+            type: "text",
+            placeholder:
+              "e.g., 'Simpan postingan ini!', 'Komentari pendapatmu!'",
+            info: "Ajak audiens untuk berinteraksi.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "tweetFormat",
+            label: "Format Tweet",
+            type: "select",
+            options: ["Single Tweet", "Thread (Rangkaian Tweet)", "Lainnya..."],
+            info: "Apakah ini tweet tunggal atau rangkaian bersambung?",
+            optional: true,
+          },
+          {
+            name: "hook",
+            label: "Kalimat Pembuka (Hook)",
+            type: "text",
+            placeholder: "e.g., 'Saya baru saja mencoba Y dan ini hasilnya...'",
+            info: "Kalimat pertama yang membuat orang berhenti scrolling.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "tone",
+            label: "Gaya Bahasa Twitter",
+            type: "select",
+            options: [
+              "Santai",
+              "Profesional",
+              "Humoris",
+              "Provokatif",
+              "Informatif",
+              "Lainnya...",
+            ],
+            info: "Sesuaikan gaya bahasa dengan audiens Twitter.",
+            optional: true,
+          },
+          {
+            name: "targetAudience",
+            label: "Target Audiens Facebook",
+            type: "text",
+            placeholder: "e.g., 'Anggota grup Komunitas Z', 'Pengikut Halaman'",
+            info: "Siapa audiens spesifik yang Anda sapa?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "visualIdea",
+            label: "Ide Visual Pendamping",
+            type: "text",
+            placeholder:
+              "e.g., 'Album foto acara kemarin, infografis sederhana'",
+            info: "Deskripsikan gambar atau video yang akan menyertai teks.",
+            validation: {
+              min_length: 10,
+            },
+            optional: true,
+          },
+          {
+            name: "interactionGoal",
+            label: "Tujuan Interaksi",
+            type: "text",
+            placeholder: "e.g., 'Memicu diskusi di kolom komentar'",
+            info: "Jenis respons apa yang Anda harapkan?",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+          {
+            name: "videoConcept",
+            label: "Konsep Video Singkat",
+            type: "textarea",
+            placeholder:
+              "e.g., 'Transisi sebelum dan sesudah menggunakan produk X dengan lagu yang sedang tren.'",
+            info: "Jelaskan alur cerita atau konsep visual video Anda.",
+            validation: {
+              min_length: 20,
+            },
+            optional: true,
+          },
+          {
+            name: "trendingSound",
+            label: "Saran Suara/Lagu Tren",
+            type: "text",
+            placeholder: "e.g., 'Gunakan lagu 'xyz' yang sedang viral'",
+            info: "Sebutkan nama lagu atau jenis suara untuk meningkatkan jangkauan.",
+            optional: true,
+          },
+          {
+            name: "caption",
+            label: "Teks Caption TikTok",
+            type: "text",
+            placeholder: "e.g., 'Jangan kaget sama hasilnya! ✨'",
+            info: "Buat caption yang singkat, menarik, dan relevan dengan video.",
+            validation: {
+              min_length: 5,
+            },
+            optional: true,
+          },
+        ],
         kategori: ["Teks & Konten", "Pemasaran & Penjualan"],
         nama_kerangka: "Postingan Media Sosial",
         examples: [],
@@ -19578,6 +18411,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih fokus untuk sesi jurnal Anda.",
+            optional: true,
           },
           {
             name: "currentMood",
@@ -19585,6 +18419,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "text",
             placeholder: "e.g., 'Merasa lelah', 'Bersemangat', 'Sedikit cemas'",
             info: "Membantu AI menyesuaikan pertanyaan agar lebih relevan dengan kondisi Anda.",
+            optional: true,
           },
           {
             name: "numberOfPrompts",
@@ -19592,6 +18427,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "number",
             placeholder: "e.g., 5",
             info: "Berapa banyak pertanyaan panduan yang Anda inginkan?",
+            optional: true,
           },
           {
             name: "promptStyle",
@@ -19604,6 +18440,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih jenis pertanyaan yang paling Anda butuhkan saat ini.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -19612,6 +18449,31 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Fokus pada pencapaian kecil. Hindari pertanyaan tentang pekerjaan. Buat pertanyaan yang bisa dijawab dalam 1-2 kalimat.",
             info: "Preferensi personal untuk memandu AI.",
+            optional: true,
+          },
+          {
+            name: "custom_journalTheme",
+            label: "Sebutkan Tema Jurnal Hari Ini Lainnya",
+            type: "text",
+            description: "Input kustom untuk Tema Jurnal Hari Ini.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_promptStyle",
+            label: "Sebutkan Gaya Prompt Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Prompt.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Pengembangan Diri & Psikologi"],
@@ -19632,46 +18494,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dengan code examples, explanations, dan best practice recommendations yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "journalTheme",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_journalTheme",
-                  label: "Sebutkan Tema Jurnal Hari Ini Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Tema Jurnal Hari Ini.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "promptStyle",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_promptStyle",
-                  label: "Sebutkan Gaya Prompt Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Prompt.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Simulator Latihan Percakapan Sulit": {
         description:
@@ -19757,6 +18579,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "targetAudience",
@@ -19767,6 +18590,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "usp",
@@ -19777,6 +18601,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "keyFeatures",
@@ -19788,6 +18613,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "brandVoice",
@@ -19801,6 +18627,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih suara brand yang konsisten dengan produk Anda.",
+            optional: true,
           },
           {
             name: "length",
@@ -19813,6 +18640,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih panjang deskripsi sesuai kebutuhan platform e-commerce.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -19825,6 +18653,30 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_brandVoice",
+            label: "Sebutkan Gaya Bahasa Brand Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Bahasa Brand.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_length",
+            label: "Sebutkan Panjang Deskripsi Lainnya",
+            type: "text",
+            description: "Input kustom untuk Panjang Deskripsi.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
@@ -19845,46 +18697,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "brandVoice",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_brandVoice",
-                  label: "Sebutkan Gaya Bahasa Brand Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Bahasa Brand.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "length",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_length",
-                  label: "Sebutkan Panjang Deskripsi Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Panjang Deskripsi.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Halaman 'Tentang Kami'": {
         description:
@@ -19902,6 +18714,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "missionStatement",
@@ -19913,6 +18726,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "originStory",
@@ -19935,6 +18749,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "tone",
@@ -19948,6 +18763,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih nada yang paling merepresentasikan budaya perusahaan Anda.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -19960,6 +18776,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_tone",
+            label: "Sebutkan Gaya Bahasa Halaman Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Bahasa Halaman.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
@@ -19980,27 +18808,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "tone",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_tone",
-                  label: "Sebutkan Gaya Bahasa Halaman Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Bahasa Halaman.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Pembuat Studi Kasus (Case Study)": {
         description:
@@ -20215,6 +19022,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "hostPersona",
@@ -20226,6 +19034,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "podcastFormat",
@@ -20239,6 +19048,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Struktur umum dari episode podcast Anda.",
+            optional: true,
           },
           {
             name: "keySegments",
@@ -20250,6 +19060,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "targetDuration",
@@ -20261,6 +19072,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 1,
               max_value: 120,
             },
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -20273,6 +19085,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+          },
+          {
+            name: "custom_podcastFormat",
+            label: "Sebutkan Format Podcast Lainnya",
+            type: "text",
+            description: "Input kustom untuk Format Podcast.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
@@ -20293,27 +19117,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "podcastFormat",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_podcastFormat",
-                  label: "Sebutkan Format Podcast Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Format Podcast.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Penulis White Paper/Laporan": {
         description:
@@ -20331,6 +19134,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "mainThesis",
@@ -20342,6 +19146,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
           },
           {
             name: "targetAudience",
@@ -20355,6 +19160,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Siapa audiens utama dokumen ini? Ini akan menentukan tingkat kedalaman teknis.",
+            optional: true,
           },
           {
             name: "supportingData",
@@ -20366,6 +19172,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 20,
             },
+            optional: true,
           },
           {
             name: "structure",
@@ -20391,6 +19198,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_targetAudience",
+            label: "Sebutkan Target Pembaca Lainnya",
+            type: "text",
+            description: "Input kustom untuk Target Pembaca.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
         nama_kerangka: "Penulis White Paper/Laporan",
@@ -20410,27 +19229,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "targetAudience",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_targetAudience",
-                  label: "Sebutkan Target Pembaca Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Target Pembaca.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Penulisan Artikel SEO": {
         description:
@@ -20448,6 +19246,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "secondaryKeywords",
@@ -20458,6 +19257,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 3,
             },
+            optional: true,
           },
           {
             name: "targetAudience",
@@ -20468,6 +19268,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 5,
             },
+            optional: true,
           },
           {
             name: "tone",
@@ -20482,6 +19283,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih nuansa tulisan yang diinginkan.",
+            optional: true,
           },
           {
             name: "wordCount",
@@ -20493,6 +19295,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_value: 100,
               max_value: 5000,
             },
+            optional: true,
           },
           {
             name: "outline",
@@ -20514,6 +19317,18 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               min_length: 10,
             },
           },
+          {
+            name: "custom_tone",
+            label: "Sebutkan Gaya Bahasa Artikel Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Bahasa Artikel.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
         ],
         kategori: ["Teks & Konten", "Penulisan & Konten"],
         nama_kerangka: "Penulisan Artikel SEO",
@@ -20533,27 +19348,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "tone",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_tone",
-                  label: "Sebutkan Gaya Bahasa Artikel Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Bahasa Artikel.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
     },
     "Utilitas & Development": {
@@ -20574,6 +19368,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 50,
             },
+            optional: true,
           },
           {
             name: "myRole",
@@ -20585,6 +19380,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Dari sudut pandang mana AI harus menganalisis dokumen ini?",
+            optional: true,
           },
           {
             name: "focus",
@@ -20593,6 +19389,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'Kewajiban saya', 'Hak saya atas data', 'Klausul pembatalan'",
             info: "Aspek apa dari dokumen yang paling ingin Anda pahami?",
+            optional: true,
           },
           {
             name: "outputFormat",
@@ -20605,6 +19402,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih cara penyajian ringkasan yang paling mudah Anda pahami.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -20616,6 +19414,31 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             validation: {
               min_length: 10,
             },
+            optional: true,
+          },
+          {
+            name: "custom_myRole",
+            label: "Sebutkan Peran Saya Lainnya",
+            type: "text",
+            description: "Input kustom untuk Peran Saya.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_outputFormat",
+            label: "Sebutkan FORMAT_OUTPUT Lainnya",
+            type: "text",
+            description: "Input kustom untuk FORMAT_OUTPUT.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Utilitas & Development"],
@@ -20636,46 +19459,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "myRole",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_myRole",
-                  label: "Sebutkan Peran Saya Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Peran Saya.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "outputFormat",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_outputFormat",
-                  label: "Sebutkan FORMAT_OUTPUT Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk FORMAT_OUTPUT.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Data Dummy": {
         description:
@@ -20690,6 +19473,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "text",
             placeholder: "e.g., 'Daftar Pengguna'",
             info: "Nama objek data yang akan dibuat.",
+            optional: true,
           },
           {
             name: "schemaFields",
@@ -20698,6 +19482,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "e.g., 'nama:nama_lengkap\nemail:email\nusia:angka(18-65)\nstatus:pilihan(aktif|tidak aktif)'",
             info: "Definisikan setiap field dan tipenya (nama_lengkap, email, angka, teks, pilihan, dll.). Gunakan format 'nama:tipe(opsi)'.",
+            optional: true,
           },
           {
             name: "recordCount",
@@ -20705,6 +19490,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "number",
             placeholder: "e.g., 10",
             info: "Berapa banyak baris data yang ingin Anda hasilkan?",
+            optional: true,
           },
           {
             name: "outputFormat",
@@ -20712,6 +19498,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "select",
             options: ["JSON Array", "CSV", "Lainnya..."],
             info: "Pilih format output yang diinginkan (misalnya, JSON Array, CSV).",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -20720,6 +19507,19 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Pastikan email unik untuk setiap record. Buat data terlihat realistis. Usia harus berdistribusi normal.",
             info: "Instruksi spesifik tentang batasan data, relasi antar field, atau tingkat kerandoman.",
+            optional: true,
+          },
+          {
+            name: "custom_outputFormat",
+            label: "Sebutkan FORMAT_OUTPUT Lainnya",
+            type: "text",
+            description: "Input kustom untuk FORMAT_OUTPUT.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Utilitas & Development"],
@@ -20740,27 +19540,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "outputFormat",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_outputFormat",
-                  label: "Sebutkan FORMAT_OUTPUT Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk FORMAT_OUTPUT.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
       "Generator Pesan Error Ramah Pengguna": {
         description:
@@ -20841,6 +19620,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "textarea",
             placeholder: "Tempelkan fungsi, kelas, atau metode Anda di sini.",
             info: "AI akan menganalisis kode untuk menghasilkan dokumentasi yang relevan.",
+            optional: true,
           },
           {
             name: "language",
@@ -20855,6 +19635,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Bahasa pemrograman akan menentukan format docstring (e.g., reST, JSDoc).",
+            optional: true,
           },
           {
             name: "documentationStyle",
@@ -20868,6 +19649,7 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
               "Lainnya...",
             ],
             info: "Pilih format komentar dokumentasi yang umum digunakan.",
+            optional: true,
           },
           {
             name: "additionalContext",
@@ -20876,6 +19658,31 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             placeholder:
               "Contoh: Jelaskan parameter 'user_id' secara lebih detail. Sertakan satu contoh penggunaan. Jelaskan apa yang di-return oleh fungsi ini.",
             info: "Informasi tambahan yang tidak bisa disimpulkan hanya dari kode.",
+            optional: true,
+          },
+          {
+            name: "custom_language",
+            label: "Sebutkan Bahasa Pemrograman Lainnya",
+            type: "text",
+            description: "Input kustom untuk Bahasa Pemrograman.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
+          },
+          {
+            name: "custom_documentationStyle",
+            label: "Sebutkan Gaya Dokumentasi Lainnya",
+            type: "text",
+            description: "Input kustom untuk Gaya Dokumentasi.",
+            placeholder: "Ketik opsi kustom...",
+            optional: false,
+            validation: {
+              min_length: 2,
+            },
+            info: "Manual input jika opsi standar tidak tersedia.",
           },
         ],
         kategori: ["Teks & Konten", "Utilitas & Development"],
@@ -20896,46 +19703,6 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           FORMAT_OUTPUT:
             "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas.",
         },
-        dynamicSubcomponents: [
-          {
-            trigger: "language",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_language",
-                  label: "Sebutkan Bahasa Pemrograman Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Bahasa Pemrograman.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-          {
-            trigger: "documentationStyle",
-            options: {
-              "Lainnya...": [
-                {
-                  name: "custom_documentationStyle",
-                  label: "Sebutkan Gaya Dokumentasi Lainnya",
-                  type: "text",
-                  description: "Input kustom untuk Gaya Dokumentasi.",
-                  placeholder: "Ketik opsi kustom...",
-                  optional: false,
-                  validation: {
-                    min_length: 2,
-                  },
-                  info: "Manual input jika opsi standar tidak tersedia.",
-                },
-              ],
-            },
-          },
-        ],
       },
     },
   },

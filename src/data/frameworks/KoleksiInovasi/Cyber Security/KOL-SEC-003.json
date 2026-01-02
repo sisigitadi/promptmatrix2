@@ -37,400 +37,371 @@
         "Pengukuran & Pelaporan Program Keamanan (Security Program Metrics & Reporting)",
         "Lainnya..."
       ]
+    },
+    {
+      "name": "VALIDATION_TTP_ID",
+      "label": "Taktik/Teknik yang Divalidasi (ID TTP)",
+      "type": "text",
+      "placeholder": "Contoh: T1059.001 (PowerShell), T1548.002 (Bypass UAC).",
+      "info": "Sebutkan ID Taktik, Teknik, dan Prosedur (TTP) dari MITRE ATT&CK yang akan diuji.",
+      "optional": false,
+      "description": "ID TTP yang akan diuji."
+    },
+    {
+      "name": "VALIDATION_RED_TEAM_TOOL",
+      "label": "Alat Red Team yang Digunakan",
+      "type": "text",
+      "placeholder": "Contoh: Atomic Red Team, skrip PowerShell kustom, Cobalt Strike.",
+      "info": "Alat yang akan digunakan Red Team untuk mengeksekusi TTP.",
+      "optional": false,
+      "description": "Alat yang digunakan Red Team."
+    },
+    {
+      "name": "VALIDATION_BLUE_TEAM_TOOL",
+      "label": "Alat Blue Team untuk Observasi",
+      "type": "text",
+      "placeholder": "Contoh: Sysmon, Azure Sentinel, CrowdStrike.",
+      "info": "Alat yang akan dipantau oleh Blue Team untuk melihat jejak serangan.",
+      "optional": false,
+      "description": "Alat yang dipantau Blue Team."
+    },
+    {
+      "name": "TUNING_RULE_ID",
+      "label": "ID atau Nama Aturan Deteksi",
+      "type": "text",
+      "placeholder": "Contoh: 'Deteksi Eksekusi PowerShell dari Office App', Rule ID: 5a4b...",
+      "info": "Aturan spesifik di SIEM atau EDR yang akan disesuaikan.",
+      "optional": false,
+      "description": "ID atau nama aturan deteksi."
+    },
+    {
+      "name": "TUNING_PROBLEM",
+      "label": "Masalah yang Dihadapi",
+      "type": "select",
+      "options": [
+        "Terlalu Banyak False Positive",
+        "Terjadi False Negative (Gagal Mendeteksi)",
+        "Performa Aturan Lambat",
+        "Lainnya..."
+      ],
+      "info": "Pilih masalah utama yang terkait dengan aturan deteksi saat ini.",
+      "optional": false,
+      "description": "Masalah terkait aturan deteksi."
+    },
+    {
+      "name": "TUNING_CONTEXT",
+      "label": "Konteks Tambahan",
+      "type": "textarea",
+      "placeholder": "Contoh: False positive terjadi karena skrip login yang sah. Serangan asli dengan TTP X gagal terdeteksi saat simulasi.",
+      "info": "Berikan detail tentang skenario false positive atau false negative.",
+      "optional": true,
+      "description": "Detail skenario false positive/negative."
+    },
+    {
+      "name": "EVAL_TOOL_NAME",
+      "label": "Nama Alat Keamanan",
+      "type": "text",
+      "placeholder": "Contoh: EDR X, SIEM Y, Firewall Z.",
+      "info": "Sebutkan alat keamanan yang akan dievaluasi.",
+      "optional": false,
+      "description": "Alat keamanan yang dievaluasi."
+    },
+    {
+      "name": "EVAL_CRITERIA",
+      "label": "Kriteria Evaluasi",
+      "type": "textarea",
+      "placeholder": "Contoh: Kemampuan deteksi TTP A, B, C; integrasi dengan SIEM; kemudahan penggunaan.",
+      "info": "Definisikan kriteria yang akan digunakan untuk menilai alat tersebut.",
+      "optional": false,
+      "description": "Kriteria penilaian alat."
+    },
+    {
+      "name": "EVAL_PURPOSE",
+      "label": "Tujuan Evaluasi",
+      "type": "textarea",
+      "placeholder": "Contoh: Memilih EDR baru, memvalidasi fitur terbaru dari SIEM yang ada.",
+      "info": "Jelaskan mengapa evaluasi ini dilakukan.",
+      "optional": false,
+      "description": "Tujuan utama evaluasi."
+    },
+    {
+      "name": "THREAT_MODEL_TARGET_APP",
+      "label": "Aplikasi atau Sistem Target",
+      "type": "text",
+      "placeholder": "Contoh: Aplikasi perbankan online baru, arsitektur microservices 'X'.",
+      "info": "Aplikasi atau sistem yang akan dimodelkan ancamannya.",
+      "optional": false,
+      "description": "Target pemodelan ancaman."
+    },
+    {
+      "name": "THREAT_MODEL_METHODOLOGY",
+      "label": "Metodologi Pemodelan Ancaman",
+      "type": "select",
+      "options": [
+        "STRIDE",
+        "PASTA",
+        "DREAD",
+        "Lainnya..."
+      ],
+      "info": "Pilih kerangka kerja pemodelan ancaman yang akan digunakan.",
+      "default": "STRIDE",
+      "optional": false,
+      "description": "Metodologi pemodelan ancaman."
+    },
+    {
+      "name": "THREAT_MODEL_SCOPE",
+      "label": "Lingkup Pemodelan",
+      "type": "textarea",
+      "placeholder": "Contoh: Hanya modul autentikasi, seluruh layanan backend.",
+      "info": "Definisikan bagian spesifik dari aplikasi/sistem yang akan dianalisis.",
+      "optional": false,
+      "description": "Lingkup analisis ancaman."
+    },
+    {
+      "name": "DE_SESSION_GOAL",
+      "label": "Tujuan Sesi",
+      "type": "textarea",
+      "placeholder": "Contoh: Membuat deteksi baru untuk teknik 'Kerberoasting', meningkatkan cakupan deteksi untuk gerakan lateral.",
+      "info": "Apa hasil yang diharapkan dari sesi rekayasa deteksi ini?",
+      "optional": false,
+      "description": "Hasil yang diharapkan dari sesi."
+    },
+    {
+      "name": "DE_SESSION_LOG_SOURCES",
+      "label": "Sumber Log yang Diperlukan",
+      "type": "text",
+      "placeholder": "Contoh: Log Keamanan Windows (4769), log jaringan dari Zeek/Corelight.",
+      "info": "Data apa yang diperlukan untuk membangun dan memvalidasi deteksi baru?",
+      "optional": false,
+      "description": "Data yang diperlukan untuk deteksi baru."
+    },
+    {
+      "name": "DE_SESSION_ATTACK_SIM",
+      "label": "Simulasi Serangan yang Direncanakan",
+      "type": "textarea",
+      "placeholder": "Contoh: Eksekusi Mimikatz pada domain controller, penggunaan PsExec untuk gerakan lateral.",
+      "info": "Tindakan Red Team yang akan disimulasikan selama sesi untuk menguji deteksi.",
+      "optional": false,
+      "description": "Simulasi serangan Red Team."
+    },
+    {
+      "name": "BAS_TARGET_TTP",
+      "label": "TTP Target (MITRE ATT&CK ID)",
+      "type": "text",
+      "placeholder": "Contoh: T1059.003 (Windows Command Shell), T1566.001 (Spearphishing Attachment).",
+      "info": "Sebutkan ID TTP spesifik yang ingin diuji oleh skenario BAS.",
+      "optional": false,
+      "description": "ID TTP yang akan diuji."
+    },
+    {
+      "name": "BAS_OBJECTIVE",
+      "label": "Tujuan Skenario BAS",
+      "type": "textarea",
+      "placeholder": "Contoh: Memvalidasi deteksi EDR terhadap eksekusi remote shell, mengukur efektivitas filter email terhadap lampiran berbahaya.",
+      "info": "Apa yang ingin Anda capai dengan menjalankan skenario BAS ini?",
+      "optional": false,
+      "description": "Tujuan skenario BAS."
+    },
+    {
+      "name": "BAS_TOOL",
+      "label": "Alat BAS yang Digunakan",
+      "type": "text",
+      "placeholder": "Contoh: AttackIQ, Cymulate, Picus Security.",
+      "info": "Sebutkan platform Breach and Attack Simulation (BAS) yang akan digunakan.",
+      "optional": false,
+      "description": "Platform BAS yang digunakan."
+    },
+    {
+      "name": "HUNT_SESSION_THREAT",
+      "label": "Ancaman yang Dicari",
+      "type": "textarea",
+      "placeholder": "Contoh: Ancaman yang menggunakan teknik 'Living Off The Land Binaries' (LOLBAS), aktivitas post-eksploitasi dari ransomware.",
+      "info": "Jelaskan jenis ancaman atau perilaku spesifik yang akan menjadi fokus perburuan.",
+      "optional": false,
+      "description": "Jenis ancaman yang menjadi fokus."
+    },
+    {
+      "name": "HUNT_SESSION_HYPOTHESIS",
+      "label": "Hipotesis Perburuan",
+      "type": "textarea",
+      "placeholder": "Contoh: 'Penyerang mungkin telah menggunakan `certutil.exe` untuk mengunduh payload dari internet', 'Ada akun layanan yang melakukan login interaktif'.",
+      "info": "Asumsi yang akan divalidasi atau dibantah selama sesi perburuan.",
+      "optional": false,
+      "description": "Asumsi yang akan divalidasi."
+    },
+    {
+      "name": "HUNT_SESSION_DATA",
+      "label": "Sumber Data yang Akan Digunakan",
+      "type": "text",
+      "placeholder": "Contoh: Log proses EDR, log Sysmon, log autentikasi AD.",
+      "info": "Sebutkan sumber data yang akan digunakan untuk mencari indikator ancaman.",
+      "optional": false,
+      "description": "Sumber data untuk perburuan ancaman."
+    },
+    {
+      "name": "CONTROL_TEST_NAME",
+      "label": "Nama Kontrol Keamanan",
+      "type": "text",
+      "placeholder": "Contoh: Aturan Firewall IPS, Kebijakan DLP, Fungsi Antivirus EDR.",
+      "info": "Sebutkan kontrol keamanan yang akan diuji efektivitasnya.",
+      "optional": false,
+      "description": "Kontrol keamanan yang diuji."
+    },
+    {
+      "name": "CONTROL_TEST_METHOD",
+      "label": "Metode Pengujian",
+      "type": "select",
+      "options": [
+        "Simulasi Serangan (Red Team)",
+        "Uji Konfigurasi (Audit)",
+        "Analisis Log (Blue Team)",
+        "Lainnya..."
+      ],
+      "info": "Pilih metode yang akan digunakan untuk menguji kontrol.",
+      "optional": false,
+      "description": "Metode yang digunakan untuk pengujian."
+    },
+    {
+      "name": "CONTROL_TEST_EXPECTED",
+      "label": "Hasil yang Diharapkan",
+      "type": "textarea",
+      "placeholder": "Contoh: Serangan diblokir, peringatan dihasilkan di SIEM, file dienkripsi setelah tindakan tertentu.",
+      "info": "Jelaskan perilaku yang diinginkan dari kontrol keamanan saat diuji.",
+      "optional": false,
+      "description": "Perilaku yang diharapkan dari kontrol keamanan."
+    },
+    {
+      "name": "GAP_ANALYSIS_FRAMEWORK",
+      "label": "Kerangka Kerja Acuan",
+      "type": "text",
+      "placeholder": "Contoh: MITRE ATT&CK, CIS Controls v8.",
+      "info": "Kerangka kerja yang akan digunakan untuk memetakan kemampuan pertahanan saat ini.",
+      "optional": false,
+      "description": "Kerangka kerja acuan untuk analisis."
+    },
+    {
+      "name": "GAP_ANALYSIS_CURRENT_COVERAGE",
+      "label": "Cakupan Deteksi Saat Ini",
+      "type": "textarea",
+      "placeholder": "Contoh: Hasil dari ATT&CK Navigator, laporan dari alat BAS.",
+      "info": "Informasi tentang cakupan TTP yang sudah dimiliki saat ini.",
+      "optional": true,
+      "description": "Cakupan TTP yang ada saat ini."
+    },
+    {
+      "name": "GAP_ANALYSIS_TARGET",
+      "label": "Target Kesenjangan",
+      "type": "textarea",
+      "placeholder": "Contoh: Area 'Persistensi', semua teknik 'Defense Evasion'.",
+      "info": "Fokus analisis pada area atau taktik spesifik.",
+      "optional": false,
+      "description": "Area fokus analisis kesenjangan."
+    },
+    {
+      "name": "POSTMORTEM_INCIDENT_ID",
+      "label": "ID Insiden",
+      "type": "text",
+      "placeholder": "Contoh: INC-20240315-001.",
+      "info": "ID unik dari insiden yang sedang dianalisis.",
+      "optional": false,
+      "description": "ID unik insiden."
+    },
+    {
+      "name": "POSTMORTEM_SUMMARY",
+      "label": "Ringkasan Insiden",
+      "type": "textarea",
+      "placeholder": "Contoh: Serangan ransomware yang berhasil mengenkripsi server file, insiden kebocoran data dari aplikasi web.",
+      "info": "Berikan ringkasan singkat tentang insiden dan dampaknya.",
+      "optional": false,
+      "description": "Ringkasan insiden dan dampaknya."
+    },
+    {
+      "name": "POSTMORTEM_FINDINGS_RED",
+      "label": "Temuan dari Perspektif Red Team",
+      "type": "textarea",
+      "placeholder": "Contoh: Vektor akses awal yang berhasil, metode eskalasi hak yang digunakan.",
+      "info": "Apa yang Red Team pelajari dari sudut pandang penyerang?",
+      "optional": false,
+      "description": "Pembelajaran Red Team dari insiden."
+    },
+    {
+      "name": "POSTMORTEM_FINDINGS_BLUE",
+      "label": "Temuan dari Perspektif Blue Team",
+      "type": "textarea",
+      "placeholder": "Contoh: Titik kegagalan deteksi, waktu respons, area peningkatan tim SOC.",
+      "info": "Apa yang Blue Team pelajari dari sudut pandang pembela?",
+      "optional": false,
+      "description": "Pembelajaran Blue Team dari insiden."
+    },
+    {
+      "name": "DEBRIEF_EXERCISE_NAME",
+      "label": "Nama Latihan Gabungan",
+      "type": "text",
+      "placeholder": "Contoh: 'Operasi Solar Flare Q3 2024'",
+      "info": "Nama atau kode dari latihan yang telah dilaksanakan.",
+      "optional": false,
+      "description": "Nama latihan gabungan."
+    },
+    {
+      "name": "DEBRIEF_FINDINGS_RED",
+      "label": "Temuan Utama dari Red Team",
+      "type": "textarea",
+      "placeholder": "Contoh: Berhasil mendapatkan akses awal melalui CVE-XXXX. Mampu bergerak lateral menggunakan Pass-the-Hash.",
+      "info": "Ringkasan keberhasilan dan tantangan dari tim ofensif.",
+      "optional": false,
+      "description": "Keberhasilan dan tantangan Red Team."
+    },
+    {
+      "name": "DEBRIEF_FINDINGS_BLUE",
+      "label": "Temuan Utama dari Blue Team",
+      "type": "textarea",
+      "placeholder": "Contoh: Deteksi berhasil pada tahap akses awal, namun gagal melihat gerakan lateral. Waktu respons 15 menit.",
+      "info": "Ringkasan keberhasilan dan tantangan dari tim defensif.",
+      "optional": false,
+      "description": "Keberhasilan dan tantangan Blue Team."
+    },
+    {
+      "name": "DEBRIEF_RECOMMENDATIONS",
+      "label": "Rekomendasi Utama",
+      "type": "textarea",
+      "placeholder": "Contoh: Perbarui aturan deteksi untuk T1059.001. Latih analis SOC tentang deteksi gerakan lateral.",
+      "info": "Sebutkan rekomendasi utama untuk peningkatan yang muncul dari debriefing.",
+      "optional": false,
+      "description": "Rekomendasi peningkatan dari debriefing."
+    },
+    {
+      "name": "METRICS_REPORT_SCOPE",
+      "label": "Lingkup Laporan",
+      "type": "text",
+      "placeholder": "Contoh: Kinerja SOC Q3, Efektivitas Program Manajemen Kerentanan.",
+      "info": "Definisikan area program keamanan yang akan diukur dan dilaporkan.",
+      "optional": false,
+      "description": "Area program keamanan yang dilaporkan."
+    },
+    {
+      "name": "METRICS_KEY_METRICS",
+      "label": "Metrik Kunci yang Dilaporkan",
+      "type": "textarea",
+      "placeholder": "Contoh: Waktu Rata-rata untuk Deteksi (MTTD), Waktu Rata-rata untuk Respons (MTTR), Jumlah Kerentanan Kritis yang Belum Ditambal.",
+      "info": "Sebutkan metrik spesifik yang relevan dengan laporan ini.",
+      "optional": false,
+      "description": "Metrik keamanan yang akan dilaporkan."
+    },
+    {
+      "name": "METRICS_AUDIENCE",
+      "label": "Audiens Laporan",
+      "type": "select",
+      "options": [
+        "Manajemen Teknis",
+        "Eksekutif C-Level",
+        "Tim Keamanan Internal",
+        "Lainnya..."
+      ],
+      "info": "Siapa yang akan menerima laporan ini? Ini akan mempengaruhi tingkat detail dan bahasa yang digunakan.",
+      "optional": false,
+      "description": "Audiens utama laporan."
     }
   ],
-  "dynamicSubcomponents": {
-    "trigger": "PURPLE_TEAM_ACTIVITY",
-    "options": {
-      "Validasi Deteksi Taktis (Tactical Detection Validation)": [
-        {
-          "name": "VALIDATION_TTP_ID",
-          "label": "Taktik/Teknik yang Divalidasi (ID TTP)",
-          "type": "text",
-          "placeholder": "Contoh: T1059.001 (PowerShell), T1548.002 (Bypass UAC).",
-          "info": "Sebutkan ID Taktik, Teknik, dan Prosedur (TTP) dari MITRE ATT&CK yang akan diuji.",
-          "optional": false,
-          "description": "ID TTP yang akan diuji."
-        },
-        {
-          "name": "VALIDATION_RED_TEAM_TOOL",
-          "label": "Alat Red Team yang Digunakan",
-          "type": "text",
-          "placeholder": "Contoh: Atomic Red Team, skrip PowerShell kustom, Cobalt Strike.",
-          "info": "Alat yang akan digunakan Red Team untuk mengeksekusi TTP.",
-          "optional": false,
-          "description": "Alat yang digunakan Red Team."
-        },
-        {
-          "name": "VALIDATION_BLUE_TEAM_TOOL",
-          "label": "Alat Blue Team untuk Observasi",
-          "type": "text",
-          "placeholder": "Contoh: Sysmon, Azure Sentinel, CrowdStrike.",
-          "info": "Alat yang akan dipantau oleh Blue Team untuk melihat jejak serangan.",
-          "optional": false,
-          "description": "Alat yang dipantau Blue Team."
-        }
-      ],
-      "Penyesuaian & Pengoptimalan Aturan (Rule Tuning & Optimization)": [
-        {
-          "name": "TUNING_RULE_ID",
-          "label": "ID atau Nama Aturan Deteksi",
-          "type": "text",
-          "placeholder": "Contoh: 'Deteksi Eksekusi PowerShell dari Office App', Rule ID: 5a4b...",
-          "info": "Aturan spesifik di SIEM atau EDR yang akan disesuaikan.",
-          "optional": false,
-          "description": "ID atau nama aturan deteksi."
-        },
-        {
-          "name": "TUNING_PROBLEM",
-          "label": "Masalah yang Dihadapi",
-          "type": "select",
-          "options": [
-            "Terlalu Banyak False Positive",
-            "Terjadi False Negative (Gagal Mendeteksi)",
-            "Performa Aturan Lambat",
-            "Lainnya..."
-          ],
-          "info": "Pilih masalah utama yang terkait dengan aturan deteksi saat ini.",
-          "optional": false,
-          "description": "Masalah terkait aturan deteksi."
-        },
-        {
-          "name": "TUNING_CONTEXT",
-          "label": "Konteks Tambahan",
-          "type": "textarea",
-          "placeholder": "Contoh: False positive terjadi karena skrip login yang sah. Serangan asli dengan TTP X gagal terdeteksi saat simulasi.",
-          "info": "Berikan detail tentang skenario false positive atau false negative.",
-          "optional": true,
-          "description": "Detail skenario false positive/negative."
-        }
-      ],
-      "Evaluasi Alat Keamanan (Security Tooling Evaluation)": [
-        {
-          "name": "EVAL_TOOL_NAME",
-          "label": "Nama Alat Keamanan",
-          "type": "text",
-          "placeholder": "Contoh: EDR X, SIEM Y, Firewall Z.",
-          "info": "Sebutkan alat keamanan yang akan dievaluasi.",
-          "optional": false,
-          "description": "Alat keamanan yang dievaluasi."
-        },
-        {
-          "name": "EVAL_CRITERIA",
-          "label": "Kriteria Evaluasi",
-          "type": "textarea",
-          "placeholder": "Contoh: Kemampuan deteksi TTP A, B, C; integrasi dengan SIEM; kemudahan penggunaan.",
-          "info": "Definisikan kriteria yang akan digunakan untuk menilai alat tersebut.",
-          "optional": false,
-          "description": "Kriteria penilaian alat."
-        },
-        {
-          "name": "EVAL_PURPOSE",
-          "label": "Tujuan Evaluasi",
-          "type": "textarea",
-          "placeholder": "Contoh: Memilih EDR baru, memvalidasi fitur terbaru dari SIEM yang ada.",
-          "info": "Jelaskan mengapa evaluasi ini dilakukan.",
-          "optional": false,
-          "description": "Tujuan utama evaluasi."
-        }
-      ],
-      "Pemodelan Ancaman Kolaboratif (Collaborative Threat Modeling)": [
-        {
-          "name": "THREAT_MODEL_TARGET_APP",
-          "label": "Aplikasi atau Sistem Target",
-          "type": "text",
-          "placeholder": "Contoh: Aplikasi perbankan online baru, arsitektur microservices 'X'.",
-          "info": "Aplikasi atau sistem yang akan dimodelkan ancamannya.",
-          "optional": false,
-          "description": "Target pemodelan ancaman."
-        },
-        {
-          "name": "THREAT_MODEL_METHODOLOGY",
-          "label": "Metodologi Pemodelan Ancaman",
-          "type": "select",
-          "options": [
-            "STRIDE",
-            "PASTA",
-            "DREAD",
-            "Lainnya..."
-          ],
-          "info": "Pilih kerangka kerja pemodelan ancaman yang akan digunakan.",
-          "default": "STRIDE",
-          "optional": false,
-          "description": "Metodologi pemodelan ancaman."
-        },
-        {
-          "name": "THREAT_MODEL_SCOPE",
-          "label": "Lingkup Pemodelan",
-          "type": "textarea",
-          "placeholder": "Contoh: Hanya modul autentikasi, seluruh layanan backend.",
-          "info": "Definisikan bagian spesifik dari aplikasi/sistem yang akan dianalisis.",
-          "optional": false,
-          "description": "Lingkup analisis ancaman."
-        }
-      ],
-      "Sesi Rekayasa Deteksi (Detection Engineering Session)": [
-        {
-          "name": "DE_SESSION_GOAL",
-          "label": "Tujuan Sesi",
-          "type": "textarea",
-          "placeholder": "Contoh: Membuat deteksi baru untuk teknik 'Kerberoasting', meningkatkan cakupan deteksi untuk gerakan lateral.",
-          "info": "Apa hasil yang diharapkan dari sesi rekayasa deteksi ini?",
-          "optional": false,
-          "description": "Hasil yang diharapkan dari sesi."
-        },
-        {
-          "name": "DE_SESSION_LOG_SOURCES",
-          "label": "Sumber Log yang Diperlukan",
-          "type": "text",
-          "placeholder": "Contoh: Log Keamanan Windows (4769), log jaringan dari Zeek/Corelight.",
-          "info": "Data apa yang diperlukan untuk membangun dan memvalidasi deteksi baru?",
-          "optional": false,
-          "description": "Data yang diperlukan untuk deteksi baru."
-        },
-        {
-          "name": "DE_SESSION_ATTACK_SIM",
-          "label": "Simulasi Serangan yang Direncanakan",
-          "type": "textarea",
-          "placeholder": "Contoh: Eksekusi Mimikatz pada domain controller, penggunaan PsExec untuk gerakan lateral.",
-          "info": "Tindakan Red Team yang akan disimulasikan selama sesi untuk menguji deteksi.",
-          "optional": false,
-          "description": "Simulasi serangan Red Team."
-        }
-      ],
-      "Desain Skenario BAS (BAS Scenario Design)": [
-        {
-          "name": "BAS_TARGET_TTP",
-          "label": "TTP Target (MITRE ATT&CK ID)",
-          "type": "text",
-          "placeholder": "Contoh: T1059.003 (Windows Command Shell), T1566.001 (Spearphishing Attachment).",
-          "info": "Sebutkan ID TTP spesifik yang ingin diuji oleh skenario BAS.",
-          "optional": false,
-          "description": "ID TTP yang akan diuji."
-        },
-        {
-          "name": "BAS_OBJECTIVE",
-          "label": "Tujuan Skenario BAS",
-          "type": "textarea",
-          "placeholder": "Contoh: Memvalidasi deteksi EDR terhadap eksekusi remote shell, mengukur efektivitas filter email terhadap lampiran berbahaya.",
-          "info": "Apa yang ingin Anda capai dengan menjalankan skenario BAS ini?",
-          "optional": false,
-          "description": "Tujuan skenario BAS."
-        },
-        {
-          "name": "BAS_TOOL",
-          "label": "Alat BAS yang Digunakan",
-          "type": "text",
-          "placeholder": "Contoh: AttackIQ, Cymulate, Picus Security.",
-          "info": "Sebutkan platform Breach and Attack Simulation (BAS) yang akan digunakan.",
-          "optional": false,
-          "description": "Platform BAS yang digunakan."
-        }
-      ],
-      "Sesi Perburuan Terpandu (Guided Hunting Session)": [
-        {
-          "name": "HUNT_SESSION_THREAT",
-          "label": "Ancaman yang Dicari",
-          "type": "textarea",
-          "placeholder": "Contoh: Ancaman yang menggunakan teknik 'Living Off The Land Binaries' (LOLBAS), aktivitas post-eksploitasi dari ransomware.",
-          "info": "Jelaskan jenis ancaman atau perilaku spesifik yang akan menjadi fokus perburuan.",
-          "optional": false,
-          "description": "Jenis ancaman yang menjadi fokus."
-        },
-        {
-          "name": "HUNT_SESSION_HYPOTHESIS",
-          "label": "Hipotesis Perburuan",
-          "type": "textarea",
-          "placeholder": "Contoh: 'Penyerang mungkin telah menggunakan `certutil.exe` untuk mengunduh payload dari internet', 'Ada akun layanan yang melakukan login interaktif'.",
-          "info": "Asumsi yang akan divalidasi atau dibantah selama sesi perburuan.",
-          "optional": false,
-          "description": "Asumsi yang akan divalidasi."
-        },
-        {
-          "name": "HUNT_SESSION_DATA",
-          "label": "Sumber Data yang Akan Digunakan",
-          "type": "text",
-          "placeholder": "Contoh: Log proses EDR, log Sysmon, log autentikasi AD.",
-          "info": "Sebutkan sumber data yang akan digunakan untuk mencari indikator ancaman.",
-          "optional": false,
-          "description": "Sumber data untuk perburuan ancaman."
-        }
-      ],
-      "Pengujian Efektivitas Kontrol Keamanan (Security Control Efficacy Testing)": [
-        {
-          "name": "CONTROL_TEST_NAME",
-          "label": "Nama Kontrol Keamanan",
-          "type": "text",
-          "placeholder": "Contoh: Aturan Firewall IPS, Kebijakan DLP, Fungsi Antivirus EDR.",
-          "info": "Sebutkan kontrol keamanan yang akan diuji efektivitasnya.",
-          "optional": false,
-          "description": "Kontrol keamanan yang diuji."
-        },
-        {
-          "name": "CONTROL_TEST_METHOD",
-          "label": "Metode Pengujian",
-          "type": "select",
-          "options": [
-            "Simulasi Serangan (Red Team)",
-            "Uji Konfigurasi (Audit)",
-            "Analisis Log (Blue Team)",
-            "Lainnya..."
-          ],
-          "info": "Pilih metode yang akan digunakan untuk menguji kontrol.",
-          "optional": false,
-          "description": "Metode yang digunakan untuk pengujian."
-        },
-        {
-          "name": "CONTROL_TEST_EXPECTED",
-          "label": "Hasil yang Diharapkan",
-          "type": "textarea",
-          "placeholder": "Contoh: Serangan diblokir, peringatan dihasilkan di SIEM, file dienkripsi setelah tindakan tertentu.",
-          "info": "Jelaskan perilaku yang diinginkan dari kontrol keamanan saat diuji.",
-          "optional": false,
-          "description": "Perilaku yang diharapkan dari kontrol keamanan."
-        }
-      ],
-      "Analisis Kesenjangan Pertahanan (Defense Gap Analysis)": [
-        {
-          "name": "GAP_ANALYSIS_FRAMEWORK",
-          "label": "Kerangka Kerja Acuan",
-          "type": "text",
-          "placeholder": "Contoh: MITRE ATT&CK, CIS Controls v8.",
-          "info": "Kerangka kerja yang akan digunakan untuk memetakan kemampuan pertahanan saat ini.",
-          "optional": false,
-          "description": "Kerangka kerja acuan untuk analisis."
-        },
-        {
-          "name": "GAP_ANALYSIS_CURRENT_COVERAGE",
-          "label": "Cakupan Deteksi Saat Ini",
-          "type": "textarea",
-          "placeholder": "Contoh: Hasil dari ATT&CK Navigator, laporan dari alat BAS.",
-          "info": "Informasi tentang cakupan TTP yang sudah dimiliki saat ini.",
-          "optional": true,
-          "description": "Cakupan TTP yang ada saat ini."
-        },
-        {
-          "name": "GAP_ANALYSIS_TARGET",
-          "label": "Target Kesenjangan",
-          "type": "textarea",
-          "placeholder": "Contoh: Area 'Persistensi', semua teknik 'Defense Evasion'.",
-          "info": "Fokus analisis pada area atau taktik spesifik.",
-          "optional": false,
-          "description": "Area fokus analisis kesenjangan."
-        }
-      ],
-      "Post-Mortem Insiden Kolaboratif (Collaborative Incident Post-Mortem)": [
-        {
-          "name": "POSTMORTEM_INCIDENT_ID",
-          "label": "ID Insiden",
-          "type": "text",
-          "placeholder": "Contoh: INC-20240315-001.",
-          "info": "ID unik dari insiden yang sedang dianalisis.",
-          "optional": false,
-          "description": "ID unik insiden."
-        },
-        {
-          "name": "POSTMORTEM_SUMMARY",
-          "label": "Ringkasan Insiden",
-          "type": "textarea",
-          "placeholder": "Contoh: Serangan ransomware yang berhasil mengenkripsi server file, insiden kebocoran data dari aplikasi web.",
-          "info": "Berikan ringkasan singkat tentang insiden dan dampaknya.",
-          "optional": false,
-          "description": "Ringkasan insiden dan dampaknya."
-        },
-        {
-          "name": "POSTMORTEM_FINDINGS_RED",
-          "label": "Temuan dari Perspektif Red Team",
-          "type": "textarea",
-          "placeholder": "Contoh: Vektor akses awal yang berhasil, metode eskalasi hak yang digunakan.",
-          "info": "Apa yang Red Team pelajari dari sudut pandang penyerang?",
-          "optional": false,
-          "description": "Pembelajaran Red Team dari insiden."
-        },
-        {
-          "name": "POSTMORTEM_FINDINGS_BLUE",
-          "label": "Temuan dari Perspektif Blue Team",
-          "type": "textarea",
-          "placeholder": "Contoh: Titik kegagalan deteksi, waktu respons, area peningkatan tim SOC.",
-          "info": "Apa yang Blue Team pelajari dari sudut pandang pembela?",
-          "optional": false,
-          "description": "Pembelajaran Blue Team dari insiden."
-        }
-      ],
-      "Debriefing & Laporan Latihan Gabungan (Joint Exercise Debrief & Reporting)": [
-        {
-          "name": "DEBRIEF_EXERCISE_NAME",
-          "label": "Nama Latihan Gabungan",
-          "type": "text",
-          "placeholder": "Contoh: 'Operasi Solar Flare Q3 2024'",
-          "info": "Nama atau kode dari latihan yang telah dilaksanakan.",
-          "optional": false,
-          "description": "Nama latihan gabungan."
-        },
-        {
-          "name": "DEBRIEF_FINDINGS_RED",
-          "label": "Temuan Utama dari Red Team",
-          "type": "textarea",
-          "placeholder": "Contoh: Berhasil mendapatkan akses awal melalui CVE-XXXX. Mampu bergerak lateral menggunakan Pass-the-Hash.",
-          "info": "Ringkasan keberhasilan dan tantangan dari tim ofensif.",
-          "optional": false,
-          "description": "Keberhasilan dan tantangan Red Team."
-        },
-        {
-          "name": "DEBRIEF_FINDINGS_BLUE",
-          "label": "Temuan Utama dari Blue Team",
-          "type": "textarea",
-          "placeholder": "Contoh: Deteksi berhasil pada tahap akses awal, namun gagal melihat gerakan lateral. Waktu respons 15 menit.",
-          "info": "Ringkasan keberhasilan dan tantangan dari tim defensif.",
-          "optional": false,
-          "description": "Keberhasilan dan tantangan Blue Team."
-        },
-        {
-          "name": "DEBRIEF_RECOMMENDATIONS",
-          "label": "Rekomendasi Utama",
-          "type": "textarea",
-          "placeholder": "Contoh: Perbarui aturan deteksi untuk T1059.001. Latih analis SOC tentang deteksi gerakan lateral.",
-          "info": "Sebutkan rekomendasi utama untuk peningkatan yang muncul dari debriefing.",
-          "optional": false,
-          "description": "Rekomendasi peningkatan dari debriefing."
-        }
-      ],
-      "Pengukuran & Pelaporan Program Keamanan (Security Program Metrics & Reporting)": [
-        {
-          "name": "METRICS_REPORT_SCOPE",
-          "label": "Lingkup Laporan",
-          "type": "text",
-          "placeholder": "Contoh: Kinerja SOC Q3, Efektivitas Program Manajemen Kerentanan.",
-          "info": "Definisikan area program keamanan yang akan diukur dan dilaporkan.",
-          "optional": false,
-          "description": "Area program keamanan yang dilaporkan."
-        },
-        {
-          "name": "METRICS_KEY_METRICS",
-          "label": "Metrik Kunci yang Dilaporkan",
-          "type": "textarea",
-          "placeholder": "Contoh: Waktu Rata-rata untuk Deteksi (MTTD), Waktu Rata-rata untuk Respons (MTTR), Jumlah Kerentanan Kritis yang Belum Ditambal.",
-          "info": "Sebutkan metrik spesifik yang relevan dengan laporan ini.",
-          "optional": false,
-          "description": "Metrik keamanan yang akan dilaporkan."
-        },
-        {
-          "name": "METRICS_AUDIENCE",
-          "label": "Audiens Laporan",
-          "type": "select",
-          "options": [
-            "Manajemen Teknis",
-            "Eksekutif C-Level",
-            "Tim Keamanan Internal",
-            "Lainnya..."
-          ],
-          "info": "Siapa yang akan menerima laporan ini? Ini akan mempengaruhi tingkat detail dan bahasa yang digunakan.",
-          "optional": false,
-          "description": "Audiens utama laporan."
-        }
-      ]
-    }
-  },
   "komponen_prompt": {
     "PERAN": "Anda adalah seorang Koordinator Purple Team yang ahli dalam memfasilitasi kolaborasi antara tim ofensif dan defensif untuk meningkatkan postur keamanan secara keseluruhan.",
     "KONTEKS": "Input yang saya berikan: {PURPLE_TEAM_ACTIVITY}.",

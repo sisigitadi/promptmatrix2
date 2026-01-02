@@ -22,85 +22,79 @@
         "Lainnya..."
       ],
       "default": "Perancangan Alur Pengguna (User Flow)",
-      "info": "Pilih jenis bantuan desain yang Anda perlukan."
-    }
-  ],
-  "dynamicSubcomponents": [
+      "info": "Pilih jenis bantuan desain yang Anda perlukan.",
+      "optional": true
+    },
     {
-      "trigger": "TUGAS_DESAIN_UIUX",
-      "options": {
-        "Perancangan Alur Pengguna (User Flow)": [
-          {
-            "name": "FLOW_TUGAS_PENGGUNA",
-            "label": "Tugas Utama Pengguna",
-            "type": "text",
-            "placeholder": "Contoh: Melakukan pendaftaran akun baru",
-            "info": "Jelaskan tugas yang ingin Anda petakan alurnya."
-          },
-          {
-            "name": "FLOW_TITIK_AWAL_AKHIR",
-            "label": "Titik Awal dan Akhir Alur",
-            "type": "text",
-            "placeholder": "Contoh: Dari halaman utama hingga halaman 'selamat datang'",
-            "info": "Sebutkan dari mana alur dimulai dan di mana berakhir."
-          }
-        ],
-        "Generator Konsep Tata Letak (Wireframe)": [
-          {
-            "name": "WIREFRAME_JENIS_HALAMAN",
-            "label": "Jenis Halaman/Layar",
-            "type": "text",
-            "placeholder": "Contoh: Halaman Beranda, Layar Login",
-            "info": "Sebutkan halaman yang ingin dibuatkan konsep tata letaknya."
-          },
-          {
-            "name": "WIREFRAME_ELEMEN_KUNCI",
-            "label": "Elemen-elemen Kunci",
-            "type": "textarea",
-            "placeholder": "Contoh: Logo, Tombol Login, Banner Promo, Daftar Produk",
-            "info": "Sebutkan semua elemen yang wajib ada di halaman tersebut."
-          }
-        ],
-        "Analisis & Umpan Balik Desain": [
-          {
-            "name": "ANALISIS_DESKRIPSI_DESAIN",
-            "label": "Deskripsi atau Link ke Desain Anda",
-            "type": "textarea",
-            "placeholder": "Jelaskan desain Anda saat ini atau tempelkan link ke gambar (misal: Imgur).",
-            "info": "Berikan konteks sebanyak mungkin tentang desain yang ingin dianalisis."
-          },
-          {
-            "name": "ANALISIS_TUJUAN_DESAIN",
-            "label": "Tujuan Utama Halaman/Desain",
-            "type": "text",
-            "placeholder": "Contoh: Meyakinkan pengguna untuk menekan tombol 'Daftar Gratis'",
-            "info": "Apa aksi terpenting yang diharapkan dari pengguna di halaman ini?"
-          }
-        ],
-        "Generator Teks Antarmuka (UX Writing)": [
-          {
-            "name": "UXWRITING_KONTEKS",
-            "label": "Konteks dan Elemen UI",
-            "type": "text",
-            "placeholder": "Contoh: Pesan error untuk form login, Teks untuk tombol konfirmasi",
-            "info": "Jelaskan di mana teks ini akan muncul."
-          },
-          {
-            "name": "UXWRITING_TONE",
-            "label": "Nada Suara (Tone of Voice)",
-            "type": "select",
-            "options": [
-              "Formal",
-              "Ramah",
-              "Jenaka",
-              "Profesional",
-              "Lainnya..."
-            ],
-            "default": "Ramah",
-            "info": "Pilih gaya bahasa yang sesuai dengan brand Anda."
-          }
-        ]
-      }
+      "name": "FLOW_TUGAS_PENGGUNA",
+      "label": "Tugas Utama Pengguna",
+      "type": "text",
+      "placeholder": "Contoh: Melakukan pendaftaran akun baru",
+      "info": "Jelaskan tugas yang ingin Anda petakan alurnya.",
+      "optional": true
+    },
+    {
+      "name": "FLOW_TITIK_AWAL_AKHIR",
+      "label": "Titik Awal dan Akhir Alur",
+      "type": "text",
+      "placeholder": "Contoh: Dari halaman utama hingga halaman 'selamat datang'",
+      "info": "Sebutkan dari mana alur dimulai dan di mana berakhir.",
+      "optional": true
+    },
+    {
+      "name": "WIREFRAME_JENIS_HALAMAN",
+      "label": "Jenis Halaman/Layar",
+      "type": "text",
+      "placeholder": "Contoh: Halaman Beranda, Layar Login",
+      "info": "Sebutkan halaman yang ingin dibuatkan konsep tata letaknya.",
+      "optional": true
+    },
+    {
+      "name": "WIREFRAME_ELEMEN_KUNCI",
+      "label": "Elemen-elemen Kunci",
+      "type": "textarea",
+      "placeholder": "Contoh: Logo, Tombol Login, Banner Promo, Daftar Produk",
+      "info": "Sebutkan semua elemen yang wajib ada di halaman tersebut.",
+      "optional": true
+    },
+    {
+      "name": "ANALISIS_DESKRIPSI_DESAIN",
+      "label": "Deskripsi atau Link ke Desain Anda",
+      "type": "textarea",
+      "placeholder": "Jelaskan desain Anda saat ini atau tempelkan link ke gambar (misal: Imgur).",
+      "info": "Berikan konteks sebanyak mungkin tentang desain yang ingin dianalisis.",
+      "optional": true
+    },
+    {
+      "name": "ANALISIS_TUJUAN_DESAIN",
+      "label": "Tujuan Utama Halaman/Desain",
+      "type": "text",
+      "placeholder": "Contoh: Meyakinkan pengguna untuk menekan tombol 'Daftar Gratis'",
+      "info": "Apa aksi terpenting yang diharapkan dari pengguna di halaman ini?",
+      "optional": true
+    },
+    {
+      "name": "UXWRITING_KONTEKS",
+      "label": "Konteks dan Elemen UI",
+      "type": "text",
+      "placeholder": "Contoh: Pesan error untuk form login, Teks untuk tombol konfirmasi",
+      "info": "Jelaskan di mana teks ini akan muncul.",
+      "optional": true
+    },
+    {
+      "name": "UXWRITING_TONE",
+      "label": "Nada Suara (Tone of Voice)",
+      "type": "select",
+      "options": [
+        "Formal",
+        "Ramah",
+        "Jenaka",
+        "Profesional",
+        "Lainnya..."
+      ],
+      "default": "Ramah",
+      "info": "Pilih gaya bahasa yang sesuai dengan brand Anda.",
+      "optional": true
     }
   ],
   "komponen_prompt": {

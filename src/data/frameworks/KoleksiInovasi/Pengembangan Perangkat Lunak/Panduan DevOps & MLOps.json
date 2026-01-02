@@ -30,285 +30,266 @@
       ],
       "description": "Pilih tugas operasional utama yang ingin Anda lakukan.",
       "default": "Manajemen Proyek Agile",
-      "info": "Pilih tugas utama yang ingin Anda lakukan. Pilihan Anda akan menampilkan opsi-opsi yang relevan di bawah."
-    }
-  ],
-  "dynamicSubcomponents": [
+      "info": "Pilih tugas utama yang ingin Anda lakukan. Pilihan Anda akan menampilkan opsi-opsi yang relevan di bawah.",
+      "optional": true
+    },
     {
-      "trigger": "TUGAS_OPERASIONAL",
-      "options": {
-        "Manajemen Proyek Agile": [
-          {
-            "name": "agileFramework",
-            "label": "Kerangka Kerja Agile",
-            "type": "select",
-            "options": [
-              "Scrum",
-              "Kanban",
-              "Lainnya..."
-            ],
-            "default": "Scrum",
-            "info": "Pilih kerangka kerja Agile yang Anda gunakan."
-          },
-          {
-            "name": "projectGoal",
-            "label": "Tujuan Proyek/Sprint",
-            "type": "textarea",
-            "placeholder": "e.g., 'Mengembangkan fitur autentikasi pengguna baru'",
-            "info": "Jelaskan tujuan utama dari proyek atau sprint ini."
-          },
-          {
-            "name": "teamSize",
-            "label": "Ukuran Tim",
-            "type": "number",
-            "placeholder": "e.g., 5",
-            "info": "Masukkan jumlah anggota dalam tim Anda."
-          }
-        ],
-        "Manajemen Dependensi & Versi": [
-          {
-            "name": "helpTopic",
-            "label": "Topik Bantuan",
-            "type": "select",
-            "options": [
-              "Manajemen Dependensi",
-              "Kontrol Versi (Git)",
-              "Keduanya",
-              "Lainnya..."
-            ],
-            "default": "Kontrol Versi (Git)",
-            "info": "Pilih topik yang Anda butuhkan bantuan."
-          },
-          {
-            "name": "programmingLanguage",
-            "label": "Bahasa/Ekosistem Pemrograman (Opsional)",
-            "type": "text",
-            "placeholder": "e.g., 'Node.js (npm), Python (pip), Java (Maven/Gradle)'",
-            "optional": true,
-            "info": "Sebutkan bahasa atau ekosistem pemrograman Anda."
-          },
-          {
-            "name": "specificProblem",
-            "label": "Masalah Spesifik (Opsional)",
-            "type": "textarea",
-            "placeholder": "e.g., 'Saya tidak tahu cara menggabungkan dua branch di Git tanpa konflik.'",
-            "optional": true,
-            "info": "Jelaskan masalah spesifik yang Anda hadapi."
-          }
-        ],
-        "Containerization & Deployment": [
-          {
-            "name": "taskType",
-            "label": "Jenis Tugas",
-            "type": "select",
-            "options": [
-              "Membuat Dockerfile",
-              "Membangun Image Docker",
-              "Menjalankan Kontainer",
-              "Deployment ke Cloud",
-              "Lainnya..."
-            ],
-            "default": "Membuat Dockerfile",
-            "info": "Pilih tugas yang ingin Anda lakukan."
-          },
-          {
-            "name": "applicationType",
-            "label": "Jenis Aplikasi",
-            "type": "text",
-            "placeholder": "e.g., 'Aplikasi web Node.js', 'API Python dengan Flask'",
-            "info": "Jelaskan jenis aplikasi Anda."
-          },
-          {
-            "name": "programmingLanguage",
-            "label": "Bahasa Pemrograman",
-            "type": "select",
-            "options": [
-              "Node.js",
-              "Python",
-              "Java",
-              "Go",
-              "Lainnya..."
-            ],
-            "default": "Node.js",
-            "info": "Pilih bahasa pemrograman aplikasi Anda."
-          }
-        ],
-        "Bangun CI/CD Pipeline": [
-          {
-            "name": "ciCdPlatform",
-            "label": "Platform CI/CD",
-            "type": "select",
-            "options": [
-              "GitHub Actions",
-              "GitLab CI/CD",
-              "Jenkins",
-              "CircleCI",
-              "Lainnya..."
-            ],
-            "default": "GitHub Actions",
-            "info": "Pilih platform CI/CD yang ingin Anda gunakan."
-          },
-          {
-            "name": "projectType",
-            "label": "Jenis Proyek",
-            "type": "text",
-            "placeholder": "e.g., 'Aplikasi web frontend', 'API backend', 'Library Python'",
-            "info": "Jelaskan jenis proyek Anda."
-          },
-          {
-            "name": "pipelineStages",
-            "label": "Tahapan Pipeline yang Diinginkan",
-            "type": "multiselect",
-            "options": [
-              "Linting",
-              "Testing",
-              "Building",
-              "Deployment",
-              "Notifikasi",
-              "Lainnya..."
-            ],
-            "default": [
-              "Linting",
-              "Testing",
-              "Building",
-              "Deployment"
-            ],
-            "info": "Pilih tahapan yang ingin Anda sertakan dalam pipeline."
-          }
-        ],
-        "Monitoring & Logging": [
-          {
-            "name": "monitoringTool",
-            "label": "Alat Pemantauan/Pencatatan",
-            "type": "select",
-            "options": [
-              "Prometheus & Grafana",
-              "ELK Stack (Elasticsearch, Logstash, Kibana)",
-              "Datadog",
-              "New Relic",
-              "Lainnya..."
-            ],
-            "default": "Prometheus & Grafana",
-            "info": "Pilih alat yang ingin Anda gunakan."
-          },
-          {
-            "name": "applicationType",
-            "label": "Jenis Aplikasi",
-            "type": "text",
-            "placeholder": "e.g., 'Aplikasi web Node.js', 'Microservice Java'",
-            "info": "Jelaskan jenis aplikasi yang akan dipantau."
-          },
-          {
-            "name": "metricsToTrack",
-            "label": "Metrik Kunci yang Ingin Dilacak",
-            "type": "multiselect",
-            "options": [
-              "Penggunaan CPU",
-              "Penggunaan Memori",
-              "Latensi Permintaan",
-              "Jumlah Error",
-              "Trafik Jaringan",
-              "Lainnya..."
-            ],
-            "default": [
-              "Penggunaan CPU",
-              "Latensi Permintaan",
-              "Jumlah Error"
-            ],
-            "info": "Pilih metrik yang paling penting untuk Anda."
-          }
-        ],
-        "Infrastructure as Code (IaC)": [
-          {
-            "name": "iacTool",
-            "label": "Alat IaC",
-            "type": "select",
-            "options": [
-              "Terraform",
-              "AWS CloudFormation",
-              "Azure Resource Manager (ARM)",
-              "Pulumi",
-              "Lainnya..."
-            ],
-            "default": "Terraform",
-            "info": "Pilih alat Infrastructure as Code yang ingin Anda gunakan."
-          },
-          {
-            "name": "cloudProvider",
-            "label": "Penyedia Cloud",
-            "type": "select",
-            "options": [
-              "AWS",
-              "Azure",
-              "Google Cloud Platform (GCP)",
-              "Lainnya..."
-            ],
-            "default": "AWS",
-            "info": "Pilih penyedia layanan cloud Anda."
-          },
-          {
-            "name": "resourceType",
-            "label": "Jenis Sumber Daya",
-            "type": "multiselect",
-            "options": [
-              "Virtual Machine (VM)",
-              "Database",
-              "Jaringan (VPC/VNet)",
-              "Penyimpanan (Storage)",
-              "Load Balancer",
-              "Lainnya..."
-            ],
-            "default": [
-              "Virtual Machine (VM)",
-              "Jaringan (VPC/VNet)"
-            ],
-            "info": "Pilih jenis sumber daya yang ingin Anda definisikan."
-          }
-        ],
-        "Alur Kerja Data Science": [
-          {
-            "name": "workflowTask",
-            "label": "Tugas Alur Kerja",
-            "type": "select",
-            "options": [
-              "Pengumpulan Data",
-              "Pembersihan & Pra-pemrosesan Data",
-              "Eksplorasi Data (EDA)",
-              "Pelatihan Model",
-              "Evaluasi Model",
-              "Deployment Model",
-              "Lainnya..."
-            ],
-            "default": "Eksplorasi Data (EDA)",
-            "info": "Pilih tugas dalam alur kerja data science yang Anda butuhkan bantuan."
-          },
-          {
-            "name": "datasetDescription",
-            "label": "Deskripsi Dataset (Opsional)",
-            "type": "textarea",
-            "placeholder": "e.g., 'Dataset berisi data transaksi pelanggan selama 1 tahun.'",
-            "optional": true,
-            "info": "Jelaskan secara singkat tentang dataset yang Anda gunakan."
-          },
-          {
-            "name": "goal",
-            "label": "Tujuan Analisis/Model",
-            "type": "textarea",
-            "placeholder": "e.g., 'Memprediksi churn pelanggan', 'Mengelompokkan pelanggan berdasarkan perilaku pembelian'",
-            "info": "Jelaskan tujuan akhir dari analisis atau model yang ingin Anda bangun."
-          }
-        ],
-        "Lainnya...": [
-          {
-            "name": "customOperationalTask",
-            "label": "Sebutkan Tugas Operasional Lainnya",
-            "type": "textarea",
-            "description": "Jelaskan secara rinci tugas operasional spesifik yang ingin Anda lakukan.",
-            "placeholder": "e.g., 'Melakukan audit keamanan pada infrastruktur cloud', 'Merancang strategi pemulihan bencana'",
-            "info": "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan."
-          }
-        ]
-      }
+      "name": "agileFramework",
+      "label": "Kerangka Kerja Agile",
+      "type": "select",
+      "options": [
+        "Scrum",
+        "Kanban",
+        "Lainnya..."
+      ],
+      "default": "Scrum",
+      "info": "Pilih kerangka kerja Agile yang Anda gunakan.",
+      "optional": true
+    },
+    {
+      "name": "projectGoal",
+      "label": "Tujuan Proyek/Sprint",
+      "type": "textarea",
+      "placeholder": "e.g., 'Mengembangkan fitur autentikasi pengguna baru'",
+      "info": "Jelaskan tujuan utama dari proyek atau sprint ini.",
+      "optional": true
+    },
+    {
+      "name": "teamSize",
+      "label": "Ukuran Tim",
+      "type": "number",
+      "placeholder": "e.g., 5",
+      "info": "Masukkan jumlah anggota dalam tim Anda.",
+      "optional": true
+    },
+    {
+      "name": "helpTopic",
+      "label": "Topik Bantuan",
+      "type": "select",
+      "options": [
+        "Manajemen Dependensi",
+        "Kontrol Versi (Git)",
+        "Keduanya",
+        "Lainnya..."
+      ],
+      "default": "Kontrol Versi (Git)",
+      "info": "Pilih topik yang Anda butuhkan bantuan.",
+      "optional": true
+    },
+    {
+      "name": "programmingLanguage",
+      "label": "Bahasa Pemrograman",
+      "type": "select",
+      "options": [
+        "Node.js",
+        "Python",
+        "Java",
+        "Go",
+        "Lainnya..."
+      ],
+      "default": "Node.js",
+      "info": "Pilih bahasa pemrograman aplikasi Anda.",
+      "optional": true
+    },
+    {
+      "name": "specificProblem",
+      "label": "Masalah Spesifik (Opsional)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Saya tidak tahu cara menggabungkan dua branch di Git tanpa konflik.'",
+      "optional": true,
+      "info": "Jelaskan masalah spesifik yang Anda hadapi."
+    },
+    {
+      "name": "taskType",
+      "label": "Jenis Tugas",
+      "type": "select",
+      "options": [
+        "Membuat Dockerfile",
+        "Membangun Image Docker",
+        "Menjalankan Kontainer",
+        "Deployment ke Cloud",
+        "Lainnya..."
+      ],
+      "default": "Membuat Dockerfile",
+      "info": "Pilih tugas yang ingin Anda lakukan.",
+      "optional": true
+    },
+    {
+      "name": "applicationType",
+      "label": "Jenis Aplikasi",
+      "type": "text",
+      "placeholder": "e.g., 'Aplikasi web Node.js', 'Microservice Java'",
+      "info": "Jelaskan jenis aplikasi yang akan dipantau.",
+      "optional": true
+    },
+    {
+      "name": "ciCdPlatform",
+      "label": "Platform CI/CD",
+      "type": "select",
+      "options": [
+        "GitHub Actions",
+        "GitLab CI/CD",
+        "Jenkins",
+        "CircleCI",
+        "Lainnya..."
+      ],
+      "default": "GitHub Actions",
+      "info": "Pilih platform CI/CD yang ingin Anda gunakan.",
+      "optional": true
+    },
+    {
+      "name": "projectType",
+      "label": "Jenis Proyek",
+      "type": "text",
+      "placeholder": "e.g., 'Aplikasi web frontend', 'API backend', 'Library Python'",
+      "info": "Jelaskan jenis proyek Anda.",
+      "optional": true
+    },
+    {
+      "name": "pipelineStages",
+      "label": "Tahapan Pipeline yang Diinginkan",
+      "type": "multiselect",
+      "options": [
+        "Linting",
+        "Testing",
+        "Building",
+        "Deployment",
+        "Notifikasi",
+        "Lainnya..."
+      ],
+      "default": [
+        "Linting",
+        "Testing",
+        "Building",
+        "Deployment"
+      ],
+      "info": "Pilih tahapan yang ingin Anda sertakan dalam pipeline.",
+      "optional": true
+    },
+    {
+      "name": "monitoringTool",
+      "label": "Alat Pemantauan/Pencatatan",
+      "type": "select",
+      "options": [
+        "Prometheus & Grafana",
+        "ELK Stack (Elasticsearch, Logstash, Kibana)",
+        "Datadog",
+        "New Relic",
+        "Lainnya..."
+      ],
+      "default": "Prometheus & Grafana",
+      "info": "Pilih alat yang ingin Anda gunakan.",
+      "optional": true
+    },
+    {
+      "name": "metricsToTrack",
+      "label": "Metrik Kunci yang Ingin Dilacak",
+      "type": "multiselect",
+      "options": [
+        "Penggunaan CPU",
+        "Penggunaan Memori",
+        "Latensi Permintaan",
+        "Jumlah Error",
+        "Trafik Jaringan",
+        "Lainnya..."
+      ],
+      "default": [
+        "Penggunaan CPU",
+        "Latensi Permintaan",
+        "Jumlah Error"
+      ],
+      "info": "Pilih metrik yang paling penting untuk Anda.",
+      "optional": true
+    },
+    {
+      "name": "iacTool",
+      "label": "Alat IaC",
+      "type": "select",
+      "options": [
+        "Terraform",
+        "AWS CloudFormation",
+        "Azure Resource Manager (ARM)",
+        "Pulumi",
+        "Lainnya..."
+      ],
+      "default": "Terraform",
+      "info": "Pilih alat Infrastructure as Code yang ingin Anda gunakan.",
+      "optional": true
+    },
+    {
+      "name": "cloudProvider",
+      "label": "Penyedia Cloud",
+      "type": "select",
+      "options": [
+        "AWS",
+        "Azure",
+        "Google Cloud Platform (GCP)",
+        "Lainnya..."
+      ],
+      "default": "AWS",
+      "info": "Pilih penyedia layanan cloud Anda.",
+      "optional": true
+    },
+    {
+      "name": "resourceType",
+      "label": "Jenis Sumber Daya",
+      "type": "multiselect",
+      "options": [
+        "Virtual Machine (VM)",
+        "Database",
+        "Jaringan (VPC/VNet)",
+        "Penyimpanan (Storage)",
+        "Load Balancer",
+        "Lainnya..."
+      ],
+      "default": [
+        "Virtual Machine (VM)",
+        "Jaringan (VPC/VNet)"
+      ],
+      "info": "Pilih jenis sumber daya yang ingin Anda definisikan.",
+      "optional": true
+    },
+    {
+      "name": "workflowTask",
+      "label": "Tugas Alur Kerja",
+      "type": "select",
+      "options": [
+        "Pengumpulan Data",
+        "Pembersihan & Pra-pemrosesan Data",
+        "Eksplorasi Data (EDA)",
+        "Pelatihan Model",
+        "Evaluasi Model",
+        "Deployment Model",
+        "Lainnya..."
+      ],
+      "default": "Eksplorasi Data (EDA)",
+      "info": "Pilih tugas dalam alur kerja data science yang Anda butuhkan bantuan.",
+      "optional": true
+    },
+    {
+      "name": "datasetDescription",
+      "label": "Deskripsi Dataset (Opsional)",
+      "type": "textarea",
+      "placeholder": "e.g., 'Dataset berisi data transaksi pelanggan selama 1 tahun.'",
+      "optional": true,
+      "info": "Jelaskan secara singkat tentang dataset yang Anda gunakan."
+    },
+    {
+      "name": "goal",
+      "label": "Tujuan Analisis/Model",
+      "type": "textarea",
+      "placeholder": "e.g., 'Memprediksi churn pelanggan', 'Mengelompokkan pelanggan berdasarkan perilaku pembelian'",
+      "info": "Jelaskan tujuan akhir dari analisis atau model yang ingin Anda bangun.",
+      "optional": true
+    },
+    {
+      "name": "customOperationalTask",
+      "label": "Sebutkan Tugas Operasional Lainnya",
+      "type": "textarea",
+      "description": "Jelaskan secara rinci tugas operasional spesifik yang ingin Anda lakukan.",
+      "placeholder": "e.g., 'Melakukan audit keamanan pada infrastruktur cloud', 'Merancang strategi pemulihan bencana'",
+      "info": "Jelaskan tugas kustom Anda di sini. AI akan mencoba memahaminya dan memberikan bantuan yang relevan.",
+      "optional": true
     }
   ],
   "komponen_prompt": {

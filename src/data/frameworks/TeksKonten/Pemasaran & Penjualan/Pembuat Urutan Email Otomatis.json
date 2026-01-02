@@ -13,7 +13,8 @@
         "Re-engagement (untuk pengguna tidak aktif)",
         "Lainnya..."
       ],
-      "info": "Pilih tujuan utama dari rangkaian email ini."
+      "info": "Pilih tujuan utama dari rangkaian email ini.",
+      "optional": true
     },
     {
       "name": "product",
@@ -23,7 +24,8 @@
       "info": "Fokus dari konten email.",
       "validation": {
         "min_length": 5
-      }
+      },
+      "optional": true
     },
     {
       "name": "numberOfEmails",
@@ -34,7 +36,8 @@
       "validation": {
         "min_value": 1,
         "max_value": 10
-      }
+      },
+      "optional": true
     },
     {
       "name": "sequenceGoal",
@@ -44,7 +47,8 @@
       "info": "Apa hasil yang Anda harapkan setelah email terakhir terkirim?",
       "validation": {
         "min_length": 10
-      }
+      },
+      "optional": true
     },
     {
       "name": "emailTopics",
@@ -67,6 +71,18 @@
       "validation": {
         "min_length": 10
       }
+    },
+    {
+      "name": "custom_sequenceType",
+      "label": "Sebutkan Jenis Urutan Email Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Jenis Urutan Email.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -85,26 +101,5 @@
     "KONTEKS": "Saya ingin create konten marketing untuk {sequenceType} dengan format {product}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Develop marketing content atau strategy yang engaging dan sesuai dengan target audience.",
     "FORMAT_OUTPUT": "Sajikan dalam format marketing-ready dengan clear call-to-action dan measurable objectives."
-  },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "sequenceType",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_sequenceType",
-            "label": "Sebutkan Jenis Urutan Email Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Jenis Urutan Email.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ]
+  }
 }

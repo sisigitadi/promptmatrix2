@@ -22,71 +22,64 @@
         "Lainnya..."
       ],
       "default": "Identifikasi Tren dan Pola",
-      "info": "Pilih jenis analisis yang ingin Anda lakukan."
-    }
-  ],
-  "dynamicSubcomponents": [
+      "info": "Pilih jenis analisis yang ingin Anda lakukan.",
+      "optional": true
+    },
     {
-      "trigger": "TUGAS_ANALISIS_DATA",
-      "options": {
-        "Eksplorasi & Pembersihan Data": [
-          {
-            "name": "DATA_SAMPEL_EKSPLORASI",
-            "label": "Tempelkan Sampel Data Anda",
-            "type": "textarea",
-            "placeholder": "Contoh: salin beberapa baris dari file CSV atau Excel Anda di sini.",
-            "info": "Berikan sampel data untuk dianalisis kesehatannya."
-          }
-        ],
-        "Analisis Statistik Deskriptif": [
-          {
-            "name": "DATA_SAMPEL_STATISTIK",
-            "label": "Tempelkan Sampel Data Anda",
-            "type": "textarea",
-            "placeholder": "Contoh: salin data numerik Anda di sini.",
-            "info": "Data untuk dihitung statistik dasarnya."
-          },
-          {
-            "name": "KOLOM_STATISTIK",
-            "label": "Nama Kolom yang Dianalisis",
-            "type": "text",
-            "placeholder": "Contoh: Kolom 'Pendapatan' dan 'Usia Pelanggan'",
-            "info": "Sebutkan kolom mana yang ingin Anda hitung statistiknya."
-          }
-        ],
-        "Identifikasi Tren dan Pola": [
-          {
-            "name": "DATA_SAMPEL_TREN",
-            "label": "Tempelkan Sampel Data Anda",
-            "type": "textarea",
-            "placeholder": "Contoh: salin data time-series atau data kategorikal Anda.",
-            "info": "Data yang akan dianalisis untuk menemukan pola."
-          },
-          {
-            "name": "PERTANYAAN_BISNIS_TREN",
-            "label": "Pertanyaan Bisnis yang Ingin Dijawab",
-            "type": "text",
-            "placeholder": "Contoh: Bagaimana tren penjualan produk A selama 6 bulan terakhir?",
-            "info": "Pertanyaan spesifik akan mengarahkan analisis."
-          }
-        ],
-        "Rekomendasi Visualisasi Data": [
-          {
-            "name": "DATA_VISUALISASI",
-            "label": "Jelaskan Data yang Ingin Divisualisasikan",
-            "type": "textarea",
-            "placeholder": "Contoh: Saya punya data penjualan bulanan per kategori produk.",
-            "info": "Deskripsi data Anda."
-          },
-          {
-            "name": "PESAN_VISUALISASI",
-            "label": "Pesan Utama yang Ingin Disampaikan",
-            "type": "text",
-            "placeholder": "Contoh: Saya ingin menunjukkan kategori produk mana yang paling cepat bertumbuh.",
-            "info": "Apa cerita yang ingin Anda sampaikan dengan data ini?"
-          }
-        ]
-      }
+      "name": "DATA_SAMPEL_EKSPLORASI",
+      "label": "Tempelkan Sampel Data Anda",
+      "type": "textarea",
+      "placeholder": "Contoh: salin beberapa baris dari file CSV atau Excel Anda di sini.",
+      "info": "Berikan sampel data untuk dianalisis kesehatannya.",
+      "optional": true
+    },
+    {
+      "name": "DATA_SAMPEL_STATISTIK",
+      "label": "Tempelkan Sampel Data Anda",
+      "type": "textarea",
+      "placeholder": "Contoh: salin data numerik Anda di sini.",
+      "info": "Data untuk dihitung statistik dasarnya.",
+      "optional": true
+    },
+    {
+      "name": "KOLOM_STATISTIK",
+      "label": "Nama Kolom yang Dianalisis",
+      "type": "text",
+      "placeholder": "Contoh: Kolom 'Pendapatan' dan 'Usia Pelanggan'",
+      "info": "Sebutkan kolom mana yang ingin Anda hitung statistiknya.",
+      "optional": true
+    },
+    {
+      "name": "DATA_SAMPEL_TREN",
+      "label": "Tempelkan Sampel Data Anda",
+      "type": "textarea",
+      "placeholder": "Contoh: salin data time-series atau data kategorikal Anda.",
+      "info": "Data yang akan dianalisis untuk menemukan pola.",
+      "optional": true
+    },
+    {
+      "name": "PERTANYAAN_BISNIS_TREN",
+      "label": "Pertanyaan Bisnis yang Ingin Dijawab",
+      "type": "text",
+      "placeholder": "Contoh: Bagaimana tren penjualan produk A selama 6 bulan terakhir?",
+      "info": "Pertanyaan spesifik akan mengarahkan analisis.",
+      "optional": true
+    },
+    {
+      "name": "DATA_VISUALISASI",
+      "label": "Jelaskan Data yang Ingin Divisualisasikan",
+      "type": "textarea",
+      "placeholder": "Contoh: Saya punya data penjualan bulanan per kategori produk.",
+      "info": "Deskripsi data Anda.",
+      "optional": true
+    },
+    {
+      "name": "PESAN_VISUALISASI",
+      "label": "Pesan Utama yang Ingin Disampaikan",
+      "type": "text",
+      "placeholder": "Contoh: Saya ingin menunjukkan kategori produk mana yang paling cepat bertumbuh.",
+      "info": "Apa cerita yang ingin Anda sampaikan dengan data ini?",
+      "optional": true
     }
   ],
   "komponen_prompt": {

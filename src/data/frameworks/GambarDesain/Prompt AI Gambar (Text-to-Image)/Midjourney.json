@@ -11,7 +11,8 @@
       "info": "Deskripsi utama dari apa yang ingin Anda lihat.",
       "validation": {
         "min_length": 20
-      }
+      },
+      "optional": true
     },
     {
       "name": "style",
@@ -21,7 +22,8 @@
       "info": "Kata kunci yang mendefinisikan gaya visual, artis, atau medium.",
       "validation": {
         "min_length": 10
-      }
+      },
+      "optional": true
     },
     {
       "name": "aspectRatio",
@@ -34,7 +36,8 @@
         "16:9 (Widescreen)",
         "Lainnya..."
       ],
-      "info": "Rasio lebar dan tinggi gambar."
+      "info": "Rasio lebar dan tinggi gambar.",
+      "optional": true
     },
     {
       "name": "version",
@@ -48,7 +51,8 @@
         "6.1",
         "Lainnya..."
       ],
-      "info": "Versi model Midjourney yang akan digunakan."
+      "info": "Versi model Midjourney yang akan digunakan.",
+      "optional": true
     },
     {
       "name": "p",
@@ -58,7 +62,8 @@
       "info": "Membuat permutasi dari prompt, memungkinkan beberapa variasi dari satu input.",
       "validation": {
         "min_length": 3
-      }
+      },
+      "optional": true
     },
     {
       "name": "chaos",
@@ -69,7 +74,8 @@
       "validation": {
         "min_value": 0,
         "max_value": 100
-      }
+      },
+      "optional": true
     },
     {
       "name": "quality",
@@ -80,7 +86,8 @@
       "validation": {
         "min_value": 0.25,
         "max_value": 2
-      }
+      },
+      "optional": true
     },
     {
       "name": "stylize",
@@ -91,7 +98,8 @@
       "validation": {
         "min_value": 0,
         "max_value": 1000
-      }
+      },
+      "optional": true
     },
     {
       "name": "weird",
@@ -102,7 +110,8 @@
       "validation": {
         "min_value": 0,
         "max_value": 3000
-      }
+      },
+      "optional": true
     },
     {
       "name": "negativePrompt",
@@ -112,7 +121,8 @@
       "info": "Hal-hal yang tidak Anda inginkan muncul di gambar.",
       "validation": {
         "min_length": 5
-      }
+      },
+      "optional": true
     },
     {
       "name": "sref",
@@ -122,7 +132,8 @@
       "info": "URL gambar untuk referensi gaya.",
       "validation": {
         "min_length": 10
-      }
+      },
+      "optional": true
     },
     {
       "name": "sw",
@@ -133,7 +144,8 @@
       "validation": {
         "min_value": 0,
         "max_value": 1000
-      }
+      },
+      "optional": true
     },
     {
       "name": "cref",
@@ -143,7 +155,8 @@
       "info": "URL gambar untuk menjaga konsistensi karakter.",
       "validation": {
         "min_length": 10
-      }
+      },
+      "optional": true
     },
     {
       "name": "cw",
@@ -154,7 +167,8 @@
       "validation": {
         "min_value": 0,
         "max_value": 100
-      }
+      },
+      "optional": true
     },
     {
       "name": "seed",
@@ -165,7 +179,8 @@
       "validation": {
         "min_value": 0,
         "max_value": 4294967295
-      }
+      },
+      "optional": true
     },
     {
       "name": "stop",
@@ -176,7 +191,8 @@
       "validation": {
         "min_value": 10,
         "max_value": 100
-      }
+      },
+      "optional": true
     },
     {
       "name": "repeat",
@@ -187,7 +203,8 @@
       "validation": {
         "min_value": 1,
         "max_value": 40
-      }
+      },
+      "optional": true
     },
     {
       "name": "tile",
@@ -198,7 +215,8 @@
         "Yes",
         "Lainnya..."
       ],
-      "info": "Buat gambar yang bisa di-tile secara seamless."
+      "info": "Buat gambar yang bisa di-tile secara seamless.",
+      "optional": true
     },
     {
       "name": "styleRaw",
@@ -209,13 +227,63 @@
         "Yes",
         "Lainnya..."
       ],
-      "info": "Mengurangi beautifikasi otomatis, membuat gambar lebih akurat terhadap prompt dan umumnya lebih fotorealistik. Dapat juga digunakan dengan kode gaya (misalnya, `--style raw --sref random`) untuk menerapkan estetika tertentu."
+      "info": "Mengurangi beautifikasi otomatis, membuat gambar lebih akurat terhadap prompt dan umumnya lebih fotorealistik. Dapat juga digunakan dengan kode gaya (misalnya, `--style raw --sref random`) untuk menerapkan estetika tertentu.",
+      "optional": true
     },
     {
       "name": "inputImage",
       "label": "Input Gambar (Opsional)",
       "type": "image",
-      "info": "Unggah gambar untuk digunakan sebagai referensi visual atau input untuk AI."
+      "info": "Unggah gambar untuk digunakan sebagai referensi visual atau input untuk AI.",
+      "optional": true
+    },
+    {
+      "name": "custom_aspectRatio",
+      "label": "Sebutkan Aspect Ratio (--ar) Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Aspect Ratio (--ar).",
+      "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Aspect Ratio (--ar) standar tidak tersedia."
+    },
+    {
+      "name": "custom_version",
+      "label": "Sebutkan Model Version (--v) Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Model Version (--v).",
+      "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Model Version (--v) standar tidak tersedia."
+    },
+    {
+      "name": "custom_tile",
+      "label": "Sebutkan Tile (--tile) Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Tile (--tile).",
+      "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Tile (--tile) standar tidak tersedia."
+    },
+    {
+      "name": "custom_styleRaw",
+      "label": "Sebutkan Style Raw (--style raw) Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Style Raw (--style raw).",
+      "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Style Raw (--style raw) standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -229,84 +297,6 @@
   "top_k": 40,
   "version": "2.0.0",
   "updated_at": "2025-12-23T05:07:55.231364",
-  "dynamicSubcomponents": [
-    {
-      "trigger": "aspectRatio",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_aspectRatio",
-            "label": "Sebutkan Aspect Ratio (--ar) Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Aspect Ratio (--ar).",
-            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Aspect Ratio (--ar) standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "version",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_version",
-            "label": "Sebutkan Model Version (--v) Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Model Version (--v).",
-            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Model Version (--v) standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "tile",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_tile",
-            "label": "Sebutkan Tile (--tile) Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Tile (--tile).",
-            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Tile (--tile) standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "styleRaw",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_styleRaw",
-            "label": "Sebutkan Style Raw (--style raw) Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Style Raw (--style raw).",
-            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Style Raw (--style raw) standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "_review_notes": [
     "TODO: Apply hybrid format to 'Model Version (--v)' option '6.0'",
     "TODO: Apply hybrid format to 'Model Version (--v)' option '5.2'",

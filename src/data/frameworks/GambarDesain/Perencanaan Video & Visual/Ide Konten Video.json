@@ -14,14 +14,16 @@
         "LinkedIn Video",
         "Lainnya..."
       ],
-      "info": "Platform menentukan format, durasi, dan gaya konten."
+      "info": "Platform menentukan format, durasi, dan gaya konten.",
+      "optional": true
     },
     {
       "name": "niche",
       "label": "Niche / Tema Channel",
       "type": "text",
       "placeholder": "e.g., 'memasak untuk pemula, review gadget, keuangan pribadi'",
-      "info": "Fokus utama dari channel atau akun Anda."
+      "info": "Fokus utama dari channel atau akun Anda.",
+      "optional": true
     },
     {
       "name": "videoFormat",
@@ -36,21 +38,48 @@
         "Wawancara",
         "Lainnya..."
       ],
-      "info": "Pilih jenis struktur video yang diinginkan."
+      "info": "Pilih jenis struktur video yang diinginkan.",
+      "optional": true
     },
     {
       "name": "desiredOutcome",
       "label": "Tujuan Video",
       "type": "textarea",
       "placeholder": "e.g., 'meningkatkan subscriber, mendapatkan engagement tinggi, mengarahkan trafik ke website'",
-      "info": "Apa hasil yang ingin Anda capai dengan video ini?"
+      "info": "Apa hasil yang ingin Anda capai dengan video ini?",
+      "optional": true
     },
     {
       "name": "additionalContext",
       "label": "Konteks Tambahan & Instruksi Khusus",
       "type": "textarea",
       "placeholder": "Contoh: Saya ingin ide yang bisa dikolaborasikan dengan kreator lain. Fokus pada budget produksi rendah. Hindari topik politik.",
-      "info": "Detail tambahan yang bisa mengarahkan ide AI menjadi lebih unik dan sesuai dengan channel Anda."
+      "info": "Detail tambahan yang bisa mengarahkan ide AI menjadi lebih unik dan sesuai dengan channel Anda.",
+      "optional": true
+    },
+    {
+      "name": "custom_platform",
+      "label": "Sebutkan Platform Video Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Platform Video.",
+      "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Platform Video standar tidak tersedia."
+    },
+    {
+      "name": "custom_videoFormat",
+      "label": "Sebutkan Format Video Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Format Video.",
+      "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Format Video standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -70,46 +99,6 @@
     "TUGAS": "Generate prompt yang menghasilkan video dengan narrative flow dan visual continuity yang baik.",
     "FORMAT_OUTPUT": "Sajikan prompt dengan scene breakdown, camera movements, dan transition details yang jelas."
   },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "platform",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_platform",
-            "label": "Sebutkan Platform Video Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Platform Video.",
-            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Platform Video standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "videoFormat",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_videoFormat",
-            "label": "Sebutkan Format Video Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Format Video.",
-            "placeholder": "Contoh: Gaya kustom, teknik baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Format Video standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "_review_notes": [
     "TODO: Apply hybrid format to 'Platform Video' option 'YouTube'",
     "TODO: Apply hybrid format to 'Platform Video' option 'TikTok'",

@@ -22,93 +22,88 @@
         "Lainnya..."
       ],
       "default": "Pembuat Laporan Keuangan Sederhana",
-      "info": "Pilih tugas keuangan yang ingin Anda selesaikan."
-    }
-  ],
-  "dynamicSubcomponents": [
+      "info": "Pilih tugas keuangan yang ingin Anda selesaikan.",
+      "optional": true
+    },
     {
-      "trigger": "TUGAS_AKUNTANSI",
-      "options": {
-        "Pembuat Laporan Keuangan Sederhana": [
-          {
-            "name": "ACC_JENIS_LAPORAN",
-            "label": "Jenis Laporan Keuangan",
-            "type": "select",
-            "options": [
-              "Laporan Laba Rugi",
-              "Laporan Arus Kas Sederhana",
-              "Lainnya..."
-            ],
-            "default": "Laporan Laba Rugi",
-            "info": "Pilih jenis laporan yang ingin Anda buat."
-          },
-          {
-            "name": "ACC_PERIODE",
-            "label": "Periode Laporan",
-            "type": "text",
-            "placeholder": "Contoh: Bulan Juli 2025",
-            "info": "Sebutkan periode waktu yang dicakup laporan."
-          },
-          {
-            "name": "ACC_DATA_RINGKAS",
-            "label": "Data Keuangan Ringkas",
-            "type": "textarea",
-            "placeholder": "Contoh L/R: Total Pendapatan: 50jt, HPP: 20jt, Biaya Operasional: 15jt",
-            "info": "Masukkan data keuangan ringkas sesuai jenis laporan."
-          }
-        ],
-        "Generator Draf Faktur (Invoice)": [
-          {
-            "name": "INV_NAMA_KLIEN",
-            "label": "Nama Klien",
-            "type": "text",
-            "placeholder": "Contoh: PT Sejahtera Makmur",
-            "info": "Nama klien yang akan ditagih."
-          },
-          {
-            "name": "INV_DETAIL_TAGIHAN",
-            "label": "Detail Barang/Jasa (pisahkan baris)",
-            "type": "textarea",
-            "placeholder": "Contoh: Desain Logo (1, Rp 2.000.000)\nJasa Konsultasi (2 jam, Rp 500.000/jam)",
-            "info": "Masukkan setiap item, kuantitas, dan harga."
-          }
-        ],
-        "Alat Analisis & Kategorisasi Biaya": [
-          {
-            "name": "BIAYA_DAFTAR",
-            "label": "Tempelkan Daftar Pengeluaran Anda",
-            "type": "textarea",
-            "placeholder": "- Sewa kantor 5.000.000\n- Gaji staf 15.000.000\n- Iklan online 2.000.000",
-            "info": "Masukkan daftar pengeluaran Anda, satu per baris."
-          }
-        ],
-        "Kalkulator Titik Impas (Break-Even Point)": [
-          {
-            "name": "BEP_BIAYA_TETAP",
-            "label": "Total Biaya Tetap per Bulan",
-            "type": "number",
-            "placeholder": "20000000",
-            "unit": "Rp",
-            "info": "Biaya yang selalu sama, tidak peduli penjualan (gaji, sewa)."
-          },
-          {
-            "name": "BEP_HARGA_JUAL",
-            "label": "Harga Jual per Unit",
-            "type": "number",
-            "placeholder": "100000",
-            "unit": "Rp",
-            "info": "Harga jual satu unit produk/jasa Anda."
-          },
-          {
-            "name": "BEP_BIAYA_VARIABEL",
-            "label": "Biaya Variabel per Unit",
-            "type": "number",
-            "placeholder": "40000",
-            "unit": "Rp",
-            "info": "Biaya yang hanya muncul jika ada penjualan (bahan baku, komisi)."
-          }
-        ]
-      }
+      "name": "ACC_JENIS_LAPORAN",
+      "label": "Jenis Laporan Keuangan",
+      "type": "select",
+      "options": [
+        "Laporan Laba Rugi",
+        "Laporan Arus Kas Sederhana",
+        "Lainnya..."
+      ],
+      "default": "Laporan Laba Rugi",
+      "info": "Pilih jenis laporan yang ingin Anda buat.",
+      "optional": true
+    },
+    {
+      "name": "ACC_PERIODE",
+      "label": "Periode Laporan",
+      "type": "text",
+      "placeholder": "Contoh: Bulan Juli 2025",
+      "info": "Sebutkan periode waktu yang dicakup laporan.",
+      "optional": true
+    },
+    {
+      "name": "ACC_DATA_RINGKAS",
+      "label": "Data Keuangan Ringkas",
+      "type": "textarea",
+      "placeholder": "Contoh L/R: Total Pendapatan: 50jt, HPP: 20jt, Biaya Operasional: 15jt",
+      "info": "Masukkan data keuangan ringkas sesuai jenis laporan.",
+      "optional": true
+    },
+    {
+      "name": "INV_NAMA_KLIEN",
+      "label": "Nama Klien",
+      "type": "text",
+      "placeholder": "Contoh: PT Sejahtera Makmur",
+      "info": "Nama klien yang akan ditagih.",
+      "optional": true
+    },
+    {
+      "name": "INV_DETAIL_TAGIHAN",
+      "label": "Detail Barang/Jasa (pisahkan baris)",
+      "type": "textarea",
+      "placeholder": "Contoh: Desain Logo (1, Rp 2.000.000)\nJasa Konsultasi (2 jam, Rp 500.000/jam)",
+      "info": "Masukkan setiap item, kuantitas, dan harga.",
+      "optional": true
+    },
+    {
+      "name": "BIAYA_DAFTAR",
+      "label": "Tempelkan Daftar Pengeluaran Anda",
+      "type": "textarea",
+      "placeholder": "- Sewa kantor 5.000.000\n- Gaji staf 15.000.000\n- Iklan online 2.000.000",
+      "info": "Masukkan daftar pengeluaran Anda, satu per baris.",
+      "optional": true
+    },
+    {
+      "name": "BEP_BIAYA_TETAP",
+      "label": "Total Biaya Tetap per Bulan",
+      "type": "number",
+      "placeholder": "20000000",
+      "unit": "Rp",
+      "info": "Biaya yang selalu sama, tidak peduli penjualan (gaji, sewa).",
+      "optional": true
+    },
+    {
+      "name": "BEP_HARGA_JUAL",
+      "label": "Harga Jual per Unit",
+      "type": "number",
+      "placeholder": "100000",
+      "unit": "Rp",
+      "info": "Harga jual satu unit produk/jasa Anda.",
+      "optional": true
+    },
+    {
+      "name": "BEP_BIAYA_VARIABEL",
+      "label": "Biaya Variabel per Unit",
+      "type": "number",
+      "placeholder": "40000",
+      "unit": "Rp",
+      "info": "Biaya yang hanya muncul jika ada penjualan (bahan baku, komisi).",
+      "optional": true
     }
   ],
   "komponen_prompt": {

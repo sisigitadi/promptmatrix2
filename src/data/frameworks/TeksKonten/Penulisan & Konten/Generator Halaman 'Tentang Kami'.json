@@ -11,7 +11,8 @@
       "info": "Nama entitas yang akan diceritakan.",
       "validation": {
         "min_length": 5
-      }
+      },
+      "optional": true
     },
     {
       "name": "missionStatement",
@@ -21,7 +22,8 @@
       "info": "Apa tujuan besar dan alasan keberadaan perusahaan Anda?",
       "validation": {
         "min_length": 20
-      }
+      },
+      "optional": true
     },
     {
       "name": "originStory",
@@ -42,7 +44,8 @@
       "info": "Prinsip-prinsip yang menjadi panduan perusahaan Anda.",
       "validation": {
         "min_length": 5
-      }
+      },
+      "optional": true
     },
     {
       "name": "tone",
@@ -55,7 +58,8 @@
         "Menyenangkan & Unik",
         "Lainnya..."
       ],
-      "info": "Pilih nada yang paling merepresentasikan budaya perusahaan Anda."
+      "info": "Pilih nada yang paling merepresentasikan budaya perusahaan Anda.",
+      "optional": true
     },
     {
       "name": "additionalContext",
@@ -67,6 +71,18 @@
       "validation": {
         "min_length": 10
       }
+    },
+    {
+      "name": "custom_tone",
+      "label": "Sebutkan Gaya Bahasa Halaman Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Gaya Bahasa Halaman.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -85,26 +101,5 @@
     "KONTEKS": "Saya ingin create konten tertulis tentang {companyName} untuk {missionStatement}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
     "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
-  },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "tone",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_tone",
-            "label": "Sebutkan Gaya Bahasa Halaman Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Gaya Bahasa Halaman.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ]
+  }
 }

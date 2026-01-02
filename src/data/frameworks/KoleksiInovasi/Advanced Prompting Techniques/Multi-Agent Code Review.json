@@ -18,7 +18,8 @@
       "info": "Tempelkan potongan kode yang ingin Anda tinjau di sini.",
       "validation": {
         "min_length": 10
-      }
+      },
+      "optional": true
     },
     {
       "name": "programmingLanguage",
@@ -33,7 +34,8 @@
         "Lainnya..."
       ],
       "default": "Python",
-      "info": "Pilih bahasa pemrograman dari potongan kode."
+      "info": "Pilih bahasa pemrograman dari potongan kode.",
+      "optional": true
     },
     {
       "name": "reviewFocus",
@@ -51,7 +53,8 @@
         "Kinerja",
         "Keterbacaan"
       ],
-      "info": "Pilih aspek yang ingin Anda fokuskan dalam tinjauan."
+      "info": "Pilih aspek yang ingin Anda fokuskan dalam tinjauan.",
+      "optional": true
     },
     {
       "name": "additionalContext",
@@ -60,6 +63,30 @@
       "placeholder": "e.g., 'Fokus pada potensi kerentanan SQL Injection. Pertimbangkan skalabilitas untuk 1 juta pengguna.'",
       "optional": true,
       "info": "Sebutkan batasan, preferensi, atau instruksi khusus lainnya untuk tim AI."
+    },
+    {
+      "name": "custom_programmingLanguage",
+      "label": "Sebutkan Bahasa Pemrograman Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Bahasa Pemrograman.",
+      "placeholder": "Contoh: Opsi kustom, kategori baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Bahasa Pemrograman standar tidak tersedia."
+    },
+    {
+      "name": "custom_reviewFocus",
+      "label": "Sebutkan Fokus Tinjauan (Pilih satu atau lebih) Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Fokus Tinjauan (Pilih satu atau lebih).",
+      "placeholder": "Contoh: Opsi kustom, kategori baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Fokus Tinjauan (Pilih satu atau lebih) standar tidak tersedia."
     }
   ],
   "komponen_prompt": {
@@ -78,46 +105,6 @@
   "top_p": 0.9,
   "top_k": 40,
   "updated_at": "2025-12-23T06:59:22.640679",
-  "dynamicSubcomponents": [
-    {
-      "trigger": "programmingLanguage",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_programmingLanguage",
-            "label": "Sebutkan Bahasa Pemrograman Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Bahasa Pemrograman.",
-            "placeholder": "Contoh: Opsi kustom, kategori baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Bahasa Pemrograman standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "reviewFocus",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_reviewFocus",
-            "label": "Sebutkan Fokus Tinjauan (Pilih satu atau lebih) Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Fokus Tinjauan (Pilih satu atau lebih).",
-            "placeholder": "Contoh: Opsi kustom, kategori baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Fokus Tinjauan (Pilih satu atau lebih) standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "_review_notes": [
     "HYBRID: Bahasa Pemrograman → 'Python' (add English technical term if applicable)",
     "HYBRID: Bahasa Pemrograman → 'JavaScript' (add English technical term if applicable)",

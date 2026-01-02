@@ -8,14 +8,16 @@
       "label": "Prompt Deskriptif",
       "type": "textarea",
       "placeholder": "e.g., 'A soulful blues track about a long road trip, with harmonica solos, male vocals, and a steady drum beat'",
-      "info": "Deskripsikan musik Anda secara detail, termasuk genre, instrumen, mood, dan tema."
+      "info": "Deskripsikan musik Anda secara detail, termasuk genre, instrumen, mood, dan tema.",
+      "optional": true
     },
     {
       "name": "lyrics",
       "label": "Lirik (Opsional)",
       "type": "textarea",
       "placeholder": "e.g., '[Verse]\nSunrise on the highway...'",
-      "info": "Masukkan lirik jika Anda punya, atau biarkan Udio yang membuatnya."
+      "info": "Masukkan lirik jika Anda punya, atau biarkan Udio yang membuatnya.",
+      "optional": true
     },
     {
       "name": "instrumental",
@@ -26,14 +28,28 @@
         "Ya",
         "Lainnya..."
       ],
-      "info": "Pilih 'Ya' untuk membuat lagu tanpa vokal."
+      "info": "Pilih 'Ya' untuk membuat lagu tanpa vokal.",
+      "optional": true
     },
     {
       "name": "additionalContext",
       "label": "Konteks Tambahan & Instruksi Khusus",
       "type": "textarea",
       "placeholder": "Contoh: Berikan batasan atau instruksi spesifik untuk memandu AI.",
-      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI."
+      "info": "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI.",
+      "optional": true
+    },
+    {
+      "name": "custom_instrumental",
+      "label": "Sebutkan Instrumental? Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Instrumental?.",
+      "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Instrumental? standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -53,27 +69,6 @@
     "TUGAS": "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat."
   },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "instrumental",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_instrumental",
-            "label": "Sebutkan Instrumental? Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Instrumental?.",
-            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Instrumental? standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "_review_notes": [
     "TODO: Review options for hybrid localization (Technical EN + ID)"
   ]

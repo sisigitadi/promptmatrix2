@@ -11,7 +11,8 @@
       "info": "Kata kunci utama yang akan menjadi fokus artikel Anda. Ini penting untuk SEO.",
       "validation": {
         "min_length": 5
-      }
+      },
+      "optional": true
     },
     {
       "name": "secondaryKeywords",
@@ -21,7 +22,8 @@
       "info": "Kata kunci tambahan yang relevan untuk memperkaya isi artikel dan meningkatkan visibilitas SEO.",
       "validation": {
         "min_length": 3
-      }
+      },
+      "optional": true
     },
     {
       "name": "targetAudience",
@@ -31,7 +33,8 @@
       "info": "Siapa yang akan membaca artikel ini?",
       "validation": {
         "min_length": 5
-      }
+      },
+      "optional": true
     },
     {
       "name": "tone",
@@ -45,7 +48,8 @@
         "Lucu",
         "Lainnya..."
       ],
-      "info": "Pilih nuansa tulisan yang diinginkan."
+      "info": "Pilih nuansa tulisan yang diinginkan.",
+      "optional": true
     },
     {
       "name": "wordCount",
@@ -56,7 +60,8 @@
       "validation": {
         "min_value": 100,
         "max_value": 5000
-      }
+      },
+      "optional": true
     },
     {
       "name": "outline",
@@ -76,6 +81,18 @@
       "validation": {
         "min_length": 10
       }
+    },
+    {
+      "name": "custom_tone",
+      "label": "Sebutkan Gaya Bahasa Artikel Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Gaya Bahasa Artikel.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -94,26 +111,5 @@
     "KONTEKS": "Saya ingin create konten tertulis tentang {targetKeyword} untuk {secondaryKeywords}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
     "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
-  },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "tone",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_tone",
-            "label": "Sebutkan Gaya Bahasa Artikel Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Gaya Bahasa Artikel.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ]
+  }
 }

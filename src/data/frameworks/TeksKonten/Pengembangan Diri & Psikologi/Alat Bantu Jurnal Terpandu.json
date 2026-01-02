@@ -15,21 +15,24 @@
         "Meningkatkan Kreativitas",
         "Lainnya..."
       ],
-      "info": "Pilih fokus untuk sesi jurnal Anda."
+      "info": "Pilih fokus untuk sesi jurnal Anda.",
+      "optional": true
     },
     {
       "name": "currentMood",
       "label": "Perasaan Anda Saat Ini (Opsional)",
       "type": "text",
       "placeholder": "e.g., 'Merasa lelah', 'Bersemangat', 'Sedikit cemas'",
-      "info": "Membantu AI menyesuaikan pertanyaan agar lebih relevan dengan kondisi Anda."
+      "info": "Membantu AI menyesuaikan pertanyaan agar lebih relevan dengan kondisi Anda.",
+      "optional": true
     },
     {
       "name": "numberOfPrompts",
       "label": "Jumlah Prompt/Pertanyaan",
       "type": "number",
       "placeholder": "e.g., 5",
-      "info": "Berapa banyak pertanyaan panduan yang Anda inginkan?"
+      "info": "Berapa banyak pertanyaan panduan yang Anda inginkan?",
+      "optional": true
     },
     {
       "name": "promptStyle",
@@ -41,14 +44,40 @@
         "Prompt Kreatif & Imajinatif",
         "Lainnya..."
       ],
-      "info": "Pilih jenis pertanyaan yang paling Anda butuhkan saat ini."
+      "info": "Pilih jenis pertanyaan yang paling Anda butuhkan saat ini.",
+      "optional": true
     },
     {
       "name": "additionalContext",
       "label": "Konteks Tambahan & Instruksi Khusus",
       "type": "textarea",
       "placeholder": "Contoh: Fokus pada pencapaian kecil. Hindari pertanyaan tentang pekerjaan. Buat pertanyaan yang bisa dijawab dalam 1-2 kalimat.",
-      "info": "Preferensi personal untuk memandu AI."
+      "info": "Preferensi personal untuk memandu AI.",
+      "optional": true
+    },
+    {
+      "name": "custom_journalTheme",
+      "label": "Sebutkan Tema Jurnal Hari Ini Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Tema Jurnal Hari Ini.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
+    },
+    {
+      "name": "custom_promptStyle",
+      "label": "Sebutkan Gaya Prompt Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Gaya Prompt.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -67,45 +96,5 @@
     "KONTEKS": "Saya ingin create konten tertulis tentang {journalTheme} untuk {currentMood}. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate code atau technical guidance yang clean, efficient, dan mengikuti best practices.",
     "FORMAT_OUTPUT": "Sajikan dengan code examples, explanations, dan best practice recommendations yang jelas."
-  },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "journalTheme",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_journalTheme",
-            "label": "Sebutkan Tema Jurnal Hari Ini Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Tema Jurnal Hari Ini.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "promptStyle",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_promptStyle",
-            "label": "Sebutkan Gaya Prompt Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Gaya Prompt.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ]
+  }
 }

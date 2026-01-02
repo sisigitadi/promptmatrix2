@@ -11,7 +11,8 @@
       "info": "Semakin detail inputnya, semakin akurat ringkasannya.",
       "validation": {
         "min_length": 50
-      }
+      },
+      "optional": true
     },
     {
       "name": "attendees",
@@ -31,7 +32,8 @@
         "Tabel Keputusan & Tindakan",
         "Lainnya..."
       ],
-      "info": "Pilih format output yang paling sesuai dengan kebutuhan Anda."
+      "info": "Pilih format output yang paling sesuai dengan kebutuhan Anda.",
+      "optional": true
     },
     {
       "name": "keyTopics",
@@ -63,6 +65,30 @@
       "validation": {
         "min_length": 10
       }
+    },
+    {
+      "name": "custom_summaryStyle",
+      "label": "Sebutkan Gaya Ringkasan Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Gaya Ringkasan.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
+    },
+    {
+      "name": "custom_actionItemsToExtract",
+      "label": "Sebutkan Fokus Ekstraksi 'Action Items' Lainnya",
+      "type": "text",
+      "description": "Input kustom untuk Fokus Ekstraksi 'Action Items'.",
+      "placeholder": "Ketik opsi kustom...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Manual input jika opsi standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -81,45 +107,5 @@
     "KONTEKS": "Saya ingin create konten tertulis tentang {meetingTranscript} untuk [Daftar Peserta (Opsional): {attendees}]. [Konteks Tambahan & Instruksi Khusus: {additionalContext}].",
     "TUGAS": "Generate konten tertulis yang engaging, informatif, dan sesuai dengan tujuan yang diminta.",
     "FORMAT_OUTPUT": "Sajikan dalam format yang sesuai dengan medium target (blog, email, social media, etc.) dengan struktur yang jelas."
-  },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "summaryStyle",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_summaryStyle",
-            "label": "Sebutkan Gaya Ringkasan Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Gaya Ringkasan.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "actionItemsToExtract",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_actionItemsToExtract",
-            "label": "Sebutkan Fokus Ekstraksi 'Action Items' Lainnya",
-            "type": "text",
-            "description": "Input kustom untuk Fokus Ekstraksi 'Action Items'.",
-            "placeholder": "Ketik opsi kustom...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Manual input jika opsi standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ]
+  }
 }

@@ -22,71 +22,62 @@
         "Lainnya..."
       ],
       "default": "Generator Templat Respons",
-      "info": "Pilih tugas yang ingin Anda optimalkan."
-    }
-  ],
-  "dynamicSubcomponents": [
+      "info": "Pilih tugas yang ingin Anda optimalkan.",
+      "optional": true
+    },
     {
-      "trigger": "TUGAS_LAYANAN_PELANGGAN",
-      "options": {
-        "Generator Templat Respons": [
-          {
-            "name": "CS_SKENARIO",
-            "label": "Skenario Pelanggan",
-            "type": "text",
-            "placeholder": "Contoh: Keluhan produk rusak, Pertanyaan status pengiriman",
-            "info": "Jelaskan situasi umum yang dihadapi agen Anda."
-          },
-          {
-            "name": "CS_TONE",
-            "label": "Nada Suara Respons",
-            "type": "select",
-            "options": [
-              "Empatik & Profesional",
-              "Cepat & Efisien",
-              "Sangat Sopan & Formal",
-              "Lainnya..."
-            ],
-            "default": "Empatik & Profesional",
-            "info": "Pilih gaya bahasa untuk respons."
-          }
-        ],
-        "Penyusun Skrip Eskalasi Masalah": [
-          {
-            "name": "CS_MASALAH_ESKALASI",
-            "label": "Jenis Masalah yang Perlu Eskalasi",
-            "type": "text",
-            "placeholder": "Contoh: Masalah teknis kompleks, Pelanggan yang sangat tidak puas",
-            "info": "Sebutkan situasi yang memerlukan penanganan tim senior."
-          }
-        ],
-        "Pembuat Konten Halaman FAQ": [
-          {
-            "name": "CS_PRODUK_FAQ",
-            "label": "Produk atau Layanan",
-            "type": "text",
-            "placeholder": "Contoh: Layanan langganan premium kami",
-            "info": "Produk yang akan dibuatkan halaman FAQ-nya."
-          },
-          {
-            "name": "CS_PERTANYAAN_UMUM",
-            "label": "Contoh Pertanyaan Umum (Opsional)",
-            "type": "textarea",
-            "placeholder": "- Bagaimana cara membatalkan langganan?\n- Apakah ada refund?",
-            "info": "Jika Anda sudah punya daftar, masukkan di sini. Jika tidak, AI akan membuatnya.",
-            "optional": true
-          }
-        ],
-        "Analisis Umpan Balik Pelanggan": [
-          {
-            "name": "CS_UMPAN_BALIK",
-            "label": "Tempelkan Umpan Balik Pelanggan",
-            "type": "textarea",
-            "placeholder": "Salin dan tempel beberapa ulasan pelanggan dari Google Reviews, App Store, atau survei di sini...",
-            "info": "AI akan menganalisis teks ini untuk menemukan tema umum."
-          }
-        ]
-      }
+      "name": "CS_SKENARIO",
+      "label": "Skenario Pelanggan",
+      "type": "text",
+      "placeholder": "Contoh: Keluhan produk rusak, Pertanyaan status pengiriman",
+      "info": "Jelaskan situasi umum yang dihadapi agen Anda.",
+      "optional": true
+    },
+    {
+      "name": "CS_TONE",
+      "label": "Nada Suara Respons",
+      "type": "select",
+      "options": [
+        "Empatik & Profesional",
+        "Cepat & Efisien",
+        "Sangat Sopan & Formal",
+        "Lainnya..."
+      ],
+      "default": "Empatik & Profesional",
+      "info": "Pilih gaya bahasa untuk respons.",
+      "optional": true
+    },
+    {
+      "name": "CS_MASALAH_ESKALASI",
+      "label": "Jenis Masalah yang Perlu Eskalasi",
+      "type": "text",
+      "placeholder": "Contoh: Masalah teknis kompleks, Pelanggan yang sangat tidak puas",
+      "info": "Sebutkan situasi yang memerlukan penanganan tim senior.",
+      "optional": true
+    },
+    {
+      "name": "CS_PRODUK_FAQ",
+      "label": "Produk atau Layanan",
+      "type": "text",
+      "placeholder": "Contoh: Layanan langganan premium kami",
+      "info": "Produk yang akan dibuatkan halaman FAQ-nya.",
+      "optional": true
+    },
+    {
+      "name": "CS_PERTANYAAN_UMUM",
+      "label": "Contoh Pertanyaan Umum (Opsional)",
+      "type": "textarea",
+      "placeholder": "- Bagaimana cara membatalkan langganan?\n- Apakah ada refund?",
+      "info": "Jika Anda sudah punya daftar, masukkan di sini. Jika tidak, AI akan membuatnya.",
+      "optional": true
+    },
+    {
+      "name": "CS_UMPAN_BALIK",
+      "label": "Tempelkan Umpan Balik Pelanggan",
+      "type": "textarea",
+      "placeholder": "Salin dan tempel beberapa ulasan pelanggan dari Google Reviews, App Store, atau survei di sini...",
+      "info": "AI akan menganalisis teks ini untuk menemukan tema umum.",
+      "optional": true
     }
   ],
   "komponen_prompt": {

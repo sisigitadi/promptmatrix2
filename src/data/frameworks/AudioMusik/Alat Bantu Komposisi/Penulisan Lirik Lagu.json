@@ -16,14 +16,16 @@
         "Electronic",
         "Lainnya..."
       ],
-      "info": "Genre akan mempengaruhi gaya bahasa dan struktur lirik."
+      "info": "Genre akan mempengaruhi gaya bahasa dan struktur lirik.",
+      "optional": true
     },
     {
       "name": "theme",
       "label": "Tema Lagu",
       "type": "text",
       "placeholder": "e.g., 'cinta pertama, patah hati, perjalanan hidup, protes sosial'",
-      "info": "Gagasan atau cerita utama di balik lagu."
+      "info": "Gagasan atau cerita utama di balik lagu.",
+      "optional": true
     },
     {
       "name": "mood",
@@ -37,28 +39,56 @@
         "Romantis & Intim",
         "Lainnya..."
       ],
-      "info": "Emosi utama yang ingin disampaikan melalui lirik."
+      "info": "Emosi utama yang ingin disampaikan melalui lirik.",
+      "optional": true
     },
     {
       "name": "structure",
       "label": "Struktur Lagu (Opsional)",
       "type": "text",
       "placeholder": "e.g., 'Verse-Chorus-Verse-Chorus-Bridge-Chorus'",
-      "info": "Tentukan urutan bagian-bagian lagu jika Anda punya preferensi."
+      "info": "Tentukan urutan bagian-bagian lagu jika Anda punya preferensi.",
+      "optional": true
     },
     {
       "name": "keyElements",
       "label": "Elemen/Kata Kunci Wajib",
       "type": "textarea",
       "placeholder": "e.g., 'sebutkan kata 'bintang', 'malam', 'harapan''",
-      "info": "Gambar, kata, atau frasa spesifik yang harus ada dalam lirik."
+      "info": "Gambar, kata, atau frasa spesifik yang harus ada dalam lirik.",
+      "optional": true
     },
     {
       "name": "additionalContext",
       "label": "Konteks Tambahan & Instruksi Khusus",
       "type": "textarea",
       "placeholder": "Contoh: Gunakan banyak metafora alam (laut, gunung, hutan). Hindari rima yang terlalu klise. Cerita harus berkembang dari sedih menjadi penuh harapan di bagian akhir.",
-      "info": "Detail artistik atau batasan kreatif untuk AI. Misalnya, penggunaan metafora atau majas tertentu."
+      "info": "Detail artistik atau batasan kreatif untuk AI. Misalnya, penggunaan metafora atau majas tertentu.",
+      "optional": true
+    },
+    {
+      "name": "custom_genre",
+      "label": "Sebutkan Genre Musik Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Genre Musik.",
+      "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Genre Musik standar tidak tersedia."
+    },
+    {
+      "name": "custom_mood",
+      "label": "Sebutkan Suasana Hati Lagu Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Suasana Hati Lagu.",
+      "placeholder": "Contoh: Platform kustom, tool baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Suasana Hati Lagu standar tidak tersedia."
     }
   ],
   "kategori": [
@@ -78,46 +108,6 @@
     "TUGAS": "Generate prompt musik yang menghasilkan komposisi sesuai dengan mood, genre, dan durasi yang diminta.",
     "FORMAT_OUTPUT": "Sajikan prompt dalam format yang kompatibel dengan AI music generation tools, dengan deskripsi yang jelas dan parameter yang tepat."
   },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "genre",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_genre",
-            "label": "Sebutkan Genre Musik Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Genre Musik.",
-            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Genre Musik standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "mood",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_mood",
-            "label": "Sebutkan Suasana Hati Lagu Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Suasana Hati Lagu.",
-            "placeholder": "Contoh: Platform kustom, tool baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Suasana Hati Lagu standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "_review_notes": [
     "TODO: Review options for hybrid localization (Technical EN + ID)"
   ]

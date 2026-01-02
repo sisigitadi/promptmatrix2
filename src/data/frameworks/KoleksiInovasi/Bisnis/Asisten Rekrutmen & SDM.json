@@ -22,84 +22,78 @@
         "Lainnya..."
       ],
       "default": "Pembuat Deskripsi Pekerjaan",
-      "info": "Pilih tugas SDM yang ingin Anda kerjakan."
-    }
-  ],
-  "dynamicSubcomponents": [
+      "info": "Pilih tugas SDM yang ingin Anda kerjakan.",
+      "optional": true
+    },
     {
-      "trigger": "TUGAS_SDM",
-      "options": {
-        "Pembuat Deskripsi Pekerjaan": [
-          {
-            "name": "HR_POSISI_JABATAN",
-            "label": "Posisi Jabatan dan Level",
-            "type": "text",
-            "placeholder": "Contoh: Senior Graphic Designer",
-            "info": "Sebutkan jabatan yang sedang dibuka."
-          },
-          {
-            "name": "HR_TANGGUNG_JAWAB",
-            "label": "3-5 Tanggung Jawab Utama",
-            "type": "textarea",
-            "placeholder": "- Membuat desain untuk media sosial\n- Mengembangkan konsep visual untuk kampanye",
-            "info": "Sebutkan poin-poin tanggung jawab terpenting."
-          }
-        ],
-        "Generator Pertanyaan Wawancara": [
-          {
-            "name": "HR_POSISI_WAWANCARA",
-            "label": "Posisi Jabatan",
-            "type": "text",
-            "placeholder": "Contoh: Customer Service, Software Engineer",
-            "info": "Posisi yang akan diwawancarai."
-          },
-          {
-            "name": "HR_SOFT_SKILL",
-            "label": "Soft Skill yang Dicari",
-            "type": "text",
-            "placeholder": "Contoh: Kemampuan memecahkan masalah, kolaborasi tim",
-            "info": "Karakteristik perilaku yang penting untuk posisi ini."
-          }
-        ],
-        "Penyusun Rencana Onboarding": [
-          {
-            "name": "HR_POSISI_ONBOARDING",
-            "label": "Posisi Jabatan Karyawan Baru",
-            "type": "text",
-            "placeholder": "Contoh: Junior Accountant",
-            "info": "Posisi karyawan yang akan menjalani orientasi."
-          },
-          {
-            "name": "HR_TUJUAN_30_HARI",
-            "label": "Tujuan Utama untuk 30 Hari Pertama",
-            "type": "text",
-            "placeholder": "Contoh: Memahami alur kerja tim dan berhasil menangani 5 klien kecil.",
-            "info": "Apa target utama yang harus dicapai karyawan baru di bulan pertama?"
-          }
-        ],
-        "Pembuat Draf Email Rekrutmen": [
-          {
-            "name": "HR_JENIS_EMAIL",
-            "label": "Jenis Email",
-            "type": "select",
-            "options": [
-              "Undangan Wawancara",
-              "Surat Penolakan Kandidat",
-              "Surat Penawaran Kerja",
-              "Lainnya..."
-            ],
-            "default": "Undangan Wawancara",
-            "info": "Pilih templat email yang Anda butuhkan."
-          },
-          {
-            "name": "HR_NAMA_KANDIDAT",
-            "label": "Nama Kandidat",
-            "type": "text",
-            "placeholder": "Contoh: Budi Santoso",
-            "info": "Nama kandidat untuk personalisasi email."
-          }
-        ]
-      }
+      "name": "HR_POSISI_JABATAN",
+      "label": "Posisi Jabatan dan Level",
+      "type": "text",
+      "placeholder": "Contoh: Senior Graphic Designer",
+      "info": "Sebutkan jabatan yang sedang dibuka.",
+      "optional": true
+    },
+    {
+      "name": "HR_TANGGUNG_JAWAB",
+      "label": "3-5 Tanggung Jawab Utama",
+      "type": "textarea",
+      "placeholder": "- Membuat desain untuk media sosial\n- Mengembangkan konsep visual untuk kampanye",
+      "info": "Sebutkan poin-poin tanggung jawab terpenting.",
+      "optional": true
+    },
+    {
+      "name": "HR_POSISI_WAWANCARA",
+      "label": "Posisi Jabatan",
+      "type": "text",
+      "placeholder": "Contoh: Customer Service, Software Engineer",
+      "info": "Posisi yang akan diwawancarai.",
+      "optional": true
+    },
+    {
+      "name": "HR_SOFT_SKILL",
+      "label": "Soft Skill yang Dicari",
+      "type": "text",
+      "placeholder": "Contoh: Kemampuan memecahkan masalah, kolaborasi tim",
+      "info": "Karakteristik perilaku yang penting untuk posisi ini.",
+      "optional": true
+    },
+    {
+      "name": "HR_POSISI_ONBOARDING",
+      "label": "Posisi Jabatan Karyawan Baru",
+      "type": "text",
+      "placeholder": "Contoh: Junior Accountant",
+      "info": "Posisi karyawan yang akan menjalani orientasi.",
+      "optional": true
+    },
+    {
+      "name": "HR_TUJUAN_30_HARI",
+      "label": "Tujuan Utama untuk 30 Hari Pertama",
+      "type": "text",
+      "placeholder": "Contoh: Memahami alur kerja tim dan berhasil menangani 5 klien kecil.",
+      "info": "Apa target utama yang harus dicapai karyawan baru di bulan pertama?",
+      "optional": true
+    },
+    {
+      "name": "HR_JENIS_EMAIL",
+      "label": "Jenis Email",
+      "type": "select",
+      "options": [
+        "Undangan Wawancara",
+        "Surat Penolakan Kandidat",
+        "Surat Penawaran Kerja",
+        "Lainnya..."
+      ],
+      "default": "Undangan Wawancara",
+      "info": "Pilih templat email yang Anda butuhkan.",
+      "optional": true
+    },
+    {
+      "name": "HR_NAMA_KANDIDAT",
+      "label": "Nama Kandidat",
+      "type": "text",
+      "placeholder": "Contoh: Budi Santoso",
+      "info": "Nama kandidat untuk personalisasi email.",
+      "optional": true
     }
   ],
   "komponen_prompt": {

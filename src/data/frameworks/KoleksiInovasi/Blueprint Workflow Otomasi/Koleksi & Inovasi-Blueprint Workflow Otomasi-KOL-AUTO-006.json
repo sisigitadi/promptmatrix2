@@ -18,14 +18,16 @@
       "label": "Tujuan Workflow",
       "type": "textarea",
       "placeholder": "Jelaskan detail apa yang ingin diotomatisasi...",
-      "info": "Jelaskan use-case unik Anda secara spesifik."
+      "info": "Jelaskan use-case unik Anda secara spesifik.",
+      "optional": true
     },
     {
       "name": "APP_LIST",
       "label": "Aplikasi Terlibat",
       "type": "text",
       "placeholder": "Gmail, Slack, Custom API, dll",
-      "info": "Daftar aplikasi yang perlu dihubungkan."
+      "info": "Daftar aplikasi yang perlu dihubungkan.",
+      "optional": true
     },
     {
       "name": "OPTIMIZATION_GOAL",
@@ -39,7 +41,8 @@
         "User Experience (Kemudahan Pengguna)"
       ],
       "description": "Apa metrik kesuksesan utama workflow ini? Mengarahkan AI dalam memilih tools.",
-      "info": "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil)."
+      "info": "Menentukan strategi arsitektur yang akan dipilih AI (misal: tool murah vs tool stabil).",
+      "optional": true
     },
     {
       "name": "PLATFORM_OTOMASI",
@@ -59,7 +62,8 @@
         "Lainnya..."
       ],
       "description": "Platform mana yang akan digunakan?",
-      "info": "Platform tempat workflow ini akan dibangun."
+      "info": "Platform tempat workflow ini akan dibangun.",
+      "optional": true
     },
     {
       "name": "COMPLEXITY",
@@ -75,7 +79,8 @@
         "Level 7: Human Approval (Proses berhenti tunggu approval)",
         "Lainnya..."
       ],
-      "info": "Seberapa rumit logika workflow yang Anda bayangkan?"
+      "info": "Seberapa rumit logika workflow yang Anda bayangkan?",
+      "optional": true
     },
     {
       "name": "INDUSTRY_SECTOR",
@@ -95,7 +100,8 @@
         "HR & Recruitment (SDM)",
         "Lainnya..."
       ],
-      "info": "Industri target untuk menyesuaikan terminologi bisnis."
+      "info": "Industri target untuk menyesuaikan terminologi bisnis.",
+      "optional": true
     },
     {
       "name": "DATA_VOLUME",
@@ -109,7 +115,8 @@
         "Streaming/Real-time",
         "Lainnya..."
       ],
-      "info": "Estimasi beban kerja untuk perhitungan biaya server/API."
+      "info": "Estimasi beban kerja untuk perhitungan biaya server/API.",
+      "optional": true
     },
     {
       "name": "ADDITIONAL_INSTRUCTIONS",
@@ -119,6 +126,54 @@
       "description": "Detail spesifik atau batasan khusus yang ingin Anda tambahkan.",
       "optional": true,
       "info": "Tambahkan aturan khusus, preferensi tools, atau constraint yang tidak ada di pilihan di atas."
+    },
+    {
+      "name": "custom_PLATFORM_OTOMASI",
+      "label": "Sebutkan Platform Otomasi Utama Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
+      "placeholder": "Contoh: API Kustom, App Baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia."
+    },
+    {
+      "name": "custom_COMPLEXITY",
+      "label": "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
+      "placeholder": "Contoh: API Kustom, App Baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia."
+    },
+    {
+      "name": "custom_INDUSTRY_SECTOR",
+      "label": "Sebutkan Sektor Industri Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Sektor Industri.",
+      "placeholder": "Contoh: API Kustom, App Baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Sektor Industri standar tidak tersedia."
+    },
+    {
+      "name": "custom_DATA_VOLUME",
+      "label": "Sebutkan Perkiraan Volume Data Lainnya",
+      "type": "text",
+      "description": "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
+      "placeholder": "Contoh: API Kustom, App Baru, dll...",
+      "optional": false,
+      "validation": {
+        "min_length": 2
+      },
+      "info": "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia."
     }
   ],
   "komponen_prompt": {
@@ -127,84 +182,6 @@
     "TUGAS": "Buat Blueprint Lengkap: Logic Flow, Mermaid Diagram, Node Configuration, dan Error Handling Recommendations.",
     "FORMAT_OUTPUT": "### 🛠️ AUTOMATION ARCHITECTURE: {{nama_kerangka}}\n\n**1. Executive Strategy**\n- **Core Strategy:** {{OPTIMIZATION_GOAL}}\n- **Tool Selection:** {{PLATFORM_OTOMASI}}\n- **Domain Context:** {{INDUSTRY_SECTOR}}\n\n**2. Flow Architecture (Mermaid)**\n```mermaid\ngraph TD;\n    T([Trigger]) --> P1[Process 1];\n    P1 --> C{Condition};\n    C -- Yes --> A1[Action 1];\n    C -- No --> A2[Action 2];\n```\n\n**3. Node Configuration Details**\n- **Node Type:** [Trigger/Action/Logic]\n- **Platform Specific:** {{PLATFORM_OTOMASI}}\n- **JSON Mapping:** [Key-Value Pairs]\n\n**4. Scalability & Error Handling**\n- [ ] Implement Logging\n- [ ] Setup Error Alerts\n- [ ] Auto-retry Logic [via {{PLATFORM_OTOMASI}}]\n"
   },
-  "dynamicSubcomponents": [
-    {
-      "trigger": "PLATFORM_OTOMASI",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_PLATFORM_OTOMASI",
-            "label": "Sebutkan Platform Otomasi Utama Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Platform Otomasi Utama.",
-            "placeholder": "Contoh: API Kustom, App Baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Platform Otomasi Utama standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "COMPLEXITY",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_COMPLEXITY",
-            "label": "Sebutkan Tingkat Kompleksitas Workflow Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Tingkat Kompleksitas Workflow.",
-            "placeholder": "Contoh: API Kustom, App Baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Tingkat Kompleksitas Workflow standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "INDUSTRY_SECTOR",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_INDUSTRY_SECTOR",
-            "label": "Sebutkan Sektor Industri Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Sektor Industri.",
-            "placeholder": "Contoh: API Kustom, App Baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Sektor Industri standar tidak tersedia."
-          }
-        ]
-      }
-    },
-    {
-      "trigger": "DATA_VOLUME",
-      "options": {
-        "Lainnya...": [
-          {
-            "name": "custom_DATA_VOLUME",
-            "label": "Sebutkan Perkiraan Volume Data Lainnya",
-            "type": "text",
-            "description": "Ketik manual nilai kustom untuk Perkiraan Volume Data.",
-            "placeholder": "Contoh: API Kustom, App Baru, dll...",
-            "optional": false,
-            "validation": {
-              "min_length": 2
-            },
-            "info": "Input manual jika pilihan Perkiraan Volume Data standar tidak tersedia."
-          }
-        ]
-      }
-    }
-  ],
   "konteks_tambahan_instruksi_khusus": "Pastikan output berfokus pada langkah teknis yang praktis dan segera dapat diimplementasikan.\n\n[Instruksi Khusus]: {ADDITIONAL_INSTRUCTIONS}",
   "examples": [],
   "temperature": 0.7,
