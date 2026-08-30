@@ -1,96 +1,72 @@
-# 🚀 Panduan Deployment & Live PromptMatrix 2.0
+﻿# 🚀 Panduan Deployment & Live PromptMatrix 2.0 ke https://prompt.sigitadi.id
 
-Dokumen ini menjelaskan langkah-langkah lengkap untuk mempublikasikan (*deploy*) **PromptMatrix 2.0** agar dapat diakses secara online (live).
+Dokumen ini menjelaskan langkah-langkah lengkap untuk mempublikasikan (*deploy*) **PromptMatrix 2.0** agar dapat diakses secara online (live) di domain kustom Anda: **[https://prompt.sigitadi.id](https://prompt.sigitadi.id)**.
 
-Repository: [https://github.com/sisigitadi/promptmatrix2](https://github.com/sisigitadi/promptmatrix2)
-
----
-
-## 📋 Daftar Opsi Deployment
-
-1. [Opsi 1: GitHub Pages Otomatis via GitHub Actions (Sangat Direkomendasikan)](#opsi-1-github-pages-otomatis-via-github-actions)
-2. [Opsi 2: GitHub Pages Manual (`npm run deploy`)](#opsi-2-github-pages-manual-npm-run-deploy)
-3. [Opsi 3: Vercel (1-Click Deployment)](#opsi-3-vercel-1-click-deployment)
-4. [Opsi 4: Netlify / Cloudflare Pages](#opsi-4-netlify--cloudflare-pages)
+Repository: [https://github.com/sisigitadi/promptmatrix2](https://github.com/sisigitadi/promptmatrix2)  
+Domain Live: [https://prompt.sigitadi.id](https://prompt.sigitadi.id)
 
 ---
 
-## 🌟 Opsi 1: GitHub Pages Otomatis via GitHub Actions
+## 🌐 Langkah 1: Konfigurasi DNS di Provider Domain Anda (Cloudflare / cPanel / Niagahoster / Rumahweb / Namecheap)
 
-Workflow GitHub Actions sudah dikonfigurasi di file `.github/workflows/deploy.yml`. Setiap kali Anda melakukan `git push` ke branch `main`, GitHub akan secara otomatis mengkompilasi dan mempublikasikan aplikasi.
+Agar domain `prompt.sigitadi.id` terhubung ke server hosting GitHub Pages:
 
-### Langkah Aktivasi di GitHub:
-1. Buka repositori Anda: `https://github.com/sisigitadi/promptmatrix2`
-2. Klik tab **Settings** (Pengaturan) di bagian atas.
-3. Di menu sebelah kiri, pilih menu **Pages** (di bawah bagian *Code and automation*).
-4. Di bagian **Build and deployment**:
-   - Pada dropdown **Source**, pilih **GitHub Actions**.
-5. Lakukan push commit terbaru ke branch `main`:
-   ```bash
-   git add .
-   git commit -m "feat: complete master localization and deployment setup for promptmatrix2"
-   git push origin main
-   ```
-6. Buka tab **Actions** di repositori Anda untuk melihat proses build & deployment berjalan.
-7. Setelah selesai, website Anda akan live di:
-   👉 **`https://sisigitadi.github.io/promptmatrix2/`**
+1. Buka dashboard DNS Manager domain Anda (misal: Cloudflare, cPanel, Niagahoster, dll.).
+2. Tambahkan satu entri DNS Record baru bertipe **CNAME**:
+   - **Type**: `CNAME`
+   - **Name / Host**: `prompt`
+   - **Target / Value / Points to**: `sisigitadi.github.io`
+   - **TTL**: `Auto` (atau `3600`)
+   - *(Jika menggunakan Cloudflare)*: **Proxy status**: `DNS only` (Grey cloud) atau `Proxied` (Orange cloud).
+3. Simpan perubahan DNS Record.
 
 ---
 
-## ⚡ Opsi 2: GitHub Pages Manual (`npm run deploy`)
+## ⚙️ Langkah 2: Konfigurasi Custom Domain di GitHub Pages
 
-Jika Anda ingin melakukan deploy langsung dari terminal komputer lokal Anda:
+File `public/CNAME` berisi `prompt.sigitadi.id` sudah tersedia di dalam repositori dan otomatis terbawa saat build.
 
-1. Jalankan perintah:
-   ```bash
-   npm run deploy
-   ```
-2. Perintah ini akan:
-   - Menjalankan `npm run build` untuk mengompilasi kode ke folder `dist/`.
-   - Mengunggah folder `dist/` ke branch `gh-pages` di repositori GitHub Anda menggunakan paket `gh-pages`.
-3. Pastikan di **Settings > Pages**, Source disetel ke **Deploy from a branch** dengan branch `gh-pages` dan folder `/(root)`.
+Untuk memastikannya aktif di GitHub:
+1. Buka browser ke repositori Anda: **`https://github.com/sisigitadi/promptmatrix2/settings/pages`**
+2. Di bagian **Build and deployment**:
+   - **Source**: Pilih **GitHub Actions**.
+3. Di bagian **Custom domain**:
+   - Ketik: `prompt.sigitadi.id`
+   - Klik tombol **Save**.
+4. GitHub akan melakukan pengecekan DNS (*DNS check*).
+5. Centang opsi **Enforce HTTPS** agar website Anda memiliki sertifikat keamanan SSL gratis otomatis dari Let's Encrypt / GitHub.
 
 ---
 
-## ▲ Opsi 3: Vercel (1-Click Deployment)
+## 🚀 Langkah 3: Push Kode ke GitHub
 
-Vercel memberikan performa super cepat dengan global CDN dan SSL otomatis gratis.
+Lakukan push ke repositori GitHub Anda:
+
+```bash
+# 1. Masukkan semua perubahan
+git add .
+
+# 2. Buat commit
+git commit -m "feat: configure custom domain prompt.sigitadi.id and deployment automation"
+
+# 3. Dorong ke repositori
+git push origin main --force
+```
+
+GitHub Actions akan secara otomatis mengompilasi aplikasi dan mempublikasikannya langsung ke **`https://prompt.sigitadi.id`**.
+
+---
+
+## 🌟 Opsi Alternatif: Deployment via Vercel (1-Click)
+
+Jika Anda juga ingin men-deploy cadangan (*fallback*) di Vercel dengan domain `prompt.sigitadi.id`:
 
 1. Buka [https://vercel.com](https://vercel.com) dan login dengan akun GitHub Anda.
-2. Klik tombol **Add New...** > **Project**.
-3. Pilih repositori **promptmatrix2** dari daftar repositori Anda lalu klik **Import**.
-4. Di bagian konfigurasi proyek:
-   - **Framework Preset**: `Vite`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-5. (Opsional) Jika ingin menggunakan fitur AI live execution dengan Gemini API:
-   - Buka **Environment Variables**, tambahkan:
-     - `GEMINI_API_KEY`: `your_gemini_api_key_here`
-6. Klik tombol **Deploy**.
-7. Dalam 30 detik, aplikasi Anda akan live di URL Vercel (misal: `https://promptmatrix2.vercel.app`).
-
----
-
-## 🌐 Opsi 4: Netlify / Cloudflare Pages
-
-### Netlify:
-1. Buka [https://app.netlify.com](https://app.netlify.com) dan hubungkan akun GitHub Anda.
-2. Pilih repositori `promptmatrix2`.
-3. Set **Build command**: `npm run build` dan **Publish directory**: `dist`.
-4. File `public/_redirects` sudah disertakan untuk memastikan *Single Page Application routing* bekerja mulus tanpa error 404 saat refresh halaman.
-5. Klik **Deploy site**.
-
----
-
-## 🔒 Konfigurasi Environment Variable (Opsional)
-
-Aplikasi PromptMatrix 2.0 dapat berjalan **100% offline & client-side** untuk meracik dan menyalin prompt. Jika Anda ingin mengaktifkan fitur integrasi AI langsung ke model Google Gemini:
-
-1. Buat file `.env` di folder utama:
-   ```env
-   GEMINI_API_KEY=your_gemini_api_key_here
-   ```
-2. Pada platform hosting (Vercel / Netlify / GitHub Secrets), tambahkan variabel lingkungan `GEMINI_API_KEY` pada menu pengaturan *Environment Variables*.
+2. Klik **Add New...** > **Project** > Import repositori **promptmatrix2**.
+3. Klik tombol **Deploy**.
+4. Setelah deploy selesai, buka **Project Settings** > **Domains**.
+5. Tambahkan domain: `prompt.sigitadi.id`.
+6. Ikuti arahan DNS Vercel (CNAME record mengarah ke `cname.vercel-dns.com`).
 
 ---
 

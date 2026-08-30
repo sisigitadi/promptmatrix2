@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://promptmatrix.app/sitemap.xml
+Sitemap: https://prompt.sigitadi.id/sitemap.xml

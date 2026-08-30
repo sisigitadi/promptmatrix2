@@ -3,12 +3,13 @@
 [![Production Build](https://img.shields.io/badge/Build-Passing-emerald.svg)](https://github.com/sisigitadi/promptmatrix2)
 [![Frameworks](https://img.shields.io/badge/Master%20Frameworks-350%20Templates-blue.svg)](https://github.com/sisigitadi/promptmatrix2)
 [![Bilingual](https://img.shields.io/badge/Languages-100%25%20Bilingual%20(ID%20%7C%20EN)-purple.svg)](https://github.com/sisigitadi/promptmatrix2)
+[![Live Domain](https://img.shields.io/badge/Live-prompt.sigitadi.id-emerald.svg)](https://prompt.sigitadi.id)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 **PromptMatrix 2.0** adalah platform generator prompt AI berpemandu dan terstruktur terlengkap dengan **350 formula master siap pakai** berstandar global. Dirancang untuk memudahkan siapa saja—mulai dari pengguna awam non-teknis hingga profesional tingkat lanjut—meracik instruksi prompt AI berkualitas tinggi, kontekstual, dan berdaya guna dalam hitungan detik untuk ChatGPT, Claude, Gemini, DeepSeek, Midjourney, Sora, dan berbagai model AI lainnya.
 
-🌐 **Live Demo & Deployment**: [https://sisigitadi.github.io/promptmatrix2/](https://sisigitadi.github.io/promptmatrix2/)  
-📖 **Panduan Deployment**: Baca [DEPLOYMENT.md](DEPLOYMENT.md) untuk panduan publikasi ke GitHub Pages, Vercel, Netlify, atau Cloudflare.
+🌐 **Website Live Resmi**: [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
+📖 **Panduan Deployment & DNS**: Baca [DEPLOYMENT.md](DEPLOYMENT.md) untuk panduan konfigurasi domain dan hosting.
 
 ---
 
@@ -66,22 +67,25 @@ Aplikasi akan berjalan di `http://localhost:5173`.
 
 ---
 
-## 🚢 Panduan Deployment & Live
+## 🚢 Panduan Deployment ke https://prompt.sigitadi.id
 
-Proyek ini telah dilengkapi dengan workflow **GitHub Actions** otomatis serta konfigurasi bawaan untuk berbagai platform hosting modern:
+Proyek ini telah dilengkapi dengan workflow **GitHub Actions** otomatis serta berkas `public/CNAME` untuk domain `prompt.sigitadi.id`:
 
-### Opsi 1: GitHub Pages Otomatis (GitHub Actions)
-1. Buka repositori Anda di GitHub: `https://github.com/sisigitadi/promptmatrix2`
-2. Buka tab **Settings** > **Pages**.
-3. Di bagian **Source**, pilih **GitHub Actions**.
-4. Lakukan `git push origin main`. GitHub Actions akan otomatis melakukan build dan mempublikasikan aplikasi ke:  
-   👉 `https://sisigitadi.github.io/promptmatrix2/`
+### 1. Konfigurasi DNS di Provider Domain:
+- Buat record **CNAME**:
+  - **Host / Name**: `prompt`
+  - **Target / Points to**: `sisigitadi.github.io`
 
-### Opsi 2: Vercel (1-Click Import)
-- Import repositori `sisigitadi/promptmatrix2` di dashboard [Vercel](https://vercel.com).
-- Konfigurasi `vercel.json` telah tersedia dan siap jalan secara otomatis.
+### 2. Konfigurasi di GitHub Pages:
+- Buka repositori `https://github.com/sisigitadi/promptmatrix2/settings/pages`.
+- Pada bagian **Custom domain**, masukkan `prompt.sigitadi.id` lalu klik **Save**.
+- Centang opsi **Enforce HTTPS**.
 
-*Untuk panduan lengkap deployment ke Netlify, Cloudflare Pages, atau hosting kustom, silakan baca [DEPLOYMENT.md](DEPLOYMENT.md).*
+### 3. Push ke GitHub:
+- Lakukan `git push origin main`. GitHub Actions akan otomatis melakukan build dan mempublikasikan aplikasi ke:  
+  👉 **`https://prompt.sigitadi.id`**
+
+*Untuk panduan lengkap deployment ke Vercel atau Netlify, silakan baca [DEPLOYMENT.md](DEPLOYMENT.md).*
 
 ---
 
@@ -107,12 +111,16 @@ promptmatrix2/
 │   ├── aiPlatforms.ts           # Daftar 38 platform AI tools untuk Quick Launch
 │   └── frameworks.ts            # Basis data 350 master prompt frameworks
 ├── docs/                        # Dokumentasi SOP, panduan AI Pro, dan FAQ
-├── public/                      # Aset statis, favicon, manifest, robots.txt, sitemap
+├── public/
+│   ├── CNAME                    # Custom domain pointer (prompt.sigitadi.id)
+│   ├── _redirects               # SPA routing rewrite
+│   ├── robots.txt               # SEO robots configuration
+│   └── sitemap.xml              # SEO XML sitemap
 ├── services/
 │   ├── localizationService.ts   # Mesin lokalisasi presisi 4.213 entri (ID ↔ EN)
 │   └── sampleDataService.ts     # Mesin data contoh realistis otomatis
 ├── App.tsx                      # Root application logic & state orchestration
-├── DEPLOYMENT.md                # Panduan teknis publikasi live
+├── DEPLOYMENT.md                # Panduan teknis publikasi live domain
 ├── package.json                 # Konfigurasi dependensi & skrip build
 └── vite.config.ts               # Konfigurasi bundler Vite & alias path
 ```
