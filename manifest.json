@@ -1,0 +1,28 @@
+{
+  "name": "PromptMatrix 2.0 - Generator Prompt AI Berpemandu",
+  "short_name": "PromptMatrix",
+  "description": "Generator prompt AI berpemandu dengan 136+ formula terstruktur (ChatGPT, Claude, Gemini, DeepSeek, Midjourney).",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": [
+    "productivity",
+    "utilities",
+    "developer tools"
+  ]
+}

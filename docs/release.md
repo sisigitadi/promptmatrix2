@@ -1,37 +1,5 @@
 # Prompt Matrix 2.0 - Catatan Rilis
 
-## Versi 2.7.0
-
-### Fitur & Peningkatan Utama
-
-*   **Seamless Storytelling Architecture**: Implementasi sistem narasi prompt yang lebih mengalir menggunakan sintaks kondisional `[...]`. Menghilangkan teks statis yang mengganggu saat input opsional kosong.
-*   **Smart Prompt Deduplication**: Pratinjau prompt kini secara cerdas mendeteksi dan menghapus duplikasi komponen yang sudah masuk ke dalam narasi (Persona/Konteks), menghemat token secara signifikan.
-*   **Hybrid Localization Strategy**: Keseimbangan antara akurasi teknis (Bahasa Inggris) dan kenyamanan pengguna lokal (Bahasa Indonesia) pada seluruh opsi dropdown framework.
-*   **Automation Blueprint v2**: Peningkatan logika generator untuk Blueprint Workflow Otomasi dengan dukungan otomatis untuk opsi kustom ("Lainnya...").
-*   **Penyempurnaan AI Logic**: Persona AI yang lebih mendalam dan spesifik, memberikan instruksi yang lebih konkrit dan teknis (pseudo-code/logic flow).
-*   **Peningkatan Efisiensi Token**: Reduksi redundansi instruksi pada template prompt untuk penggunaan API yang lebih hemat dan efisien.
-
-## Versi 2.6.0
-
-### Fitur & Peningkatan Utama
-
-*   **Expanded Dice Functionality**: Tombol "Dice" (Saran Acak) kini mendukung tipe input `number`, `slider`, `color`, `select`, `multiselect`, dan `code`. Fitur ini memberikan saran kontekstual cerdas atau nilai acak yang aman untuk mempercepat eksperimen prompt.
-*   **Database Saran Masif**: Perluasan signifikan pada `suggestions.ts` dengan penambahan kategori baru (Cyber Security, SWOT, Hero's Journey, dll.) dan ratusan alias pintar. Memastikan hampir semua variabel input memiliki saran yang relevan.
-*   **Automation Super Frameworks**: Konsolidasi 8 framework otomasi utama menjadi struktur "Super Frameworks" dengan integrasi pemilihan alat (Zapier, n8n, Make) yang lebih intuitif.
-*   **Standardisasi Format Output**: Seluruh key framework kini distandardisasi menggunakan `FORMAT_OUTPUT`, menghapus inkonsistensi legacy.
-*   **Optimasi UI/UX**: Peningkatan mikro-interaksi pada input form dan validasi yang lebih mulus.
-
-## Versi 2.4.0                                                                                  
-
-### Fitur & Peningkatan Utama
-
-*   **Sinkronisasi SOP Framework**: Seluruh kerangka kerja kini mengikuti standar kualitas tinggi sesuai `PROMPT_MATRIX_SOP.md`, mencakup logika AI yang lebih mendalam dan format output yang sangat terstruktur.
-*   **Peningkatan Suite Keamanan Siber**: Penambahan dan penyempurnaan playbook untuk operasi Red, Blue, dan Purple Team dengan integrasi framework MITRE ATT&CK.
-*   **Visual Prompt Builder v2**: Peningkatan stabilitas dan fitur pada drag-and-drop orchestrator, mendukung blok teks dan gambar dengan lebih lancar.
-*   **Eksperimen "Dice Roll"**: Implementasi pengisian input otomatis yang cerdas untuk membantu kreativitas pengguna.
-*   **Modernisasi Tech Stack**: Migrasi penuh ke React 19 dan Vite 7 untuk performa yang lebih optimal dan waktu build yang lebih cepat.
-*   **Penyempurnaan Eskpor PDF**: Format laporan yang lebih profesional dengan metadata yang lengkap dan penanganan multi-halaman yang lebih baik.
-
 ## Versi 2.0.2
 
 ### Perbaikan & Peningkatan
@@ -54,7 +22,7 @@
 ### Fitur Baru
 
 *   **Antarmuka Pengguna yang Ditingkatkan**: Desain ulang antarmuka pengguna untuk pengalaman yang lebih intuitif dan modern.
-*   **Manajemen Prompt yang Lebih Baik**: Peningkatan kemampuan untuk menyimpan, memuat, mengekspor, dan impport prompt.
+*   **Manajemen Prompt yang Lebih Baik**: Peningkatan kemampuan untuk menyimpan, memuat, mengekspor, dan mengimpor prompt.
 *   **Pencarian yang Ditingkatkan**: Fungsi pencarian yang lebih cepat dan akurat untuk menemukan kerangka kerja dan prompt.
 *   **Validasi Input Komprehensif**: Penambahan validasi input untuk memastikan kualitas prompt yang dihasilkan.
 *   **Dukungan untuk Berbagai Jenis Input**: Mendukung berbagai jenis input seperti teks, angka, pilihan, slider, dan lainnya.
