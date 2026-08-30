@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="ogBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="60%" stop-color="#0c1220"/>
+      <stop offset="100%" stop-color="#050811"/>
+    </linearGradient>
+    <linearGradient id="emeraldText" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="50%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="1" stroke-opacity="0.4"/>
+    </pattern>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="40" result="blur"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base & Grid Pattern -->
+  <rect width="1200" height="630" fill="url(#ogBg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Ambient Emerald Light Orbs -->
+  <circle cx="200" cy="150" r="180" fill="#059669" fill-opacity="0.18" filter="url(#softGlow)"/>
+  <circle cx="1050" cy="450" r="220" fill="#10b981" fill-opacity="0.14" filter="url(#softGlow)"/>
+
+  <!-- Top Logo Header -->
+  <g transform="translate(80, 75)">
+    <!-- App Logo Icon Box -->
+    <rect width="64" height="64" rx="16" fill="#0f172a" stroke="#10b981" stroke-width="2.5" stroke-opacity="0.7"/>
+    <g transform="translate(14, 14)" stroke="#34d399" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 2h14l-1 2v9.3a4 4 0 001.2 2.8l10 10c2.5 2.5.7 6.9-2.8 6.9H3.6c-3.5 0-5.3-4.4-2.8-6.9l10-10A4 4 0 0012 13.3V4L11 2z"/>
+      <path d="M30 27a4 4 0 00-2-1.1l-4.8-1a12 12 0 00-7.7 1l-.6.3a12 12 0 01-7.7 1L3 26.5a4 4 0 00-3.6 1.1" stroke="#34d399" stroke-width="2" stroke-opacity="0.9"/>
+    </g>
+    
+    <!-- Title and Version Badge -->
+    <text x="82" y="38" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="32" fill="#f8fafc">PromptMatrix</text>
+    <rect x="305" y="16" width="60" height="28" rx="8" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.4"/>
+    <text x="335" y="35" font-family="monospace" font-weight="700" font-size="15" fill="#34d399" text-anchor="middle">2.0</text>
+    <text x="82" y="58" font-family="system-ui, -apple-system, sans-serif" font-weight="500" font-size="14" fill="#94a3b8">GUIDED AI PROMPT STUDIO</text>
+  </g>
+
+  <!-- Main Value Proposition Headline -->
+  <g transform="translate(80, 200)">
+    <text x="0" y="45" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="52" fill="#ffffff" letter-spacing="-1">
+      Generator Prompt AI Berpemandu
+    </text>
+    <text x="0" y="105" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="52" fill="url(#emeraldText)" letter-spacing="-1">
+      &amp; 136+ Formula Terstruktur Terlengkap
+    </text>
+    <text x="0" y="155" font-family="system-ui, -apple-system, sans-serif" font-weight="400" font-size="20" fill="#94a3b8" max-width="650">
+      Racik prompt presisi tinggi untuk ChatGPT, Claude 3.7, Gemini 3.7, DeepSeek R1 &amp; Midjourney.
+    </text>
+    <text x="0" y="185" font-family="system-ui, -apple-system, sans-serif" font-weight="400" font-size="18" fill="#64748b">
+      100% Ramah Pemula • Formula Medsos, Bisnis, Desain, Koding, Karir • 1-Klik Contoh Nyata
+    </text>
+  </g>
+
+  <!-- Floating Mockup Cards Preview on the Right -->
+  <g transform="translate(760, 110)">
+    <!-- Card 1: HSO TikTok Hook -->
+    <rect x="0" y="0" width="360" height="135" rx="16" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.5"/>
+    <text x="24" y="36" font-family="system-ui, sans-serif" font-weight="700" font-size="16" fill="#34d399">⚡ Hook - Story - Offer (TikTok)</text>
+    <text x="24" y="66" font-family="monospace" font-size="12" fill="#cbd5e1">Hook: "Rahasia 10x Lipat Produktivitas..."</text>
+    <text x="24" y="90" font-family="monospace" font-size="12" fill="#94a3b8">Story: "Dulu saya menghabiskan 8 jam..."</text>
+    <rect x="24" y="104" width="70" height="18" rx="4" fill="#059669" fill-opacity="0.2"/>
+    <text x="59" y="117" font-family="sans-serif" font-size="10" font-weight="600" fill="#34d399" text-anchor="middle">Medsos &amp; Viral</text>
+
+    <!-- Card 2: RTF / AIDA Copywriting -->
+    <rect x="20" y="155" width="360" height="135" rx="16" fill="url(#cardGrad)" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.4"/>
+    <text x="44" y="191" font-family="system-ui, sans-serif" font-weight="700" font-size="16" fill="#38bdf8">🎯 AIDA Copywriting Master</text>
+    <text x="44" y="221" font-family="monospace" font-size="12" fill="#cbd5e1">Attention • Interest • Desire • Action</text>
+    <text x="44" y="245" font-family="monospace" font-size="12" fill="#94a3b8">Target: "Closing Pembeli Shopee/Tokped"</text>
+    <rect x="44" y="259" width="90" height="18" rx="4" fill="#0284c7" fill-opacity="0.2"/>
+    <text x="89" y="272" font-family="sans-serif" font-size="10" font-weight="600" fill="#38bdf8" text-anchor="middle">Bisnis &amp; Marketing</text>
+
+    <!-- Card 3: Midjourney / Visual AI -->
+    <rect x="40" y="310" width="360" height="135" rx="16" fill="url(#cardGrad)" stroke="#a855f7" stroke-width="1.5" stroke-opacity="0.4"/>
+    <text x="64" y="346" font-family="system-ui, sans-serif" font-weight="700" font-size="16" fill="#c084fc">🎨 3D Pixar Animation Avatar</text>
+    <text x="64" y="376" font-family="monospace" font-size="12" fill="#cbd5e1">Subjek: "Karakter 3D Chibi Imut..."</text>
+    <text x="64" y="400" font-family="monospace" font-size="12" fill="#94a3b8">Lighting: "Octane Render 8K Cinematic"</text>
+    <rect x="64" y="414" width="80" height="18" rx="4" fill="#7c3aed" fill-opacity="0.2"/>
+    <text x="104" y="427" font-family="sans-serif" font-size="10" font-weight="600" fill="#c084fc" text-anchor="middle">Desain &amp; Gambar</text>
+  </g>
+
+  <!-- Bottom Badges Bar -->
+  <g transform="translate(80, 525)">
+    <rect x="0" y="0" width="210" height="42" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="105" y="26" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#e2e8f0" text-anchor="middle">✨ 136+ Formula Siap Pakai</text>
+
+    <rect x="225" y="0" width="190" height="42" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="320" y="26" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#e2e8f0" text-anchor="middle">🚀 30+ Peluncur Cepat AI</text>
+
+    <rect x="430" y="0" width="170" height="42" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="515" y="26" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#e2e8f0" text-anchor="middle">🔒 100% Privasi Lokal</text>
+
+    <rect x="615" y="0" width="140" height="42" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="685" y="26" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#e2e8f0" text-anchor="middle">⚡ Gratis Selamanya</text>
+  </g>
+</svg>

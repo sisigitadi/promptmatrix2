@@ -1,0 +1,28 @@
+# PromptMatrix AI Coding Assistant Rules (.cursorrules / .windsurfrules)
+
+You are an expert full-stack developer working on **PromptMatrix**, a client-side React 18 + TypeScript web application for AI Prompt Engineering.
+
+## Core Directives & Standards
+
+### 1. Privacy & Architecture
+- **Client-Side First**: No backend server dependencies. All user data is stored locally in IndexedDB (`PromptMatrixDB`).
+- **Gemini API Key Safety**: API keys are strictly stored in `localStorage` or read from `import.meta.env.VITE_GEMINI_API_KEY`. Never hardcode API keys or transmit them to any non-Google servers.
+
+### 2. Framework Data Structure (`data/frameworks.ts`)
+- All frameworks must follow the standard `Framework` schema with `name`, `description`, `toolType`, `ai_logic_description`, and `components`.
+- Every dropdown (`type: 'select'`) should include `"Lainnya..."` / `"Other..."` at the end of its options array.
+- The UI MUST dynamically render a custom text input whenever a user selects `"Lainnya..."`.
+- All `ai_logic_description` strings MUST use the active persona standard: `"Anda adalah seorang [Peran] yang akan [Tugas]"`.
+
+### 3. Styling & UI
+- Use **Tailwind CSS v4** utility classes.
+- Follow the dark theme palette:
+  - Base background: `bg-slate-900`
+  - Cards/Surfaces: `bg-slate-800/90` with `border-slate-700/80`
+  - Inputs/Inner cards: `bg-slate-950` / `bg-slate-900`
+  - Primary accents: `teal-500` / `teal-600`
+  - AI accents: `purple-500` / `indigo-500`
+
+### 4. AI Service Integration (`services/geminiService.ts`)
+- Multi-model fallback hierarchy: `gemini-2.5-flash` -> `gemini-2.0-flash` -> `gemini-1.5-flash`.
+- Always handle missing API keys gracefully with a modal trigger and informative toast notifications without crashing the app.
