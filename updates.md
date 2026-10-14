@@ -4,7 +4,20 @@
 This document provides a history of major features and updates to the PromptMatrix application, helping users understand its evolution and current capabilities.
 
 ---
-## V6.2.0 (Current Version - UI/UX Fixes)
+## V6.3.0 (Smart Language Detection & Landing Flow Polish)
+*   **🌐 Smart Browser Locale Detection & EN Default:**
+    *   PromptMatrix now defaults to English (`EN`) while automatically inspecting the user's browser locale (`navigator.languages` / `navigator.language`).
+    *   If the user's browser language begins with `id` or `in` (Indonesian), the application automatically initializes in Bahasa Indonesia (`ID`).
+    *   Explicit language toggling via the header button persists across reloads via `localStorage`.
+    *   Synchronized `<html lang="...">` dynamically for enhanced accessibility and crawler recognition.
+*   **🧭 Landing Page Navigation Fix:**
+    *   Resolved an initial-mount issue where the app previously auto-switched to Studio mode under "Koleksi & Inovasi - Prinsip Kepemimpinan & Evaluasi Produk" (Pareto Principle).
+    *   The app now cleanly and reliably opens on the **Template Gallery** overview landing page.
+    *   Template grid ordering now accurately follows `CATEGORY_ORDER`, showcasing "Teks & Konten" at the forefront.
+*   **Documentation & Versioning:** Updated `package.json`, `CHANGELOG.md`, `updates.md`, and `README.md`.
+
+---
+## V6.2.0 (Previous Version - UI/UX Fixes)
 *   **UI/UX Bug Fixes & Polish:**
     *   **Mobile Subtitle Wrapping:** Fixed an issue where the app subtitle in the header could be truncated on mobile devices by ensuring proper text wrapping logic. The subtitle now correctly wraps to multiple lines if necessary on smaller screens.
     *   **Teaser Popup Reliability:** Addressed a bug where the "Premium Teaser Popup" might not appear reliably as intended on initial load after disclaimer/how-to-use modals. The trigger logic has been refined to ensure the `localStorage` flag (marking it as "shown") is set more accurately when the popup is actually scheduled to display.

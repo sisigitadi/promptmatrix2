@@ -132,7 +132,8 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
       fieldCount: number;
     }> = [];
 
-    Object.entries(frameworksData).forEach(([catName, subcats]) => {
+    categories.forEach(catName => {
+      const subcats = frameworksData[catName] || {};
       Object.entries(subcats).forEach(([subcatName, fws]) => {
         Object.entries(fws).forEach(([fwName, fw]) => {
           let fieldCount = fw.components?.length || 0;
@@ -151,7 +152,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
     });
 
     return list;
-  }, [frameworksData]);
+  }, [frameworksData, categories]);
 
   // Filtered Templates with Intent Aliasing & Deep Multi-Field Search
   const filteredTemplates = useMemo(() => {

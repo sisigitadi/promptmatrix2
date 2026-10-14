@@ -1,4 +1,4 @@
-﻿# PromptMatrix 2.0 - Ultimate Guided AI Prompt Generator 🚀
+# PromptMatrix 2.0 - Ultimate Guided AI Prompt Generator 🚀
 
 [![Production Build](https://img.shields.io/badge/Build-Passing-emerald.svg)](https://github.com/sisigitadi/promptmatrix2)
 [![Frameworks](https://img.shields.io/badge/Master%20Frameworks-350%20Templates-blue.svg)](https://github.com/sisigitadi/promptmatrix2)
@@ -16,7 +16,7 @@
 ## 🌟 Fitur Unggulan
 
 - 💎 **350 Formula Prompt Master**: Mencakup 8 kategori inti dengan 80 subkategori spesifik yang telah diaudit dan disinkronkan secara mendalam.
-- 🌐 **100% Sinkronisasi Dual Bahasa (ID ⇄ EN)**: Seluruh 4.213 entri teks—mulai dari nama formula, deskripsi, persona sistem AI, label kolom, tips balon, placeholder contoh nyata, opsi dropdown, hingga output live preview—berganti bahasa secara reaktif dan alami.
+- 🌐 **Deteksi Bahasa Cerdas & Dual Bahasa (EN ⇄ ID)**: Default bahasa Inggris (EN) dengan auto-deteksi preferensi browser (otomatis Bahasa Indonesia jika locale browser ID/IN). Pengguna dapat beralih bahasa kapan saja melalui header switcher dengan persistensi `localStorage`. Seluruh 4.200+ entri teks tersinkronisasi 100%.
 - ⚡ **1-Klik Isi Contoh Nyata (*Fill Sample*)**: Membantu pengguna baru memahami cara kerja formula dengan mengisi data formulir secara otomatis menggunakan skenario riil dalam Bahasa Indonesia atau Bahasa Inggris.
 - 🎨 **2 Mode Antarmuka Intuitif**:
   - 🧭 **Galeri Template**: Tampilan kartu visual modern dengan filter kategori instan, pencarian cerdas, dan navigasi cepat.

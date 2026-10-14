@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { PROMPT_FRAMEWORKS, Framework } from './data/frameworks';
-import NavigationPane from './components/NavigationPane';
 import FrameworkPane from './components/FrameworkPane';
 import TemplateGallery from './components/TemplateGallery';
 import Header from './components/Header';
@@ -180,19 +179,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     loadSavedPrompts();
-
-    // Select initial framework
-    const firstCat = Object.keys(PROMPT_FRAMEWORKS)[1] || Object.keys(PROMPT_FRAMEWORKS)[0];
-    if (firstCat && PROMPT_FRAMEWORKS[firstCat]) {
-      const firstSubcat = Object.keys(PROMPT_FRAMEWORKS[firstCat])[0];
-      if (firstSubcat && PROMPT_FRAMEWORKS[firstCat][firstSubcat]) {
-        const firstFwName = Object.keys(PROMPT_FRAMEWORKS[firstCat][firstSubcat])[0];
-        if (firstFwName) {
-          const fw = PROMPT_FRAMEWORKS[firstCat][firstSubcat][firstFwName];
-          handleSelectFramework(firstCat, firstSubcat, firstFwName, fw);
-        }
-      }
-    }
   }, []);
 
   const showToast = (message: string, type: 'success' | 'info' | 'error' = 'success') => {
