@@ -309,11 +309,59 @@ export const fetchModelsFromEndpoint = async (
 // --- HIGH-LEVEL CAPABILITIES ---
 
 /**
+ * Ensures clean paragraph spacing and optimal visual readability for prompts:
+ * - Normalizes Windows CRLF to standard LF (\n)
+ * - Automatically ensures a blank line (\n\n) before major labeled headers (e.g. "Persona:", "Konteks:", "Tugas:", "Instruksi:", "Batasan:", etc.) if directly joined to a previous line
+ * - Ensures stanza tags (e.g. [Intro], [Chorus]) have clean spacing
+ * - Normalizes 3+ consecutive newlines down to 2
+ */
+export const formatPromptForReadability = (text: string): string => {
+  if (!text) return '';
+  let str = text.replace(/\r\n/g, '\n').trim();
+
+  // Common labeled section patterns in Indonesian and English
+  const sectionKeywords = [
+    'Persona AI', 'AI Persona', 'Peran AI', 'Peran', 'Role', 'System Role',
+    'Konteks & Tujuan', 'Konteks', 'Context', 'Background', 'Latar Belakang',
+    'Tugas Utama', 'Tugas', 'Task', 'Objective', 'Tujuan', 'Goal',
+    'Variabel Input', 'Detail Masukan', 'Input Details',
+    'Instruksi Utama', 'Instruksi Khusus', 'Instruksi Tambahan', 'Instruksi', 'Instructions', 'Guidelines',
+    'Batasan Mutlak', 'Batasan & Kriteria', 'Batasan', 'Constraints', 'Hard Constraints',
+    'Format Output', 'Format Keluaran', 'Output Format', 'Deliverables',
+    'Target Audiens', 'Audiens Target', 'Target Audience', 'Audience',
+    'Nada Bicara', 'Gaya Bahasa', 'Tone of Voice', 'Tone & Style', 'Tone', 'Voice',
+    'Attention', 'Interest', 'Desire', 'Action',
+    'Hook', 'Story', 'Offer', 'Call to Action',
+    'Pencahayaan', 'Sudut Kamera', 'Optik', 'Lighting', 'Camera',
+    'Catatan Khusus', 'Important Notes', 'Catatan', 'Notes'
+  ];
+
+  // Insert a blank line before recognized section headers if they are glued to the previous line
+  const keywordPattern = new RegExp(
+    `([^\n])\n((?:[-*•#>]+\\s*)?(?:${sectionKeywords.join('|')}):)`,
+    'gi'
+  );
+  str = str.replace(keywordPattern, '$1\n\n$2');
+
+  // Also ensure blank line before numbered section steps like "1. Riset:", "Step 1:", "Langkah 1:"
+  str = str.replace(/([^\n])\n((?:Step|Langkah|\d+\.)\s+[A-Za-z0-9\s()&/._-]{1,30}:)/gi, '$1\n\n$2');
+
+  // Also ensure blank line before musical/audio structural tags like "[Intro]", "[Verse]", "[Chorus]"
+  str = str.replace(/([^\n])\n(\[(?:Intro|Verse|Pre-Chorus|Chorus|Bridge|Guitar Solo|Outro|Drop|Hook|Build-up)[^\]]*\])/gi, '$1\n\n$2');
+
+  // Collapse 3 or more consecutive newlines into 2
+  str = str.replace(/\n{3,}/g, '\n\n');
+
+  return str.trim();
+};
+
+/**
  * Utility to sanitize AI-generated prompt text from unwanted markdown artifacts:
  * - Code block fences (```markdown, ```text, ```)
  * - Bold asterisks (**label** -> label)
  * - AI conversational preambles ("Berikut adalah prompt...")
  * - Wrapping outer quotes
+ * - Formats paragraphs for optimal visual readability
  */
 export const sanitizePromptText = (text: string): string => {
   if (!text) return '';
@@ -337,7 +385,8 @@ export const sanitizePromptText = (text: string): string => {
     cleaned = cleaned.slice(1, -1).trim();
   }
 
-  return cleaned.trim();
+  // 5. Ensure optimal paragraph spacing & readable visual structure
+  return formatPromptForReadability(cleaned);
 };
 
 /**
@@ -384,16 +433,50 @@ export const enhancePromptWithUniversalAI = async (
   const isIndonesian = language === 'id';
 
   const systemInstruction = isIndonesian
-    ? `Anda adalah Master Prompt Optimizer. Tugas Anda adalah menyempurnakan prompt yang diberikan agar lebih tajam, presisi, kaya detail, dan menghasilkan output maksimal pada LLM modern.
-ATURAN FORMAT MUTLAK:
-1. Kembalikan HANYA teks prompt hasil perbaikan dalam bentuk teks polos (plain text) tanpa kata pengantar atau penutup.
+    ? `Anda adalah Master Prompt Optimizer & AI Prompt Architect Kelas Dunia. Tugas Anda adalah menyempurnakan prompt yang diberikan agar lebih tajam, kaya konteks terarah, minim ambiguitas, dan menghasilkan output maksimal pada LLM modern.
+
+ATURAN STRUKTUR & KETERBACAAN (MUTLAK):
+1. Kembalikan HANYA teks prompt hasil perbaikan dalam bentuk teks polos (plain text) tanpa kata pengantar ("Berikut adalah...") dan tanpa penutup.
 2. DILARANG KERAS menggunakan blok kode markdown (JANGAN gunakan \`\`\` atau \`\`\`markdown).
-3. DILARANG KERAS menggunakan format tebal asterisks (JANGAN gunakan **teks**). Gunakan format teks biasa yang bersih seperti "Label: Nilai".`
-    : `You are a Master Prompt Optimizer. Elevate and polish the prompt to be sharper, richer in clarity and constraints, and maximize output quality on modern AI models.
-STRICT FORMAT RULES:
+3. DILARANG KERAS menggunakan format tebal asterisks (JANGAN gunakan **teks**).
+4. WAJIB BERIKAN SPASI KOSONG (DOUBLE NEWLINE / DUA KALI ENTER) ANTAR SETIAP BAGIAN DAN SETIAP PARAGRAF:
+   - Pisahkan Persona AI, Konteks, Instruksi/Poin Tindakan, Batasan Keras, dan Format Output dengan 1 baris kosong di antaranya.
+   - Jangan pernah menggabungkan beberapa instruksi berbeda ke dalam satu blok teks padat yang rapat.
+   - Format setiap seksi dengan judul jelas diikuti titik dua, contoh:
+
+     Persona AI: [deskripsi peran mendalam]
+
+     Konteks & Tujuan: [latar belakang dan tujuan spesifik]
+
+     Instruksi Utama:
+     - [langkah/poin tindakan 1]
+     - [langkah/poin tindakan 2]
+
+     Batasan & Kriteria: [larangan dan batasan ketat]
+
+     Format Output: [format hasil akhir yang diharapkan]`
+    : `You are a World-Class Master Prompt Optimizer & AI Prompt Architect. Elevate and polish the prompt to be sharper, richer in clarity and constraints, and maximize output quality on modern AI models.
+
+STRICT STRUCTURE & READABILITY RULES (MANDATORY):
 1. Return ONLY the plain text enhanced prompt without any introductory or concluding remarks.
 2. DO NOT use markdown code block fences (NO \`\`\` or \`\`\`markdown).
-3. DO NOT use bold asterisks (NO **text**). Use clean, plain text formatting like "Label: Value".`;
+3. DO NOT use bold asterisks (NO **text**).
+4. MANDATORY DOUBLE NEWLINE BETWEEN SECTIONS & PARAGRAPHS:
+   - Separate AI Role, Context/Objective, Key Instructions, Hard Constraints, and Output Format with a blank line between each section.
+   - Never compress distinct instructions into a single dense wall of text.
+   - Format each section with clear labels followed by a colon, e.g.:
+
+     AI Role: [detailed persona description]
+
+     Context & Goal: [specific background and objective]
+
+     Key Instructions:
+     - [action point 1]
+     - [action point 2]
+
+     Constraints: [hard constraints and boundaries]
+
+     Output Format: [deliverables specification]`;
 
   const userPrompt = isIndonesian
     ? `Kerangka Kerja: "${frameworkName}"
@@ -402,14 +485,14 @@ Prompt Awal:
 ${currentPrompt}
 """
 
-Tingkatkan dan poles prompt di atas menjadi versi paling optimal dalam bentuk TEKS POLOS BERSIH (tanpa blok kode \`\`\` dan tanpa format tebal **):`
+Tingkatkan dan poles prompt di atas menjadi versi paling optimal. Pastikan setiap bagian/paragraf dipisahkan oleh satu baris kosong agar sangat rapi, nyaman dibaca, dan mudah ditinjau sebelum disalin:`
     : `Framework: "${frameworkName}"
 Initial Prompt:
 """
 ${currentPrompt}
 """
 
-Enhance and refine the prompt above to the absolute highest standard in CLEAN PLAIN TEXT (no code fences \`\`\`, no bold ** formatting):`;
+Enhance and refine the prompt above to the absolute highest standard. Ensure every section and paragraph is separated by an empty line so it is exceptionally clean, comfortable to read, and easy to review before copying:`;
 
   const raw = await generateTextWithUniversalAI(userPrompt, systemInstruction);
   return sanitizePromptText(raw);

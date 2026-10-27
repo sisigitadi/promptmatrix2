@@ -124,6 +124,11 @@ const App: React.FC = () => {
   const [toast, setToast] = useState<ToastState | null>(null);
   const [isCopied, setIsCopied] = useState(false);
 
+  // Preview Reader & Fullscreen Review Modal State
+  const [previewViewMode, setPreviewViewMode] = useState<'structured' | 'raw'>('structured');
+  const [showExpandReviewModal, setShowExpandReviewModal] = useState<boolean>(false);
+  const [expandedStashPromptId, setExpandedStashPromptId] = useState<number | null>(null);
+
   // Hidden AI Features State & 9-Tap Logo Unlock
   const [showAIFeatures, setShowAIFeatures] = useState<boolean>(() => {
     try {
@@ -259,19 +264,84 @@ const App: React.FC = () => {
           : (comp.label || comp.name);
         const valToDisplay = typeof val === 'string' && language === 'en' ? translateOption(val, 'en') : val;
         lines.push(`${labelToDisplay}: ${valToDisplay}`);
+        lines.push(''); // Baris kosong antar parameter agar lega dan mudah dibaca
       }
     });
 
     // 3. Additional Context / Instructions from SOP
     if (fw.konteks_tambahan_instruksi_khusus) {
-      lines.push('');
       const additionalInstruction = language === 'en'
         ? translateInfo(fw.konteks_tambahan_instruksi_khusus, 'en')
         : fw.konteks_tambahan_instruksi_khusus;
       lines.push(`${language === 'id' ? 'Instruksi Tambahan' : 'Additional Instructions'}: ${additionalInstruction}`);
+      lines.push('');
     }
 
-    return lines.join('\n');
+    return lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  };
+
+  // Helper to render prompt paragraphs in a clean, structured, and visually spacious format
+  const renderStructuredContent = (text: string) => {
+    if (!text) return null;
+    const blocks = text.split(/\n{2,}/).map(b => b.trim()).filter(Boolean);
+
+    return (
+      <div className="flex flex-col gap-3">
+        {blocks.map((block, idx) => {
+          const colonMatch = block.match(/^([A-Za-z0-9\s()&/._-]{2,45}):\s*([\s\S]*)$/);
+          const tagMatch = block.match(/^(\[[^\]]+\])\s*([\s\S]*)$/);
+
+          if (colonMatch) {
+            const label = colonMatch[1];
+            const content = colonMatch[2];
+            return (
+              <div 
+                key={idx} 
+                className="bg-slate-900/70 rounded-xl p-3 sm:p-3.5 border border-slate-800/80 hover:border-slate-700/80 transition-colors shadow-sm"
+              >
+                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-400 uppercase tracking-wider mb-1.5 select-none">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
+                  <span>{label}</span>
+                </div>
+                <div className="text-xs sm:text-[13px] leading-relaxed text-slate-200 whitespace-pre-wrap font-sans">
+                  {content}
+                </div>
+              </div>
+            );
+          }
+
+          if (tagMatch) {
+            const tag = tagMatch[1];
+            const content = tagMatch[2];
+            return (
+              <div 
+                key={idx} 
+                className="bg-slate-900/70 rounded-xl p-3 sm:p-3.5 border border-slate-800/80 hover:border-slate-700/80 transition-colors shadow-sm"
+              >
+                <div className="flex items-center gap-1.5 text-[11px] font-mono font-semibold text-cyan-400 tracking-wider mb-1.5 select-none">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>
+                  <span>{tag}</span>
+                </div>
+                {content && (
+                  <div className="text-xs sm:text-[13px] leading-relaxed text-slate-200 whitespace-pre-wrap font-sans">
+                    {content}
+                  </div>
+                )}
+              </div>
+            );
+          }
+
+          return (
+            <div 
+              key={idx} 
+              className="bg-slate-900/50 rounded-xl p-3 sm:p-3.5 border border-slate-800/70 text-xs sm:text-[13px] leading-relaxed text-slate-200 whitespace-pre-wrap font-sans"
+            >
+              {block}
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   const handleSelectFramework = (
@@ -731,32 +801,96 @@ const App: React.FC = () => {
               <div id="prompt-output-card" className="lg:col-span-5 flex flex-col gap-4 sticky top-20">
                 {/* Live Output Box */}
                 <div className="bg-[#0f172a]/95 border border-slate-800/90 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-                    <div className="flex items-center gap-2">
-                      <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      <h2 className="text-xs font-bold uppercase tracking-wider text-slate-200 font-sans">
-                        {t('prompt_preview')}
-                      </h2>
+                  <div className="flex flex-col gap-2.5 border-b border-slate-800/80 pb-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <h2 className="text-xs font-bold uppercase tracking-wider text-slate-200 font-sans">
+                          {t('prompt_preview')}
+                        </h2>
+                      </div>
+                      {generatedPrompt && (
+                        <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-400">
+                          <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-emerald-400 font-medium">
+                            {generatedPrompt.length} {t('chars_count')}
+                          </span>
+                          <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-400">
+                            ~{Math.round(generatedPrompt.length / 4)} tokens
+                          </span>
+                          {/* Tombol Perbesar / Layar Penuh */}
+                          <button
+                            type="button"
+                            onClick={() => setShowExpandReviewModal(true)}
+                            className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-emerald-400 border border-slate-800 transition-colors ml-0.5"
+                            title={t('expand_review_btn')}
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                            </svg>
+                          </button>
+                        </div>
+                      )}
                     </div>
+
+                    {/* Mode Tampilan Pratinjau (Terstruktur vs Teks Polos) */}
                     {generatedPrompt && (
-                      <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-400">
-                        <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-emerald-400">
-                          {generatedPrompt.length} {t('chars_count')}
-                        </span>
-                        <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-400">
-                          ~{Math.round(generatedPrompt.length / 4)} tokens
-                        </span>
+                      <div className="flex items-center justify-between pt-0.5">
+                        <div className="flex bg-slate-950/90 border border-slate-800/90 rounded-xl p-0.5 text-[11px] font-sans">
+                          <button
+                            type="button"
+                            onClick={() => setPreviewViewMode('structured')}
+                            className={`px-2.5 py-1 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                              previewViewMode === 'structured'
+                                ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
+                                : 'text-slate-400 hover:text-slate-200'
+                            }`}
+                          >
+                            <svg className="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+                            </svg>
+                            <span>{t('preview_structured')}</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setPreviewViewMode('raw')}
+                            className={`px-2.5 py-1 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                              previewViewMode === 'raw'
+                                ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
+                                : 'text-slate-400 hover:text-slate-200'
+                            }`}
+                          >
+                            <svg className="w-3 h-3 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                            <span>{t('preview_raw')}</span>
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setShowExpandReviewModal(true)}
+                          className="text-[11px] text-emerald-400/80 hover:text-emerald-300 transition-colors flex items-center gap-1 font-medium"
+                        >
+                          <span>{language === 'id' ? 'Layar Penuh' : 'Fullscreen'}</span>
+                          <span aria-hidden="true">↗</span>
+                        </button>
                       </div>
                     )}
                   </div>
                   
                   {generatedPrompt ? (
                     <div className="flex flex-col gap-4">
-                      <div className="bg-[#090d16] border border-slate-800/90 rounded-2xl p-3.5 sm:p-4 max-h-72 sm:max-h-80 overflow-y-auto text-xs leading-relaxed font-mono text-slate-200 whitespace-pre-wrap break-words selection:bg-emerald-900/60 shadow-inner">
-                        {generatedPrompt}
-                      </div>
+                      {/* Kontainer Teks Pratinjau Terbaca */}
+                      {previewViewMode === 'structured' ? (
+                        <div className="bg-[#070b12] border border-slate-800/90 rounded-2xl p-4 sm:p-5 min-h-[220px] max-h-[460px] overflow-y-auto selection:bg-emerald-900/60 shadow-inner">
+                          {renderStructuredContent(generatedPrompt)}
+                        </div>
+                      ) : (
+                        <div className="bg-[#070b12] border border-slate-800/90 rounded-2xl p-4 sm:p-5 min-h-[220px] max-h-[460px] overflow-y-auto text-xs sm:text-[13px] leading-[1.85] font-mono text-slate-200 whitespace-pre-wrap break-words selection:bg-emerald-900/60 shadow-inner">
+                          {generatedPrompt}
+                        </div>
+                      )}
 
                       {/* AI Enhancement & Quality Actions (Hidden by default, unlocked via 9-tap logo) */}
                       {showAIFeatures && (
@@ -910,17 +1044,15 @@ const App: React.FC = () => {
             {generatedPrompt && (
               <div className="lg:hidden fixed bottom-0 left-0 right-0 p-3 bg-[#090d16]/95 backdrop-blur-md border-t border-slate-800 z-30 flex items-center justify-between gap-3 shadow-2xl">
                 <button
-                  onClick={() => {
-                    const el = document.getElementById('prompt-output-card');
-                    el?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="h-10 px-3.5 rounded-xl bg-slate-900 border border-slate-700 text-xs font-semibold text-slate-300 flex items-center gap-1.5 shrink-0"
+                  type="button"
+                  onClick={() => setShowExpandReviewModal(true)}
+                  className="h-10 px-3.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-emerald-500 text-xs font-semibold text-slate-200 flex items-center gap-1.5 shrink-0 transition-colors shadow-sm"
                 >
                   <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
-                  <span>{language === 'id' ? 'Lihat Hasil' : 'View'}</span>
+                  <span>{language === 'id' ? 'Tinjau Lengkap' : 'Full Review'}</span>
                 </button>
 
                 <button
@@ -1080,9 +1212,37 @@ const App: React.FC = () => {
                         </span>
                       </div>
 
-                      <p className="text-xs text-slate-300 font-mono line-clamp-3 mb-4 bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80 leading-relaxed">
-                        {prompt.generatedPrompt}
-                      </p>
+                      {expandedStashPromptId === prompt.id ? (
+                        <div className="mb-3 space-y-1.5">
+                          <div className="text-xs text-slate-200 font-mono whitespace-pre-wrap max-h-56 overflow-y-auto bg-slate-950/95 p-3 rounded-xl border border-emerald-500/30 leading-relaxed shadow-inner">
+                            {prompt.generatedPrompt}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setExpandedStashPromptId(null)}
+                            className="text-[11px] text-emerald-400 hover:text-emerald-300 font-medium flex items-center gap-1 transition-colors"
+                          >
+                            <span>{language === 'id' ? '▲ Tutup Pratinjau' : '▲ Collapse Preview'}</span>
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="mb-3 space-y-1.5">
+                          <p 
+                            onClick={() => setExpandedStashPromptId(prompt.id)}
+                            className="text-xs text-slate-300 font-mono line-clamp-3 bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80 leading-relaxed cursor-pointer hover:border-slate-700 transition-colors"
+                            title={language === 'id' ? 'Klik untuk membaca selengkapnya' : 'Click to expand and read full prompt'}
+                          >
+                            {prompt.generatedPrompt}
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => setExpandedStashPromptId(prompt.id)}
+                            className="text-[11px] text-slate-400 hover:text-emerald-400 font-medium flex items-center gap-1 transition-colors"
+                          >
+                            <span>{language === 'id' ? '▼ Baca Selengkapnya' : '▼ Read Full Prompt'}</span>
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex items-center gap-2 pt-2 border-t border-slate-800">
@@ -1208,6 +1368,149 @@ const App: React.FC = () => {
             >
               {t('close_btn')}
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Fullscreen Spacious Review & Copy Modal */}
+      {showExpandReviewModal && generatedPrompt && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn">
+          <div className="bg-[#0b101b] border border-slate-800 rounded-2xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+            {/* Modal Header */}
+            <div className="px-5 py-4 border-b border-slate-800 bg-[#0e1424] flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-sm sm:text-base font-bold text-slate-100 truncate">
+                    {t('review_modal_title')}
+                  </h3>
+                  <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono mt-0.5">
+                    {selectedFrameworkName && (
+                      <span className="text-emerald-400 font-medium truncate max-w-[200px] sm:max-w-xs">
+                        {selectedFrameworkName}
+                      </span>
+                    )}
+                    <span>•</span>
+                    <span>{generatedPrompt.length} {t('chars_count')}</span>
+                    <span>•</span>
+                    <span>~{Math.round(generatedPrompt.length / 4)} tokens</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mode Switcher & Close */}
+              <div className="flex items-center gap-2 shrink-0">
+                <div className="flex bg-slate-950 border border-slate-800 rounded-xl p-0.5 text-xs font-sans">
+                  <button
+                    type="button"
+                    onClick={() => setPreviewViewMode('structured')}
+                    className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                      previewViewMode === 'structured'
+                        ? 'bg-emerald-600 text-white font-semibold shadow-sm'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+                    </svg>
+                    <span className="hidden sm:inline">{t('preview_structured')}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewViewMode('raw')}
+                    className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                      previewViewMode === 'raw'
+                        ? 'bg-emerald-600 text-white font-semibold shadow-sm'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    <svg className="w-3.5 h-3.5 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                    <span className="hidden sm:inline">{t('preview_raw')}</span>
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setShowExpandReviewModal(false)}
+                  className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-750 text-slate-400 hover:text-slate-200 border border-slate-700 transition-colors"
+                  title={t('close_btn')}
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Body - Spacious & Comfortable Reading Area */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[#070b13] space-y-4">
+              {previewViewMode === 'structured' ? (
+                <div className="max-w-3xl mx-auto">
+                  {renderStructuredContent(generatedPrompt)}
+                </div>
+              ) : (
+                <div className="max-w-3xl mx-auto bg-slate-950/80 border border-slate-800/90 rounded-2xl p-5 sm:p-6 text-xs sm:text-sm leading-loose font-mono text-slate-200 whitespace-pre-wrap break-words selection:bg-emerald-900/60 shadow-inner">
+                  {generatedPrompt}
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="px-5 py-3.5 border-t border-slate-800 bg-[#0e1424] flex items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={handleSavePrompt}
+                className="h-10 px-4 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold flex items-center gap-2 transition-colors"
+              >
+                <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                </svg>
+                <span>{t('save_stash_btn')}</span>
+              </button>
+
+              <div className="flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setShowExpandReviewModal(false)}
+                  className="h-10 px-4 rounded-xl bg-slate-800/80 hover:bg-slate-750 text-slate-400 hover:text-slate-200 border border-slate-700 text-xs font-medium transition-colors"
+                >
+                  {t('close_btn')}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    copyToClipboard(generatedPrompt);
+                  }}
+                  className={`h-10 px-5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-lg ${
+                    isCopied
+                      ? 'bg-emerald-500 text-slate-950 shadow-emerald-900/40'
+                      : 'bg-emerald-600 hover:bg-emerald-500 text-slate-950 shadow-emerald-950/50'
+                  }`}
+                >
+                  {isCopied ? (
+                    <>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>{t('copied_btn')}</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                      </svg>
+                      <span>{t('copy_prompt_btn')}</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

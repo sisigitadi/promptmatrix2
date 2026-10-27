@@ -58,6 +58,10 @@ export const allTranslations: TranslationSet = {
 
     // Output & Actions
     prompt_preview: 'Pratinjau Prompt',
+    preview_structured: 'Terstruktur',
+    preview_raw: 'Teks Polos',
+    expand_review_btn: 'Perbesar Pratinjau',
+    review_modal_title: 'Tinjau & Salin Prompt',
     chars_count: 'karakter',
     copy_prompt_btn: 'Salin Prompt',
     save_stash_btn: 'Simpan ke Koleksi',
@@ -208,6 +212,10 @@ export const allTranslations: TranslationSet = {
 
     // Output & Actions
     prompt_preview: 'Prompt Preview',
+    preview_structured: 'Structured',
+    preview_raw: 'Plain Text',
+    expand_review_btn: 'Expand Review',
+    review_modal_title: 'Review & Copy Prompt',
     chars_count: 'chars',
     copy_prompt_btn: 'Copy Prompt',
     save_stash_btn: 'Save to Stash',
