@@ -60,47 +60,66 @@ const CategoryIcons: Record<string, React.ReactNode> = {
 
 // Practical keyword/intent aliases mapping to ensure everyday user terms accurately match prompt formulas
 const INTENT_KEYWORD_MAP: Record<string, string[]> = {
-  "copywriting": ["aida", "pas", "bab", "fab", "ad copy", "iklan", "penjualan", "persuasi", "pemasaran", "email marketing"],
-  "iklan": ["ad copy", "copywriting", "aida", "pas", "pemasaran", "penjualan", "iklan"],
+  "copywriting": ["aida", "pas-e", "bab", "acca", "4p", "ad copy", "iklan", "penjualan", "persuasi", "pemasaran", "email marketing", "copywriting"],
+  "iklan": ["ad copy", "copywriting", "aida", "pas-e", "pemasaran", "penjualan", "iklan", "penulis teks iklan"],
   "caption": ["thread", "media sosial", "sosmed", "konten", "penulisan", "instagram", "tiktok"],
   "instagram": ["thread", "media sosial", "skrip video", "reels", "konten", "gambar", "sosmed"],
-  "tiktok": ["skrip video", "video pendek", "reels", "konten", "media sosial"],
-  "youtube": ["skrip video", "video", "perencanaan video", "konten"],
-  "video": ["video", "animasi", "skrip", "sora", "runway", "pika", "visual"],
-  "artikel": ["artikel", "blog", "seo", "studi kasus", "penulisan"],
+  "tiktok": ["tiktok shop", "skrip video", "video pendek", "reels", "konten", "media sosial", "hook-story-offer", "live streaming"],
+  "youtube": ["skrip video", "video", "perencanaan video", "konten", "voiceover storytelling"],
+  "video": ["kling", "runway", "video", "animasi", "skrip", "sora", "pika", "visual", "hailuo"],
+  "artikel": ["artikel", "blog", "seo", "studi kasus", "penulisan", "pillar article"],
   "blog": ["blog post", "artikel", "seo", "penulisan"],
-  "seo": ["artikel seo", "penulisan", "blog", "konten"],
-  "gambar": ["gambar", "desain", "text-to-image", "midjourney", "dall-e", "foto", "visual"],
-  "logo": ["branding", "identitas", "desain", "gambar", "nama"],
-  "desain": ["desain", "gambar", "visual", "branding", "platform"],
-  "midjourney": ["midjourney", "gambar", "text-to-image", "desain", "prompt master"],
-  "analisis": ["analisis", "data", "chain-of-thought", "tree-of-thoughts", "berpikir", "pemikiran"],
+  "seo": ["artikel seo", "penulisan", "blog", "konten", "pillar article", "meta deskripsi"],
+  "gambar": ["gambar", "desain", "text-to-image", "midjourney", "dall-e", "foto", "visual", "flux"],
+  "logo": ["branding", "identitas", "desain", "gambar", "nama", "icon", "brand style guide"],
+  "desain": ["desain", "gambar", "visual", "branding", "platform", "illustration"],
+  "midjourney": ["midjourney", "cref", "sref", "gambar", "text-to-image", "desain", "flux.1", "photorealistic portrait"],
+  "flux": ["flux.1", "photorealistic descriptive studio", "leica", "hasselblad", "fotorealistik", "midjourney"],
+  "analisis": ["gcc", "reasoning", "analisis", "data", "chain-of-thought", "tree-of-thoughts", "berpikir", "pemikiran", "swot"],
+  "reasoning": ["gcc", "deepseek-r1", "claude 3.7", "o1/o3", "goal-constraint-context", "pemikiran terstruktur", "first principles"],
   "ide": ["ideasi", "brainstorming", "scamper", "inovasi", "kreatif", "blue ocean"],
-  "inovasi": ["inovasi", "scamper", "design thinking", "blue ocean", "koleksi"],
-  "koding": ["kode", "pengembang", "developer", "koding", "script", "utilitas", "coding"],
-  "coding": ["kode", "pengembang", "developer", "koding", "script", "utilitas", "coding"],
-  "interview": ["star", "car", "par", "profesional", "komunikasi", "pengembangan diri"],
-  "edukasi": ["akademis", "edukasi", "pendidikan", "pembelajaran", "belajar"],
-  "ringkasan": ["ringkas", "ekstraksi", "utilitas", "penulisan"],
-  "email": ["email", "komunikasi profesional", "marketing", "penjualan"],
-  "rtf": ["rtf", "role task format", "terstruktur"],
-  "aida": ["aida", "attention interest desire action", "persuasi"],
-  "co-star": ["co-star", "context objective style tone audience response"],
-  "star": ["star", "situation task action result"]
+  "inovasi": ["inovasi", "scamper", "design thinking", "blue ocean", "koleksi", "triz"],
+  "koding": ["cursorrules", "windsurf", "mcp", "kode", "pengembang", "developer", "koding", "script", "utilitas", "coding", "rag", "refactoring", "api"],
+  "coding": ["cursorrules", "windsurf", "mcp", "kode", "pengembang", "developer", "koding", "script", "utilitas", "coding", "rag", "refactoring", "api"],
+  "agent": ["cursorrules", "mcp", "model context protocol", "crewai", "autogen", "multi-agent", "autonomous"],
+  "mcp": ["model context protocol", "mcp server", "cursor", "claude desktop"],
+  "interview": ["mock interviewer", "simulasi wawancara", "wawancara kerja", "s-t-a-r-r", "c-a-r"],
+  "wawancara": ["mock interviewer", "simulasi wawancara", "wawancara kerja", "s-t-a-r-r"],
+  "edukasi": ["lpdp", "beasiswa", "akademis", "edukasi", "pendidikan", "pembelajaran", "belajar", "feynman"],
+  "beasiswa": ["lpdp", "chevening", "beasiswa kontribusi", "esai akademik", "studi pasca"],
+  "lpdp": ["lpdp & beasiswa", "kontribusi indonesia", "rencana studi", "roadmap kontribusi"],
+  "ringkasan": ["ringkas", "ekstraksi", "utilitas", "penulisan", "tldr", "pdf"],
+  "email": ["email", "komunikasi profesional", "marketing", "penjualan", "cold email", "drip sequence"],
+  "rtf": ["rtf", "role-task-format", "terstruktur"],
+  "aida": ["aida", "pas-e", "bab", "acca", "4p", "ad copy", "copywriting", "persuasi"],
+  "co-star": ["co-star", "context-objective-style-tone-audience-response"],
+  "star": ["s-t-a-r-r", "c-a-r", "achievement bullets"],
+  "musik": ["suno", "udio", "lagu", "audio", "genre musik", "hit song"],
+  "music": ["suno", "udio", "song", "audio", "melody", "hit song"]
 };
 
 // Recommended quick search tags matching actual database formulas
 const QUICK_SEARCH_TAGS = [
-  { id: 'hso', label_id: '🔥 Hook Video (HSO)', label_en: '🔥 Short Video Hook (HSO)', query: 'Hook-Story-Offer' },
-  { id: 'shopee', label_id: '🛍️ Deskripsi Shopee', label_en: '🛍️ Marketplace Description', query: 'Deskripsi Produk' },
-  { id: 'wa', label_id: '💬 Closing WhatsApp', label_en: '💬 WhatsApp Sales Closing', query: 'Closing Sales' },
-  { id: 'pixar', label_id: '🎨 3D Pixar Avatar', label_en: '🎨 3D Pixar Avatar', query: 'Disney Pixar' },
-  { id: 'foto', label_id: '📸 Foto Produk Studio', label_en: '📸 Studio Photography', query: 'Foto Produk' },
-  { id: 'mock', label_id: '💼 Latihan Wawancara', label_en: '💼 Mock Job Interview', query: 'Wawancara' },
-  { id: 'itin', label_id: '✈️ Itinerary Liburan', label_en: '✈️ Travel Itinerary', query: 'Itinerary' },
-  { id: 'resep', label_id: '🍳 Resep Masak Kulkas', label_en: '🍳 Fridge Meal Recipe', query: 'Perencana Menu' },
-  { id: 'feynman', label_id: '💡 Feynman Explainer', label_en: '💡 Feynman Explainer', query: 'Feynman' },
-  { id: 'rtf', label_id: '🚀 RTF / AIDA / STAR', label_en: '🚀 RTF / AIDA / STAR', query: 'RTF' },
+  { id: 'aida', label_id: 'AIDA Copywriting', label_en: 'AIDA Copywriting', query: 'AIDA' },
+  { id: 'reasoning', label_id: 'Reasoning (GCC)', label_en: 'Reasoning (GCC)', query: 'GCC' },
+  { id: 'rtf', label_id: 'RTF Framework', label_en: 'RTF Framework', query: 'RTF' },
+  { id: 'costar', label_id: 'CO-STAR Framework', label_en: 'CO-STAR Framework', query: 'CO-STAR' },
+  { id: 'starr', label_id: 'S-T-A-R-R Method', label_en: 'S-T-A-R-R Method', query: 'S-T-A-R-R' },
+  { id: 'hso', label_id: 'Hook Video (HSO)', label_en: 'Short Video Hook (HSO)', query: 'Hook-Story-Offer' },
+  { id: 'tiktoklive', label_id: 'TikTok Live Stream', label_en: 'TikTok Live Stream', query: 'TikTok Shop' },
+  { id: 'shopee', label_id: 'Deskripsi Shopee', label_en: 'Marketplace Description', query: 'Deskripsi Produk' },
+  { id: 'wa', label_id: 'Closing WhatsApp', label_en: 'WhatsApp Sales Closing', query: 'Closing Sales' },
+  { id: 'midjourney', label_id: 'Midjourney & Flux', label_en: 'Midjourney & Flux', query: 'Midjourney' },
+  { id: 'kling', label_id: 'Kling & Runway Video', label_en: 'Kling & Runway Video', query: 'Kling' },
+  { id: 'suno', label_id: 'Suno AI Musik', label_en: 'Suno AI Music', query: 'Suno' },
+  { id: 'codingrules', label_id: 'Cursor & MCP Server', label_en: 'Cursor & MCP Server', query: 'cursorrules' },
+  { id: 'rag', label_id: 'RAG Pipeline Dev', label_en: 'RAG Pipeline Dev', query: 'RAG' },
+  { id: 'lpdp', label_id: 'Esai LPDP Beasiswa', label_en: 'LPDP Scholarship Essay', query: 'LPDP' },
+  { id: 'mock', label_id: 'Wawancara Kerja', label_en: 'Mock Job Interview', query: 'Mock Interviewer' },
+  { id: 'itin', label_id: 'Itinerary Liburan', label_en: 'Travel Itinerary', query: 'Itinerary' },
+  { id: 'resep', label_id: 'Resep Masak Kulkas', label_en: 'Fridge Meal Recipe', query: 'Perencana Menu' },
+  { id: 'feynman', label_id: 'Feynman Explainer', label_en: 'Feynman Explainer', query: 'Feynman' },
+  { id: 'seo', label_id: 'Artikel Pilar SEO', label_en: 'SEO Pillar Article', query: 'SEO' }
 ];
 
 const TemplateGallery: React.FC<TemplateGalleryProps> = ({
@@ -239,7 +258,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={language === 'id' ? 'Cari formula atau topik: RTF, AIDA, SEO, Copywriting, Gambar, Analisis...' : 'Search formula or topic: RTF, AIDA, SEO, Copywriting, Image, Analysis...'}
+                placeholder={language === 'id' ? 'Cari formula atau topik: RTF, CO-STAR, SEO, Copywriting, Midjourney, Coding...' : 'Search formula or topic: RTF, CO-STAR, SEO, Copywriting, Midjourney, Coding...'}
                 className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3.5 bg-slate-950/90 border border-slate-700/80 focus:border-emerald-500 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none transition-all shadow-inner"
               />
               {searchQuery && (
@@ -257,7 +276,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
               <span className="text-[11px] text-slate-500 font-sans mr-1">{language === 'id' ? 'Pencarian cepat:' : 'Quick search:'}</span>
               {QUICK_SEARCH_TAGS.map(tag => (
                 <button
-                  key={tag.query}
+                  key={tag.id}
                   type="button"
                   onClick={() => {
                     setSearchQuery(tag.query);

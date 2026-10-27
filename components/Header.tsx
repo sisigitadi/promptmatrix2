@@ -50,8 +50,17 @@ const Header: React.FC<HeaderProps> = ({
                 <span className="text-[9px] sm:text-[10px] font-mono px-1.5 py-0.2 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">2.0</span>
               </h1>
             </div>
-            <p className="text-[10px] sm:text-[11px] text-slate-400 hidden md:block font-sans">
-              {language === 'id' ? 'Generator Prompt AI Berpemandu' : 'Guided AI Prompt Generator'}
+            <p className="text-[10px] sm:text-[11px] text-slate-400 hidden md:flex items-center gap-1.5 font-sans">
+              <span>{language === 'id' ? 'Generator Prompt AI Berpemandu' : 'Guided AI Prompt Generator'}</span>
+              <span className="text-slate-600">·</span>
+              <a
+                href="https://sigitadi.id/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-500/70 hover:text-emerald-400 transition-colors font-medium"
+              >
+                🌐 sigitadi.id
+              </a>
             </p>
           </div>
         </div>

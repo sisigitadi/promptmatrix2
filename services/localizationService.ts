@@ -458,6 +458,16 @@ export const SUBCATEGORY_TRANSLATIONS: Record<string, { id: string; en: string }
 // ═══════════════════════════════════════════════════════════════════════
 
 export const FRAMEWORK_NAMES_MAP: Record<string, string> = {
+  "AI Coding Agent Rules Architect (.cursorrules & Windsurf)": "AI Coding Agent Rules Architect (.cursorrules & Windsurf)",
+  "MCP (Model Context Protocol) Server & Tool Designer": "MCP (Model Context Protocol) Server & Tool Designer",
+  "LPDP & Beasiswa Kontribusi Indonesia Essay Architect": "LPDP & Indonesian Scholarship Contribution Essay Architect",
+  "AIDA Klasik Copywriting Master": "Classic AIDA Copywriting Master (Attention-Interest-Desire-Action)",
+  "TikTok Shop & Shopee Live High-Converting Stream Script": "TikTok Shop & Shopee Live High-Converting Stream Script",
+  "Midjourney v6.1 Character & Style Consistency Architect": "Midjourney v6.1 Character & Style Consistency Architect",
+  "FLUX.1 Photorealistic Descriptive Studio": "FLUX.1 Photorealistic Descriptive Studio",
+  "Kling 1.5 & Runway Gen-3 Cinematic Motion Director": "Kling 1.5 & Runway Gen-3 Cinematic Motion Director",
+  "Suno v4 Hit Song Lyric & Prompt Architect": "Suno v4 Hit Song Lyric & Prompt Architect",
+  "Goal-Constraint-Context (GCC) Reasoning Framework": "Goal-Constraint-Context (GCC) Reasoning Framework",
   "LangChain & LlamaIndex RAG Pipeline Architect": "LangChain & LlamaIndex RAG Pipeline Architect",
   "Agentic AI Multi-Agent Workflow (CrewAI / AutoGen)": "Agentic AI Multi-Agent Workflow (CrewAI / AutoGen)",
   "Electron & Tauri Desktop App Architect": "Electron & Tauri Desktop App Architect",
@@ -811,6 +821,16 @@ export const FRAMEWORK_NAMES_MAP: Record<string, string> = {
 };
 
 export const FRAMEWORK_DESCRIPTIONS_MAP: Record<string, string> = {
+  "AI Coding Agent Rules Architect (.cursorrules & Windsurf)": "System rule guide architecture (.cursorrules, CLAUDE.md, .windsurfrules) for autonomous AI coding agents (Cursor, Windsurf, Copilot, Antigravity) to prevent hallucinations, maintain clean code architecture, and enforce repo standards.",
+  "MCP (Model Context Protocol) Server & Tool Designer": "Architectural specification for Anthropic Model Context Protocol (MCP) Servers. Designs custom tools, resources, strict JSON schema validation, error handling, and client integration for Claude Desktop / Cursor IDE.",
+  "LPDP & Beasiswa Kontribusi Indonesia Essay Architect": "Prestigious scholarship essay architecture (LPDP, AAS, Chevening, Fulbright) focusing on 'Commitment to Return to Indonesia and Post-Study Contribution'. Connects applicant track record, academic urgency, and concrete roadmap aligned with Golden Indonesia 2045.",
+  "AIDA Klasik Copywriting Master": "Legendary Elias St. Elmo Lewis copywriting formula (Attention, Interest, Desire, Action) to craft high-converting sales letters, landing pages, or pitch emails.",
+  "TikTok Shop & Shopee Live High-Converting Stream Script": "Interactive live streaming sales script for TikTok Shop & Shopee Live hosts. Uses 3-second scroll-stopping hooks, value stacking, flash sale countdowns, and real-time chat engagement triggering yellow cart checkouts.",
+  "Midjourney v6.1 Character & Style Consistency Architect": "Advanced Midjourney v6.1 prompt formula for multi-scene character consistency (--cref, --cw) and aesthetic style transfer (--sref, --sw, --style raw) with precision parameter tuning.",
+  "FLUX.1 Photorealistic Descriptive Studio": "Pure natural language descriptive prompt formula for FLUX.1 (Dev / Schnell / Pro). Leverages real optical camera parameters, multi-source lighting, and microscopic surface textures without negative tags.",
+  "Kling 1.5 & Runway Gen-3 Cinematic Motion Director": "Cinematic director prompt formula for AI video generation (Kling 1.5, Runway Gen-3 Alpha, Hailuo MiniMax, Luma Ray 2). Orchestrates dynamic camera motion, frame rates, physical continuity, and emotional scene tone.",
+  "Suno v4 Hit Song Lyric & Prompt Architect": "Complete prompt architecture and lyrical structure for Suno v4 & Udio 1.5. Integrates structural metatags ([Intro], [Verse], [Pre-Chorus], [Chorus], [Bridge], [Guitar Solo], [Outro]), BPM tempo, genre fusions, and vocal timbres.",
+  "Goal-Constraint-Context (GCC) Reasoning Framework": "Cutting-edge prompt framework engineered for reasoning models (Claude 3.7 Sonnet Thinking, DeepSeek-R1, OpenAI o1/o3). Empowers autonomous thinking by locking Goal, Hard Constraints, and Context without micromanaging the internal CoT.",
   "Pipeline Retrieval-Augmented Generation (RAG) cerdas dengan vector embeddings (Pinecone/Chroma), semantic chunking, re-ranking, dan hybrid search.": "Smart Retrieval-Augmented Generation (RAG) pipeline with vector embeddings (Pinecone/Chroma), semantic chunking, re-ranking, and hybrid search.",
   "Desain sistem multi-agen AI otonom dengan pembagian peran terstruktur (Researcher, Writer, Reviewer), tool calling kustom, dan guardrails kualitas.": "Design an autonomous multi-agent AI system with structured role division (Researcher, Writer, Reviewer), custom tool calling, and quality guardrails.",
   "Arsitektur aplikasi desktop cross-platform modern dengan Rust backend (Tauri 2.0) atau Node/TypeScript (Electron) dengan keamanan IPC dan auto-updater.": "Modern cross-platform desktop application architecture with a Rust backend (Tauri 2.0) or Node/TypeScript (Electron), featuring IPC security and auto-updaters.",
@@ -1164,6 +1184,16 @@ export const FRAMEWORK_DESCRIPTIONS_MAP: Record<string, string> = {
 };
 
 export const AI_LOGICS_MAP: Record<string, string> = {
+  "AI Coding Agent Rules Architect (.cursorrules & Windsurf)": "AI Persona: You are a Principal Software Architect & AI Engineering Workflow Lead. Create razor-sharp system rule files (.cursorrules / CLAUDE.md) binding the AI to explicit code conventions, dependency guardrails, and automated validation protocols before files are saved.",
+  "MCP (Model Context Protocol) Server & Tool Designer": "AI Persona: You are a Core Systems Architect & Model Context Protocol (MCP) Specialist. Design a comprehensive MCP server blueprint with official SDK interfaces, strict input validation schemas (Zod / JSON Schema), stdio/SSE connections, and credential security.",
+  "LPDP & Beasiswa Kontribusi Indonesia Essay Architect": "AI Persona: You are a Senior Scholarship Reviewer & International Academic Essay Consultant. Evaluate and draft a cohesive scholarship essay with a solid golden thread linking real Indonesian challenges, target university strengths, and measurable (SMART) post-study contribution.",
+  "AIDA Klasik Copywriting Master": "AI Persona: You are a World-Class Direct Response Copywriter & Conversion Strategist. Apply pure AIDA: grab Attention, build Interest & relevance, spark deep emotional Desire, and trigger decisive Action without hesitation.",
+  "TikTok Shop & Shopee Live High-Converting Stream Script": "AI Persona: You are a Master Live Stream Sales Coach & E-Commerce Affiliate Strategist. Craft an energetic, interactive live script triggering genuine FOMO urgency, constantly guiding new viewers to double-tap the screen and checkout yellow cart etalase items.",
+  "Midjourney v6.1 Character & Style Consistency Architect": "AI Persona: You are a Midjourney Visual Prompt Engineer & Cinematographer specializing in character consistency. Craft vivid visual descriptions with rich action, realistic skin texture, atmospheric lighting, and official Midjourney v6.1 flags.",
+  "FLUX.1 Photorealistic Descriptive Studio": "AI Persona: You are a Master Photographer & FLUX.1 Prompt Specialist. Write deep natural language descriptive paragraphs directing FLUX's attention mechanism to achieve studio-grade photorealistic results.",
+  "Kling 1.5 & Runway Gen-3 Cinematic Motion Director": "AI Persona: You are a Cinematic Director of Photography (DoP) & AI Video Motion Engineer. Design visual prompts blending subject choreographies, industry film camera movements (Dolly, Pan, Orbit, Crane), and natural physical dynamics.",
+  "Suno v4 Hit Song Lyric & Prompt Architect": "AI Persona: You are a Multi-Platinum Music Producer & Songwriter specializing in AI Audio Generation (Suno v4). Craft multi-instrument style prompts and rhymed, structured lyrics with precise stanza tags for radio-ready AI tracks.",
+  "Goal-Constraint-Context (GCC) Reasoning Framework": "AI Persona: You are an Autonomous Reasoning Engine with deep deliberative thinking capabilities. Plan hypotheses, stress-test extreme edge cases, and validate solutions against strict constraints without rushing into superficial answers.",
   "LangChain & LlamaIndex RAG Pipeline Architect": "AI Persona: You are a Principal AI Systems Architect & LLM Engineer. Design a RAG pipeline that minimizes hallucinations, leverages hybrid search (Dense + Sparse/BM25), and utilizes query expansion.",
   "Agentic AI Multi-Agent Workflow (CrewAI / AutoGen)": "AI Persona: You are an Agentic AI Engineer & Multi-Agent Orchestrator Specialist. Design an AI agent collaboration architecture with clearly defined boundaries of authority and infinite loop mitigation.",
   "Electron & Tauri Desktop App Architect": "AI Persona: You are a Senior Desktop App Architect (Tauri / Electron).",

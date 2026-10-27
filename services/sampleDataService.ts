@@ -81,6 +81,28 @@ const FIELD_SAMPLE_DICTIONARY: Record<string, { id: string; en: string }> = {
   aksi: { id: "Saya memimpin inisiatif restrukturisasi alur funnel dan membuat kampanye onboarding interaktif", en: "I led an initiative to restructure the funnel flow and created an interactive onboarding campaign" },
   result: { id: "Penjualan meningkat 35% dalam waktu 6 minggu dan churn rate berkurang separuh", en: "Sales increased by 35% within 6 weeks and the churn rate was cut in half" },
   hasil: { id: "Penjualan meningkat 35% dalam waktu 6 minggu dan churn rate berkurang separuh", en: "Sales increased by 35% within 6 weeks and the churn rate was cut in half" },
+
+  // Reasoning & Deliberative Models (DeepSeek R1, Claude 3.7 Thinking, o1/o3)
+  hardconstraints: { id: "DILARANG menggunakan database NoSQL. Harus kompatibel dengan PostgreSQL 16. Skema harus zero downtime migration.", en: "STRICTLY FORBIDDEN to use NoSQL databases. Must be compatible with PostgreSQL 16. Schema must support zero downtime migration." },
+  contextualgrounding: { id: "Tim 4 backend engineer Golang. Berjalan di Kubernetes on-premise dengan batasan lisensi open-source.", en: "Team of 4 Golang backend engineers. Running on-premise Kubernetes with open-source licensing constraints." },
+  outputcontract: { id: "1. Ringkasan Eksekutif Trade-off, 2. Skema DDL SQL Lengkap, 3. Protokol Penanganan Sharding & Failover.", en: "1. Executive Trade-off Summary, 2. Complete SQL DDL Schema, 3. Sharding & Failover Protocol." },
+
+  // MCP & AI Coding Agents (.cursorrules / Windsurf)
+  projecttechstack: { id: "Next.js 15 (App Router), TypeScript 5.5, Tailwind CSS v4, Zustand, Supabase Database, React Query v5", en: "Next.js 15 (App Router), TypeScript 5.5, Tailwind CSS v4, Zustand, Supabase Database, React Query v5" },
+  architecturalpatterns: { id: "Gunakan Feature-First Folder Structure (/features/[name]/components, api, hooks). Pisahkan business logic ke custom hooks.", en: "Use Feature-First Folder Structure (/features/[name]/components, api, hooks). Decouple business logic into custom hooks." },
+  strictforbiddenrules: { id: "DILARANG menggunakan 'any' di TypeScript. JANGAN install dependensi baru tanpa persetujuan. HINDARI inline styles.", en: "DO NOT use 'any' in TypeScript. NEVER install new dependencies without approval. AVOID inline styles." },
+  mcpservername: { id: "PostgreSQL Cloud Analytics MCP Server - Integrasi query database & visualisasi schema", en: "PostgreSQL Cloud Analytics MCP Server - Database query integration & schema visualization" },
+  toolsandresources: { id: "1. execute_read_query (SQL SELECT dengan limit proteksi), 2. inspect_table_schema (Ambil DDL & relasi foreign keys), 3. explain_query_plan (Analisis query latency)", en: "1. execute_read_query (Protected SELECT with limit), 2. inspect_table_schema (DDL & foreign keys), 3. explain_query_plan (Query latency analysis)" },
+
+  // Multimodal Video & Suno v4 Audio
+  scenevisualnarrative: { id: "Seorang astronot berdiri di tepi ngarai Planet Mars, mengangkat sensor cuaca saat badai pasir jingga menerjang dan visor memantulkan dua bulan", en: "An astronaut standing at the edge of a Martian canyon, raising a sensor device as orange dust storms sweep across terrain with twin moon visor reflections" },
+  songstructurelyrics: { id: "[Intro]\n(Melodi gitar akustik hangat)\n\n[Verse 1]\nPagi buta melangkah di aspal ibukota\nMenatap gedung tinggi menembus cakrawala\n\n[Chorus]\nAku berjanji takkan pulang dengan tangan hampa\nDoa ibu mengiringi setiap tetes peluh rasa\n\n[Guitar Solo]\n\n[Outro]\nSampai esok kita berjumpa di puncak impian", en: "[Intro]\n(Warm acoustic guitar picking)\n\n[Verse 1]\nEarly morning walking on city pavement\nGazing at high-rises reaching the clouds\n\n[Chorus]\nI promised I would never return empty-handed\nMother's prayer carries every step I take\n\n[Guitar Solo]\n\n[Outro]\nUntil we meet tomorrow at the peak of our dreams" },
+
+  // Live Stream E-Commerce & Scholarship
+  liveproductname: { id: "Paket Skincare Glowing 4-in-1 (Serum + Moisturizer + Sunscreen + Facial Wash) Diskon 50% + Free Pouch", en: "4-in-1 Glowing Skincare Set (Serum + Moisturizer + Sunscreen + Facial Wash) 50% Off + Free Travel Pouch" },
+  flashsaleurgency: { id: "Khusus 20 orang pertama yang tap love sampai 10K dan ketik 'MAU GLOWING' di kolom komentar, harga diskon 50%! Hitungan 10 detik etalase dibuka!", en: "Exclusive for first 20 viewers who tap love to 10K and comment 'WANT GLOWING', instant 50% off! 10 second countdown begins now!" },
+  applicantbackground: { id: "Dokter umum lulusan UI dengan pengalaman 3 tahun memimpin program penanganan stunting di pelosok Nusa Tenggara Timur", en: "Medical doctor from UI with 3 years leading childhood stunting eradication in remote East Nusa Tenggara" },
+  poststudyroadmap: { id: "Tahun 1-2: Kembali bertugas di Kemenkes RI merancang digitalisasi sistem rujukan Puskesmas. Tahun 3-5: Mendirikan inisiatif tele-health non-profit untuk 50 kepulauan terluar.", en: "Year 1-2: Serve at Ministry of Health designing digital primary clinic referral. Year 3-5: Establish non-profit tele-health network for 50 outermost islands." },
 };
 
 /**

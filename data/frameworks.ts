@@ -103,6 +103,106 @@ export const CATEGORY_ORDER: string[] = [
 export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
   "Kode & Pengembang": {
     "AI, RAG & Desktop Multiplatform": {
+      "AI Coding Agent Rules Architect (.cursorrules & Windsurf)": {
+        description: "Rancangan panduan aturan sistem (.cursorrules, CLAUDE.md, .windsurfrules) untuk AI coding agent otonom (Cursor, Windsurf, Copilot, Antigravity) agar tidak halusinasi, menjaga arsitektur clean code, dan mematuhi standar repositori.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Principal Software Architect & AI Engineering Workflow Lead. Buat dokumen aturan sistem (.cursorrules / CLAUDE.md) yang tajam, minim ambigu, mengikat AI pada konvensi kode spesifik, proteksi dependensi, dan protokol validasi otomatis sebelum file disimpan.",
+        components: [
+          {
+            name: "projectTechStack",
+            label: "Tech Stack, Framework & Versi Utama",
+            type: "textarea",
+            placeholder: "contoh: Next.js 15 (App Router), TypeScript 5.5, Tailwind CSS v4, Zustand, Supabase Database, React Query v5",
+            info: "Sebutkan bahasa, runtime, database, dan pustaka inti yang digunakan dalam repositori ini."
+          },
+          {
+            name: "architecturalPatterns",
+            label: "Pola Arsitektur & Struktur Direktori Wajib",
+            type: "textarea",
+            placeholder: "contoh: Gunakan Feature-First Folder Structure (/features/[name]/components, api, hooks). Pisahkan business logic ke custom hooks. Jangan buat inline complex state di page.",
+            info: "Struktur direktori, pola desain (Clean Architecture, DDD, Repository Pattern) yang harus ditaati."
+          },
+          {
+            name: "strictForbiddenRules",
+            label: "Larangan Mutlak (Strict Constraints & Anti-Patterns)",
+            type: "textarea",
+            placeholder: "contoh: DILARANG menggunakan 'any' di TypeScript. JANGAN install dependensi baru tanpa persetujuan eksplisit. HINDARI inline styles. JANGAN ubah file schema database secara langsung.",
+            info: "Hal-hal yang dilarang keras dilakukan oleh AI Agent saat memodifikasi kode."
+          },
+          {
+            name: "testingLintProtocol",
+            label: "Protokol Pengujian & Validasi Sebelum Selesai",
+            type: "select",
+            options: [
+              "Mandatory 'npm run lint && npm test' verification before concluding task",
+              "Type-check strict (tsc --noEmit) & ESLint zero warnings policy",
+              "Vitest unit tests required for all new utility & business functions",
+              "Minimal overhead: syntax check & clean console logging only"
+            ],
+            info: "Langkah verifikasi mandiri yang wajib dieksekusi agen sebelum menyerahkan hasil ke developer."
+          },
+          {
+            name: "agentCommunicationStyle",
+            label: "Gaya Respon & Persona Coding Agent",
+            type: "select",
+            options: [
+              "Senior Pragmatic Engineer (Ringkas, langsung ke kode, jelaskan trade-off non-trivial)",
+              "Mentorship & Explanatory (Jelaskan alasan setiap perubahan arsitektural secara runtut)",
+              "Autonomous Surgical Fixer (Fokus pada diff minimalis tanpa mengubah baris yang tidak terkait)"
+            ],
+            info: "Bagaimana AI mengkomunikasikan rencananya dan mereview pekerjaannya."
+          }
+        ]
+      },
+      "MCP (Model Context Protocol) Server & Tool Designer": {
+        description: "Spesifikasi arsitektur Model Context Protocol (MCP) Server resmi Anthropic. Merancang custom tools, resources, skema JSON Schema validasi, error handling, dan konfigurasi integrasi ke Claude Desktop / Cursor IDE.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Core Systems Architect & Model Context Protocol (MCP) Specialist. Susun blueprint server MCP lengkap dengan interface SDK resmi, definisi tool dengan skema input ketat (Zod / JSON Schema), penanganan koneksi stdio/SSE, dan sanitasi keamanan data sensitif.",
+        components: [
+          {
+            name: "mcpServerName",
+            label: "Nama Server MCP & Domain Tugas",
+            type: "text",
+            placeholder: "contoh: PostgreSQL Cloud Analytics MCP Server - Integrasi query database & visualisasi schema",
+            info: "Nama server MCP dan apa domain utilitas yang disediakannya untuk LLM client."
+          },
+          {
+            name: "toolsAndResources",
+            label: "Daftar Custom Tools & Resources yang Disediakan",
+            type: "textarea",
+            placeholder: "contoh: 1. execute_read_query (SQL SELECT dengan limit proteksi), 2. inspect_table_schema (Ambil DDL & relasi foreign keys), 3. explain_query_plan (Analisis query latency)",
+            info: "Sebutkan tool yang bisa dipanggil oleh AI beserta parameter input dan data outputnya."
+          },
+          {
+            name: "implementationLanguage",
+            label: "Bahasa & SDK MCP",
+            type: "select",
+            options: [
+              "TypeScript / Node.js (@modelcontextprotocol/sdk dengan Zod validation)",
+              "Python (mcp-server package dengan Pydantic & AsyncIO)",
+              "Go / Rust Lightweight High-Performance Daemon"
+            ],
+            info: "Pilih bahasa pemrograman dan pustaka resmi yang digunakan."
+          },
+          {
+            name: "transportAndSecurity",
+            label: "Transport Protocol & Batasan Keamanan",
+            type: "select",
+            options: [
+              "Stdio Transport (Lokal Claude Desktop & Cursor dengan Read-Only Guardrails)",
+              "Server-Sent Events (SSE) Remote dengan Token Bearer Authentication",
+              "Hybrid Stdio with Environment Variable Vault (Kredensial via .env)"
+            ],
+            info: "Bagaimana client berinteraksi dengan server MCP dan proteksi keamanannya."
+          },
+          {
+            name: "clientConfigInstructions",
+            label: "Format Konfigurasi Client (claude_desktop_config.json)",
+            type: "boolean",
+            info: "Sertakan blok konfigurasi JSON siap salin untuk diletakkan di claude_desktop_config.json."
+          }
+        ]
+      },
       "LangChain & LlamaIndex RAG Pipeline Architect": {
         description: "Pipeline Retrieval-Augmented Generation (RAG) cerdas dengan vector embeddings (Pinecone/Chroma), semantic chunking, re-ranking, dan hybrid search.",
         toolType: "code",
@@ -2613,6 +2713,62 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
       },
     },
     "Akademis & Edukasi": {
+      "LPDP & Beasiswa Kontribusi Indonesia Essay Architect": {
+        description: "Struktur penyusunan esai beasiswa prestisius (LPDP, AAS, Chevening, Fulbright) pilar 'Komitmen Kembali ke Indonesia dan Rencana Pasca Studi'. Menghubungkan rekam jejak, urgensi keilmuan, dan roadmap kontribusi riil selaras Indonesia Emas 2045.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah Reviewer Beasiswa Senior & Konsultan Esai Akademis Internasional. Evaluasi dan susun draf esai beasiswa yang tidak sekadar ambisius di atas kertas, melainkan memiliki benang merah kokoh (golden thread) antara masalah riil Indonesia, kompetensi di kampus tujuan, dan rencana kontribusi yang terukur (SMART).",
+        components: [
+          {
+            name: "applicantBackground",
+            label: "Profil & Rekam Jejak Pelamar",
+            type: "textarea",
+            placeholder: "contoh: Dokter umum lulusan UI dengan pengalaman 3 tahun memimpin program penanganan stunting di pelosok Nusa Tenggara Timur",
+            info: "Pendidikan terakhir, profesi saat ini, dan pencapaian atau pengabdian masyarakat yang relevan."
+          },
+          {
+            name: "targetStudyProgram",
+            label: "Kampus & Program Studi Tujuan",
+            type: "text",
+            placeholder: "contoh: Master of Public Health (Health Policy & Management) di Johns Hopkins University, USA",
+            info: "Nama perguruan tinggi tujuan dan jurusan spesifik yang diambil."
+          },
+          {
+            name: "criticalIssueProblem",
+            label: "Isu Kritis / Masalah Riil Nasional yang Ingin Diselesaikan",
+            type: "textarea",
+            placeholder: "contoh: Tingginya disparitas kualitas layanan gawat darurat dan distribusi tenaga medis spesialis di wilayah 3T Indonesia",
+            info: "Data, fakta, atau celah kebijakan nyata di Indonesia yang menjadi alasan mengapa Anda harus mengambil studi ini."
+          },
+          {
+            name: "whyThisCampus",
+            label: "Mengapa Program Studi & Kampus Ini Unik",
+            type: "textarea",
+            placeholder: "contoh: Laboratorium Health Economics di Johns Hopkins memiliki keahlian khusus dalam perancangan skema asuransi universal untuk negara kepulauan",
+            info: "Mata kuliah, laboratorium, atau profesor rujukan yang tidak ada di kampus dalam negeri."
+          },
+          {
+            name: "postStudyRoadmap",
+            label: "Roadmap Kontribusi Pasca Studi (Jangka Pendek, Menengah, Panjang)",
+            type: "textarea",
+            placeholder: "contoh: Tahun 1-2: Kembali bertugas di Kemenkes RI merancang digitalisasi sistem rujukan Puskesmas. Tahun 3-5: Mendirikan inisiatif tele-health non-profit untuk 50 kepulauan terluar.",
+            info: "Rencana aksi konkret yang realistis, berkesinambungan, dan terukur saat kembali ke tanah air."
+          },
+          {
+            name: "nationalAlignment",
+            label: "Penyelarasan dengan Isu Prioritas Nasional",
+            type: "select",
+            options: [
+              "Transformasi Kesehatan & Penurunan Stunting Nasional",
+              "Kemandirian Ketahanan Pangan & Energi Terbarukan",
+              "Pengembangan Teknologi Digital, AI & Keamanan Siber",
+              "Pemerataan Kualitas Pendidikan Vokasi & Wilayah 3T",
+              "Ekonomi Sirkular, Perubahan Iklim & Keberlanjutan Lingkungan",
+              "Reformasi Birokrasi, Hukum & Kebijakan Publik Transparan"
+            ],
+            info: "Pilih pilar pembangunan nasional yang paling beririsan langsung dengan riset Anda."
+          }
+        ]
+      },
       "Feynman Technique Explainer (Analogi Sederhana)": {
         description: "Terjemahkan materi teknis, sains, finansial, atau hukum yang rumit menjadi penjelasan mudah dipahami menggunakan analogi sehari-hari.",
         toolType: "text",
@@ -3967,6 +4123,114 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
       },
     },
     "Pemasaran & Penjualan": {
+      "AIDA Klasik Copywriting Master": {
+        description: "Formula copywriting legendaris Elias St. Elmo Lewis (Attention, Interest, Desire, Action) untuk menyusun naskah penjualan, landing page, atau email penawaran berkonversi tinggi.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah Direct Response Copywriter Kelas Dunia & Pakar Konversi Penjualan. Terapkan prinsip AIDA murni: rebut perhatian (Attention), bangun relevansi & penasaran (Interest), picu emosi & keinginan memiliki (Desire), lalu dorong tindakan nyata tanpa ragu (Action).",
+        components: [
+          {
+            name: "productName",
+            label: "Nama Produk & Target Audiens",
+            type: "text",
+            placeholder: "contoh: Kursus Kilat Desain Grafis Canva untuk Pemilik Toko Online & UMKM",
+            info: "Sebutkan produk atau jasa yang ditawarkan beserta profil audiens yang dituju."
+          },
+          {
+            name: "attentionHook",
+            label: "Attention (Hook Pembuka Penarik Perhatian)",
+            type: "textarea",
+            placeholder: "contoh: 80% postingan promosi diabaikan karena desainnya amatir. Ini rahasia bikin banner profesional dalam 5 menit!",
+            info: "Pernyataan mengejutkan, statistik ganjil, pertanyaan provokatif, atau masalah mendesak pembaca."
+          },
+          {
+            name: "interestEngagement",
+            label: "Interest (Fakta Menarik & Relevansi Solusi)",
+            type: "textarea",
+            placeholder: "contoh: Anda tidak perlu sewa desainer mahal puluhan juta atau belajar Photoshop bertahun-tahun. Kami bongkar 20 template siap pakai yang terbukti melipatgandakan klik iklan.",
+            info: "Jelaskan mengapa masalah ini relevan dan tunjukkan secercah harapan solusi baru yang masuk akal."
+          },
+          {
+            name: "desireBenefits",
+            label: "Desire (Manfaat Emosional, Bukti Sosial & Penawaran)",
+            type: "textarea",
+            placeholder: "contoh: Bayangkan omzet toko Anda melonjak karena tampilan etalase sekelas brand ternama. Telah dipakai lebih dari 1.200 alumni dengan kenaikan penjualan rata-rata 40%.",
+            info: "Bangkitkan emosi kepemilikan, transformasi hidup, garansi tanpa risiko, dan bukti sosial nyata."
+          },
+          {
+            name: "actionCall",
+            label: "Action (Call to Action Spesifik & Urgensi)",
+            type: "text",
+            placeholder: "contoh: Klik tombol 'Daftar Sekarang' sebelum kuota promo diskon 60% ditutup malam ini pukul 23.59 WIB!",
+            info: "Instruksi tindakan tunggal yang jelas, minim gesekan, disertai urgensi atau kelangkaan."
+          },
+          {
+            name: "toneOfVoice",
+            label: "Nada & Gaya Bahasa",
+            type: "select",
+            options: [
+              "Persuasif, Bersemangat & Mendesak (High Energy Urgency)",
+              "Empatik, Hangat & Solutif (Consultative Friendly)",
+              "Eksklusif, Premium & Otoriter (Luxury Authority)",
+              "Santai, Mengalir & Kasual (Storytelling Conversational)"
+            ],
+            info: "Pilih persona gaya penyampaian naskah copywriting."
+          }
+        ]
+      },
+      "TikTok Shop & Shopee Live High-Converting Stream Script": {
+        description: "Naskah siaran langsung (live streaming) interaktif untuk host TikTok Shop & Shopee Live. Menggunakan formula hook 3 detik penahan scroll, penumpukan nilai (value stacking), hitung mundur flash sale, dan interaksi komentar real-time pemicu keranjang kuning.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah Master Live Stream Sales Coach & E-Commerce Affiliate Strategist. Susun skrip live yang energik, interaktif, memicu urgensi FOMO alami tanpa terkesan memaksa, dan terus-menerus mengarahkan penonton baru untuk tap layar serta checkout keranjang kuning.",
+        components: [
+          {
+            name: "liveProductName",
+            label: "Nama Produk & Penawaran Spesial Live",
+            type: "text",
+            placeholder: "contoh: Paket Skincare Glowing 4-in-1 (Serum + Moisturizer + Sunscreen + Facial Wash) Diskon 50% + Free Pouch",
+            info: "Nama produk yang dipromosikan dan promo eksklusif khusus selama siaran berlangsung."
+          },
+          {
+            name: "liveTargetAudience",
+            label: "Profil Penonton & Masalah Utama",
+            type: "text",
+            placeholder: "contoh: Remaja & wanita usia 18-35 tahun yang mengeluhkan kulit kusam, bekas jerawat, dan ingin hasil nyata tanpa merkuri",
+            info: "Siapa yang sedang menonton live dan masalah apa yang mendesak mereka cari solusinya."
+          },
+          {
+            name: "retentionHook3Sec",
+            label: "Hook 3 Detik Pembuka & Penahan Scroll",
+            type: "textarea",
+            placeholder: "contoh: Stop scroll! Jangan checkout skincare lain dulu kalau belum lihat uji hidrasi 60 detik ini di kulit saya langsung!",
+            info: "Kalimat pertama yang diucapkan berulang setiap ada penonton baru masuk room."
+          },
+          {
+            name: "flashSaleUrgency",
+            label: "Mekanisme Flash Sale & Hitung Mundur Keranjang Kuning",
+            type: "textarea",
+            placeholder: "contoh: Khusus 20 orang pertama yang tap love sampai 10K dan ketik 'MAU GLOWING' di kolom komentar, harga turun dari Rp 189.000 jadi cuma Rp 89.000! Hitungan 10 detik keranjang nomor 1 dibuka!",
+            info: "Cara host menciptakan kelangkaan stok, kuota waktu terbatas, dan instruksi checkout nomor etalase."
+          },
+          {
+            name: "objectionHandling",
+            label: "Antisipasi Keraguan / Pertanyaan Populer Penonton",
+            type: "textarea",
+            placeholder: "contoh: 'Kak aman buat bumil busui gak?', 'Pengiriman dari mana kak?', 'Bisa COD gak?'",
+            info: "Daftar 2-3 pertanyaan atau keraguan yang paling sering ditanyakan penonton live."
+          },
+          {
+            name: "hostEnergyStyle",
+            label: "Gaya Energi & Pembawaan Host",
+            type: "select",
+            options: [
+              "Super Energik & Ceria (Cepat, heboh, nada panggung belanja interaktif)",
+              "Sahabat Hangat & Curhat (Santai, dekat, sharing pengalaman pribadi)",
+              "Edukator & Expert Beauty/Tech (Tenang, informatif, demonstrasi uji lab ilmiah)",
+              "Eksklusif & Berkelas (Elegan, premium, menonjolkan prestige produk)"
+            ],
+            info: "Pilih vibe pembawaan host di depan kamera."
+          }
+        ]
+      },
       "Deskripsi Produk Marketplace (Shopee & Tokopedia)": {
         description: "Copywriting deskripsi produk toko online yang menonjolkan manfaat emosional, detail spesifikasi, garansi toko, dan pemicu checkout instan.",
         toolType: "text",
@@ -9973,6 +10237,117 @@ Email 3: Studi kasus pengguna`,
       },
     },
     "Prompt AI Gambar Master (Midjourney, DALL-E 3, Flux)": {
+      "Midjourney v6.1 Character & Style Consistency Architect": {
+        description: "Formula prompt Midjourney v6.1 canggih untuk mempertahankan konsistensi karakter antar scene (--cref, --cw) dan transfer estetika visual (--sref, --sw, --style raw) dengan parameter presisi.",
+        toolType: "image-generation",
+        ai_logic_description: "Persona AI: Anda adalah Midjourney Visual Prompt Engineer & Cinematographer Spesialis Konsistensi Karakter. Susun deskripsi visual yang kaya aksi, pencahayaan realistis, tekstur kulit alami, dan parameter flag Midjourney v6.1 resmi.",
+        components: [
+          {
+            name: "subjectAndAction",
+            label: "Subjek Karakter, Pose & Aksi Scene",
+            type: "textarea",
+            placeholder: "contoh: A 28-year-old Southeast Asian female tech founder in casual linen shirt, sitting at an outdoor cafe in Tokyo, typing thoughtfully on a sleek aluminum laptop, holding a warm matcha latte",
+            info: "Deskripsikan subjek secara spesifik: pakaian, ekspresi wajah, pose, dan aksi yang sedang dilakukan."
+          },
+          {
+            name: "crefImageUrl",
+            label: "URL Referensi Karakter (--cref) & Bobot (--cw)",
+            type: "text",
+            placeholder: "contoh: https://media.promptmatrix.app/characters/sarah_ref.jpg --cw 80",
+            info: "Tautan gambar referensi karakter. Gunakan --cw 100 untuk wajah+baju sama, atau --cw 0-20 untuk fokus wajah saja dengan baju berbeda."
+          },
+          {
+            name: "srefStyleUrl",
+            label: "Referensi Gaya Artistik (--sref) & Bobot (--sw)",
+            type: "text",
+            placeholder: "contoh: https://media.promptmatrix.app/styles/cinematic_kodak.jpg --sw 150",
+            info: "URL referensi palet warna / suasana artistik dan kekuatan transfer gaya (0-1000, default 100)."
+          },
+          {
+            name: "environmentAndLighting",
+            label: "Latar Belakang & Tata Cahaya",
+            type: "textarea",
+            placeholder: "contoh: Soft overcast morning daylight, subtle warm cafe interior lamps, natural reflections on glass window, cinematic depth of field",
+            info: "Suasana lingkungan, jenis pencahayaan, pantulan, dan kedalaman bidang visual."
+          },
+          {
+            name: "cameraOptics",
+            label: "Optik Kamera & Rendering",
+            type: "select",
+            options: [
+              "Shot on 85mm f/1.4 lens, natural skin texture, 35mm film grain, photorealistic",
+              "Cinematic 35mm anamorphic lens, subtle lens flare, soft bokeh",
+              "Crisp commercial editorial photography, Hasselblad medium format, studio rim lighting",
+              "Editorial street photography, Leica M11, candid angle, natural shadows"
+            ],
+            info: "Pilih karakteristik lensa, kamera, dan tekstur render."
+          },
+          {
+            name: "aspectRatioAndFlags",
+            label: "Aspek Rasio & Parameter Flags",
+            type: "select",
+            options: [
+              "--ar 16:9 --v 6.1 --style raw",
+              "--ar 9:16 --v 6.1 --style raw (Vertikal TikTok/Reels)",
+              "--ar 4:5 --v 6.1 --style raw (Instagram Feed Portrait)",
+              "--ar 21:9 --v 6.1 --style raw (Ultra-wide Cinematic)"
+            ],
+            info: "Format rasio gambar dan versi mesin Midjourney."
+          }
+        ]
+      },
+      "FLUX.1 Photorealistic Descriptive Studio": {
+        description: "Formula prompt deskriptif berbasis bahasa alami murni untuk FLUX.1 (Dev / Schnell / Pro). Menggunakan terminologi optik riil, multi-source lighting, dan detail tekstur mikroskopis tanpa parameter tag negatif.",
+        toolType: "image-generation",
+        ai_logic_description: "Persona AI: Anda adalah Master Photographer & FLUX.1 Prompt Specialist. Tuliskan deskripsi visual mendalam dalam bahasa Inggris deskriptif alami (natural language paragraphs) yang mengarahkan attention mechanism FLUX untuk menghasilkan rendering fotorealistik sekelas kamera profesional.",
+        components: [
+          {
+            name: "mainSubject",
+            label: "Subjek Utama & Detail Tekstur Mikroskopis",
+            type: "textarea",
+            placeholder: "contoh: A close-up editorial portrait of an Indonesian artisan woodcarver in his 50s, weathered hands with fine wrinkles, intense focused gaze, subtle sawdust particles resting on his shoulders",
+            info: "Deskripsikan subjek secara anatomis dan tekstur riil (pori-pori kulit, kerutan halus, helai rambut, serat kain)."
+          },
+          {
+            name: "cameraAndOptics",
+            label: "Kamera, Sensor & Lensa Sinematik",
+            type: "select",
+            options: [
+              "Captured on Leica M11 with Summilux-M 50mm f/1.4 ASPH lens, hyper-detailed optical clarity",
+              "Shot on ARRI Alexa LF with Cooke S4/i 75mm T2.0 prime lens, organic cinematic softness",
+              "Shot on Hasselblad H6D-100c medium format, 100mm f/2.2, extreme dynamic range",
+              "Shot on Sony A7R V with 85mm f/1.2 GM lens, razor-sharp eye focus and silky smooth creamy bokeh"
+            ],
+            info: "Pilih profil kamera dan karakteristik optik lensa."
+          },
+          {
+            name: "multiSourceLighting",
+            label: "Tata Cahaya Multi-Sumber (Multi-Source Lighting)",
+            type: "textarea",
+            placeholder: "contoh: Lit by natural golden late-afternoon window light from the left side, with a gentle warm tungsten lantern providing rim light on his jawline and dark ambient background shadows",
+            info: "Sebutkan arah cahaya utama (key light), cahaya pengisi (fill light), rim light, dan pantulan bayangan."
+          },
+          {
+            name: "environmentGrading",
+            label: "Lingkungan, Suasana & Color Grading",
+            type: "textarea",
+            placeholder: "contoh: Traditional rustic wooden workshop in Bali, warm earthy tones, deep amber and teak wood hues, subtle dust motes dancing in sunbeams, authentic documentary aesthetic",
+            info: "Latar tempat, palet warna, atmosfer udara (kabut halus, partikel debu), dan grading warna film."
+          },
+          {
+            name: "compositionShotType",
+            label: "Tipe Shot & Komposisi",
+            type: "select",
+            options: [
+              "Intimate Eye-Level Close-Up Portrait (Komposisi intim fokus karakter)",
+              "Medium Shot with Environmental Storytelling (Subjek menyatu dengan bengkel kerja)",
+              "Wide Atmospheric Establishing Shot (Konteks ruangan dan arsitektur)",
+              "Low-Angle Dramatic Hero Shot (Kesan megah dan berwibawa)"
+            ],
+            info: "Sudut pandang dan jarak kamera terhadap subjek."
+          }
+        ]
+      },
       "Flux.1 & Midjourney v6.1 Photorealistic Portrait": {
         description: "Formula prompt potret manusia fotorealistik 8K dengan tekstur pori-pori kulit mikro, pencahayaan Rembrandt, lensa kamera profesional, dan ekspresi natural.",
         toolType: "image-generation",
@@ -11661,6 +12036,53 @@ Email 3: Studi kasus pengguna`,
       },
     },
     "Generator Video AI Sinematik (Sora, Kling, Runway, Luma)": {
+      "Kling 1.5 & Runway Gen-3 Cinematic Motion Director": {
+        description: "Formula prompt sutradara sinematik generasi video AI (Kling 1.5, Runway Gen-3 Alpha, Hailuo MiniMax, Luma Ray 2). Mengatur pergerakan kamera dinamis, kecepatan frame, kontinuitas fisika, dan emosi adegan.",
+        toolType: "video",
+        ai_logic_description: "Persona AI: Anda adalah Director of Photography (DoP) Sinematik & AI Video Motion Engineer. Rancang naskah visual prompt yang memadukan koreografi gerak subjek, pergerakan kamera berbasis istilah industri film (Dolly, Pan, Orbit, Crane), serta kontinuitas fisika dunia nyata.",
+        components: [
+          {
+            name: "sceneVisualNarrative",
+            label: "Subjek, Tindakan & Narasi Visual Adegan",
+            type: "textarea",
+            placeholder: "contoh: An astronaut standing at the edge of a Martian canyon, raising a high-tech sensor device as sudden orange dust storms sweep across the rocky terrain, visor reflecting the twin moons",
+            info: "Deskripsikan apa yang terjadi dalam video 5-10 detik: siapa subjeknya, aksi fisiknya, dan perubahan lingkungan."
+          },
+          {
+            name: "cameraMovementDirector",
+            label: "Pergerakan Kamera Sutradara (Camera Movement)",
+            type: "select",
+            options: [
+              "Slow cinematic Dolly-In towards subject with subtle camera shake (Menegangkan & Fokus)",
+              "Dynamic Low-Angle Crane Shot rising smoothly into wide panoramic view (Megah & Eksploratif)",
+              "360-degree Orbit Shot around subject with high parallax effect (Dramatis)",
+              "Continuous Forward Tracking Shot following behind subject at running pace (Aksi Cepat)",
+              "Smooth Lateral Pan from Left to Right revealing background revelation (Pengungkapan Scene)",
+              "Static Camera with High Motion Subject Movement (Kontemplatif & Alami)"
+            ],
+            info: "Pilih teknik pergerakan kamera profesional yang diinginkan."
+          },
+          {
+            name: "motionPacingSpeed",
+            label: "Intensitas Gerak, Pacing & Kecepatan",
+            type: "select",
+            options: [
+              "Cinematic Slow Motion (60fps to 24fps ramp, gerak anggun dan megah)",
+              "Natural Real-Time Speed (Kecepatan alami dengan fisika gravitasi nyata)",
+              "Accelerated Dynamic Rush (Pacing tinggi, hembusan angin kencang, tempo cepat)",
+              "Subtle Ambient Micro-Motion (Gerak dedaunan, hembusan nafas, kedipan mata perlahan)"
+            ],
+            info: "Kecepatan pergerakan visual dan ritme adegan video."
+          },
+          {
+            name: "cinematicColorMood",
+            label: "Pencahayaan, Grading Warna & Atmosfer",
+            type: "textarea",
+            placeholder: "contoh: Volumetric sun rays cutting through orange haze, sci-fi blockbuster color grading, teal and orange palette, anamorphic lens flares, photorealistic 8K render",
+            info: "Suasana pencahayaan, efek flare lensa, gradasi warna film, dan atmosfer cuaca."
+          }
+        ]
+      },
       "Sora & Kling Cinematic Scene Director": {
         description: "Rancang formula prompt adegan video sinematik dengan kendali gerakan kamera (pan, tilt, zoom, FPV drone), pencahayaan volumetrik, dan simulasi fisika realistis.",
         toolType: "video",
@@ -12188,6 +12610,47 @@ Email 3: Studi kasus pengguna`,
       },
     },
     "Prompt AI Musik (Suno & Udio)": {
+      "Suno v4 Hit Song Lyric & Prompt Architect": {
+        description: "Arsitektur penulisan prompt dan struktur lirik berstandar Suno v4 & Udio 1.5. Mengintegrasikan tag struktural resmi ([Intro], [Verse], [Pre-Chorus], [Chorus], [Bridge], [Guitar Solo], [Outro]), tempo BPM, fusi genre, dan warna vokal.",
+        toolType: "music-composition",
+        ai_logic_description: "Persona AI: Anda adalah Multi-Platinum Music Producer & Songwriter Spesialis AI Audio Generation (Suno v4). Rancang prompt Style of Music yang kaya layer instrumen serta struktur lirik berima rapi dengan metatag stanzal presisi agar model AI menghasilkan lagu siap edar.",
+        components: [
+          {
+            name: "songThemeStory",
+            label: "Tema, Cerita & Emosi Lagu",
+            type: "textarea",
+            placeholder: "contoh: Lagu motivasi perjuangan anak rantau mengejar impian di ibukota, dari rasa sepi hingga mencapai kesuksesan bersama keluarga",
+            info: "Apa cerita utama di balik lagu, pesan emosional, dan suasana hati yang ingin disampaikan?"
+          },
+          {
+            name: "genreFusionStyle",
+            label: "Fusi Genre & Layer Instrumen (Style Prompt)",
+            type: "textarea",
+            placeholder: "contoh: Indonesian Pop Acoustic Rock fusion, acoustic guitar picking, uplifting piano chords, energetic drum build-up, melodic bassline, modern radio production, warm mastering",
+            info: "Kombinasi genre musik, instrumen utama, dan gaya produksi audio (masukkan ke kolom Style di Suno)."
+          },
+          {
+            name: "vocalTimbreBpm",
+            label: "Warna Vokal & Tempo BPM",
+            type: "select",
+            options: [
+              "Soulful Indonesian Male Vocal, emotional, raspy chest voice, 95 BPM",
+              "Powerful Indonesian Female Vocal, soaring high notes, angelic vibrato, 120 BPM",
+              "Indie Folk Duet (Male & Female harmony), warm intimate whisper, 85 BPM",
+              "Energetic Modern Pop Rock Vocal, confident, driving beat, 128 BPM",
+              "Smooth R&B Lo-Fi Vocal, mellow reverb, groove bass, 78 BPM"
+            ],
+            info: "Karakter suara penyanyi dan kecepatan tempo lagu."
+          },
+          {
+            name: "songStructureLyrics",
+            label: "Struktur Lirik Ber-Metatag Lengkap",
+            type: "textarea",
+            placeholder: "contoh: Masukkan bait lirik atau biarkan AI meracik lirik berima dengan tag [Intro], [Verse 1], [Chorus], [Guitar Solo], [Bridge], [Big Finish], [Outro]",
+            info: "Struktur lirik lengkap dengan tag panduan mesin audio AI."
+          }
+        ]
+      },
       "Suno AI v4 Master Song Producer": {
         description: "Komposisi lagu utuh di Suno AI v4 lengkap dengan genre tags, BPM, instrumentasi, gaya vokal, lirik terstruktur [Verse], [Chorus], [Bridge], dan [Drop].",
         toolType: "music-generation",
@@ -12930,6 +13393,53 @@ Email 3: Studi kasus pengguna`,
       },
     },
     "Pemikiran Terstruktur & Analisis": {
+      "Goal-Constraint-Context (GCC) Reasoning Framework": {
+        description: "Framework prompt khusus model penalaran generasi baru (Claude 3.7 Sonnet Thinking, DeepSeek-R1, OpenAI o1/o3). Memberikan otonomi pemikiran penuh dengan mengunci Goal (Tujuan), Hard Constraints (Batasan Mutlak), dan Context (Fakta Dasar) tanpa micromanage alur CoT.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah Autonomous Reasoning Engine dengan kemampuan penalaran mendalam (Chain of Thought tersembunyi). Rencanakan hipotesis, uji skenario ekstrem, dan validasi solusi secara otonom terhadap batasan ketat tanpa terburu-buru memberikan jawaban dangkal.",
+        components: [
+          {
+            name: "primaryGoal",
+            label: "Goal (Tujuan Utama & Definisi Sukses)",
+            type: "textarea",
+            placeholder: "contoh: Rancang arsitektur database multi-tenant untuk sistem reservasi klinik dengan throughput 10.000 QPS dan isolasi data setingkat HIPAA.",
+            info: "Apa hasil akhir spesifik yang ingin dicapai dan bagaimana kriteria keberhasilannya diukur?"
+          },
+          {
+            name: "hardConstraints",
+            label: "Hard Constraints (Batasan Mutlak & Anti-Pola)",
+            type: "textarea",
+            placeholder: "contoh: DILARANG menggunakan database NoSQL. Harus compatible dengan PostgreSQL 16. Skema harus zero downtime migration. Jangan rekomendasikan solusi cloud-proprietary terkunci.",
+            info: "Daftar larangan keras, batasan teknis, regulasi, atau solusi yang sudah terbukti gagal."
+          },
+          {
+            name: "contextualGrounding",
+            label: "Context & Grounding (Konteks & Fakta Terverifikasi)",
+            type: "textarea",
+            placeholder: "contoh: Tim beranggotakan 4 engineer backend Golang. Infrastruktur berjalan di Kubernetes on-premise. Anggaran lisensi perangkat lunak terbatas.",
+            info: "Kondisi riil, batasan tim, sumber daya yang ada, dan asumsi yang boleh digunakan."
+          },
+          {
+            name: "thinkingDepth",
+            label: "Thinking Depth & Verification Mode",
+            type: "select",
+            options: [
+              "Deep Architectural Deliberation (Eksplorasi trade-off & skenario kegagalan)",
+              "Rigorous Mathematical / Logic Proof (Analisis formal langkah demi langkah)",
+              "Pragmatic Senior Engineer Review (Fokus implementasi praktis & kesederhanaan)",
+              "Red Team Adversarial Audit (Cari celah keamanan & titik rapuh)"
+            ],
+            info: "Pilih mode penalaran dan kedalaman analisis internal model."
+          },
+          {
+            name: "outputContract",
+            label: "Format Kontrak Output",
+            type: "text",
+            placeholder: "contoh: 1. Ringkasan Eksekutif Trade-off, 2. Skema DDL SQL Lengkap, 3. Protokol Penanganan Sharding & Failover.",
+            info: "Format struktur deliverables jawaban akhir yang diharapkan."
+          }
+        ]
+      },
       "Analisis SWOT Personal & Strategi Karir": {
         description: "Petakan Kekuatan (Strengths), Kelemahan (Weaknesses), Peluang (Opportunities), dan Ancaman (Threats) karir Anda secara objektif.",
         toolType: "text",

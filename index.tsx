@@ -66,7 +66,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
               <button
                 onClick={() => {
                   try {
+                    const preservedSettings = localStorage.getItem('pm_ai_settings');
+                    const preservedUnlock = localStorage.getItem('pm_ai_unlocked');
                     localStorage.clear();
+                    if (preservedSettings) localStorage.setItem('pm_ai_settings', preservedSettings);
+                    if (preservedUnlock) localStorage.setItem('pm_ai_unlocked', preservedUnlock);
                   } catch (e) {}
                   window.location.reload();
                 }}

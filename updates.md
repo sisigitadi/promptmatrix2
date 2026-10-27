@@ -4,6 +4,41 @@
 This document provides a history of major features and updates to the PromptMatrix application, helping users understand its evolution and current capabilities.
 
 ---
+## V6.4.0 (360 Masterclass Formulas, AI Sanitizer, Bundle Splitting & Stash Markdown)
+*   **💎 360 Masterclass Formulas (2026 Ready):**
+    *   Added 10 new high-demand frameworks:
+        *   **GCC Reasoning Framework**: Goal-Constraint-Context for reasoning LLMs (Claude 3.7 Thinking, DeepSeek-R1, o1/o3).
+        *   **Classic AIDA**: Attention-Interest-Desire-Action legendary copywriting formula.
+        *   **Midjourney v6.1 Consistency**: Multi-scene character & style transfer (`--cref`, `--cw`, `--sref`, `--style raw`).
+        *   **FLUX.1 Descriptive Studio**: Natural language photorealism with real optics (Leica, Cooke S4, Hasselblad).
+        *   **Kling 1.5 & Runway Gen-3 Director**: Cinematic camera movements (Dolly, Crane, Orbit, Tracking) and motion intensity.
+        *   **Suno v4 Lyrical Architect**: Full structural tags (`[Intro]`, `[Verse]`, `[Chorus]`, `[Outro]`), BPM, and vocal timbres.
+        *   **AI Coding Agent Rules**: Strict `.cursorrules` & Windsurf architecture guardrails and testing protocols.
+        *   **MCP Server Designer**: Anthropic Model Context Protocol custom tools and `claude_desktop_config.json`.
+        *   **TikTok Shop & Shopee Live Script**: 3-second retention hooks and yellow cart flash sale triggers.
+        *   **LPDP Scholarship Essay**: Golden thread aligning national critical issues with post-study contribution.
+*   **🧹 AI Enhance Output Sanitizer (`sanitizePromptText`):**
+    *   Eliminates markdown code fences (```markdown) and bold formatting asterisks (**) leaking from LLMs.
+*   **⚡ High-Performance Vite Code Splitting:**
+    *   Separated vendor and dataset chunks (`data-frameworks`, `data-localization`, `vendor-react`).
+    *   Main JS bundle reduced from 1,415 kB to 152 kB (89% bandwidth reduction).
+*   **📦 Stash Markdown Export & Clean SVG Icons:**
+    *   Added one-click export of saved prompts to Markdown (`.md`) format.
+    *   Replaced raw emojis with clean SVG icons across the Stash drawer and quick tags.
+*   **🛡️ ErrorBoundary Safeguard:**
+    *   Emergency cache reset no longer wipes saved API keys (`pm_ai_settings`) or activation status (`pm_ai_unlocked`).
+*   **🌐 Domain & SEO Unification:**
+    *   Updated all metadata to `https://prompt.sigitadi.id` authored by Sigit Adi.
+
+---
+## V6.3.1 (Developer Portfolio Link in Header)
+*   **🔗 Portfolio Link in Header Brand Area:**
+    *   Added a subtle `🌐 sigitadi.id` link next to the header subtitle, linking to `https://sigitadi.id/` (opens in new tab).
+    *   Visible on `md:` breakpoint and above (tablet & desktop). Hidden on mobile to keep the header compact.
+    *   Styled with emerald accent colors (`emerald-500/70` → hover `emerald-400`) consistent with the design system.
+*   **Documentation & Versioning:** Updated `package.json` to `6.3.1`, `CHANGELOG.md`, `updates.md`.
+
+---
 ## V6.3.0 (Smart Language Detection & Landing Flow Polish)
 *   **🌐 Smart Browser Locale Detection & EN Default:**
     *   PromptMatrix now defaults to English (`EN`) while automatically inspecting the user's browser locale (`navigator.languages` / `navigator.language`).

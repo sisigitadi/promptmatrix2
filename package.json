@@ -1,7 +1,7 @@
 {
   "name": "promptmatrix",
   "private": true,
-  "version": "6.3.0",
+  "version": "6.4.0",
   "type": "module",
   "homepage": "https://prompt.sigitadi.id/",
   "repository": {
@@ -16,7 +16,6 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "@google/genai": "0.12.0",
     "esbuild": "^0.25.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"

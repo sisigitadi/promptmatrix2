@@ -434,6 +434,44 @@ const App: React.FC = () => {
     showToast(t('toast_exported'), 'success');
   };
 
+  const handleExportStashMarkdown = () => {
+    if (savedPrompts.length === 0) {
+      showToast(t('no_saved_prompts'), 'info');
+      return;
+    }
+    const lines = [
+      '# Koleksi Prompt - PromptMatrix 2.0',
+      `Diekspor pada: ${new Date().toLocaleString()}`,
+      `Total Prompt: ${savedPrompts.length}`,
+      '',
+      '---',
+      ''
+    ];
+    savedPrompts.forEach((p, idx) => {
+      lines.push(`## ${idx + 1}. ${p.name}`);
+      lines.push(`- **Framework:** ${p.selectedFrameworkName || p.frameworkId || '-'}`);
+      lines.push(`- **Tanggal Simpan:** ${new Date(p.timestamp).toLocaleString()}`);
+      lines.push('');
+      lines.push('```');
+      lines.push(p.generatedPrompt);
+      lines.push('```');
+      lines.push('');
+      lines.push('---');
+      lines.push('');
+    });
+
+    const blob = new Blob([lines.join('\n')], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `PromptMatrix_Stash_${new Date().toISOString().slice(0, 10)}.md`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showToast(language === 'id' ? 'Berhasil ekspor ke Markdown (.md)' : 'Exported to Markdown (.md)', 'success');
+  };
+
   const handleImportStashFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -921,11 +959,13 @@ const App: React.FC = () => {
           <div className="mt-8 bg-slate-800/90 border border-slate-700 rounded-xl p-6 shadow-md animate-fade-in">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5 pb-4 border-b border-slate-700">
               <div className="flex items-center gap-3">
-                <h2 className="text-lg font-semibold text-slate-100 flex items-center gap-2">
-                  <span>📁</span>
+                <h2 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h6a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
+                  </svg>
                   <span>{t('saved_prompts_title')}</span>
                 </h2>
-                <span className="text-xs bg-slate-700 text-teal-300 px-2.5 py-0.5 rounded-full font-mono">
+                <span className="text-xs bg-slate-900 border border-slate-700 text-emerald-400 px-2.5 py-0.5 rounded-full font-mono font-semibold">
                   {savedPrompts.length}
                 </span>
               </div>
@@ -933,25 +973,39 @@ const App: React.FC = () => {
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={handleExportStash}
-                  className="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 bg-slate-900 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors shadow-sm"
                   title={language === 'id' ? 'Ekspor prompt ke file cadangan JSON' : 'Export prompts to JSON backup file'}
                 >
-                  <span>📤</span>
-                  <span>{t('export_stash_btn')}</span>
+                  <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                  <span>JSON</span>
+                </button>
+                <button
+                  onClick={handleExportStashMarkdown}
+                  className="px-3 py-1.5 bg-slate-900 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors shadow-sm"
+                  title={language === 'id' ? 'Ekspor prompt ke format Markdown (.md)' : 'Export prompts to Markdown (.md) file'}
+                >
+                  <svg className="w-3.5 h-3.5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span>Markdown (.md)</span>
                 </button>
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 bg-slate-900 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors shadow-sm"
                   title={language === 'id' ? 'Impor prompt dari file cadangan JSON' : 'Import prompts from JSON backup file'}
                 >
-                  <span>📥</span>
+                  <svg className="w-3.5 h-3.5 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
                   <span>{t('import_stash_btn')}</span>
                 </button>
                 <button
                   onClick={() => setShowStash(false)}
-                  className="px-2.5 py-1.5 text-xs text-slate-400 hover:text-slate-200 rounded-lg bg-slate-800 border border-slate-700 ml-1"
+                  className="px-2.5 py-1.5 text-xs text-slate-400 hover:text-slate-200 rounded-xl bg-slate-900 border border-slate-700 ml-1"
                 >
-                  {t('close_btn')} ✕
+                  ✕
                 </button>
               </div>
             </div>
@@ -959,13 +1013,15 @@ const App: React.FC = () => {
             {/* Search Input */}
             {savedPrompts.length > 0 && (
               <div className="relative w-full max-w-sm mb-5">
-                <span className="absolute left-3 top-2 text-xs text-slate-400">🔍</span>
+                <svg className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
                 <input
                   type="text"
                   value={stashSearch}
                   onChange={(e) => setStashSearch(e.target.value)}
                   placeholder={t('search_stash_placeholder')}
-                  className="w-full pl-8 pr-3 py-1.5 bg-slate-900 border border-slate-700 focus:border-teal-500 rounded-lg text-xs text-slate-200 placeholder-slate-500 focus:outline-none"
+                  className="w-full pl-8 pr-3 py-2 bg-slate-950 border border-slate-700 focus:border-emerald-500 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none"
                 />
               </div>
             )}
@@ -976,7 +1032,7 @@ const App: React.FC = () => {
                 {displayedSavedPrompts.map(prompt => (
                   <div 
                     key={prompt.id} 
-                    className="bg-slate-900/70 border border-slate-700 rounded-lg p-4 flex flex-col justify-between hover:border-slate-600 transition-colors"
+                    className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all shadow-lg"
                   >
                     <div>
                       {/* Card Title / Rename Form */}
@@ -987,42 +1043,44 @@ const App: React.FC = () => {
                               type="text"
                               value={editNameInput}
                               onChange={(e) => setEditNameInput(e.target.value)}
-                              className="flex-1 px-2 py-0.5 bg-slate-950 border border-teal-500 rounded text-xs text-slate-100 focus:outline-none"
+                              className="flex-1 px-2.5 py-1 bg-slate-950 border border-emerald-500 rounded-lg text-xs text-slate-100 focus:outline-none"
                               autoFocus
                             />
                             <button
                               onClick={() => handleSaveRename(prompt)}
-                              className="px-2 py-0.5 bg-teal-600 hover:bg-teal-500 text-white rounded text-[11px]"
+                              className="px-2 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-[11px] font-semibold"
                             >
                               ✓
                             </button>
                             <button
                               onClick={() => setEditingPromptId(null)}
-                              className="px-1.5 py-0.5 bg-slate-700 text-slate-300 rounded text-[11px]"
+                              className="px-2 py-1 bg-slate-800 text-slate-300 rounded-lg text-[11px]"
                             >
                               ✕
                             </button>
                           </div>
                         ) : (
                           <div className="flex items-center gap-1.5 truncate max-w-[210px] group">
-                            <h3 className="font-semibold text-sm text-teal-300 truncate" title={prompt.name}>
+                            <h3 className="font-semibold text-xs text-emerald-400 truncate" title={prompt.name}>
                               {prompt.name}
                             </h3>
                             <button
                               onClick={() => handleStartRename(prompt)}
-                              className="opacity-0 group-hover:opacity-100 text-[11px] text-slate-400 hover:text-teal-300 transition-opacity"
+                              className="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-emerald-300 transition-opacity p-0.5"
                               title={t('rename_tooltip')}
                             >
-                              ✏️
+                              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                              </svg>
                             </button>
                           </div>
                         )}
-                        <span className="text-[10px] text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded font-mono whitespace-nowrap ml-1">
+                        <span className="text-[10px] text-slate-400 bg-slate-950 px-2 py-0.5 rounded-md font-mono border border-slate-800 whitespace-nowrap ml-1">
                           {new Date(prompt.timestamp).toLocaleDateString()}
                         </span>
                       </div>
 
-                      <p className="text-xs text-slate-400 font-mono line-clamp-3 mb-4 bg-slate-950/60 p-2 rounded border border-slate-800">
+                      <p className="text-xs text-slate-300 font-mono line-clamp-3 mb-4 bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80 leading-relaxed">
                         {prompt.generatedPrompt}
                       </p>
                     </div>
@@ -1030,23 +1088,30 @@ const App: React.FC = () => {
                     <div className="flex items-center gap-2 pt-2 border-t border-slate-800">
                       <button
                         onClick={() => handleLoadPrompt(prompt)}
-                        className="flex-1 px-3 py-1.5 bg-teal-600/80 hover:bg-teal-600 text-white rounded text-xs font-medium transition-colors"
+                        className="flex-1 px-3 py-1.5 bg-emerald-600/90 hover:bg-emerald-500 text-slate-950 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5"
                       >
-                        {t('load_btn')}
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        <span>{t('load_btn')}</span>
                       </button>
                       <button
                         onClick={() => copyToClipboard(prompt.generatedPrompt)}
-                        className="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded text-xs transition-colors"
+                        className="p-1.5 bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700 rounded-xl text-xs transition-colors"
                         title={t('copy_btn')}
                       >
-                        📋
+                        <svg className="w-3.5 h-3.5 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                        </svg>
                       </button>
                       <button
                         onClick={() => handleDeletePrompt(prompt.id)}
-                        className="px-2.5 py-1.5 bg-red-950/50 hover:bg-red-900 border border-red-800 text-red-300 rounded text-xs transition-colors"
+                        className="p-1.5 bg-red-950/40 hover:bg-red-900/60 border border-red-900/60 text-red-300 rounded-xl text-xs transition-colors"
                         title={t('delete_btn')}
                       >
-                        🗑️
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
                       </button>
                     </div>
                   </div>

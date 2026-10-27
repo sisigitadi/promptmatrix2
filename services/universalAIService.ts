@@ -309,6 +309,38 @@ export const fetchModelsFromEndpoint = async (
 // --- HIGH-LEVEL CAPABILITIES ---
 
 /**
+ * Utility to sanitize AI-generated prompt text from unwanted markdown artifacts:
+ * - Code block fences (```markdown, ```text, ```)
+ * - Bold asterisks (**label** -> label)
+ * - AI conversational preambles ("Berikut adalah prompt...")
+ * - Wrapping outer quotes
+ */
+export const sanitizePromptText = (text: string): string => {
+  if (!text) return '';
+  let cleaned = text.trim();
+
+  // 1. Strip markdown code fence at the start (e.g. ```markdown, ```text, ```prompt, or ```)
+  cleaned = cleaned.replace(/^```[a-zA-Z0-9_-]*\s*\r?\n?/i, '');
+  // Strip closing markdown code fence at the end
+  cleaned = cleaned.replace(/\r?\n?```\s*$/g, '');
+
+  // 2. Strip generic conversational preamble from AI
+  cleaned = cleaned.replace(/^(?:Tentu,?\s*)?(?:Berikut\s+(?:adalah\s+)?(?:hasil\s+)?(?:versi\s+)?(?:prompt\s+)?(?:yang\s+)?(?:telah\s+)?(?:disempurnakan|dioptimalkan|ditingkatkan|diperbarui)?[^:\n]*:?\s*[\r\n]+)/i, '');
+  cleaned = cleaned.replace(/^(?:Sure,?\s*)?(?:Here\s+(?:is|are)\s+(?:the\s+)?(?:enhanced|improved|refined|optimized)\s+prompt[^:\n]*:?\s*[\r\n]+)/i, '');
+
+  // 3. Strip bold formatting (**text** -> text and __text__ -> text)
+  cleaned = cleaned.replace(/\*\*([^*]+)\*\*/g, '$1');
+  cleaned = cleaned.replace(/__([^_]+)__/g, '$1');
+
+  // 4. Strip outer quotes if the model wrapped everything in "..."
+  if ((cleaned.startsWith('"') && cleaned.endsWith('"')) || (cleaned.startsWith("'") && cleaned.endsWith("'"))) {
+    cleaned = cleaned.slice(1, -1).trim();
+  }
+
+  return cleaned.trim();
+};
+
+/**
  * 1. Auto-Suggest Content for Specific Form Field
  */
 export const suggestFieldContentWithUniversalAI = async (
@@ -320,8 +352,8 @@ export const suggestFieldContentWithUniversalAI = async (
   const isIndonesian = language === 'id';
 
   const systemInstruction = isIndonesian
-    ? `Anda adalah seorang ahli prompt engineering handal. Tugas Anda adalah memberikan satu saran isian terbaik dan spesifik untuk kolom formulir yang diminta. Berikan HANYA nilai isian langsung tanpa pembuka, tanpa tanda kutip, dan tanpa penjelasan tambahan.`
-    : `You are an expert AI prompt engineer. Provide ONLY the direct, high-quality, specific value for the requested form field. Do not include markdown quotes, pleasantries, or preamble.`;
+    ? `Anda adalah seorang ahli prompt engineering handal. Tugas Anda adalah memberikan satu saran isian terbaik dan spesifik untuk kolom formulir yang diminta. Berikan HANYA nilai isian langsung tanpa pembuka, tanpa tanda kutip, tanpa format tebal (**), dan tanpa penjelasan tambahan.`
+    : `You are an expert AI prompt engineer. Provide ONLY the direct, high-quality, specific value for the requested form field. Do not include markdown quotes, bold asterisks (**), pleasantries, or preamble.`;
 
   const userPrompt = isIndonesian
     ? `Kerangka Kerja: "${frameworkName}"
@@ -329,15 +361,16 @@ Kolom yang perlu diisi: "${fieldLabel}"
 Konteks isian kolom lain yang sudah ada:
 ${contextSoFar || '(Belum ada kolom lain yang diisi)'}
 
-Berikan satu saran isian yang kreatif, kontekstual, dan bernilai tinggi:`
+Berikan satu saran isian teks biasa yang kreatif, kontekstual, dan bernilai tinggi:`
     : `Framework: "${frameworkName}"
 Target Field: "${fieldLabel}"
 Other Filled Context:
 ${contextSoFar || '(No other fields filled yet)'}
 
-Provide one creative, highly specific, and relevant value for this field:`;
+Provide one creative, highly specific, and relevant plain-text value for this field:`;
 
-  return generateTextWithUniversalAI(userPrompt, systemInstruction);
+  const raw = await generateTextWithUniversalAI(userPrompt, systemInstruction);
+  return sanitizePromptText(raw);
 };
 
 /**
@@ -351,8 +384,16 @@ export const enhancePromptWithUniversalAI = async (
   const isIndonesian = language === 'id';
 
   const systemInstruction = isIndonesian
-    ? `Anda adalah Master Prompt Optimizer. Tugas Anda adalah menyempurnakan prompt yang diberikan agar lebih tajam, presisi, kaya detail, dan menghasilkan output maksimal pada LLM modern. Pertahankan struktur utama dan kembalikan HANYA teks prompt yang telah disempurnakan tanpa kata pengantar.`
-    : `You are a Master Prompt Optimizer. Elevate and polish the prompt to be sharper, richer in clarity and constraints, and maximize output quality on modern AI models. Return ONLY the enhanced prompt.`;
+    ? `Anda adalah Master Prompt Optimizer. Tugas Anda adalah menyempurnakan prompt yang diberikan agar lebih tajam, presisi, kaya detail, dan menghasilkan output maksimal pada LLM modern.
+ATURAN FORMAT MUTLAK:
+1. Kembalikan HANYA teks prompt hasil perbaikan dalam bentuk teks polos (plain text) tanpa kata pengantar atau penutup.
+2. DILARANG KERAS menggunakan blok kode markdown (JANGAN gunakan \`\`\` atau \`\`\`markdown).
+3. DILARANG KERAS menggunakan format tebal asterisks (JANGAN gunakan **teks**). Gunakan format teks biasa yang bersih seperti "Label: Nilai".`
+    : `You are a Master Prompt Optimizer. Elevate and polish the prompt to be sharper, richer in clarity and constraints, and maximize output quality on modern AI models.
+STRICT FORMAT RULES:
+1. Return ONLY the plain text enhanced prompt without any introductory or concluding remarks.
+2. DO NOT use markdown code block fences (NO \`\`\` or \`\`\`markdown).
+3. DO NOT use bold asterisks (NO **text**). Use clean, plain text formatting like "Label: Value".`;
 
   const userPrompt = isIndonesian
     ? `Kerangka Kerja: "${frameworkName}"
@@ -361,16 +402,17 @@ Prompt Awal:
 ${currentPrompt}
 """
 
-Tingkatkan dan poles prompt di atas agar menjadi versi paling optimal:`
+Tingkatkan dan poles prompt di atas menjadi versi paling optimal dalam bentuk TEKS POLOS BERSIH (tanpa blok kode \`\`\` dan tanpa format tebal **):`
     : `Framework: "${frameworkName}"
 Initial Prompt:
 """
 ${currentPrompt}
 """
 
-Enhance and refine the prompt above to the absolute highest standard:`;
+Enhance and refine the prompt above to the absolute highest standard in CLEAN PLAIN TEXT (no code fences \`\`\`, no bold ** formatting):`;
 
-  return generateTextWithUniversalAI(userPrompt, systemInstruction);
+  const raw = await generateTextWithUniversalAI(userPrompt, systemInstruction);
+  return sanitizePromptText(raw);
 };
 
 /**
