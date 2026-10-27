@@ -4,6 +4,23 @@
 This document provides a history of major features and updates to the PromptMatrix application, helping users understand its evolution and current capabilities.
 
 ---
+## V6.4.1 (Mobile Responsive UI Overhaul & 100% Bilingual Translation Audit)
+*   **📱 Mobile Header & Responsive Viewport Perfection:**
+    *   **Guaranteed Visibility:** Language switcher (Globe + "ID"/"EN") and AI Configuration button (Sparkle + status glow + "AI") are 100% visible on small smartphones ($\le 360\text{px} - 420\text{px}$).
+    *   **Zero Horizontal Overflow:** Middle Studio/Gallery switcher is responsive (`hidden sm:flex`) to eliminate horizontal scrollbars and layout clipping.
+    *   **Touch Targets:** Action buttons enlarged to $\ge 32\text{px}\times 32\text{px}$ on mobile and $\ge 36\text{px}$ on desktop.
+    *   **Safe Area Padding:** Mobile quick-action floating dock includes `env(safe-area-inset-bottom)` for iPhone home indicator and Android gesture bars.
+    *   **iOS Safari Bugfix:** Fixed form input auto-zoom on mobile devices (`font-size: 16px !important`).
+*   **🌐 100% Bidirectional Bilingual Translation (Zero Untranslated Content):**
+    *   **260 English Formulas in ID Mode:** Added comprehensive `EN_TO_ID_FRAMEWORK_NAMES_MAP` in `services/localizationService.ts` mapping all 260 English framework names to official, high-quality Indonesian titles.
+    *   **100 Indonesian Formulas in EN Mode:** Fixed Review modal and stash displays using `translateFrameworkName`.
+    *   **52 Form Labels & 52 Guidance Infos:** Fully mapped across `COMPLETE_LABELS_MAP`, `ALL_INFOS_MAP`, and `EN_TO_ID_LABELS_MAP`.
+    *   **62 Dropdown Options:** Fully translated in `OPTION_TRANSLATIONS` and `EN_TO_ID_OPTIONS_MAP`.
+    *   **ToolType Badges:** Dynamic bilingual badge rendering on gallery cards (`Teks`, `Kode`, `Gambar`, `Video`, `Audio & Musik`, `Perencanaan`, `Umum`).
+*   **🤖 AI Features Enabled by Default:**
+    *   `showAIFeatures` initialized to `true` out of the box, giving immediate access to AI Suggestion, AI Prompt Enhancement, and Quality Scoring.
+
+---
 ## V6.4.0 (360 Masterclass Formulas, AI Sanitizer, Bundle Splitting & Stash Markdown)
 *   **💎 360 Masterclass Formulas (2026 Ready):**
     *   Added 10 new high-demand frameworks:

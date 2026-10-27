@@ -122,6 +122,23 @@ const QUICK_SEARCH_TAGS = [
   { id: 'seo', label_id: 'Artikel Pilar SEO', label_en: 'SEO Pillar Article', query: 'SEO' }
 ];
 
+const getLocalizedToolType = (toolType: string | undefined, lang: 'id' | 'en'): string => {
+  if (!toolType || toolType.toLowerCase() === 'general') {
+    return lang === 'id' ? 'Umum' : 'General';
+  }
+  const map: Record<string, { id: string; en: string }> = {
+    text: { id: 'Teks', en: 'Text' },
+    code: { id: 'Kode', en: 'Code' },
+    image: { id: 'Gambar', en: 'Image' },
+    video: { id: 'Video', en: 'Video' },
+    audio: { id: 'Audio', en: 'Audio' },
+    'music / audio': { id: 'Audio & Musik', en: 'Music / Audio' },
+    planning: { id: 'Perencanaan', en: 'Planning' },
+  };
+  const match = map[toolType.toLowerCase()];
+  return match ? match[lang] : toolType;
+};
+
 const TemplateGallery: React.FC<TemplateGalleryProps> = ({
   frameworksData,
   onSelectFramework,
@@ -371,7 +388,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
                     {localizedCatName} ❯ {localizedSubcatName}
                   </span>
                   <span className="px-2 py-0.5 rounded-full bg-slate-950 border border-slate-800 font-mono text-[9px] sm:text-[10px] text-slate-400 uppercase shrink-0">
-                    {item.framework.toolType || 'General'}
+                    {getLocalizedToolType(item.framework.toolType, language)}
                   </span>
                 </div>
 

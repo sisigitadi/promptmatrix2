@@ -4,6 +4,24 @@
 Dokumen ini mencatat perubahan teknis detail untuk setiap versi PromptMatrix.
 
 ---
+## [V6.4.1] - 2026-10-28
+### Added & Enhanced
+- **Responsivitas Layar Mobile Penuh (360px - 420px)**:
+  - Tombol **Ganti Bahasa** (Globe + "ID"/"EN") dan **Pengaturan AI** (Sparkle + Status Dot + "AI") 100% selalu terlihat di header pada semua ukuran layar mobile.
+  - Tab Switcher tengah (Galeri/Studio) diset responsif (`hidden sm:flex`) untuk mengeliminasi pemotongan dan scrollbar horizontal (*zero horizontal overflow*).
+  - Aksesibilitas tap target diperbesar hingga $\ge 32\text{px} \times 32\text{px}$ di mobile dan $\ge 36\text{px}$ di desktop.
+  - Menambahkan safe-area inset `pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))]` pada *Mobile Floating Dock* di bagian bawah.
+  - Memperbaiki bug auto-zoom iOS Safari pada form input (`font-size: 16px !important`).
+- **Audit Translasi Total Dua Arah (360 Formula Terverifikasi)**:
+  - Kamus `EN_TO_ID_FRAMEWORK_NAMES_MAP` (260 judul formula Inggris ➔ padanan resmi Bahasa Indonesia).
+  - Pemetaan judul formula Indonesia ➔ Inggris pada Modal Review (`translateFrameworkName`).
+  - 52 label komponen dan 52 info tooltip baru dari formula v6.4.0 terdaftar dwibahasa di `COMPLETE_LABELS_MAP`, `ALL_INFOS_MAP`, dan `EN_TO_ID_LABELS_MAP`.
+  - 62 pilihan dropdown terdaftar dwibahasa di `OPTION_TRANSLATIONS` dan `EN_TO_ID_OPTIONS_MAP`.
+  - Badge ToolType kartu galeri terjemah dinamis (`Teks`, `Kode`, `Gambar`, `Video`, `Audio & Musik`, `Perencanaan`, `Umum`).
+- **Aktivasi Fitur AI Default**:
+  - `showAIFeatures` aktif secara bawaan (`true`) sehingga fitur AI dapat langsung dinikmati tanpa perlu 9-tap logo.
+
+---
 ## [V6.0.0] - YYYY-MM-DD (Tanggal Rilis Sebenarnya)
 ### Added
 - **Fitur Inti: Analisis & Penilaian Prompt oleh AI (Membutuhkan Kunci API):**

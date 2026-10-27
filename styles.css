@@ -89,8 +89,8 @@ select:focus-visible {
 
 /* Mobile Touch Target & Interaction Helpers */
 @media (max-width: 640px) {
-  input, select, textarea, button {
-    font-size: 14px !important; /* Prevents auto-zoom on iOS Safari */
+  input, select, textarea {
+    font-size: 16px !important; /* Prevents unwanted auto-zoom on iOS Safari (must be >= 16px) */
   }
 }
 

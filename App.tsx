@@ -27,7 +27,8 @@ import {
   AI_LOGICS_MAP,
   translateComponentLabel,
   translateInfo,
-  translateOption
+  translateOption,
+  translateFrameworkName
 } from './services/localizationService';
 
 interface ToastState {
@@ -129,12 +130,13 @@ const App: React.FC = () => {
   const [showExpandReviewModal, setShowExpandReviewModal] = useState<boolean>(false);
   const [expandedStashPromptId, setExpandedStashPromptId] = useState<number | null>(null);
 
-  // Hidden AI Features State & 9-Tap Logo Unlock
+  // Universal AI Features State & 9-Tap Logo Toggle
   const [showAIFeatures, setShowAIFeatures] = useState<boolean>(() => {
     try {
-      return localStorage.getItem('pm_ai_unlocked') === 'true';
+      const stored = localStorage.getItem('pm_ai_unlocked');
+      return stored !== null ? stored === 'true' : true;
     } catch {
-      return false;
+      return true;
     }
   });
   const [logoClickCount, setLogoClickCount] = useState<number>(0);
@@ -1042,7 +1044,7 @@ const App: React.FC = () => {
 
             {/* Mobile Floating Quick Action Dock */}
             {generatedPrompt && (
-              <div className="lg:hidden fixed bottom-0 left-0 right-0 p-3 bg-[#090d16]/95 backdrop-blur-md border-t border-slate-800 z-30 flex items-center justify-between gap-3 shadow-2xl">
+              <div className="lg:hidden fixed bottom-0 left-0 right-0 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] bg-[#090d16]/95 backdrop-blur-md border-t border-slate-800 z-30 flex items-center justify-between gap-3 shadow-2xl">
                 <button
                   type="button"
                   onClick={() => setShowExpandReviewModal(true)}
@@ -1391,7 +1393,7 @@ const App: React.FC = () => {
                   <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono mt-0.5">
                     {selectedFrameworkName && (
                       <span className="text-emerald-400 font-medium truncate max-w-[200px] sm:max-w-xs">
-                        {selectedFrameworkName}
+                        {translateFrameworkName(selectedFrameworkName, language)}
                       </span>
                     )}
                     <span>•</span>

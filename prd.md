@@ -81,14 +81,15 @@ flowchart TD
 # ZONA BAWAH: LIVING CONTEXT (STATUS AKTIF & REGISTER TEKNOLOGI)
 # ==============================================================================
 
-### Status Sistem Terkini (v6.4.0)
+### Status Sistem Terkini (v6.4.1)
 - **Framework Utama:** React 18.0.0 (Functional Components + Hooks)
 - **Bahasa & Compiler:** TypeScript 5.5.4 + Vite 5.4.19
 - **Styling Engine:** Tailwind CSS v4.1.10 + PostCSS 8
 - **Penyimpanan Klien:** Native IndexedDB (`db.ts`, Store: `userPrompts`) + Safe LocalStorage
 - **Hosting & CI/CD:** GitHub Actions -> GitHub Pages + Vercel / Netlify Rewrite Ready (`public/CNAME`, `public/_redirects`)
 - **Domain Resmi:** `https://prompt.sigitadi.id`
-- **Total Master Formulas:** 360 Formulas Terverifikasi (100% Searchable & Localized)
+- **Total Master Formulas:** 360 Formulas Terverifikasi (100% Searchable, Localized Dua Arah ID ↔ EN)
+- **Responsivitas Mobile:** 100% Viewport Teroptimasi (360px - 420px), Tombol Ganti Bahasa & Atur AI Selalu Terlihat, Touch Target >= 40px, Zero Horizontal Overflow.
 
 ### Register Modul & Komponen Utama
 | Berkas / Direktori | Tanggung Jawab Teknis |

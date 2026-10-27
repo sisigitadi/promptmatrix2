@@ -24,6 +24,9 @@ module.exports = {
           light: '#1E293B'
         }
       },
+      screens: {
+        xs: '420px',
+      },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace']

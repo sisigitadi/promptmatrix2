@@ -1,5 +1,23 @@
 # Changelog - PromptMatrix 2.0
 
+## [6.4.1] - 2026-10-28
+### 📱 Mobile UI Overhaul & 100% Audit Translasi Dwibahasa (ID ↔ EN)
+
+#### Diperbaiki & Dioptimalkan (Fixed & Optimized):
+- **Visibilitas Tombol Header di Mode Mobile**:
+  - Mengatasi masalah tombol **Ganti Bahasa** (Globe + "ID"/"EN") dan **Pengaturan AI** (Sparkle + Status Dot + "AI") yang sebelumnya terpotong/tersembunyi pada layar smartphone kecil ($\le 360\text{px} - 420\text{px}$).
+  - Tab Switcher tengah (Galeri / Studio) diset responsif (`hidden sm:flex`) untuk mengeliminasi pemotongan dan scrollbar horizontal (*zero horizontal overflow*).
+  - Aksesibilitas tap target diperbesar hingga $\ge 32\text{px} \times 32\text{px}$ di mobile dan $\ge 36\text{px}$ di desktop.
+  - Menambahkan safe-area inset `pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))]` pada *Mobile Floating Dock* di bagian bawah.
+  - Memperbaiki bug auto-zoom iOS Safari pada input teks formulir (`font-size: 16px !important`).
+- **Audit Translasi Total Dua Arah (360 Formula Terverifikasi)**:
+  - **260 Judul Formula EN di Mode ID**: Menambahkan kamus `EN_TO_ID_FRAMEWORK_NAMES_MAP` di `services/localizationService.ts` sehingga seluruh formula berbahasa Inggris memiliki padanan resmi Bahasa Indonesia saat pengguna memilih mode ID.
+  - **100 Judul Formula ID di Mode EN**: Membungkus `selectedFrameworkName` pada Modal *Review & Copy Prompt* dengan fungsi `translateFrameworkName`.
+  - **52 Label & 52 Info Tooltip Baru**: Memetakan seluruh label dan deskripsi panduan komponen formulir dari 10 formula v6.4.0 ke dalam `COMPLETE_LABELS_MAP`, `ALL_INFOS_MAP`, dan `EN_TO_ID_LABELS_MAP`.
+  - **62 Pilihan Dropdown**: Mengintegrasikan seluruh opsi select dwibahasa di `OPTION_TRANSLATIONS` dan `EN_TO_ID_OPTIONS_MAP`.
+  - **Subkategori & ToolType Badge**: Menyelaraskan subkategori (`"AI, RAG & Desktop Lintas Platform"`, `"Sulih Suara & Desain Suara"`) dan badge jenis alat kartu galeri (`Teks`, `Kode`, `Gambar`, `Video`, `Audio & Musik`, `Perencanaan`, `Umum`).
+- **Aksesibilitas Fitur AI Langsung**:
+  - `showAIFeatures` kini berstatus aktif (`true`) secara bawaan, memungkinkan seluruh pengguna menikmati tombol *AI Suggest*, *AI Enhance*, dan *Quality Analysis* secara langsung.
 
 ## [6.4.0] - 2026-10-28
 ### 🚀 Rilis Besar PromptMatrix v6.4.0: 360 Formula Master, Sanitizer AI, Optimasi Bundle & Stash Markdown
