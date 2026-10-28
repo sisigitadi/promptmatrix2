@@ -364,34 +364,43 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
   return (
     <div className="space-y-6 sm:space-y-8 animate-fade-in pb-12">
       {/* Hero Welcome Banner (Vivid, Real High-Definition AI Matrix & Earth Network Background) */}
-      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-750 shadow-2xl bg-[#070b12]">
-        {/* Background Image: Real, Vivid, Sharp Photographic Earth & Neural Matrix Network */}
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-700/80 shadow-2xl bg-[#070b12]">
+        {/* Background Image: Vivid, High-Contrast Photographic Earth & Neural Matrix Network */}
         <div 
-          className="absolute inset-0 bg-cover bg-right sm:bg-center bg-no-repeat opacity-45 sm:opacity-55 scale-100 pointer-events-none transition-opacity duration-700 ease-out"
+          className="absolute inset-0 bg-cover bg-[center_30%] sm:bg-center bg-no-repeat opacity-80 sm:opacity-65 contrast-125 brightness-110 saturate-125 pointer-events-none transition-all duration-700 ease-out"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=85')`
+            backgroundImage: `url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=90')`
           }}
         />
-        {/* Asymmetrical Overlay Gradient: Dark Solid on Left for Text Readability, Fully Revealing Real Image on Right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#070b12] via-[#070b12]/85 to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#070b12] via-transparent to-black/30 pointer-events-none" />
+
+        {/* Ambient Glows to enrich color depth */}
+        <div className="absolute -top-10 -right-10 w-64 h-64 sm:w-96 sm:h-96 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-8 -left-8 w-48 h-48 sm:w-72 sm:h-72 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none" />
+
+        {/* Gradient Masks: Balanced for Mobile & Desktop so Photographic Detail Remains Distinct */}
+        {/* Mobile Gradient: Soft Vertical Gradient allowing center/image to shine through while keeping text readable */}
+        <div className="block sm:hidden absolute inset-0 bg-gradient-to-b from-[#070b12]/85 via-[#070b12]/35 to-[#070b12]/85 pointer-events-none" />
+        {/* Desktop Gradient: Horizontal Asymmetrical Gradient protecting left text area */}
+        <div className="hidden sm:block absolute inset-0 bg-gradient-to-r from-[#070b12] via-[#070b12]/75 to-transparent pointer-events-none" />
+        {/* Subtle Vignette for cinematic framing */}
+        <div className="absolute inset-0 bg-radial from-transparent via-transparent to-[#070b12]/50 pointer-events-none" />
 
         {/* Hero Content Container - Compact & Space-Efficient */}
         <div className="relative z-10 p-4 sm:py-5 sm:px-7 md:py-6 md:px-8 max-w-3xl space-y-2 sm:space-y-3">
-          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[10px] sm:text-xs font-semibold backdrop-blur-xs">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-slate-950/75 border border-emerald-500/35 text-emerald-300 text-[10px] sm:text-xs font-semibold backdrop-blur-md shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
             <span>PromptMatrix 2.0</span>
             <span>•</span>
             <span>{allTemplates.length} {language === 'id' ? 'Formula AI Terverifikasi' : 'Verified AI Formulas'}</span>
           </div>
 
-          <h1 className="text-base sm:text-xl md:text-2xl font-bold tracking-tight text-white font-sans leading-snug">
+          <h1 className="text-base sm:text-xl md:text-2xl font-bold tracking-tight text-white font-sans leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
             {language === 'id'
               ? 'Racik 360 Formula Prompt AI Presisi Tinggi'
               : 'Craft 360 High-Precision AI Prompt Formulas'}
           </h1>
           
-          <p className="text-xs sm:text-[13px] text-slate-300/90 leading-relaxed max-w-2xl font-sans hidden sm:block">
+          <p className="text-xs sm:text-[13px] text-slate-200/95 leading-relaxed max-w-2xl font-sans hidden sm:block drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
             {language === 'id'
               ? 'Panduan visual terstruktur untuk ChatGPT, Claude, Gemini, DeepSeek, Cursor & Midjourney.'
               : 'Structured visual framework for ChatGPT, Claude, Gemini, DeepSeek, Cursor & Midjourney.'}
