@@ -857,6 +857,8 @@ const App: React.FC = () => {
                     loadingFieldId={loadingFieldId}
                     onBackToGallery={() => setViewMode('gallery')}
                     showAIFeatures={showAIFeatures}
+                    generatedPrompt={generatedPrompt}
+                    isLightTheme={isLightTheme}
                   />
                 ) : (
                   <div className="bg-[#0f172a]/95 border border-slate-800/90 rounded-3xl p-16 text-center text-slate-400 flex flex-col items-center justify-center min-h-[380px] shadow-2xl space-y-4">
@@ -975,15 +977,6 @@ const App: React.FC = () => {
                   
                   {generatedPrompt ? (
                     <div className="flex flex-col gap-4">
-                      {/* Visual Mockup & Contoh Hasil Terkurasi (Selaras Isian Contoh) */}
-                      <VisualPromptPreview
-                        promptText={generatedPrompt}
-                        framework={selectedFramework}
-                        frameworkName={selectedFrameworkName}
-                        category={selectedCategory}
-                        isLightTheme={isLightTheme}
-                      />
-
                       {/* Kontainer Teks Pratinjau Terbaca */}
                       {previewViewMode === 'structured' ? (
                         <div className="bg-[#070b12] border border-slate-800/90 rounded-2xl p-4 sm:p-5 min-h-[220px] max-h-[460px] overflow-y-auto selection:bg-emerald-900/60 shadow-inner">

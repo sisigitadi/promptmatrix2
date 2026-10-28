@@ -12,6 +12,7 @@ import {
 } from '../services/localizationService';
 
 import { getRealisticSampleForComponent } from '../services/sampleDataService';
+import { VisualPromptPreview } from './VisualPromptPreview';
 
 interface FrameworkPaneProps {
   categoryName: string;
@@ -28,6 +29,8 @@ interface FrameworkPaneProps {
   loadingFieldId: string | null;
   onBackToGallery?: () => void;
   showAIFeatures?: boolean;
+  generatedPrompt?: string;
+  isLightTheme?: boolean;
 }
 
 const FrameworkPane: React.FC<FrameworkPaneProps> = ({
@@ -45,6 +48,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   loadingFieldId,
   onBackToGallery,
   showAIFeatures = false,
+  generatedPrompt = '',
+  isLightTheme = false,
 }) => {
   const { t, language } = useLanguage();
   const [showFewShot, setShowFewShot] = React.useState<boolean>(false);
@@ -310,6 +315,17 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
               {localizedFw.description}
             </p>
           )}
+        </div>
+
+        {/* Visual Mockup & Contoh Hasil Terkurasi (Ditempatkan di atas, tepat di bawah judul & deskripsi template) */}
+        <div className="pt-1">
+          <VisualPromptPreview
+            promptText={generatedPrompt}
+            framework={framework}
+            frameworkName={frameworkName}
+            category={categoryName}
+            isLightTheme={isLightTheme}
+          />
         </div>
       </div>
 
