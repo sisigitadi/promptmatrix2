@@ -22,6 +22,7 @@ import {
   analyzePromptQualityWithUniversalAI, 
   PromptAnalysisResult 
 } from './services/universalAIService';
+import { slugifyFormula } from './services/urlHelper';
 import { 
   COMMON_LABELS_TRANSLATIONS,
   AI_LOGICS_MAP,
@@ -394,20 +395,21 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Check deep link URL on initial mount (Section B12)
+  // Check deep link URL on initial mount (Section B12 - Clean Slugs without %20)
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
-      const targetQuery = params.get('template') || params.get('formula');
+      const targetQuery = params.get('f') || params.get('formula') || params.get('template');
       if (targetQuery) {
-        const queryLower = targetQuery.toLowerCase().trim();
+        const querySlug = slugifyFormula(targetQuery);
         for (const [catName, subcats] of Object.entries(PROMPT_FRAMEWORKS)) {
           for (const [subcatName, fws] of Object.entries(subcats)) {
             for (const [fwName, fw] of Object.entries(fws)) {
+              const currentFwSlug = slugifyFormula(fwName);
               if (
-                fwName.toLowerCase() === queryLower ||
-                fwName.toLowerCase().includes(queryLower) ||
-                queryLower.includes(fwName.toLowerCase())
+                currentFwSlug === querySlug ||
+                (querySlug.length >= 3 && currentFwSlug.includes(querySlug)) ||
+                (querySlug.length >= 3 && querySlug.includes(currentFwSlug))
               ) {
                 handleSelectFramework(catName, subcatName, fwName, fw);
                 return;
@@ -421,15 +423,26 @@ const App: React.FC = () => {
     }
   }, []);
 
-
   const handleInputChange = (name: string, value: any) => {
-    const updatedValues = { ...formValues, [name]: value };
-    setFormValues(updatedValues);
+    setFormValues(prev => {
+      const updatedValues = { ...prev, [name]: value };
+      if (selectedFramework && selectedFrameworkName) {
+        const prompt = compilePrompt(selectedFramework, selectedFrameworkName, updatedValues, customOtherValues);
+        setGeneratedPrompt(prompt);
+      }
+      return updatedValues;
+    });
+  };
 
-    if (selectedFramework && selectedFrameworkName) {
-      const prompt = compilePrompt(selectedFramework, selectedFrameworkName, updatedValues, customOtherValues);
-      setGeneratedPrompt(prompt);
-    }
+  const handleBatchInputChange = (newValues: Record<string, any>) => {
+    setFormValues(prev => {
+      const updatedValues = { ...prev, ...newValues };
+      if (selectedFramework && selectedFrameworkName) {
+        const prompt = compilePrompt(selectedFramework, selectedFrameworkName, updatedValues, customOtherValues);
+        setGeneratedPrompt(prompt);
+      }
+      return updatedValues;
+    });
   };
 
   const handleCustomOtherChange = (name: string, value: string) => {
@@ -817,6 +830,7 @@ const App: React.FC = () => {
                     formValues={formValues}
                     customOtherValues={customOtherValues}
                     onInputChange={handleInputChange}
+                    onBatchInputChange={handleBatchInputChange}
                     onCustomOtherChange={handleCustomOtherChange}
                     onClearFields={handleClearFields}
                     onAiSuggest={handleAiSuggestField}
@@ -921,14 +935,6 @@ const App: React.FC = () => {
                             <span>{t('preview_raw')}</span>
                           </button>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => setShowExpandReviewModal(true)}
-                          className="text-[11px] text-emerald-400/80 hover:text-emerald-300 transition-colors flex items-center gap-1 font-medium"
-                        >
-                          <span>{language === 'id' ? 'Layar Penuh' : 'Fullscreen'}</span>
-                          <span aria-hidden="true">↗</span>
-                        </button>
                       </div>
                     )}
                   </div>

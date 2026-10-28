@@ -1,10 +1,11 @@
 /**
  * PromptMatrix Realistic Sample Data Engine
- * Generates natural, context-aware sample values for all 136+ Prompt Frameworks
+ * Generates natural, context-aware sample values for all 360+ Prompt Frameworks
  * Fully synchronized for Indonesian (ID) and English (EN)
+ * Powers 1-Click Sample Filling & AI Suggestion Context Benchmarks
  */
 
-import { Framework, FrameworkComponent } from '../data/frameworks';
+import { FrameworkComponent } from '../data/frameworks';
 import { translatePlaceholder } from './localizationService';
 
 // Field-specific smart dictionary based on common component parameter names
@@ -14,73 +15,85 @@ const FIELD_SAMPLE_DICTIONARY: Record<string, { id: string; en: string }> = {
   peran: { id: "Pakar Pemasaran Digital & Copywriter Senior dengan pengalaman 10+ tahun", en: "Senior Digital Marketing Specialist & Copywriter with 10+ years experience" },
   persona: { id: "Konsultan Bisnis Senior & Mentor Startup Teknologi", en: "Senior Business Consultant & Tech Startup Mentor" },
   user_persona: { id: "Profesional muda usia 25-35 tahun yang ingin meningkatkan produktivitas harian", en: "Young professional aged 25-35 looking to improve daily productivity" },
+  expert_role: { id: "Principal Software Architect spesialis sistem terdistribusi skala besar", en: "Principal Software Architect specializing in large-scale distributed systems" },
   
   // Context & Background
   context: { id: "Peluncuran produk SaaS manajemen keuangan otomatis untuk UMKM dan pekerja lepas", en: "Product launch of an automated financial management SaaS for SMBs and freelancers" },
   konteks: { id: "Peluncuran produk SaaS manajemen keuangan otomatis untuk UMKM dan pekerja lepas", en: "Product launch of an automated financial management SaaS for SMBs and freelancers" },
   background: { id: "Persaingan pasar semakin ketat dan audiens membutuhkan solusi cepat tanpa kurva belajar rumit", en: "Market competition is growing and the audience needs a fast solution without a steep learning curve" },
   latar_belakang: { id: "Persaingan pasar semakin ketat dan audiens membutuhkan solusi cepat tanpa kurva belajar rumit", en: "Market competition is growing and the audience needs a fast solution without a steep learning curve" },
+  scenario: { id: "Perusahaan bertumbuh cepat dari 10 ke 50 karyawan dan sistem komunikasi internal mulai tidak terkoordinasi", en: "Company rapidly growing from 10 to 50 employees and internal communication is getting disorganized" },
+  skenario: { id: "Perusahaan bertumbuh cepat dari 10 ke 50 karyawan dan sistem komunikasi internal mulai tidak terkoordinasi", en: "Company rapidly growing from 10 to 50 employees and internal communication is getting disorganized" },
   
   // Task & Objectives
-  task: { id: "Buat draf strategi konten media sosial lengkap dengan jadwal posting dan 5 pilar konten utama", en: "Create a comprehensive social media content strategy draft with posting schedule and 5 core pillars" },
-  tugas: { id: "Buat draf strategi konten media sosial lengkap dengan jadwal posting dan 5 pilar konten utama", en: "Create a comprehensive social media content strategy draft with posting schedule and 5 core pillars" },
+  task: { id: "Buat draf strategi konten media sosial lengkap dengan jadwal posting mingguan dan 5 pilar konten utama", en: "Create a comprehensive social media content strategy draft with weekly posting schedule and 5 core pillars" },
+  tugas: { id: "Buat draf strategi konten media sosial lengkap dengan jadwal posting mingguan dan 5 pilar konten utama", en: "Create a comprehensive social media content strategy draft with weekly posting schedule and 5 core pillars" },
   objective: { id: "Meningkatkan rasio konversi pendaftaran gratis hingga 25% dalam 30 hari ke depan", en: "Increase free sign-up conversion rate by 25% over the next 30 days" },
   tujuan: { id: "Meningkatkan rasio konversi pendaftaran gratis hingga 25% dalam 30 hari ke depan", en: "Increase free sign-up conversion rate by 25% over the next 30 days" },
-  goal: { id: "Membangun kepercayaan pelanggan baru dan mendorong pembelian pertama", en: "Build trust with new customers and drive first-time purchases" },
+  goal: { id: "Membangun kepercayaan pelanggan baru dan mendorong transaksi pembelian pertama", en: "Build trust with new customers and drive first-time purchase transactions" },
   
   // Audience & Target Market
   audience: { id: "Pemilik bisnis online, pedagang marketplace, dan kreator konten digital di Indonesia", en: "Online business owners, marketplace merchants, and digital content creators" },
   audiens: { id: "Pemilik bisnis online, pedagang marketplace, dan kreator konten digital di Indonesia", en: "Online business owners, marketplace merchants, and digital content creators" },
-  target_audience: { id: "Mahasiswa dan pekerja kantoran pemula yang ingin belajar investasi dari nol", en: "College students and early-career professionals wanting to learn investing from scratch" },
+  target_audience: { id: "Mahasiswa dan pekerja kantoran pemula yang ingin belajar literasi finansial dari nol", en: "College students and early-career professionals wanting to learn financial literacy from scratch" },
   target_market: { id: "Pengguna smartphone aktif usia 18-40 tahun yang menyukai kepraktisan belanja online", en: "Active smartphone users aged 18-40 who love the convenience of online shopping" },
   target_audiens: { id: "Pengguna smartphone aktif usia 18-40 tahun yang menyukai kepraktisan belanja online", en: "Active smartphone users aged 18-40 who love the convenience of online shopping" },
+  demografi: { id: "Pria dan wanita urban usia 25-35 tahun dengan minat tinggi pada gaya hidup sehat dan efisiensi waktu", en: "Urban men and women aged 25-35 with high interest in healthy lifestyle and time efficiency" },
 
-  // Topic, Subject, Problem
+  // Topic, Subject, Problem & Pain Points
   topic: { id: "Cara mengelola waktu kerja secara efektif dengan teknik time-blocking dan AI", en: "How to effectively manage work time with time-blocking techniques and AI" },
   topik: { id: "Cara mengelola waktu kerja secara efektif dengan teknik time-blocking dan AI", en: "How to effectively manage work time with time-blocking techniques and AI" },
-  subject: { id: "Aplikasi produktivitas berbasis mobile dengan fitur pelacak kebiasaan harian", en: "Mobile-first productivity app with a daily habit tracking feature" },
-  subjek: { id: "Aplikasi produktivitas berbasis mobile dengan fitur pelacak kebiasaan harian", en: "Mobile-first productivity app with a daily habit tracking feature" },
-  problem: { id: "Sering merasa kewalahan dengan tumpukan tugas tanpa tahu mana prioritas utama", en: "Constantly feeling overwhelmed with backlog tasks without knowing what to prioritize" },
-  masalah: { id: "Sering merasa kewalahan dengan tumpukan tugas tanpa tahu mana prioritas utama", en: "Constantly feeling overwhelmed with backlog tasks without knowing what to prioritize" },
-  pain_point: { id: "Membuang 3 jam sehari hanya untuk membalas pesan pelanggan berulang", en: "Wasting 3 hours a day just responding to repetitive customer inquiries" },
+  subject: { id: "Aplikasi produktivitas berbasis mobile dengan fitur pelacak kebiasaan harian otomatis", en: "Mobile-first productivity app with an automated daily habit tracking feature" },
+  subjek: { id: "Aplikasi produktivitas berbasis mobile dengan fitur pelacak kebiasaan harian otomatis", en: "Mobile-first productivity app with an automated daily habit tracking feature" },
+  problem: { id: "Sering merasa kewalahan dengan tumpukan tugas tanpa tahu mana prioritas yang memberikan dampak terbesar", en: "Constantly feeling overwhelmed with task backlogs without knowing which priority drives highest impact" },
+  masalah: { id: "Sering merasa kewalahan dengan tumpukan tugas tanpa tahu mana prioritas yang memberikan dampak terbesar", en: "Constantly feeling overwhelmed with task backlogs without knowing which priority drives highest impact" },
+  pain_point: { id: "Membuang 3 jam sehari hanya untuk membalas pesan pelanggan berulang dan rekap data manual", en: "Wasting 3 hours a day just responding to repetitive customer inquiries and manual data entry" },
+  titik_masalah: { id: "Tingginya angka churn pelanggan akibat proses onboarding yang membingungkan dan lambat", en: "High customer churn rate caused by a confusing and sluggish onboarding process" },
 
-  // Video, Social & Hooks
-  hook: { id: "90% orang salah saat menyusun anggaran bulanan, ini rahasia 3 langkah yang benar!", en: "90% of people make this mistake when budgeting, here is the real 3-step secret!" },
-  story: { id: "Dulu saya selalu kehabisan gaji di minggu kedua, sampai saya mencoba sistem pembagian rekening otomatis ini...", en: "I used to run out of money by the second week, until I tested this automated account split system..." },
+  // Video, Social, Hooks & Copywriting
+  hook: { id: "90% orang salah saat menyusun anggaran bulanan, ini rahasia 3 langkah yang jarang dibagikan!", en: "90% of people make this mistake when budgeting, here is the real 3-step secret rarely shared!" },
+  story: { id: "Dulu saya selalu kehabisan gaji di minggu kedua, sampai saya mencoba sistem pembagian rekening 50/30/20 otomatis ini...", en: "I used to run out of money by the second week, until I tested this automated 50/30/20 account split system..." },
   offer: { id: "Klaim template spreadsheet keuangan gratis via tautan di bio sekarang sebelum dihapus!", en: "Claim your free financial tracking template via the link in bio before it gets taken down!" },
   cta: { id: "Klik tombol daftar sekarang untuk klaim diskon 50% khusus 100 pendaftar pertama!", en: "Click the register button now to claim an exclusive 50% discount for the first 100 signups!" },
   panggilan_aksi: { id: "Klik tombol daftar sekarang untuk klaim diskon 50% khusus 100 pendaftar pertama!", en: "Click the register button now to claim an exclusive 50% discount for the first 100 signups!" },
+  headline: { id: "Solusi Cerdas Otomatisasi Operasional Bisnis Tanpa Tambahan Karyawan", en: "Smart Business Operations Automation Solution Without Adding Headcount" },
 
   // Style, Tone & Format
   tone: { id: "Profesional, persuasif, inspiratif namun tetap bersahabat dan mudah dimengerti", en: "Professional, persuasive, inspiring yet friendly and easy to understand" },
-  gaya_bahasa: { id: "Santai, mengalir, penuh empati seperti berbicara dengan teman akrab", en: "Casual, flowing, empathetic like talking with a close friend" },
-  style: { id: "Modern, elegan, bersih dengan sentuhan minimalis", en: "Modern, elegant, clean with a minimalist touch" },
+  gaya_bahasa: { id: "Santai, mengalir, penuh empati seperti berbicara dengan teman akrab yang berpengalaman", en: "Casual, flowing, empathetic like talking with an experienced close friend" },
+  style: { id: "Modern, elegan, bersih dengan sentuhan minimalis berorientasi hasil", en: "Modern, elegant, clean with a minimalist results-driven touch" },
   format: { id: "Gunakan poin-poin terstruktur dengan judul tebal dan ringkasan eksekutif 3 baris di awal", en: "Use structured bullet points with bold headers and a 3-line executive summary upfront" },
   format_output: { id: "Tabel perbandingan ringkas beserta rekomendasi langkah aksi konkret", en: "Concise comparison table alongside concrete action step recommendations" },
+  panjang_kata: { id: "Sekitar 400 - 600 kata yang padat isi tanpa pemborosan kalimat", en: "Around 400 - 600 words, dense in value with zero filler" },
 
   // Constraints & Rules
-  constraint: { id: "Maksimal 300 kata, hindari jargon teknis berlebihan, dan sertakan 3 tips praktis", en: "Maximum 300 words, avoid excessive technical jargon, and include 3 actionable tips" },
-  batasan: { id: "Maksimal 300 kata, hindari jargon teknis berlebihan, dan sertakan 3 tips praktis", en: "Maximum 300 words, avoid excessive technical jargon, and include 3 actionable tips" },
+  constraint: { id: "Maksimal 300 kata, hindari jargon teknis berlebihan, dan sertakan 3 tips praktis siap pakai", en: "Maximum 300 words, avoid excessive technical jargon, and include 3 actionable tips" },
+  batasan: { id: "Maksimal 300 kata, hindari jargon teknis berlebihan, dan sertakan 3 tips praktis siap pakai", en: "Maximum 300 words, avoid excessive technical jargon, and include 3 actionable tips" },
   instruksi_khusus: { id: "Fokus pada solusi yang bisa langsung dipraktekkan hari ini tanpa modal tambahan", en: "Focus on solutions that can be applied immediately today with zero additional capital" },
+  larangan: { id: "Dilarang menggunakan kata klise seperti 'di era modern ini', 'revolusioner', atau 'tak terbantahkan'", en: "Strictly avoid buzzwords like 'in this modern era', 'game-changing', or 'revolutionize'" },
 
-  // Image & Visual Prompts (Midjourney / DALL-E)
-  prompt_visual: { id: "Karakter 3D animasi Disney Pixar anak kucing oranye lucu mengenakan jas astronot mini, berdiri di permukaan bulan", en: "3D Disney Pixar animation character of a cute orange kitten wearing a mini astronaut suit, standing on the moon surface" },
+  // Image & Visual Prompts (Midjourney, DALL-E, FLUX.1)
+  prompt_visual: { id: "Karakter 3D animasi Disney Pixar anak kucing oranye lucu mengenakan jas astronot mini, berdiri di permukaan bulan dengan latar bumi biru bersinar", en: "3D Disney Pixar animation character of a cute orange kitten wearing a mini astronaut suit, standing on the moon surface with radiant blue Earth background" },
   pencahayaan: { id: "Cinematic golden hour lighting dengan ambient rim light neon teal dan soft volumetric fog", en: "Cinematic golden hour lighting with neon teal ambient rim light and soft volumetric fog" },
   sudut_kamera: { id: "Eye-level shot, 85mm f/1.8 lens, bokeh latar belakang lembut, komposisi rule of thirds", en: "Eye-level shot, 85mm f/1.8 lens, smooth background bokeh, rule of thirds composition" },
   detail_visual: { id: "Detail tekstur fotorealistik 8K, render Octane, visual tajam dan kaya warna", en: "8K hyper-realistic texture detail, Octane render, crisp visuals and vibrant color palette" },
+  rasio_aspek: { id: "16:9", en: "16:9" },
+  aspek_rasio: { id: "16:9", en: "16:9" },
 
-  // Code & Technical
+  // Code & Technical Engineering
   kode_bahasa: { id: "TypeScript / React dengan Tailwind CSS", en: "TypeScript / React with Tailwind CSS" },
-  fungsi_tujuan: { id: "Fungsi utilitas untuk validasi formulir input dan kalkulasi diskon otomatis", en: "Utility function for input form validation and automatic discount calculation" },
+  bahasa_pemrograman: { id: "TypeScript (ES2022+)", en: "TypeScript (ES2022+)" },
+  fungsi_tujuan: { id: "Fungsi utilitas untuk validasi formulir input dan kalkulasi diskon otomatis secara reaktif", en: "Utility function for input form validation and reactive automatic discount calculation" },
   error_message: { id: "TypeError: Cannot read properties of undefined (reading 'map') saat memuat data async", en: "TypeError: Cannot read properties of undefined (reading 'map') when loading async data" },
+  arsitektur: { id: "Clean Architecture dengan Feature-Sliced Design dan pemisahan concerns yang ketat", en: "Clean Architecture with Feature-Sliced Design and strict separation of concerns" },
 
-  // STAR / Interview
-  situation: { id: "Tim kami menghadapi penurunan performa penjualan sebesar 20% pada kuartal lalu", en: "Our team faced a 20% drop in sales performance during the last quarter" },
-  situasi: { id: "Tim kami menghadapi penurunan performa penjualan sebesar 20% pada kuartal lalu", en: "Our team faced a 20% drop in sales performance during the last quarter" },
-  action: { id: "Saya memimpin inisiatif restrukturisasi alur funnel dan membuat kampanye onboarding interaktif", en: "I led an initiative to restructure the funnel flow and created an interactive onboarding campaign" },
-  aksi: { id: "Saya memimpin inisiatif restrukturisasi alur funnel dan membuat kampanye onboarding interaktif", en: "I led an initiative to restructure the funnel flow and created an interactive onboarding campaign" },
-  result: { id: "Penjualan meningkat 35% dalam waktu 6 minggu dan churn rate berkurang separuh", en: "Sales increased by 35% within 6 weeks and the churn rate was cut in half" },
-  hasil: { id: "Penjualan meningkat 35% dalam waktu 6 minggu dan churn rate berkurang separuh", en: "Sales increased by 35% within 6 weeks and the churn rate was cut in half" },
+  // STAR / Interview / Career
+  situation: { id: "Tim kami menghadapi penurunan performa penjualan sebesar 20% pada kuartal lalu akibat peralihan tren pasar", en: "Our team faced a 20% drop in sales performance during the last quarter due to market trend shift" },
+  situasi: { id: "Tim kami menghadapi penurunan performa penjualan sebesar 20% pada kuartal lalu akibat peralihan tren pasar", en: "Our team faced a 20% drop in sales performance during the last quarter due to market trend shift" },
+  action: { id: "Saya memimpin inisiatif restrukturisasi alur funnel, meluncurkan konten edukasi viral, dan membuat kampanye onboarding interaktif", en: "I led an initiative to restructure the funnel flow, launched viral educational content, and created an interactive onboarding campaign" },
+  aksi: { id: "Saya memimpin inisiatif restrukturisasi alur funnel, meluncurkan konten edukasi viral, dan membuat kampanye onboarding interaktif", en: "I led an initiative to restructure the funnel flow, launched viral educational content, and created an interactive onboarding campaign" },
+  result: { id: "Penjualan meningkat 35% dalam waktu 6 minggu, churn rate berkurang 50%, dan kepuasan pelanggan naik menjadi 4.8/5", en: "Sales increased by 35% within 6 weeks, churn rate dropped by 50%, and CSAT rose to 4.8/5" },
+  hasil: { id: "Penjualan meningkat 35% dalam waktu 6 minggu, churn rate berkurang 50%, dan kepuasan pelanggan naik menjadi 4.8/5", en: "Sales increased by 35% within 6 weeks, churn rate dropped by 50%, and CSAT rose to 4.8/5" },
 
   // Reasoning & Deliberative Models (DeepSeek R1, Claude 3.7 Thinking, o1/o3)
   hardconstraints: { id: "DILARANG menggunakan database NoSQL. Harus kompatibel dengan PostgreSQL 16. Skema harus zero downtime migration.", en: "STRICTLY FORBIDDEN to use NoSQL databases. Must be compatible with PostgreSQL 16. Schema must support zero downtime migration." },
@@ -106,33 +119,73 @@ const FIELD_SAMPLE_DICTIONARY: Record<string, { id: string; en: string }> = {
 };
 
 /**
- * Get a high quality, realistic sample value for a component in the active language.
+ * Get a high quality, realistic sample value for any component without exception.
+ * Guarantees every single field is filled with rich, realistic, context-aware content
+ * that directly serves as an authoritative benchmark for AI idea generation.
  */
 export const getRealisticSampleForComponent = (
   comp: FrameworkComponent,
   frameworkName: string,
   lang: 'id' | 'en' = 'id'
 ): any => {
-  // 1. Select type: return first valid option
-  if (comp.type === 'select' && comp.options && comp.options.length > 0) {
-    const validOpt = comp.options.find(o => o !== 'Lainnya...' && o !== 'Other...') || comp.options[0];
-    return validOpt;
+  // 1. Select type: return first valid option (avoiding "Lainnya..." / "Other...")
+  if (comp.type === 'select') {
+    if (comp.options && comp.options.length > 0) {
+      const validOpt = comp.options.find(o => o !== 'Lainnya...' && o !== 'Other...') || comp.options[0];
+      return validOpt;
+    }
+    return lang === 'id' ? 'Opsi Default Rekomendasi' : 'Recommended Default Option';
   }
 
-  // 2. Sliders / numbers: return ideal midpoint
+  // 2. Multiselect type: return array of top options
+  if (comp.type === 'multiselect') {
+    if (comp.options && comp.options.length > 0) {
+      const validOptions = comp.options.filter(o => o !== 'Lainnya...' && o !== 'Other...');
+      if (validOptions.length >= 2) {
+        return [validOptions[0], validOptions[1]];
+      }
+      return validOptions.length > 0 ? [validOptions[0]] : [comp.options[0]];
+    }
+    return lang === 'id' ? ['Pilihan Utama', 'Pilihan Tambahan'] : ['Primary Choice', 'Secondary Choice'];
+  }
+
+  // 3. Sliders / numbers: return ideal midpoint or within range
   if (comp.type === 'slider' || comp.type === 'number') {
     if (comp.min !== undefined && comp.max !== undefined) {
       return Math.round((comp.min + comp.max) / 2);
     }
-    return comp.min ?? 5;
+    if (comp.min !== undefined) return comp.min + 5;
+    if (comp.max !== undefined) return Math.min(comp.max, 10);
+    return 10;
   }
 
-  // 3. Boolean / Checkboxes
+  // 4. Boolean / Checkboxes
   if (comp.type === 'boolean') {
     return true;
   }
 
-  // 4. Try from placeholder if meaningful
+  // 5. Date type: return current real-world date (YYYY-MM-DD)
+  if (comp.type === 'date') {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  // 6. Color picker
+  if (comp.type === 'color') {
+    return '#10b981';
+  }
+
+  // 7. Code type
+  if (comp.type === 'code') {
+    return lang === 'id'
+      ? `// Logika fungsi utilitas utama\nexport const processData = (items: string[]) => {\n  return items.filter(Boolean).map(item => item.trim());\n};`
+      : `// Core utility function implementation\nexport const processData = (items: string[]) => {\n  return items.filter(Boolean).map(item => item.trim());\n};`;
+  }
+
+  // 8. Try extracting from placeholder if it provides a genuine example
   if (comp.placeholder && comp.placeholder.trim()) {
     const raw = translatePlaceholder(comp.placeholder, lang);
     const cleaned = raw
@@ -141,51 +194,84 @@ export const getRealisticSampleForComponent = (
       .replace(/^\s*['"]/, '')
       .trim();
 
-    // Check if cleaned is a genuine realistic sample (not just "Masukkan..." or "Tempelkan...")
-    const isInstructionOnly = /^(masukkan|tempelkan|tuliskan|salin|paste|enter|insert|copy)/i.test(cleaned);
+    // Check if cleaned is a genuine realistic sample (not merely an imperative instruction)
+    const isInstructionOnly = /^(masukkan|tempelkan|tuliskan|salin|isi|paste|enter|insert|copy|type)\b/i.test(cleaned);
     if (cleaned && cleaned.length > 5 && !isInstructionOnly && !cleaned.startsWith('...')) {
       return cleaned;
     }
   }
 
-  // 5. Check field-specific smart dictionary
+  // 9. Exact match from field dictionary
   const normalizedKey = comp.name.toLowerCase().replace(/[^a-z0-9_]/g, '_');
   if (FIELD_SAMPLE_DICTIONARY[normalizedKey]) {
     return FIELD_SAMPLE_DICTIONARY[normalizedKey][lang];
   }
 
-  // Check partial key matching
+  // 10. Partial key matching from dictionary
   for (const [key, val] of Object.entries(FIELD_SAMPLE_DICTIONARY)) {
     if (normalizedKey.includes(key)) {
       return val[lang];
     }
   }
 
-  // 6. Natural fallback based on component label
+  // 11. Intelligent contextual synthesis based on label & parameter semantics
   const label = (comp.label || comp.name).toLowerCase();
-  if (label.includes('produk') || label.includes('product') || label.includes('brand')) {
+
+  if (label.includes('produk') || label.includes('product') || label.includes('brand') || label.includes('merek')) {
     return lang === 'id' 
       ? 'Botol Minum Termos Stainless Steel 500ml Tahan Panas 24 Jam' 
       : '500ml Stainless Steel Insulated Thermos Bottle 24h Heat Retention';
   }
-  if (label.includes('topik') || label.includes('topic') || label.includes('judul') || label.includes('title')) {
+  if (label.includes('topik') || label.includes('topic') || label.includes('judul') || label.includes('title') || label.includes('tema')) {
     return lang === 'id'
-      ? 'Panduan Praktis Meningkatkan Produktivitas dan Fokus Kerja Harian'
-      : 'Practical Guide to Boosting Daily Productivity and Work Focus';
+      ? 'Strategi Praktis Meningkatkan Fokus, Produktivitas, dan Konsistensi Kerja Harian'
+      : 'Practical Strategies to Boost Daily Focus, Productivity, and Consistency';
   }
-  if (label.includes('audiens') || label.includes('audience') || label.includes('target')) {
+  if (label.includes('audiens') || label.includes('audience') || label.includes('target') || label.includes('pengguna') || label.includes('user')) {
     return lang === 'id'
-      ? 'Profesional muda dan pemilik usaha kecil menengah usia 22-40 tahun'
-      : 'Young professionals and small business owners aged 22-40';
+      ? 'Profesional muda usia 22-38 tahun dan pemilik usaha kecil menengah yang mengutamakan efisiensi'
+      : 'Young professionals aged 22-38 and small business owners prioritizing efficiency';
   }
-  if (label.includes('tujuan') || label.includes('goal') || label.includes('objective')) {
+  if (label.includes('tujuan') || label.includes('goal') || label.includes('objective') || label.includes('target')) {
     return lang === 'id'
-      ? 'Membantu pembaca memahami konsep dasar dan langsung mempraktikkannya hari ini'
-      : 'Help readers grasp the core concepts and apply them immediately today';
+      ? 'Membantu pembaca memahami kerangka kerja inti dan menerapkannya langsung dalam pekerjaan hari ini'
+      : 'Help readers grasp the core framework and apply it directly in their work today';
+  }
+  if (label.includes('masalah') || label.includes('problem') || label.includes('kendala') || label.includes('challenge')) {
+    return lang === 'id'
+      ? 'Alur kerja masih manual dan tidak terdokumentasi rapi sehingga sering terjadi miskomunikasi tim'
+      : 'Workflow remains manual and undocumented, leading to frequent team miscommunication';
+  }
+  if (label.includes('solusi') || label.includes('solution') || label.includes('langkah') || label.includes('step')) {
+    return lang === 'id'
+      ? 'Standardisasi alur kerja digital dengan template otomatisasi dan panduan langkah demi langkah'
+      : 'Standardizing digital workflow with automation templates and step-by-step guidance';
+  }
+  if (label.includes('manfaat') || label.includes('benefit') || label.includes('keunggulan')) {
+    return lang === 'id'
+      ? 'Menghemat waktu operasional hingga 70% dan meningkatkan akurasi data tanpa kerja lembur'
+      : 'Save up to 70% operational time and enhance data accuracy without overtime work';
+  }
+  if (label.includes('harga') || label.includes('price') || label.includes('biaya') || label.includes('cost')) {
+    return lang === 'id'
+      ? 'Mulai dari Rp149.000 (Paket Starter) dengan garansi kepuasan 30 hari uang kembali'
+      : 'Starting from $19/month (Starter Plan) with a 30-day money-back guarantee';
+  }
+  if (label.includes('durasi') || label.includes('duration') || label.includes('waktu') || label.includes('time')) {
+    return lang === 'id'
+      ? '60 detik berdurasi cepat dan langsung ke inti permasalahan'
+      : '60 seconds fast-paced and straight to the core message';
+  }
+  if (label.includes('link') || label.includes('tautan') || label.includes('url')) {
+    return 'https://prompt.sigitadi.id/';
+  }
+  if (label.includes('email') || label.includes('surel')) {
+    return 'si.sigitadi@gmail.com';
   }
 
-  // Final fallback
+  // 12. High-Caliber Contextual Synthesizer (Never returns generic placeholder)
+  const readableLabel = (comp.label || comp.name).trim();
   return lang === 'id'
-    ? `Contoh ${comp.label || comp.name} untuk skenario ${frameworkName}`
-    : `Sample ${comp.label || comp.name} for ${frameworkName} scenario`;
+    ? `Rincian ${readableLabel} yang spesifik, relevan, dan terukur untuk skenario optimal ${frameworkName}`
+    : `Specific, actionable, and measurable ${readableLabel} tailored for optimal ${frameworkName} execution`;
 };

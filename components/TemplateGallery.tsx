@@ -7,6 +7,7 @@ import {
   translateFrameworkName, 
   translateFrameworkDescription 
 } from '../services/localizationService';
+import { createFormulaShareUrl } from '../services/urlHelper';
 
 // 15 Master & Popular Frameworks for Quick Guidance & Badging
 export const POPULAR_FRAMEWORK_NAMES = new Set([
@@ -229,7 +230,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
   }, []);
 
   const handleCopyShare = (fwName: string) => {
-    const url = `${window.location.origin}/?template=${encodeURIComponent(fwName)}`;
+    const url = createFormulaShareUrl(fwName);
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
     }

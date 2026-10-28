@@ -159,7 +159,7 @@ export const allTranslations: TranslationSet = {
     toast_need_ai_setup: 'Silakan atur Provider / API Key AI di menu pengaturan ⚙️',
 
     // Footer
-    footer_text: 'Prompt Matrix © 2025 - 2026 — Optimalkan AI Anda, Mulai dari Prompt'
+    footer_text: '© 2025–2026 Sigit Adi — Optimalkan Prompt AI Anda'
   },
 
   en: {
@@ -313,6 +313,6 @@ export const allTranslations: TranslationSet = {
     toast_need_ai_setup: 'Please configure your AI Provider / API Key in settings ⚙️',
 
     // Footer
-    footer_text: 'Prompt Matrix © 2025 - 2026 — Optimize Your AI, Starting from the Prompt'
+    footer_text: '© 2025–2026 Sigit Adi — Optimize Your AI Prompts'
   }
 };

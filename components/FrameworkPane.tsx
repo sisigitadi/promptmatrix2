@@ -21,6 +21,7 @@ interface FrameworkPaneProps {
   formValues: Record<string, any>;
   customOtherValues: Record<string, string>;
   onInputChange: (name: string, value: any) => void;
+  onBatchInputChange?: (updates: Record<string, any>) => void;
   onCustomOtherChange: (name: string, value: string) => void;
   onClearFields: () => void;
   onAiSuggest: (name: string, label: string) => void;
@@ -37,6 +38,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   formValues,
   customOtherValues,
   onInputChange,
+  onBatchInputChange,
   onCustomOtherChange,
   onClearFields,
   onAiSuggest,
@@ -50,6 +52,12 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
 
   // Components from standard components or SOP komponen_prompt
   let allComponents: FrameworkComponent[] = localizedFw?.components || [];
+  if (allComponents.length === 0 && framework?.komponen_prompt?.["VARIABEL INPUT"]) {
+    allComponents = Object.entries(framework.komponen_prompt["VARIABEL INPUT"]).map(([k, v]) => ({
+      name: k,
+      ...v
+    }));
+  }
 
   // Check dynamic subcomponents based on current trigger value
   let dynamicExtraComponents: FrameworkComponent[] = [];
@@ -70,13 +78,44 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   const combinedComponents = [...allComponents, ...dynamicExtraComponents];
 
   // 1-Click Fill Sample Handler for Beginners (Real-world clean samples in active language)
+  // Ensures ALL fields without exception are completely filled, including dynamic subcomponents
   const handleFillSample = () => {
-    combinedComponents.forEach(comp => {
+    const samplePayload: Record<string, any> = {};
+
+    // 1. Fill all main components
+    allComponents.forEach(comp => {
       const sampleVal = getRealisticSampleForComponent(comp, localizedFw.name, language);
       if (sampleVal !== undefined && sampleVal !== null) {
-        onInputChange(comp.name, sampleVal);
+        samplePayload[comp.name] = sampleVal;
       }
     });
+
+    // 2. Handle dynamic subcomponents unconditionally
+    if (framework?.dynamicSubcomponents) {
+      const triggerField = framework.dynamicSubcomponents.trigger;
+      const triggerKeys = Object.keys(framework.dynamicSubcomponents.options);
+      let chosenTrigger = samplePayload[triggerField];
+      if (!chosenTrigger || !framework.dynamicSubcomponents.options[chosenTrigger]) {
+        chosenTrigger = triggerKeys[0];
+        samplePayload[triggerField] = chosenTrigger;
+      }
+
+      if (chosenTrigger && framework.dynamicSubcomponents.options[chosenTrigger]) {
+        const subComps = framework.dynamicSubcomponents.options[chosenTrigger];
+        subComps.forEach(subComp => {
+          const subVal = getRealisticSampleForComponent(subComp, localizedFw.name, language);
+          if (subVal !== undefined && subVal !== null) {
+            samplePayload[subComp.name] = subVal;
+          }
+        });
+      }
+    }
+
+    if (onBatchInputChange) {
+      onBatchInputChange(samplePayload);
+    } else {
+      Object.entries(samplePayload).forEach(([k, v]) => onInputChange(k, v));
+    }
   };
 
   const renderComponentInput = (comp: FrameworkComponent, index: number) => {
