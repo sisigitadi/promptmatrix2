@@ -1,7 +1,7 @@
 {
   "name": "PromptMatrix 2.0 - Generator Prompt AI Berpemandu",
   "short_name": "PromptMatrix",
-  "description": "Generator prompt AI berpemandu dengan 136+ formula terstruktur (ChatGPT, Claude, Gemini, DeepSeek, Midjourney).",
+  "description": "Generator prompt AI berpemandu dengan 360+ formula terstruktur (ChatGPT, Claude, Gemini, DeepSeek, Midjourney, FLUX, Suno, Coding).",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#090d16",

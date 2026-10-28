@@ -239,10 +239,16 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
 
   const PAGE_SIZE = 24;
   const [visibleCount, setVisibleCount] = useState<number>(PAGE_SIZE);
+  const [isLoadingTransition, setIsLoadingTransition] = useState(false);
 
-  // Auto-reset visible count to initial batch when filter or search changes
+  // Auto-reset visible count & trigger quick skeleton transition on filter change (Section A6)
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
+    setIsLoadingTransition(true);
+    const timer = setTimeout(() => {
+      setIsLoadingTransition(false);
+    }, 180);
+    return () => clearTimeout(timer);
   }, [selectedCategory, searchQuery, selectedToolType, sortBy]);
 
   const categories = Object.keys(frameworksData).sort((a, b) => {
@@ -557,105 +563,170 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
         </div>
       </div>
 
-      {/* Template Cards Grid (High Readability, Modern & Elegant) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
-        {sortedTemplates.slice(0, visibleCount).map(item => {
-          const localizedFwName = translateFrameworkName(item.frameworkName, language);
-          const localizedFwDesc = translateFrameworkDescription(item.framework.description || '', language, item.frameworkName);
-          const localizedCatName = translateCategoryName(item.category, language);
-          const localizedSubcatName = translateSubcategoryName(item.subcategory, language);
-          const isSelected = selectedFrameworkName === item.frameworkName;
-          const isPopular = POPULAR_FRAMEWORK_NAMES.has(item.frameworkName);
+      {/* Sticky Category Quick Nav (Section A4) - Always reachable on scroll */}
+      <div className="sticky top-16 z-30 -mx-3 sm:-mx-4 md:-mx-6 px-3 sm:px-4 md:px-6 py-2 bg-[#090d16]/95 backdrop-blur-md border-y border-slate-800/80 shadow-md flex items-center justify-between gap-2 overflow-x-auto scrollbar-none transition-all">
+        <div className="flex items-center gap-1.5 overflow-x-auto py-0.5 scrollbar-none">
+          <button
+            type="button"
+            onClick={() => setSelectedCategory('all')}
+            className={`px-2.5 py-1 rounded-xl text-xs font-semibold shrink-0 transition-all border flex items-center gap-1.5 ${
+              selectedCategory === 'all'
+                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-sm'
+                : 'bg-slate-900/90 hover:bg-slate-850 text-slate-400 hover:text-slate-200 border-slate-800'
+            }`}
+          >
+            <span>{language === 'id' ? 'Semua' : 'All'}</span>
+            <span className="text-[10px] font-mono text-slate-500">({allTemplates.length})</span>
+          </button>
+          {categories.map(cat => {
+            const isSelected = selectedCategory === cat;
+            const count = allTemplates.filter(t => t.category === cat).length;
+            return (
+              <button
+                key={`sticky-${cat}`}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-2.5 py-1 rounded-xl text-xs font-semibold shrink-0 transition-all border flex items-center gap-1.5 ${
+                  isSelected
+                    ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-sm'
+                    : 'bg-slate-900/90 hover:bg-slate-850 text-slate-400 hover:text-slate-200 border-slate-800'
+                }`}
+              >
+                <span>{translateCategoryName(cat, language)}</span>
+                <span className="text-[10px] font-mono text-slate-500">({count})</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-          return (
+      {/* Skeleton Loading Cards (Section A6) while changing filter / sort */}
+      {isLoadingTransition ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 animate-fade-in">
+          {Array.from({ length: 6 }).map((_, i) => (
             <div
-              key={item.frameworkName}
-              onClick={() => onSelectFramework(item.category, item.subcategory, item.frameworkName, item.framework)}
-              className={`group cursor-pointer rounded-2xl p-4 sm:p-5 border transition-all duration-200 flex flex-col justify-between gap-3 sm:gap-4 ${
-                isSelected
-                  ? 'bg-slate-900/90 border-emerald-500 ring-1 ring-emerald-500/50 shadow-xl'
-                  : 'bg-[#0f172a]/80 hover:bg-[#0f172a] border-slate-800/90 hover:border-slate-700 shadow-md hover:shadow-xl hover:-translate-y-0.5'
-              }`}
+              key={`skeleton-${i}`}
+              className="rounded-2xl p-4 sm:p-5 border border-slate-800/80 bg-slate-900/50 flex flex-col justify-between gap-4 animate-pulse min-h-[190px]"
             >
-              <div className="space-y-2">
-                {/* Header Tag / Category & Badges */}
-                <div className="flex items-center justify-between gap-2 text-[11px]">
-                  <span className="text-slate-400 font-medium truncate flex-1" title={`${localizedCatName} ❯ ${localizedSubcatName}`}>
-                    {localizedCatName} ❯ {localizedSubcatName}
-                  </span>
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    {isPopular && (
-                      <span className="px-1.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono text-[9px] font-semibold flex items-center gap-0.5">
-                        <span>🔥</span>
-                        <span>{language === 'id' ? 'Populer' : 'Popular'}</span>
-                      </span>
-                    )}
-                    <span className="px-2 py-0.5 rounded-full bg-slate-950 border border-slate-800 font-mono text-[9px] sm:text-[10px] text-slate-400 uppercase">
-                      {getLocalizedToolType(item.framework.toolType, language)}
-                    </span>
-                  </div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="h-3.5 bg-slate-800 rounded w-1/3"></div>
+                  <div className="h-3.5 bg-slate-800 rounded w-16"></div>
                 </div>
-
-                {/* Template Name */}
-                <h3 className="text-sm sm:text-base font-bold text-slate-100 group-hover:text-emerald-300 transition-colors line-clamp-2 leading-snug min-h-[2.5rem] flex items-center">
-                  {localizedFwName}
-                </h3>
-
-                {/* Template Description */}
-                <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed min-h-[2rem]">
-                  {localizedFwDesc || (language === 'id' ? 'Template prompt terstruktur untuk hasil AI optimal.' : 'Structured prompt template for optimal AI outputs.')}
-                </p>
+                <div className="h-5 bg-slate-800 rounded w-3/4"></div>
+                <div className="space-y-1.5 pt-1">
+                  <div className="h-3 bg-slate-800/70 rounded w-full"></div>
+                  <div className="h-3 bg-slate-800/70 rounded w-5/6"></div>
+                </div>
               </div>
-
-              {/* Card Footer Actions */}
-              <div className="flex items-center justify-between pt-2.5 sm:pt-3 border-t border-slate-800/80">
-                <span className="text-[10px] sm:text-[11px] text-slate-500 font-mono">
-                  {item.fieldCount} {language === 'id' ? 'kolom isian' : 'inputs'}
-                </span>
-
-                <div className="flex items-center gap-1.5">
-                  {/* Share Deep Link Button (Section B12) */}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleCopyShare(item.frameworkName);
-                    }}
-                    title={language === 'id' ? 'Salin link langsung formula ini' : 'Copy link to this formula'}
-                    className="h-7 px-2 rounded-xl bg-slate-950/80 hover:bg-slate-850 text-slate-400 hover:text-emerald-400 border border-slate-800 hover:border-slate-700 text-[10px] font-medium transition-all flex items-center gap-1"
-                  >
-                    {copiedLinkFw === item.frameworkName ? (
-                      <>
-                        <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-emerald-400 font-semibold">{language === 'id' ? 'Disalin!' : 'Copied!'}</span>
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                        </svg>
-                        <span className="hidden sm:inline">{language === 'id' ? 'Share' : 'Share'}</span>
-                      </>
-                    )}
-                  </button>
-
-                  <button
-                    type="button"
-                    className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-500/10 group-hover:bg-emerald-500 text-emerald-400 group-hover:text-slate-950 font-semibold text-xs transition-all flex items-center gap-1 sm:gap-1.5"
-                  >
-                    <span>{language === 'id' ? 'Gunakan' : 'Use'}</span>
-                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </button>
-                </div>
+              <div className="flex items-center justify-between pt-3 border-t border-slate-800/60">
+                <div className="h-3 bg-slate-800 rounded w-16"></div>
+                <div className="h-7 bg-slate-800 rounded-xl w-20"></div>
               </div>
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      ) : (
+        /* Template Cards Grid (High Readability, Modern & Elegant) */
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
+          {sortedTemplates.slice(0, visibleCount).map(item => {
+            const localizedFwName = translateFrameworkName(item.frameworkName, language);
+            const localizedFwDesc = translateFrameworkDescription(item.framework.description || '', language, item.frameworkName);
+            const localizedCatName = translateCategoryName(item.category, language);
+            const localizedSubcatName = translateSubcategoryName(item.subcategory, language);
+            const isSelected = selectedFrameworkName === item.frameworkName;
+            const isPopular = POPULAR_FRAMEWORK_NAMES.has(item.frameworkName);
+
+            return (
+              <div
+                key={item.frameworkName}
+                onClick={() => onSelectFramework(item.category, item.subcategory, item.frameworkName, item.framework)}
+                className={`group cursor-pointer rounded-2xl p-4 sm:p-5 border transition-all duration-200 flex flex-col justify-between gap-3 sm:gap-4 ${
+                  isSelected
+                    ? 'bg-slate-900/90 border-emerald-500 ring-1 ring-emerald-500/50 shadow-xl'
+                    : 'bg-[#0f172a]/80 hover:bg-[#0f172a] border-slate-800/90 hover:border-slate-700 shadow-md hover:shadow-xl hover:-translate-y-0.5'
+                }`}
+              >
+                <div className="space-y-2">
+                  {/* Header Tag / Category & Badges */}
+                  <div className="flex items-center justify-between gap-2 text-[11px]">
+                    <span className="text-slate-400 font-medium truncate flex-1" title={`${localizedCatName} ❯ ${localizedSubcatName}`}>
+                      {localizedCatName} ❯ {localizedSubcatName}
+                    </span>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {isPopular && (
+                        <span className="px-1.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono text-[9px] font-semibold flex items-center gap-0.5">
+                          <span>🔥</span>
+                          <span>{language === 'id' ? 'Populer' : 'Popular'}</span>
+                        </span>
+                      )}
+                      <span className="px-2 py-0.5 rounded-full bg-slate-950 border border-slate-800 font-mono text-[9px] sm:text-[10px] text-slate-400 uppercase">
+                        {getLocalizedToolType(item.framework.toolType, language)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Template Name */}
+                  <h3 className="text-sm sm:text-base font-bold text-slate-100 group-hover:text-emerald-300 transition-colors line-clamp-2 leading-snug min-h-[2.5rem] flex items-center">
+                    {localizedFwName}
+                  </h3>
+
+                  {/* Template Description */}
+                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed min-h-[2rem]">
+                    {localizedFwDesc || (language === 'id' ? 'Template prompt terstruktur untuk hasil AI optimal.' : 'Structured prompt template for optimal AI outputs.')}
+                  </p>
+                </div>
+
+                {/* Card Footer Actions */}
+                <div className="flex items-center justify-between pt-2.5 sm:pt-3 border-t border-slate-800/80">
+                  <span className="text-[10px] sm:text-[11px] text-slate-500 font-mono">
+                    {item.fieldCount} {language === 'id' ? 'kolom isian' : 'inputs'}
+                  </span>
+
+                  <div className="flex items-center gap-1.5">
+                    {/* Share Deep Link Button (Section B12) */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCopyShare(item.frameworkName);
+                      }}
+                      title={language === 'id' ? 'Salin link langsung formula ini' : 'Copy link to this formula'}
+                      className="h-7 px-2 rounded-xl bg-slate-950/80 hover:bg-slate-850 text-slate-400 hover:text-emerald-400 border border-slate-800 hover:border-slate-700 text-[10px] font-medium transition-all flex items-center gap-1"
+                    >
+                      {copiedLinkFw === item.frameworkName ? (
+                        <>
+                          <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                          <span className="text-emerald-400 font-semibold">{language === 'id' ? 'Disalin!' : 'Copied!'}</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                          </svg>
+                          <span className="hidden sm:inline">{language === 'id' ? 'Share' : 'Share'}</span>
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      type="button"
+                      className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-500/10 group-hover:bg-emerald-500 text-emerald-400 group-hover:text-slate-950 font-semibold text-xs transition-all flex items-center gap-1 sm:gap-1.5"
+                    >
+                      <span>{language === 'id' ? 'Gunakan' : 'Use'}</span>
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* Load More Pagination Controls (Eliminating Infinite Scroll & Boosting Performance) */}
       {sortedTemplates.length > visibleCount && (
