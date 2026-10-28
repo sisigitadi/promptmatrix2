@@ -42,41 +42,6 @@ export const VisualPromptPreview: React.FC<VisualPromptPreviewProps> = ({
     return getVisualBenchmarkForFramework(framework, frameworkName, category);
   }, [framework, frameworkName, category]);
 
-  // Aspect ratio CSS class mapping for container
-  const getAspectRatioClass = (ar: AspectRatioType): string => {
-    switch (ar) {
-      case '16:9':
-        return 'aspect-video';
-      case '9:16':
-        return 'aspect-[9/16] max-h-[360px] mx-auto';
-      case '4:5':
-        return 'aspect-[4/5] max-h-[320px] mx-auto';
-      case '21:9':
-        return 'aspect-[21/9]';
-      case '1:1':
-      default:
-        return 'aspect-square max-h-[290px] mx-auto';
-    }
-  };
-
-  // Download Image Helper
-  const handleDownloadImage = async (url: string, filename: string) => {
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `${filename}.jpg`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch {
-      window.open(url, '_blank');
-    }
-  };
-
   // Close lightbox on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -95,7 +60,7 @@ export const VisualPromptPreview: React.FC<VisualPromptPreviewProps> = ({
         : 'bg-[#090d16] border-slate-800/90 shadow-md'
     }`}>
       {/* Header Bar */}
-      <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-slate-800/80 bg-slate-950/60">
+      <div className="flex items-center justify-between px-3.5 py-2 border-b border-slate-800/80 bg-slate-950/60">
         <div className="flex items-center gap-2">
           <div className="w-5 h-5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
@@ -133,106 +98,97 @@ export const VisualPromptPreview: React.FC<VisualPromptPreviewProps> = ({
       </div>
 
       {!isCollapsed && (
-        <div className="p-3 sm:p-3.5 flex flex-col gap-3">
-          {/* Status Badge: Curated & Aligned with Sample */}
-          <div className="flex items-center justify-between gap-2 text-[11px]">
-            <div className="flex items-center gap-1.5 text-amber-400 font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              <span>{t('benchmark_badge')}</span>
-            </div>
-            <div className="text-[10px] text-emerald-400/90 font-mono bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
-              ✓ {t('align_sample_badge')}
-            </div>
-          </div>
+        <div className="p-3 sm:p-3.5">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start">
+            {/* Left: Compact Interactive Thumbnail (Click to zoom in lightbox) */}
+            <div 
+              onClick={() => {
+                setLightboxImage({
+                  url: benchmark.imageUrl,
+                  title: benchmark.title,
+                  subtitle: `${benchmark.styleCategory} • ${benchmark.authorOrModel}`
+                });
+                setShowLightbox(true);
+              }}
+              className="relative w-full sm:w-44 md:w-48 shrink-0 h-32 sm:h-36 overflow-hidden rounded-xl bg-slate-950 border border-slate-800/80 cursor-pointer group shadow-sm"
+            >
+              <img
+                src={benchmark.imageUrl}
+                alt={benchmark.title}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
 
-          {/* Image Frame with Aspect Ratio */}
-          <div 
-            onClick={() => {
-              setLightboxImage({
-                url: benchmark.imageUrl,
-                title: benchmark.title,
-                subtitle: `${benchmark.styleCategory} • ${benchmark.authorOrModel}`
-              });
-              setShowLightbox(true);
-            }}
-            className={`relative w-full overflow-hidden rounded-xl bg-slate-950 border border-slate-800/80 cursor-pointer group shadow-inner ${getAspectRatioClass(benchmark.aspectRatio)}`}
-          >
-            <img
-              src={benchmark.imageUrl}
-              alt={benchmark.title}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-
-            {/* Hover Overlay Hint */}
-            <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <span className="px-2.5 py-1 rounded-lg bg-slate-900/90 text-white text-[11px] font-medium border border-slate-700/80 shadow-lg flex items-center gap-1.5 backdrop-blur-sm">
-                <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                </svg>
-                <span>{t('zoom_click_hint')}</span>
-              </span>
-            </div>
-
-            {/* Bottom Title Bar Overlay */}
-            <div className="absolute bottom-0 inset-x-0 p-2.5 bg-gradient-to-t from-black/90 via-black/60 to-transparent flex items-end justify-between">
-              <div className="truncate pr-2">
-                <p className="text-xs font-semibold text-white drop-shadow truncate">
-                  {benchmark.title}
-                </p>
-                <p className="text-[10px] text-slate-300 drop-shadow truncate">
-                  {benchmark.styleCategory} • {benchmark.authorOrModel}
-                </p>
+              {/* Hover Overlay Hint */}
+              <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                <span className="px-2 py-1 rounded-lg bg-slate-900/90 text-white text-[10px] font-medium border border-slate-700/80 shadow-md flex items-center gap-1 backdrop-blur-xs">
+                  <svg className="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
+                  <span>{t('zoom_click_hint')}</span>
+                </span>
               </div>
-              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-black/70 text-slate-300 border border-white/10 shrink-0">
+
+              {/* Aspect Ratio Badge Tag on thumbnail */}
+              <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded text-[9px] font-mono font-medium bg-black/80 text-emerald-300 border border-white/10 shadow-xs backdrop-blur-xs">
                 {benchmark.aspectRatio}
               </span>
             </div>
-          </div>
 
-          {/* Key Visual Parameter Badges */}
-          {benchmark.keyParameters && benchmark.keyParameters.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
-              <span className="text-[10px] text-slate-400 font-medium">
-                {t('key_params_label')}
-              </span>
-              {benchmark.keyParameters.map((param, idx) => (
-                <span 
-                  key={idx}
-                  className="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-300 font-sans"
-                >
-                  <span className="text-slate-400">{param.label}:</span> <span className="text-emerald-300 font-medium">{param.value}</span>
-                </span>
-              ))}
+            {/* Right: Rich Structured Information */}
+            <div className="flex-1 min-w-0 flex flex-col justify-between space-y-2 w-full">
+              {/* Header Meta: Author/Model + Sample Alignment */}
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <div className="flex items-center gap-1.5 text-[11px] text-slate-300 font-sans">
+                  <span className="px-1.5 py-0.5 rounded-md bg-slate-850 border border-slate-750 text-slate-300 font-medium">
+                    {benchmark.styleCategory}
+                  </span>
+                  <span className="text-slate-500">•</span>
+                  <span className="text-slate-400 font-mono text-[10px]">
+                    {benchmark.authorOrModel}
+                  </span>
+                </div>
+                <div className="text-[10px] text-emerald-400 font-mono bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+                  ✓ {t('align_sample_badge')}
+                </div>
+              </div>
+
+              {/* Title & Description of Output */}
+              <div className="space-y-1">
+                <h4 className="text-xs sm:text-sm font-semibold text-slate-100 font-sans tracking-tight">
+                  {benchmark.title}
+                </h4>
+                <p className="text-[11px] text-slate-400 leading-relaxed font-sans line-clamp-2 sm:line-clamp-3">
+                  {benchmark.description}
+                </p>
+              </div>
+
+              {/* Sample Real-world Scenario link */}
+              {benchmark.sampleScenarioLink && (
+                <div className="text-[11px] text-emerald-400/95 flex items-center gap-1.5 bg-emerald-950/20 border border-emerald-800/30 px-2.5 py-1 rounded-lg">
+                  <span className="text-emerald-400 shrink-0">🎯</span>
+                  <span className="truncate">{benchmark.sampleScenarioLink}</span>
+                </div>
+              )}
+
+              {/* Key Parameters as Mini Pills */}
+              {benchmark.keyParameters && benchmark.keyParameters.length > 0 && (
+                <div className="flex flex-wrap items-center gap-1 pt-0.5">
+                  <span className="text-[10px] text-slate-500 font-medium mr-1">
+                    {t('key_params_label')}
+                  </span>
+                  {benchmark.keyParameters.map((param, idx) => (
+                    <span 
+                      key={idx}
+                      className="px-1.5 py-0.5 rounded text-[10px] bg-slate-900 border border-slate-800 text-slate-300 font-sans"
+                    >
+                      <span className="text-slate-500">{param.label}:</span>{' '}
+                      <span className="text-emerald-300 font-medium">{param.value}</span>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
-          )}
-
-          {/* Benchmark Description & Sample Alignment Note */}
-          <div className="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex flex-col gap-1.5">
-            <p className="text-[11px] text-slate-300 leading-relaxed italic">
-              &ldquo;{benchmark.description}&rdquo;
-            </p>
-            {benchmark.sampleScenarioLink && (
-              <p className="text-[10px] text-emerald-400/90 flex items-center gap-1">
-                <span className="text-emerald-500">🎯</span>
-                <span>{benchmark.sampleScenarioLink}</span>
-              </p>
-            )}
-          </div>
-
-          {/* Quick Action: Download Image Button */}
-          <div className="flex items-center justify-end pt-0.5">
-            <button
-              type="button"
-              onClick={() => handleDownloadImage(benchmark.imageUrl, `promptmatrix-${benchmark.id}`)}
-              className="px-3 py-1.5 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-700/80 text-slate-200 font-medium text-xs flex items-center gap-1.5 transition-all shadow-sm"
-              title={t('download_image')}
-            >
-              <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              <span>{t('download_image')}</span>
-            </button>
           </div>
         </div>
       )}
@@ -283,17 +239,14 @@ export const VisualPromptPreview: React.FC<VisualPromptPreviewProps> = ({
             {/* Modal Footer */}
             <div className="flex items-center justify-between px-4 py-2.5 border-t border-slate-800/80 bg-slate-900/80 text-xs">
               <span className="text-slate-400 font-mono text-[11px]">
-                PromptMatrix 2.0 Visual Engine
+                PromptMatrix 2.0 Benchmark Engine
               </span>
               <button
                 type="button"
-                onClick={() => handleDownloadImage(lightboxImage.url, `promptmatrix-sample-${Date.now()}`)}
-                className="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium flex items-center gap-1.5 transition-all shadow-sm"
+                onClick={() => setShowLightbox(false)}
+                className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white font-medium transition-all"
               >
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                <span>{t('download_image')}</span>
+                {t('close_btn')}
               </button>
             </div>
           </div>

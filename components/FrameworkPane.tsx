@@ -276,34 +276,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
               {localizedSubcatName}
             </span>
           </div>
-
-
-          <div className="flex items-center gap-2">
-            {/* 1-Click Fill Sample Button */}
-            {combinedComponents.length > 0 && (
-              <button
-                type="button"
-                onClick={handleFillSample}
-                className="h-8 px-3 rounded-xl text-xs font-semibold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 transition-all flex items-center gap-1.5 shadow-sm"
-                title={language === 'id' ? 'Otomatis isi contoh data nyata' : 'Auto-fill realistic sample values'}
-              >
-                <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-                <span>{language === 'id' ? 'Isi Contoh Otomatis' : 'Fill Sample'}</span>
-              </button>
-            )}
-
-            {/* Clear Button */}
-            {hasAnyValue && (
-              <button
-                onClick={onClearFields}
-                className="h-8 px-3 rounded-xl text-xs text-slate-400 hover:text-red-300 hover:bg-red-950/30 border border-slate-800 hover:border-red-900/40 transition-all"
-              >
-                {t('clear_fields_btn')}
-              </button>
-            )}
-          </div>
         </div>
 
         <div>
@@ -326,6 +298,44 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
             category={categoryName}
             isLightTheme={isLightTheme}
           />
+        </div>
+      </div>
+
+      {/* Quick Action: Isi Contoh Otomatis & Hapus (Ditempatkan tepat di atas Instruksi Logika AI) */}
+      <div className="flex items-center justify-between gap-3 p-3 bg-slate-950/60 border border-slate-800/90 rounded-2xl flex-wrap">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span className="text-xs font-semibold text-slate-200 font-sans">
+            {language === 'id' ? 'Uji Cepat Formula' : 'Quick Formula Test'}
+          </span>
+          <span className="text-[11px] text-slate-400 hidden sm:inline font-sans">
+            — {language === 'id' ? 'Isi seluruh kolom dengan data nyata terverifikasi' : 'Fill all fields with verified realistic data'}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {combinedComponents.length > 0 && (
+            <button
+              type="button"
+              onClick={handleFillSample}
+              className="h-8.5 px-3.5 rounded-xl text-xs font-semibold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 transition-all flex items-center gap-1.5 shadow-sm active:scale-98"
+              title={language === 'id' ? 'Otomatis isi contoh data nyata' : 'Auto-fill realistic sample values'}
+            >
+              <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              <span>{language === 'id' ? 'Isi Contoh Otomatis' : 'Fill Sample'}</span>
+            </button>
+          )}
+
+          {hasAnyValue && (
+            <button
+              onClick={onClearFields}
+              className="h-8.5 px-3 rounded-xl text-xs text-slate-400 hover:text-red-300 hover:bg-red-950/30 border border-slate-800 hover:border-red-900/40 transition-all"
+            >
+              {t('clear_fields_btn')}
+            </button>
+          )}
         </div>
       </div>
 
