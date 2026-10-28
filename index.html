@@ -198,23 +198,31 @@
     ]
   }
   </script>
-  <script type="module" crossorigin src="./assets/index-BxL3IdVk.js"></script>
+  <script type="module" crossorigin src="./assets/index-Dc2tIJiy.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/vendor-react-Cdf7IZff.js">
   <link rel="modulepreload" crossorigin href="./assets/data-frameworks-DMeKd9fJ.js">
   <link rel="modulepreload" crossorigin href="./assets/data-localization-Bf9kRmVy.js">
   <link rel="modulepreload" crossorigin href="./assets/feature-ai-BjF3MAt-.js">
   <link rel="modulepreload" crossorigin href="./assets/feature-stash-HQJM0O15.js">
-  <link rel="stylesheet" crossorigin href="./assets/index-By_w6K1F.css">
+  <link rel="stylesheet" crossorigin href="./assets/index-DH3Ii95j.css">
 </head>
 <body class="antialiased bg-[#090d16] text-slate-100 min-h-screen selection:bg-emerald-900/60 selection:text-white font-sans">
   <div id="root"></div>
   <script>
-    if ('serviceWorker' in navigator && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(err => {
-          console.debug('ServiceWorker registration error:', err);
+    if ('serviceWorker' in navigator) {
+      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          for (const reg of registrations) {
+            reg.unregister();
+          }
         });
-      });
+      } else {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch((err) => {
+            console.debug('ServiceWorker registration error:', err);
+          });
+        });
+      }
     }
   </script>
 </body>
