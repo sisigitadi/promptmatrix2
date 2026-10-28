@@ -76,6 +76,18 @@ const Footer: React.FC<FooterProps> = ({ isLightTheme = false }) => {
             </svg>
             <span>Medium</span>
           </a>
+
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="hover:text-emerald-400 transition-colors flex items-center gap-1 text-slate-400 hover:text-emerald-300 ml-1"
+            title={language === 'id' ? 'Lompat kembali ke atas' : 'Jump back to top'}
+          >
+            <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+            <span>{language === 'id' ? 'Ke Atas' : 'Top'}</span>
+          </button>
         </div>
       </div>
     </footer>

@@ -3,7 +3,7 @@
 > **Sistem:** PromptMatrix 2.0 - Ultimate Guided AI Prompt Generator  
 > **Arsitek & Pemilik:** Sigit Adi ([https://sigitadi.id](https://sigitadi.id))  
 > **Domain Live:** [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
-> **Versi Saat Ini:** v6.5.0  
+> **Versi Saat Ini:** v6.6.0  
 > **Lisensi:** MIT  
 > **Standar Rekayasa:** Dikelola oleh RetroBOT (`RetroBOT.md`)
 
@@ -81,7 +81,7 @@ flowchart TD
 # ZONA BAWAH: LIVING CONTEXT (STATUS AKTIF & REGISTER TEKNOLOGI)
 # ==============================================================================
 
-### Status Sistem Terkini (v6.5.0)
+### Status Sistem Terkini (v6.6.0)
 - **Framework Utama:** React 18.0.0 (Functional Components + Hooks)
 - **Bahasa & Compiler:** TypeScript 5.5.4 + Vite 5.4.19
 - **Styling Engine:** Tailwind CSS v4.1.10 + PostCSS 8
@@ -89,11 +89,15 @@ flowchart TD
 - **Hosting & CI/CD:** GitHub Actions -> GitHub Pages + Vercel / Netlify Rewrite Ready (`public/CNAME`, `public/_redirects`)
 - **Domain Resmi:** `https://prompt.sigitadi.id`
 - **Total Master Formulas:** 360 Formulas Terverifikasi (100% Searchable, Localized Dua Arah ID ↔ EN)
-- **Responsivitas & Layout (v6.5.0):**
-  - **Eliminasi Infinite Scroll:** Pagination cerdas 24 kartu per batch dengan tombol *Muat Lebih Banyak* & *Tampilkan Semua*, mengurangi scroll dari 15 layar ke 3 layar serta mendongkrak performa rendering.
-  - **Visibilitas Web Portfolio Mobile:** Link `sigitadi.id` kini 100% terlihat di mobile header (di bawah judul) dan footer dengan logo resmi SA (`public/sa-logo.png`).
-  - **Scroll-to-Top FAB:** Tombol floating otomatis muncul saat scroll > 400px untuk navigasi cepat.
-  - **Kategori & Filter Non-Scrolling:** Grid 2-kolom mobile / 3x3 desktop, Touch Target >= 40px, Zero Horizontal Overflow.
+- **Fitur Upgrade & Navigasi (v6.6.0):**
+  - **Recently Used Section:** Baris formula yang baru saja diakses tersimpan di `localStorage` (`pm_recent_templates`) dengan akses instan 1-klik dan opsi hapus riwayat.
+  - **Popular & Trending Badges:** Lencana `🔥 Populer` otomatis disematkan pada formula andalan (AIDA, RTF, CO-STAR, GCC, S-T-A-R-R, Midjourney, Cursor Rules, dll.).
+  - **Dynamic Sort Options:** Pengurutan fleksibel (Default, Populer Teratas, Nama A-Z, Nama Z-A, Input Terbanyak, Input Tersedikit).
+  - **Keyboard Shortcut (`Ctrl+K` & `Esc`):** Akses pencarian instan ala power user modern di mana saja.
+  - **Deep-Link Sharing (`?template=...`):** Tombol *Share* di setiap kartu menyalin link langsung formula, didukung auto-open parser saat halaman dimuat.
+  - **Compact Mobile Hero & Asset Preload:** Tinggi banner mobile dipangkas agar input & kategori langsung terlihat; preload aset penting di `index.html`.
+  - **Quick Nav "Ke Atas" di Footer:** Tautan cepat kembali ke hero atas di bagian footer.
+  - **Eliminasi Infinite Scroll:** Pagination 24 kartu per batch dengan tombol *Muat Lebih Banyak* & *Tampilkan Semua*.
 
 ### Register Modul & Komponen Utama
 | Berkas / Direktori | Tanggung Jawab Teknis |

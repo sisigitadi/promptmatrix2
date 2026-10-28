@@ -371,6 +371,17 @@ const App: React.FC = () => {
     setSelectedFrameworkName(fwName);
     setSelectedFramework(fw);
 
+    // Save to recently used (Section B7)
+    try {
+      const raw = localStorage.getItem('pm_recent_templates');
+      const list: Array<{ category: string; subcategory: string; frameworkName: string }> = raw ? JSON.parse(raw) : [];
+      const filtered = list.filter(item => item.frameworkName !== fwName);
+      const updated = [{ category: catName, subcategory: subcatName, frameworkName: fwName }, ...filtered].slice(0, 6);
+      localStorage.setItem('pm_recent_templates', JSON.stringify(updated));
+    } catch (e) {
+      console.error('Error saving recent template:', e);
+    }
+
     const initialValues: Record<string, any> = {};
     const initialOther: Record<string, string> = {};
     setFormValues(initialValues);
@@ -382,6 +393,33 @@ const App: React.FC = () => {
     setViewMode('studio');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Check deep link URL on initial mount (Section B12)
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const targetQuery = params.get('template') || params.get('formula');
+      if (targetQuery) {
+        const queryLower = targetQuery.toLowerCase().trim();
+        for (const [catName, subcats] of Object.entries(PROMPT_FRAMEWORKS)) {
+          for (const [subcatName, fws] of Object.entries(subcats)) {
+            for (const [fwName, fw] of Object.entries(fws)) {
+              if (
+                fwName.toLowerCase() === queryLower ||
+                fwName.toLowerCase().includes(queryLower) ||
+                queryLower.includes(fwName.toLowerCase())
+              ) {
+                handleSelectFramework(catName, subcatName, fwName, fw);
+                return;
+              }
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Error parsing deep link query:', e);
+    }
+  }, []);
 
 
   const handleInputChange = (name: string, value: any) => {

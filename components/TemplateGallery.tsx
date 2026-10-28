@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { PromptFrameworksType, Framework, CATEGORY_ORDER } from '../data/frameworks';
 import { useLanguage } from '../contexts/LanguageContext';
 import { 
@@ -7,6 +7,27 @@ import {
   translateFrameworkName, 
   translateFrameworkDescription 
 } from '../services/localizationService';
+
+// 15 Master & Popular Frameworks for Quick Guidance & Badging
+export const POPULAR_FRAMEWORK_NAMES = new Set([
+  'RTF Framework',
+  'CO-STAR Framework',
+  'AIDA Copywriting',
+  'S-T-A-R-R Method',
+  'Goal-Constraint-Context (GCC)',
+  'Hook-Story-Offer (HSO)',
+  'Midjourney v6.1 Masterclass',
+  'FLUX.1 Photorealistic Studio',
+  'Cursor & Windsurf AI Agent Rules',
+  'TikTok Shop Live Stream Script',
+  'LPDP & Beasiswa Master Architect',
+  'SEO Pillar Article Architect',
+  'Chain-of-Thought (CoT)',
+  'Feynman Technique Explainer',
+  'Suno v4 Hit Song Architect'
+]);
+
+export type SortOption = 'default' | 'popular' | 'alpha-asc' | 'alpha-desc' | 'fields-desc' | 'fields-asc';
 
 interface TemplateGalleryProps {
   frameworksData: PromptFrameworksType;
@@ -148,6 +169,73 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedToolType, setSelectedToolType] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<SortOption>('default');
+  const [copiedLinkFw, setCopiedLinkFw] = useState<string | null>(null);
+
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Recently used templates state
+  const [recentTemplates, setRecentTemplates] = useState<Array<{
+    category: string;
+    subcategory: string;
+    frameworkName: string;
+  }>>([]);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('pm_recent_templates');
+      if (raw) {
+        setRecentTemplates(JSON.parse(raw));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  const handleClearRecent = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      localStorage.removeItem('pm_recent_templates');
+      setRecentTemplates([]);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleSelectRecent = (recent: { category: string; subcategory: string; frameworkName: string }) => {
+    const fw = frameworksData[recent.category]?.[recent.subcategory]?.[recent.frameworkName];
+    if (fw) {
+      onSelectFramework(recent.category, recent.subcategory, recent.frameworkName, fw);
+    }
+  };
+
+  // Keyboard shortcut Ctrl+K to search and Esc to clear
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+        searchInputRef.current?.select();
+      } else if (e.key === 'Escape') {
+        if (document.activeElement === searchInputRef.current) {
+          setSearchQuery('');
+          searchInputRef.current?.blur();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleCopyShare = (fwName: string) => {
+    const url = `${window.location.origin}/?template=${encodeURIComponent(fwName)}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url);
+    }
+    setCopiedLinkFw(fwName);
+    setTimeout(() => setCopiedLinkFw(null), 2500);
+  };
 
   const PAGE_SIZE = 24;
   const [visibleCount, setVisibleCount] = useState<number>(PAGE_SIZE);
@@ -155,7 +243,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
   // Auto-reset visible count to initial batch when filter or search changes
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
-  }, [selectedCategory, searchQuery, selectedToolType]);
+  }, [selectedCategory, searchQuery, selectedToolType, sortBy]);
 
   const categories = Object.keys(frameworksData).sort((a, b) => {
     const idxA = CATEGORY_ORDER.indexOf(a);
@@ -251,53 +339,88 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
     });
   }, [allTemplates, selectedCategory, selectedToolType, searchQuery, language]);
 
+  // Sorted Templates based on User Selection (Default, Popular, Alpha, Inputs)
+  const sortedTemplates = useMemo(() => {
+    let list = [...filteredTemplates];
+    if (sortBy === 'popular') {
+      list.sort((a, b) => {
+        const aPop = POPULAR_FRAMEWORK_NAMES.has(a.frameworkName) ? 1 : 0;
+        const bPop = POPULAR_FRAMEWORK_NAMES.has(b.frameworkName) ? 1 : 0;
+        return bPop - aPop;
+      });
+    } else if (sortBy === 'alpha-asc') {
+      list.sort((a, b) => {
+        const nameA = translateFrameworkName(a.frameworkName, language);
+        const nameB = translateFrameworkName(b.frameworkName, language);
+        return nameA.localeCompare(nameB);
+      });
+    } else if (sortBy === 'alpha-desc') {
+      list.sort((a, b) => {
+        const nameA = translateFrameworkName(a.frameworkName, language);
+        const nameB = translateFrameworkName(b.frameworkName, language);
+        return nameB.localeCompare(nameA);
+      });
+    } else if (sortBy === 'fields-desc') {
+      list.sort((a, b) => b.fieldCount - a.fieldCount);
+    } else if (sortBy === 'fields-asc') {
+      list.sort((a, b) => a.fieldCount - b.fieldCount);
+    }
+    return list;
+  }, [filteredTemplates, sortBy, language]);
+
   return (
     <div className="space-y-6 sm:space-y-8 animate-fade-in pb-12">
-      {/* Hero Welcome Banner (Clean, Human, Zero AI Cliché) */}
-      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-b from-slate-900 via-[#0f172a] to-[#090d16] border border-slate-800 p-5 sm:p-8 md:p-12 shadow-2xl">
-        <div className="max-w-3xl space-y-3 sm:space-y-4">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] sm:text-xs font-semibold">
+      {/* Hero Welcome Banner (Clean, Human, Zero AI Cliché - Compact on Mobile) */}
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-b from-slate-900 via-[#0f172a] to-[#090d16] border border-slate-800 p-4 sm:p-8 md:p-10 shadow-2xl">
+        <div className="max-w-3xl space-y-2.5 sm:space-y-4">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 sm:py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] sm:text-xs font-semibold">
             <span>PromptMatrix 2.0</span>
             <span>•</span>
             <span>{allTemplates.length} {language === 'id' ? 'Template Formula AI' : 'AI Formula Templates'}</span>
           </div>
 
-          <h1 className="text-xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white font-sans leading-tight">
+          <h1 className="text-base sm:text-2xl md:text-3xl font-bold tracking-tight text-white font-sans leading-snug">
             {language === 'id'
               ? 'Mau meracik prompt formula apa hari ini?'
               : 'What prompt formula would you like to build?'}
           </h1>
-          <p className="text-xs sm:text-sm md:text-base text-slate-400 leading-relaxed max-w-2xl font-sans">
+          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-2xl font-sans hidden sm:block">
             {language === 'id'
               ? 'Pilih formula prompt terstruktur di bawah ini (misal: RTF, AIDA, STAR, SEO, Midjourney), isi variabel sederhana atau gunakan contoh 1-klik, dan hasilkan prompt berkualitas tinggi.'
               : 'Choose any structured prompt formula below (e.g. RTF, AIDA, STAR, SEO, Midjourney), fill in simple inputs or use 1-click samples, and generate high-precision prompts.'}
           </p>
 
-          {/* Natural Search Bar */}
-          <div className="pt-2 max-w-2xl space-y-2.5">
+          {/* Natural Search Bar with Keyboard Shortcut Indicator */}
+          <div className="pt-1 sm:pt-2 max-w-2xl space-y-2">
             <div className="relative">
               <svg className="absolute left-3.5 top-3 sm:top-3.5 w-4 h-4 sm:w-5 sm:h-5 text-slate-500 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
+                ref={searchInputRef}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={language === 'id' ? 'Cari formula atau topik: RTF, CO-STAR, SEO, Copywriting, Midjourney, Coding...' : 'Search formula or topic: RTF, CO-STAR, SEO, Copywriting, Midjourney, Coding...'}
-                className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3.5 bg-slate-950/90 border border-slate-700/80 focus:border-emerald-500 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none transition-all shadow-inner"
+                className="w-full pl-10 sm:pl-12 pr-16 sm:pr-20 py-2.5 sm:py-3.5 bg-slate-950/90 border border-slate-700/80 focus:border-emerald-500 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none transition-all shadow-inner"
               />
-              {searchQuery && (
+              {searchQuery ? (
                 <button
                   onClick={() => setSearchQuery('')}
                   className="absolute right-3.5 top-2.5 sm:top-3 text-xs sm:text-sm text-slate-400 hover:text-slate-200"
                 >
                   ✕
                 </button>
+              ) : (
+                <div className="absolute right-3.5 top-2.5 sm:top-3 hidden sm:flex items-center gap-1 text-[10px] font-mono text-slate-500 bg-slate-900 border border-slate-800 px-1.5 py-0.5 rounded-md pointer-events-none">
+                  <span>Ctrl</span>
+                  <span>K</span>
+                </div>
               )}
             </div>
 
             {/* Quick Search Chips matching real formulas */}
-            <div className="flex items-center gap-1.5 flex-wrap pt-1">
+            <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
               <span className="text-[11px] text-slate-500 font-sans mr-1">{language === 'id' ? 'Pencarian cepat:' : 'Quick search:'}</span>
               {QUICK_SEARCH_TAGS.map(tag => (
                 <button
@@ -307,7 +430,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
                     setSearchQuery(tag.query);
                     setSelectedCategory('all');
                   }}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all border ${
+                  className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-[10px] sm:text-[11px] font-medium transition-all border ${
                     searchQuery === tag.query
                       ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
                       : 'bg-slate-950/70 hover:bg-slate-900 text-slate-400 hover:text-slate-200 border-slate-800'
@@ -321,21 +444,67 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
         </div>
       </div>
 
+      {/* Recently Used Bar (Section B7) */}
+      {recentTemplates.length > 0 && !searchQuery.trim() && (
+        <div className="p-3 sm:p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 space-y-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-300 font-sans">
+              <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{language === 'id' ? 'Terakhir Digunakan' : 'Recently Used'}</span>
+            </div>
+            <button
+              type="button"
+              onClick={handleClearRecent}
+              className="text-[10px] text-slate-500 hover:text-slate-300 transition-colors"
+            >
+              {language === 'id' ? 'Hapus Riwayat' : 'Clear History'}
+            </button>
+          </div>
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+            {recentTemplates.map(r => (
+              <button
+                key={r.frameworkName}
+                onClick={() => handleSelectRecent(r)}
+                className="px-2.5 py-1.5 rounded-xl bg-slate-950/80 hover:bg-slate-850 border border-slate-800 hover:border-emerald-500/50 text-slate-300 hover:text-emerald-300 text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all shadow-xs"
+              >
+                <span className="text-emerald-400 font-bold">⚡</span>
+                <span className="truncate max-w-[170px]">{translateFrameworkName(r.frameworkName, language)}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
-      {/* Category Grid Filter (Neat, Non-Scrolling Responsive Grid - Zero Swipe/Geser) */}
+      {/* Category Grid Filter & Sort Selector */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300 font-sans">
-            {language === 'id' ? 'Kategori Kebutuhan' : 'Explore by Category'}
-          </h2>
-          <span className="text-[11px] sm:text-xs text-slate-400 font-mono">
-            {filteredTemplates.length > PAGE_SIZE
-              ? (language === 'id' 
-                  ? `Menampilkan ${Math.min(visibleCount, filteredTemplates.length)} dari ${filteredTemplates.length} formula` 
-                  : `Showing ${Math.min(visibleCount, filteredTemplates.length)} of ${filteredTemplates.length} formulas`)
-              : `${filteredTemplates.length} ${language === 'id' ? 'template ditemukan' : 'templates found'}`
-            }
-          </span>
+        <div className="flex items-center justify-between gap-2 flex-wrap">
+          <div className="flex items-center gap-2">
+            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300 font-sans">
+              {language === 'id' ? 'Kategori Kebutuhan' : 'Explore by Category'}
+            </h2>
+            <span className="text-[11px] sm:text-xs text-slate-400 font-mono">
+              ({filteredTemplates.length} {language === 'id' ? 'formula' : 'formulas'})
+            </span>
+          </div>
+
+          {/* Sort Selector (Section B9) */}
+          <div className="flex items-center gap-1.5 text-xs">
+            <span className="text-slate-500 text-[11px] hidden sm:inline">{language === 'id' ? 'Urutkan:' : 'Sort:'}</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as SortOption)}
+              className="bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 focus:border-emerald-500 focus:outline-none cursor-pointer"
+            >
+              <option value="default">{language === 'id' ? 'Default (Kategori)' : 'Default (Category)'}</option>
+              <option value="popular">{language === 'id' ? '🔥 Populer Teratas' : '🔥 Popular First'}</option>
+              <option value="alpha-asc">{language === 'id' ? 'Nama (A-Z)' : 'Name (A-Z)'}</option>
+              <option value="alpha-desc">{language === 'id' ? 'Nama (Z-A)' : 'Name (Z-A)'}</option>
+              <option value="fields-desc">{language === 'id' ? 'Input Terbanyak' : 'Most Inputs'}</option>
+              <option value="fields-asc">{language === 'id' ? 'Input Tersedikit' : 'Fewest Inputs'}</option>
+            </select>
+          </div>
         </div>
 
         {/* 2-Column on Mobile (with 'All' spanning top) and balanced 3x3 Grid on Tablet & Desktop */}
@@ -390,12 +559,13 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
 
       {/* Template Cards Grid (High Readability, Modern & Elegant) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
-        {filteredTemplates.slice(0, visibleCount).map(item => {
+        {sortedTemplates.slice(0, visibleCount).map(item => {
           const localizedFwName = translateFrameworkName(item.frameworkName, language);
           const localizedFwDesc = translateFrameworkDescription(item.framework.description || '', language, item.frameworkName);
           const localizedCatName = translateCategoryName(item.category, language);
           const localizedSubcatName = translateSubcategoryName(item.subcategory, language);
           const isSelected = selectedFrameworkName === item.frameworkName;
+          const isPopular = POPULAR_FRAMEWORK_NAMES.has(item.frameworkName);
 
           return (
             <div
@@ -408,14 +578,22 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
               }`}
             >
               <div className="space-y-2">
-                {/* Header Tag / Category */}
+                {/* Header Tag / Category & Badges */}
                 <div className="flex items-center justify-between gap-2 text-[11px]">
                   <span className="text-slate-400 font-medium truncate flex-1" title={`${localizedCatName} ❯ ${localizedSubcatName}`}>
                     {localizedCatName} ❯ {localizedSubcatName}
                   </span>
-                  <span className="px-2 py-0.5 rounded-full bg-slate-950 border border-slate-800 font-mono text-[9px] sm:text-[10px] text-slate-400 uppercase shrink-0">
-                    {getLocalizedToolType(item.framework.toolType, language)}
-                  </span>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    {isPopular && (
+                      <span className="px-1.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono text-[9px] font-semibold flex items-center gap-0.5">
+                        <span>🔥</span>
+                        <span>{language === 'id' ? 'Populer' : 'Popular'}</span>
+                      </span>
+                    )}
+                    <span className="px-2 py-0.5 rounded-full bg-slate-950 border border-slate-800 font-mono text-[9px] sm:text-[10px] text-slate-400 uppercase">
+                      {getLocalizedToolType(item.framework.toolType, language)}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Template Name */}
@@ -435,15 +613,44 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
                   {item.fieldCount} {language === 'id' ? 'kolom isian' : 'inputs'}
                 </span>
 
-                <button
-                  type="button"
-                  className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-500/10 group-hover:bg-emerald-500 text-emerald-400 group-hover:text-slate-950 font-semibold text-xs transition-all flex items-center gap-1 sm:gap-1.5"
-                >
-                  <span>{language === 'id' ? 'Gunakan' : 'Use'}</span>
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </button>
+                <div className="flex items-center gap-1.5">
+                  {/* Share Deep Link Button (Section B12) */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCopyShare(item.frameworkName);
+                    }}
+                    title={language === 'id' ? 'Salin link langsung formula ini' : 'Copy link to this formula'}
+                    className="h-7 px-2 rounded-xl bg-slate-950/80 hover:bg-slate-850 text-slate-400 hover:text-emerald-400 border border-slate-800 hover:border-slate-700 text-[10px] font-medium transition-all flex items-center gap-1"
+                  >
+                    {copiedLinkFw === item.frameworkName ? (
+                      <>
+                        <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-emerald-400 font-semibold">{language === 'id' ? 'Disalin!' : 'Copied!'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                        </svg>
+                        <span className="hidden sm:inline">{language === 'id' ? 'Share' : 'Share'}</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-500/10 group-hover:bg-emerald-500 text-emerald-400 group-hover:text-slate-950 font-semibold text-xs transition-all flex items-center gap-1 sm:gap-1.5"
+                  >
+                    <span>{language === 'id' ? 'Gunakan' : 'Use'}</span>
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           );
@@ -451,7 +658,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
       </div>
 
       {/* Load More Pagination Controls (Eliminating Infinite Scroll & Boosting Performance) */}
-      {filteredTemplates.length > visibleCount && (
+      {sortedTemplates.length > visibleCount && (
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 sm:pt-6">
           <button
             type="button"
@@ -460,8 +667,8 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
           >
             <span>
               {language === 'id'
-                ? `Muat Lebih Banyak (+${Math.min(PAGE_SIZE, filteredTemplates.length - visibleCount)})`
-                : `Load More (+${Math.min(PAGE_SIZE, filteredTemplates.length - visibleCount)})`}
+                ? `Muat Lebih Banyak (+${Math.min(PAGE_SIZE, sortedTemplates.length - visibleCount)})`
+                : `Load More (+${Math.min(PAGE_SIZE, sortedTemplates.length - visibleCount)})`}
             </span>
             <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -470,10 +677,10 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
 
           <button
             type="button"
-            onClick={() => setVisibleCount(filteredTemplates.length)}
+            onClick={() => setVisibleCount(sortedTemplates.length)}
             className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 hover:border-slate-700 text-xs sm:text-sm font-medium transition-all"
           >
-            {language === 'id' ? `Tampilkan Semua (${filteredTemplates.length})` : `Show All (${filteredTemplates.length})`}
+            {language === 'id' ? `Tampilkan Semua (${sortedTemplates.length})` : `Show All (${sortedTemplates.length})`}
           </button>
         </div>
       )}
