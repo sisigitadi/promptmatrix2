@@ -314,7 +314,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
       </div>
 
 
-      {/* Category Pills Filter (Clean Horizontal Scrollable Segmented Bar) */}
+      {/* Category Grid Filter (Neat, Non-Scrolling Responsive Grid - Zero Swipe/Geser) */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300 font-sans">
@@ -325,16 +325,25 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
           </span>
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+        {/* 2-Column on Mobile (with 'All' spanning top) and balanced 3x3 Grid on Tablet & Desktop */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5">
           <button
             onClick={() => setSelectedCategory('all')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border ${
+            className={`col-span-2 sm:col-span-1 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-between border shadow-sm ${
               selectedCategory === 'all'
-                ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300 shadow-sm'
-                : 'bg-slate-900/60 hover:bg-slate-800 border-slate-800 text-slate-400 hover:text-slate-200'
+                ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300 ring-1 ring-emerald-500/30'
+                : 'bg-slate-900/70 hover:bg-slate-850 border-slate-800 text-slate-300 hover:text-white'
             }`}
           >
-            {language === 'id' ? 'Semua' : 'All'} ({allTemplates.length})
+            <div className="flex items-center gap-2 min-w-0">
+              <svg className="w-4 h-4 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
+              <span className="truncate">{language === 'id' ? 'Semua Kategori' : 'All Categories'}</span>
+            </div>
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-950/80 border border-slate-800 text-slate-400 shrink-0 ml-1.5">
+              {allTemplates.length}
+            </span>
           </button>
 
           {categories.map(cat => {
@@ -347,15 +356,19 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(isSelected ? 'all' : cat)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 sm:gap-2 border ${
+                className={`px-3 py-2.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-between border shadow-sm ${
                   isSelected
-                    ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300 shadow-sm'
-                    : 'bg-slate-900/60 hover:bg-slate-800 border-slate-800 text-slate-400 hover:text-slate-200'
+                    ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300 ring-1 ring-emerald-500/30'
+                    : 'bg-slate-900/70 hover:bg-slate-850 border-slate-800 text-slate-300 hover:text-white'
                 }`}
               >
-                <span className="text-slate-400">{icon}</span>
-                <span>{localizedCatName}</span>
-                <span className="text-[10px] font-mono opacity-60">({count})</span>
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="text-slate-400 shrink-0 w-4 h-4 flex items-center justify-center">{icon}</span>
+                  <span className="truncate">{localizedCatName}</span>
+                </div>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-950/80 border border-slate-800 text-slate-400 shrink-0 ml-1.5">
+                  {count}
+                </span>
               </button>
             );
           })}

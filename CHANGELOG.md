@@ -1,5 +1,19 @@
 # Changelog - PromptMatrix 2.0
 
+## [6.4.2] - 2026-10-28
+### 🔒 Kontrol Akses AI Discretionary & Grid Kategori Kebutuhan Statis (Zero-Swipe)
+
+#### Diperbaiki & Dioptimalkan (Fixed & Optimized):
+- **Sembunyikan Seluruh Fitur AI Apabila Belum Diaktifkan**:
+  - Tombol **Pengaturan AI** di header kini dibungkus kondisional `{showAIFeatures && ...}` sehingga tersembunyi total saat AI tidak diaktifkan.
+  - Nilai bawaan (*default state*) `showAIFeatures` dikembalikan ke `false` (hanya aktif jika `pm_ai_unlocked === 'true'` via 9-tap logo).
+  - Saat tidak diaktifkan, seluruh elemen AI (Tombol Atur AI di header, AI Suggest di formulir, tombol Sempurnakan & Analisis Kualitas di Studio, serta bagian AI di panduan) disembunyikan sepenuhnya dari antarmuka.
+  - Pengguna dapat mengaktifkan/menonaktifkan seluruh fitur AI kapan saja dengan mengetuk logo PromptMatrix sebanyak 9 kali (*easter egg by discretion*).
+- **Layout Kategori Kebutuhan Non-Scrolling (Tanpa Geser)**:
+  - Menggantikan baris geser horizontal (`overflow-x-auto whitespace-nowrap`) pada bagian *Kategori Kebutuhan* dengan tata letak grid responsif yang terstruktur dan rapi.
+  - **Layar Ponsel (< 640px):** Tombol *Semua Kategori (360)* membentang penuh di baris atas (`col-span-2`), diikuti 8 kategori dalam 4 baris berpasangan yang simetris tanpa perlu geser menyamping (*zero horizontal swipe*).
+  - **Layar Tablet & Desktop (≥ 640px):** 9 tombol kategori tersusun dalam grid simetris 3x3 yang presisi dengan icon SVG, teks terpotong rapi (*truncate*), dan badge hitungan formula di sisi kanan.
+
 ## [6.4.1] - 2026-10-28
 ### 📱 Mobile UI Overhaul & 100% Audit Translasi Dwibahasa (ID ↔ EN)
 

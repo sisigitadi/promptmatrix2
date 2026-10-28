@@ -130,13 +130,12 @@ const App: React.FC = () => {
   const [showExpandReviewModal, setShowExpandReviewModal] = useState<boolean>(false);
   const [expandedStashPromptId, setExpandedStashPromptId] = useState<number | null>(null);
 
-  // Universal AI Features State & 9-Tap Logo Toggle
+  // Hidden AI Features State & 9-Tap Logo Unlock
   const [showAIFeatures, setShowAIFeatures] = useState<boolean>(() => {
     try {
-      const stored = localStorage.getItem('pm_ai_unlocked');
-      return stored !== null ? stored === 'true' : true;
+      return localStorage.getItem('pm_ai_unlocked') === 'true';
     } catch {
-      return true;
+      return false;
     }
   });
   const [logoClickCount, setLogoClickCount] = useState<number>(0);

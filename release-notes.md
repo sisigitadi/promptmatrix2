@@ -4,6 +4,18 @@
 Dokumen ini mencatat perubahan teknis detail untuk setiap versi PromptMatrix.
 
 ---
+## [V6.4.2] - 2026-10-28
+### Security, Privacy & Layout Enhancements
+- **Proteksi Fitur AI Discretionary (Default Tersembunyi)**:
+  - Tombol **Atur AI** di header dibungkus kondisional `{showAIFeatures && ...}`.
+  - State awal `showAIFeatures` dikembalikan ke default `false` (hanya aktif jika `pm_ai_unlocked === 'true'`).
+  - Seluruh fitur AI (Atur AI, AI Suggest, AI Enhance, AI Quality Score, panduan AI) disembunyikan total sebelum pengguna secara sadar mengaktifkannya via 9-tap logo.
+- **Transformasi Grid Kategori Kebutuhan (Tanpa Geser / Non-Scrolling)**:
+  - Mengubah baris geser horizontal (`overflow-x-auto whitespace-nowrap`) menjadi layout grid responsif.
+  - Tampilan ponsel (< 640px): 2 kolom dengan tombol "Semua Kategori" membentang penuh di atas.
+  - Tampilan tablet/desktop (≥ 640px): Grid 3x3 simetris dengan ikon SVG, nama kategori terpotong rapi (*truncate*), dan badge hitungan.
+
+---
 ## [V6.4.1] - 2026-10-28
 ### Added & Enhanced
 - **Responsivitas Layar Mobile Penuh (360px - 420px)**:

@@ -4,6 +4,17 @@
 This document provides a history of major features and updates to the PromptMatrix application, helping users understand its evolution and current capabilities.
 
 ---
+## V6.4.2 (Discretionary AI Feature Visibility & Static Non-Scrolling Category Grid)
+*   **🔒 Strict Discretionary AI Feature Visibility:**
+    *   **Completely Hidden When Inactive:** The Header AI Provider Settings button is wrapped in `{showAIFeatures && ...}` and will NOT render unless AI features are activated.
+    *   **Default State:** `showAIFeatures` defaults to `false` (only active when `pm_ai_unlocked === 'true'`).
+    *   **Zero UI Pollution:** Without intentional activation (via 9-tap logo), all AI buttons, suggestions, enhancements, and quality checkers remain hidden.
+*   **🗂️ Non-Scrolling Category Grid Layout (Zero-Swipe):**
+    *   **No Horizontal Scrollbar:** Removed `overflow-x-auto whitespace-nowrap` on the *Kategori Kebutuhan* section.
+    *   **Mobile Viewport (< 640px):** 2-column balanced layout with "All Categories (360)" spanning full width at top, followed by 8 categories in 4 neat pairs.
+    *   **Tablet & Desktop (≥ 640px):** Symmetrical 3x3 grid with SVG icons, truncated text, and count badges.
+
+---
 ## V6.4.1 (Mobile Responsive UI Overhaul & 100% Bilingual Translation Audit)
 *   **📱 Mobile Header & Responsive Viewport Perfection:**
     *   **Guaranteed Visibility:** Language switcher (Globe + "ID"/"EN") and AI Configuration button (Sparkle + status glow + "AI") are 100% visible on small smartphones ($\le 360\text{px} - 420\text{px}$).

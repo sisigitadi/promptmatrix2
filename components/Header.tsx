@@ -98,27 +98,29 @@ const Header: React.FC<HeaderProps> = ({
 
         {/* Right Action Controls - Guaranteed 100% visible on mobile with clear icons & labels */}
         <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-          {/* Universal AI Provider Settings Button */}
-          <button
-            onClick={onOpenApiKeyModal}
-            className={`h-8 px-2 sm:h-9 sm:px-3 rounded-xl text-xs font-semibold border flex items-center justify-center gap-1.5 transition-all shadow-sm ${
-              isConfigured 
-                ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300 hover:bg-emerald-950/60 shadow-[0_0_12px_rgba(16,185,129,0.15)]' 
-                : 'bg-slate-900/90 border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white'
-            }`}
-            title={`${t('ai_settings_btn')}: ${preset.name} (${aiSettings.model})`}
-            aria-label={t('ai_settings_btn')}
-          >
-            <span className={`w-2 h-2 rounded-full shrink-0 ${isConfigured ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse' : 'bg-amber-400'}`}></span>
-            {/* AI Sparkle Icon - always visible */}
-            <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            <span className="font-bold text-[11px] sm:text-xs">
-              <span className="sm:hidden">AI</span>
-              <span className="hidden sm:inline">{isConfigured ? preset.name.split(' ')[0] : (language === 'id' ? 'Atur AI' : 'Setup AI')}</span>
-            </span>
-          </button>
+          {/* Universal AI Provider Settings Button (Only visible when AI features are activated) */}
+          {showAIFeatures && (
+            <button
+              onClick={onOpenApiKeyModal}
+              className={`h-8 px-2 sm:h-9 sm:px-3 rounded-xl text-xs font-semibold border flex items-center justify-center gap-1.5 transition-all shadow-sm ${
+                isConfigured 
+                  ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300 hover:bg-emerald-950/60 shadow-[0_0_12px_rgba(16,185,129,0.15)]' 
+                  : 'bg-slate-900/90 border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white'
+              }`}
+              title={`${t('ai_settings_btn')}: ${preset.name} (${aiSettings.model})`}
+              aria-label={t('ai_settings_btn')}
+            >
+              <span className={`w-2 h-2 rounded-full shrink-0 ${isConfigured ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse' : 'bg-amber-400'}`}></span>
+              {/* AI Sparkle Icon */}
+              <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span className="font-bold text-[11px] sm:text-xs">
+                <span className="sm:hidden">AI</span>
+                <span className="hidden sm:inline">{isConfigured ? preset.name.split(' ')[0] : (language === 'id' ? 'Atur AI' : 'Setup AI')}</span>
+              </span>
+            </button>
+          )}
 
           {/* Language Switcher - High-visibility bilingual toggle with Globe icon */}
           <button
