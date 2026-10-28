@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { PromptFrameworksType, Framework, CATEGORY_ORDER } from '../data/frameworks';
 import { useLanguage } from '../contexts/LanguageContext';
 import { 
@@ -148,6 +148,14 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedToolType, setSelectedToolType] = useState<string>('all');
+
+  const PAGE_SIZE = 24;
+  const [visibleCount, setVisibleCount] = useState<number>(PAGE_SIZE);
+
+  // Auto-reset visible count to initial batch when filter or search changes
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [selectedCategory, searchQuery, selectedToolType]);
 
   const categories = Object.keys(frameworksData).sort((a, b) => {
     const idxA = CATEGORY_ORDER.indexOf(a);
@@ -320,8 +328,13 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
           <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300 font-sans">
             {language === 'id' ? 'Kategori Kebutuhan' : 'Explore by Category'}
           </h2>
-          <span className="text-[11px] sm:text-xs text-slate-500 font-mono">
-            {filteredTemplates.length} {language === 'id' ? 'template ditemukan' : 'templates found'}
+          <span className="text-[11px] sm:text-xs text-slate-400 font-mono">
+            {filteredTemplates.length > PAGE_SIZE
+              ? (language === 'id' 
+                  ? `Menampilkan ${Math.min(visibleCount, filteredTemplates.length)} dari ${filteredTemplates.length} formula` 
+                  : `Showing ${Math.min(visibleCount, filteredTemplates.length)} of ${filteredTemplates.length} formulas`)
+              : `${filteredTemplates.length} ${language === 'id' ? 'template ditemukan' : 'templates found'}`
+            }
           </span>
         </div>
 
@@ -377,7 +390,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
 
       {/* Template Cards Grid (High Readability, Modern & Elegant) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
-        {filteredTemplates.map(item => {
+        {filteredTemplates.slice(0, visibleCount).map(item => {
           const localizedFwName = translateFrameworkName(item.frameworkName, language);
           const localizedFwDesc = translateFrameworkDescription(item.framework.description || '', language, item.frameworkName);
           const localizedCatName = translateCategoryName(item.category, language);
@@ -436,6 +449,34 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
           );
         })}
       </div>
+
+      {/* Load More Pagination Controls (Eliminating Infinite Scroll & Boosting Performance) */}
+      {filteredTemplates.length > visibleCount && (
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 sm:pt-6">
+          <button
+            type="button"
+            onClick={() => setVisibleCount(prev => prev + PAGE_SIZE)}
+            className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 hover:text-emerald-200 border border-emerald-500/40 hover:border-emerald-500/70 shadow-lg shadow-emerald-950/30 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all active:scale-95 group"
+          >
+            <span>
+              {language === 'id'
+                ? `Muat Lebih Banyak (+${Math.min(PAGE_SIZE, filteredTemplates.length - visibleCount)})`
+                : `Load More (+${Math.min(PAGE_SIZE, filteredTemplates.length - visibleCount)})`}
+            </span>
+            <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setVisibleCount(filteredTemplates.length)}
+            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 hover:border-slate-700 text-xs sm:text-sm font-medium transition-all"
+          >
+            {language === 'id' ? `Tampilkan Semua (${filteredTemplates.length})` : `Show All (${filteredTemplates.length})`}
+          </button>
+        </div>
+      )}
 
 
       {filteredTemplates.length === 0 && (

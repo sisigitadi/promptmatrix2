@@ -3,7 +3,7 @@
 > **Sistem:** PromptMatrix 2.0 - Ultimate Guided AI Prompt Generator  
 > **Arsitek & Pemilik:** Sigit Adi ([https://sigitadi.id](https://sigitadi.id))  
 > **Domain Live:** [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
-> **Versi Saat Ini:** v6.3.1  
+> **Versi Saat Ini:** v6.5.0  
 > **Lisensi:** MIT  
 > **Standar Rekayasa:** Dikelola oleh RetroBOT (`RetroBOT.md`)
 
@@ -81,7 +81,7 @@ flowchart TD
 # ZONA BAWAH: LIVING CONTEXT (STATUS AKTIF & REGISTER TEKNOLOGI)
 # ==============================================================================
 
-### Status Sistem Terkini (v6.4.2)
+### Status Sistem Terkini (v6.5.0)
 - **Framework Utama:** React 18.0.0 (Functional Components + Hooks)
 - **Bahasa & Compiler:** TypeScript 5.5.4 + Vite 5.4.19
 - **Styling Engine:** Tailwind CSS v4.1.10 + PostCSS 8
@@ -89,16 +89,20 @@ flowchart TD
 - **Hosting & CI/CD:** GitHub Actions -> GitHub Pages + Vercel / Netlify Rewrite Ready (`public/CNAME`, `public/_redirects`)
 - **Domain Resmi:** `https://prompt.sigitadi.id`
 - **Total Master Formulas:** 360 Formulas Terverifikasi (100% Searchable, Localized Dua Arah ID ↔ EN)
-- **Responsivitas & Layout:** 100% Non-scrolling static category grid (2-kolom mobile / 3x3 desktop), Tombol AI tersembunyi total saat belum diaktifkan (9-tap logo unlock), Touch Target >= 40px, Zero Horizontal Overflow.
+- **Responsivitas & Layout (v6.5.0):**
+  - **Eliminasi Infinite Scroll:** Pagination cerdas 24 kartu per batch dengan tombol *Muat Lebih Banyak* & *Tampilkan Semua*, mengurangi scroll dari 15 layar ke 3 layar serta mendongkrak performa rendering.
+  - **Visibilitas Web Portfolio Mobile:** Link `sigitadi.id` kini 100% terlihat di mobile header (di bawah judul) dan footer dengan logo resmi SA (`public/sa-logo.png`).
+  - **Scroll-to-Top FAB:** Tombol floating otomatis muncul saat scroll > 400px untuk navigasi cepat.
+  - **Kategori & Filter Non-Scrolling:** Grid 2-kolom mobile / 3x3 desktop, Touch Target >= 40px, Zero Horizontal Overflow.
 
 ### Register Modul & Komponen Utama
 | Berkas / Direktori | Tanggung Jawab Teknis |
 | :--- | :--- |
-| `App.tsx` | State orchestrator utama (viewMode, formValues, stash CRUD & Export MD, toast, prompt compiler, 9-tap logo unlock) |
-| `components/TemplateGallery.tsx` | Galeri visual 360 kartu formula, 20 quick search tags, pencarian berbasis sinonim/intent, category switcher |
+| `App.tsx` | State orchestrator utama (viewMode, formValues, stash CRUD & Export MD, toast, prompt compiler, 9-tap logo unlock, scroll-to-top FAB) |
+| `components/TemplateGallery.tsx` | Galeri visual 360 kartu formula, pagination 24-batch, 20 quick search tags, pencarian intent, category switcher |
 | `components/FrameworkPane.tsx` | Formulir interaktif dinamis, tombol *1-Click Isi Contoh Nyata*, AI suggestion per-field |
-| `components/Header.tsx` | Navigasi atas, logo tap trigger, language switcher (ID/EN), stash modal badge |
-| `components/Footer.tsx` | Metadata, copyright Sigit Adi, navigasi dokumentasi & lisensi |
+| `components/Header.tsx` | Navigasi atas, logo tap trigger, portfolio link dengan logo SA (selalu terlihat di mobile & desktop), language switcher (ID/EN) |
+| `components/Footer.tsx` | Metadata, copyright Sigit Adi, link portfolio sigitadi.id dengan logo SA, kontak email & sosial |
 | `components/AISettingsModal.tsx` | Modal konfigurasi multi-provider AI (Gemini, Claude, OpenAI, DeepSeek, Ollama, Custom URL) |
 | `services/universalAIService.ts` | Dispatcher universal pemanggilan AI multi-provider dengan SSE stream parser, error handler, dan sanitizer markdown |
 | `services/aiSettingsService.ts` | Manajemen preset provider, model default, dan persistensi `localStorage` |

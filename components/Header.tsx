@@ -50,18 +50,24 @@ const Header: React.FC<HeaderProps> = ({
                 <span className="text-[9px] sm:text-[10px] font-mono px-1 sm:px-1.5 py-0.2 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">2.0</span>
               </h1>
             </div>
-            <p className="text-[10px] sm:text-[11px] text-slate-400 hidden md:flex items-center gap-1.5 font-sans">
-              <span>{language === 'id' ? 'Generator Prompt AI Berpemandu' : 'Guided AI Prompt Generator'}</span>
-              <span className="text-slate-600">·</span>
+            <div className="text-[10px] sm:text-[11px] text-slate-400 flex items-center gap-1 sm:gap-1.5 font-sans">
+              <span className="hidden md:inline">{language === 'id' ? 'Generator Prompt AI Berpemandu' : 'Guided AI Prompt Generator'}</span>
+              <span className="hidden md:inline text-slate-600">·</span>
               <a
                 href="https://sigitadi.id/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-emerald-500/70 hover:text-emerald-400 transition-colors font-medium"
+                className="text-emerald-400/90 hover:text-emerald-300 transition-colors font-medium flex items-center gap-1 hover:underline"
+                title={language === 'id' ? 'Portfolio Web Sigit Adi' : "Sigit Adi's Portfolio"}
               >
-                🌐 sigitadi.id
+                <img 
+                  src="/sa-logo.png" 
+                  alt="SA Logo" 
+                  className="w-3.5 h-3.5 rounded object-cover inline-block border border-emerald-500/40 shadow-xs" 
+                />
+                <span>sigitadi.id</span>
               </a>
-            </p>
+            </div>
           </div>
         </div>
 

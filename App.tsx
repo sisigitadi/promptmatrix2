@@ -183,6 +183,21 @@ const App: React.FC = () => {
   const [analysisResult, setAnalysisResult] = useState<PromptAnalysisResult | null>(null);
   const [showAnalysisModal, setShowAnalysisModal] = useState(false);
 
+  // Floating Scroll to top state
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   useEffect(() => {
     loadSavedPrompts();
   }, []);
@@ -1514,6 +1529,21 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Scroll-to-Top Floating Action Button */}
+      {showScrollTop && (
+        <button
+          type="button"
+          onClick={scrollToTop}
+          aria-label={language === 'id' ? 'Kembali ke atas' : 'Scroll to top'}
+          title={language === 'id' ? 'Kembali ke atas' : 'Scroll to top'}
+          className="fixed bottom-6 right-6 z-30 p-3 rounded-full bg-slate-900/90 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/40 hover:border-emerald-400 shadow-xl shadow-slate-950/80 backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 group"
+        >
+          <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
       )}
 
       {/* Reusable Footer Component with Social Links & Copyright */}

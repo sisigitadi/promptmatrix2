@@ -20,7 +20,23 @@ const Footer: React.FC<FooterProps> = ({ isLightTheme = false }) => {
         </div>
 
         {/* Social & Contact Icons */}
-        <div className="flex items-center gap-5 text-slate-400">
+        <div className="flex items-center gap-5 text-slate-400 flex-wrap">
+          <a
+            href="https://sigitadi.id/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-emerald-400 transition-colors flex items-center gap-1.5 text-slate-300 hover:text-emerald-300 font-medium"
+            aria-label="Portfolio Sigit Adi"
+            title={language === 'id' ? 'Web Portfolio Sigit Adi' : "Sigit Adi's Portfolio"}
+          >
+            <img 
+              src="/sa-logo.png" 
+              alt="SA Logo" 
+              className="w-4 h-4 rounded object-cover inline-block border border-emerald-500/40 shadow-xs" 
+            />
+            <span>sigitadi.id</span>
+          </a>
+
           <a
             href="mailto:si.sigitadi@gmail.com"
             className="hover:text-emerald-400 transition-colors flex items-center gap-1.5"
