@@ -28,6 +28,7 @@ interface FrameworkPaneProps {
   onAiSuggest: (name: string, label: string) => void;
   loadingFieldId: string | null;
   onBackToGallery?: () => void;
+  onBackToCategory?: (category: string) => void;
   showAIFeatures?: boolean;
   generatedPrompt?: string;
   isLightTheme?: boolean;
@@ -47,6 +48,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   onAiSuggest,
   loadingFieldId,
   onBackToGallery,
+  onBackToCategory,
   showAIFeatures = false,
   generatedPrompt = '',
   isLightTheme = false,
@@ -268,9 +270,18 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 <span>{language === 'id' ? 'Galeri' : 'Gallery'}</span>
               </button>
             )}
-            <span className="px-2 sm:px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold text-[10px] sm:text-[11px] whitespace-nowrap">
-              {localizedCategoryName}
-            </span>
+            {/* Clickable Category Badge to navigate directly to Category Gallery */}
+            <button
+              type="button"
+              onClick={() => onBackToCategory ? onBackToCategory(categoryName) : onBackToGallery?.()}
+              className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 hover:text-emerald-200 border border-emerald-500/30 hover:border-emerald-500/50 font-semibold text-[10px] sm:text-[11px] whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer group shadow-2xs"
+              title={language === 'id' ? `Kembali ke galeri kategori ${localizedCategoryName}` : `Back to category ${localizedCategoryName}`}
+            >
+              <span>{localizedCategoryName}</span>
+              <svg className="w-3 h-3 text-emerald-400 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
             <span className="text-slate-500">/</span>
             <span className="text-slate-300 font-sans font-medium text-[11px] sm:text-xs">
               {localizedSubcatName}
@@ -301,7 +312,24 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
         </div>
       </div>
 
-      {/* Quick Action: Isi Contoh Otomatis & Hapus (Ditempatkan tepat di atas Instruksi Logika AI) */}
+      {/* AI Persona Banner if available */}
+      {localizedFw.aiLogic && (
+        <div className="bg-slate-950/70 border border-slate-800 p-4 rounded-2xl flex items-start gap-3">
+          <svg className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block font-sans">
+              {language === 'id' ? 'Instruksi Logika AI' : 'AI System Logic'}
+            </span>
+            <p className="text-xs text-slate-400 leading-relaxed font-sans">
+              {localizedFw.aiLogic}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Quick Action: Isi Contoh Otomatis & Hapus (Ditempatkan tepat di bawah Instruksi Logika AI) */}
       <div className="flex items-center justify-between gap-3 p-3 bg-slate-950/60 border border-slate-800/90 rounded-2xl flex-wrap">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -338,23 +366,6 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
           )}
         </div>
       </div>
-
-      {/* AI Persona Banner if available */}
-      {localizedFw.aiLogic && (
-        <div className="bg-slate-950/70 border border-slate-800 p-4 rounded-2xl flex items-start gap-3">
-          <svg className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <div className="space-y-1">
-            <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block font-sans">
-              {language === 'id' ? 'Instruksi Logika AI' : 'AI System Logic'}
-            </span>
-            <p className="text-xs text-slate-400 leading-relaxed font-sans">
-              {localizedFw.aiLogic}
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Dynamic Form Components List */}
       <div className="space-y-3.5">

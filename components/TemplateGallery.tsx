@@ -34,6 +34,8 @@ interface TemplateGalleryProps {
   frameworksData: PromptFrameworksType;
   onSelectFramework: (category: string, subcategory: string, frameworkName: string, framework: Framework) => void;
   selectedFrameworkName: string | null;
+  activeCategory?: string;
+  onCategoryChange?: (category: string) => void;
 }
 
 // Clean SVG Category Icons (Senior Developer Standard, Zero Emoji Clutter)
@@ -151,13 +153,26 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
   frameworksData,
   onSelectFramework,
   selectedFrameworkName,
+  activeCategory,
+  onCategoryChange,
 }) => {
   const { t, language } = useLanguage();
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>(activeCategory || 'all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedToolType, setSelectedToolType] = useState<string>('all');
   const [sortBy, setSortBy] = useState<SortOption>('default');
   const [copiedLinkFw, setCopiedLinkFw] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (activeCategory) {
+      setSelectedCategory(activeCategory);
+    }
+  }, [activeCategory]);
+
+  const handleCategorySelect = (cat: string) => {
+    setSelectedCategory(cat);
+    onCategoryChange?.(cat);
+  };
 
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -478,15 +493,15 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
               {language === 'id' ? 'Hapus Riwayat' : 'Clear History'}
             </button>
           </div>
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
-            {recentTemplates.map(r => (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {recentTemplates.slice(0, 3).map(r => (
               <button
                 key={r.frameworkName}
                 onClick={() => handleSelectRecent(r)}
-                className="px-2.5 py-1.5 rounded-xl bg-slate-950/80 hover:bg-slate-850 border border-slate-800 hover:border-emerald-500/50 text-slate-300 hover:text-emerald-300 text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all shadow-xs"
+                className="w-full px-3 py-2 rounded-xl bg-slate-950/80 hover:bg-slate-850 border border-slate-800 hover:border-emerald-500/50 text-slate-300 hover:text-emerald-300 text-xs font-medium flex items-center gap-2 transition-all shadow-xs text-left"
               >
-                <span className="text-emerald-400 font-bold">⚡</span>
-                <span className="truncate max-w-[170px]">{translateFrameworkName(r.frameworkName, language)}</span>
+                <span className="text-emerald-400 font-bold shrink-0">⚡</span>
+                <span className="truncate flex-1">{translateFrameworkName(r.frameworkName, language)}</span>
               </button>
             ))}
           </div>
@@ -494,7 +509,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
       )}
 
       {/* Category Grid Filter & Sort Selector */}
-      <div className="space-y-3">
+      <div id="template-category-section" className="space-y-3">
         <div className="flex items-center justify-between gap-2 flex-wrap">
           <div className="flex items-center gap-2">
             <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300 font-sans">
@@ -526,7 +541,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
         {/* 2-Column on Mobile (with 'All' spanning top) and balanced 3x3 Grid on Tablet & Desktop */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5">
           <button
-            onClick={() => setSelectedCategory('all')}
+            onClick={() => handleCategorySelect('all')}
             className={`col-span-2 sm:col-span-1 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-between border shadow-sm ${
               selectedCategory === 'all'
                 ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300 ring-1 ring-emerald-500/30'
@@ -553,7 +568,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
             return (
               <button
                 key={cat}
-                onClick={() => setSelectedCategory(isSelected ? 'all' : cat)}
+                onClick={() => handleCategorySelect(isSelected ? 'all' : cat)}
                 className={`px-3 py-2.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-between border shadow-sm ${
                   isSelected
                     ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300 ring-1 ring-emerald-500/30'
@@ -567,43 +582,6 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-950/80 border border-slate-800 text-slate-400 shrink-0 ml-1.5">
                   {count}
                 </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Sticky Category Quick Nav (Section A4) - Always reachable on scroll */}
-      <div className="sticky top-16 z-30 -mx-3 sm:-mx-4 md:-mx-6 px-3 sm:px-4 md:px-6 py-2 bg-[#090d16]/95 backdrop-blur-md border-y border-slate-800/80 shadow-md flex items-center justify-between gap-2 overflow-x-auto scrollbar-none transition-all">
-        <div className="flex items-center gap-1.5 overflow-x-auto py-0.5 scrollbar-none">
-          <button
-            type="button"
-            onClick={() => setSelectedCategory('all')}
-            className={`px-2.5 py-1 rounded-xl text-xs font-semibold shrink-0 transition-all border flex items-center gap-1.5 ${
-              selectedCategory === 'all'
-                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-sm'
-                : 'bg-slate-900/90 hover:bg-slate-850 text-slate-400 hover:text-slate-200 border-slate-800'
-            }`}
-          >
-            <span>{language === 'id' ? 'Semua' : 'All'}</span>
-            <span className="text-[10px] font-mono text-slate-500">({allTemplates.length})</span>
-          </button>
-          {categories.map(cat => {
-            const isSelected = selectedCategory === cat;
-            const count = allTemplates.filter(t => t.category === cat).length;
-            return (
-              <button
-                key={`sticky-${cat}`}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-2.5 py-1 rounded-xl text-xs font-semibold shrink-0 transition-all border flex items-center gap-1.5 ${
-                  isSelected
-                    ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-sm'
-                    : 'bg-slate-900/90 hover:bg-slate-850 text-slate-400 hover:text-slate-200 border-slate-800'
-                }`}
-              >
-                <span>{translateCategoryName(cat, language)}</span>
-                <span className="text-[10px] font-mono text-slate-500">({count})</span>
               </button>
             );
           })}

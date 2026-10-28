@@ -30,7 +30,8 @@ import {
   translateComponentLabel,
   translateInfo,
   translateOption,
-  translateFrameworkName
+  translateFrameworkName,
+  translateCategoryName
 } from './services/localizationService';
 import { VisualPromptPreview } from './components/VisualPromptPreview';
 
@@ -397,7 +398,7 @@ const App: React.FC = () => {
       const raw = localStorage.getItem('pm_recent_templates');
       const list: Array<{ category: string; subcategory: string; frameworkName: string }> = raw ? JSON.parse(raw) : [];
       const filtered = list.filter(item => item.frameworkName !== fwName);
-      const updated = [{ category: catName, subcategory: subcatName, frameworkName: fwName }, ...filtered].slice(0, 6);
+      const updated = [{ category: catName, subcategory: subcatName, frameworkName: fwName }, ...filtered].slice(0, 3);
       localStorage.setItem('pm_recent_templates', JSON.stringify(updated));
     } catch (e) {
       console.error('Error saving recent template:', e);
@@ -815,22 +816,53 @@ const App: React.FC = () => {
             frameworksData={PROMPT_FRAMEWORKS}
             onSelectFramework={handleSelectFramework}
             selectedFrameworkName={selectedFrameworkName}
+            activeCategory={selectedCategory}
+            onCategoryChange={(cat) => setSelectedCategory(cat)}
           />
         ) : (
           /* Mode 2: Spacious 2-Column Studio (55% Editor, 45% Live Output) */
           <div className="space-y-6 animate-fade-in">
             {/* Top Back & Quick Step Bar */}
-            <div className="flex items-center justify-between gap-4 flex-wrap pb-2">
-              <button
-                type="button"
-                onClick={() => setViewMode('gallery')}
-                className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-xs font-semibold text-slate-300 hover:text-white transition-all flex items-center gap-2 shadow-sm"
-              >
-                <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                <span>{language === 'id' ? 'Kembali ke Galeri Template' : 'Back to Template Gallery'}</span>
-              </button>
+            <div className="flex items-center justify-between gap-3 flex-wrap pb-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setViewMode('gallery');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-slate-700 text-xs font-semibold text-slate-300 hover:text-white transition-all flex items-center gap-1.5 shadow-sm"
+                >
+                  <svg className="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                  <span>{language === 'id' ? 'Galeri Template' : 'Template Gallery'}</span>
+                </button>
+
+                {selectedCategory && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setViewMode('gallery');
+                      setTimeout(() => {
+                        const el = document.getElementById('template-category-section');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }, 80);
+                    }}
+                    className="px-3 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-xs font-semibold text-emerald-300 hover:text-emerald-200 transition-all flex items-center gap-1.5 shadow-sm"
+                    title={language === 'id' ? `Kembali ke galeri terfilter: ${translateCategoryName(selectedCategory, language)}` : `Back to category: ${translateCategoryName(selectedCategory, language)}`}
+                  >
+                    <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                    </svg>
+                    <span>
+                      {language === 'id' 
+                        ? `Kategori: ${translateCategoryName(selectedCategory, language)}`
+                        : `Category: ${translateCategoryName(selectedCategory, language)}`}
+                    </span>
+                  </button>
+                )}
+              </div>
 
               <div className="flex items-center gap-2 text-xs text-slate-400 font-sans">
                 <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -856,6 +888,14 @@ const App: React.FC = () => {
                     onAiSuggest={handleAiSuggestField}
                     loadingFieldId={loadingFieldId}
                     onBackToGallery={() => setViewMode('gallery')}
+                    onBackToCategory={(cat) => {
+                      setSelectedCategory(cat);
+                      setViewMode('gallery');
+                      setTimeout(() => {
+                        const el = document.getElementById('template-category-section');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }, 80);
+                    }}
                     showAIFeatures={showAIFeatures}
                     generatedPrompt={generatedPrompt}
                     isLightTheme={isLightTheme}
