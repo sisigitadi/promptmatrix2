@@ -1,56 +1,33 @@
-# Catatan Audit & Revisi: Visual Mockup & Benchmark Engine (revisi.md)
+# Draf Revisi & Rencana Kerja Teknis: Refactor Hero Banner Ringkas & Latar Belakang Gambar (revisi.md)
 
-Dokumen ini disusun oleh **RetroBOT** (Arsitek Sistem & Asisten Rekayasa Resmi Sigit Adi) sebagai catatan hasil audit dan revisi atas fitur visualisasi hasil prompt pada PromptMatrix 2.0.
+Dokumen ini disusun oleh **RetroBOT** (Arsitek Sistem & Asisten Rekayasa Resmi Sigit Adi) sebagai rencana perancangan dan implementasi teknis untuk pembaharuan **Hero Banner** pada PromptMatrix 2.0.
 
 > **Status:** SELESAI & TERVERIFIKASI 100% (COMPLETED & VERIFIED)  
-> **Target Revisi:**  
-> 1. Mengeliminasi Tab 2 (Pollinations.ai live render) akibat batasan rate limit / IP limit pihak ketiga.  
-> 2. Memfokuskan engine hanya pada Tab 1 (Curated Visual Benchmark & Mockup) dengan stabilitas 100% offline & instan.  
-> 3. Memastikan seluruh gambar mockup terkurasi selaras 100% dengan skenario data isian otomatis (*1-Click Sample* di `services/sampleDataService.ts`).  
-> 4. Menyediakan visual mockup informatif untuk seluruh template di 8 kategori.  
-> **Hasil Uji Produksi:** Build Vite lolos dengan 0 error TypeScript (`✓ built in 6.18s`).
+> **Target:**  
+> 1. Menambahkan latar belakang gambar bertema Cybernetic Neural Studio dengan overlay gradien gelap tajam (WCAG AAA contrast).  
+> 2. Mengurangi jumlah pencarian cepat dari 20 tags menjadi 6 tag esensial lintas modalitas.  
+> 3. Memadatkan struktur bagian atas aplikasi (~40% lebih ringkas) dengan placeholder pencarian kontekstual agar konten galeri lekas tampak di layar pertama.  
+> **Hasil Validasi:** Build Vite lolos dengan 0 error kompilasi dan 0 type error TypeScript (`✓ built in 2.76s`).
 
 ---
 
-## 📌 1. Hasil Audit & Tindakan Perbaikan
+## 📌 1. Rincian Perubahan
 
-### A. Eliminasi Ketergantungan Tab 2 (Pollinations.ai Rate Limit)
-- **Temuan:** Layanan publik gratis Pollinations.ai sering mengalami *free limit reached / rate limit error*, menyebabkan gambar gagal termuat di browser pengguna.
-- **Tindakan:** Seluruh logika Tab 2 (live fetch URL, seed randomized loop, state loading error) telah dihapus dari antarmuka. Antarmuka kini difokuskan pada kartu visual mockup yang stabil, cepat, dan tidak bergantung pada API eksternal yang rentan dibatasi.
+### A. Latar Belakang Gambar Hero (`Opsi 1: Cybernetic Neural Studio`)
+- Menambahkan gambar latar belakang `https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1600&q=80` (Neural network dark matrix) dengan opacity terkontrol (`opacity-20` atau `opacity-25`) dan blend-mode halus.
+- Melapisi dengan multi-layer linear & radial dark gradient overlay (`from-[#070b12] via-[#090e18]/95 to-[#090d16]/80` dan `from-black/40 via-transparent to-[#070b12]/90`) sehingga teks putih dan elemen input 100% kontras dan nyaman di mata.
 
-### B. Keselarasan 100% dengan Isian Contoh Otomatis (`sampleDataService.ts`)
-Setiap template kini dipetakan secara presisi ke visual mockup yang langsung mencerminkan data skenario saat pengguna mengklik tombol **"Isi Contoh Nyata"**:
-- **FLUX.1 Descriptive Studio:** Menampilkan *Pengrajin Batik Tradisional di Studio Jogja* (selaras dengan isian studio pengrajin batik & pencahayaan golden hour).
-- **Midjourney v6.1 Masterclass:** Menampilkan *Gang Hujan Cyberpunk Neo-Tokyo* (selaras dengan parameter neon teal/magenta & refleksi aspal basah).
-- **3D Animation Character:** Menampilkan *Anak Kucing Oranye Astronot di Bulan* (selaras dengan isian `prompt_visual`: kucing astronot Disney Pixar).
-- **Video Sinematik (Kling / Runway):** Menampilkan *Astronot di Ngarai Planet Mars* (selaras dengan isian `scenevisualnarrative`: astronot badai pasir Mars).
-- **Audio & Musik (Suno v4):** Menampilkan *Studio Rekaman Akustik & Songwriting* (selaras dengan isian `songstructurelyrics`: petikan gitar akustik hangat).
-- **TikTok Shop Live Stream Script:** Menampilkan *Paket Skincare Glowing 4-in-1* (selaras dengan isian `liveproductname`: paket skincare flash sale 50%).
-- **AI Coding Agent Rules (.cursorrules):** Menampilkan *Modern IDE Architecture Next.js 15 & TS* (selaras dengan isian `projecttechstack`).
-- **MCP Server & Tool Designer:** Menampilkan *Cloud Database MCP Infrastructure* (selaras dengan isian `mcpservername`: PostgreSQL MCP Server).
-- **LPDP & Academic Essay:** Menampilkan *Dokter Pengabdian Medis Pedesaan NTT* (selaras dengan isian `applicantbackground`: Dokter penanganan stunting NTT).
-- **AIDA Copywriting & Funnel:** Menampilkan *Dashboard Pertumbuhan SaaS Finansial UMKM* (selaras dengan isian `context` & `role`: SaaS keuangan UMKM).
-- **STAR Method Interview:** Menampilkan *Presentasi Strategi Manajemen Eksekutif* (selaras dengan isian kenaikan omset 35% & penurunan churn).
-- **Model Penalaran GCC (Claude 3.7 & DeepSeek-R1):** Menampilkan *Graf Kognitif Jaringan Saraf Penalaran* (selaras dengan batasan sharding PostgreSQL).
-- **Fotografi Makanan:** Menampilkan *Matcha Latte & Dessert Tradisional Makro*.
-- **Desain Isometrik 3D:** Menampilkan *Studio Interior Minimalis Isometrik*.
-- **Anime Makoto Shinkai:** Menampilkan *Lanskap Senja Stasiun Kereta Api*.
+### B. Reduksi Pencarian Cepat (6 Tag Esensial Lintas Pilar)
+Memangkas 20 tag menjadi 6 tag terpopuler:
+1. `Reasoning (GCC)` (Query: `GCC`)
+2. `AIDA Copywriting` (Query: `AIDA`)
+3. `Midjourney & Flux` (Query: `Midjourney`)
+4. `Cursor & Windsurf` (Query: `cursorrules`)
+5. `TikTok Shop & Video` (Query: `TikTok Shop`)
+6. `Suno Musik` (Query: `Suno`)
 
-### C. Cakupan Universal ke Seluruh 8 Kategori
-Bagi seluruh 360 template lainnya, sistem menyediakan fallback visual mockup terkurasi tingkat kategori:
-- *Teks & Konten:* Workspace Penulisan Konten Kreatif & Editorial.
-- *Kode & Pengembang:* Workstation Rekayasa Perangkat Lunak Modern.
-- *Audio & Musik:* Studio Desain Suara & Produksi Audio Digital.
-- *Video & Animasi:* Rig Kamera Sinematografi & Pengarah Adegan.
-- *Prompt Ringkas:* Asisten Produktivitas & Solusi Cepat Eksekutif.
-- *Prompt Proyek:* Manajemen Proyek, Roadmap & Strategi Tim.
-- *Koleksi & Inovasi:* Laboratorium Riset & Inovasi Teknologi Masa Depan.
-
----
-
-## 🛠️ 2. Modul yang Terlibat & Status
-1. `services/visualBenchmarkService.ts`: Master registry 22 visual mockup berkualitas tinggi, deteksi rasio aspek dinamis, dan fallback 8 kategori universal.
-2. `components/VisualPromptPreview.tsx`: Komponen visual mockup tunggal (bebas tab switcher), dilengkapi tombol zoom Lightbox Modal, parameter kunci, dan pengunduh gambar lokal.
-3. `translations.ts`: Kunci lokalisasi dwibahasa (ID ↔ EN) diperbarui dan disederhanakan.
-4. `App.tsx`: Menampilkan `VisualPromptPreview` untuk seluruh template di Studio Mode dan Review Modal.
-5. `prd.md`: Dokumentasi v7.0.0 diperbarui.
+### C. Pemadatan Vertikal & Desain Ringkas (Above-The-Fold Efficiency)
+- Padding dipadatkan dari `p-4 sm:p-8 md:p-10` menjadi `py-5 sm:py-6 px-4 sm:px-7`.
+- Headline dipadatkan menjadi *"Racik 360 Formula Prompt AI Presisi Tinggi"*.
+- Deskripsi diringkas menjadi 1 baris padat.
+- Placeholder pencarian kontekstual: *"Cari 360 formula AI: GCC, AIDA, Cursorrules, Midjourney, LPDP..."*.

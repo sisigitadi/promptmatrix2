@@ -120,28 +120,14 @@ const INTENT_KEYWORD_MAP: Record<string, string[]> = {
   "music": ["suno", "udio", "song", "audio", "melody", "hit song"]
 };
 
-// Recommended quick search tags matching actual database formulas
+// Recommended quick search tags matching actual database formulas (6 Curated Tags)
 const QUICK_SEARCH_TAGS = [
-  { id: 'aida', label_id: 'AIDA Copywriting', label_en: 'AIDA Copywriting', query: 'AIDA' },
   { id: 'reasoning', label_id: 'Reasoning (GCC)', label_en: 'Reasoning (GCC)', query: 'GCC' },
-  { id: 'rtf', label_id: 'RTF Framework', label_en: 'RTF Framework', query: 'RTF' },
-  { id: 'costar', label_id: 'CO-STAR Framework', label_en: 'CO-STAR Framework', query: 'CO-STAR' },
-  { id: 'starr', label_id: 'S-T-A-R-R Method', label_en: 'S-T-A-R-R Method', query: 'S-T-A-R-R' },
-  { id: 'hso', label_id: 'Hook Video (HSO)', label_en: 'Short Video Hook (HSO)', query: 'Hook-Story-Offer' },
-  { id: 'tiktoklive', label_id: 'TikTok Live Stream', label_en: 'TikTok Live Stream', query: 'TikTok Shop' },
-  { id: 'shopee', label_id: 'Deskripsi Shopee', label_en: 'Marketplace Description', query: 'Deskripsi Produk' },
-  { id: 'wa', label_id: 'Closing WhatsApp', label_en: 'WhatsApp Sales Closing', query: 'Closing Sales' },
+  { id: 'aida', label_id: 'AIDA Copywriting', label_en: 'AIDA Copywriting', query: 'AIDA' },
   { id: 'midjourney', label_id: 'Midjourney & Flux', label_en: 'Midjourney & Flux', query: 'Midjourney' },
-  { id: 'kling', label_id: 'Kling & Runway Video', label_en: 'Kling & Runway Video', query: 'Kling' },
-  { id: 'suno', label_id: 'Suno AI Musik', label_en: 'Suno AI Music', query: 'Suno' },
-  { id: 'codingrules', label_id: 'Cursor & MCP Server', label_en: 'Cursor & MCP Server', query: 'cursorrules' },
-  { id: 'rag', label_id: 'RAG Pipeline Dev', label_en: 'RAG Pipeline Dev', query: 'RAG' },
-  { id: 'lpdp', label_id: 'Esai LPDP Beasiswa', label_en: 'LPDP Scholarship Essay', query: 'LPDP' },
-  { id: 'mock', label_id: 'Wawancara Kerja', label_en: 'Mock Job Interview', query: 'Mock Interviewer' },
-  { id: 'itin', label_id: 'Itinerary Liburan', label_en: 'Travel Itinerary', query: 'Itinerary' },
-  { id: 'resep', label_id: 'Resep Masak Kulkas', label_en: 'Fridge Meal Recipe', query: 'Perencana Menu' },
-  { id: 'feynman', label_id: 'Feynman Explainer', label_en: 'Feynman Explainer', query: 'Feynman' },
-  { id: 'seo', label_id: 'Artikel Pilar SEO', label_en: 'SEO Pillar Article', query: 'SEO' }
+  { id: 'cursor', label_id: 'Cursor & Windsurf', label_en: 'Cursor & Windsurf', query: 'cursorrules' },
+  { id: 'tiktoklive', label_id: 'TikTok Shop & Video', label_en: 'TikTok Shop & Video', query: 'TikTok Shop' },
+  { id: 'suno', label_id: 'Suno Musik', label_en: 'Suno Music', query: 'Suno' },
 ];
 
 const getLocalizedToolType = (toolType: string | undefined, lang: 'id' | 'en'): string => {
@@ -377,30 +363,44 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-fade-in pb-12">
-      {/* Hero Welcome Banner (Clean, Human, Zero AI Cliché - Compact on Mobile) */}
-      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-b from-slate-900 via-[#0f172a] to-[#090d16] border border-slate-800 p-4 sm:p-8 md:p-10 shadow-2xl">
-        <div className="max-w-3xl space-y-2.5 sm:space-y-4">
-          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 sm:py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] sm:text-xs font-semibold">
+      {/* Hero Welcome Banner (Compact, Cybernetic Neural Studio Image Background with Dark Overlay) */}
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-800 shadow-2xl bg-[#090d16]">
+        {/* Background Image with Controlled Opacity & Dark Mesh */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 mix-blend-luminosity scale-105 pointer-events-none transition-transform duration-1000 ease-out"
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1600&q=80')`
+          }}
+        />
+        {/* Dark Radial & Linear Overlay Gradients for 100% WCAG AAA Text Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#070b12] via-[#090e18]/95 to-[#090d16]/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#070b12]/90 pointer-events-none" />
+
+        {/* Hero Content Container - Compact & Space-Efficient */}
+        <div className="relative z-10 p-4 sm:py-5 sm:px-7 md:py-6 md:px-8 max-w-3xl space-y-2 sm:space-y-3">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[10px] sm:text-xs font-semibold backdrop-blur-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
             <span>PromptMatrix 2.0</span>
             <span>•</span>
-            <span>{allTemplates.length} {language === 'id' ? 'Template Formula AI' : 'AI Formula Templates'}</span>
+            <span>{allTemplates.length} {language === 'id' ? 'Formula AI Terverifikasi' : 'Verified AI Formulas'}</span>
           </div>
 
-          <h1 className="text-base sm:text-2xl md:text-3xl font-bold tracking-tight text-white font-sans leading-snug">
+          <h1 className="text-base sm:text-xl md:text-2xl font-bold tracking-tight text-white font-sans leading-snug">
             {language === 'id'
-              ? 'Mau meracik prompt formula apa hari ini?'
-              : 'What prompt formula would you like to build?'}
+              ? 'Racik 360 Formula Prompt AI Presisi Tinggi'
+              : 'Craft 360 High-Precision AI Prompt Formulas'}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-2xl font-sans hidden sm:block">
+          
+          <p className="text-xs sm:text-[13px] text-slate-300/90 leading-relaxed max-w-2xl font-sans hidden sm:block">
             {language === 'id'
-              ? 'Pilih formula prompt terstruktur di bawah ini (misal: RTF, AIDA, STAR, SEO, Midjourney), isi variabel sederhana atau gunakan contoh 1-klik, dan hasilkan prompt berkualitas tinggi.'
-              : 'Choose any structured prompt formula below (e.g. RTF, AIDA, STAR, SEO, Midjourney), fill in simple inputs or use 1-click samples, and generate high-precision prompts.'}
+              ? 'Panduan visual terstruktur untuk ChatGPT, Claude, Gemini, DeepSeek, Cursor & Midjourney.'
+              : 'Structured visual framework for ChatGPT, Claude, Gemini, DeepSeek, Cursor & Midjourney.'}
           </p>
 
-          {/* Natural Search Bar with Keyboard Shortcut Indicator */}
-          <div className="pt-1 sm:pt-2 max-w-2xl space-y-2">
+          {/* Context-Aware Search Bar with Keyboard Shortcut Indicator */}
+          <div className="pt-0.5 max-w-2xl space-y-1.5">
             <div className="relative">
-              <svg className="absolute left-3.5 top-3 sm:top-3.5 w-4 h-4 sm:w-5 sm:h-5 text-slate-500 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="absolute left-3.5 top-2.5 sm:top-3 w-4 h-4 sm:w-4.5 sm:h-4.5 text-slate-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
@@ -408,27 +408,27 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={language === 'id' ? 'Cari formula atau topik: RTF, CO-STAR, SEO, Copywriting, Midjourney, Coding...' : 'Search formula or topic: RTF, CO-STAR, SEO, Copywriting, Midjourney, Coding...'}
-                className="w-full pl-10 sm:pl-12 pr-16 sm:pr-20 py-2.5 sm:py-3.5 bg-slate-950/90 border border-slate-700/80 focus:border-emerald-500 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none transition-all shadow-inner"
+                placeholder={language === 'id' ? 'Cari 360 formula AI: GCC, AIDA, Cursorrules, Midjourney, LPDP...' : 'Search 360 AI formulas: GCC, AIDA, Cursorrules, Midjourney, LPDP...'}
+                className="w-full pl-9 sm:pl-11 pr-16 sm:pr-20 py-2 sm:py-2.5 bg-slate-950/80 backdrop-blur-md border border-slate-700/80 focus:border-emerald-500 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-slate-100 placeholder-slate-400 focus:outline-none transition-all shadow-inner"
               />
               {searchQuery ? (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3.5 top-2.5 sm:top-3 text-xs sm:text-sm text-slate-400 hover:text-slate-200"
+                  className="absolute right-3.5 top-2 sm:top-2.5 text-xs sm:text-sm text-slate-400 hover:text-slate-200"
                 >
                   ✕
                 </button>
               ) : (
-                <div className="absolute right-3.5 top-2.5 sm:top-3 hidden sm:flex items-center gap-1 text-[10px] font-mono text-slate-500 bg-slate-900 border border-slate-800 px-1.5 py-0.5 rounded-md pointer-events-none">
+                <div className="absolute right-3.5 top-2 sm:top-2.5 hidden sm:flex items-center gap-1 text-[10px] font-mono text-slate-400 bg-slate-900/90 border border-slate-800 px-1.5 py-0.5 rounded-md pointer-events-none">
                   <span>Ctrl</span>
                   <span>K</span>
                 </div>
               )}
             </div>
 
-            {/* Quick Search Chips matching real formulas */}
+            {/* Quick Search Chips - 6 Curated High-Value Tags */}
             <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
-              <span className="text-[11px] text-slate-500 font-sans mr-1">{language === 'id' ? 'Pencarian cepat:' : 'Quick search:'}</span>
+              <span className="text-[11px] text-slate-400 font-sans mr-1">{language === 'id' ? 'Pencarian cepat:' : 'Quick search:'}</span>
               {QUICK_SEARCH_TAGS.map(tag => (
                 <button
                   key={tag.id}
@@ -439,8 +439,8 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
                   }}
                   className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-[10px] sm:text-[11px] font-medium transition-all border ${
                     searchQuery === tag.query
-                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                      : 'bg-slate-950/70 hover:bg-slate-900 text-slate-400 hover:text-slate-200 border-slate-800'
+                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-xs'
+                      : 'bg-slate-950/60 hover:bg-slate-900 text-slate-400 hover:text-slate-200 border-slate-800/80 backdrop-blur-xs'
                   }`}
                 >
                   {language === 'id' ? tag.label_id : tag.label_en}

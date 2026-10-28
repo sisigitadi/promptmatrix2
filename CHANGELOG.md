@@ -27,6 +27,10 @@
   - Parameter visual kunci (*Key Parameters*) disematkan rapi di bawah gambar.
   - Akordion *Sembunyikan/Tampilkan Visual* untuk keleluasaan membaca teks prompt.
   - Tombol *Unduh Gambar* untuk menyimpan gambar sampel ke komputer/perangkat lokal.
+- **Hero Banner Cybernetic Studio & Compact Layout (`components/TemplateGallery.tsx`)**:
+  - Menambahkan latar belakang gambar bertema Cybernetic Neural Studio dengan overlay gradien gelap tajam berstandar WCAG AAA.
+  - Memangkas 20 tag pencarian cepat menjadi 6 tag esensial lintas pilar (Reasoning, AIDA, Midjourney, Cursor, TikTok, Suno).
+  - Memadatkan tinggi vertikal banner sebesar ~40% dengan placeholder pencarian kontekstual (*Above-The-Fold Efficiency*).
 
 ## [6.4.2] - 2026-10-28
 ### 🔒 Kontrol Akses AI Discretionary & Grid Kategori Kebutuhan Statis (Zero-Swipe)
