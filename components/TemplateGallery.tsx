@@ -363,18 +363,18 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-fade-in pb-12">
-      {/* Hero Welcome Banner (Compact, Cybernetic Neural Studio Image Background with Dark Overlay) */}
-      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-800 shadow-2xl bg-[#090d16]">
-        {/* Background Image with Controlled Opacity & Dark Mesh */}
+      {/* Hero Welcome Banner (Vivid, Real High-Definition AI Matrix & Earth Network Background) */}
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-750 shadow-2xl bg-[#070b12]">
+        {/* Background Image: Real, Vivid, Sharp Photographic Earth & Neural Matrix Network */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 mix-blend-luminosity scale-105 pointer-events-none transition-transform duration-1000 ease-out"
+          className="absolute inset-0 bg-cover bg-right sm:bg-center bg-no-repeat opacity-45 sm:opacity-55 scale-100 pointer-events-none transition-opacity duration-700 ease-out"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1600&q=80')`
+            backgroundImage: `url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=85')`
           }}
         />
-        {/* Dark Radial & Linear Overlay Gradients for 100% WCAG AAA Text Contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#070b12] via-[#090e18]/95 to-[#090d16]/80 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#070b12]/90 pointer-events-none" />
+        {/* Asymmetrical Overlay Gradient: Dark Solid on Left for Text Readability, Fully Revealing Real Image on Right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#070b12] via-[#070b12]/85 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#070b12] via-transparent to-black/30 pointer-events-none" />
 
         {/* Hero Content Container - Compact & Space-Efficient */}
         <div className="relative z-10 p-4 sm:py-5 sm:px-7 md:py-6 md:px-8 max-w-3xl space-y-2 sm:space-y-3">
