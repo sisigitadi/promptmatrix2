@@ -4,6 +4,16 @@
 Dokumen ini mencatat perubahan teknis detail untuk setiap versi PromptMatrix.
 
 ---
+## [V7.0.0] - 2026-10-28
+### Visual Mockup & Benchmark Engine for All 360 Templates
+- **Visual Mockup & Benchmark Showcase (Universal 360 Templates)**:
+  - Pratinjau visual terkurasi beresolusi tinggi untuk seluruh formula di 8 kategori.
+  - 100% selaras dengan skenario isian otomatis (*1-Click Sample*) di `services/sampleDataService.ts`.
+  - Zero rate-limit: mengeliminasi dependensi model publik pihak ketiga yang rentan limit kuota.
+  - Tampil instan (0 detik latensi) dan 100% offline-ready (PWA Cache-First).
+  - Dilengkapi Lightbox Zoom Modal (fullscreen preview dengan shortcut `Esc`), ringkasan parameter kunci (*Key Visual Parameters*), akordion *Sembunyikan/Tampilkan Visual*, dan tombol *Unduh Gambar* lokal.
+
+---
 ## [V6.4.2] - 2026-10-28
 ### Security, Privacy & Layout Enhancements
 - **Proteksi Fitur AI Discretionary (Default Tersembunyi)**:

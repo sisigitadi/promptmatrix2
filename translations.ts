@@ -72,6 +72,17 @@ export const allTranslations: TranslationSet = {
     prompt_placeholder_hint: 'Prompt akan muncul di sini saat Anda memilih kerangka kerja dan mengisi kolom formulir.',
     popular_tools_title: 'Peluncur Cepat AI',
 
+    // Visual Prompt Preview (Curated Benchmark & Sample Mockup)
+    visual_preview_title: 'Mockup Visual & Contoh Hasil',
+    benchmark_badge: 'Contoh Nyata Terkurasi',
+    align_sample_badge: 'Selaras Isian Contoh',
+    toggle_visual_hide: 'Sembunyikan Visual',
+    toggle_visual_show: 'Tampilkan Visual',
+    download_image: 'Unduh Gambar',
+    zoom_click_hint: 'Klik gambar untuk memperbesar',
+    close_lightbox: 'Tutup Tampilan Penuh',
+    key_params_label: 'Parameter Kunci:',
+
     // Stash Management (Koleksi Prompt)
     saved_prompts_title: 'Koleksi Prompt Tersimpan',
     export_stash_btn: 'Ekspor JSON',
@@ -225,6 +236,17 @@ export const allTranslations: TranslationSet = {
     ai_analyzing: 'Evaluating...',
     prompt_placeholder_hint: 'Your prompt will appear here as you select a framework and fill in the form fields.',
     popular_tools_title: 'Quick Launch AI Tools',
+
+    // Visual Prompt Preview (Curated Benchmark & Sample Mockup)
+    visual_preview_title: 'Visual Mockup & Sample Result',
+    benchmark_badge: 'Curated Real Benchmark',
+    align_sample_badge: 'Matches Sample Input',
+    toggle_visual_hide: 'Hide Visual',
+    toggle_visual_show: 'Show Visual',
+    download_image: 'Download Image',
+    zoom_click_hint: 'Click image to expand lightbox',
+    close_lightbox: 'Close Fullscreen View',
+    key_params_label: 'Key Parameters:',
 
     // Stash Management (Prompt Collection)
     saved_prompts_title: 'Saved Prompts Stash',

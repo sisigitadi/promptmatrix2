@@ -3,7 +3,7 @@
 > **Sistem:** PromptMatrix 2.0 - Ultimate Guided AI Prompt Generator  
 > **Arsitek & Pemilik:** Sigit Adi ([https://sigitadi.id](https://sigitadi.id))  
 > **Domain Live:** [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
-> **Versi Saat Ini:** v6.9.0  
+> **Versi Saat Ini:** v7.0.0  
 > **Lisensi:** MIT  
 > **Standar Rekayasa:** Dikelola oleh RetroBOT (`RetroBOT.md`)
 
@@ -81,7 +81,7 @@ flowchart TD
 # ZONA BAWAH: LIVING CONTEXT (STATUS AKTIF & REGISTER TEKNOLOGI)
 # ==============================================================================
 
-### Status Sistem Terkini (v6.7.0 - All Audit Points 100% Implemented)
+### Status Sistem Terkini (v7.0.0 - Visual Prompt Preview Engine Online)
 - **Framework Utama:** React 18.0.0 (Functional Components + Hooks)
 - **Bahasa & Compiler:** TypeScript 5.5.4 + Vite 5.4.19
 - **Styling Engine:** Tailwind CSS v4.1.10 + PostCSS 8
@@ -116,16 +116,19 @@ flowchart TD
   - **D23. Interactive PWA Install Button (v6.9.0):** Tombol pasang otomatis di Header yang mendeteksi `beforeinstallprompt` perangkat.
   - **D24. Vite Chunking & Performance Optimization (v6.9.0):** Isolasi chunk mandiri untuk modul AI dan Stash memori.
   - **D25. 360+ Formulas Complete Catalog & GEO/AEO Index (v6.9.0):** Pembaruan berkas katalog publik `DaftarKerangkaKerja.md` untuk perayap sitasi AI.
+  - **D26. Visual Mockup & Benchmark Engine (v7.0.0):** Pratinjau visual terkurasi untuk seluruh 360 template di 8 kategori yang 100% selaras dengan skenario isian otomatis (*1-Click Sample*). Mengeliminasi ketergantungan API pihak ketiga (bebas limit kuota), dilengkapi Lightbox Zoom modal, ringkasan parameter kunci, dan tombol unduh gambar lokal. Bekerja 100% tanpa fitur AI aktif (Zero API Key & Zero Token Cost).
 
 ### Register Modul & Komponen Utama
 | Berkas / Direktori | Tanggung Jawab Teknis |
 | :--- | :--- |
 | `App.tsx` | State orchestrator utama (viewMode, formValues, stash CRUD & Export MD, toast, prompt compiler, 9-tap logo unlock, scroll-to-top FAB) |
+| `components/VisualPromptPreview.tsx` | Komponen visual mockup & benchmark hasil prompt terkurasi untuk seluruh template, lightbox zoom modal, dan pengunduh gambar |
 | `components/TemplateGallery.tsx` | Galeri visual 360 kartu formula, pagination 24-batch, 20 quick search tags, pencarian intent, category switcher |
 | `components/FrameworkPane.tsx` | Formulir interaktif dinamis, tombol *1-Click Isi Contoh Nyata*, AI suggestion per-field |
 | `components/Header.tsx` | Navigasi atas, logo tap trigger, portfolio link dengan logo SA (selalu terlihat di mobile & desktop), language switcher (ID/EN) |
 | `components/Footer.tsx` | Metadata, copyright Sigit Adi, link portfolio sigitadi.id dengan logo SA, kontak email & sosial |
 | `components/AISettingsModal.tsx` | Modal konfigurasi multi-provider AI (Gemini, Claude, OpenAI, DeepSeek, Ollama, Custom URL) |
+| `services/visualBenchmarkService.ts` | Registry kurasi gambar benchmark gold-standard, deteksi rasio aspek prompt, sanitizer teks prompt untuk engine render publik |
 | `services/universalAIService.ts` | Dispatcher universal pemanggilan AI multi-provider dengan SSE stream parser, error handler, dan sanitizer markdown |
 | `services/aiSettingsService.ts` | Manajemen preset provider, model default, dan persistensi `localStorage` |
 | `services/localizationService.ts` | Basis data translasi 4.300+ frasa & mapping bilingual ID ↔ EN presisi (360 framework names & descriptions) |

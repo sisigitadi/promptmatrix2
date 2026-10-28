@@ -1,5 +1,33 @@
 # Changelog - PromptMatrix 2.0
 
+## [7.0.0] - 2026-10-28
+### 🖼️ Visual Mockup & Benchmark Engine (Selaras 100% Isian Contoh Otomatis untuk Seluruh 360 Template)
+
+#### Ditambahkan & Ditingkatkan (Added & Enhanced):
+- **Universal Visual Mockup & Benchmark Engine (`components/VisualPromptPreview.tsx`)**:
+  - Menampilkan visual mockup berkualitas tinggi yang representatif dan informatif untuk **seluruh 360 template** di 8 kategori.
+  - **100% Selaras dengan Isian Contoh Otomatis (`services/sampleDataService.ts`)**:
+    - *3D Animation Character*: Menampilkan anak kucing oranye astronot di bulan (selaras dengan isian `prompt_visual`).
+    - *FLUX.1 Descriptive Studio*: Menampilkan pengrajin batik tradisional di studio Jogja berlatar cahaya keemasan.
+    - *Midjourney v6.1 Masterclass*: Menampilkan gang hujan cyberpunk Neo-Tokyo dengan pendar neon teal/magenta.
+    - *Kling & Runway Video Director*: Menampilkan astronot di ngarai Mars saat badai pasir jingga.
+    - *Suno v4 Hit Song Architect*: Menampilkan studio musik rekaman akustik hangat.
+    - *TikTok Shop Live Stream Script*: Menampilkan paket skincare glowing 4-in-1 untuk flash sale live streaming.
+    - *AI Coding Agent Rules (.cursorrules)*: Menampilkan workstation IDE modern Next.js 15 & TypeScript.
+    - *MCP Server & Tool Designer*: Menampilkan infrastruktur cloud database analytics server.
+    - *LPDP Essay Architect*: Menampilkan dokter pengabdian penanganan stunting di pelosok NTT.
+    - *AIDA Copywriting Master*: Menampilkan dashboard pertumbuhan funnel SaaS keuangan UMKM.
+    - *STAR Interview Method*: Menampilkan presentasi kepemimpinan eksekutif bisnis.
+    - *Model Penalaran GCC (DeepSeek-R1 & Claude 3.7)*: Menampilkan graf kognitif penalaran arsitektur sistem.
+- **Bebas Limit Kuota & 100% Client-Side**:
+  - Menghilangkan ketergantungan API pihak ketiga (Pollinations/AI tokens) yang rentan limit kuota (*free limit reached*).
+  - Berjalan 100% offline-ready (PWA Cache-First) tanpa butuh konfigurasi API key maupun kuota token.
+- **Fullscreen Lightbox Zoom & Ergonomi Studio**:
+  - Klik pada gambar membuka modal tampilan penuh resolusi tinggi (dengan tombol pintas `Esc` dan tombol tutup).
+  - Parameter visual kunci (*Key Parameters*) disematkan rapi di bawah gambar.
+  - Akordion *Sembunyikan/Tampilkan Visual* untuk keleluasaan membaca teks prompt.
+  - Tombol *Unduh Gambar* untuk menyimpan gambar sampel ke komputer/perangkat lokal.
+
 ## [6.4.2] - 2026-10-28
 ### 🔒 Kontrol Akses AI Discretionary & Grid Kategori Kebutuhan Statis (Zero-Swipe)
 

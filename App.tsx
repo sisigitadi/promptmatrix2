@@ -32,6 +32,7 @@ import {
   translateOption,
   translateFrameworkName
 } from './services/localizationService';
+import { VisualPromptPreview } from './components/VisualPromptPreview';
 
 interface ToastState {
   message: string;
@@ -974,6 +975,15 @@ const App: React.FC = () => {
                   
                   {generatedPrompt ? (
                     <div className="flex flex-col gap-4">
+                      {/* Visual Mockup & Contoh Hasil Terkurasi (Selaras Isian Contoh) */}
+                      <VisualPromptPreview
+                        promptText={generatedPrompt}
+                        framework={selectedFramework}
+                        frameworkName={selectedFrameworkName}
+                        category={selectedCategory}
+                        isLightTheme={isLightTheme}
+                      />
+
                       {/* Kontainer Teks Pratinjau Terbaca */}
                       {previewViewMode === 'structured' ? (
                         <div className="bg-[#070b12] border border-slate-800/90 rounded-2xl p-4 sm:p-5 min-h-[220px] max-h-[460px] overflow-y-auto selection:bg-emerald-900/60 shadow-inner">
@@ -1560,6 +1570,17 @@ const App: React.FC = () => {
 
             {/* Modal Body - Spacious & Comfortable Reading Area */}
             <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[#070b13] space-y-4">
+              {/* Visual Mockup & Contoh Hasil in Expanded Modal */}
+              <div className="max-w-3xl mx-auto">
+                <VisualPromptPreview
+                  promptText={generatedPrompt}
+                  framework={selectedFramework}
+                  frameworkName={selectedFrameworkName}
+                  category={selectedCategory}
+                  isLightTheme={isLightTheme}
+                />
+              </div>
+
               {previewViewMode === 'structured' ? (
                 <div className="max-w-3xl mx-auto">
                   {renderStructuredContent(generatedPrompt)}

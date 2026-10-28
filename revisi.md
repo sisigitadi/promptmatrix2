@@ -1,137 +1,56 @@
-# Draf Revisi & Rencana Kerja Teknis: Audit & Perbaikan Translasi Total (revisi.md)
+# Catatan Audit & Revisi: Visual Mockup & Benchmark Engine (revisi.md)
 
-Dokumen ini disusun oleh **RetroBOT** (Arsitek Sistem & Asisten Rekayasa Resmi Sigit Adi) sebagai rencana perbaikan teknis atas audit translasi dwibahasa (Bahasa Indonesia 🇮🇩 ↔ Bahasa Inggris 🇬🇧) pada PromptMatrix 2.0.
+Dokumen ini disusun oleh **RetroBOT** (Arsitek Sistem & Asisten Rekayasa Resmi Sigit Adi) sebagai catatan hasil audit dan revisi atas fitur visualisasi hasil prompt pada PromptMatrix 2.0.
 
 > **Status:** SELESAI & TERVERIFIKASI 100% (COMPLETED & VERIFIED)  
-> **Target:** 100% Translasi Dua Arah Sempurna (Zero English in ID mode, Zero Indonesian in EN mode) & Tampilan Mobile Responsif Optimal (Tombol AI & Bahasa 100% Terlihat)
+> **Target Revisi:**  
+> 1. Mengeliminasi Tab 2 (Pollinations.ai live render) akibat batasan rate limit / IP limit pihak ketiga.  
+> 2. Memfokuskan engine hanya pada Tab 1 (Curated Visual Benchmark & Mockup) dengan stabilitas 100% offline & instan.  
+> 3. Memastikan seluruh gambar mockup terkurasi selaras 100% dengan skenario data isian otomatis (*1-Click Sample* di `services/sampleDataService.ts`).  
+> 4. Menyediakan visual mockup informatif untuk seluruh template di 8 kategori.  
+> **Hasil Uji Produksi:** Build Vite lolos dengan 0 error TypeScript (`✓ built in 6.18s`).
 
 ---
 
-## 📌 1. Hasil Temuan Audit Menyeluruh (Root Cause Analysis)
+## 📌 1. Hasil Audit & Tindakan Perbaikan
 
-Berdasarkan audit otomatis dan inspeksi menyeluruh terhadap 360 kerangka kerja (frameworks), `services/localizationService.ts`, `App.tsx`, dan `components/TemplateGallery.tsx`, ditemukan akar masalah sebagai berikut:
+### A. Eliminasi Ketergantungan Tab 2 (Pollinations.ai Rate Limit)
+- **Temuan:** Layanan publik gratis Pollinations.ai sering mengalami *free limit reached / rate limit error*, menyebabkan gambar gagal termuat di browser pengguna.
+- **Tindakan:** Seluruh logika Tab 2 (live fetch URL, seed randomized loop, state loading error) telah dihapus dari antarmuka. Antarmuka kini difokuskan pada kartu visual mockup yang stabil, cepat, dan tidak bergantung pada API eksternal yang rentan dibatasi.
 
-### A. Judul Template EN Muncul di Mode ID (260 Kasus)
-- **Penyebab:** Pada `data/frameworks.ts`, sebanyak 260 formula memiliki key/judul asli dalam Bahasa Inggris (misal: *"AI Coding Agent Rules Architect (.cursorrules & Windsurf)"*, *"MCP Server & Tool Designer"*, *"Pareto Principle 80/20 High-Leverage Strategic Audit"*, dsb).
-- Di `services/localizationService.ts`, fungsi `translateFrameworkName` didefinisikan sebagai:
-  ```ts
-  export const translateFrameworkName = (fwName: string, lang: 'id' | 'en'): string => {
-    if (lang === 'id' || !fwName) return fwName || '';
-    return FRAMEWORK_NAMES_MAP[fwName] || fwName;
-  };
-  ```
-  Artinya: saat pengguna memilih mode **ID (Bahasa Indonesia)**, sistem langsung mengembalikan `fwName` mentah tanpa ada proses penerjemahan dari EN ke ID! Tidak ada kamus `EN_TO_ID_FRAMEWORK_NAMES_MAP`.
-- **Dampak:** 260 template (72% dari pustaka) tampil dengan judul Bahasa Inggris meskipun pengguna sedang dalam mode Bahasa Indonesia.
+### B. Keselarasan 100% dengan Isian Contoh Otomatis (`sampleDataService.ts`)
+Setiap template kini dipetakan secara presisi ke visual mockup yang langsung mencerminkan data skenario saat pengguna mengklik tombol **"Isi Contoh Nyata"**:
+- **FLUX.1 Descriptive Studio:** Menampilkan *Pengrajin Batik Tradisional di Studio Jogja* (selaras dengan isian studio pengrajin batik & pencahayaan golden hour).
+- **Midjourney v6.1 Masterclass:** Menampilkan *Gang Hujan Cyberpunk Neo-Tokyo* (selaras dengan parameter neon teal/magenta & refleksi aspal basah).
+- **3D Animation Character:** Menampilkan *Anak Kucing Oranye Astronot di Bulan* (selaras dengan isian `prompt_visual`: kucing astronot Disney Pixar).
+- **Video Sinematik (Kling / Runway):** Menampilkan *Astronot di Ngarai Planet Mars* (selaras dengan isian `scenevisualnarrative`: astronot badai pasir Mars).
+- **Audio & Musik (Suno v4):** Menampilkan *Studio Rekaman Akustik & Songwriting* (selaras dengan isian `songstructurelyrics`: petikan gitar akustik hangat).
+- **TikTok Shop Live Stream Script:** Menampilkan *Paket Skincare Glowing 4-in-1* (selaras dengan isian `liveproductname`: paket skincare flash sale 50%).
+- **AI Coding Agent Rules (.cursorrules):** Menampilkan *Modern IDE Architecture Next.js 15 & TS* (selaras dengan isian `projecttechstack`).
+- **MCP Server & Tool Designer:** Menampilkan *Cloud Database MCP Infrastructure* (selaras dengan isian `mcpservername`: PostgreSQL MCP Server).
+- **LPDP & Academic Essay:** Menampilkan *Dokter Pengabdian Medis Pedesaan NTT* (selaras dengan isian `applicantbackground`: Dokter penanganan stunting NTT).
+- **AIDA Copywriting & Funnel:** Menampilkan *Dashboard Pertumbuhan SaaS Finansial UMKM* (selaras dengan isian `context` & `role`: SaaS keuangan UMKM).
+- **STAR Method Interview:** Menampilkan *Presentasi Strategi Manajemen Eksekutif* (selaras dengan isian kenaikan omset 35% & penurunan churn).
+- **Model Penalaran GCC (Claude 3.7 & DeepSeek-R1):** Menampilkan *Graf Kognitif Jaringan Saraf Penalaran* (selaras dengan batasan sharding PostgreSQL).
+- **Fotografi Makanan:** Menampilkan *Matcha Latte & Dessert Tradisional Makro*.
+- **Desain Isometrik 3D:** Menampilkan *Studio Interior Minimalis Isometrik*.
+- **Anime Makoto Shinkai:** Menampilkan *Lanskap Senja Stasiun Kereta Api*.
 
-### B. Judul Template ID Muncul di Mode EN (Kasus Modal Review & Stash)
-- **Penyebab:** Pada `App.tsx` (baris 1394 pada modal *Review & Copy Prompt*):
-  ```tsx
-  {selectedFrameworkName && (
-    <span className="text-emerald-400 font-medium truncate max-w-[200px] sm:max-w-xs">
-      {selectedFrameworkName}
-    </span>
-  )}
-  ```
-  Variabel `selectedFrameworkName` dicetak secara mentah tanpa dibungkus `translateFrameworkName(selectedFrameworkName, language)`.
-- **Dampak:** Untuk 100 template yang key aslinya berbahasa Indonesia (misal: *"Brainstorming Ide Bisnis Modal Kecil (Side Hustle)"*, *"Simulasi Wawancara Kerja Interaktif (Mock Interviewer)"*), judul tetap muncul dalam Bahasa Indonesia saat pengguna berada di mode Bahasa Inggris.
-
-### C. Komponen Formulir v6.4.0 Berbahasa Indonesia di Mode EN (52 Labels & 52 Infos)
-- **Penyebab:** 10 formula terbaru v6.4.0 (AIDA, GCC Reasoning, Kling/Runway, Suno v4, Cursorrules, MCP Server, TikTok Live, LPDP Essay, FLUX.1, Midjourney v6.1) memiliki label dan info yang ditulis dalam Bahasa Indonesia, namun **belum terdaftar** di dalam `COMPLETE_LABELS_MAP` dan `ALL_INFOS_MAP`.
-- **Dampak:** Saat beralih ke mode Bahasa Inggris (EN), label formulir seperti *"Tech Stack, Framework & Versi Utama"*, *"Larangan Mutlak (Strict Constraints & Anti-Patterns)"*, *"Profil & Rekam Jejak Pelamar"*, dan seluruh info tooltip-nya tetap tampil dalam Bahasa Indonesia.
-
-### D. Pilihan Dropdown (Options) Belum Terpetakan Sempurna (62 Opsi EN Mode & 16 Opsi ID Mode)
-- **Penyebab:** 62 opsi baru dari 10 template v6.4.0 belum terdaftar di `OPTION_TRANSLATIONS` (ID ➔ EN), dan 16 opsi teknis bahasa Inggris belum memiliki terjemahan di `EN_TO_ID_OPTIONS_MAP` (EN ➔ ID).
-- **Dampak:** Opsi select tampil dalam bahasa yang berlawanan dengan preferensi bahasa aktif.
-
-### E. Label Subkategori & Badge ToolType
-- Subkategori `"AI, RAG & Desktop Multiplatform"` dan `"Voiceover & Sound Design"` identik antara ID dan EN. Perlu dibuatkan versi bahasa Indonesia yang natural (`"AI, RAG & Desktop Lintas Platform"`, `"Sulih Suara & Desain Suara"`).
-- Badge ToolType di `TemplateGallery.tsx` baris 374 mencetak string mentah (`text`, `code`, `video`, `music-composition`, `planning`, `General`) tanpa lokalisasi di mode ID.
+### C. Cakupan Universal ke Seluruh 8 Kategori
+Bagi seluruh 360 template lainnya, sistem menyediakan fallback visual mockup terkurasi tingkat kategori:
+- *Teks & Konten:* Workspace Penulisan Konten Kreatif & Editorial.
+- *Kode & Pengembang:* Workstation Rekayasa Perangkat Lunak Modern.
+- *Audio & Musik:* Studio Desain Suara & Produksi Audio Digital.
+- *Video & Animasi:* Rig Kamera Sinematografi & Pengarah Adegan.
+- *Prompt Ringkas:* Asisten Produktivitas & Solusi Cepat Eksekutif.
+- *Prompt Proyek:* Manajemen Proyek, Roadmap & Strategi Tim.
+- *Koleksi & Inovasi:* Laboratorium Riset & Inovasi Teknologi Masa Depan.
 
 ---
 
-## 🛠️ 2. Rencana Tindakan Perbaikan Teknis (Action Plan)
-
-### Modul 1: `services/localizationService.ts`
-1. **Buat Kamus `EN_TO_ID_FRAMEWORK_NAMES_MAP` (260 Judul Template):**
-   - Menerjemahkan seluruh 260 judul formula Inggris ke padanan Bahasa Indonesia yang profesional, presisi, dan kontekstual.
-   - Contoh:
-     - `"AI Coding Agent Rules Architect (.cursorrules & Windsurf)"` ➔ `"Arsitek Aturan Agen Koding AI (.cursorrules & Windsurf)"`
-     - `"MCP (Model Context Protocol) Server & Tool Designer"` ➔ `"Perancang Server & Tool MCP (Model Context Protocol)"`
-     - `"LangChain & LlamaIndex RAG Pipeline Architect"` ➔ `"Arsitek Pipeline RAG LangChain & LlamaIndex"`
-     - `"Pareto Principle 80/20 High-Leverage Strategic Audit"` ➔ `"Audit Strategis Berdampak Tinggi Prinsip Pareto 80/20"`
-     - `"Eisenhower Matrix Priority & Time Mastery Engine"` ➔ `"Mesin Prioritas & Manajemen Waktu Matriks Eisenhower"`
-     - `"Pre-Mortem Analysis & Project Failure Prevention"` ➔ `"Analisis Pre-Mortem & Pencegahan Kegagalan Proyek"`
-2. **Perbarui Logika `translateFrameworkName`:**
-   ```ts
-   export const translateFrameworkName = (fwName: string, lang: 'id' | 'en'): string => {
-     if (!fwName) return '';
-     if (lang === 'id') {
-       return EN_TO_ID_FRAMEWORK_NAMES_MAP[fwName] || fwName;
-     }
-     return FRAMEWORK_NAMES_MAP[fwName] || fwName;
-   };
-   ```
-3. **Perbarui `getLocalizedFramework`:**
-   - Pada blok `if (lang === 'id')`, ganti `name: fwName` menjadi `name: translateFrameworkName(fwName, 'id')`.
-4. **Lengkapi 52 Label ke `COMPLETE_LABELS_MAP`:**
-   - Memasukkan seluruh padanan Bahasa Inggris untuk 52 label komponen input v6.4.0.
-5. **Lengkapi 52 Info ke `ALL_INFOS_MAP`:**
-   - Memasukkan seluruh padanan Bahasa Inggris untuk 52 deskripsi info/tooltip input v6.4.0.
-6. **Lengkapi 62 Opsi Dropdown ke `OPTION_TRANSLATIONS` & 16 Opsi ke `EN_TO_ID_OPTIONS_MAP`:**
-   - Sinkronisasi opsi dropdown dua arah secara komprehensif.
-7. **Perbarui `COMPLETE_SUBCATEGORIES_MAP` & `SUBCATEGORY_TRANSLATIONS`:**
-   - Menambahkan translasi untuk subkategori yang masih identik.
-
-### Modul 2: `App.tsx`
-1. **Perbaiki Modal Review Prompt (baris 1394):**
-   - Bungkus `{selectedFrameworkName}` dengan `{translateFrameworkName(selectedFrameworkName, language)}`.
-2. **Sinkronkan Penamaan Simpan ke Koleksi (Stash):**
-   - Gunakan nama yang telah dilokalisasi saat menyimpan prompt ke Stash.
-
-### Modul 3: `components/TemplateGallery.tsx`
-1. **Lokalisasi Badge ToolType di Kartu Template (baris 374):**
-   - Buat helper mapper untuk toolType:
-     - `text` ➔ ID: `Teks`, EN: `Text`
-     - `code` ➔ ID: `Kode`, EN: `Code`
-     - `video` ➔ ID: `Video`, EN: `Video`
-     - `music-generation` / `music-composition` / `audio-generation` ➔ ID: `Musik / Audio`, EN: `Music / Audio`
-     - `image-generation` / `image-editing` ➔ ID: `Gambar`, EN: `Image`
-     - `planning` ➔ ID: `Perencanaan`, EN: `Planning`
-     - `General` ➔ ID: `Umum`, EN: `General`
-
----
-
-## 📋 3. File yang Terdampak
-1. `services/localizationService.ts` (Kamus translasi 260 judul EN->ID, 52 labels, 52 infos, 62 options, update fungsi translasi)
-2. `App.tsx` (Lokalisasi modal review dan stash naming)
-3. `components/TemplateGallery.tsx` (Lokalisasi badge toolType pada card)
-4. `prd.md` (Update status living context Zona Bawah setelah eksekusi)
-
----
-
-## 🛡️ 4. Rencana Pengujian & Validasi
-1. **Automated Verification Script:** Menjalankan script validasi mandiri Node.js untuk mengecek:
-   - Jumlah judul EN yang tampil di ID: **0**
-   - Jumlah judul ID yang tampil di EN: **0**
-   - Jumlah label yang belum terjemah di EN: **0**
-   - Jumlah info yang belum terjemah di EN: **0**
-2. **Build Type-Check:** Menjalankan `npm run build` untuk memastikan 0 TypeScript error dan bundle tetap teroptimasi (< 500 kB).
-
----
-
----
-
-## 🎯 5. Hasil Verifikasi Akhir (Verification Outcomes)
-1. **Automated Verification Script:**
-   - 360 formula diuji menyeluruh di 8 kategori.
-   - Judul formula dengan translasi ID yang presisi: **262 formula** (seluruh 260 formula Inggris + 2 bilingual).
-   - Judul formula dengan translasi EN yang presisi: **100 formula** (seluruh 100 formula Indonesia).
-   - 52 missing component labels, 52 missing infos, dan 62 missing options terdaftar 100% dua arah.
-   - Subkategori & ToolType terjemah dwibahasa secara mulus.
-2. **Mobile Device Display & Responsiveness:**
-   - Tombol ganti bahasa (Globe + "ID"/"EN") dan tombol konfigurasi AI (Sparkle + Status Dot + "AI") 100% selalu terlihat di layar mobile (360px - 420px).
-   - Horizontal scrollbar / layout overflow tereliminasi total.
-   - iOS input zoom bug diperbaiki (`font-size: 16px`).
-   - Mobile floating dock dilengkapi `safe-area-inset-bottom` untuk iPhone dan Android gesture bar.
-3. **Build & Type-Check:**
-   - `npm run build` sukses 100% tanpa error (`✓ built in 2.69s`).
+## 🛠️ 2. Modul yang Terlibat & Status
+1. `services/visualBenchmarkService.ts`: Master registry 22 visual mockup berkualitas tinggi, deteksi rasio aspek dinamis, dan fallback 8 kategori universal.
+2. `components/VisualPromptPreview.tsx`: Komponen visual mockup tunggal (bebas tab switcher), dilengkapi tombol zoom Lightbox Modal, parameter kunci, dan pengunduh gambar lokal.
+3. `translations.ts`: Kunci lokalisasi dwibahasa (ID ↔ EN) diperbarui dan disederhanakan.
+4. `App.tsx`: Menampilkan `VisualPromptPreview` untuk seluruh template di Studio Mode dan Review Modal.
+5. `prd.md`: Dokumentasi v7.0.0 diperbarui.
