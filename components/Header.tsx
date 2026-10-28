@@ -30,6 +30,31 @@ const Header: React.FC<HeaderProps> = ({
   const preset = AI_PROVIDER_PRESETS[aiSettings.provider] || AI_PROVIDER_PRESETS.custom;
   const isConfigured = isAIConfigured();
 
+  // PWA Install Prompt Listener
+  const [deferredPrompt, setDeferredPrompt] = React.useState<any>(null);
+  const [isInstallable, setIsInstallable] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    const handleBeforeInstall = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+  }, []);
+
+  const handleInstallPWA = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+    if (choice.outcome === 'accepted') {
+      setIsInstallable(false);
+      setDeferredPrompt(null);
+    }
+  };
+
   return (
     <header className="sticky top-0 z-40 border-b border-slate-800/80 bg-[#090d16]/95 backdrop-blur-md transition-colors">
       <div className="max-w-7xl mx-auto px-2.5 sm:px-6 h-16 flex items-center justify-between gap-1.5 sm:gap-4">
@@ -124,6 +149,23 @@ const Header: React.FC<HeaderProps> = ({
               <span className="font-bold text-[11px] sm:text-xs">
                 <span className="sm:hidden">AI</span>
                 <span className="hidden sm:inline">{isConfigured ? preset.name.split(' ')[0] : (language === 'id' ? 'Atur AI' : 'Setup AI')}</span>
+              </span>
+            </button>
+          )}
+
+          {/* Interactive PWA Install Button */}
+          {isInstallable && (
+            <button
+              onClick={handleInstallPWA}
+              className="h-8 px-2 sm:h-9 sm:px-2.5 rounded-xl text-xs font-semibold bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 animate-pulse"
+              title={language === 'id' ? 'Pasang Aplikasi PWA di Perangkat Anda' : 'Install PWA App on your device'}
+              aria-label="Install PWA"
+            >
+              <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <span className="hidden md:inline font-bold text-[11px] sm:text-xs">
+                {language === 'id' ? 'Pasang' : 'Install'}
               </span>
             </button>
           )}

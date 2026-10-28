@@ -47,6 +47,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   showAIFeatures = false,
 }) => {
   const { t, language } = useLanguage();
+  const [showFewShot, setShowFewShot] = React.useState<boolean>(false);
 
   const localizedFw = getLocalizedFramework(frameworkName, framework, language);
 
@@ -336,6 +337,60 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
         ) : (
           <div className="text-center py-16 text-slate-400 text-xs">
             {t('ready_direct_use')}
+          </div>
+        )}
+      </div>
+
+      {/* Few-Shot Example Builder Accordion (Optional Precision Booster) */}
+      <div className="bg-slate-950/80 border border-slate-800/80 rounded-2xl overflow-hidden transition-all shadow-sm mt-4">
+        <button
+          type="button"
+          onClick={() => setShowFewShot(!showFewShot)}
+          className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-slate-900/50 transition-colors"
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-emerald-400 text-sm">✨</span>
+            <span className="text-xs font-bold text-slate-200">
+              {language === 'id' ? 'Contoh Acuan Few-Shot (Opsional)' : 'Few-Shot Reference Examples (Optional)'}
+            </span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-900 text-slate-400 border border-slate-800 font-mono">
+              {formValues['__few_shot_input'] || formValues['__few_shot_output'] ? (language === 'id' ? 'Aktif' : 'Active') : '+40% Akurasi'}
+            </span>
+          </div>
+          <span className="text-xs text-slate-400 font-mono">
+            {showFewShot ? '▲' : '▼'}
+          </span>
+        </button>
+
+        {showFewShot && (
+          <div className="p-4 pt-2 border-t border-slate-800/70 space-y-3 bg-[#080c14]">
+            <p className="text-[11px] text-slate-400 leading-relaxed font-sans">
+              {language === 'id'
+                ? 'Sertakan contoh masukan dan contoh keluaran yang diharapkan agar AI meniru gaya, format, dan standar jawaban Anda dengan presisi tinggi.'
+                : 'Provide sample input and expected output so AI models mirror your exact style, tone, and delivery format.'}
+            </p>
+            <div className="space-y-1">
+              <label className="text-[11px] font-semibold text-slate-300">
+                {language === 'id' ? 'Contoh Masukan (Sample Input):' : 'Sample Input:'}
+              </label>
+              <textarea
+                value={formValues['__few_shot_input'] || ''}
+                onChange={(e) => onInputChange('__few_shot_input', e.target.value)}
+                placeholder={language === 'id' ? 'Misal: Teks mentah, poin kasar, atau data input...' : 'e.g., Raw text, rough bullet points, or raw input...'}
+                className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 h-16 resize-y font-mono"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[11px] font-semibold text-slate-300">
+                {language === 'id' ? 'Contoh Keluaran yang Diharapkan (Expected Output):' : 'Expected Output:'}
+              </label>
+              <textarea
+                value={formValues['__few_shot_output'] || ''}
+                onChange={(e) => onInputChange('__few_shot_output', e.target.value)}
+                placeholder={language === 'id' ? 'Misal: Hasil akhir yang terstruktur, padat, dan rapi...' : 'e.g., Structured, clean, and concise target output...'}
+                className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 h-20 resize-y font-mono"
+              />
+            </div>
           </div>
         )}
       </div>

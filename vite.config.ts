@@ -29,6 +29,12 @@ export default defineConfig(({ mode }) => {
               if (id.includes('localizationService')) {
                 return 'data-localization';
               }
+              if (id.includes('universalAIService') || id.includes('aiSettingsService')) {
+                return 'feature-ai';
+              }
+              if (id.includes('db.ts')) {
+                return 'feature-stash';
+              }
             }
           }
         },

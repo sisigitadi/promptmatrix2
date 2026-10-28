@@ -13,6 +13,7 @@ import {
   deletePromptFromDB, 
   updatePromptInDB,
   exportPromptsToJSONFile,
+  exportPromptsToPlainTextFile,
   importPromptsFromJSONFile 
 } from './db';
 import { isAIConfigured } from './services/aiSettingsService';
@@ -129,6 +130,8 @@ const App: React.FC = () => {
   // Preview Reader & Fullscreen Review Modal State
   const [previewViewMode, setPreviewViewMode] = useState<'structured' | 'raw'>('structured');
   const [showExpandReviewModal, setShowExpandReviewModal] = useState<boolean>(false);
+  const [showCompareModal, setShowCompareModal] = useState<boolean>(false);
+  const [compareAlternativePrompt, setCompareAlternativePrompt] = useState<string>('');
   const [expandedStashPromptId, setExpandedStashPromptId] = useState<number | null>(null);
 
   // Hidden AI Features State & 9-Tap Logo Unlock
@@ -291,6 +294,22 @@ const App: React.FC = () => {
         ? translateInfo(fw.konteks_tambahan_instruksi_khusus, 'en')
         : fw.konteks_tambahan_instruksi_khusus;
       lines.push(`${language === 'id' ? 'Instruksi Tambahan' : 'Additional Instructions'}: ${additionalInstruction}`);
+      lines.push('');
+    }
+
+    // 4. Few-Shot Reference Examples (Optionally populated by user)
+    const fewShotInput = values['__few_shot_input'];
+    const fewShotOutput = values['__few_shot_output'];
+    if (fewShotInput || fewShotOutput) {
+      const fewShotHeader = language === 'id' ? 'Contoh Acuan (Few-Shot Reference Example)' : 'Few-Shot Reference Example';
+      let fewShotContent = '';
+      if (fewShotInput) {
+        fewShotContent += `${language === 'id' ? '[Contoh Masukan]' : '[Sample Input]'}:\n${fewShotInput}\n\n`;
+      }
+      if (fewShotOutput) {
+        fewShotContent += `${language === 'id' ? '[Contoh Keluaran yang Diharapkan]' : '[Expected Output]'}:\n${fewShotOutput}`;
+      }
+      lines.push(`${fewShotHeader}:\n${fewShotContent.trim()}`);
       lines.push('');
     }
 
@@ -887,6 +906,20 @@ const App: React.FC = () => {
                           <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-400">
                             ~{Math.round(generatedPrompt.length / 4)} tokens
                           </span>
+                          {/* Tombol Bandingkan Side-by-Side */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setCompareAlternativePrompt(generatedPrompt);
+                              setShowCompareModal(true);
+                            }}
+                            className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-cyan-400 border border-slate-800 transition-colors"
+                            title={language === 'id' ? 'Bandingkan Prompt Berdampingan' : 'Compare Prompts Side-by-Side'}
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                          </button>
                           {/* Tombol Perbesar / Layar Penuh */}
                           <button
                             type="button"
@@ -1182,6 +1215,23 @@ const App: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   <span>Markdown (.md)</span>
+                </button>
+                <button
+                  onClick={() => {
+                    if (savedPrompts.length === 0) {
+                      showToast(t('no_saved_prompts'), 'info');
+                      return;
+                    }
+                    exportPromptsToPlainTextFile(savedPrompts);
+                    showToast(language === 'id' ? 'Berhasil ekspor ke Plain Text (.txt)' : 'Exported to Plain Text (.txt)', 'success');
+                  }}
+                  className="px-3 py-1.5 bg-slate-900 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors shadow-sm"
+                  title={language === 'id' ? 'Ekspor prompt ke format Teks Polos (.txt)' : 'Export prompts to Plain Text (.txt) file'}
+                >
+                  <svg className="w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                  <span>Text (.txt)</span>
                 </button>
                 <button
                   onClick={() => fileInputRef.current?.click()}
@@ -1570,6 +1620,119 @@ const App: React.FC = () => {
                   )}
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Side-by-Side Prompt Comparison Modal */}
+      {showCompareModal && generatedPrompt && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn">
+          <div className="bg-[#0b101b] border border-slate-800 rounded-2xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+            {/* Modal Header */}
+            <div className="px-5 py-4 border-b border-slate-800 bg-[#0e1424] flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold text-slate-100">
+                    {language === 'id' ? 'Komparasi Prompt Berdampingan (Side-by-Side)' : 'Side-by-Side Prompt Comparison'}
+                  </h3>
+                  <p className="text-[11px] text-slate-400">
+                    {language === 'id' ? 'Bandingkan prompt aktif dengan variasi alternatif secara langsung' : 'Compare active prompt with alternative variations side-by-side'}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowCompareModal(false)}
+                className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-750 text-slate-400 hover:text-slate-200 border border-slate-700 transition-colors"
+                title={t('close_btn')}
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Modal Body: Two Columns Grid */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[#070b13] grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              {/* Column A: Active Form Prompt */}
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-emerald-400 flex items-center gap-1.5 font-sans">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>{language === 'id' ? 'Versi A (Hasil Formulir)' : 'Version A (Active Form Prompt)'}</span>
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono text-slate-400">
+                      ~{Math.round(generatedPrompt.length / 4)} tokens
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        copyToClipboard(generatedPrompt);
+                        showToast(t('copied_btn'), 'success');
+                      }}
+                      className="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 text-[11px] border border-slate-800"
+                    >
+                      {t('copy_btn')}
+                    </button>
+                  </div>
+                </div>
+                <div className="flex-1 min-h-[300px] bg-slate-950/80 border border-slate-800/90 rounded-2xl p-4 text-xs font-mono text-slate-200 whitespace-pre-wrap overflow-y-auto leading-relaxed shadow-inner">
+                  {generatedPrompt}
+                </div>
+              </div>
+
+              {/* Column B: Editable Alternative / Variation */}
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-cyan-400 flex items-center gap-1.5 font-sans">
+                    <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                    <span>{language === 'id' ? 'Versi B (Dapat Diedit / Variasi)' : 'Version B (Editable Variation)'}</span>
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono text-slate-400">
+                      ~{Math.round(compareAlternativePrompt.length / 4)} tokens
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        copyToClipboard(compareAlternativePrompt);
+                        showToast(t('copied_btn'), 'success');
+                      }}
+                      className="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 text-[11px] border border-slate-800"
+                    >
+                      {t('copy_btn')}
+                    </button>
+                  </div>
+                </div>
+                <textarea
+                  value={compareAlternativePrompt}
+                  onChange={(e) => setCompareAlternativePrompt(e.target.value)}
+                  placeholder={language === 'id' ? 'Ketik atau tempelkan variasi prompt pembanding di sini...' : 'Type or paste alternative prompt variation here...'}
+                  className="flex-1 min-h-[300px] bg-slate-950/90 border border-slate-800/90 focus:border-cyan-500 rounded-2xl p-4 text-xs font-mono text-slate-200 resize-none leading-relaxed focus:outline-none shadow-inner"
+                />
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="px-5 py-3 border-t border-slate-800 bg-[#0e1424] flex items-center justify-between gap-3">
+              <span className="text-[11px] text-slate-500 font-sans hidden sm:inline">
+                {language === 'id' ? '💡 Tip: Anda dapat mengedit Versi B langsung untuk menguji variasi instruksi.' : '💡 Tip: You can edit Version B directly to experiment with different prompt variations.'}
+              </span>
+              <button
+                type="button"
+                onClick={() => setShowCompareModal(false)}
+                className="h-9 px-4 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white border border-slate-700 text-xs font-medium ml-auto transition-colors"
+              >
+                {t('close_btn')}
+              </button>
             </div>
           </div>
         </div>

@@ -142,6 +142,68 @@ export const exportPromptsToJSONFile = (prompts: SavedPrompt[]): void => {
 };
 
 /**
+ * Exports all prompts to a formatted Markdown (.md) document
+ */
+export const exportPromptsToMarkdownFile = (prompts: SavedPrompt[]): void => {
+  const dateStr = new Date().toISOString().slice(0, 10);
+  let md = `# Koleksi Prompt - PromptMatrix 2.0\n\n`;
+  md += `> Diekspor pada: ${new Date().toLocaleString()}\n`;
+  md += `> Total Prompt Tersimpan: ${prompts.length}\n\n---\n\n`;
+
+  prompts.forEach((p, idx) => {
+    md += `## ${idx + 1}. ${p.name || p.selectedFrameworkName || 'Untitled Prompt'}\n\n`;
+    md += `* **Framework:** ${p.selectedFrameworkName || 'Custom'}\n`;
+    md += `* **Kategori:** ${p.category || 'General'}\n`;
+    md += `* **Waktu Simpan:** ${new Date(p.timestamp).toLocaleString()}\n\n`;
+    md += `\`\`\`text\n${p.generatedPrompt}\n\`\`\`\n\n`;
+    if (p.notes) {
+      md += `> 💡 **Catatan:** ${p.notes}\n\n`;
+    }
+    md += `---\n\n`;
+  });
+
+  const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.href = url;
+  downloadAnchor.download = `promptmatrix_stash_${dateStr}.md`;
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  document.body.removeChild(downloadAnchor);
+  URL.revokeObjectURL(url);
+};
+
+/**
+ * Exports all prompts to a clean text (.txt) file
+ */
+export const exportPromptsToPlainTextFile = (prompts: SavedPrompt[]): void => {
+  const dateStr = new Date().toISOString().slice(0, 10);
+  let txt = `PROMPT MATRIX 2.0 - KOLEKSI PROMPT TERSIMPAN\n`;
+  txt += `Tanggal Ekspor: ${new Date().toLocaleString()}\n`;
+  txt += `Total: ${prompts.length} prompt\n`;
+  txt += `========================================================\n\n`;
+
+  prompts.forEach((p, idx) => {
+    txt += `[PROMPT #${idx + 1}] ${p.name || p.selectedFrameworkName}\n`;
+    txt += `Framework: ${p.selectedFrameworkName} | Kategori: ${p.category}\n`;
+    txt += `Waktu: ${new Date(p.timestamp).toLocaleString()}\n`;
+    txt += `--------------------------------------------------------\n`;
+    txt += `${p.generatedPrompt}\n`;
+    txt += `========================================================\n\n`;
+  });
+
+  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.href = url;
+  downloadAnchor.download = `promptmatrix_stash_${dateStr}.txt`;
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  document.body.removeChild(downloadAnchor);
+  URL.revokeObjectURL(url);
+};
+
+/**
  * Imports prompts from a user-uploaded JSON file into IndexedDB
  */
 export const importPromptsFromJSONFile = async (file: File): Promise<number> => {
