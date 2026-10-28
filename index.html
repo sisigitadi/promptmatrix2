@@ -105,13 +105,22 @@
     ]
   }
   </script>
-  <script type="module" crossorigin src="./assets/index-BzO0NOda.js"></script>
+  <script type="module" crossorigin src="./assets/index-BIWrrgOy.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/vendor-react-Cdf7IZff.js">
   <link rel="modulepreload" crossorigin href="./assets/data-frameworks-DMeKd9fJ.js">
   <link rel="modulepreload" crossorigin href="./assets/data-localization-Bf9kRmVy.js">
-  <link rel="stylesheet" crossorigin href="./assets/index-CrbrecfB.css">
+  <link rel="stylesheet" crossorigin href="./assets/index-x7xZIbD6.css">
 </head>
 <body class="antialiased bg-[#090d16] text-slate-100 min-h-screen selection:bg-emerald-900/60 selection:text-white font-sans">
   <div id="root"></div>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => {
+          console.debug('ServiceWorker registration error:', err);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
