@@ -393,6 +393,12 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-900 text-slate-400 border border-slate-800 font-mono">
               {formValues['__few_shot_input'] || formValues['__few_shot_output'] ? (language === 'id' ? 'Aktif' : 'Active') : '+40% Akurasi'}
             </span>
+            {showAIFeatures && (
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-sans font-medium hidden sm:inline-flex items-center gap-1">
+                <span>✨</span>
+                <span>AI Suggest</span>
+              </span>
+            )}
           </div>
           <span className="text-xs text-slate-400 font-mono">
             {showFewShot ? '▲' : '▼'}
@@ -406,10 +412,30 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 ? 'Sertakan contoh masukan dan contoh keluaran yang diharapkan agar AI meniru gaya, format, dan standar jawaban Anda dengan presisi tinggi.'
                 : 'Provide sample input and expected output so AI models mirror your exact style, tone, and delivery format.'}
             </p>
-            <div className="space-y-1">
-              <label className="text-[11px] font-semibold text-slate-300">
-                {language === 'id' ? 'Contoh Masukan (Sample Input):' : 'Sample Input:'}
-              </label>
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between gap-2">
+                <label className="text-[11px] font-semibold text-slate-300">
+                  {language === 'id' ? 'Contoh Masukan (Sample Input):' : 'Sample Input:'}
+                </label>
+                {showAIFeatures && (
+                  <button
+                    type="button"
+                    onClick={() => onAiSuggest('__few_shot_input', language === 'id' ? 'Contoh Masukan (Few-Shot Sample Input)' : 'Sample Input (Few-Shot Example)')}
+                    disabled={loadingFieldId === '__few_shot_input'}
+                    className={`h-6 px-2.5 rounded-lg text-[11px] font-medium flex items-center gap-1.5 transition-all ${
+                      loadingFieldId === '__few_shot_input'
+                        ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-700 animate-pulse cursor-wait'
+                        : 'bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-emerald-300 border border-slate-800 hover:border-emerald-700/40'
+                    }`}
+                    title={language === 'id' ? 'Bantu contoh masukan otomatis dengan AI' : 'Suggest sample input with AI'}
+                  >
+                    <svg className="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span className="hidden sm:inline">{loadingFieldId === '__few_shot_input' ? t('ai_suggesting') : t('ai_suggest_btn')}</span>
+                  </button>
+                )}
+              </div>
               <textarea
                 value={formValues['__few_shot_input'] || ''}
                 onChange={(e) => onInputChange('__few_shot_input', e.target.value)}
@@ -417,10 +443,30 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 h-16 resize-y font-mono"
               />
             </div>
-            <div className="space-y-1">
-              <label className="text-[11px] font-semibold text-slate-300">
-                {language === 'id' ? 'Contoh Keluaran yang Diharapkan (Expected Output):' : 'Expected Output:'}
-              </label>
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between gap-2">
+                <label className="text-[11px] font-semibold text-slate-300">
+                  {language === 'id' ? 'Contoh Keluaran yang Diharapkan (Expected Output):' : 'Expected Output:'}
+                </label>
+                {showAIFeatures && (
+                  <button
+                    type="button"
+                    onClick={() => onAiSuggest('__few_shot_output', language === 'id' ? 'Contoh Keluaran yang Diharapkan (Few-Shot Expected Output)' : 'Expected Output (Few-Shot Example)')}
+                    disabled={loadingFieldId === '__few_shot_output'}
+                    className={`h-6 px-2.5 rounded-lg text-[11px] font-medium flex items-center gap-1.5 transition-all ${
+                      loadingFieldId === '__few_shot_output'
+                        ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-700 animate-pulse cursor-wait'
+                        : 'bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-emerald-300 border border-slate-800 hover:border-emerald-700/40'
+                    }`}
+                    title={language === 'id' ? 'Bantu contoh keluaran otomatis dengan AI' : 'Suggest expected output with AI'}
+                  >
+                    <svg className="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span className="hidden sm:inline">{loadingFieldId === '__few_shot_output' ? t('ai_suggesting') : t('ai_suggest_btn')}</span>
+                  </button>
+                )}
+              </div>
               <textarea
                 value={formValues['__few_shot_output'] || ''}
                 onChange={(e) => onInputChange('__few_shot_output', e.target.value)}

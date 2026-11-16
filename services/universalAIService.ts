@@ -399,12 +399,19 @@ export const suggestFieldContentWithUniversalAI = async (
   language: 'en' | 'id' = 'id'
 ): Promise<string> => {
   const isIndonesian = language === 'id';
+  const isFewShot = /few-shot|contoh masukan|contoh keluaran|sample input|expected output/i.test(fieldLabel);
 
-  const systemInstruction = isIndonesian
+  let systemInstruction = isIndonesian
     ? `Anda adalah seorang ahli prompt engineering handal. Tugas Anda adalah memberikan satu saran isian terbaik dan spesifik untuk kolom formulir yang diminta. Berikan HANYA nilai isian langsung tanpa pembuka, tanpa tanda kutip, tanpa format tebal (**), dan tanpa penjelasan tambahan.`
     : `You are an expert AI prompt engineer. Provide ONLY the direct, high-quality, specific value for the requested form field. Do not include markdown quotes, bold asterisks (**), pleasantries, or preamble.`;
 
-  const userPrompt = isIndonesian
+  if (isFewShot) {
+    systemInstruction = isIndonesian
+      ? `Anda adalah Master Prompt Engineer spesialis Few-Shot In-Context Learning. Tugas Anda adalah menyusun contoh acuan (few-shot reference exemplar) yang konkret, realistis, dan mencerminkan standar emas. Berikan HANYA teks contoh acuan langsung tanpa kata pengantar ("Berikut adalah..."), tanpa tanda kutip pembungkus, dan tanpa format tebal berlebihan.`
+      : `You are a Master Prompt Engineer specializing in Few-Shot In-Context Learning. Provide ONLY the direct, realistic, gold-standard reference exemplar text without introductory preamble or markdown quotes.`;
+  }
+
+  let userPrompt = isIndonesian
     ? `Kerangka Kerja: "${frameworkName}"
 Kolom yang perlu diisi: "${fieldLabel}"
 Konteks isian kolom lain yang sudah ada:
@@ -417,6 +424,22 @@ Other Filled Context:
 ${contextSoFar || '(No other fields filled yet)'}
 
 Provide one creative, highly specific, and relevant plain-text value for this field:`;
+
+  if (isFewShot) {
+    userPrompt = isIndonesian
+      ? `Kerangka Kerja: "${frameworkName}"
+Target Komponen Few-Shot: "${fieldLabel}"
+Konteks parameter framework yang sudah terisi:
+${contextSoFar || '(Gunakan konteks umum kerangka kerja)'}
+
+Susun satu contoh ${fieldLabel} yang konkret, realistis, dan siap ditiru oleh model AI:`
+      : `Framework: "${frameworkName}"
+Target Few-Shot Component: "${fieldLabel}"
+Existing Framework Context:
+${contextSoFar || '(Use general framework context)'}
+
+Draft one concrete, realistic ${fieldLabel} exemplar ready for in-context learning:`;
+  }
 
   const raw = await generateTextWithUniversalAI(userPrompt, systemInstruction);
   return sanitizePromptText(raw);

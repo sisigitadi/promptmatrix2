@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { PROMPT_FRAMEWORKS, Framework } from './data/frameworks';
 import FrameworkPane from './components/FrameworkPane';
 import TemplateGallery from './components/TemplateGallery';
@@ -34,6 +34,12 @@ import {
   translateCategoryName
 } from './services/localizationService';
 import { VisualPromptPreview } from './components/VisualPromptPreview';
+import { CleanJsonViewer } from './components/CleanJsonViewer';
+import {
+  buildCleanPromptJSON,
+  getCleanJSONString,
+  JsonFormatType
+} from './services/jsonPromptService';
 
 interface ToastState {
   message: string;
@@ -130,11 +136,30 @@ const App: React.FC = () => {
   const [isCopied, setIsCopied] = useState(false);
 
   // Preview Reader & Fullscreen Review Modal State
-  const [previewViewMode, setPreviewViewMode] = useState<'structured' | 'raw'>('structured');
+  const [previewViewMode, setPreviewViewMode] = useState<'structured' | 'raw' | 'json'>('structured');
+  const [jsonFormatType, setJsonFormatType] = useState<JsonFormatType>('full');
   const [showExpandReviewModal, setShowExpandReviewModal] = useState<boolean>(false);
   const [showCompareModal, setShowCompareModal] = useState<boolean>(false);
   const [compareAlternativePrompt, setCompareAlternativePrompt] = useState<string>('');
   const [expandedStashPromptId, setExpandedStashPromptId] = useState<number | null>(null);
+
+  // Clean JSON Serialization (100% Zero Decode Error RFC 8259 Guarantee)
+  const cleanJsonPayload = useMemo(() => {
+    return buildCleanPromptJSON(
+      selectedFramework,
+      selectedFrameworkName,
+      selectedCategory,
+      selectedSubcategory,
+      formValues,
+      customOtherValues,
+      generatedPrompt,
+      language
+    );
+  }, [selectedFramework, selectedFrameworkName, selectedCategory, selectedSubcategory, formValues, customOtherValues, generatedPrompt, language]);
+
+  const cleanJsonString = useMemo(() => {
+    return getCleanJSONString(cleanJsonPayload, jsonFormatType);
+  }, [cleanJsonPayload, jsonFormatType]);
 
   // Hidden AI Features State & 9-Tap Logo Unlock
   const [showAIFeatures, setShowAIFeatures] = useState<boolean>(() => {
@@ -648,12 +673,12 @@ const App: React.FC = () => {
     }
   };
 
-  const copyToClipboard = async (text: string) => {
+  const copyToClipboard = async (text: string, customToast?: string) => {
     try {
       await navigator.clipboard.writeText(text);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
-      showToast(t('toast_copied'), 'success');
+      showToast(customToast || t('toast_copied'), 'success');
     } catch (error) {
       console.error('Error copying to clipboard:', error);
       const textarea = document.createElement('textarea');
@@ -664,7 +689,7 @@ const App: React.FC = () => {
       document.body.removeChild(textarea);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
-      showToast(t('toast_copied'), 'success');
+      showToast(customToast || t('toast_copied'), 'success');
     }
   };
 
@@ -943,12 +968,31 @@ const App: React.FC = () => {
                       </div>
                       {generatedPrompt && (
                         <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-400">
-                          <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-emerald-400 font-medium">
-                            {generatedPrompt.length} {t('chars_count')}
-                          </span>
-                          <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-400">
-                            ~{Math.round(generatedPrompt.length / 4)} tokens
-                          </span>
+                          {previewViewMode === 'json' ? (
+                            <>
+                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-cyan-400 font-medium">
+                                {cleanJsonString.length} {t('chars_count')}
+                              </span>
+                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-400">
+                                ~{Math.round(cleanJsonString.length / 4)} tokens
+                              </span>
+                              <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-medium">
+                                <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>{t('preview_json_badge')}</span>
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-emerald-400 font-medium">
+                                {generatedPrompt.length} {t('chars_count')}
+                              </span>
+                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-400">
+                                ~{Math.round(generatedPrompt.length / 4)} tokens
+                              </span>
+                            </>
+                          )}
                           {/* Tombol Bandingkan Side-by-Side */}
                           <button
                             type="button"
@@ -978,7 +1022,7 @@ const App: React.FC = () => {
                       )}
                     </div>
 
-                    {/* Mode Tampilan Pratinjau (Terstruktur vs Teks Polos) */}
+                    {/* Mode Tampilan Pratinjau (Terstruktur vs Teks Polos vs JSON) */}
                     {generatedPrompt && (
                       <div className="flex items-center justify-between pt-0.5">
                         <div className="flex bg-slate-950/90 border border-slate-800/90 rounded-xl p-0.5 text-[11px] font-sans">
@@ -1010,6 +1054,20 @@ const App: React.FC = () => {
                             </svg>
                             <span>{t('preview_raw')}</span>
                           </button>
+                          <button
+                            type="button"
+                            onClick={() => setPreviewViewMode('json')}
+                            className={`px-2.5 py-1 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                              previewViewMode === 'json'
+                                ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
+                                : 'text-slate-400 hover:text-slate-200'
+                            }`}
+                          >
+                            <svg className="w-3 h-3 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span>{t('preview_json')}</span>
+                          </button>
                         </div>
                       </div>
                     )}
@@ -1018,14 +1076,25 @@ const App: React.FC = () => {
                   {generatedPrompt ? (
                     <div className="flex flex-col gap-4">
                       {/* Kontainer Teks Pratinjau Terbaca */}
-                      {previewViewMode === 'structured' ? (
+                      {previewViewMode === 'structured' && (
                         <div className="bg-[#070b12] border border-slate-800/90 rounded-2xl p-4 sm:p-5 min-h-[220px] max-h-[460px] overflow-y-auto selection:bg-emerald-900/60 shadow-inner">
                           {renderStructuredContent(generatedPrompt)}
                         </div>
-                      ) : (
+                      )}
+                      {previewViewMode === 'raw' && (
                         <div className="bg-[#070b12] border border-slate-800/90 rounded-2xl p-4 sm:p-5 min-h-[220px] max-h-[460px] overflow-y-auto text-xs sm:text-[13px] leading-[1.85] font-mono text-slate-200 whitespace-pre-wrap break-words selection:bg-emerald-900/60 shadow-inner">
                           {generatedPrompt}
                         </div>
+                      )}
+                      {previewViewMode === 'json' && (
+                        <CleanJsonViewer
+                          jsonString={cleanJsonString}
+                          activeFormat={jsonFormatType}
+                          onFormatChange={setJsonFormatType}
+                          onCopy={() => copyToClipboard(cleanJsonString, t('toast_json_copied'))}
+                          isCopied={isCopied}
+                          isLightTheme={isLightTheme}
+                        />
                       )}
 
                       {/* AI Enhancement & Quality Actions (Hidden by default, unlocked via 9-tap logo) */}
@@ -1059,7 +1128,13 @@ const App: React.FC = () => {
                       {/* Copy & Save Action Buttons */}
                       <div className="flex flex-col gap-2 pt-2 border-t border-slate-800/80">
                         <button
-                          onClick={() => copyToClipboard(generatedPrompt)}
+                          onClick={() => {
+                            if (previewViewMode === 'json') {
+                              copyToClipboard(cleanJsonString, t('toast_json_copied'));
+                            } else {
+                              copyToClipboard(generatedPrompt);
+                            }
+                          }}
                           className={`w-full h-11 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xl transition-all ${
                             isCopied 
                               ? 'bg-emerald-400 text-slate-950 scale-[1.01] shadow-emerald-500/30' 
@@ -1078,7 +1153,7 @@ const App: React.FC = () => {
                           <span>
                             {isCopied 
                               ? (language === 'id' ? 'Tersalin ke Clipboard!' : 'Copied to Clipboard!') 
-                              : t('copy_prompt_btn')}
+                              : (previewViewMode === 'json' ? t('copy_json_btn') : t('copy_prompt_btn'))}
                           </span>
                         </button>
                         <button
@@ -1153,7 +1228,11 @@ const App: React.FC = () => {
                           rel="noreferrer"
                           onClick={() => {
                             if (generatedPrompt) {
-                              copyToClipboard(generatedPrompt);
+                              if (previewViewMode === 'json') {
+                                copyToClipboard(cleanJsonString, t('toast_json_copied'));
+                              } else {
+                                copyToClipboard(generatedPrompt);
+                              }
                             }
                           }}
                           className="p-2.5 bg-slate-900/60 hover:bg-emerald-950/30 border border-slate-800 hover:border-emerald-500/40 rounded-xl text-xs font-medium text-slate-300 hover:text-emerald-200 transition-all flex items-center justify-between group truncate"
@@ -1192,7 +1271,13 @@ const App: React.FC = () => {
                 </button>
 
                 <button
-                  onClick={() => copyToClipboard(generatedPrompt)}
+                  onClick={() => {
+                    if (previewViewMode === 'json') {
+                      copyToClipboard(cleanJsonString, t('toast_json_copied'));
+                    } else {
+                      copyToClipboard(generatedPrompt);
+                    }
+                  }}
                   className={`flex-1 h-10 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all ${
                     isCopied
                       ? 'bg-emerald-400 text-slate-950 font-bold'
@@ -1211,7 +1296,7 @@ const App: React.FC = () => {
                   <span>
                     {isCopied
                       ? (language === 'id' ? 'Tersalin!' : 'Copied!')
-                      : (language === 'id' ? 'Salin Prompt' : 'Copy Prompt')}
+                      : (previewViewMode === 'json' ? t('copy_json_btn') : (language === 'id' ? 'Salin Prompt' : 'Copy Prompt'))}
                   </span>
                 </button>
               </div>
@@ -1548,9 +1633,22 @@ const App: React.FC = () => {
                       </span>
                     )}
                     <span>•</span>
-                    <span>{generatedPrompt.length} {t('chars_count')}</span>
-                    <span>•</span>
-                    <span>~{Math.round(generatedPrompt.length / 4)} tokens</span>
+                    {previewViewMode === 'json' ? (
+                      <>
+                        <span className="text-cyan-400 font-medium">{cleanJsonString.length} {t('chars_count')}</span>
+                        <span>•</span>
+                        <span>~{Math.round(cleanJsonString.length / 4)} tokens</span>
+                        <span className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-medium ml-1">
+                          ✓ {t('preview_json_badge')}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <span>{generatedPrompt.length} {t('chars_count')}</span>
+                        <span>•</span>
+                        <span>~{Math.round(generatedPrompt.length / 4)} tokens</span>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1586,6 +1684,20 @@ const App: React.FC = () => {
                     </svg>
                     <span className="hidden sm:inline">{t('preview_raw')}</span>
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewViewMode('json')}
+                    className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                      previewViewMode === 'json'
+                        ? 'bg-emerald-600 text-white font-semibold shadow-sm'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span className="hidden sm:inline">{t('preview_json')}</span>
+                  </button>
                 </div>
 
                 <button
@@ -1614,13 +1726,26 @@ const App: React.FC = () => {
                 />
               </div>
 
-              {previewViewMode === 'structured' ? (
+              {previewViewMode === 'structured' && (
                 <div className="max-w-3xl mx-auto">
                   {renderStructuredContent(generatedPrompt)}
                 </div>
-              ) : (
+              )}
+              {previewViewMode === 'raw' && (
                 <div className="max-w-3xl mx-auto bg-slate-950/80 border border-slate-800/90 rounded-2xl p-5 sm:p-6 text-xs sm:text-sm leading-loose font-mono text-slate-200 whitespace-pre-wrap break-words selection:bg-emerald-900/60 shadow-inner">
                   {generatedPrompt}
+                </div>
+              )}
+              {previewViewMode === 'json' && (
+                <div className="max-w-3xl mx-auto">
+                  <CleanJsonViewer
+                    jsonString={cleanJsonString}
+                    activeFormat={jsonFormatType}
+                    onFormatChange={setJsonFormatType}
+                    onCopy={() => copyToClipboard(cleanJsonString, t('toast_json_copied'))}
+                    isCopied={isCopied}
+                    isLightTheme={isLightTheme}
+                  />
                 </div>
               )}
             </div>
@@ -1649,7 +1774,11 @@ const App: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    copyToClipboard(generatedPrompt);
+                    if (previewViewMode === 'json') {
+                      copyToClipboard(cleanJsonString, t('toast_json_copied'));
+                    } else {
+                      copyToClipboard(generatedPrompt);
+                    }
                   }}
                   className={`h-10 px-5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-lg ${
                     isCopied
@@ -1669,7 +1798,7 @@ const App: React.FC = () => {
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                       </svg>
-                      <span>{t('copy_prompt_btn')}</span>
+                      <span>{previewViewMode === 'json' ? t('copy_json_btn') : t('copy_prompt_btn')}</span>
                     </>
                   )}
                 </button>

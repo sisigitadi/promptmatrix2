@@ -1,5 +1,28 @@
 # Changelog - PromptMatrix 2.0
 
+## [7.1.0] - 2026-11-16
+### ⚡ Pratinjau Prompt JSON Bersih Bebas Decode Error (Zero Decode Errors RFC 8259)
+
+#### Ditambahkan & Ditingkatkan (Added & Enhanced):
+- **Mode Pratinjau JSON Mandiri (`services/jsonPromptService.ts` & `components/CleanJsonViewer.tsx`)**:
+  - Menambahkan tab tampilan `{ } JSON` pada komponen Pratinjau Prompt Studio dan Modal Perbesar Layar Penuh.
+  - Menghilangkan 100% risiko *JSON Decode Error* (`json.decoder.JSONDecodeError` pada Python, `SyntaxError: Bad control character` pada Node.js, unescaped quotes, unescaped backslashes regex/Windows path, multiline raw breaks, dan zero-width invisible bytes).
+  - Melakukan validasi internal ganda menggunakan `JSON.parse()` sebelum konten disajikan ke antarmuka pengguna.
+- **Tiga Pilihan Sub-format JSON Cerdas**:
+  - **Struktur Penuh (Full Structure)**: Menyajikan template, kategori, bahasa, persona sistem, parameter variabel input, instruksi khusus, contoh acuan (few-shot), prompt terkompilasi, dan pesan Chat API.
+  - **Format Chat API (Messages)**: Format array `messages` langsung (`[{ role: 'system', ... }, { role: 'user', ... }]`) yang siap pakai untuk OpenAI Chat Completions, Anthropic Claude Messages, dan Google Gemini API.
+  - **String Prompt Aman (Prompt String)**: Objek `{ "prompt": "..." }` dengan sanitasi escape yang aman untuk skrip otomatisasi.
+- **Visualizer Kode Monospace Bergaya IDE Modern**:
+  - Pewarnaan sintaks murni React JSX tanpa dependensi eksternal berat (Keys cyan, Strings emerald, Numbers amber, Booleans purple, Brackets slate).
+  - Dilengkapi nomor baris interaktif (*Line Numbers*) dan baris status validasi RFC 8259.
+- **Tombol Salin & Integrasi Peluncur AI**:
+  - Tombol **Salin JSON** langsung di pojok pratinjau kode dan sinkronisasi otomatis tombol utama **Salin Prompt / Salin JSON**.
+  - Notifikasi toast khusus: *"JSON bersih bebas decode error tersalin! 📋"*.
+  - Dukungan peluncur cepat AI (*AI Tool Launchers*) dan dock mobile yang otomatis menyalin JSON saat tab JSON aktif.
+- **✨ AI Suggest pada Contoh Acuan Few-Shot (`components/FrameworkPane.tsx` & `services/universalAIService.ts`)**:
+  - Penambahan tombol mandiri **AI Suggest** pada kolom *Contoh Masukan (Sample Input)* dan *Contoh Keluaran yang Diharapkan (Expected Output)* di dalam akordion Few-Shot.
+  - Peningkatan prompt kognitif sistem AI spesialis *In-Context Learning* untuk menghasilkan pasangan contoh acuan konkret, padat, dan realistis sesuai aturan kerangka kerja aktif.
+
 ## [7.0.0] - 2026-10-28
 ### 🖼️ Visual Mockup & Benchmark Engine (Selaras 100% Isian Contoh Otomatis untuk Seluruh 360 Template)
 

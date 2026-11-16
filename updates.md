@@ -4,6 +4,21 @@
 This document provides a history of major features and updates to the PromptMatrix application, helping users understand its evolution and current capabilities.
 
 ---
+## V7.1.0 (Clean JSON Prompt Preview with Zero Decode Errors RFC 8259)
+*   **⚡ Zero-Decode-Error JSON Prompt Preview (`services/jsonPromptService.ts` & `components/CleanJsonViewer.tsx`):**
+    *   **New JSON View Tab:** Added a dedicated `{ } JSON` view toggle alongside *Structured* and *Plain Text* in both Studio Output Card and Fullscreen Review Modal.
+    *   **Zero Syntax & Decode Errors:** Strips dangerous control characters and invisible zero-width bytes, normalizes line breaks, and performs internal dual `JSON.parse` validation. Prevents Python `json.loads` failures, Node.js syntax errors, and cURL issues.
+    *   **Three Smart JSON Sub-Formats:**
+        1. *Full Structure (`full`):* Complete payload containing template, category, language, system persona, parameters, additional instructions, few-shot examples, full compiled prompt, and chat messages.
+        2. *API Messages (`messages`):* Pre-built `messages` array (`[{ role: 'system', ... }, { role: 'user', ... }]`) directly compatible with OpenAI Chat Completions, Anthropic Claude Messages, and Google Gemini API.
+        3. *Safe Prompt String (`prompt_only`):* Sanitized single `{ "prompt": "..." }` object.
+    *   **IDE-Styled Monospace Code Visualizer:** Custom syntax highlighting in pure React JSX (Cyan keys, Emerald string values, Amber numbers, Purple booleans, Slate punctuation) with line numbers and RFC 8259 validation bar.
+    *   **Smart Copy Sync:** Top-right quick "Salin JSON" button plus main "Salin Prompt" button dynamically syncs to copy clean JSON with toast confirmation: *"JSON bersih bebas decode error tersalin! 📋"*.
+*   **✨ Few-Shot Reference Example AI Suggest (`components/FrameworkPane.tsx` & `services/universalAIService.ts`):**
+    *   **Individual AI Suggest Buttons:** Added dedicated AI Suggest action buttons on both *Sample Input* and *Expected Output* inside the Few-Shot accordion.
+    *   **In-Context Learning Prompting:** Tailored cognitive AI system prompts to generate realistic, domain-specific sample queries and corresponding high-quality expected answers based on active framework context.
+
+---
 ## V6.4.2 (Discretionary AI Feature Visibility & Static Non-Scrolling Category Grid)
 *   **🔒 Strict Discretionary AI Feature Visibility:**
     *   **Completely Hidden When Inactive:** The Header AI Provider Settings button is wrapped in `{showAIFeatures && ...}` and will NOT render unless AI features are activated.

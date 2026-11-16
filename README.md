@@ -16,6 +16,8 @@
 ## 🌟 Fitur Unggulan
 
 - 💎 **360 Formula Prompt Master**: Mencakup 8 kategori inti dengan 80 subkategori spesifik, termasuk 10 Masterclass 2026 (Reasoning GCC, Cursor Rules, MCP Server, FLUX.1 Descriptive Studio, Kling Director, Suno v4, TikTok Shop Live, LPDP Essay).
+- ⚡ **Pratinjau JSON Bebas "Decode Error" (RFC 8259)**: Tampilan pratinjau JSON terformat dan tervalidasi dengan 3 sub-format (*Struktur Penuh*, *Format Chat API messages*, dan *Prompt String Aman*) yang bebas dari `json.decoder.JSONDecodeError` untuk Python, cURL, LangChain, dan REST API.
+- ✨ **Few-Shot In-Context Learning Booster dengan AI Suggest**: Tingkatkan akurasi prompt hingga +40% dengan contoh acuan masukan dan keluaran yang didukung generator AI Suggest terarah.
 - 🌐 **Deteksi Bahasa Cerdas & Dual Bahasa (EN ⇄ ID)**: Default bahasa Inggris (EN) dengan auto-deteksi preferensi browser (otomatis Bahasa Indonesia jika locale browser ID/IN). Pengguna dapat beralih bahasa kapan saja melalui header switcher dengan persistensi `localStorage`. Seluruh 4.300+ entri teks tersinkronisasi 100%.
 - ⚡ **1-Klik Isi Contoh Nyata (*Fill Sample*)**: Membantu pengguna baru memahami cara kerja formula dengan mengisi data formulir secara otomatis menggunakan skenario riil dalam Bahasa Indonesia atau Bahasa Inggris didukung smart dictionary.
 - 🎨 **2 Mode Antarmuka Intuitif**:

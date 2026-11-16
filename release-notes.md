@@ -4,6 +4,20 @@
 Dokumen ini mencatat perubahan teknis detail untuk setiap versi PromptMatrix.
 
 ---
+## [V7.1.0] - 2026-11-16
+### Clean JSON Prompt Preview (Zero Decode Errors) & Few-Shot AI Suggest
+- **Pratinjau JSON Bebas Decode Error Berstandar RFC 8259 (`services/jsonPromptService.ts` & `components/CleanJsonViewer.tsx`)**:
+  - Menambahkan tab pratinjau ketiga `{ } JSON` pada Studio Output Card dan Modal Review Layar Penuh.
+  - Sanitasi karakter kontrol, normalisasi baris, penghapusan byte tak kasat mata (zero-width chars `\u200B`), dan validasi ganda `JSON.parse` internal.
+  - 100% bebas dari `json.decoder.JSONDecodeError` pada Python, `SyntaxError: Bad control character` pada Node.js, unescaped quotes, dan unescaped backslashes.
+  - 3 Sub-format JSON: **Struktur Penuh (Full Structure)**, **Format Chat API (Messages)** siap pakai OpenAI/Claude/Gemini, dan **Prompt String Aman**.
+  - Visualizer kode monospace modern dengan pewarnaan sintaks murni React JSX dan nomor baris interaktif.
+  - Tombol **Salin JSON** langsung di pojok pratinjau dan sinkronisasi otomatis tombol salin utama.
+- **✨ AI Suggest pada Contoh Acuan Few-Shot (`components/FrameworkPane.tsx` & `services/universalAIService.ts`)**:
+  - Tombol mandiri **AI Suggest** pada kolom *Contoh Masukan (Sample Input)* dan *Contoh Keluaran yang Diharapkan (Expected Output)*.
+  - Prompt kognitif khusus spesialis *In-Context Learning* yang menghasilkan pasangan masukan dan jawaban yang selaras konteks framework.
+
+---
 ## [V7.0.0] - 2026-10-28
 ### Visual Mockup & Benchmark Engine for All 360 Templates
 - **Visual Mockup & Benchmark Showcase (Universal 360 Templates)**:
