@@ -53,6 +53,10 @@ export const VisualPromptPreview: React.FC<VisualPromptPreviewProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showLightbox]);
 
+  if (frameworkName === '__blank_canvas__' || !framework) {
+    return null;
+  }
+
   return (
     <div className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
       isLightTheme 

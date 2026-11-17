@@ -74,8 +74,8 @@ export const buildCleanPromptJSON = (
   let comps: FrameworkComponent[] = fw?.components || [];
   if (comps.length === 0 && fw?.komponen_prompt?.["VARIABEL INPUT"]) {
     comps = Object.entries(fw.komponen_prompt["VARIABEL INPUT"]).map(([k, v]) => ({
-      name: k,
-      ...v
+      ...v,
+      name: v.name || k
     }));
   }
 

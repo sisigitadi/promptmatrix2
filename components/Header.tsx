@@ -7,6 +7,7 @@ interface HeaderProps {
   onShowHelp: () => void;
   onShowStash: () => void;
   onOpenApiKeyModal: () => void;
+  onOpenUploadUpgrade?: () => void;
   savedPromptsCount: number;
   isLightTheme: boolean;
   onToggleTheme: () => void;
@@ -20,6 +21,7 @@ const Header: React.FC<HeaderProps> = ({
   onShowHelp,
   onShowStash,
   onOpenApiKeyModal,
+  onOpenUploadUpgrade,
   savedPromptsCount,
   activeMode = 'gallery',
   onSelectMode = () => {},
@@ -149,6 +151,35 @@ const Header: React.FC<HeaderProps> = ({
               <span className="font-bold text-[11px] sm:text-xs">
                 <span className="sm:hidden">AI</span>
                 <span className="hidden sm:inline">{isConfigured ? preset.name.split(' ')[0] : (language === 'id' ? 'Atur AI' : 'Setup AI')}</span>
+              </span>
+            </button>
+          )}
+
+          {/* Upload & Upgrade Prompt/Skill Button (Only visible when AI features are activated) */}
+          {showAIFeatures && onOpenUploadUpgrade && (
+            <button
+              type="button"
+              onClick={onOpenUploadUpgrade}
+              className="h-8 px-2 sm:h-9 sm:px-3 rounded-xl text-xs font-semibold border bg-slate-900/90 hover:bg-slate-800 border-slate-700 hover:border-emerald-500/60 text-slate-200 hover:text-emerald-300 transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+              title={t('upload_upgrade_menu_btn')}
+              aria-label={t('upload_upgrade_menu_btn')}
+            >
+              <svg
+                className="w-3.5 h-3.5 text-emerald-400 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 12h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              <span className="hidden md:inline font-semibold text-[11px] sm:text-xs">
+                {t('upload_upgrade_menu_btn')}
               </span>
             </button>
           )}

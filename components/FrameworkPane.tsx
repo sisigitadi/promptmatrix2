@@ -19,10 +19,10 @@ interface FrameworkPaneProps {
   subcategoryName: string;
   frameworkName: string;
   framework: Framework;
-  formValues: Record<string, any>;
+  formValues: Record<string, string | string[]>;
   customOtherValues: Record<string, string>;
-  onInputChange: (name: string, value: any) => void;
-  onBatchInputChange?: (updates: Record<string, any>) => void;
+  onInputChange: (name: string, value: string | string[]) => void;
+  onBatchInputChange?: (updates: Record<string, string | string[]>) => void;
   onCustomOtherChange: (name: string, value: string) => void;
   onClearFields: () => void;
   onAiSuggest: (name: string, label: string) => void;
@@ -62,8 +62,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   let allComponents: FrameworkComponent[] = localizedFw?.components || [];
   if (allComponents.length === 0 && framework?.komponen_prompt?.["VARIABEL INPUT"]) {
     allComponents = Object.entries(framework.komponen_prompt["VARIABEL INPUT"]).map(([k, v]) => ({
-      name: k,
-      ...v
+      ...v,
+      name: v.name || k
     }));
   }
 
@@ -71,14 +71,15 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   let dynamicExtraComponents: FrameworkComponent[] = [];
   if (framework?.dynamicSubcomponents) {
     const triggerField = framework.dynamicSubcomponents.trigger;
-    const triggerValue = formValues[triggerField];
+    const rawTrigger = formValues[triggerField];
+    const triggerValue = typeof rawTrigger === 'string' ? rawTrigger : (Array.isArray(rawTrigger) ? rawTrigger[0] : '');
     if (triggerValue && framework.dynamicSubcomponents.options[triggerValue]) {
-      dynamicExtraComponents = framework.dynamicSubcomponents.options[triggerValue].map(c => ({
+      dynamicExtraComponents = framework.dynamicSubcomponents.options[triggerValue].map((c: FrameworkComponent) => ({
         ...c,
         label: translateComponentLabel(c.label || c.name, language),
         placeholder: translatePlaceholder(c.placeholder || '', language),
         info: translateInfo(c.info || '', language),
-        options: c.options ? c.options.map(opt => translateOption(opt, language)) : undefined
+        options: c.options ? c.options.map((opt: string) => translateOption(opt, language)) : undefined
       }));
     }
   }
@@ -127,7 +128,8 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
   };
 
   const renderComponentInput = (comp: FrameworkComponent, index: number) => {
-    const value = formValues[comp.name] ?? '';
+    const rawVal = formValues[comp.name];
+    const value = typeof rawVal === 'string' ? rawVal : (Array.isArray(rawVal) ? rawVal.join(', ') : '');
     const isAiLoading = loadingFieldId === comp.name;
     const isOtherSelected = value === 'Lainnya...' || value === 'Other...';
     const displayLabel = translateComponentLabel(comp.label || comp.name, language);
@@ -215,11 +217,11 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
             <input
               type={comp.type === 'slider' ? 'range' : 'number'}
               id={comp.name}
-              value={value || comp.min || 0}
+              value={value || String(comp.min ?? 0)}
               min={comp.min ?? 0}
               max={comp.max ?? 100}
               step={comp.step ?? 1}
-              onChange={(e) => onInputChange(comp.name, Number(e.target.value))}
+              onChange={(e) => onInputChange(comp.name, e.target.value)}
               className="flex-1 accent-emerald-500"
             />
             <span className="text-xs font-mono bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800 text-emerald-400 min-w-12 text-center">
@@ -437,7 +439,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 )}
               </div>
               <textarea
-                value={formValues['__few_shot_input'] || ''}
+                value={typeof formValues['__few_shot_input'] === 'string' ? formValues['__few_shot_input'] : ''}
                 onChange={(e) => onInputChange('__few_shot_input', e.target.value)}
                 placeholder={language === 'id' ? 'Misal: Teks mentah, poin kasar, atau data input...' : 'e.g., Raw text, rough bullet points, or raw input...'}
                 className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 h-16 resize-y font-mono"
@@ -456,7 +458,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                     className={`h-6 px-2.5 rounded-lg text-[11px] font-medium flex items-center gap-1.5 transition-all ${
                       loadingFieldId === '__few_shot_output'
                         ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-700 animate-pulse cursor-wait'
-                        : 'bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-emerald-300 border border-slate-800 hover:border-emerald-700/40'
+                        : 'bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-emerald-700/40 text-slate-400 hover:text-emerald-300'
                     }`}
                     title={language === 'id' ? 'Bantu contoh keluaran otomatis dengan AI' : 'Suggest expected output with AI'}
                   >
@@ -468,7 +470,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
                 )}
               </div>
               <textarea
-                value={formValues['__few_shot_output'] || ''}
+                value={typeof formValues['__few_shot_output'] === 'string' ? formValues['__few_shot_output'] : ''}
                 onChange={(e) => onInputChange('__few_shot_output', e.target.value)}
                 placeholder={language === 'id' ? 'Misal: Hasil akhir yang terstruktur, padat, dan rapi...' : 'e.g., Structured, clean, and concise target output...'}
                 className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 h-20 resize-y font-mono"

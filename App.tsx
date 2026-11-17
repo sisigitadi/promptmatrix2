@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { PROMPT_FRAMEWORKS, Framework } from './data/frameworks';
 import FrameworkPane from './components/FrameworkPane';
+import BlankCanvasPane from './components/BlankCanvasPane';
 import TemplateGallery from './components/TemplateGallery';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HelpModal from './components/HelpModal';
 import AISettingsModal from './components/AISettingsModal';
+import UploadUpgradeModal from './components/UploadUpgradeModal';
 import { useLanguage } from './contexts/LanguageContext';
 import { 
   addPromptToDB, 
@@ -21,8 +23,24 @@ import {
   enhancePromptWithUniversalAI, 
   suggestFieldContentWithUniversalAI, 
   analyzePromptQualityWithUniversalAI, 
-  PromptAnalysisResult 
+  generateCanvasDraftWithUniversalAI,
+  analyzeAndUpgradeUploadedContentWithUniversalAI,
+  PromptAnalysisResult,
+  UploadedContentUpgradeResult
 } from './services/universalAIService';
+import {
+  BLANK_CANVAS_ID,
+  buildBlankCanvasAgentSkillSpec,
+  buildBlankCanvasJsonPayload,
+  clearBlankCanvasDraft,
+  compileBlankCanvasPrompt,
+  createCanvasBlock,
+  createEmptyCanvasState,
+  loadBlankCanvasDraft,
+  parseUploadedPromptOrSkill,
+  saveBlankCanvasDraft,
+} from './services/blankCanvasService';
+import { BlankCanvasState, BlankCanvasTargetMode, CanvasBlock, SavedPrompt } from './types';
 import { slugifyFormula } from './services/urlHelper';
 import { 
   AI_LOGICS_MAP,
@@ -61,41 +79,42 @@ interface ToolLauncher {
 
 const AI_TOOL_LAUNCHERS: ToolLauncher[] = [
   // 💬 Chat & Reasoning
-  { name: 'ChatGPT', url: 'https://chatgpt.com/', category: 'chat', icon: '🟢', badge: 'GPT-5 / o3' },
-  { name: 'Claude', url: 'https://claude.ai/new', category: 'chat', icon: '🟧', badge: 'Sonnet 4.5' },
-  { name: 'Google Gemini', url: 'https://gemini.google.com/app', category: 'chat', icon: '✨', badge: '3.7 Flash' },
-  { name: 'DeepSeek', url: 'https://chat.deepseek.com/', category: 'chat', icon: '🔵', badge: 'R1 / V3' },
+  { name: 'ChatGPT', url: 'https://chatgpt.com/', category: 'chat', icon: '🟢', badge: 'GPT-6 / o3' },
+  { name: 'Claude', url: 'https://claude.ai/new', category: 'chat', icon: '🟧', badge: 'Sonnet 5.5' },
+  { name: 'Google Gemini', url: 'https://gemini.google.com/app', category: 'chat', icon: '✨', badge: 'Gemini 4 / 3.8' },
+  { name: 'DeepSeek', url: 'https://chat.deepseek.com/', category: 'chat', icon: '🔵', badge: 'V4 / R1' },
   { name: 'Perplexity AI', url: 'https://www.perplexity.ai/', category: 'chat', icon: '🌐', badge: 'Search & Cite' },
   { name: 'Microsoft Copilot', url: 'https://copilot.microsoft.com/', category: 'chat', icon: '🪟', badge: 'Web Pro' },
-  { name: 'Grok (xAI)', url: 'https://x.com/i/grok', category: 'chat', icon: '🖤', badge: 'Grok 4.6' },
+  { name: 'Grok (xAI)', url: 'https://x.com/i/grok', category: 'chat', icon: '🖤', badge: 'Grok 4.7' },
   { name: 'Poe by Quora', url: 'https://poe.com/', category: 'chat', icon: '🤖', badge: 'Multi-Bot' },
   { name: 'HuggingChat', url: 'https://huggingface.co/chat/', category: 'chat', icon: '🤗', badge: 'Open Models' },
   
   // 🎨 Image & Design AI
-  { name: 'Midjourney', url: 'https://www.midjourney.com/explore', category: 'image', icon: '🎨', badge: 'v6.1 / v7' },
-  { name: 'DALL-E 3', url: 'https://chatgpt.com/g/g-2fkYVsCas-dall-e', category: 'image', icon: '🖼️', badge: 'OpenAI' },
+  { name: 'Midjourney', url: 'https://www.midjourney.com/explore', category: 'image', icon: '🎨', badge: 'V8.2 / Edit' },
+  { name: 'ChatGPT Images', url: 'https://chatgpt.com/', category: 'image', icon: '🖼️', badge: 'GPT-Image' },
   { name: 'Leonardo.Ai', url: 'https://app.leonardo.ai/', category: 'image', icon: '🦁', badge: 'Phoenix & Flux' },
-  { name: 'Flux.2 (Fal)', url: 'https://fal.ai/models/fal-ai/flux/dev', category: 'image', icon: '⚡', badge: 'Hyper-Real' },
+  { name: 'FLUX.3 / .2 (Fal)', url: 'https://fal.ai/models/fal-ai/flux/dev', category: 'image', icon: '⚡', badge: 'Pro & Dev' },
   { name: 'Ideogram AI', url: 'https://ideogram.ai/', category: 'image', icon: '🔤', badge: 'Text In Image' },
   { name: 'Recraft.ai', url: 'https://www.recraft.ai/', category: 'image', icon: '📐', badge: 'Vector & 3D' },
   { name: 'Canva Magic', url: 'https://www.canva.com/ai-image-generator/', category: 'image', icon: '🪄', badge: 'Design Studio' },
   { name: 'Adobe Firefly', url: 'https://firefly.adobe.com/', category: 'image', icon: '🪶', badge: 'Commercial' },
 
   // 🎬 Video & Animation AI
-  { name: 'Runway Gen-4', url: 'https://app.runwayml.com/', category: 'video', icon: '🎬', badge: 'Gen-4 Video' },
+  { name: 'Google Veo (Flow)', url: 'https://labs.google/fx/tools/flow', category: 'video', icon: '🎞️', badge: 'Veo 3.1' },
+  { name: 'Runway Gen-4.5', url: 'https://app.runwayml.com/', category: 'video', icon: '🎬', badge: 'Gen-4.5 Video' },
   { name: 'Luma Dream Machine', url: 'https://lumalabs.ai/dream-machine', category: 'video', icon: '🔮', badge: 'Cinematic' },
-  { name: 'Kling AI', url: 'https://klingai.com/', category: 'video', icon: '🎥', badge: 'Kling 2.1' },
+  { name: 'Kling AI', url: 'https://klingai.com/', category: 'video', icon: '🎥', badge: 'Kling 3.0' },
   { name: 'Pika Labs', url: 'https://pika.art/', category: 'video', icon: '⚡', badge: 'Pika 2.0' },
   { name: 'Hailuo AI (Minimax)', url: 'https://hailuoai.video/', category: 'video', icon: '📹', badge: 'Expressive' },
 
   // 🎵 Audio, Voice & Music AI
-  { name: 'Suno AI', url: 'https://suno.com/', category: 'audio', icon: '🎵', badge: 'v4.5 / v5' },
+  { name: 'Suno AI', url: 'https://suno.com/', category: 'audio', icon: '🎵', badge: 'v6 / Studio 2.0' },
   { name: 'Udio Music', url: 'https://www.udio.com/', category: 'audio', icon: '🎸', badge: 'Studio Audio' },
   { name: 'ElevenLabs', url: 'https://elevenlabs.io/app/speech-synthesis', category: 'audio', icon: '🎙️', badge: 'Voice Clone' },
 
   // 💻 Coding & Developer AI
   { name: 'Claude Code', url: 'https://docs.anthropic.com/en/docs/claude-code/overview', category: 'code', icon: '🟧', badge: 'Agent CLI' },
-  { name: 'GitHub Copilot', url: 'https://github.com/features/copilot', category: 'code', icon: '🐙', badge: 'Agents & Skills' },
+  { name: 'GitHub Copilot', url: 'https://github.com/features/copilot', category: 'code', icon: '🐙', badge: 'Agents & Rules' },
   { name: 'Windsurf', url: 'https://windsurf.com/', category: 'code', icon: '🌊', badge: 'Cascade AI' },
   { name: 'Cursor IDE', url: 'https://www.cursor.com/', category: 'code', icon: '💻', badge: 'Agent & Rules' },
   { name: 'v0 by Vercel', url: 'https://v0.dev/', category: 'code', icon: '▲', badge: 'React/Tailwind' },
@@ -115,6 +134,10 @@ const App: React.FC = () => {
   const [isLightTheme, setIsLightTheme] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showAISettingsModal, setShowAISettingsModal] = useState(false);
+  const [showUploadUpgradeModal, setShowUploadUpgradeModal] = useState<boolean>(false);
+  const [isAnalyzingUpload, setIsAnalyzingUpload] = useState<boolean>(false);
+  const [uploadUpgradeError, setUploadUpgradeError] = useState<string | null>(null);
+  const [uploadUpgradeResult, setUploadUpgradeResult] = useState<UploadedContentUpgradeResult | null>(null);
 
   // Navigation & Framework Selection
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -122,8 +145,18 @@ const App: React.FC = () => {
   const [selectedFrameworkName, setSelectedFrameworkName] = useState<string | null>(null);
   const [selectedFramework, setSelectedFramework] = useState<Framework | null>(null);
 
+  // Blank Canvas Mode & Draft State
+  const [isBlankCanvasMode, setIsBlankCanvasMode] = useState<boolean>(false);
+  const [blankCanvasState, setBlankCanvasState] = useState<BlankCanvasState>(() =>
+    loadBlankCanvasDraft()
+  );
+  const [isAiDraftingCanvas, setIsAiDraftingCanvas] = useState<boolean>(false);
+  const [aiDraftError, setAiDraftError] = useState<string | null>(null);
+  const [loadingCanvasBlockId, setLoadingCanvasBlockId] = useState<string | null>(null);
+  const [hasUnappliedEnhancedPrompt, setHasUnappliedEnhancedPrompt] = useState<boolean>(false);
+
   // Form State
-  const [formValues, setFormValues] = useState<Record<string, any>>({});
+  const [formValues, setFormValues] = useState<Record<string, string | string[]>>({});
   const [customOtherValues, setCustomOtherValues] = useState<Record<string, string>>({});
   const [generatedPrompt, setGeneratedPrompt] = useState<string>('');
 
@@ -132,7 +165,7 @@ const App: React.FC = () => {
   const [toolTypeFilter, setToolTypeFilter] = useState<string>('all');
 
   // Stash Management
-  const [savedPrompts, setSavedPrompts] = useState<any[]>([]);
+  const [savedPrompts, setSavedPrompts] = useState<SavedPrompt[]>([]);
   const [showStash, setShowStash] = useState(false);
   const [stashSearch, setStashSearch] = useState('');
   const [editingPromptId, setEditingPromptId] = useState<number | null>(null);
@@ -151,8 +184,45 @@ const App: React.FC = () => {
   const [compareAlternativePrompt, setCompareAlternativePrompt] = useState<string>('');
   const [expandedStashPromptId, setExpandedStashPromptId] = useState<number | null>(null);
 
+  // Hidden AI Features & Skill Pack State & 9-Tap Logo Unlock
+  const [showAIFeatures, setShowAIFeatures] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('pm_ai_unlocked') === 'true';
+    } catch {
+      return false;
+    }
+  });
+  const [logoClickCount, setLogoClickCount] = useState<number>(0);
+  const logoClickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const effectiveBlankCanvasState = useMemo<BlankCanvasState>(() => {
+    if (showAIFeatures || blankCanvasState.targetMode !== 'skill') {
+      return blankCanvasState;
+    }
+    return {
+      ...blankCanvasState,
+      targetMode: 'prompt',
+    };
+  }, [blankCanvasState, showAIFeatures]);
+
+  // Auto-save Blank Canvas draft locally on change
+  useEffect(() => {
+    saveBlankCanvasDraft(blankCanvasState);
+  }, [blankCanvasState]);
+
+  // Live compile Blank Canvas prompt whenever Blank Canvas state, language, or AI unlock state changes
+  useEffect(() => {
+    if (!isBlankCanvasMode) return;
+    const compiled = compileBlankCanvasPrompt(effectiveBlankCanvasState, language);
+    setGeneratedPrompt(compiled);
+    setHasUnappliedEnhancedPrompt(false);
+  }, [isBlankCanvasMode, effectiveBlankCanvasState, language]);
+
   // Clean JSON Serialization (100% Zero Decode Error RFC 8259 Guarantee)
   const cleanJsonPayload = useMemo(() => {
+    if (isBlankCanvasMode) {
+      return buildBlankCanvasJsonPayload(effectiveBlankCanvasState, generatedPrompt, language);
+    }
     return buildCleanPromptJSON(
       selectedFramework,
       selectedFrameworkName,
@@ -163,7 +233,18 @@ const App: React.FC = () => {
       generatedPrompt,
       language
     );
-  }, [selectedFramework, selectedFrameworkName, selectedCategory, selectedSubcategory, formValues, customOtherValues, generatedPrompt, language]);
+  }, [
+    isBlankCanvasMode,
+    effectiveBlankCanvasState,
+    selectedFramework,
+    selectedFrameworkName,
+    selectedCategory,
+    selectedSubcategory,
+    formValues,
+    customOtherValues,
+    generatedPrompt,
+    language,
+  ]);
 
   const cleanJsonString = useMemo(() => {
     return getCleanJSONString(cleanJsonPayload, jsonFormatType);
@@ -171,6 +252,9 @@ const App: React.FC = () => {
 
   // Open Agent Skills (SKILL.md) Serialization & Validation
   const agentSkillSpec = useMemo(() => {
+    if (isBlankCanvasMode) {
+      return buildBlankCanvasAgentSkillSpec(effectiveBlankCanvasState, generatedPrompt, language);
+    }
     return buildAgentSkillSpec({
       framework: selectedFramework,
       frameworkName: selectedFrameworkName,
@@ -182,6 +266,8 @@ const App: React.FC = () => {
       language,
     });
   }, [
+    isBlankCanvasMode,
+    effectiveBlankCanvasState,
     selectedFramework,
     selectedFrameworkName,
     selectedCategory,
@@ -216,16 +302,28 @@ const App: React.FC = () => {
     }
   };
 
-  // Hidden AI Features State & 9-Tap Logo Unlock
-  const [showAIFeatures, setShowAIFeatures] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem('pm_ai_unlocked') === 'true';
-    } catch {
-      return false;
+  const handleDownloadActiveSkill = () => {
+    const filename = `${agentSkillSpec.name || 'promptmatrix-skill'}-SKILL.md`;
+    const blob = new Blob([agentSkillMarkdown], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    URL.revokeObjectURL(url);
+    showToast(t('toast_skill_downloaded'), 'success');
+  };
+
+  useEffect(() => {
+    if (!showAIFeatures && previewViewMode === 'skill') {
+      setPreviewViewMode('structured');
     }
-  });
-  const [logoClickCount, setLogoClickCount] = useState<number>(0);
-  const logoClickTimeoutRef = useRef<any>(null);
+    if (!showAIFeatures) {
+      setShowUploadUpgradeModal(false);
+    }
+  }, [showAIFeatures, previewViewMode]);
 
   const handleLogoTap = () => {
     setViewMode('gallery');
@@ -243,8 +341,8 @@ const App: React.FC = () => {
           }
           showToast(
             updated
-              ? (language === 'id' ? '⚡ Fitur AI Pro Berhasil Diaktifkan!' : '⚡ AI Pro Features Unlocked!')
-              : (language === 'id' ? '🔒 Fitur AI Telah Disembunyikan' : '🔒 AI Features Hidden'),
+              ? (language === 'id' ? '⚡ Fitur AI Pro & Paket Skill Berhasil Diaktifkan!' : '⚡ AI Pro & Skill Pack Unlocked!')
+              : (language === 'id' ? '🔒 Fitur AI Pro & Paket Skill Disembunyikan' : '🔒 AI Pro & Skill Pack Hidden'),
             'success'
           );
           return updated;
@@ -462,12 +560,59 @@ const App: React.FC = () => {
     );
   };
 
+  const handleOpenBlankCanvas = () => {
+    setSelectedCategory(null);
+    setSelectedSubcategory(null);
+    setSelectedFrameworkName(null);
+    setSelectedFramework(null);
+    setIsBlankCanvasMode(true);
+    setAnalysisResult(null);
+    setHasUnappliedEnhancedPrompt(false);
+    setAiDraftError(null);
+    const compiled = compileBlankCanvasPrompt(effectiveBlankCanvasState, language);
+    setGeneratedPrompt(compiled);
+    setViewMode('studio');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBlankCanvasChange = (updater: (prev: BlankCanvasState) => BlankCanvasState) => {
+    if (!isBlankCanvasMode) {
+      setIsBlankCanvasMode(true);
+    }
+    setBlankCanvasState((prev) => updater(prev));
+  };
+
+  const handleClearBlankCanvas = () => {
+    clearBlankCanvasDraft();
+    setBlankCanvasState(createEmptyCanvasState());
+    setAiDraftError(null);
+    setAnalysisResult(null);
+    setHasUnappliedEnhancedPrompt(false);
+    setGeneratedPrompt('');
+    showToast(t('toast_canvas_cleared'), 'info');
+  };
+
+  const handleApplyEnhancedToScratchpad = () => {
+    if (!generatedPrompt.trim()) return;
+    setBlankCanvasState((prev) => ({
+      ...prev,
+      scratchpad: generatedPrompt,
+      blocks: [],
+      updatedAt: Date.now(),
+    }));
+    setHasUnappliedEnhancedPrompt(false);
+    showToast(t('toast_canvas_enhanced_applied'), 'success');
+  };
+
   const handleSelectFramework = (
     catName: string,
     subcatName: string,
     fwName: string,
     fw: Framework
   ) => {
+    setIsBlankCanvasMode(false);
+    setHasUnappliedEnhancedPrompt(false);
+    setAiDraftError(null);
     setSelectedCategory(catName);
     setSelectedSubcategory(subcatName);
     setSelectedFrameworkName(fwName);
@@ -484,7 +629,7 @@ const App: React.FC = () => {
       console.error('Error saving recent template:', e);
     }
 
-    const initialValues: Record<string, any> = {};
+    const initialValues: Record<string, string | string[]> = {};
     const initialOther: Record<string, string> = {};
     setFormValues(initialValues);
     setCustomOtherValues(initialOther);
@@ -524,7 +669,7 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handleInputChange = (name: string, value: any) => {
+  const handleInputChange = (name: string, value: string | string[]) => {
     setFormValues(prev => {
       const updatedValues = { ...prev, [name]: value };
       if (selectedFramework && selectedFrameworkName) {
@@ -535,7 +680,7 @@ const App: React.FC = () => {
     });
   };
 
-  const handleBatchInputChange = (newValues: Record<string, any>) => {
+  const handleBatchInputChange = (newValues: Record<string, string | string[]>) => {
     setFormValues(prev => {
       const updatedValues = { ...prev, ...newValues };
       if (selectedFramework && selectedFrameworkName) {
@@ -567,21 +712,56 @@ const App: React.FC = () => {
   };
 
   const handleSavePrompt = async () => {
+    if (isBlankCanvasMode) {
+      if (!generatedPrompt.trim()) return;
+      const canvasDisplayName =
+        blankCanvasState.title.trim() ||
+        (language === 'id' ? 'Canvas Kosong Kustom' : 'Custom Blank Canvas');
+
+      try {
+        const promptToSave: Omit<SavedPrompt, 'id' | 'timestamp'> = {
+          name: `${canvasDisplayName} - ${new Date().toLocaleDateString()}`,
+          frameworkId: BLANK_CANVAS_ID,
+          category:
+            blankCanvasState.targetMode === 'skill' && showAIFeatures
+              ? 'agent-skill'
+              : 'scratch',
+          promptComponents: blankCanvasState.blocks,
+          interactiveFormValues: {},
+          otherInputValues: {},
+          userDefinedInteraction: '',
+          generatedPrompt,
+          promptToCopy: generatedPrompt,
+          language,
+          selectedFrameworkName: canvasDisplayName,
+          blankCanvasSnapshot: blankCanvasState,
+        };
+
+        await addPromptToDB(promptToSave);
+        await loadSavedPrompts();
+        showToast(t('toast_saved'), 'success');
+      } catch (error) {
+        console.error('Error saving blank canvas prompt:', error);
+        showToast(language === 'id' ? 'Gagal menyimpan prompt' : 'Error saving prompt', 'error');
+      }
+      return;
+    }
+
     if (!selectedFramework || !selectedFrameworkName || !generatedPrompt) return;
 
     try {
-      const promptToSave = {
+      const promptToSave: Omit<SavedPrompt, 'id' | 'timestamp'> = {
         name: `${selectedFrameworkName} - ${new Date().toLocaleDateString()}`,
         frameworkId: selectedFrameworkName,
-        category: (selectedCategory || 'text') as any,
+        category: selectedCategory || 'text',
         promptComponents: [],
         interactiveFormValues: formValues,
         otherInputValues: customOtherValues,
         userDefinedInteraction: '',
         generatedPrompt,
         promptToCopy: generatedPrompt,
-        language: language,
-        selectedFrameworkName: selectedFrameworkName
+        language,
+        selectedFrameworkName,
       };
 
       await addPromptToDB(promptToSave);
@@ -593,12 +773,49 @@ const App: React.FC = () => {
     }
   };
 
-  const handleLoadPrompt = (prompt: any) => {
+  const handleLoadPrompt = (prompt: SavedPrompt) => {
     try {
+      if (prompt.frameworkId === BLANK_CANVAS_ID) {
+        const restoredState: BlankCanvasState = prompt.blankCanvasSnapshot
+          ? {
+              ...createEmptyCanvasState(),
+              ...prompt.blankCanvasSnapshot,
+              blocks: Array.isArray(prompt.blankCanvasSnapshot.blocks)
+                ? prompt.blankCanvasSnapshot.blocks
+                : [],
+              updatedAt: Date.now(),
+            }
+          : {
+              ...createEmptyCanvasState(),
+              title: prompt.selectedFrameworkName || prompt.name || '',
+              scratchpad: prompt.generatedPrompt || '',
+              targetMode: prompt.category === 'agent-skill' ? 'skill' : 'prompt',
+              updatedAt: Date.now(),
+            };
+
+        setSelectedCategory(null);
+        setSelectedSubcategory(null);
+        setSelectedFrameworkName(null);
+        setSelectedFramework(null);
+        setBlankCanvasState(restoredState);
+        setIsBlankCanvasMode(true);
+        setHasUnappliedEnhancedPrompt(false);
+        setAnalysisResult(null);
+        setAiDraftError(null);
+        setGeneratedPrompt(
+          prompt.generatedPrompt || compileBlankCanvasPrompt(restoredState, language)
+        );
+        setViewMode('studio');
+        setShowStash(false);
+        showToast(t('toast_loaded'), 'success');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
       let foundFw: Framework | null = null;
       let foundCat: string | null = null;
       let foundSubcat: string | null = null;
-      let foundName = prompt.selectedFrameworkName || prompt.frameworkId;
+      const foundName = prompt.selectedFrameworkName || prompt.frameworkId || '';
 
       // Find in PROMPT_FRAMEWORKS
       Object.entries(PROMPT_FRAMEWORKS).forEach(([cat, subcats]) => {
@@ -612,6 +829,9 @@ const App: React.FC = () => {
       });
 
       if (foundFw && foundCat && foundSubcat) {
+        setIsBlankCanvasMode(false);
+        setHasUnappliedEnhancedPrompt(false);
+        setAiDraftError(null);
         setSelectedCategory(foundCat);
         setSelectedSubcategory(foundSubcat);
         setSelectedFrameworkName(foundName);
@@ -619,10 +839,14 @@ const App: React.FC = () => {
         setFormValues(prompt.interactiveFormValues || {});
         setCustomOtherValues(prompt.otherInputValues || {});
         setGeneratedPrompt(prompt.generatedPrompt || '');
+        setViewMode('studio');
+        setShowStash(false);
         showToast(t('toast_loaded'), 'success');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         setGeneratedPrompt(prompt.generatedPrompt || '');
+        setViewMode('studio');
+        setShowStash(false);
         showToast(t('toast_loaded'), 'success');
       }
     } catch (err) {
@@ -642,12 +866,12 @@ const App: React.FC = () => {
     }
   };
 
-  const handleStartRename = (prompt: any) => {
+  const handleStartRename = (prompt: SavedPrompt) => {
     setEditingPromptId(prompt.id);
     setEditNameInput(prompt.name);
   };
 
-  const handleSaveRename = async (prompt: any) => {
+  const handleSaveRename = async (prompt: SavedPrompt) => {
     if (editNameInput.trim()) {
       try {
         await updatePromptInDB({
@@ -788,48 +1012,314 @@ const App: React.FC = () => {
     }
   };
 
+  const handleAiDraftFromIdea = async (idea: string) => {
+    const trimmedIdea = idea.trim();
+    if (!trimmedIdea) {
+      setAiDraftError(null);
+      return;
+    }
+
+    if (!isAIConfigured()) {
+      const setupMsg = t('toast_need_ai_setup');
+      setAiDraftError(setupMsg);
+      showToast(setupMsg, 'info');
+      setShowAISettingsModal(true);
+      return;
+    }
+
+    setAiDraftError(null);
+    setIsAiDraftingCanvas(true);
+    try {
+      const targetMode = showAIFeatures ? blankCanvasState.targetMode : 'prompt';
+      const draft = await generateCanvasDraftWithUniversalAI(trimmedIdea, targetMode, language);
+
+      const mappedBlocks: CanvasBlock[] = draft.blocks.map((block) =>
+        createCanvasBlock(block.type, language, block.label, block.value)
+      );
+
+      setBlankCanvasState((prev) => ({
+        ...prev,
+        title: draft.title || prev.title,
+        description: draft.description || prev.description,
+        scratchpad: draft.scratchpad || prev.scratchpad,
+        blocks: mappedBlocks.length > 0 ? mappedBlocks : prev.blocks,
+        fewShotInput: draft.fewShotInput !== undefined ? draft.fewShotInput : prev.fewShotInput,
+        fewShotOutput: draft.fewShotOutput !== undefined ? draft.fewShotOutput : prev.fewShotOutput,
+        skillName:
+          targetMode === 'skill' && draft.skillName ? draft.skillName : prev.skillName,
+        skillDescription:
+          targetMode === 'skill' && draft.skillDescription
+            ? draft.skillDescription
+            : prev.skillDescription,
+        updatedAt: Date.now(),
+      }));
+      setHasUnappliedEnhancedPrompt(false);
+      showToast(t('toast_canvas_draft_ready'), 'success');
+    } catch (err: unknown) {
+      console.error('Error generating canvas draft with AI:', err);
+      const errMsg =
+        err instanceof Error && err.message
+          ? err.message
+          : language === 'id'
+            ? 'Gagal menyusun draft AI. Periksa pengaturan provider AI Anda.'
+            : 'Failed to generate AI draft. Check your AI provider settings.';
+      setAiDraftError(errMsg);
+      showToast(errMsg, 'error');
+    } finally {
+      setIsAiDraftingCanvas(false);
+    }
+  };
+
+  const handleAiSuggestCanvasBlock = async (blockId: string, label: string) => {
+    if (!checkAIConfiguredOrPrompt()) return;
+
+    setLoadingCanvasBlockId(blockId);
+    try {
+      const contextParts: string[] = [];
+      if (blankCanvasState.title.trim()) {
+        contextParts.push(`Judul: ${blankCanvasState.title.trim()}`);
+      }
+      if (blankCanvasState.description.trim()) {
+        contextParts.push(`Deskripsi: ${blankCanvasState.description.trim()}`);
+      }
+      blankCanvasState.blocks
+        .filter((b) => b.id !== blockId && b.value.trim())
+        .forEach((b) => {
+          contextParts.push(`${b.label}: ${b.value.trim()}`);
+        });
+      if (blankCanvasState.scratchpad.trim()) {
+        contextParts.push(`Scratchpad: ${blankCanvasState.scratchpad.trim()}`);
+      }
+
+      const contextName = blankCanvasState.title.trim() || 'Canvas Kosong';
+      const suggestion = await suggestFieldContentWithUniversalAI(
+        label,
+        contextName,
+        contextParts.join('\n'),
+        language
+      );
+
+      if (suggestion) {
+        setBlankCanvasState((prev) => ({
+          ...prev,
+          blocks: prev.blocks.map((block) =>
+            block.id === blockId ? { ...block, value: suggestion } : block
+          ),
+          updatedAt: Date.now(),
+        }));
+        showToast(t('toast_suggested'), 'success');
+      }
+    } catch (err: unknown) {
+      console.error('Error suggesting canvas block with AI:', err);
+      const errMsg = err instanceof Error ? err.message : '';
+      showToast(errMsg || (language === 'id' ? 'Saran AI gagal' : 'AI Suggestion failed'), 'error');
+    } finally {
+      setLoadingCanvasBlockId(null);
+    }
+  };
+
+  const handleAiSuggestCanvasFewShot = async (
+    field: '__few_shot_input' | '__few_shot_output',
+    label: string
+  ) => {
+    if (!checkAIConfiguredOrPrompt()) return;
+
+    setLoadingCanvasBlockId(field);
+    try {
+      const contextParts: string[] = [];
+      if (blankCanvasState.title.trim()) {
+        contextParts.push(`Judul: ${blankCanvasState.title.trim()}`);
+      }
+      if (blankCanvasState.description.trim()) {
+        contextParts.push(`Deskripsi: ${blankCanvasState.description.trim()}`);
+      }
+      blankCanvasState.blocks
+        .filter((b) => b.value.trim())
+        .forEach((b) => {
+          contextParts.push(`${b.label}: ${b.value.trim()}`);
+        });
+      if (blankCanvasState.scratchpad.trim()) {
+        contextParts.push(`Scratchpad: ${blankCanvasState.scratchpad.trim()}`);
+      }
+      if (field === '__few_shot_output' && blankCanvasState.fewShotInput.trim()) {
+        contextParts.push(`Sample Input: ${blankCanvasState.fewShotInput.trim()}`);
+      }
+      if (field === '__few_shot_input' && blankCanvasState.fewShotOutput.trim()) {
+        contextParts.push(`Expected Output: ${blankCanvasState.fewShotOutput.trim()}`);
+      }
+
+      const contextName = blankCanvasState.title.trim() || 'Canvas Kosong';
+      const suggestion = await suggestFieldContentWithUniversalAI(
+        label,
+        contextName,
+        contextParts.join('\n'),
+        language
+      );
+
+      if (suggestion) {
+        setBlankCanvasState((prev) => ({
+          ...prev,
+          fewShotInput: field === '__few_shot_input' ? suggestion : prev.fewShotInput,
+          fewShotOutput: field === '__few_shot_output' ? suggestion : prev.fewShotOutput,
+          updatedAt: Date.now(),
+        }));
+        showToast(t('toast_suggested'), 'success');
+      }
+    } catch (err: unknown) {
+      console.error('Error suggesting canvas few-shot with AI:', err);
+      const errMsg = err instanceof Error ? err.message : '';
+      showToast(errMsg || (language === 'id' ? 'Saran AI gagal' : 'AI Suggestion failed'), 'error');
+    } finally {
+      setLoadingCanvasBlockId(null);
+    }
+  };
+
   const handleAiEnhancePrompt = async () => {
-    if (!checkAIConfiguredOrPrompt() || !selectedFrameworkName || !generatedPrompt) return;
+    const activeContextName = isBlankCanvasMode
+      ? blankCanvasState.title.trim() || 'Canvas Kosong'
+      : selectedFrameworkName;
+    if (!checkAIConfiguredOrPrompt() || !activeContextName || !generatedPrompt) return;
 
     setIsEnhancing(true);
     try {
       const enhanced = await enhancePromptWithUniversalAI(
         generatedPrompt,
-        selectedFrameworkName,
+        activeContextName,
         language
       );
 
       if (enhanced) {
         setGeneratedPrompt(enhanced);
+        if (isBlankCanvasMode) {
+          setHasUnappliedEnhancedPrompt(true);
+        }
         showToast(t('toast_enhanced'), 'success');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error enhancing prompt with AI:', err);
-      showToast(err.message || (language === 'id' ? 'Penyempurnaan AI gagal' : 'AI Enhancement failed'), 'error');
+      const errMsg = err instanceof Error ? err.message : '';
+      showToast(errMsg || (language === 'id' ? 'Penyempurnaan AI gagal' : 'AI Enhancement failed'), 'error');
     } finally {
       setIsEnhancing(false);
     }
   };
 
   const handleAiAnalyzePrompt = async () => {
-    if (!checkAIConfiguredOrPrompt() || !selectedFrameworkName || !generatedPrompt) return;
+    const activeContextName = isBlankCanvasMode
+      ? blankCanvasState.title.trim() || 'Canvas Kosong'
+      : selectedFrameworkName;
+    if (!checkAIConfiguredOrPrompt() || !activeContextName || !generatedPrompt) return;
 
     setIsAnalyzing(true);
     try {
       const result = await analyzePromptQualityWithUniversalAI(
         generatedPrompt,
-        selectedFrameworkName,
+        activeContextName,
         language
       );
 
       setAnalysisResult(result);
       setShowAnalysisModal(true);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error analyzing prompt with AI:', err);
-      showToast(err.message || (language === 'id' ? 'Analisis kualitas AI gagal' : 'AI Analysis failed'), 'error');
+      const errMsg = err instanceof Error ? err.message : '';
+      showToast(errMsg || (language === 'id' ? 'Analisis kualitas AI gagal' : 'AI Analysis failed'), 'error');
     } finally {
       setIsAnalyzing(false);
     }
+  };
+
+  const handleOpenUploadUpgrade = (): void => {
+    if (!showAIFeatures) return;
+    setUploadUpgradeError(null);
+    setShowUploadUpgradeModal(true);
+  };
+
+  const handleAnalyzeAndUpgradeUpload = async (
+    rawContent: string,
+    targetKind: 'auto' | BlankCanvasTargetMode,
+    upgradeGoal: string
+  ): Promise<void> => {
+    if (!showAIFeatures) return;
+    if (!isAIConfigured()) {
+      const setupMsg = t('toast_need_ai_setup');
+      setUploadUpgradeError(setupMsg);
+      showToast(setupMsg, 'info');
+      return;
+    }
+
+    setUploadUpgradeError(null);
+    setIsAnalyzingUpload(true);
+    try {
+      const result = await analyzeAndUpgradeUploadedContentWithUniversalAI(
+        rawContent,
+        targetKind,
+        upgradeGoal,
+        language
+      );
+      setUploadUpgradeResult(result);
+      showToast(t('toast_upload_upgraded'), 'success');
+    } catch (err: unknown) {
+      console.error('Error analyzing and upgrading uploaded content:', err);
+      const errMsg =
+        err instanceof Error && err.message
+          ? err.message
+          : language === 'id'
+            ? 'Gagal menganalisis dan meningkatkan konten dengan AI.'
+            : 'Failed to analyze and upgrade uploaded content with AI.';
+      setUploadUpgradeError(errMsg);
+      showToast(errMsg, 'error');
+    } finally {
+      setIsAnalyzingUpload(false);
+    }
+  };
+
+  const handleApplyUpgradedToCanvas = (upgraded: UploadedContentUpgradeResult): void => {
+    const emptyState = createEmptyCanvasState();
+    const nextState: BlankCanvasState = {
+      ...emptyState,
+      title: upgraded.upgradedDraft.title,
+      description: upgraded.upgradedDraft.description,
+      targetMode: upgraded.detectedKind,
+      scratchpad: upgraded.upgradedDraft.scratchpad,
+      blocks: upgraded.upgradedDraft.blocks.map((b) =>
+        createCanvasBlock(b.type, language, b.label, b.value)
+      ),
+      fewShotInput: upgraded.upgradedDraft.fewShotInput || '',
+      fewShotOutput: upgraded.upgradedDraft.fewShotOutput || '',
+      skillName: upgraded.upgradedDraft.skillName || '',
+      skillDescription: upgraded.upgradedDraft.skillDescription || '',
+      updatedAt: Date.now(),
+    };
+
+    setBlankCanvasState(nextState);
+    setIsBlankCanvasMode(true);
+    setSelectedCategory(null);
+    setSelectedSubcategory(null);
+    setSelectedFrameworkName(null);
+    setSelectedFramework(null);
+    setAnalysisResult(null);
+    setHasUnappliedEnhancedPrompt(false);
+    setViewMode('studio');
+    setShowUploadUpgradeModal(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast(t('toast_upload_applied'), 'success');
+  };
+
+  const handleLoadOriginalToCanvas = (rawContent: string, filename?: string): void => {
+    const parsed = parseUploadedPromptOrSkill(rawContent, filename, language);
+    setBlankCanvasState(parsed);
+    setIsBlankCanvasMode(true);
+    setSelectedCategory(null);
+    setSelectedSubcategory(null);
+    setSelectedFrameworkName(null);
+    setSelectedFramework(null);
+    setAnalysisResult(null);
+    setHasUnappliedEnhancedPrompt(false);
+    setViewMode('studio');
+    setShowUploadUpgradeModal(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast(t('toast_loaded'), 'success');
   };
 
   // Filter stash prompts
@@ -877,12 +1367,17 @@ const App: React.FC = () => {
         onShowHelp={() => setShowHelpModal(true)}
         onShowStash={() => setShowStash(!showStash)}
         onOpenApiKeyModal={() => setShowAISettingsModal(true)}
+        onOpenUploadUpgrade={showAIFeatures ? handleOpenUploadUpgrade : undefined}
         savedPromptsCount={savedPrompts.length}
         isLightTheme={isLightTheme}
         onToggleTheme={() => setIsLightTheme(!isLightTheme)}
         activeMode={viewMode}
         showAIFeatures={showAIFeatures}
         onSelectMode={(mode) => {
+          if (mode === 'studio' && !selectedFramework) {
+            handleOpenBlankCanvas();
+            return;
+          }
           setViewMode(mode);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
@@ -895,6 +1390,7 @@ const App: React.FC = () => {
           <TemplateGallery
             frameworksData={PROMPT_FRAMEWORKS}
             onSelectFramework={handleSelectFramework}
+            onOpenBlankCanvas={handleOpenBlankCanvas}
             selectedFrameworkName={selectedFrameworkName}
             activeCategory={selectedCategory || undefined}
             onCategoryChange={(cat) => setSelectedCategory(cat)}
@@ -951,9 +1447,32 @@ const App: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              {/* Left Column: Form Editor (Spacious 7 cols / ~58%) */}
+              {/* Left Column: Form Editor or Blank Canvas (Spacious 7 cols / ~58%) */}
               <div className="lg:col-span-7">
-                {selectedFramework && selectedFrameworkName ? (
+                {isBlankCanvasMode || !selectedFramework || !selectedFrameworkName ? (
+                  <BlankCanvasPane
+                    state={effectiveBlankCanvasState}
+                    onChange={handleBlankCanvasChange}
+                    onClearCanvas={handleClearBlankCanvas}
+                    onBackToGallery={() => {
+                      setViewMode('gallery');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    showAIFeatures={showAIFeatures}
+                    onAiDraftFromIdea={handleAiDraftFromIdea}
+                    isAiDrafting={isAiDraftingCanvas}
+                    aiDraftError={aiDraftError}
+                    onClearAiDraftError={() => setAiDraftError(null)}
+                    onOpenAiSettings={() => setShowAISettingsModal(true)}
+                    onAiSuggestBlock={handleAiSuggestCanvasBlock}
+                    onAiSuggestFewShot={handleAiSuggestCanvasFewShot}
+                    loadingBlockId={loadingCanvasBlockId}
+                    onApplyEnhancedToScratchpad={handleApplyEnhancedToScratchpad}
+                    hasUnappliedEnhancedPrompt={hasUnappliedEnhancedPrompt}
+                    onOpenUploadUpgrade={showAIFeatures ? handleOpenUploadUpgrade : undefined}
+                    isLightTheme={isLightTheme}
+                  />
+                ) : (
                   <FrameworkPane
                     categoryName={selectedCategory || ''}
                     subcategoryName={selectedSubcategory || ''}
@@ -980,30 +1499,6 @@ const App: React.FC = () => {
                     generatedPrompt={generatedPrompt}
                     isLightTheme={isLightTheme}
                   />
-                ) : (
-                  <div className="bg-[#0f172a]/95 border border-slate-800/90 rounded-3xl p-16 text-center text-slate-400 flex flex-col items-center justify-center min-h-[380px] shadow-2xl space-y-4">
-                    <div className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400">
-                      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                      </svg>
-                    </div>
-                    <div className="space-y-1">
-                      <h3 className="text-base font-bold text-slate-200">
-                        {language === 'id' ? 'Belum Ada Template yang Dipilih' : 'No Template Selected Yet'}
-                      </h3>
-                      <p className="text-xs text-slate-400 max-w-sm">
-                        {language === 'id' 
-                          ? 'Buka galeri template untuk memilih kebutuhan prompt Anda.'
-                          : 'Open the template gallery to choose your prompt template.'}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setViewMode('gallery')}
-                      className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-colors shadow-lg"
-                    >
-                      {language === 'id' ? 'Buka Galeri Template' : 'Explore Templates'}
-                    </button>
-                  </div>
                 )}
               </div>
 
@@ -1038,7 +1533,7 @@ const App: React.FC = () => {
                                 <span>{t('preview_json_badge')}</span>
                               </span>
                             </>
-                          ) : previewViewMode === 'skill' ? (
+                          ) : showAIFeatures && previewViewMode === 'skill' ? (
                             <>
                               <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-emerald-400 font-medium">
                                 {agentSkillMarkdown.length} {t('chars_count')}
@@ -1139,20 +1634,22 @@ const App: React.FC = () => {
                             </svg>
                             <span>{t('preview_json')}</span>
                           </button>
-                          <button
-                            type="button"
-                            onClick={() => setPreviewViewMode('skill')}
-                            className={`px-2.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                              previewViewMode === 'skill'
-                                ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
-                                : 'text-slate-300 hover:text-white'
-                            }`}
-                          >
-                            <svg className="w-3 h-3 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            <span>{t('preview_skill')}</span>
-                          </button>
+                          {showAIFeatures && (
+                            <button
+                              type="button"
+                              onClick={() => setPreviewViewMode('skill')}
+                              className={`px-2.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                                previewViewMode === 'skill'
+                                  ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
+                                  : 'text-slate-300 hover:text-white'
+                              }`}
+                            >
+                              <svg className="w-3 h-3 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                              </svg>
+                              <span>{t('preview_skill')}</span>
+                            </button>
+                          )}
                         </div>
                       </div>
                     )}
@@ -1181,7 +1678,7 @@ const App: React.FC = () => {
                           isLightTheme={isLightTheme}
                         />
                       )}
-                      {previewViewMode === 'skill' && (
+                      {showAIFeatures && previewViewMode === 'skill' && (
                         <AgentSkillViewer
                           skillSpec={agentSkillSpec}
                           skillMarkdown={agentSkillMarkdown}
@@ -1610,14 +2107,49 @@ const App: React.FC = () => {
         showAIFeatures={showAIFeatures}
       />
 
-      {/* Universal Multi-Provider AI Settings Modal */}
-      <AISettingsModal
-        show={showAISettingsModal}
-        onHide={() => setShowAISettingsModal(false)}
-        onSettingsSaved={() => {
-          showToast(t('toast_settings_saved'), 'success');
-        }}
-      />
+      {/* Upload & Upgrade Prompt / Skill Modal */}
+      {showAIFeatures && (
+        <UploadUpgradeModal
+          show={showUploadUpgradeModal}
+          onClose={() => setShowUploadUpgradeModal(false)}
+          onAnalyzeAndUpgrade={handleAnalyzeAndUpgradeUpload}
+          isAnalyzing={isAnalyzingUpload}
+          error={uploadUpgradeError}
+          onClearError={() => setUploadUpgradeError(null)}
+          result={uploadUpgradeResult}
+          onResetResult={() => setUploadUpgradeResult(null)}
+          onApplyUpgradedToCanvas={handleApplyUpgradedToCanvas}
+          onLoadOriginalToCanvas={handleLoadOriginalToCanvas}
+          onCopyText={copyToClipboard}
+          onOpenAiSettings={() => setShowAISettingsModal(true)}
+          isLightTheme={isLightTheme}
+        />
+      )}
+
+      {/* Universal Multi-Provider AI Settings & Private Skill Pack Modal */}
+      {showAIFeatures && (
+        <AISettingsModal
+          show={showAISettingsModal}
+          onHide={() => setShowAISettingsModal(false)}
+          onSettingsSaved={() => {
+            showToast(t('toast_settings_saved'), 'success');
+          }}
+          activeSkillSpec={agentSkillSpec}
+          activeSkillMarkdown={agentSkillMarkdown}
+          activeSkillValidation={agentSkillValidation}
+          hasActivePrompt={Boolean(generatedPrompt)}
+          onCopyActiveSkill={() => copyToClipboard(agentSkillMarkdown, t('toast_skill_copied'))}
+          onDownloadActiveSkill={handleDownloadActiveSkill}
+          onOpenSkillInStudio={() => {
+            setPreviewViewMode('skill');
+            if (!selectedFramework && !isBlankCanvasMode) {
+              handleOpenBlankCanvas();
+            } else {
+              setViewMode('studio');
+            }
+          }}
+        />
+      )}
 
       {/* AI Analysis Quality Modal */}
       {showAnalysisModal && analysisResult && (
@@ -1708,12 +2240,21 @@ const App: React.FC = () => {
                     {t('review_modal_title')}
                   </h3>
                   <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono mt-0.5">
-                    {selectedFrameworkName && (
-                      <span className="text-emerald-400 font-medium truncate max-w-[200px] sm:max-w-xs">
-                        {translateFrameworkName(selectedFrameworkName, language)}
-                      </span>
-                    )}
-                    <span>•</span>
+                    {isBlankCanvasMode ? (
+                      <>
+                        <span className="text-emerald-400 font-medium truncate max-w-[200px] sm:max-w-xs">
+                          {blankCanvasState.title.trim() || t('blank_canvas_title')}
+                        </span>
+                        <span>•</span>
+                      </>
+                    ) : selectedFrameworkName ? (
+                      <>
+                        <span className="text-emerald-400 font-medium truncate max-w-[200px] sm:max-w-xs">
+                          {translateFrameworkName(selectedFrameworkName, language)}
+                        </span>
+                        <span>•</span>
+                      </>
+                    ) : null}
                     {previewViewMode === 'json' ? (
                       <>
                         <span className="text-cyan-400 font-medium">{cleanJsonString.length} {t('chars_count')}</span>
@@ -1723,7 +2264,7 @@ const App: React.FC = () => {
                           ✓ {t('preview_json_badge')}
                         </span>
                       </>
-                    ) : previewViewMode === 'skill' ? (
+                    ) : showAIFeatures && previewViewMode === 'skill' ? (
                       <>
                         <span className="text-emerald-400 font-medium">{agentSkillMarkdown.length} {t('chars_count')}</span>
                         <span>•</span>
@@ -1792,20 +2333,22 @@ const App: React.FC = () => {
                     </svg>
                     <span className="hidden sm:inline">{t('preview_json')}</span>
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => setPreviewViewMode('skill')}
-                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                      previewViewMode === 'skill'
-                        ? 'bg-emerald-600 text-white font-semibold shadow-sm'
-                        : 'text-slate-300 hover:text-white'
-                    }`}
-                  >
-                    <svg className="w-3.5 h-3.5 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    <span className="hidden sm:inline">{t('preview_skill')}</span>
-                  </button>
+                  {showAIFeatures && (
+                    <button
+                      type="button"
+                      onClick={() => setPreviewViewMode('skill')}
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                        previewViewMode === 'skill'
+                          ? 'bg-emerald-600 text-white font-semibold shadow-sm'
+                          : 'text-slate-300 hover:text-white'
+                      }`}
+                    >
+                      <svg className="w-3.5 h-3.5 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      <span className="hidden sm:inline">{t('preview_skill')}</span>
+                    </button>
+                  )}
                 </div>
 
                 <button
@@ -1824,15 +2367,17 @@ const App: React.FC = () => {
             {/* Modal Body - Spacious & Comfortable Reading Area */}
             <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[#070b13] space-y-4">
               {/* Visual Mockup & Contoh Hasil in Expanded Modal */}
-              <div className="max-w-3xl mx-auto">
-                <VisualPromptPreview
-                  promptText={generatedPrompt}
-                  framework={selectedFramework}
-                  frameworkName={selectedFrameworkName}
-                  category={selectedCategory}
-                  isLightTheme={isLightTheme}
-                />
-              </div>
+              {!isBlankCanvasMode && (
+                <div className="max-w-3xl mx-auto">
+                  <VisualPromptPreview
+                    promptText={generatedPrompt}
+                    framework={selectedFramework}
+                    frameworkName={selectedFrameworkName}
+                    category={selectedCategory}
+                    isLightTheme={isLightTheme}
+                  />
+                </div>
+              )}
 
               {previewViewMode === 'structured' && (
                 <div className="max-w-3xl mx-auto">
@@ -1856,7 +2401,7 @@ const App: React.FC = () => {
                   />
                 </div>
               )}
-              {previewViewMode === 'skill' && (
+              {showAIFeatures && previewViewMode === 'skill' && (
                 <div className="max-w-3xl mx-auto">
                   <AgentSkillViewer
                     skillSpec={agentSkillSpec}

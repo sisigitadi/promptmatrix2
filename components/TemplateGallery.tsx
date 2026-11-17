@@ -39,6 +39,7 @@ export type SortOption = 'default' | 'popular' | 'alpha-asc' | 'alpha-desc' | 'f
 interface TemplateGalleryProps {
   frameworksData: PromptFrameworksType;
   onSelectFramework: (category: string, subcategory: string, frameworkName: string, framework: Framework) => void;
+  onOpenBlankCanvas: () => void;
   selectedFrameworkName: string | null;
   activeCategory?: string;
   onCategoryChange?: (category: string) => void;
@@ -165,6 +166,7 @@ const getLocalizedToolType = (toolType: string | undefined, lang: 'id' | 'en'): 
 const TemplateGallery: React.FC<TemplateGalleryProps> = ({
   frameworksData,
   onSelectFramework,
+  onOpenBlankCanvas,
   selectedFrameworkName,
   activeCategory,
   onCategoryChange,
@@ -524,6 +526,46 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
           </div>
         </div>
       )}
+
+      {/* Blank Canvas Action Strip (Visually distinct from template cards) */}
+      <section
+        aria-label={language === 'id' ? 'Canvas Kosong: Mulai dari Nol' : 'Blank Canvas: Start from Scratch'}
+        className="rounded-2xl border border-dashed border-emerald-500/45 bg-[#09111d] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-lg"
+      >
+        <div className="flex items-start sm:items-center gap-3.5 min-w-0">
+          <div
+            className="w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-500/35 text-emerald-300 flex items-center justify-center shrink-0"
+            aria-hidden="true"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+              />
+            </svg>
+          </div>
+          <div className="min-w-0 space-y-1">
+            <h2 className="text-sm sm:text-base font-bold text-slate-100 font-sans tracking-tight">
+              {language === 'id' ? 'Canvas Kosong: Mulai dari Nol' : 'Blank Canvas: Start from Scratch'}
+            </h2>
+            <p className="text-xs text-slate-300 leading-relaxed font-sans max-w-2xl">
+              {t('blank_canvas_banner_desc')}
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={onOpenBlankCanvas}
+          className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-slate-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09111d]"
+        >
+          <span>{t('blank_canvas_open_cta')}</span>
+          <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+      </section>
 
       {/* Category Grid Filter & Sort Selector */}
       <div id="template-category-section" className="space-y-3">

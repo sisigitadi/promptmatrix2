@@ -423,39 +423,44 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
 
       {/* Agensi.io Ready Footer Note */}
       <div
-        className={`px-3.5 py-2.5 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] ${
+        className={`px-3.5 py-2.5 border-t flex flex-col gap-2 text-[11px] ${
           isLightTheme
             ? 'bg-slate-100 border-slate-300 text-slate-800'
             : 'bg-slate-950/70 border-slate-800/80 text-slate-300'
         }`}
       >
-        <div className="space-y-0.5 min-w-0">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span
-              className={`font-semibold ${
+        <div className="space-y-1 min-w-0">
+          <p className="leading-relaxed text-[11px]">
+            <strong
+              className={`font-semibold mr-1.5 ${
                 isLightTheme ? 'text-emerald-800' : 'text-emerald-400'
               }`}
             >
               {t('skill_agensi_ready_title')}:
-            </span>
+            </strong>
             <span>
               {language === 'id'
                 ? `${AGENSI_CONFIG.commissionInfo.standardSharePercent}% bagian kreator (${AGENSI_CONFIG.commissionInfo.affiliateNewBuyerSharePercent}% via tautan afiliasi, ${AGENSI_CONFIG.commissionInfo.listingModel}).`
                 : `${AGENSI_CONFIG.commissionInfo.standardSharePercent}% creator share (${AGENSI_CONFIG.commissionInfo.affiliateNewBuyerSharePercent}% via affiliate link, ${AGENSI_CONFIG.commissionInfo.listingModel}).`}
             </span>
-          </div>
+          </p>
           {!hasConfiguredStoreUrl && (
-            <p className={isLightTheme ? 'text-slate-700 text-[10px]' : 'text-slate-400 text-[10px]'}>
+            <p className={`leading-relaxed ${isLightTheme ? 'text-slate-700 text-[10px]' : 'text-slate-400 text-[10px]'}`}>
               {t('skill_agensi_setup_hint')}
             </p>
           )}
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
+        <div
+          className={`flex items-center justify-between gap-2 pt-1.5 border-t min-w-0 ${
+            isLightTheme ? 'border-slate-300/80' : 'border-slate-800/60'
+          }`}
+        >
           <span
-            className={`font-mono text-[10px] ${
+            className={`font-mono text-[10px] truncate min-w-0 ${
               isLightTheme ? 'text-slate-600' : 'text-slate-400'
             }`}
+            title={`${lines.length} lines • ${skillSpec.name}-SKILL.md`}
           >
             {lines.length} lines • {skillSpec.name}-SKILL.md
           </span>
@@ -464,7 +469,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
               href={activeStoreUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-1 min-h-[32px] px-2.5 rounded-lg text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+              className={`inline-flex items-center gap-1 min-h-[28px] px-2.5 rounded-lg text-[11px] font-semibold shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                 isLightTheme
                   ? 'bg-emerald-700 hover:bg-emerald-800 text-white'
                   : 'bg-emerald-600 hover:bg-emerald-500 text-white'

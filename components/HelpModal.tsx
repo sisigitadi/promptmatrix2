@@ -33,9 +33,10 @@ const HelpModal: React.FC<HelpModalProps> = ({ show, onHide, showAIFeatures = fa
       const text = await response.text();
       setMarkdownContent(text);
       setDocumentTitle(title);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Failed to load markdown file:", error);
-      setMarkdownContent(language === 'id' ? `Gagal memuat dokumen: ${error.message || String(error)}` : `Failed to load document: ${error.message || String(error)}`);
+      const errMsg = error instanceof Error ? error.message : String(error);
+      setMarkdownContent(language === 'id' ? `Gagal memuat dokumen: ${errMsg}` : `Failed to load document: ${errMsg}`);
       setDocumentTitle(title || (language === 'id' ? "Dokumen" : "Document"));
     } finally {
       setIsLoadingDoc(false);
@@ -224,20 +225,20 @@ const HelpModal: React.FC<HelpModalProps> = ({ show, onHide, showAIFeatures = fa
                 )}
               </div>
 
-              {/* Exclusive AI Pro Active Banner (Only if AI is unlocked) */}
+              {/* Exclusive AI Pro & Skill Pack Active Banner (Only if AI is unlocked) */}
               {showAIFeatures && (
                 <div className="bg-gradient-to-r from-purple-950/40 via-slate-900 to-indigo-950/40 border border-purple-800/50 p-4 rounded-2xl space-y-2 animate-fade-in">
                   <div className="flex items-center justify-between">
                     <h5 className="font-bold text-purple-300 text-xs flex items-center gap-1.5 font-sans">
                       <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-                      <span>{language === 'id' ? '⚡ Mode AI Pro Aktif' : '⚡ AI Pro Mode Active'}</span>
+                      <span>{language === 'id' ? '⚡ Mode AI Pro & Paket Skill Aktif' : '⚡ AI Pro & Skill Pack Mode Active'}</span>
                     </h5>
                     <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-purple-900/40 text-purple-200 border border-purple-700/50">Unlocked</span>
                   </div>
                   <p className="text-[11px] text-slate-300 leading-relaxed">
                     {language === 'id'
-                      ? 'Fitur AI Suggest (Bantu Ide), AI Enhance (Sempurnakan), AI Quality Analysis, dan tombol Atur Provider API kini terbuka. Untuk menyembunyikannya kembali, ketuk logo aplikasi sebanyak 9 kali.'
-                      : 'AI Suggest, AI Enhance, AI Quality Analysis, and API Provider setup are now unlocked. To hide them again, tap the app logo 9 times.'}
+                      ? 'Fitur AI Suggest (Bantu Ide), AI Enhance (Sempurnakan), AI Quality Analysis, Pengaturan Provider API, serta Paket Skill (tab SKILL.md & 6 bundel agensi-skills) kini terbuka. Untuk menyembunyikannya kembali dari tampilan publik, ketuk logo aplikasi sebanyak 9 kali.'
+                      : 'AI Suggest, AI Enhance, AI Quality Analysis, API Provider Settings, and the Skill Pack (SKILL.md tab & 6 agensi-skills bundles) are now unlocked. To hide them again from public view, tap the app logo 9 times.'}
                   </p>
                 </div>
               )}

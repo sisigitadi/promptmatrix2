@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<svg 
+  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
   <defs>
     <linearGradient id="ogBg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#090d16"/>
@@ -21,15 +22,12 @@
       <feGaussianBlur stdDeviation="50" result="blur"/>
     </filter>
   </defs>
-
   <!-- Background Base & Grid Pattern -->
   <rect width="1200" height="630" fill="url(#ogBg)"/>
   <rect width="1200" height="630" fill="url(#grid)"/>
-
   <!-- Ambient Emerald Light Orbs -->
   <circle cx="200" cy="160" r="190" fill="#059669" fill-opacity="0.22" filter="url(#softGlow)"/>
   <circle cx="1020" cy="460" r="230" fill="#10b981" fill-opacity="0.16" filter="url(#softGlow)"/>
-
   <!-- Top Logo Header -->
   <g transform="translate(70, 65)">
     <!-- App Logo Icon Box -->
@@ -38,14 +36,12 @@
       <path d="M11 2h14l-1 2v9.3a4 4 0 001.2 2.8l10 10c2.5 2.5.7 6.9-2.8 6.9H3.6c-3.5 0-5.3-4.4-2.8-6.9l10-10A4 4 0 0012 13.3V4L11 2z"/>
       <path d="M30 27a4 4 0 00-2-1.1l-4.8-1a12 12 0 00-7.7 1l-.6.3a12 12 0 01-7.7 1L3 26.5a4 4 0 00-3.6 1.1" stroke="#34d399" stroke-width="1.8" stroke-opacity="0.9"/>
     </g>
-    
     <!-- Title and Version Badge -->
     <text x="76" y="36" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="30" fill="#f8fafc">PromptMatrix</text>
     <rect x="286" y="15" width="54" height="26" rx="8" fill="#10b981" fill-opacity="0.18" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.5"/>
     <text x="313" y="33" font-family="monospace" font-weight="700" font-size="14" fill="#34d399" text-anchor="middle">2.0</text>
     <text x="76" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="13" fill="#94a3b8" letter-spacing="1.5">GUIDED AI PROMPT STUDIO</text>
   </g>
-
   <!-- Left Value Proposition Column -->
   <g transform="translate(70, 185)">
     <text x="0" y="40" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="44" fill="#ffffff" letter-spacing="-0.5">
@@ -55,13 +51,12 @@
       Berpemandu &amp; 400+ Formula
     </text>
     <text x="0" y="145" font-family="system-ui, -apple-system, sans-serif" font-weight="400" font-size="20" fill="#cbd5e1">
-      Racik prompt presisi &amp; ekspor SKILL.md untuk GPT-5, Claude 4, Gemini 3.7 &amp; DeepSeek.
+      Racik prompt presisi &amp; JSON bersih untuk GPT-6, Claude 5.5, Gemini 4 &amp; DeepSeek V4.
     </text>
     <text x="0" y="180" font-family="system-ui, -apple-system, sans-serif" font-weight="400" font-size="17" fill="#94a3b8">
-      400 Formula • 83 Subkategori • JSON RFC 8259 &amp; Agensi.io SKILL.md • Privasi Lokal
+      400 Formula • 83 Subkategori • JSON RFC 8259 • 100% Privasi Lokal
     </text>
   </g>
-
   <!-- Floating Mockup Cards on the Right (Neat & Clean Spacing) -->
   <g transform="translate(720, 55)">
     <!-- Card 1: HSO TikTok Hook -->
@@ -71,7 +66,6 @@
     <text x="22" y="86" font-family="monospace" font-size="12" fill="#94a3b8">Story: "Dulu saya menghabiskan 8 jam di depan laptop..."</text>
     <rect x="22" y="98" width="96" height="20" rx="6" fill="#059669" fill-opacity="0.25"/>
     <text x="70" y="112" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#34d399" text-anchor="middle">Medsos &amp; Viral</text>
-
     <!-- Card 2: CO-STAR Strategy -->
     <rect x="15" y="150" width="410" height="130" rx="16" fill="url(#cardGrad1)" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.5"/>
     <text x="37" y="184" font-family="system-ui, sans-serif" font-weight="700" font-size="15" fill="#38bdf8">🎯 CO-STAR Business Framework</text>
@@ -79,28 +73,23 @@
     <text x="37" y="236" font-family="monospace" font-size="12" fill="#94a3b8">Target: "Closing Pelanggan B2B &amp; Proposal Bisnis"</text>
     <rect x="37" y="248" width="115" height="20" rx="6" fill="#0284c7" fill-opacity="0.25"/>
     <text x="94" y="262" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#38bdf8" text-anchor="middle">Bisnis &amp; Marketing</text>
-
     <!-- Card 3: Midjourney / Visual AI -->
     <rect x="30" y="300" width="410" height="130" rx="16" fill="url(#cardGrad1)" stroke="#a855f7" stroke-width="1.5" stroke-opacity="0.5"/>
-    <text x="52" y="334" font-family="system-ui, sans-serif" font-weight="700" font-size="15" fill="#c084fc">🎨 Midjourney v7 &amp; FLUX.2 Director</text>
-    <text x="52" y="362" font-family="monospace" font-size="12" fill="#e2e8f0">Subjek: "3D Character Astronaut, --oref..."</text>
-    <text x="52" y="386" font-family="monospace" font-size="12" fill="#94a3b8">Lighting: "Cinematic Studio, Veo 3 &amp; Kling 2.1"</text>
+    <text x="52" y="334" font-family="system-ui, sans-serif" font-weight="700" font-size="15" fill="#c084fc">🎨 Midjourney v8.2 &amp; FLUX.3 Director</text>
+    <text x="52" y="362" font-family="monospace" font-size="12" fill="#e2e8f0">Subjek: "3D Character Astronaut, 2K HD..."</text>
+    <text x="52" y="386" font-family="monospace" font-size="12" fill="#94a3b8">Lighting: "Cinematic Studio, Veo 3.1 &amp; Kling 3.0"</text>
     <rect x="52" y="398" width="105" height="20" rx="6" fill="#7c3aed" fill-opacity="0.25"/>
     <text x="104" y="412" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#c084fc" text-anchor="middle">Desain &amp; Gambar</text>
   </g>
-
   <!-- Bottom Badges Bar -->
   <g transform="translate(70, 520)">
     <rect x="0" y="0" width="220" height="46" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.2"/>
     <text x="110" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#e2e8f0" text-anchor="middle">✨ 400+ Formula Siap Pakai</text>
-
     <rect x="236" y="0" width="210" height="46" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.2"/>
-    <text x="341" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#e2e8f0" text-anchor="middle">🧩 Ekspor SKILL.md &amp; JSON</text>
-
+    <text x="341" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#e2e8f0" text-anchor="middle">🧩 JSON RFC 8259 Bersih</text>
     <rect x="462" y="0" width="185" height="46" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.2"/>
     <text x="554" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#e2e8f0" text-anchor="middle">🔒 100% Privasi Lokal</text>
-
     <rect x="663" y="0" width="165" height="46" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.2"/>
-    <text x="745" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#e2e8f0" text-anchor="middle">⚡ 33 Peluncur AI</text>
+    <text x="745" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="14" fill="#e2e8f0" text-anchor="middle">⚡ 34 Peluncur AI</text>
   </g>
 </svg>

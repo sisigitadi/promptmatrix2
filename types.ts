@@ -1,6 +1,6 @@
 export type Language = 'en' | 'id';
 
-export type TranslationFunction = (...args: any[]) => string;
+export type TranslationFunction = (...args: Array<string | number>) => string;
 
 // Defines the structure for translations within a single language.
 export interface Translations {
@@ -23,6 +23,40 @@ export type {
   KomponenPromptType
 } from './data/frameworks';
 
+export type CanvasBlockType =
+  | 'persona'
+  | 'context'
+  | 'task'
+  | 'constraints'
+  | 'output_format'
+  | 'audience'
+  | 'variable'
+  | 'custom';
+
+export type BlankCanvasTargetMode = 'prompt' | 'skill';
+
+export interface CanvasBlock {
+  id: string;
+  type: CanvasBlockType;
+  label: string;
+  value: string;
+  isCustomLabel?: boolean;
+}
+
+export interface BlankCanvasState {
+  title: string;
+  description: string;
+  targetMode: BlankCanvasTargetMode;
+  scratchpad: string;
+  blocks: CanvasBlock[];
+  fewShotInput: string;
+  fewShotOutput: string;
+  skillName: string;
+  skillDescription: string;
+  skillCompatibility: string;
+  updatedAt: number;
+}
+
 export interface SavedPrompt {
   id: number;
   timestamp: number;
@@ -37,7 +71,8 @@ export interface SavedPrompt {
   promptToCopy: string; 
   language: Language; 
   selectedFrameworkName: string; 
-  notes?: string; 
+  notes?: string;
+  blankCanvasSnapshot?: BlankCanvasState;
 }
 
 export interface WebResearchDataSource {

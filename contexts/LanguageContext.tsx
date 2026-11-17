@@ -5,7 +5,7 @@ import { allTranslations } from '../translations';
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string, ...args: any[]) => string;
+  t: (key: string, ...args: Array<string | number>) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -79,20 +79,21 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     }
   }, [language]);
 
-  const t = (key: string, ...args: any[]): string => {
-    const translations = allTranslations[language] || allTranslations['id'];
-    const value = (translations as any)[key];
+  const t = (key: string, ...args: Array<string | number>): string => {
+    const translations = (allTranslations[language] || allTranslations['id']) as Record<string, unknown>;
+    const value = translations[key];
     
     if (typeof value === 'string') {
       return value;
     } else if (typeof value === 'function') {
-      return value(...args);
+      return (value as (...fnArgs: Array<string | number>) => string)(...args);
     } else if (Array.isArray(value)) {
       return value.join(' ');
     }
     
     // Check fallback in 'en' or 'id'
-    const fallbackVal = (allTranslations['en'] as any)?.[key] || (allTranslations['id'] as any)?.[key];
+    const fallbackSource = (allTranslations['en'] || allTranslations['id']) as Record<string, unknown>;
+    const fallbackVal = fallbackSource[key];
     if (fallbackVal && typeof fallbackVal === 'string') {
       return fallbackVal;
     }

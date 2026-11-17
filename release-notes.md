@@ -4,6 +4,23 @@
 Dokumen ini mencatat perubahan teknis detail untuk setiap versi PromptMatrix.
 
 ---
+## [V7.2.1] - 2026-11-17
+### Penyelarasan Model Frontier 2026, Pembersihan Model Defunct & Perbaikan Tata Letak Responsif
+- **Integrasi Model Frontier 2026 & Pembersihan Model Usang (`services/aiSettingsService.ts`, `services/universalAIService.ts`, `data/aiPlatforms.ts`, `components/AISettingsModal.tsx`)**:
+  - **Google Gemini:** Mengintegrasikan model frontier aktif late-2026: `gemini-4-carbon` (default kognisi tertinggi), `gemini-4-argon` (multimodal & reasoning), `gemini-4-hydrogen` (ultra-ringan & latensi terendah), `gemini-3.8-flash`, `gemini-3.7-flash`, dan `gemini-3.5-flash-lite`. Memangkas model yang sudah tidak aktif (`gemini-2.0-flash`, `gemini-1.5-pro`, `gemini-1.5-flash`, `gemini-2.5-flash`).
+  - **OpenAI:** Mengintegrasikan model frontier aktif late-2026: `gpt-6.1-sol` (default), `gpt-6-astra`, `gpt-6.1-terra`, `gpt-6.1-luna`, `gpt-5.2-codex`, dan `gpt-5`. Menghapus total model deprecated/defunct (`gpt-4o`, `gpt-4o-mini`, `gpt-4.5-preview`, `o3`, `o4-mini`).
+  - **Anthropic Claude:** Mengintegrasikan model frontier aktif late-2026: `claude-sonnet-5-5` (default), `claude-opus-5-5`, `claude-fable-5-2`, `claude-haiku-5-5`, dan `claude-sonnet-4-5`. Menghapus keluarga legacy Claude 3 (`claude-3-5-sonnet`, `claude-3-opus`, dll).
+  - **OpenRouter & OpenAI-Compatible (Kustom):** Menyelaraskan seluruh preset model kustom dengan model frontier aktif 2026 (`gemini-4-carbon`, `gemini-4-argon`, `gemini-4-hydrogen`, `gpt-6-astra`, `gpt-6.1-sol`, `claude-sonnet-5-5`, `deepseek-v4-pro`, dll) dan memperbaiki label provider "OpenAI-Compatible (Kustom)".
+- **Audit & Perbaikan Tata Letak Responsif `AgentSkillViewer.tsx`**:
+  - Memperbaiki tata letak bagian footer info komisi Agensi.io agar tidak tertekan menjadi kolom sempit vertikal satu kata per baris saat nama file `-SKILL.md` panjang.
+  - Memisahkan blok paragraf info komisi dengan baris status info file menggunakan tata letak bertingkat flex-col dan `truncate min-w-0`.
+- **Penguatan Kepatuhan TypeScript & Standar RetroBOT**:
+  - Mengeliminasi tipe `any` terlarang di seluruh basis kode komponen dan service.
+  - Memperbaiki tabrakan nama props `name` (TS2783) dan tipe `formValues` di `components/FrameworkPane.tsx`.
+  - Menginstal `@types/node` untuk menuntaskan resolusi TS2688.
+  - Memperbarui cache Service Worker ke `promptmatrix-v7.2.1` dan versi `package.json` ke `7.2.1`.
+
+---
 ## [V7.2.0] - 2026-11-17
 ### Agent Skill SKILL.md Builder, Agensi.io Readiness & 400 Master Frameworks
 - **Pratinjau & Ekspor `SKILL.md` Berstandar Open Agent Skills (`services/agentSkillService.ts`, `components/AgentSkillViewer.tsx`, `config/agensiConfig.ts`)**:

@@ -1,4 +1,13 @@
-import { getStoredAISettings, AISettings, AI_PROVIDER_PRESETS } from './aiSettingsService';
+import { getStoredAISettings, AISettings, AI_PROVIDER_PRESETS, AIProviderId } from './aiSettingsService';
+import { BlankCanvasTargetMode, CanvasBlockType, Language } from '../types';
+import {
+  buildBlankCanvasAgentSkillSpec,
+  compileBlankCanvasPrompt,
+  createCanvasBlock,
+  createEmptyCanvasState,
+  detectUploadedContentKind,
+} from './blankCanvasService';
+import { formatAgentSkillMarkdown } from './agentSkillService';
 
 export interface PromptAnalysisResult {
   clarityScore: number;
@@ -6,6 +15,31 @@ export interface PromptAnalysisResult {
   overallScore: number;
   feedback: string;
   suggestions: string[];
+}
+
+interface GeminiPart {
+  text: string;
+}
+
+interface GeminiContent {
+  role?: string;
+  parts: GeminiPart[];
+}
+
+interface GeminiPayload {
+  contents: GeminiContent[];
+  systemInstruction?: {
+    parts: GeminiPart[];
+  };
+  generationConfig: {
+    temperature: number;
+    maxOutputTokens: number;
+  };
+}
+
+interface OpenAIMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
 }
 
 /**
@@ -19,9 +53,9 @@ export const generateTextWithUniversalAI = async (
   const settings = overrideSettings || getStoredAISettings();
   const { provider, apiKey, baseUrl, model } = settings;
 
-  // 1. Google Gemini Provider (Official Direct)
-  if (provider === 'gemini' && (!baseUrl || baseUrl.includes('googleapis.com'))) {
-    return generateWithGemini(prompt, systemInstruction, apiKey, model);
+  // 1. Google Gemini Provider
+  if (provider === 'gemini') {
+    return generateWithGemini(prompt, systemInstruction, apiKey, model, baseUrl);
   }
 
   // 2. Anthropic Claude Provider (Official Direct)
@@ -38,14 +72,16 @@ const generateWithGemini = async (
   prompt: string,
   systemInstruction: string,
   apiKey: string,
-  model: string
+  model: string,
+  baseUrl?: string
 ): Promise<string> => {
   if (!apiKey) throw new Error('API Key Google Gemini belum diisi. Silakan atur di menu Pengaturan AI ⚙️.');
 
-  const targetModel = model || 'gemini-2.5-flash';
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${targetModel}:generateContent?key=${apiKey}`;
+  let cleanBase = (baseUrl || 'https://generativelanguage.googleapis.com').replace(/\/+$/, '');
+  cleanBase = cleanBase.replace(/\/models$/, '').replace(/\/chat\/completions$/, '');
+  const root = cleanBase.endsWith('/v1beta') ? cleanBase : `${cleanBase}/v1beta`;
 
-  const payload: any = {
+  const payload: GeminiPayload = {
     contents: [
       {
         role: 'user',
@@ -64,19 +100,42 @@ const generateWithGemini = async (
     };
   }
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
+  const sendRequest = async (modelToUse: string): Promise<Response> => {
+    const url = `${root}/models/${modelToUse}:generateContent?key=${encodeURIComponent(apiKey.trim())}`;
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  };
 
-  if (!response.ok) {
-    const errData = await response.json().catch(() => ({}));
-    const msg = errData?.error?.message || response.statusText;
-    throw new Error(`Google Gemini Error (${response.status}): ${msg}`);
+  let targetModel = model || 'gemini-4-carbon';
+  let response = await sendRequest(targetModel);
+
+  // Auto-fallback: If 404 (model not found on API), try sibling active models in the Gemini lineup
+  if (response.status === 404) {
+    const alternativeModels = ['gemini-4-argon', 'gemini-4-hydrogen', 'gemini-3.8-flash'].filter((m) => m !== targetModel);
+    for (const alt of alternativeModels) {
+      const altResponse = await sendRequest(alt);
+      if (altResponse.ok) {
+        response = altResponse;
+        targetModel = alt;
+        break;
+      }
+    }
   }
 
-  const data = await response.json();
+  if (!response.ok) {
+    const errData = await response.json().catch(() => ({})) as { error?: { message?: string } };
+    const msg = errData?.error?.message || response.statusText;
+    let hint = '';
+    if (response.status === 404) {
+      hint = ' (Tips: Pastikan model aktif di Google AI Studio atau pilih gemini-4-carbon / gemini-4-argon / gemini-4-hydrogen)';
+    }
+    throw new Error(`Google Gemini Error (${response.status}): ${msg}${hint}`);
+  }
+
+  const data = await response.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> };
   const candidate = data?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!candidate) {
     throw new Error('Google Gemini tidak menghasilkan respons teks.');
@@ -111,14 +170,14 @@ const generateWithOpenAICompatible = async (
     headers['X-Title'] = 'PromptMatrix';
   }
 
-  const messages: any[] = [];
+  const messages: OpenAIMessage[] = [];
   if (systemInstruction) {
     messages.push({ role: 'system', content: systemInstruction });
   }
   messages.push({ role: 'user', content: prompt });
 
   const payload = {
-    model: model || 'gpt-4o',
+    model: model || 'gpt-6.1-sol',
     messages,
     temperature: 0.7,
     stream: false // Explicitly disable stream, though we also parse SSE chunks below
@@ -135,12 +194,16 @@ const generateWithOpenAICompatible = async (
   if (!response.ok) {
     let parsedMsg = '';
     try {
-      const parsed = JSON.parse(responseText);
-      parsedMsg = parsed?.error?.message || parsed?.message || parsed?.error || '';
+      const parsed = JSON.parse(responseText) as { error?: { message?: string }; message?: string };
+      parsedMsg = parsed?.error?.message || parsed?.message || '';
     } catch {
       parsedMsg = responseText;
     }
-    throw new Error(`AI Provider Error (${response.status}): ${parsedMsg || response.statusText}`);
+    let hint = '';
+    if (response.status === 404 && model.includes('gemini')) {
+      hint = ' (Tips: Untuk router kustom / OpenAI-compatible, pastikan model terdaftar atau coba gunakan prefix seperti "google/gemini-4-carbon" atau "gemini-4-argon")';
+    }
+    throw new Error(`AI Provider Error (${response.status}): ${parsedMsg || response.statusText}${hint}`);
   }
 
   // Case 1: Response is SSE Stream format (e.g. "data: {"id": ...}")
@@ -206,11 +269,16 @@ const generateWithAnthropic = async (
     'Content-Type': 'application/json',
     'x-api-key': apiKey.trim(),
     'anthropic-version': '2023-06-01',
-    'dangerously-allow-browser': 'true'
+    'anthropic-dangerous-direct-browser-access': 'true'
   };
 
-  const payload: any = {
-    model: model || 'claude-3-7-sonnet-20250219',
+  const payload: {
+    model: string;
+    max_tokens: number;
+    messages: Array<{ role: string; content: string }>;
+    system?: string;
+  } = {
+    model: model || 'claude-sonnet-5-5',
     max_tokens: 2048,
     messages: [
       { role: 'user', content: prompt }
@@ -254,19 +322,36 @@ const generateWithAnthropic = async (
 // --- FETCH AVAILABLE MODELS FROM ENDPOINT ---
 export const fetchModelsFromEndpoint = async (
   baseUrl: string,
-  apiKey: string
+  apiKey: string,
+  provider?: AIProviderId
 ): Promise<string[]> => {
   let cleanBase = (baseUrl || 'https://api.openai.com/v1').replace(/\/+$/, '');
-  
+
   // Remove /chat/completions if included in base URL
   cleanBase = cleanBase.replace(/\/chat\/completions$/, '');
-  const endpoint = cleanBase.endsWith('/models') ? cleanBase : `${cleanBase}/models`;
 
+  const isGeminiEndpoint = provider === 'gemini' || cleanBase.includes('generativelanguage.googleapis.com');
+  const isAnthropicEndpoint = provider === 'anthropic' || cleanBase.includes('api.anthropic.com');
+
+  let endpoint = cleanBase.endsWith('/models') ? cleanBase : `${cleanBase}/models`;
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
 
-  if (apiKey && apiKey.trim()) {
+  if (isGeminiEndpoint) {
+    if (!apiKey || !apiKey.trim()) {
+      throw new Error('API Key Google Gemini diperlukan untuk mengambil daftar model.');
+    }
+    const geminiRoot = cleanBase.endsWith('/v1beta') ? cleanBase : `${cleanBase}/v1beta`;
+    endpoint = `${geminiRoot}/models?key=${encodeURIComponent(apiKey.trim())}`;
+  } else if (isAnthropicEndpoint) {
+    if (!apiKey || !apiKey.trim()) {
+      throw new Error('API Key Anthropic diperlukan untuk mengambil daftar model.');
+    }
+    headers['x-api-key'] = apiKey.trim();
+    headers['anthropic-version'] = '2023-06-01';
+    headers['anthropic-dangerous-direct-browser-access'] = 'true';
+  } else if (apiKey && apiKey.trim()) {
     headers['Authorization'] = `Bearer ${apiKey.trim()}`;
   }
 
@@ -289,18 +374,29 @@ export const fetchModelsFromEndpoint = async (
   }
 
   try {
-    const data = JSON.parse(text);
-    if (Array.isArray(data?.data)) {
-      return data.data.map((item: any) => item.id || item.name).filter(Boolean);
+    const data = JSON.parse(text) as {
+      data?: Array<{ id?: string; name?: string }>;
+      models?: Array<{ id?: string; name?: string }>;
+    } | Array<string | { id?: string; name?: string }>;
+
+    if (!Array.isArray(data) && Array.isArray(data?.data)) {
+      return data.data.map((item) => item.id || item.name || '').filter(Boolean);
     }
-    if (Array.isArray(data?.models)) {
-      return data.models.map((item: any) => item.id || item.name).filter(Boolean);
+    if (!Array.isArray(data) && Array.isArray(data?.models)) {
+      return data.models
+        .map((item) => {
+          const raw = item.id || item.name || '';
+          return isGeminiEndpoint ? raw.replace(/^models\//, '') : raw;
+        })
+        .filter(Boolean);
     }
     if (Array.isArray(data)) {
-      return data.map((item: any) => typeof item === 'string' ? item : item.id || item.name).filter(Boolean);
+      return data
+        .map((item) => (typeof item === 'string' ? item : item.id || item.name || ''))
+        .filter(Boolean);
     }
   } catch {
-    //
+    // ignore malformed model payload
   }
 
   return [];
@@ -600,7 +696,574 @@ export const testAIConnection = async (settings: AISettings): Promise<{ success:
       settings
     );
     return { success: true, message: `Koneksi berhasil! Respons model: "${res.slice(0, 100)}"` };
-  } catch (err: any) {
-    return { success: false, message: err.message || 'Gagal terhubung ke API endpoint.' };
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return { success: false, message: msg || 'Gagal terhubung ke API endpoint.' };
+  }
+};
+
+export interface CanvasAIDraftBlock {
+  type: CanvasBlockType;
+  label?: string;
+  value: string;
+}
+
+export interface CanvasAIDraftResult {
+  title: string;
+  description: string;
+  scratchpad: string;
+  blocks: CanvasAIDraftBlock[];
+  fewShotInput?: string;
+  fewShotOutput?: string;
+  skillName?: string;
+  skillDescription?: string;
+}
+
+const VALID_CANVAS_BLOCK_TYPES = new Set<CanvasBlockType>([
+  'persona',
+  'context',
+  'task',
+  'constraints',
+  'output_format',
+  'audience',
+  'variable',
+  'custom',
+]);
+
+const cleanCanvasDraftText = (value: unknown): string => {
+  if (typeof value !== 'string') return '';
+  return sanitizePromptText(value)
+    .replace(/\u2014/g, ', ')
+    .replace(/\u2013/g, '-')
+    .trim();
+};
+
+const extractJsonObjectString = (raw: string): string => {
+  const stripped = raw
+    .replace(/```json/gi, '')
+    .replace(/```/g, '')
+    .trim();
+  const firstBrace = stripped.indexOf('{');
+  const lastBrace = stripped.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace > firstBrace) {
+    return stripped.slice(firstBrace, lastBrace + 1);
+  }
+  return stripped;
+};
+
+/**
+ * 5. Generate a structured Blank Canvas draft (Prompt or Agent Skill SKILL.md) from a short user idea.
+ */
+export const generateCanvasDraftWithUniversalAI = async (
+  idea: string,
+  targetMode: BlankCanvasTargetMode,
+  language: Language = 'id'
+): Promise<CanvasAIDraftResult> => {
+  const isIndonesian = language === 'id';
+  const trimmedIdea = idea.trim();
+
+  const skillModeInstructions =
+    targetMode === 'skill'
+      ? isIndonesian
+        ? `Target Mode adalah AGENT SKILL (SKILL.md). Anda WAJIB menyertakan:
+  "skillName": "nama-skill-kebab-case-maks-64-karakter",
+  "skillDescription": "deskripsi kapan AI agent harus mengaktifkan skill ini (maks 1024 karakter, jelas dan spesifik)",`
+        : `Target Mode is AGENT SKILL (SKILL.md). You MUST include:
+  "skillName": "kebab-case-skill-name-max-64-chars",
+  "skillDescription": "clear trigger description explaining when an AI agent should invoke this skill (max 1024 chars)",`
+      : isIndonesian
+        ? `Target Mode adalah PROMPT STANDAR. Fokus pada kejelasan instruksi, batasan, dan format keluaran.`
+        : `Target Mode is STANDARD PROMPT. Focus on instruction clarity, constraints, and output format.`;
+
+  const systemInstruction = isIndonesian
+    ? `Anda adalah Arsitek Prompt & Agent Skill Profesional. Tugas Anda mengubah ide singkat pengguna menjadi draft terstruktur untuk Blank Canvas.
+${skillModeInstructions}
+
+Kembalikan HANYA JSON murni yang valid tanpa markdown code fence, tanpa kata pengantar, dan TANPA karakter em dash.
+Skema JSON wajib:
+{
+  "title": "Judul ringkas dan jelas",
+  "description": "Deskripsi singkat 1-2 kalimat",
+  "scratchpad": "Instruksi inti atau langkah kerja terstruktur",
+  "blocks": [
+    {
+      "type": "persona | context | task | constraints | output_format | audience | variable | custom",
+      "label": "Nama label bagian",
+      "value": "Isi detail bagian ini"
+    }
+  ],
+  "fewShotInput": "Contoh input singkat (opsional, kosongkan string jika tidak perlu)",
+  "fewShotOutput": "Contoh output ideal (opsional, kosongkan string jika tidak perlu)"${
+    targetMode === 'skill'
+      ? `,
+  "skillName": "nama-skill-kebab-case",
+  "skillDescription": "Gunakan skill ini saat..."`
+      : ''
+  }
+}
+Gunakan 3 sampai 5 blok yang paling relevan dari daftar type yang tersedia.`
+    : `You are a Principal Prompt & Agent Skill Architect. Transform the user's brief idea into a structured Blank Canvas draft.
+${skillModeInstructions}
+
+Return ONLY pure valid JSON with no markdown code fences, no preamble, and NO em dash characters.
+Required JSON schema:
+{
+  "title": "Concise, clear title",
+  "description": "Short 1-2 sentence description",
+  "scratchpad": "Core instructions or structured execution workflow",
+  "blocks": [
+    {
+      "type": "persona | context | task | constraints | output_format | audience | variable | custom",
+      "label": "Section label name",
+      "value": "Detailed content for this section"
+    }
+  ],
+  "fewShotInput": "Brief sample input (optional, empty string if unnecessary)",
+  "fewShotOutput": "Ideal expected output (optional, empty string if unnecessary)"${
+    targetMode === 'skill'
+      ? `,
+  "skillName": "kebab-case-skill-name",
+  "skillDescription": "Use this skill when..."`
+      : ''
+  }
+}
+Select 3 to 5 of the most relevant block types.`;
+
+  const userPrompt = isIndonesian
+    ? `Ide pengguna:\n"""\n${trimmedIdea}\n"""\nSusun JSON draft Blank Canvas dalam Bahasa Indonesia.`
+    : `User idea:\n"""\n${trimmedIdea}\n"""\nCompose the Blank Canvas draft JSON in English.`;
+
+  const rawResult = await generateTextWithUniversalAI(userPrompt, systemInstruction);
+
+  try {
+    const jsonCandidate = extractJsonObjectString(rawResult);
+    const parsed: unknown = JSON.parse(jsonCandidate);
+
+    if (!parsed || typeof parsed !== 'object') {
+      throw new Error('Parsed draft is not an object.');
+    }
+
+    const record = parsed as Record<string, unknown>;
+    const rawBlocks = Array.isArray(record.blocks) ? record.blocks : [];
+
+    const blocks: CanvasAIDraftBlock[] = rawBlocks
+      .map((item): CanvasAIDraftBlock | null => {
+        if (!item || typeof item !== 'object') return null;
+        const blockObj = item as Record<string, unknown>;
+        const rawType = typeof blockObj.type === 'string' ? blockObj.type.trim() : 'custom';
+        const resolvedType: CanvasBlockType = VALID_CANVAS_BLOCK_TYPES.has(
+          rawType as CanvasBlockType
+        )
+          ? (rawType as CanvasBlockType)
+          : 'custom';
+        const value = cleanCanvasDraftText(blockObj.value);
+        if (!value) return null;
+        const label = cleanCanvasDraftText(blockObj.label);
+        return {
+          type: resolvedType,
+          label: label || undefined,
+          value,
+        };
+      })
+      .filter((item): item is CanvasAIDraftBlock => item !== null);
+
+    const title =
+      cleanCanvasDraftText(record.title) ||
+      cleanCanvasDraftText(trimmedIdea).slice(0, 60) ||
+      (isIndonesian ? 'Draft Canvas AI' : 'AI Canvas Draft');
+    const description = cleanCanvasDraftText(record.description);
+    const scratchpad = cleanCanvasDraftText(record.scratchpad);
+    const fewShotInput = cleanCanvasDraftText(record.fewShotInput) || undefined;
+    const fewShotOutput = cleanCanvasDraftText(record.fewShotOutput) || undefined;
+    const skillName = cleanCanvasDraftText(record.skillName) || undefined;
+    const skillDescription = cleanCanvasDraftText(record.skillDescription) || undefined;
+
+    return {
+      title,
+      description,
+      scratchpad,
+      blocks,
+      fewShotInput,
+      fewShotOutput,
+      skillName,
+      skillDescription,
+    };
+  } catch (err) {
+    console.warn('Fallback parsing Canvas AI draft JSON:', err);
+    const rawCleaned = cleanCanvasDraftText(rawResult);
+    const fallbackTitle =
+      cleanCanvasDraftText(trimmedIdea).slice(0, 60) ||
+      (isIndonesian ? 'Draft Canvas AI' : 'AI Canvas Draft');
+    return {
+      title: fallbackTitle,
+      description: isIndonesian
+        ? 'Draft disusun otomatis dari ide pengguna.'
+        : 'Draft generated automatically from user idea.',
+      scratchpad: rawCleaned,
+      blocks: [],
+    };
+  }
+};
+
+export interface UploadedContentAnalysisScores {
+  clarity: number;
+  specificity: number;
+  structure: number;
+  overall: number;
+}
+
+export interface UploadedContentUpgradeResult {
+  detectedKind: BlankCanvasTargetMode;
+  scores: UploadedContentAnalysisScores;
+  strengths: string[];
+  weaknesses: string[];
+  upgradeSummary: string;
+  upgradedDraft: CanvasAIDraftResult;
+  upgradedFullText: string;
+}
+
+const clampScore = (val: unknown, fallback: number): number => {
+  if (typeof val !== 'number' || !Number.isFinite(val)) return fallback;
+  return Math.max(0, Math.min(100, Math.round(val)));
+};
+
+const cleanUpgradeFullText = (value: unknown): string => {
+  if (typeof value !== 'string') return '';
+  let text = value
+    .replace(/\r\n/g, '\n')
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    .replace(/\u2014/g, ', ')
+    .replace(/\u2013/g, '-')
+    .trim();
+
+  if (/^```[a-zA-Z0-9_-]*\s*\n/.test(text) && /\n```$/.test(text)) {
+    text = text.replace(/^```[a-zA-Z0-9_-]*\s*\n/, '').replace(/\n```$/, '').trim();
+  }
+  return text;
+};
+
+const sanitizeStringArray = (value: unknown): string[] => {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item) => cleanCanvasDraftText(item))
+    .filter((item) => item.length > 0);
+};
+
+const buildFallbackFullTextFromDraft = (
+  draft: CanvasAIDraftResult,
+  mode: BlankCanvasTargetMode,
+  language: Language
+): string => {
+  const canvasState = createEmptyCanvasState();
+  canvasState.title = draft.title;
+  canvasState.description = draft.description;
+  canvasState.targetMode = mode;
+  canvasState.scratchpad = draft.scratchpad;
+  canvasState.fewShotInput = draft.fewShotInput || '';
+  canvasState.fewShotOutput = draft.fewShotOutput || '';
+  canvasState.skillName = draft.skillName || '';
+  canvasState.skillDescription = draft.skillDescription || '';
+  canvasState.blocks = draft.blocks.map((block) =>
+    createCanvasBlock(block.type, language, block.label, block.value)
+  );
+
+  const compiled = compileBlankCanvasPrompt(canvasState, language);
+  if (mode === 'skill') {
+    const spec = buildBlankCanvasAgentSkillSpec(canvasState, compiled, language);
+    return cleanUpgradeFullText(formatAgentSkillMarkdown(spec));
+  }
+  return cleanUpgradeFullText(compiled || draft.scratchpad);
+};
+
+/**
+ * 6. Analyze an uploaded Prompt or Agent Skill (SKILL.md), score its quality, diagnose gaps, and produce an upgraded version.
+ */
+export const analyzeAndUpgradeUploadedContentWithUniversalAI = async (
+  rawContent: string,
+  targetKind: 'auto' | BlankCanvasTargetMode,
+  upgradeGoal: string,
+  language: Language = 'id'
+): Promise<UploadedContentUpgradeResult> => {
+  const isIndonesian = language === 'id';
+  const trimmedContent = rawContent.trim();
+  const autoDetected = detectUploadedContentKind(trimmedContent);
+  const effectiveTarget: BlankCanvasTargetMode =
+    targetKind === 'auto' ? autoDetected : targetKind;
+
+  const skillChecklistPrompt =
+    effectiveTarget === 'skill'
+      ? isIndonesian
+        ? `Karena target adalah AGENT SKILL (SKILL.md), evaluasi juga standar Open Agent Skills:
+- YAML frontmatter wajib memiliki "name" (kebab-case, huruf kecil/angka/tanda hubung, maksimal 64 karakter) dan "description" pemicu yang jelas (maksimal 1024 karakter).
+- Struktur bagian markdown harus jelas: ## Role & Trigger, ## Input Parameters, ## Execution Steps, dan ## Verification Checklist.
+- Pastikan "upgradedDraft" menyertakan "skillName" dan "skillDescription", serta "upgradedFullText" adalah dokumen SKILL.md lengkap dengan YAML frontmatter (--- ... ---) dan isi markdown.`
+        : `Because the target is AGENT SKILL (SKILL.md), also evaluate Open Agent Skills compliance:
+- YAML frontmatter must include "name" (lowercase kebab-case, max 64 chars) and a clear trigger "description" (max 1024 chars).
+- Markdown sections should clearly cover: ## Role & Trigger, ## Input Parameters, ## Execution Steps, and ## Verification Checklist.
+- Ensure "upgradedDraft" includes "skillName" and "skillDescription", and "upgradedFullText" is a complete SKILL.md document with YAML frontmatter (--- ... ---) and markdown body.`
+      : isIndonesian
+        ? `Target adalah PROMPT STANDAR. Pastikan "upgradedFullText" adalah teks prompt siap pakai yang terstruktur rapi (pisahkan bagian dengan baris kosong ganda, tanpa markdown code fence pembungkus).`
+        : `Target is STANDARD PROMPT. Ensure "upgradedFullText" is a complete, ready-to-use prompt with clear sections separated by blank lines (no outer markdown code fence).`;
+
+  const systemInstruction = isIndonesian
+    ? `Anda adalah Auditor & Arsitek Prompt/Agent Skill Senior. Tugas Anda:
+1. Analisis konten unggahan pengguna berdasarkan kejelasan (clarity), kekhususan (specificity), dan struktur (structure) dengan skor 0-100.
+2. Identifikasi kekuatan utama (strengths) dan kelemahan/celah (weaknesses).
+3. Tingkatkan konten tersebut menjadi versi yang jauh lebih presisi, terstruktur, dan siap pakai sesuai tujuan peningkatan dari pengguna.
+${skillChecklistPrompt}
+
+ATURAN FORMAT MUTLAK:
+- Kembalikan HANYA objek JSON murni yang valid tanpa pembuka, tanpa penutup, tanpa code fence \`\`\`json, dan TANPA karakter em dash.
+- Seluruh teks penjelasan (strengths, weaknesses, upgradeSummary, dan isi upgradedDraft) ditulis dalam Bahasa Indonesia.
+
+Skema JSON wajib:
+{
+  "detectedKind": "${effectiveTarget}",
+  "scores": {
+    "clarity": 75,
+    "specificity": 70,
+    "structure": 65,
+    "overall": 70
+  },
+  "strengths": ["Kekuatan 1", "Kekuatan 2"],
+  "weaknesses": ["Celah atau kelemahan 1", "Celah atau kelemahan 2"],
+  "upgradeSummary": "Ringkasan 1-3 kalimat mengenai perbaikan yang diterapkan.",
+  "upgradedDraft": {
+    "title": "Judul ringkas dan jelas",
+    "description": "Deskripsi singkat 1-2 kalimat",
+    "scratchpad": "Instruksi inti lengkap",
+    "blocks": [
+      {
+        "type": "persona | context | task | constraints | output_format | audience | variable | custom",
+        "label": "Nama label bagian",
+        "value": "Isi bagian yang sudah ditingkatkan"
+      }
+    ],
+    "fewShotInput": "Contoh masukan (opsional, string kosong jika tidak perlu)",
+    "fewShotOutput": "Contoh keluaran ideal (opsional, string kosong jika tidak perlu)"${
+      effectiveTarget === 'skill'
+        ? `,
+    "skillName": "nama-skill-kebab-case",
+    "skillDescription": "Gunakan skill ini saat..."`
+        : ''
+    }
+  },
+  "upgradedFullText": "Teks lengkap prompt hasil upgrade atau dokumen SKILL.md lengkap dengan YAML frontmatter"
+}`
+    : `You are a Principal Prompt & Agent Skill Auditor and Architect. Your job:
+1. Analyze the uploaded content across clarity, specificity, and structure on a 0-100 scale.
+2. List concrete strengths and weaknesses/gaps.
+3. Upgrade the content into a sharper, well-structured, production-ready version aligned with the user's upgrade goal.
+${skillChecklistPrompt}
+
+STRICT FORMAT RULES:
+- Return ONLY a single valid JSON object with no preamble, no closing remarks, no \`\`\`json code fences, and NO em dash characters.
+- Write all diagnostic text (strengths, weaknesses, upgradeSummary, and upgradedDraft content) in English.
+
+Required JSON schema:
+{
+  "detectedKind": "${effectiveTarget}",
+  "scores": {
+    "clarity": 75,
+    "specificity": 70,
+    "structure": 65,
+    "overall": 70
+  },
+  "strengths": ["Strength 1", "Strength 2"],
+  "weaknesses": ["Weakness or gap 1", "Weakness or gap 2"],
+  "upgradeSummary": "1-3 sentence summary of key upgrades applied.",
+  "upgradedDraft": {
+    "title": "Concise clear title",
+    "description": "Short 1-2 sentence description",
+    "scratchpad": "Complete core instructions",
+    "blocks": [
+      {
+        "type": "persona | context | task | constraints | output_format | audience | variable | custom",
+        "label": "Section label",
+        "value": "Upgraded section content"
+      }
+    ],
+    "fewShotInput": "Sample input (optional, empty string if unnecessary)",
+    "fewShotOutput": "Ideal expected output (optional, empty string if unnecessary)"${
+      effectiveTarget === 'skill'
+        ? `,
+    "skillName": "kebab-case-skill-name",
+    "skillDescription": "Use this skill when..."`
+        : ''
+    }
+  },
+  "upgradedFullText": "Complete upgraded prompt text or full SKILL.md document with YAML frontmatter"
+}`;
+
+  const goalLine = upgradeGoal.trim()
+    ? upgradeGoal.trim()
+    : isIndonesian
+      ? 'Tingkatkan kejelasan instruksi, batasan kualitas, dan struktur agar siap pakai.'
+      : 'Improve instruction clarity, quality guardrails, and structure for production use.';
+
+  const userPrompt = isIndonesian
+    ? `Mode Target: ${targetKind === 'auto' ? `Otomatis (terdeteksi awal: ${autoDetected})` : effectiveTarget}
+Tujuan Upgrade: ${goalLine}
+
+Konten yang diunggah:
+"""
+${trimmedContent}
+"""`
+    : `Target Mode: ${targetKind === 'auto' ? `Auto (initial detection: ${autoDetected})` : effectiveTarget}
+Upgrade Goal: ${goalLine}
+
+Uploaded Content:
+"""
+${trimmedContent}
+"""`;
+
+  const rawResult = await generateTextWithUniversalAI(userPrompt, systemInstruction);
+
+  try {
+    const jsonCandidate = extractJsonObjectString(rawResult);
+    const parsed: unknown = JSON.parse(jsonCandidate);
+
+    if (!parsed || typeof parsed !== 'object') {
+      throw new Error('Parsed upgrade analysis is not an object.');
+    }
+
+    const record = parsed as Record<string, unknown>;
+    const rawKind = record.detectedKind;
+    const resolvedKind: BlankCanvasTargetMode =
+      targetKind !== 'auto'
+        ? targetKind
+        : rawKind === 'skill' || rawKind === 'prompt'
+          ? rawKind
+          : effectiveTarget;
+
+    const rawScores =
+      record.scores && typeof record.scores === 'object'
+        ? (record.scores as Record<string, unknown>)
+        : {};
+    const clarity = clampScore(rawScores.clarity, 75);
+    const specificity = clampScore(rawScores.specificity, 72);
+    const structure = clampScore(rawScores.structure, 74);
+    const avgOverall = Math.round((clarity + specificity + structure) / 3);
+    const overall = clampScore(rawScores.overall, avgOverall);
+
+    const strengths = sanitizeStringArray(record.strengths);
+    const weaknesses = sanitizeStringArray(record.weaknesses);
+    const upgradeSummary =
+      cleanCanvasDraftText(record.upgradeSummary) ||
+      (isIndonesian
+        ? 'Struktur instruksi, kejelasan peran, dan batasan kualitas telah ditingkatkan.'
+        : 'Instruction structure, role clarity, and quality constraints have been upgraded.');
+
+    const rawDraft =
+      record.upgradedDraft && typeof record.upgradedDraft === 'object'
+        ? (record.upgradedDraft as Record<string, unknown>)
+        : {};
+    const rawBlocks = Array.isArray(rawDraft.blocks) ? rawDraft.blocks : [];
+
+    const blocks: CanvasAIDraftBlock[] = rawBlocks
+      .map((item): CanvasAIDraftBlock | null => {
+        if (!item || typeof item !== 'object') return null;
+        const blockObj = item as Record<string, unknown>;
+        const rawType = typeof blockObj.type === 'string' ? blockObj.type.trim() : 'custom';
+        const resolvedType: CanvasBlockType = VALID_CANVAS_BLOCK_TYPES.has(
+          rawType as CanvasBlockType
+        )
+          ? (rawType as CanvasBlockType)
+          : 'custom';
+        const value = cleanCanvasDraftText(blockObj.value);
+        if (!value) return null;
+        const label = cleanCanvasDraftText(blockObj.label);
+        return {
+          type: resolvedType,
+          label: label || undefined,
+          value,
+        };
+      })
+      .filter((item): item is CanvasAIDraftBlock => item !== null);
+
+    const upgradedDraft: CanvasAIDraftResult = {
+      title:
+        cleanCanvasDraftText(rawDraft.title) ||
+        (isIndonesian ? 'Hasil Upgrade Canvas' : 'Upgraded Canvas Draft'),
+      description: cleanCanvasDraftText(rawDraft.description),
+      scratchpad: cleanCanvasDraftText(rawDraft.scratchpad),
+      blocks,
+      fewShotInput: cleanCanvasDraftText(rawDraft.fewShotInput) || undefined,
+      fewShotOutput: cleanCanvasDraftText(rawDraft.fewShotOutput) || undefined,
+      skillName: cleanCanvasDraftText(rawDraft.skillName) || undefined,
+      skillDescription: cleanCanvasDraftText(rawDraft.skillDescription) || undefined,
+    };
+
+    let upgradedFullText = cleanUpgradeFullText(record.upgradedFullText);
+    const needsSkillFrontmatter =
+      resolvedKind === 'skill' && !/^---\n[\s\S]*?\n---/.test(upgradedFullText);
+
+    if (!upgradedFullText || needsSkillFrontmatter) {
+      upgradedFullText = buildFallbackFullTextFromDraft(upgradedDraft, resolvedKind, language);
+    }
+
+    return {
+      detectedKind: resolvedKind,
+      scores: { clarity, specificity, structure, overall },
+      strengths:
+        strengths.length > 0
+          ? strengths
+          : [
+              isIndonesian
+                ? 'Memiliki maksud dan arah tugas dasar yang dapat dikenali.'
+                : 'Has an identifiable core objective and direction.',
+            ],
+      weaknesses:
+        weaknesses.length > 0
+          ? weaknesses
+          : [
+              isIndonesian
+                ? 'Dapat diperkuat dengan batasan eksplisit dan format keluaran yang lebih terstruktur.'
+                : 'Can be strengthened with explicit constraints and a stricter output format.',
+            ],
+      upgradeSummary,
+      upgradedDraft,
+      upgradedFullText,
+    };
+  } catch (err) {
+    console.warn('Fallback parsing uploaded content upgrade JSON:', err);
+    const rawCleaned = cleanUpgradeFullText(rawResult);
+    const fallbackDraft: CanvasAIDraftResult = {
+      title: isIndonesian ? 'Hasil Upgrade AI' : 'AI Upgraded Draft',
+      description: isIndonesian
+        ? 'Hasil analisis dan peningkatan otomatis dari konten unggahan.'
+        : 'Automated analysis and upgrade generated from uploaded content.',
+      scratchpad: cleanCanvasDraftText(rawCleaned || trimmedContent),
+      blocks: [],
+    };
+    const fallbackFullText =
+      effectiveTarget === 'skill' && !/^---\n[\s\S]*?\n---/.test(rawCleaned)
+        ? buildFallbackFullTextFromDraft(fallbackDraft, 'skill', language)
+        : rawCleaned || buildFallbackFullTextFromDraft(fallbackDraft, effectiveTarget, language);
+
+    return {
+      detectedKind: effectiveTarget,
+      scores: {
+        clarity: 74,
+        specificity: 70,
+        structure: 72,
+        overall: 72,
+      },
+      strengths: [
+        isIndonesian
+          ? 'Konten awal memiliki topik utama yang jelas untuk ditingkatkan.'
+          : 'Original content has a clear core topic ready for refinement.',
+      ],
+      weaknesses: [
+        isIndonesian
+          ? 'Struktur blok dan batasan eksplisit masih dapat diperkuat.'
+          : 'Block structure and explicit guardrails can be further reinforced.',
+      ],
+      upgradeSummary: isIndonesian
+        ? 'Konten telah diproses ulang menjadi draf yang lebih rapi dan siap disunting di Canvas.'
+        : 'Content has been refined into a cleaner draft ready for editing in Canvas.',
+      upgradedDraft: fallbackDraft,
+      upgradedFullText: fallbackFullText,
+    };
   }
 };
