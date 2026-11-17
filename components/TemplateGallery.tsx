@@ -9,7 +9,7 @@ import {
 } from '../services/localizationService';
 import { createFormulaShareUrl } from '../services/urlHelper';
 
-// 15 Master & Popular Frameworks for Quick Guidance & Badging
+// Master & Popular Frameworks for Quick Guidance & Badging
 export const POPULAR_FRAMEWORK_NAMES = new Set([
   'RTF Framework',
   'CO-STAR Framework',
@@ -18,8 +18,14 @@ export const POPULAR_FRAMEWORK_NAMES = new Set([
   'Goal-Constraint-Context (GCC)',
   'Hook-Story-Offer (HSO)',
   'Midjourney v6.1 Masterclass',
+  'Midjourney v7 Omniref & Style Weight Director',
   'FLUX.1 Photorealistic Studio',
   'Cursor & Windsurf AI Agent Rules',
+  'Agent Skill Architect (SKILL.md Builder)',
+  'Claude Code Subagent & Hooks Orchestrator',
+  'GEO (Generative Engine Optimization) & AI Citation Architect',
+  'Google Veo 3 Synchronized Audio-Video Shot Director',
+  'Antislop UI & Copywriting Audit Framework',
   'TikTok Shop Live Stream Script',
   'LPDP & Beasiswa Master Architect',
   'SEO Pillar Article Architect',
@@ -90,23 +96,30 @@ const INTENT_KEYWORD_MAP: Record<string, string[]> = {
   "instagram": ["thread", "media sosial", "skrip video", "reels", "konten", "gambar", "sosmed"],
   "tiktok": ["tiktok shop", "skrip video", "video pendek", "reels", "konten", "media sosial", "hook-story-offer", "live streaming"],
   "youtube": ["skrip video", "video", "perencanaan video", "konten", "voiceover storytelling"],
-  "video": ["kling", "runway", "video", "animasi", "skrip", "sora", "pika", "visual", "hailuo"],
-  "artikel": ["artikel", "blog", "seo", "studi kasus", "penulisan", "pillar article"],
-  "blog": ["blog post", "artikel", "seo", "penulisan"],
-  "seo": ["artikel seo", "penulisan", "blog", "konten", "pillar article", "meta deskripsi"],
+  "video": ["kling", "runway", "veo", "video", "animasi", "skrip", "sora", "pika", "visual", "hailuo"],
+  "veo": ["veo 3", "veo", "video", "sora 2", "kling 2.1", "shot director", "audio-video"],
+  "artikel": ["artikel", "blog", "seo", "geo", "aeo", "studi kasus", "penulisan", "pillar article"],
+  "blog": ["blog post", "artikel", "seo", "geo", "penulisan"],
+  "seo": ["artikel seo", "penulisan", "blog", "konten", "pillar article", "meta deskripsi", "geo", "aeo"],
+  "geo": ["geo", "generative engine optimization", "aeo", "answer engine", "ai citation", "schema"],
   "gambar": ["gambar", "desain", "text-to-image", "midjourney", "dall-e", "foto", "visual", "flux"],
   "logo": ["branding", "identitas", "desain", "gambar", "nama", "icon", "brand style guide"],
-  "desain": ["desain", "gambar", "visual", "branding", "platform", "illustration"],
-  "midjourney": ["midjourney", "cref", "sref", "gambar", "text-to-image", "desain", "flux.1", "photorealistic portrait"],
-  "flux": ["flux.1", "photorealistic descriptive studio", "leica", "hasselblad", "fotorealistik", "midjourney"],
+  "desain": ["desain", "gambar", "visual", "branding", "platform", "illustration", "antislop", "wcag"],
+  "midjourney": ["midjourney", "cref", "sref", "omniref", "gambar", "text-to-image", "desain", "flux.1", "photorealistic portrait"],
+  "flux": ["flux.1", "flux.2", "kontext", "photorealistic descriptive studio", "leica", "hasselblad", "fotorealistik", "midjourney"],
   "analisis": ["gcc", "reasoning", "analisis", "data", "chain-of-thought", "tree-of-thoughts", "berpikir", "pemikiran", "swot"],
-  "reasoning": ["gcc", "deepseek-r1", "claude 3.7", "o1/o3", "goal-constraint-context", "pemikiran terstruktur", "first principles"],
+  "reasoning": ["gcc", "deepseek-r1", "claude 4", "sonnet 4.5", "gpt-5", "o3", "goal-constraint-context", "pemikiran terstruktur", "first principles"],
   "ide": ["ideasi", "brainstorming", "scamper", "inovasi", "kreatif", "blue ocean"],
   "inovasi": ["inovasi", "scamper", "design thinking", "blue ocean", "koleksi", "triz"],
-  "koding": ["cursorrules", "windsurf", "mcp", "kode", "pengembang", "developer", "koding", "script", "utilitas", "coding", "rag", "refactoring", "api"],
-  "coding": ["cursorrules", "windsurf", "mcp", "kode", "pengembang", "developer", "koding", "script", "utilitas", "coding", "rag", "refactoring", "api"],
-  "agent": ["cursorrules", "mcp", "model context protocol", "crewai", "autogen", "multi-agent", "autonomous"],
-  "mcp": ["model context protocol", "mcp server", "cursor", "claude desktop"],
+  "koding": ["cursorrules", "windsurf", "claude code", "skill.md", "mcp", "kode", "pengembang", "developer", "koding", "script", "utilitas", "coding", "rag", "refactoring", "api"],
+  "coding": ["cursorrules", "windsurf", "claude code", "skill.md", "mcp", "kode", "pengembang", "developer", "koding", "script", "utilitas", "coding", "rag", "refactoring", "api"],
+  "agent": ["cursorrules", "mcp", "model context protocol", "skill.md", "agent skill", "claude code", "swarm", "subagent", "crewai", "autogen", "multi-agent", "autonomous"],
+  "skill": ["skill.md", "agent skill", "agensi", "open agent skills", "claude code", "cursor", "copilot"],
+  "agensi": ["agensi", "marketplace", "skill.md", "agent skill", "monetization", "affiliate", "listing"],
+  "claude code": ["claude code", "subagent", "hooks", "skill.md", "agent skill", "mcp"],
+  "antislop": ["antislop", "audit", "contrast", "wcag", "copywriting", "ui"],
+  "swarm": ["swarm", "multi-agent", "task decomposition", "verifier", "orchestrator", "subagent"],
+  "mcp": ["model context protocol", "mcp server", "cursor", "claude desktop", "claude code"],
   "interview": ["mock interviewer", "simulasi wawancara", "wawancara kerja", "s-t-a-r-r", "c-a-r"],
   "wawancara": ["mock interviewer", "simulasi wawancara", "wawancara kerja", "s-t-a-r-r"],
   "edukasi": ["lpdp", "beasiswa", "akademis", "edukasi", "pendidikan", "pembelajaran", "belajar", "feynman"],
@@ -411,14 +424,14 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
 
           <h1 className="text-base sm:text-xl md:text-2xl font-bold tracking-tight text-white font-sans leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
             {language === 'id'
-              ? 'Racik 360 Formula Prompt AI Presisi Tinggi'
-              : 'Craft 360 High-Precision AI Prompt Formulas'}
+              ? `Racik ${allTemplates.length} Formula Prompt AI Presisi Tinggi`
+              : `Craft ${allTemplates.length} High-Precision AI Prompt Formulas`}
           </h1>
           
           <p className="text-xs sm:text-[13px] text-slate-200/95 leading-relaxed max-w-2xl font-sans hidden sm:block drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
             {language === 'id'
-              ? 'Panduan visual terstruktur untuk ChatGPT, Claude, Gemini, DeepSeek, Cursor & Midjourney.'
-              : 'Structured visual framework for ChatGPT, Claude, Gemini, DeepSeek, Cursor & Midjourney.'}
+              ? 'Panduan visual terstruktur untuk ChatGPT, Claude Code, Gemini, DeepSeek, Cursor & Midjourney.'
+              : 'Structured visual framework for ChatGPT, Claude Code, Gemini, DeepSeek, Cursor & Midjourney.'}
           </p>
 
           {/* Context-Aware Search Bar with Keyboard Shortcut Indicator */}
@@ -432,8 +445,12 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={language === 'id' ? 'Cari 360 formula AI: GCC, AIDA, Cursorrules, Midjourney, LPDP...' : 'Search 360 AI formulas: GCC, AIDA, Cursorrules, Midjourney, LPDP...'}
-                className="w-full pl-9 sm:pl-11 pr-16 sm:pr-20 py-2 sm:py-2.5 bg-slate-950/80 backdrop-blur-md border border-slate-700/80 focus:border-emerald-500 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-slate-100 placeholder-slate-400 focus:outline-none transition-all shadow-inner"
+                placeholder={
+                  language === 'id'
+                    ? `Cari ${allTemplates.length} formula AI: SKILL.md, GCC, AIDA, Cursor, Midjourney, Veo 3...`
+                    : `Search ${allTemplates.length} AI formulas: SKILL.md, GCC, AIDA, Cursor, Midjourney, Veo 3...`
+                }
+                className="w-full pl-9 sm:pl-11 pr-16 sm:pr-20 py-2 sm:py-2.5 bg-slate-950/80 backdrop-blur-md border border-slate-700/80 focus:border-emerald-500 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-slate-100 placeholder-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all shadow-inner"
               />
               {searchQuery ? (
                 <button

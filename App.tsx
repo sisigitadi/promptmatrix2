@@ -25,7 +25,6 @@ import {
 } from './services/universalAIService';
 import { slugifyFormula } from './services/urlHelper';
 import { 
-  COMMON_LABELS_TRANSLATIONS,
   AI_LOGICS_MAP,
   translateComponentLabel,
   translateInfo,
@@ -35,11 +34,17 @@ import {
 } from './services/localizationService';
 import { VisualPromptPreview } from './components/VisualPromptPreview';
 import { CleanJsonViewer } from './components/CleanJsonViewer';
+import { AgentSkillViewer } from './components/AgentSkillViewer';
 import {
   buildCleanPromptJSON,
   getCleanJSONString,
   JsonFormatType
 } from './services/jsonPromptService';
+import {
+  buildAgentSkillSpec,
+  formatAgentSkillMarkdown,
+  validateAgentSkillSpec
+} from './services/agentSkillService';
 
 interface ToastState {
   message: string;
@@ -56,43 +61,46 @@ interface ToolLauncher {
 
 const AI_TOOL_LAUNCHERS: ToolLauncher[] = [
   // 💬 Chat & Reasoning
-  { name: 'ChatGPT', url: 'https://chatgpt.com/', category: 'chat', icon: '🟢', badge: 'GPT-4o' },
-  { name: 'Claude', url: 'https://claude.ai/new', category: 'chat', icon: '🟧', badge: '3.7 Sonnet' },
-  { name: 'Google Gemini', url: 'https://gemini.google.com/app', category: 'chat', icon: '✨', badge: '2.5 Flash' },
-  { name: 'DeepSeek', url: 'https://chat.deepseek.com/', category: 'chat', icon: '🔵', badge: 'R1 Reasoning' },
+  { name: 'ChatGPT', url: 'https://chatgpt.com/', category: 'chat', icon: '🟢', badge: 'GPT-5 / o3' },
+  { name: 'Claude', url: 'https://claude.ai/new', category: 'chat', icon: '🟧', badge: 'Sonnet 4.5' },
+  { name: 'Google Gemini', url: 'https://gemini.google.com/app', category: 'chat', icon: '✨', badge: '3.7 Flash' },
+  { name: 'DeepSeek', url: 'https://chat.deepseek.com/', category: 'chat', icon: '🔵', badge: 'R1 / V3' },
   { name: 'Perplexity AI', url: 'https://www.perplexity.ai/', category: 'chat', icon: '🌐', badge: 'Search & Cite' },
   { name: 'Microsoft Copilot', url: 'https://copilot.microsoft.com/', category: 'chat', icon: '🪟', badge: 'Web Pro' },
-  { name: 'Grok (xAI)', url: 'https://x.com/i/grok', category: 'chat', icon: '🖤', badge: 'Realtime X' },
+  { name: 'Grok (xAI)', url: 'https://x.com/i/grok', category: 'chat', icon: '🖤', badge: 'Grok 4.6' },
   { name: 'Poe by Quora', url: 'https://poe.com/', category: 'chat', icon: '🤖', badge: 'Multi-Bot' },
   { name: 'HuggingChat', url: 'https://huggingface.co/chat/', category: 'chat', icon: '🤗', badge: 'Open Models' },
   
   // 🎨 Image & Design AI
-  { name: 'Midjourney', url: 'https://www.midjourney.com/explore', category: 'image', icon: '🎨', badge: 'v6.1' },
+  { name: 'Midjourney', url: 'https://www.midjourney.com/explore', category: 'image', icon: '🎨', badge: 'v6.1 / v7' },
   { name: 'DALL-E 3', url: 'https://chatgpt.com/g/g-2fkYVsCas-dall-e', category: 'image', icon: '🖼️', badge: 'OpenAI' },
   { name: 'Leonardo.Ai', url: 'https://app.leonardo.ai/', category: 'image', icon: '🦁', badge: 'Phoenix & Flux' },
-  { name: 'Flux.1 (Fal)', url: 'https://fal.ai/models/fal-ai/flux/dev', category: 'image', icon: '⚡', badge: 'Hyper-Real' },
+  { name: 'Flux.2 (Fal)', url: 'https://fal.ai/models/fal-ai/flux/dev', category: 'image', icon: '⚡', badge: 'Hyper-Real' },
   { name: 'Ideogram AI', url: 'https://ideogram.ai/', category: 'image', icon: '🔤', badge: 'Text In Image' },
   { name: 'Recraft.ai', url: 'https://www.recraft.ai/', category: 'image', icon: '📐', badge: 'Vector & 3D' },
   { name: 'Canva Magic', url: 'https://www.canva.com/ai-image-generator/', category: 'image', icon: '🪄', badge: 'Design Studio' },
   { name: 'Adobe Firefly', url: 'https://firefly.adobe.com/', category: 'image', icon: '🪶', badge: 'Commercial' },
 
   // 🎬 Video & Animation AI
-  { name: 'Runway Gen-3', url: 'https://app.runwayml.com/', category: 'video', icon: '🎬', badge: 'Alpha Video' },
+  { name: 'Runway Gen-4', url: 'https://app.runwayml.com/', category: 'video', icon: '🎬', badge: 'Gen-4 Video' },
   { name: 'Luma Dream Machine', url: 'https://lumalabs.ai/dream-machine', category: 'video', icon: '🔮', badge: 'Cinematic' },
-  { name: 'Kling AI', url: 'https://klingai.com/', category: 'video', icon: '🎥', badge: 'High Motion' },
+  { name: 'Kling AI', url: 'https://klingai.com/', category: 'video', icon: '🎥', badge: 'Kling 2.1' },
   { name: 'Pika Labs', url: 'https://pika.art/', category: 'video', icon: '⚡', badge: 'Pika 2.0' },
   { name: 'Hailuo AI (Minimax)', url: 'https://hailuoai.video/', category: 'video', icon: '📹', badge: 'Expressive' },
 
   // 🎵 Audio, Voice & Music AI
-  { name: 'Suno AI', url: 'https://suno.com/', category: 'audio', icon: '🎵', badge: 'v4 Full Song' },
+  { name: 'Suno AI', url: 'https://suno.com/', category: 'audio', icon: '🎵', badge: 'v4.5 / v5' },
   { name: 'Udio Music', url: 'https://www.udio.com/', category: 'audio', icon: '🎸', badge: 'Studio Audio' },
   { name: 'ElevenLabs', url: 'https://elevenlabs.io/app/speech-synthesis', category: 'audio', icon: '🎙️', badge: 'Voice Clone' },
 
   // 💻 Coding & Developer AI
+  { name: 'Claude Code', url: 'https://docs.anthropic.com/en/docs/claude-code/overview', category: 'code', icon: '🟧', badge: 'Agent CLI' },
+  { name: 'GitHub Copilot', url: 'https://github.com/features/copilot', category: 'code', icon: '🐙', badge: 'Agents & Skills' },
+  { name: 'Windsurf', url: 'https://windsurf.com/', category: 'code', icon: '🌊', badge: 'Cascade AI' },
+  { name: 'Cursor IDE', url: 'https://www.cursor.com/', category: 'code', icon: '💻', badge: 'Agent & Rules' },
   { name: 'v0 by Vercel', url: 'https://v0.dev/', category: 'code', icon: '▲', badge: 'React/Tailwind' },
   { name: 'Bolt.new', url: 'https://bolt.new/', category: 'code', icon: '⚡', badge: 'Fullstack App' },
   { name: 'Lovable.dev', url: 'https://lovable.dev/', category: 'code', icon: '❤️', badge: 'Full App' },
-  { name: 'Cursor IDE', url: 'https://www.cursor.com/', category: 'code', icon: '💻', badge: 'AI Editor' },
   { name: 'Phind for Devs', url: 'https://www.phind.com/', category: 'code', icon: '🔍', badge: 'Dev Search' },
 ];
 
@@ -136,7 +144,7 @@ const App: React.FC = () => {
   const [isCopied, setIsCopied] = useState(false);
 
   // Preview Reader & Fullscreen Review Modal State
-  const [previewViewMode, setPreviewViewMode] = useState<'structured' | 'raw' | 'json'>('structured');
+  const [previewViewMode, setPreviewViewMode] = useState<'structured' | 'raw' | 'json' | 'skill'>('structured');
   const [jsonFormatType, setJsonFormatType] = useState<JsonFormatType>('full');
   const [showExpandReviewModal, setShowExpandReviewModal] = useState<boolean>(false);
   const [showCompareModal, setShowCompareModal] = useState<boolean>(false);
@@ -160,6 +168,53 @@ const App: React.FC = () => {
   const cleanJsonString = useMemo(() => {
     return getCleanJSONString(cleanJsonPayload, jsonFormatType);
   }, [cleanJsonPayload, jsonFormatType]);
+
+  // Open Agent Skills (SKILL.md) Serialization & Validation
+  const agentSkillSpec = useMemo(() => {
+    return buildAgentSkillSpec({
+      framework: selectedFramework,
+      frameworkName: selectedFrameworkName,
+      category: selectedCategory,
+      subcategory: selectedSubcategory,
+      formValues,
+      customOtherValues,
+      compiledPrompt: generatedPrompt,
+      language,
+    });
+  }, [
+    selectedFramework,
+    selectedFrameworkName,
+    selectedCategory,
+    selectedSubcategory,
+    formValues,
+    customOtherValues,
+    generatedPrompt,
+    language,
+  ]);
+
+  const agentSkillValidation = useMemo(() => {
+    return validateAgentSkillSpec(agentSkillSpec);
+  }, [agentSkillSpec]);
+
+  const agentSkillMarkdown = useMemo(() => {
+    return formatAgentSkillMarkdown(agentSkillSpec);
+  }, [agentSkillSpec]);
+
+  const activeCopyLabel = useMemo(() => {
+    if (previewViewMode === 'json') return t('copy_json_btn');
+    if (previewViewMode === 'skill') return t('copy_skill_btn');
+    return t('copy_prompt_btn');
+  }, [previewViewMode, t]);
+
+  const handleCopyActiveOutput = () => {
+    if (previewViewMode === 'json') {
+      copyToClipboard(cleanJsonString, t('toast_json_copied'));
+    } else if (previewViewMode === 'skill') {
+      copyToClipboard(agentSkillMarkdown, t('toast_skill_copied'));
+    } else {
+      copyToClipboard(generatedPrompt);
+    }
+  };
 
   // Hidden AI Features State & 9-Tap Logo Unlock
   const [showAIFeatures, setShowAIFeatures] = useState<boolean>(() => {
@@ -283,8 +338,8 @@ const App: React.FC = () => {
     let comps = fw.components || [];
     if (comps.length === 0 && fw.komponen_prompt?.["VARIABEL INPUT"]) {
       comps = Object.entries(fw.komponen_prompt["VARIABEL INPUT"]).map(([k, v]) => ({
-        name: k,
-        ...v
+        ...v,
+        name: v.name || k
       }));
     }
 
@@ -841,7 +896,7 @@ const App: React.FC = () => {
             frameworksData={PROMPT_FRAMEWORKS}
             onSelectFramework={handleSelectFramework}
             selectedFrameworkName={selectedFrameworkName}
-            activeCategory={selectedCategory}
+            activeCategory={selectedCategory || undefined}
             onCategoryChange={(cat) => setSelectedCategory(cat)}
           />
         ) : (
@@ -983,6 +1038,22 @@ const App: React.FC = () => {
                                 <span>{t('preview_json_badge')}</span>
                               </span>
                             </>
+                          ) : previewViewMode === 'skill' ? (
+                            <>
+                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-emerald-400 font-medium">
+                                {agentSkillMarkdown.length} {t('chars_count')}
+                              </span>
+                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-400">
+                                ~{Math.round(agentSkillMarkdown.length / 4)} tokens
+                              </span>
+                              <span className={`hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-lg border font-medium ${
+                                agentSkillValidation.valid
+                                  ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
+                                  : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+                              }`}>
+                                <span>{agentSkillValidation.valid ? t('skill_valid_badge') : t('skill_invalid_badge')}</span>
+                              </span>
+                            </>
                           ) : (
                             <>
                               <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-emerald-400 font-medium">
@@ -1022,17 +1093,17 @@ const App: React.FC = () => {
                       )}
                     </div>
 
-                    {/* Mode Tampilan Pratinjau (Terstruktur vs Teks Polos vs JSON) */}
+                    {/* Mode Tampilan Pratinjau (Terstruktur vs Teks Polos vs JSON vs SKILL.md) */}
                     {generatedPrompt && (
-                      <div className="flex items-center justify-between pt-0.5">
-                        <div className="flex bg-slate-950/90 border border-slate-800/90 rounded-xl p-0.5 text-[11px] font-sans">
+                      <div className="flex items-center justify-between pt-0.5 min-w-0">
+                        <div className="flex flex-wrap bg-slate-950/90 border border-slate-800/90 rounded-xl p-0.5 text-[11px] font-sans gap-0.5">
                           <button
                             type="button"
                             onClick={() => setPreviewViewMode('structured')}
-                            className={`px-2.5 py-1 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                            className={`px-2.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                               previewViewMode === 'structured'
                                 ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
-                                : 'text-slate-400 hover:text-slate-200'
+                                : 'text-slate-300 hover:text-white'
                             }`}
                           >
                             <svg className="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -1043,10 +1114,10 @@ const App: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => setPreviewViewMode('raw')}
-                            className={`px-2.5 py-1 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                            className={`px-2.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                               previewViewMode === 'raw'
                                 ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
-                                : 'text-slate-400 hover:text-slate-200'
+                                : 'text-slate-300 hover:text-white'
                             }`}
                           >
                             <svg className="w-3 h-3 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -1057,16 +1128,30 @@ const App: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => setPreviewViewMode('json')}
-                            className={`px-2.5 py-1 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                            className={`px-2.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                               previewViewMode === 'json'
                                 ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
-                                : 'text-slate-400 hover:text-slate-200'
+                                : 'text-slate-300 hover:text-white'
                             }`}
                           >
                             <svg className="w-3 h-3 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <span>{t('preview_json')}</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setPreviewViewMode('skill')}
+                            className={`px-2.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                              previewViewMode === 'skill'
+                                ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
+                                : 'text-slate-300 hover:text-white'
+                            }`}
+                          >
+                            <svg className="w-3 h-3 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span>{t('preview_skill')}</span>
                           </button>
                         </div>
                       </div>
@@ -1092,6 +1177,17 @@ const App: React.FC = () => {
                           activeFormat={jsonFormatType}
                           onFormatChange={setJsonFormatType}
                           onCopy={() => copyToClipboard(cleanJsonString, t('toast_json_copied'))}
+                          isCopied={isCopied}
+                          isLightTheme={isLightTheme}
+                        />
+                      )}
+                      {previewViewMode === 'skill' && (
+                        <AgentSkillViewer
+                          skillSpec={agentSkillSpec}
+                          skillMarkdown={agentSkillMarkdown}
+                          validation={agentSkillValidation}
+                          onCopy={() => copyToClipboard(agentSkillMarkdown, t('toast_skill_copied'))}
+                          onDownload={() => showToast(t('toast_skill_downloaded'), 'success')}
                           isCopied={isCopied}
                           isLightTheme={isLightTheme}
                         />
@@ -1128,14 +1224,8 @@ const App: React.FC = () => {
                       {/* Copy & Save Action Buttons */}
                       <div className="flex flex-col gap-2 pt-2 border-t border-slate-800/80">
                         <button
-                          onClick={() => {
-                            if (previewViewMode === 'json') {
-                              copyToClipboard(cleanJsonString, t('toast_json_copied'));
-                            } else {
-                              copyToClipboard(generatedPrompt);
-                            }
-                          }}
-                          className={`w-full h-11 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xl transition-all ${
+                          onClick={handleCopyActiveOutput}
+                          className={`w-full h-11 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
                             isCopied 
                               ? 'bg-emerald-400 text-slate-950 scale-[1.01] shadow-emerald-500/30' 
                               : 'bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white shadow-emerald-950/50'
@@ -1153,7 +1243,7 @@ const App: React.FC = () => {
                           <span>
                             {isCopied 
                               ? (language === 'id' ? 'Tersalin ke Clipboard!' : 'Copied to Clipboard!') 
-                              : (previewViewMode === 'json' ? t('copy_json_btn') : t('copy_prompt_btn'))}
+                              : activeCopyLabel}
                           </span>
                         </button>
                         <button
@@ -1228,11 +1318,7 @@ const App: React.FC = () => {
                           rel="noreferrer"
                           onClick={() => {
                             if (generatedPrompt) {
-                              if (previewViewMode === 'json') {
-                                copyToClipboard(cleanJsonString, t('toast_json_copied'));
-                              } else {
-                                copyToClipboard(generatedPrompt);
-                              }
+                              handleCopyActiveOutput();
                             }
                           }}
                           className="p-2.5 bg-slate-900/60 hover:bg-emerald-950/30 border border-slate-800 hover:border-emerald-500/40 rounded-xl text-xs font-medium text-slate-300 hover:text-emerald-200 transition-all flex items-center justify-between group truncate"
@@ -1261,7 +1347,7 @@ const App: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowExpandReviewModal(true)}
-                  className="h-10 px-3.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-emerald-500 text-xs font-semibold text-slate-200 flex items-center gap-1.5 shrink-0 transition-colors shadow-sm"
+                  className="h-11 px-3.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-emerald-500 text-xs font-semibold text-slate-200 flex items-center gap-1.5 shrink-0 transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >
                   <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -1271,14 +1357,9 @@ const App: React.FC = () => {
                 </button>
 
                 <button
-                  onClick={() => {
-                    if (previewViewMode === 'json') {
-                      copyToClipboard(cleanJsonString, t('toast_json_copied'));
-                    } else {
-                      copyToClipboard(generatedPrompt);
-                    }
-                  }}
-                  className={`flex-1 h-10 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all ${
+                  type="button"
+                  onClick={handleCopyActiveOutput}
+                  className={`flex-1 h-11 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
                     isCopied
                       ? 'bg-emerald-400 text-slate-950 font-bold'
                       : 'bg-emerald-600 text-white'
@@ -1295,8 +1376,8 @@ const App: React.FC = () => {
                   )}
                   <span>
                     {isCopied
-                      ? (language === 'id' ? 'Tersalin!' : 'Copied!')
-                      : (previewViewMode === 'json' ? t('copy_json_btn') : (language === 'id' ? 'Salin Prompt' : 'Copy Prompt'))}
+                      ? t('copied_btn')
+                      : activeCopyLabel}
                   </span>
                 </button>
               </div>
@@ -1642,6 +1723,19 @@ const App: React.FC = () => {
                           ✓ {t('preview_json_badge')}
                         </span>
                       </>
+                    ) : previewViewMode === 'skill' ? (
+                      <>
+                        <span className="text-emerald-400 font-medium">{agentSkillMarkdown.length} {t('chars_count')}</span>
+                        <span>•</span>
+                        <span>~{Math.round(agentSkillMarkdown.length / 4)} tokens</span>
+                        <span className={`hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] border font-medium ml-1 ${
+                          agentSkillValidation.valid
+                            ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
+                            : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+                        }`}>
+                          {agentSkillValidation.valid ? `✓ ${t('skill_valid_badge')}` : t('skill_invalid_badge')}
+                        </span>
+                      </>
                     ) : (
                       <>
                         <span>{generatedPrompt.length} {t('chars_count')}</span>
@@ -1655,14 +1749,14 @@ const App: React.FC = () => {
 
               {/* Mode Switcher & Close */}
               <div className="flex items-center gap-2 shrink-0">
-                <div className="flex bg-slate-950 border border-slate-800 rounded-xl p-0.5 text-xs font-sans">
+                <div className="flex flex-wrap bg-slate-950 border border-slate-800 rounded-xl p-0.5 text-xs font-sans gap-0.5">
                   <button
                     type="button"
                     onClick={() => setPreviewViewMode('structured')}
-                    className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                       previewViewMode === 'structured'
                         ? 'bg-emerald-600 text-white font-semibold shadow-sm'
-                        : 'text-slate-400 hover:text-slate-200'
+                        : 'text-slate-300 hover:text-white'
                     }`}
                   >
                     <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -1673,10 +1767,10 @@ const App: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setPreviewViewMode('raw')}
-                    className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                       previewViewMode === 'raw'
                         ? 'bg-emerald-600 text-white font-semibold shadow-sm'
-                        : 'text-slate-400 hover:text-slate-200'
+                        : 'text-slate-300 hover:text-white'
                     }`}
                   >
                     <svg className="w-3.5 h-3.5 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -1687,16 +1781,30 @@ const App: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setPreviewViewMode('json')}
-                    className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                       previewViewMode === 'json'
                         ? 'bg-emerald-600 text-white font-semibold shadow-sm'
-                        : 'text-slate-400 hover:text-slate-200'
+                        : 'text-slate-300 hover:text-white'
                     }`}
                   >
                     <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <span className="hidden sm:inline">{t('preview_json')}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewViewMode('skill')}
+                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                      previewViewMode === 'skill'
+                        ? 'bg-emerald-600 text-white font-semibold shadow-sm'
+                        : 'text-slate-300 hover:text-white'
+                    }`}
+                  >
+                    <svg className="w-3.5 h-3.5 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span className="hidden sm:inline">{t('preview_skill')}</span>
                   </button>
                 </div>
 
@@ -1748,6 +1856,19 @@ const App: React.FC = () => {
                   />
                 </div>
               )}
+              {previewViewMode === 'skill' && (
+                <div className="max-w-3xl mx-auto">
+                  <AgentSkillViewer
+                    skillSpec={agentSkillSpec}
+                    skillMarkdown={agentSkillMarkdown}
+                    validation={agentSkillValidation}
+                    onCopy={() => copyToClipboard(agentSkillMarkdown, t('toast_skill_copied'))}
+                    onDownload={() => showToast(t('toast_skill_downloaded'), 'success')}
+                    isCopied={isCopied}
+                    isLightTheme={isLightTheme}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Modal Footer */}
@@ -1755,7 +1876,7 @@ const App: React.FC = () => {
               <button
                 type="button"
                 onClick={handleSavePrompt}
-                className="h-10 px-4 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold flex items-center gap-2 transition-colors"
+                className="h-10 px-4 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold flex items-center gap-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
               >
                 <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
@@ -1767,23 +1888,17 @@ const App: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowExpandReviewModal(false)}
-                  className="h-10 px-4 rounded-xl bg-slate-800/80 hover:bg-slate-750 text-slate-400 hover:text-slate-200 border border-slate-700 text-xs font-medium transition-colors"
+                  className="h-10 px-4 rounded-xl bg-slate-800/80 hover:bg-slate-750 text-slate-400 hover:text-slate-200 border border-slate-700 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >
                   {t('close_btn')}
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    if (previewViewMode === 'json') {
-                      copyToClipboard(cleanJsonString, t('toast_json_copied'));
-                    } else {
-                      copyToClipboard(generatedPrompt);
-                    }
-                  }}
-                  className={`h-10 px-5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-lg ${
+                  onClick={handleCopyActiveOutput}
+                  className={`h-10 px-5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
                     isCopied
                       ? 'bg-emerald-500 text-slate-950 shadow-emerald-900/40'
-                      : 'bg-emerald-600 hover:bg-emerald-500 text-slate-950 shadow-emerald-950/50'
+                      : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-950/50'
                   }`}
                 >
                   {isCopied ? (
@@ -1798,7 +1913,7 @@ const App: React.FC = () => {
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                       </svg>
-                      <span>{previewViewMode === 'json' ? t('copy_json_btn') : t('copy_prompt_btn')}</span>
+                      <span>{activeCopyLabel}</span>
                     </>
                   )}
                 </button>

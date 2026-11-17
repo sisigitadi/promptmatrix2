@@ -1,5 +1,5 @@
 export interface TranslationDict {
-  [key: string]: any;
+  [key: string]: string | string[];
 }
 
 export interface TranslationSet {
@@ -61,13 +61,26 @@ export const allTranslations: TranslationSet = {
     preview_structured: 'Terstruktur',
     preview_raw: 'Teks Polos',
     preview_json: 'JSON',
+    preview_skill: 'SKILL.md',
     preview_json_badge: 'Bebas Decode Error',
     preview_json_full: 'Struktur Penuh',
     preview_json_messages: 'API Messages',
     preview_json_prompt_only: 'Prompt String',
     copy_json_btn: 'Salin JSON',
+    copy_skill_btn: 'Salin SKILL.md',
+    download_skill_btn: 'Unduh SKILL.md',
+    copied_btn: 'Tersalin!',
     toast_json_copied: 'JSON bersih bebas decode error tersalin! 📋',
+    toast_skill_copied: 'SKILL.md berhasil disalin ke clipboard!',
+    toast_skill_downloaded: 'File SKILL.md berhasil diunduh!',
     json_decode_clean_info: '100% Valid JSON • Aman untuk Python json.loads, cURL & API',
+    skill_valid_badge: 'YAML Valid',
+    skill_invalid_badge: 'Perlu Perbaikan',
+    skill_supported_agents: 'Kompatibel dengan:',
+    skill_agensi_ready_title: 'Siap Rilis ke Agensi.io',
+    skill_agensi_setup_hint: 'Atur affiliateUrl atau creatorStoreUrl di config/agensiConfig.ts untuk mengaktifkan tautan toko Anda.',
+    skill_agensi_visit_btn: 'Buka Listing Agensi.io',
+    skill_info_footer: 'Standar Open Agent Skills (SKILL.md) dengan YAML frontmatter tervalidasi',
     expand_review_btn: 'Perbesar Pratinjau',
     review_modal_title: 'Tinjau & Salin Prompt',
     chars_count: 'karakter',
@@ -110,7 +123,7 @@ export const allTranslations: TranslationSet = {
 
     // Universal AI Settings Modal
     ai_modal_title: 'Pengaturan Provider AI & Router Proxy',
-    ai_modal_subtitle: 'Hubungkan PromptMatrix ke Google Gemini, OpenAI, Claude 3.7 Sonnet, DeepSeek V3/R1, Grok, Groq, atau Local LLM (Ollama).',
+    ai_modal_subtitle: 'Hubungkan PromptMatrix ke Google Gemini 3.7, OpenAI GPT-5/o3, Claude Sonnet 4.5, DeepSeek R1/V3, Grok 4.6, Groq, atau Local LLM (Ollama).',
     step1_provider: '1. Pilih Provider / Layanan AI:',
     step2_baseurl: '2. Base API URL (Endpoint):',
     step2_baseurl_hint: 'Dapat diarahkan ke proxy / reverse-proxy',
@@ -122,7 +135,7 @@ export const allTranslations: TranslationSet = {
     fetching_models: 'Mengambil...',
     btn_custom_model: '+ Ketik Nama Model Spesifik',
     btn_preset_model: '← Pilih dari Daftar Model',
-    custom_model_placeholder: 'Contoh: gemini-2.0-flash, gpt-4o, claude-3-7-sonnet, deepseek-r1',
+    custom_model_placeholder: 'Contoh: gemini-3.7-flash, gpt-5, claude-sonnet-4-5, deepseek-reasoner',
     test_connection_btn: 'Uji Koneksi',
     testing_connection: 'Menguji...',
     save_settings_btn: 'Simpan Pengaturan',
@@ -134,7 +147,7 @@ export const allTranslations: TranslationSet = {
     router_tip_desc: 'Model yang dipilih belum memiliki channel aktif di router Anda. Silakan klik "Ambil Model dari Server" atau ketik nama model yang terdaftar di akun router Anda.',
 
     // Help Modal
-    help_title: 'PromptMatrix 2.0 — Pusat Bantuan',
+    help_title: 'PromptMatrix 2.0: Pusat Bantuan',
     tab_workflow: 'Alur Kerja Dasar',
     tab_faq: 'Pertanyaan Umum (FAQ)',
     tab_principles: 'Prinsip Kualitas Prompt',
@@ -178,7 +191,7 @@ export const allTranslations: TranslationSet = {
     toast_need_ai_setup: 'Silakan atur Provider / API Key AI di menu pengaturan ⚙️',
 
     // Footer
-    footer_text: '© 2025–2026 Sigit Adi — Optimalkan Prompt AI Anda'
+    footer_text: '© 2025-2026 Sigit Adi · Optimalkan Prompt AI Anda'
   },
 
   en: {
@@ -234,13 +247,26 @@ export const allTranslations: TranslationSet = {
     preview_structured: 'Structured',
     preview_raw: 'Plain Text',
     preview_json: 'JSON',
+    preview_skill: 'SKILL.md',
     preview_json_badge: 'Zero Decode Errors',
     preview_json_full: 'Full Structure',
     preview_json_messages: 'API Messages',
     preview_json_prompt_only: 'Prompt String',
     copy_json_btn: 'Copy JSON',
+    copy_skill_btn: 'Copy SKILL.md',
+    download_skill_btn: 'Download SKILL.md',
+    copied_btn: 'Copied!',
     toast_json_copied: 'Clean JSON free of decode errors copied! 📋',
+    toast_skill_copied: 'SKILL.md copied to clipboard!',
+    toast_skill_downloaded: 'SKILL.md file downloaded!',
     json_decode_clean_info: '100% Valid JSON • Safe for Python json.loads, cURL & APIs',
+    skill_valid_badge: 'YAML Valid',
+    skill_invalid_badge: 'Needs Attention',
+    skill_supported_agents: 'Compatible with:',
+    skill_agensi_ready_title: 'Agensi.io Ready',
+    skill_agensi_setup_hint: 'Configure affiliateUrl or creatorStoreUrl in config/agensiConfig.ts to enable your storefront link.',
+    skill_agensi_visit_btn: 'Open Agensi.io Listing',
+    skill_info_footer: 'Open Agent Skills Standard (SKILL.md) with validated YAML frontmatter',
     expand_review_btn: 'Expand Review',
     review_modal_title: 'Review & Copy Prompt',
     chars_count: 'chars',
@@ -283,7 +309,7 @@ export const allTranslations: TranslationSet = {
 
     // Universal AI Settings Modal
     ai_modal_title: 'AI Provider & Proxy Router Settings',
-    ai_modal_subtitle: 'Connect PromptMatrix to Google Gemini, OpenAI, Claude 3.7 Sonnet, DeepSeek V3/R1, Grok, Groq, or Local LLMs (Ollama).',
+    ai_modal_subtitle: 'Connect PromptMatrix to Google Gemini 3.7, OpenAI GPT-5/o3, Claude Sonnet 4.5, DeepSeek R1/V3, Grok 4.6, Groq, or Local LLMs (Ollama).',
     step1_provider: '1. Select AI Ecosystem / Provider:',
     step2_baseurl: '2. Base API URL (Endpoint):',
     step2_baseurl_hint: 'Can be pointed to reverse-proxies or custom servers',
@@ -295,7 +321,7 @@ export const allTranslations: TranslationSet = {
     fetching_models: 'Fetching...',
     btn_custom_model: '+ Type Custom Model Name',
     btn_preset_model: '← Pick from Preset Models',
-    custom_model_placeholder: 'e.g. gemini-2.0-flash, gpt-4o, claude-3-7-sonnet, deepseek-r1',
+    custom_model_placeholder: 'e.g. gemini-3.7-flash, gpt-5, claude-sonnet-4-5, deepseek-reasoner',
     test_connection_btn: 'Test Connection',
     testing_connection: 'Testing...',
     save_settings_btn: 'Save Settings',
@@ -307,7 +333,7 @@ export const allTranslations: TranslationSet = {
     router_tip_desc: 'The selected model has no active channel on your router. Please click "Fetch Models from Server" or type an active model ID from your account.',
 
     // Help Modal
-    help_title: 'PromptMatrix 2.0 — Help Center',
+    help_title: 'PromptMatrix 2.0: Help Center',
     tab_workflow: 'Basic Workflow',
     tab_faq: 'FAQ',
     tab_principles: 'Prompt Quality Principles',
@@ -351,6 +377,6 @@ export const allTranslations: TranslationSet = {
     toast_need_ai_setup: 'Please configure your AI Provider / API Key in settings ⚙️',
 
     // Footer
-    footer_text: '© 2025–2026 Sigit Adi — Optimize Your AI Prompts'
+    footer_text: '© 2025-2026 Sigit Adi · Optimize Your AI Prompts'
   }
 };
