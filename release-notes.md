@@ -4,6 +4,21 @@
 Dokumen ini mencatat perubahan teknis detail untuk setiap versi PromptMatrix.
 
 ---
+## [V7.2.0] - 2026-11-17
+### Agent Skill SKILL.md Builder, Agensi.io Readiness & 400 Master Frameworks
+- **Pratinjau & Ekspor `SKILL.md` Berstandar Open Agent Skills (`services/agentSkillService.ts`, `components/AgentSkillViewer.tsx`, `config/agensiConfig.ts`)**:
+  - Menambahkan mode tampilan keempat `SKILL.md` pada Studio Output Card dan Modal Review Layar Penuh.
+  - Fungsi `buildAgentSkillSpec`, `validateAgentSkillSpec`, dan `formatAgentSkillMarkdown` mengonversi state formula aktif menjadi spesifikasi `SKILL.md` dengan validasi panjang `name` (`<= 64` kebab-case) dan `description` (`<= 1024`), serta menghapus karakter kontrol maupun em dash.
+  - Dilengkapi tombol **Salin SKILL.md**, tombol **Unduh `-SKILL.md`**, dukungan tema Terang & Gelap, strip 27 runtime agen di `AGENSI_CONFIG.supportedAgents`, dan informasi kesiapan katalog Agensi.io.
+- **6 Paket Agent Skills & Playbook (`agensi-skills/`, `docs/AgensiMarketplacePlaybook.md`)**:
+  - Merilis 6 paket skill siap pakai beserta referensi dan skrip validator: `antislop-ui-and-copy-auditor`, `fullstack-ts-nextjs-architect`, `mcp-server-production-builder`, `multimodal-video-image-director`, `prompt-matrix-prompt-architect`, dan `seo-geo-aeo-content-engine`.
+- **Peningkatan ke 400 Formula Master & Penyelarasan Model Late-2026**:
+  - Penambahan 40 formula baru sehingga total mencapai 400 formula di 8 kategori dan 83 subkategori (`Kode & Pengembang: 50`, `Koleksi & Inovasi: 36`, `Teks & Konten: 98`, `Prompt Proyek: 36`, `Gambar & Desain: 54`, `Video & Animasi: 35`, `Audio & Musik: 37`, `Prompt Ringkas: 54`).
+  - Pembaruan preset dan referensi model ke standar late-2026 (GPT-5, o3, o4-mini, Claude 4 / Sonnet 4.5, Gemini 3.7, DeepSeek R1/V3, xAI Grok 4.6, Midjourney v7, FLUX.2, Veo 3, Kling 2.1, Sora 2, Runway Gen-4, Suno v4.5/v5).
+  - Sinkronisasi penuh lokalisasi ID <-> EN (`services/localizationService.ts`), sample data 1-klik (`services/sampleDataService.ts`), dan visual benchmark (`services/visualBenchmarkService.ts`).
+  - Pembaruan katalog `docs/DaftarKerangkaKerja.md` dan `public/docs/DaftarKerangkaKerja.md`, Service Worker cache `promptmatrix-v7.2.0`, serta metadata SEO/PWA/OG.
+
+---
 ## [V7.1.0] - 2026-11-16
 ### Clean JSON Prompt Preview (Zero Decode Errors) & Few-Shot AI Suggest
 - **Pratinjau JSON Bebas Decode Error Berstandar RFC 8259 (`services/jsonPromptService.ts` & `components/CleanJsonViewer.tsx`)**:

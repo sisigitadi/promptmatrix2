@@ -4,6 +4,19 @@
 This document provides a history of major features and updates to the PromptMatrix application, helping users understand its evolution and current capabilities.
 
 ---
+## V7.2.0 (Agent Skill SKILL.md Builder, Agensi.io Ready & 400 Master Frameworks)
+*   **Agent Skill `SKILL.md` Preview & Export (`services/agentSkillService.ts`, `components/AgentSkillViewer.tsx`, `config/agensiConfig.ts`):**
+    *   **New `SKILL.md` Preview Tab:** Added a fourth `SKILL.md` view mode alongside *Structured*, *Plain Text*, and *JSON* in both Studio Output Card and Fullscreen Review Modal.
+    *   **Open Agent Skills Compliance:** Converts the active framework, filled parameters, dynamic subcomponents, additional instructions, and few-shot examples into a valid `SKILL.md` document with real-time YAML frontmatter validation (`name <= 64` kebab-case characters, `description <= 1024` characters).
+    *   **Copy, Download & 27 Supported Runtimes:** Includes one-click copy, direct `-SKILL.md` file download, Agensi.io creator readiness summary, and compatibility listing for 27 agent runtimes (Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and more).
+*   **6 Packaged Agent Skills (`agensi-skills/` & `docs/AgensiMarketplacePlaybook.md`):**
+    *   Added 6 standalone Agent Skill packages with `SKILL.md`, `references/`, and Node.js validation scripts (`antislop-ui-and-copy-auditor`, `fullstack-ts-nextjs-architect`, `mcp-server-production-builder`, `multimodal-video-image-director`, `prompt-matrix-prompt-architect`, `seo-geo-aeo-content-engine`).
+*   **400 Master Frameworks & Late-2026 Model Alignment:**
+    *   Expanded `data/frameworks.ts` from 360 to **400 frameworks** across **8 categories** and **83 subcategories** (Kode & Pengembang: 50, Koleksi & Inovasi: 36, Teks & Konten: 98, Prompt Proyek: 36, Gambar & Desain: 54, Video & Animasi: 35, Audio & Musik: 37, Prompt Ringkas: 54).
+    *   Updated model references and provider presets (`data/aiPlatforms.ts`, `services/aiSettingsService.ts`, `App.tsx`) to late-2026 standards: GPT-5, o3, o4-mini, Claude 4 / Sonnet 4.5, Gemini 3.7, DeepSeek R1/V3, xAI Grok 4.6, Midjourney v7, FLUX.2, Google Veo 3, Kling 2.1, OpenAI Sora 2, Runway Gen-4, and Suno v4.5/v5.
+    *   Synchronized 100% of ID <-> EN translations (`services/localizationService.ts`), 1-click sample data (`services/sampleDataService.ts`), and visual benchmarks (`services/visualBenchmarkService.ts`).
+
+---
 ## V7.1.0 (Clean JSON Prompt Preview with Zero Decode Errors RFC 8259)
 *   **⚡ Zero-Decode-Error JSON Prompt Preview (`services/jsonPromptService.ts` & `components/CleanJsonViewer.tsx`):**
     *   **New JSON View Tab:** Added a dedicated `{ } JSON` view toggle alongside *Structured* and *Plain Text* in both Studio Output Card and Fullscreen Review Modal.

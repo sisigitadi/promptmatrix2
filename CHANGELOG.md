@@ -1,5 +1,22 @@
 # Changelog - PromptMatrix 2.0
 
+## [7.2.0] - 2026-11-17
+### Agent Skill SKILL.md Builder, Agensi.io Integration & 400 Master Frameworks (Late-2026 Alignment)
+
+#### Ditambahkan & Ditingkatkan (Added & Enhanced):
+- **Mode Pratinjau & Ekspor Agent Skill `SKILL.md` (`services/agentSkillService.ts`, `components/AgentSkillViewer.tsx`, `config/agensiConfig.ts`)**:
+  - Menambahkan tab pratinjau keempat `SKILL.md` pada Studio Output Card dan Modal Layar Penuh (sejajar dengan *Structured*, *Plain Text*, dan *JSON*).
+  - Mengonversi state kerangka kerja aktif (termasuk parameter input, dynamic subcomponents, persona AI, instruksi tambahan, dan contoh Few-Shot) menjadi berkas `SKILL.md` berstandar Open Agent Skills dengan validasi frontmatter YAML (`name <= 64` karakter kebab-case, `description <= 1024` karakter, `license`, `compatibility`, `metadata`).
+  - Dilengkapi pewarnaan sintaks YAML/Markdown, nomor baris monospace, badge status validasi langsung, tombol **Salin SKILL.md**, tombol **Unduh `-SKILL.md`**, strip 27 runtime agen yang didukung (Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, dll.), serta ringkasan kesiapan publikasi Agensi.io.
+- **6 Paket Open Agent Skills Siap Terbit (`agensi-skills/` & `docs/AgensiMarketplacePlaybook.md`)**:
+  - Menambahkan 6 paket skill mandiri beserta referensi dan skrip validator Node.js: `antislop-ui-and-copy-auditor`, `fullstack-ts-nextjs-architect`, `mcp-server-production-builder`, `multimodal-video-image-director`, `prompt-matrix-prompt-architect`, dan `seo-geo-aeo-content-engine`.
+- **Ekspansi Basis Data ke 400 Master Frameworks (8 Kategori, 83 Subkategori)**:
+  - Menambahkan 40 formula baru di 8 kategori: Kode & Pengembang (50), Koleksi & Inovasi (36), Teks & Konten (98), Prompt Proyek (36), Gambar & Desain (54), Video & Animasi (35), Audio & Musik (37), dan Prompt Ringkas (54).
+  - Menyelaraskan seluruh formula, preset model (`data/aiPlatforms.ts`, `services/aiSettingsService.ts`), dan peluncur cepat (`App.tsx`) dengan model late-2026: GPT-5, o3, o4-mini, Claude 4 / Sonnet 4.5, Gemini 3.7, DeepSeek R1/V3, xAI Grok 4.6, Midjourney v7 (`--oref`), FLUX.2 / Kontext, Google Veo 3, Kling 2.1, OpenAI Sora 2, Runway Gen-4, dan Suno v4.5/v5.
+  - Menyinkronkan 100% kamus lokalisasi ID <-> EN (`services/localizationService.ts`), sampel 1-klik (`services/sampleDataService.ts`), dan visual benchmark (`services/visualBenchmarkService.ts`) untuk seluruh 400 formula.
+- **Dukungan Tema Terang & Gelap + Aksesibilitas (`components/CleanJsonViewer.tsx`, `components/AgentSkillViewer.tsx`, `components/TemplateGallery.tsx`)**:
+  - Menambahkan dukungan penuh `isLightTheme` dengan kontras teks sesuai WCAG AA serta indikator fokus keyboard (`focus-visible`).
+
 ## [7.1.0] - 2026-11-16
 ### ⚡ Pratinjau Prompt JSON Bersih Bebas Decode Error (Zero Decode Errors RFC 8259)
 

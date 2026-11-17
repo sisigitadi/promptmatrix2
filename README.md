@@ -1,12 +1,12 @@
-# PromptMatrix 2.0 - Ultimate Guided AI Prompt Generator 🚀
+# PromptMatrix 2.0 - Guided AI Prompt Studio & Agent Skill Builder 🚀
 
 [![Production Build](https://img.shields.io/badge/Build-Passing-emerald.svg)](https://github.com/sisigitadi/promptmatrix2)
-[![Frameworks](https://img.shields.io/badge/Master%20Frameworks-360%20Templates-blue.svg)](https://github.com/sisigitadi/promptmatrix2)
+[![Frameworks](https://img.shields.io/badge/Master%20Frameworks-400%20Templates-blue.svg)](https://github.com/sisigitadi/promptmatrix2)
 [![Bilingual](https://img.shields.io/badge/Languages-100%25%20Bilingual%20(ID%20%7C%20EN)-purple.svg)](https://github.com/sisigitadi/promptmatrix2)
 [![Live Domain](https://img.shields.io/badge/Live-prompt.sigitadi.id-emerald.svg)](https://prompt.sigitadi.id)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**PromptMatrix 2.0** adalah platform generator prompt AI berpemandu dan terstruktur terlengkap dengan **360 formula master siap pakai** berstandar global. Dirancang untuk memudahkan siapa saja—mulai dari pengguna awam non-teknis hingga profesional tingkat lanjut—meracik instruksi prompt AI berkualitas tinggi, kontekstual, dan berdaya guna dalam hitungan detik untuk ChatGPT, Claude 3.7 Thinking, Gemini, DeepSeek R1, Midjourney v6.1, FLUX.1, Kling 1.5, Suno v4, dan berbagai model AI mutakhir lainnya.
+**PromptMatrix 2.0** adalah platform generator prompt AI berpemandu dan pembuat Agent Skill (`SKILL.md`) dengan **400 formula master siap pakai** lintas **83 subkategori** dan **8 kategori**. Dirancang untuk membantu pengguna non-teknis hingga software engineer menyusun instruksi prompt AI yang kontekstual dan siap pakai untuk GPT-5, o3, Claude 4 / Sonnet 4.5, Gemini 3.7, DeepSeek R1/V3, Midjourney v7, FLUX.2, Veo 3, Kling 2.1, Sora 2, Suno v4.5/v5, serta runtime Open Agent Skills.
 
 🌐 **Website Live Resmi**: [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
 📖 **Panduan Deployment & DNS**: Baca [DEPLOYMENT.md](DEPLOYMENT.md) untuk panduan konfigurasi domain dan hosting.
@@ -15,34 +15,35 @@
 
 ## 🌟 Fitur Unggulan
 
-- 💎 **360 Formula Prompt Master**: Mencakup 8 kategori inti dengan 80 subkategori spesifik, termasuk 10 Masterclass 2026 (Reasoning GCC, Cursor Rules, MCP Server, FLUX.1 Descriptive Studio, Kling Director, Suno v4, TikTok Shop Live, LPDP Essay).
+- 💎 **400 Formula Prompt Master**: Mencakup 8 kategori inti dengan **83 subkategori** spesifik, termasuk workflow Agentic AI (`SKILL.md` Builder, Claude Code Subagents & Hooks, MCP Server v2), GEO/AEO, Antislop UI Audit, Next.js/PostgreSQL, Midjourney v7 (`--oref`), FLUX.2 / Kontext, Veo 3, Kling 2.1, Sora 2, dan Suno v4.5/v5.
+- 🧩 **Pratinjau & Ekspor Agent Skill (`SKILL.md`) Siap Agensi.io**: Konversi formula apa pun di Studio menjadi berkas `SKILL.md` berstandar Open Agent Skills dengan validasi frontmatter YAML (`name <= 64` karakter kebab-case, `description <= 1024`), salin 1-klik, unduh file `-SKILL.md`, dukungan 27 runtime agen (Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, dll.), serta 6 paket siap terbit di `agensi-skills/`.
 - ⚡ **Pratinjau JSON Bebas "Decode Error" (RFC 8259)**: Tampilan pratinjau JSON terformat dan tervalidasi dengan 3 sub-format (*Struktur Penuh*, *Format Chat API messages*, dan *Prompt String Aman*) yang bebas dari `json.decoder.JSONDecodeError` untuk Python, cURL, LangChain, dan REST API.
-- ✨ **Few-Shot In-Context Learning Booster dengan AI Suggest**: Tingkatkan akurasi prompt hingga +40% dengan contoh acuan masukan dan keluaran yang didukung generator AI Suggest terarah.
-- 🌐 **Deteksi Bahasa Cerdas & Dual Bahasa (EN ⇄ ID)**: Default bahasa Inggris (EN) dengan auto-deteksi preferensi browser (otomatis Bahasa Indonesia jika locale browser ID/IN). Pengguna dapat beralih bahasa kapan saja melalui header switcher dengan persistensi `localStorage`. Seluruh 4.300+ entri teks tersinkronisasi 100%.
-- ⚡ **1-Klik Isi Contoh Nyata (*Fill Sample*)**: Membantu pengguna baru memahami cara kerja formula dengan mengisi data formulir secara otomatis menggunakan skenario riil dalam Bahasa Indonesia atau Bahasa Inggris didukung smart dictionary.
+- ✨ **Few-Shot In-Context Learning Booster dengan AI Suggest**: Tingkatkan akurasi prompt dengan contoh acuan masukan dan keluaran yang didukung generator AI Suggest terarah.
+- 🌐 **Deteksi Bahasa Cerdas & Dual Bahasa (EN ⇄ ID)**: Default bahasa Inggris (EN) dengan auto-deteksi preferensi browser (otomatis Bahasa Indonesia jika locale browser ID/IN). Pengguna dapat beralih bahasa dan tema (Dark/Light) kapan saja melalui header switcher dengan persistensi `localStorage`. Seluruh 400 nama formula, logika AI, serta 8.600+ entri kamus label, opsi, dan placeholder tersinkronisasi penuh.
+- ⚡ **1-Klik Isi Contoh Nyata (*Fill Sample*)**: Membantu pengguna baru memahami cara kerja formula dengan mengisi seluruh data formulir secara otomatis menggunakan skenario riil dalam Bahasa Indonesia atau Bahasa Inggris.
 - 🎨 **2 Mode Antarmuka Intuitif**:
-  - 🧭 **Galeri Template**: Tampilan kartu visual modern dengan filter kategori instan, 20 quick search tags terverifikasi, dan pencarian intent cerdas.
-  - 🛠️ **Studio Peracik**: Layout 2-kolom lapang (58% formulir input berpemandu, 42% kartu preview prompt langsung dengan penghitung karakter & estimasi token).
+  - 🧭 **Galeri Template**: Tampilan kartu visual modern dengan filter kategori instan, quick search tags, dan pencarian intent cerdas.
+  - 🛠️ **Studio Peracik**: Layout 2-kolom lapang (58% formulir input berpemandu, 42% kartu preview prompt langsung dengan tab *Structured*, *Raw*, *JSON*, dan *SKILL.md*, penghitung karakter & estimasi token).
 - 🧹 **AI Enhance Sanitizer**: Output AI dibersihkan otomatis dari kebocoran code fence (```markdown) dan bold asterisks (**).
-- 📦 **Prompt Stash, Backup & Markdown Export**: Simpan racikan prompt favorit langsung di browser (IndexedDB) dan ekspor ke format JSON atau **Markdown (.md)** siap pakai.
-- 🚀 **Quick Launch ke 38+ AI Tools**: Salin prompt dan buka langsung ChatGPT, Claude 3.7, Google Gemini, DeepSeek R1, Perplexity, Midjourney, Runway, Kling, Suno, dll. dalam satu klik.
+- 📦 **Prompt Stash, Backup & Markdown Export**: Simpan racikan prompt favorit langsung di browser (IndexedDB) dan ekspor ke format JSON, **Markdown (.md)**, atau Plain Text (`.txt`).
+- 🚀 **Quick Launch ke 33 AI Tools**: Salin prompt dan buka langsung ChatGPT (GPT-5/o3), Claude (Sonnet 4.5), Google Gemini (3.7 Flash), DeepSeek (R1/V3), Perplexity, Midjourney, Runway Gen-4, Kling 2.1, Suno, Claude Code, Cursor, Windsurf, dll. dalam satu klik.
 - 🔒 **100% Privasi & Client-Side**: Seluruh data dan racikan formulir diproses secara lokal di peramban Anda tanpa pengiriman data ke server pihak ketiga.
 
 ---
 
-## 📚 Pembagian 8 Kategori Master (360 Frameworks)
+## 📚 Pembagian 8 Kategori Master (400 Frameworks, 83 Subkategori)
 
-| Kategori | Jumlah Template | Cakupan Niche & Kemampuan |
-| :--- | :---: | :--- |
-| 📝 **Teks & Konten** | **90** | Copywriting (AIDA), TikTok Live, Esai LPDP, SEO, Email, Naskah Podcast, Storytelling |
-| ⚡ **Prompt Ringkas** | **52** | Reasoning Models (GCC), Formula Kilat (PAS, BAB, FAB), Negosiasi Cepat, Hook Medsos |
-| 🎨 **Gambar & Desain** | **50** | Midjourney v6.1 (--cref/--sref), FLUX.1 Studio, DALL-E 3, Fotografi Produk, Seni 3D |
-| 💻 **Kode & Pengembang** | **40** | AI Coding Agent (.cursorrules), MCP Server Designer, RAG Pipeline, Refactoring, DevOps |
-| 🎵 **Audio & Musik** | **35** | Suno v4 Hit Song, Udio, Produksi Lagu, Sound Design, Voiceover, Soundscape |
-| 🚀 **Prompt Proyek** | **31** | Perencanaan Bisnis, Pitch Deck Investor, Peluncuran Produk, Manajemen Proyek |
-| 💡 **Koleksi & Inovasi** | **31** | Model Mental, SCAMPER, Blue Ocean Strategy, TRIZ, First Principles Thinking |
-| 🎬 **Video & Animasi** | **31** | Kling 1.5 & Runway Gen-3 Director, OpenAI Sora, Luma Ray, Naskah Video Viral |
-| **TOTAL KESELURUHAN** | **360** | **Master Frameworks Terintegrasi Penuh** |
+| Kategori | Jumlah Template | Subkategori | Cakupan Niche & Kemampuan |
+| :--- | :---: | :---: | :--- |
+| 📝 **Teks & Konten** | **98** | 19 | GEO/AEO, Copywriting (AIDA), TikTok Live, Esai LPDP, SEO, Email, B2B Case Study, Changelog |
+| 🎨 **Gambar & Desain** | **54** | 11 | Midjourney v7 (`--oref`), FLUX.2 / Kontext, Nano Banana Pro, Desain System Token, Fotografi Produk |
+| ⚡ **Prompt Ringkas** | **54** | 11 | Reasoning Models (GCC), JSON-Strict Contract, Diff-Only Patch, PAS, BAB, FAB, CO-STAR, RTF |
+| 💻 **Kode & Pengembang** | **50** | 6 | Agent Skill (`SKILL.md`), Claude Code Subagents & Hooks, MCP Server v2, TypeScript Zero-Any, PostgreSQL RLS |
+| 🎵 **Audio & Musik** | **37** | 8 | Suno v4.5/v5 Multi-Stem Studio, Udio, Podcast & Voiceover SSML, Sound Design, Soundscape |
+| 🚀 **Prompt Proyek** | **36** | 13 | Micro-SaaS 30-Day Launch, Technical RFC/ADR, Blameless Post-Mortem, PRD to Task Graph |
+| 💡 **Koleksi & Inovasi** | **36** | 8 | Multi-Agent Swarm Spec, Antislop UI & Copy Audit, AI Eval Red-Teaming, SCAMPER, Blue Ocean, TRIZ |
+| 🎬 **Video & Animasi** | **35** | 7 | Google Veo 3 Audio-Video, Kling 2.1 Motion Brush, OpenAI Sora 2 Continuity, Runway Gen-4 |
+| **TOTAL KESELURUHAN** | **400** | **83** | **Master Frameworks Terintegrasi Penuh** |
 
 ---
 
@@ -98,34 +99,53 @@ Proyek ini telah dilengkapi dengan workflow **GitHub Actions** otomatis serta be
 promptmatrix2/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml           # CI/CD otomatis untuk GitHub Pages
+│       └── deploy.yml                  # CI/CD otomatis untuk GitHub Pages
+├── agensi-skills/                      # 6 paket Open Agent Skills siap pakai & siap Agensi.io
+│   ├── antislop-ui-and-copy-auditor/
+│   ├── fullstack-ts-nextjs-architect/
+│   ├── mcp-server-production-builder/
+│   ├── multimodal-video-image-director/
+│   ├── prompt-matrix-prompt-architect/
+│   └── seo-geo-aeo-content-engine/
 ├── components/
-│   ├── AISettingsModal.tsx      # Modal pengaturan API key & preferensi model
-│   ├── Footer.tsx               # Footer modern dan tautan dokumentasi
-│   ├── FrameworkPane.tsx        # Panel studio peracik formulir & live preview
-│   ├── Header.tsx               # Navigasi atas, toggle bahasa, dan Stash badge
-│   ├── HelpModal.tsx            # Panduan interaktif dan FAQ pengguna
-│   ├── InputField.tsx           # Komponen input dinamis (text, select, textarea, dll.)
-│   ├── NavigationPane.tsx       # Sidebar navigasi kategori & subkategori
-│   └── TemplateGallery.tsx      # Grid galeri kartu formula & filter instan
+│   ├── AISettingsModal.tsx             # Modal pengaturan API key & preferensi model late-2026
+│   ├── AgentSkillViewer.tsx            # Pratinjau, validasi & ekspor SKILL.md siap Agensi.io
+│   ├── CleanJsonViewer.tsx             # Pratinjau JSON RFC 8259 bebas decode error
+│   ├── Footer.tsx                      # Footer modern dan tautan dokumentasi
+│   ├── FrameworkPane.tsx               # Panel studio peracik formulir & visual preview
+│   ├── Header.tsx                      # Navigasi atas, toggle bahasa/tema, dan Stash badge
+│   ├── HelpModal.tsx                   # Panduan interaktif dan FAQ pengguna
+│   ├── InputField.tsx                  # Komponen input dinamis (text, select, textarea, dll.)
+│   ├── NavigationPane.tsx              # Sidebar navigasi kategori & subkategori
+│   ├── TemplateGallery.tsx             # Grid galeri 400 kartu formula & filter instan
+│   └── VisualPromptPreview.tsx         # Pratinjau mockup visual & benchmark gold-standard
+├── config/
+│   └── agensiConfig.ts                 # Konfigurasi marketplace Agensi.io & 27 runtime agen
 ├── contexts/
-│   └── LanguageContext.tsx      # State management dwibahasa (ID ↔ EN)
+│   └── LanguageContext.tsx             # State management dwibahasa (ID <-> EN)
 ├── data/
-│   ├── aiPlatforms.ts           # Daftar 38 platform AI tools untuk Quick Launch
-│   └── frameworks.ts            # Basis data 350 master prompt frameworks
-├── docs/                        # Dokumentasi SOP, panduan AI Pro, dan FAQ
+│   ├── aiPlatforms.ts                  # Daftar preset model LLM (GPT-5, Claude 4, Gemini 3.7, DeepSeek, Grok)
+│   └── frameworks.ts                   # Basis data 400 master prompt frameworks (83 subkategori)
+├── docs/                               # Katalog 400 formula, AgensiMarketplacePlaybook.md & SOP
 ├── public/
-│   ├── CNAME                    # Custom domain pointer (prompt.sigitadi.id)
-│   ├── _redirects               # SPA routing rewrite
-│   ├── robots.txt               # SEO robots configuration
-│   └── sitemap.xml              # SEO XML sitemap
+│   ├── CNAME                           # Custom domain pointer (prompt.sigitadi.id)
+│   ├── _redirects                      # SPA routing rewrite
+│   ├── manifest.json                   # Konfigurasi PWA v7.2.0
+│   ├── robots.txt                      # SEO robots configuration
+│   ├── sitemap.xml                     # SEO XML sitemap
+│   └── sw.js                           # Service Worker offline cache (promptmatrix-v7.2.0)
 ├── services/
-│   ├── localizationService.ts   # Mesin lokalisasi presisi 4.213 entri (ID ↔ EN)
-│   └── sampleDataService.ts     # Mesin data contoh realistis otomatis
-├── App.tsx                      # Root application logic & state orchestration
-├── DEPLOYMENT.md                # Panduan teknis publikasi live domain
-├── package.json                 # Konfigurasi dependensi & skrip build
-└── vite.config.ts               # Konfigurasi bundler Vite & alias path
+│   ├── agentSkillService.ts            # Generator & validator Open Agent Skills SKILL.md
+│   ├── aiSettingsService.ts            # Manajemen preset provider & persistensi localStorage
+│   ├── jsonPromptService.ts            # Sanitizer & formatter payload JSON RFC 8259
+│   ├── localizationService.ts          # Mesin lokalisasi presisi 8.600+ entri (ID <-> EN)
+│   ├── sampleDataService.ts            # Mesin data contoh realistis otomatis (400 formula)
+│   ├── universalAIService.ts           # Dispatcher universal multi-provider AI
+│   └── visualBenchmarkService.ts       # Kurasi gambar benchmark untuk seluruh 400 formula
+├── App.tsx                             # Root application logic, 33 Quick Launchers & state orchestration
+├── DEPLOYMENT.md                       # Panduan teknis publikasi live domain
+├── package.json                        # Konfigurasi dependensi & skrip build (v7.2.0)
+└── vite.config.ts                      # Konfigurasi bundler Vite & alias path
 ```
 
 ---
@@ -136,4 +156,4 @@ Didistribusikan di bawah lisensi [MIT](LICENSE).
 
 ---
 
-*PromptMatrix 2.0 — Optimize Your AI, Starting from the Prompt.*
+*PromptMatrix 2.0: Optimize Your AI, Starting from the Prompt.*

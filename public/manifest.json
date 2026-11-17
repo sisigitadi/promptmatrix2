@@ -1,7 +1,7 @@
 {
   "name": "PromptMatrix 2.0 - Generator Prompt AI Berpemandu",
   "short_name": "PromptMatrix",
-  "description": "Generator prompt AI berpemandu dengan 360+ formula terstruktur (ChatGPT, Claude, Gemini, DeepSeek, Midjourney, FLUX, Suno, Coding).",
+  "description": "Generator prompt AI berpemandu dengan 400+ formula terstruktur dan ekspor Agent Skill SKILL.md (GPT-5, Claude 4/Sonnet 4.5, Gemini 3.7, DeepSeek R1/V3, Midjourney v7, FLUX.2, Veo 3, Kling 2.1, Sora 2, Suno v4.5/v5).",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#090d16",
