@@ -152,12 +152,14 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "Bagaimana AI mengkomunikasikan rencananya dan mereview pekerjaannya."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan aturan agent bersifat deterministik, zero-ambiguity, memprioritaskan strict type-safety, dan mewajibkan verifikasi build sebelum tugas dinyatakan selesai.",
+        output: "natural_language_prompt"
       },
       "MCP (Model Context Protocol) Server & Tool Designer": {
-        description: "Spesifikasi arsitektur Model Context Protocol (MCP) Server resmi Anthropic. Merancang custom tools, resources, skema JSON Schema validasi, error handling, dan konfigurasi integrasi ke Claude Desktop / Cursor IDE.",
+        description: "Spesifikasi arsitektur Model Context Protocol (MCP) Server resmi Anthropic. Merancang custom tools, resources, skema JSON Schema validasi, error handling, dan konfigurasi integrasi ke Claude Desktop / Cursor / Windsurf.",
         toolType: "code",
-        ai_logic_description: "Persona AI: Anda adalah Core Systems Architect & Model Context Protocol (MCP) Specialist. Susun blueprint server MCP lengkap dengan interface SDK resmi, definisi tool dengan skema input ketat (Zod / JSON Schema), penanganan koneksi stdio/SSE, dan sanitasi keamanan data sensitif.",
+        ai_logic_description: "Persona AI: Anda adalah Core Systems Architect & Model Context Protocol (MCP) Specialist. Susun blueprint server MCP lengkap dengan interface SDK resmi, definisi tool dengan skema input ketat (Zod / JSON Schema), penanganan koneksi stdio/Streamable HTTP/SSE, dan sanitasi keamanan data sensitif.",
         components: [
           {
             name: "mcpServerName",
@@ -201,7 +203,9 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             type: "boolean",
             info: "Sertakan blok konfigurasi JSON siap salin untuk diletakkan di claude_desktop_config.json."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Wajib menyertakan validasi input ketat (Zod/JSON Schema), sanitasi kredensial via environment variables, serta penanganan error terstruktur tanpa membocorkan stack trace.",
+        output: "json_prompt"
       },
       "LangChain & LlamaIndex RAG Pipeline Architect": {
         description: "Pipeline Retrieval-Augmented Generation (RAG) cerdas dengan vector embeddings (Pinecone/Chroma), semantic chunking, re-ranking, dan hybrid search.",
@@ -223,6 +227,8 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             info: "Pilih kombinasi framework LLM dan penyimpanan vektor",
           },
         ],
+        konteks_tambahan_instruksi_khusus: "Sertakan strategi chunking, metadata filtering, sitasi sumber terverifikasi, dan fallback saat skor relevansi di bawah ambang batas.",
+        output: "natural_language_prompt"
       },
       "Agentic AI Multi-Agent Workflow (CrewAI / AutoGen)": {
         description: "Desain sistem multi-agen AI otonom dengan pembagian peran terstruktur (Researcher, Writer, Reviewer), tool calling kustom, dan guardrails kualitas.",
@@ -244,6 +250,8 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             info: "Pilih framework orchestrator agen AI",
           },
         ],
+        konteks_tambahan_instruksi_khusus: "Definisikan batas iterasi maksimum, protokol handoff antar-agen, dan mekanisme human-in-the-loop untuk keputusan berisiko tinggi.",
+        output: "natural_language_prompt"
       },
       "Electron & Tauri Desktop App Architect": {
         description: "Arsitektur aplikasi desktop cross-platform modern dengan Rust backend (Tauri 2.0) atau Node/TypeScript (Electron) dengan keamanan IPC dan auto-updater.",
@@ -441,6 +449,181 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           },
         ],
       },
+      "Agent Skill Architect (SKILL.md Builder)": {
+        description: "Merancang paket Open Agent Skill (SKILL.md, references/, dan scripts/) berstandar portabel untuk Claude Code, Cursor, Gemini CLI, Codex, Windsurf, dan katalog Agensi.io.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Principal Agentic Systems Architect & Open Agent Skills Maintainer. Susun file SKILL.md lengkap dengan YAML frontmatter valid (name kebab-case <= 64 karakter, description trigger <= 1024 karakter), instruksi deterministik, guardrails, serta daftar skrip validasi.",
+        components: [
+          {
+            name: "skillDomain",
+            label: "Domain Tugas & Kapabilitas Skill",
+            type: "textarea",
+            placeholder: "contoh: Audit migrasi PostgreSQL zero-downtime dengan pengecekan lock table, RLS policy, dan script dry-run",
+            info: "Masalah spesifik apa yang diselesaikan skill ini untuk agent?",
+          },
+          {
+            name: "targetAgentRuntimes",
+            label: "Target Agen & Runtime",
+            type: "select",
+            options: [
+              "Universal Open Agent Standard (Claude Code, Cursor, Codex, Gemini CLI, Windsurf)",
+              "Claude Code & Anthropic Agent SDK",
+              "Agensi.io Commercial Marketplace Package (SKILL.md + references/ + scripts/)",
+              "Lainnya...",
+            ],
+            info: "Pilih ekosistem agen tujuan agar kompatibilitas frontmatter presisi.",
+          },
+          {
+            name: "bundledScriptsSpec",
+            label: "Skrip Validasi & Referensi Pendukung",
+            type: "textarea",
+            placeholder: "contoh: scripts/validate-migration.mjs untuk cek DDL berbahaya dan references/rls-checklist.md",
+            info: "Skrip deterministik atau dokumen referensi yang menyertai SKILL.md.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan YAML frontmatter memenuhi batas name <= 64 karakter kebab-case dan description <= 1024 karakter tanpa karakter em-dash atau buzzword pemasaran.",
+        output: "natural_language_prompt",
+      },
+      "Claude Code Subagent & Hooks Orchestrator": {
+        description: "Merancang arsitektur subagent Claude Code (.claude/agents/*.md) dan lifecycle hooks (PreToolUse, PostToolUse, Stop) dengan batasan tool, model routing, serta verifikasi otomatis.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Staff AI Tooling Engineer spesialis Claude Code orchestration. Rancang definisi subagent dengan pemisahan peran tegas, pembatasan izin tool minimal, dan hook shell/Node deterministik untuk mencegah regresi.",
+        components: [
+          {
+            name: "subagentRoles",
+            label: "Peran Subagent & Pembagian Tugas",
+            type: "textarea",
+            placeholder: "contoh: 1. schema-reviewer (read-only), 2. test-runner (eksekusi Vitest), 3. security-auditor (cek auth & secrets)",
+            info: "Daftar subagent, tanggung jawab masing-masing, dan tool yang diizinkan.",
+          },
+          {
+            name: "hookLifecycleEvents",
+            label: "Trigger Lifecycle Hooks",
+            type: "select",
+            options: [
+              "PreToolUse (Blokir command berisiko & lindungi file sensitif)",
+              "PostToolUse (Auto-format & jalankan typecheck setelah edit)",
+              "Stop / SubagentStop (Wajibkan bukti test pass sebelum selesai)",
+              "Gabungan PreToolUse + PostToolUse + Stop Gate",
+            ],
+            info: "Tahap siklus eksekusi mana yang perlu dikawal hook deterministik?",
+          },
+          {
+            name: "verificationGateCommand",
+            label: "Perintah Verifikasi Wajib",
+            type: "text",
+            placeholder: "contoh: npx tsc --noEmit && npm test -- --run",
+            info: "Perintah terminal yang menjadi syarat lolos sebelum hook mengizinkan penyelesaian tugas.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Terapkan prinsip least privilege untuk daftar tools tiap subagent dan pastikan seluruh hook mengembalikan exit code serta pesan error yang jelas.",
+        output: "natural_language_prompt",
+      },
+      "Cursor & Windsurf Multi-Repo Workspace Rules": {
+        description: "Menyusun hierarki aturan kerja lintas repositori (.cursor/rules/*.mdc, .windsurf/rules/, AGENTS.md) dengan glob scoping agar monorepo atau multi-repo tetap konsisten di 2026.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Staff Developer Experience & Monorepo Platform Architect. Buat aturan terstruktur berbasis glob path yang memisahkan konvensi frontend, backend API, shared packages, dan larangan keras anti-any.",
+        components: [
+          {
+            name: "workspaceTopology",
+            label: "Struktur Repositori & Paket",
+            type: "textarea",
+            placeholder: "contoh: Monorepo pnpm: apps/web (Next.js 16), apps/api (Fastify), packages/db (Drizzle + Postgres), packages/ui",
+            info: "Jelaskan folder/repo apa saja yang tercakup dan stack masing-masing.",
+          },
+          {
+            name: "globRuleScoping",
+            label: "Cakupan Glob Rules (.mdc / rules)",
+            type: "textarea",
+            placeholder: "contoh: apps/web/** (WCAG AA + Tailwind), apps/api/** (Zod schema + rate limit), packages/db/** (zero-downtime SQL)",
+            info: "Aturan spesifik per pola jalur file agar context agent tetap hemat.",
+          },
+          {
+            name: "sharedGuardrails",
+            label: "Aturan Global Lintas Repo",
+            type: "select",
+            options: [
+              "Zero 'any' TypeScript + Complete Files + Mandatory Build Check",
+              "Contract-First OpenAPI/Zod + Backward Compatibility Policy",
+              "Strict Privacy & No External Telemetry Injection",
+              "Lainnya...",
+            ],
+            info: "Standar rekayasa utama yang berlaku di semua repositori.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Hindari aturan generik panjang yang memboroskan context window; pecah menjadi file aturan ringkas berbasis glob pattern yang spesifik.",
+        output: "natural_language_prompt",
+      },
+      "MCP Server v2 (Streamable HTTP & OAuth2)": {
+        description: "Merancang MCP Server generasi 2026 dengan transport Streamable HTTP, autentikasi OAuth 2.1 + PKCE, scoped tool permissions, structured JSON outputs, dan proteksi SSRF/injection.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Distributed Systems & MCP Security Architect. Rancang implementasi MCP Server modern menggunakan Streamable HTTP transport, validasi skema input/output Zod ketat, token scoping OAuth2, dan audit logging aman.",
+        components: [
+          {
+            name: "mcpServiceDomain",
+            label: "Domain Layanan & Endpoints MCP",
+            type: "text",
+            placeholder: "contoh: Multi-Tenant Billing & Analytics MCP Server dengan endpoint /mcp (Streamable HTTP)",
+            info: "Fungsionalitas utama server MCP remote dan siapa konsumennya.",
+          },
+          {
+            name: "oauthScopesAndAuth",
+            label: "Model Autentikasi & OAuth2 Scopes",
+            type: "select",
+            options: [
+              "OAuth 2.1 + PKCE dengan Dynamic Client Registration & Scoped Tokens",
+              "mTLS + Short-Lived JWT Bearer untuk Internal VPC",
+              "Read-Only API Key Vault dengan Rate Limiting per Tenant",
+              "Lainnya...",
+            ],
+            info: "Skema otorisasi untuk mencegah akses tool lintas tenant atau eskalasi hak akses.",
+          },
+          {
+            name: "toolContractSpecs",
+            label: "Kontrak Tool & Resource Schemas",
+            type: "textarea",
+            placeholder: "contoh: query_metrics (Zod filter tanggal + limit max 100), export_invoice_summary (read-only resource URI)",
+            info: "Daftar tool, resource, serta validasi input/output terstruktur.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Wajib memvalidasi seluruh argumen tool dengan Zod, mensterilkan pesan error sebelum dikirim ke LLM client, dan memisahkan sesi per user token.",
+        output: "json_prompt",
+      },
+      "Local LLM & Ollama Edge Deployment Blueprint": {
+        description: "Blueprint deployment model AI lokal (Ollama, vLLM, llama.cpp) di workstation atau server edge privat dengan pemilihan kuantisasi GGUF, VRAM budgeting, dan OpenAI-compatible gateway.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah MLOps & Edge Inference Infrastructure Engineer. Hitung alokasi VRAM/RAM, pilih kuantisasi GGUF optimal (Q4_K_M / Q6_K / FP8), atur context window KV-cache, dan rancang konfigurasi runtime lokal yang aman serta deterministik.",
+        components: [
+          {
+            name: "hardwareProfile",
+            label: "Spesifikasi Hardware & VRAM Target",
+            type: "text",
+            placeholder: "contoh: Apple M3 Max 64GB Unified Memory atau NVIDIA RTX 4090 24GB VRAM + 64GB RAM",
+            info: "Perangkat keras lokal atau edge server yang akan menjalankan model.",
+          },
+          {
+            name: "workloadAndModels",
+            label: "Beban Kerja & Kandidat Model Lokal",
+            type: "textarea",
+            placeholder: "contoh: Coding assistant & RAG dokumen internal privat menggunakan Qwen2.5-Coder-32B atau Llama 3.3 / Gemma 3",
+            info: "Jenis tugas inferensi, kebutuhan tool calling, dan model pilihan.",
+          },
+          {
+            name: "inferenceEngineMode",
+            label: "Runtime & Gateway Lokal",
+            type: "select",
+            options: [
+              "Ollama + Open WebUI / LiteLLM Local Proxy (Single Node)",
+              "vLLM / SGLang High-Throughput Batching (Linux GPU Server)",
+              "llama.cpp Server dengan Custom GGUF & Speculative Decoding",
+              "Docker Compose Air-Gapped Stack (Zero Outbound Network)",
+            ],
+            info: "Stack serving yang paling sesuai dengan target deployment.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Sertakan estimasi jejak VRAM (model weights + KV cache), parameter Modelfile/CLI yang disarankan, dan kebijakan air-gapped tanpa panggilan jaringan keluar.",
+        output: "natural_language_prompt",
+      },
     },
     "Arsitektur Sistem, Cloud & Multiplatform": {
       "Rust Memory-Safe Systems & CLI Tool Builder": {
@@ -596,6 +779,40 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             info: "Entitas dan relasi yang dibagikan antarsubgraph",
           },
         ],
+      },
+      "TypeScript Strict Zero-Any Refactoring Auditor": {
+        description: "Audit sistematis dan refaktor kode TypeScript untuk menghilangkan seluruh penggunaan 'any', menggantinya dengan generics, discriminated unions, serta type guards aman di compile-time.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Principal TypeScript Compiler & Type-Safety Architect. Lakukan analisis akar masalah setiap tipe longgar (any, as unknown as, implicit any) dan ubah menjadi kontrak tipe presisi tanpa merusak perilaku runtime.",
+        components: [
+          {
+            name: "targetCodeSnippet",
+            label: "Potongan Kode atau Modul Target Audit",
+            type: "textarea",
+            placeholder: "contoh: Handler API Express & hook React yang masih memakai Record<string, any> dan event: any",
+            info: "Tempelkan kode atau jelaskan modul TypeScript yang ingin diperketat.",
+          },
+          {
+            name: "tsconfigStrictness",
+            label: "Profil Compiler tsconfig.json",
+            type: "select",
+            options: [
+              "Maximum Strict (strict: true, noUncheckedIndexedAccess, exactOptionalPropertyTypes)",
+              "Standard Strict (strict: true, noImplicitAny, strictNullChecks)",
+              "Incremental Migration (Per file module boundary dengan Zod validation)",
+            ],
+            info: "Tingkat keketatan compiler TypeScript target.",
+          },
+          {
+            name: "refactorConstraints",
+            label: "Batasan Backward Compatibility",
+            type: "text",
+            placeholder: "contoh: Jangan ubah signature publik fungsi ekspor, tambahkan type predicate isValidPayload()",
+            info: "Hal yang harus dipertahankan agar pemanggil eksternal tidak pecah.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Dilarang keras menyisakan 'any' atau '@ts-ignore'; gunakan 'unknown' disertai type narrowing atau skema Zod untuk data eksternal.",
+        output: "natural_language_prompt",
       },
     },
     "Data Science, Mobile & Arsitektur Lanjutan": {
@@ -769,6 +986,76 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           },
         ],
       },
+      "API Security Pentest & OWASP Top 10 Reviewer": {
+        description: "Audit keamanan endpoint API REST/GraphQL terhadap OWASP API Security Top 10 (BOLA/IDOR, broken auth, mass assignment, SSRF, rate limit bypass) lengkap dengan patch remediasi.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Lead Application Security Engineer & OWASP API Auditor. Analisis vektor serangan paling realistis, tunjukkan celah otorisasi/validasi input, dan tuliskan kode perbaikan konkret yang siap diuji.",
+        components: [
+          {
+            name: "apiEndpointSpec",
+            label: "Kontrak Endpoint / Handler API",
+            type: "textarea",
+            placeholder: "contoh: PATCH /api/v1/workspaces/:id/members menggunakan JWT user, body JSON role & billingEmail",
+            info: "Deskripsikan route, mekanisme auth, query DB, dan payload inputnya.",
+          },
+          {
+            name: "threatFocusArea",
+            label: "Fokus Ancaman OWASP API",
+            type: "select",
+            options: [
+              "Full OWASP API Top 10 Checklist (BOLA, BFLA, Mass Assignment, SSRF)",
+              "Authorization & Multi-Tenant Isolation (IDOR / BOLA Focus)",
+              "Injection, Deserialization & Webhook Signature Forgery",
+              "Rate Limiting, Brute-Force & Token Leakage Review",
+            ],
+            info: "Prioritas pemeriksaan keamanan yang diinginkan.",
+          },
+          {
+            name: "runtimeStack",
+            label: "Framework & Auth Layer",
+            type: "text",
+            placeholder: "contoh: Node.js Fastify + Prisma + JWT RS256 + Redis rate limiter",
+            info: "Stack backend agar rekomendasi patch sesuai ekosistem.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Setiap temuan wajib disertai tingkat risiko (Critical/High/Medium), skenario eksploitasi defensif, serta contoh kode patch dan test kasus negatif.",
+        output: "natural_language_prompt",
+      },
+      "OpenTelemetry & Structured Observability Instrumentation": {
+        description: "Merancang instrumentasi OpenTelemetry (distributed traces, structured JSON logs, RED/USE metrics) lintas microservice dan background job tanpa membocorkan PII atau secret.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Principal Site Reliability Engineer & Observability Architect. Susun skema trace context propagation (W3C traceparent), span attributes bermakna, log redaction PII, dan alert SLO berbasis latency/error budget.",
+        components: [
+          {
+            name: "serviceArchitecture",
+            label: "Alur Layanan & Boundary Sistem",
+            type: "textarea",
+            placeholder: "contoh: API Gateway -> Order Service (Node.js) -> Kafka Queue -> Payment Worker (Go) -> PostgreSQL",
+            info: "Komponen aplikasi, antrean async, dan database yang ingin dilacak.",
+          },
+          {
+            name: "telemetryBackend",
+            label: "Collector & Backend Observability",
+            type: "select",
+            options: [
+              "OpenTelemetry Collector -> Grafana Tempo / Prometheus / Loki",
+              "OpenTelemetry SDK -> Datadog / Honeycomb / New Relic",
+              "Self-Hosted SigNoz / ClickHouse OpenTelemetry Stack",
+              "Lainnya...",
+            ],
+            info: "Tujuan ekspor telemetry agar konvensi span dan metrik kompatibel.",
+          },
+          {
+            name: "piiRedactionRules",
+            label: "Kebijakan Redaksi PII & High-Cardinality",
+            type: "text",
+            placeholder: "contoh: Masking email, authorization header, nomor kartu; hindari user_id di label metrik Prometheus",
+            info: "Aturan keamanan data dan kendali biaya kardinalitas metrik.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan trace_id otomatis disuntikkan ke seluruh log JSON terstruktur dan hindari atribut metrik dengan kardinalitas tidak terbatas.",
+        output: "natural_language_prompt",
+      },
     },
     "Pengembangan Frontend & Web App": {
       "React 19 & Next.js 15 Component Architect": {
@@ -840,6 +1127,40 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             info: "Struktur payload JSON dan mitigasi kegagalan",
           },
         ],
+      },
+      "Playwright E2E Visual & Accessibility Regression Suite": {
+        description: "Membangun suite pengujian Playwright E2E modern dengan Page Object Model, role-based locators tahan banting, pengecekan WCAG AA via axe-core, serta visual snapshot multi-viewport.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Staff QA Automation & Web Accessibility Engineer. Tulis skrip Playwright yang deterministik bebas flaky waitForTimeout, mengutamakan getByRole/getByLabel, dan memeriksa kontras/fokus keyboard.",
+        components: [
+          {
+            name: "userJourneyFlow",
+            label: "Alur Pengguna Kritis (E2E Journey)",
+            type: "textarea",
+            placeholder: "contoh: Buka galeri template -> cari 'MCP' -> isi form 1-klik sampel -> verifikasi tab SKILL.md & download file",
+            info: "Langkah interaksi nyata dari awal hingga asersi akhir.",
+          },
+          {
+            name: "regressionTargets",
+            label: "Target Cakupan Regresi",
+            type: "select",
+            options: [
+              "Functional E2E + Axe-Core WCAG 2.2 AA + Mobile/Desktop Visual Diff",
+              "Cross-Browser Matrix (Chromium, Firefox, WebKit) dengan Auth StorageState",
+              "Accessibility & Keyboard Navigation Audit (Tab order, Focus-Visible, ARIA)",
+            ],
+            info: "Dimensi kualitas yang diverifikasi di pipeline CI.",
+          },
+          {
+            name: "viewportMatrix",
+            label: "Viewport & Tema Uji",
+            type: "text",
+            placeholder: "contoh: Desktop 1440x900 dan Mobile 375x812 pada Light Mode serta Dark Mode",
+            info: "Ukuran layar dan variasi tema UI yang harus lolos tanpa horizontal overflow.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Dilarang memakai sleep/waitForTimeout statis atau selector CSS rapuh; gunakan web-first assertions (expect(locator).toBeVisible()) dan role-based locators.",
+        output: "natural_language_prompt",
       },
     },
     "Arsitektur Basis Data & Backend": {
@@ -926,6 +1247,41 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             info: "Sebutkan skenario spesifik yang wajib diuji",
           },
         ],
+      },
+      "PostgreSQL Zero-Downtime Migration & RLS Architect": {
+        description: "Merancang skrip migrasi PostgreSQL aman produksi (expand-and-contract, CONCURRENTLY index, lock_timeout) beserta kebijakan Row-Level Security (RLS) multi-tenant yang terindeks.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Principal PostgreSQL DBA & Multi-Tenant Security Architect. Susun skrip SQL DDL bertahap agar migrasi tidak memicu AccessExclusiveLock berkepanjangan dan kebijakan RLS tetap cepat di skala jutaan baris.",
+        components: [
+          {
+            name: "migrationGoal",
+            label: "Perubahan Skema & Tabel Terdampak",
+            type: "textarea",
+            placeholder: "contoh: Tambah kolom organization_id NOT NULL pada tabel invoices (40 juta baris) dan aktifkan RLS per tenant",
+            info: "Operasi DDL yang ingin dijalankan di database produksi aktif.",
+          },
+          {
+            name: "rlsIsolationPolicy",
+            label: "Model Isolasi Row-Level Security",
+            type: "select",
+            options: [
+              "JWT / Session Variable Tenant Isolation (current_setting('app.tenant_id'))",
+              "Supabase Auth UID & Role Membership Policy dengan Index",
+              "Read/Write Split Policies + Admin Bypass Role",
+              "Tanpa RLS (Fokus Zero-Downtime Expand-Contract DDL)",
+            ],
+            info: "Pola otorisasi tingkat baris yang perlu ditegakkan database.",
+          },
+          {
+            name: "lockAndRollbackBudget",
+            label: "Batas Lock & Strategi Rollback",
+            type: "text",
+            placeholder: "contoh: lock_timeout = '2s', statement_timeout = '30s', backfill batch 10.000 baris, skrip down migrasi aman",
+            info: "Pengaman produksi untuk mencegah antrean query macet.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Pisahkan fase Expand, Backfill, dan Contract secara eksplisit; gunakan NOT VALID sebelum VALIDATE CONSTRAINT dan CREATE INDEX CONCURRENTLY di luar blok transaksi.",
+        output: "natural_language_prompt",
       },
     },
   },
@@ -1099,6 +1455,76 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           },
         ],
       },
+      "Antislop UI & Copywriting Audit Framework": {
+        description: "Audit menyeluruh antarmuka web dan teks produk untuk memberantas klise AI (em-dash berlebihan, buzzword hambar), memvalidasi kontras WCAG AA/AAA di Dark/Light mode, fokus keyboard, dan kerapian mobile.",
+        toolType: "planning",
+        ai_logic_description: "Persona AI: Anda adalah Principal Design Systems Reviewer & Anti-Slop Editor. Inspeksi kode komponen UI dan salinan teks baris demi baris, tandai pelanggaran kontras, overflow horizontal mobile, serta kalimat klise pemasaran generik, lalu berikan penggantinya yang jernih.",
+        components: [
+          {
+            name: "auditTargetArtifact",
+            label: "Kode UI atau Copywriting Target Audit",
+            type: "textarea",
+            placeholder: "contoh: Komponen HeroSection.tsx dan modal output JSON/Markdown yang terasa terlalu gelap di Light Mode serta penuh kata klise AI",
+            info: "Tempelkan JSX/TSX, HTML, atau naskah UI yang akan diaudit.",
+          },
+          {
+            name: "auditSeverityFocus",
+            label: "Pilar Audit Utama",
+            type: "select",
+            options: [
+              "Full Antislop Stack (UI Contrast WCAG AA + Copywriting + Mobile Layout + Keyboard Focus)",
+              "Visual Contrast & Dark/Light Theme Parity Audit",
+              "Copywriting Anti-Buzzword & Zero Em-Dash Hygiene",
+              "Mobile Touch Target (>= 44px) & Zero Horizontal Overflow",
+            ],
+            info: "Pilih aspek kualitas yang paling diprioritaskan pada audit ini.",
+          },
+          {
+            name: "brandVoiceBenchmark",
+            label: "Standar Nada & Gaya Produk",
+            type: "text",
+            placeholder: "contoh: Tegas, teknis, jujur tanpa klaim berlebihan, ramah pembaca Indonesia dan global",
+            info: "Karakter komunikasi produk setelah klise dibersihkan.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Tandai setiap kemunculan em-dash, klaim kosong ('revolutionary', 'seamless', 'cutting-edge'), warna teks dengan rasio kontras di bawah 4.5:1, serta elemen interaktif tanpa focus-visible.",
+        output: "natural_language_prompt",
+      },
+      "Developer Tool Monetization & Marketplace Packaging": {
+        description: "Strategi pengemasan alat pengembang, Agent Skill, CLI, atau template menjadi produk komersial siap jual di marketplace seperti Agensi.io, Gumroad, atau GitHub Sponsors dengan struktur tier jelas.",
+        toolType: "planning",
+        ai_logic_description: "Persona AI: Anda adalah Developer Tools Product Strategist & Marketplace Growth Advisor. Rancang positioning teknis, pemisahan fitur Lead Magnet gratis vs paket berbayar, struktur harga rasional, dan metadata listing berkonversi tinggi berbasis bukti kapabilitas nyata.",
+        components: [
+          {
+            name: "devToolArtifact",
+            label: "Produk / Skill / Template Developer",
+            type: "textarea",
+            placeholder: "contoh: Paket 6 Open Agent Skills (SKILL.md + script validasi Zod/Playwright/PostgreSQL) untuk Claude Code & Cursor",
+            info: "Jelaskan aset teknis yang ingin dikemas untuk developer atau tim.",
+          },
+          {
+            name: "marketplaceChannel",
+            label: "Platform Distribusi & Model Bagi Hasil",
+            type: "select",
+            options: [
+              "Agensi.io Marketplace (Free Lead Magnet + Flagship Paid Skills + Affiliate Funnel)",
+              "Gumroad / LemonSqueezy Direct Indie Storefront",
+              "Open-Core GitHub Repo + Pro CLI / Enterprise Team License",
+              "Hybrid Marketplace + Direct Bundle Storefront",
+            ],
+            info: "Kanal utama tempat developer menemukan dan membeli produk Anda.",
+          },
+          {
+            name: "buyerPersonaConstraint",
+            label: "Profil Pembeli & Anggaran Target",
+            type: "text",
+            placeholder: "contoh: Solo developer & tech lead tim kecil (harga single pack $19-$29, team bundle $79-$149)",
+            info: "Siapa pengambil keputusan pembelian dan kisaran harga wajarnya.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Hindari taktik kelangkaan palsu atau janji berlebihan; fokus pada penghematan jam kerja rekayasa yang dapat diverifikasi dan daftar isi paket yang transparan.",
+        output: "natural_language_prompt",
+      },
     },
     "Model Mental & Keputusan Strategis": {
       "Inversion Thinking (Charlie Munger Anti-Goal Strategy)": {
@@ -1184,6 +1610,36 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             info: "Apa bidang usaha Anda?",
           },
         ],
+      },
+      "First-Principles Product Differentiation Matrix": {
+        description: "Membedah asumsi industri dari prinsip pertama (first principles) untuk membangun matriks diferensiasi produk yang nyata, sulit ditiru, dan terasa langsung oleh pengguna inti.",
+        toolType: "planning",
+        ai_logic_description: "Persona AI: Anda adalah Chief Product Strategist spesialis First-Principles Thinking. Bongkar fitur kosmetik yang sekadar mengikuti kompetitor, temukan hambatan biaya/waktu/kepercayaan mendasar, dan susun matriks diferensiasi terukur.",
+        components: [
+          {
+            name: "productAndCategory",
+            label: "Produk & Kategori Pasar Saat Ini",
+            type: "text",
+            placeholder: "contoh: PromptMatrix Studio - Workspace prompt engineering lokal & pembuat Open Agent Skill SKILL.md",
+            info: "Produk apa yang sedang diposisikan dan kategori industrinya.",
+          },
+          {
+            name: "incumbentAssumptions",
+            label: "Asumsi Umum Kompetitor yang Ingin Dibongkar",
+            type: "textarea",
+            placeholder: "contoh: Kompetitor mewajibkan login cloud, langganan bulanan mahal, dan menyimpan prompt pengguna di server pihak ketiga",
+            info: "Kebiasaan standar industri yang sebenarnya merugikan atau merepotkan pengguna.",
+          },
+          {
+            name: "coreTruthConstraints",
+            label: "Keunggulan Struktural & Bukti Nyata",
+            type: "textarea",
+            placeholder: "contoh: 100% client-side privacy, 400+ framework terstruktur, dukungan bilingual ID/EN, dan ekspor langsung ke SKILL.md",
+            info: "Fakta arsitektur atau model bisnis yang menjadi pembeda permanen.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Sajikan hasil dalam bentuk tabel matriks perbandingan (Asumsi Lama vs Prinsip Pertama vs Bukti Fitur vs Dampak Pengguna) yang ringkas dan objektif.",
+        output: "natural_language_prompt",
       },
     },
     "Framework Kreativitas & Agile Sprint": {
@@ -1579,6 +2035,75 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           },
         ],
       },
+      "Multi-Agent Swarm Task Decomposition & Verifier Spec": {
+        description: "Merancang arsitektur pembagian tugas swarm multi-agen dengan isolasi kepemilikan file (disjoint ownership), kontrak antarmuka eksplisit, serta peran verifier independen sebelum integrasi akhir.",
+        toolType: "planning",
+        ai_logic_description: "Persona AI: Anda adalah Distributed Multi-Agent Coordinator Architect. Pecah sasaran rekayasa kompleks menjadi unit kerja paralel tanpa tabrakan write-conflict, tentukan kriteria selesai objektif tiap pekerja, dan rancang protokol verifikasi silang.",
+        components: [
+          {
+            name: "swarmObjective",
+            label: "Sasaran Proyek & Ruang Lingkup",
+            type: "textarea",
+            placeholder: "contoh: Upgrade 360->400 framework prompt, tambah viewer SKILL.md di UI, dan susun 6 paket skill siap unggah ke Agensi.io",
+            info: "Hasil akhir terpadu yang harus diselesaikan seluruh swarm.",
+          },
+          {
+            name: "workerSlicesAndOwnership",
+            label: "Pembagian Worker & Kepemilikan File",
+            type: "textarea",
+            placeholder: "contoh: Worker-1: data/frameworks.ts & localization; Worker-2: UI & App.tsx; Worker-3: agensi-skills/ & playbook",
+            info: "Daftar agen paralel beserta batas ketat file yang boleh dan dilarang disentuh.",
+          },
+          {
+            name: "verificationGateProtocol",
+            label: "Gerbang Verifikasi & Integrasi Akhir",
+            type: "select",
+            options: [
+              "Dedicated Verifier Agent + Mandatory Build & Test Gate",
+              "Peer Cross-Review + Automated Schema Validator Script",
+              "Coordinator Merge Check + Zero-Conflict Diff Inspection",
+            ],
+            info: "Mekanisme memastikan kualitas dan konsistensi sebelum merge final.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan tidak ada dua agen menulis ke file yang sama secara bersamaan, dan cantumkan kondisi eskalasi apabila kontrak antarmuka perlu diubah.",
+        output: "json_prompt",
+      },
+      "AI Agent Evaluation & Red-Teaming Benchmark": {
+        description: "Menyusun dataset uji evaluasi agen AI (golden tasks, tool-calling accuracy, latency/cost budget) dan skenario red-teaming (prompt injection, data exfiltration, policy bypass).",
+        toolType: "planning",
+        ai_logic_description: "Persona AI: Anda adalah AI Safety & Agent Evaluation Engineer. Bangun matriks rubrik penilaian deterministik dan berbasis LLM-as-a-Judge beserta kasus uji adversarial untuk mengukur keandalan agen sebelum rilis produksi.",
+        components: [
+          {
+            name: "agentCapabilityScope",
+            label: "Kapabilitas Agen & Daftar Tools",
+            type: "textarea",
+            placeholder: "contoh: Coding & Support Agent dengan akses read_file, query_sql_readonly, dan send_ticket_reply",
+            info: "Apa yang bisa dilakukan agen dan alat eksternal apa yang dapat dipanggilnya.",
+          },
+          {
+            name: "redTeamAttackVectors",
+            label: "Vektor Serangan & Kegagalan Target Uji",
+            type: "select",
+            options: [
+              "Indirect Prompt Injection + Secret Exfiltration + Tool Misuse",
+              "Hallucination Rate + Format Contract Breakage (JSON/YAML)",
+              "Infinite Tool Loop, Context Overflow & Privilege Escalation",
+              "Full Reliability & Adversarial Eval Suite",
+            ],
+            info: "Kategori risiko utama yang harus diuji pada benchmark.",
+          },
+          {
+            name: "passFailThresholds",
+            label: "Ambang Lolos Rilis (Pass Threshold)",
+            type: "text",
+            placeholder: "contoh: >= 95% valid tool schema, 0% secret leak pada 50 kasus adversarial, p95 latency < 6s",
+            info: "Angka kelulusan objektif untuk menentukan agen siap produksi.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Sertakan contoh test case konkret (input normal, edge case, dan serangan adversarial defensif) beserta skrip/rubrik skor otomatisnya.",
+        output: "json_prompt",
+      },
     },
     "Ekstraksi & Kloning Formula Master": {
       "Reverse Prompt Engineering (Ekstraktor DNA Prompt)": {
@@ -1797,6 +2322,40 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
           },
         ],
       },
+      "SaaS Onboarding Lifecycle Email Sequence (Behavior-Driven)": {
+        description: "Merancang rangkaian email onboarding SaaS berbasis pemicu perilaku pengguna (Day 0 aktivasi, stall recovery, aha-moment nudge, dan konversi trial) yang ringkas dan terasa personal.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah SaaS Lifecycle & Retention Copywriter. Susun 5 email pendek berbasis event produk nyata (bukan timer kalender kaku) dengan satu ajakan aksi (CTA) jernih per email dan nol frasa klise pemasaran.",
+        components: [
+          {
+            name: "saasAhaMoment",
+            label: "Produk SaaS & Momen 'Aha' Pertama",
+            type: "textarea",
+            placeholder: "contoh: PromptMatrix Studio; momen aha saat pengguna menghasilkan dan menyalin SKILL.md pertama dalam 90 detik",
+            info: "Aksi kunci pertama di dalam aplikasi yang berkorelasi dengan retensi pengguna.",
+          },
+          {
+            name: "behaviorTriggers",
+            label: "Pemicu Perilaku (Event Triggers)",
+            type: "select",
+            options: [
+              "Signup -> Belum Aktif 24 Jam -> Sukses Aksi Pertama -> Hari ke-7 -> Pra-Kadaluarsa Trial",
+              "Freemium Power User -> Hit Usage Limit -> Upgrade Nudge",
+              "Self-Serve Team Invite -> Kolaborator Pertama Bergabung",
+            ],
+            info: "Jalur event produk yang memicu pengiriman masing-masing email.",
+          },
+          {
+            name: "emailToneStyle",
+            label: "Nada Komunikasi Pengirim",
+            type: "text",
+            placeholder: "contoh: Gaya founder-to-founder yang langsung ke inti, hangat, tanpa hype atau emoji berlebihan",
+            info: "Siapa pengirim email (Founder / Product Specialist) dan nada bahasanya.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Setiap email wajib memiliki subjek di bawah 50 karakter, teks pratinjau spesifik, isi 90-140 kata, dan tepat satu CTA berbasis tautan teks.",
+        output: "natural_language_prompt",
+      },
     },
     "Komunikasi Krisis & Webinar Penjualan": {
       "Crisis Management & PR Damage Control Statement": {
@@ -1870,6 +2429,8 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             info: "Gaya penulisan artikel",
           },
         ],
+        konteks_tambahan_instruksi_khusus: "Pastikan hasil prompt natural, relevan, dan memikat.",
+        output: "natural_language_prompt"
       },
       "Customer Review Response Generator (5-Star & 1-Star)": {
         description: "Generator balasan ulasan pelanggan toko online / Google Maps (Apresiasi hangat untuk bintang 5, solusi empati bertanggung jawab untuk bintang 1-2).",
@@ -1898,6 +2459,74 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             info: "Aksi nyata yang Anda berikan untuk menyelesaikan masalah",
           },
         ],
+      },
+      "GEO (Generative Engine Optimization) & AI Citation Architect": {
+        description: "Mengoptimalkan konten web agar dikutip oleh mesin pencari generatif (ChatGPT Search, Perplexity, Gemini AI Overviews, Claude) melalui klaim terverifikasi, statistik sumber primer, dan struktur entitas padat.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah Generative Engine Optimization (GEO) Strategist & Editorial Researcher. Susun kerangka artikel dengan blok jawaban langsung di paragraf awal, tabel perbandingan faktual, sitasi terukur, dan struktur semantik yang mudah diekstrak LLM.",
+        components: [
+          {
+            name: "geoTopicIntent",
+            label: "Topik Utama & Pertanyaan Pencarian AI",
+            type: "textarea",
+            placeholder: "contoh: Perbandingan standar Open Agent Skills (SKILL.md) vs MCP Server untuk tim developer di 2026",
+            info: "Pertanyaan kompleks yang sering diajukan pengguna ke mesin AI Search.",
+          },
+          {
+            name: "citationEvidenceData",
+            label: "Data Primer, Statistik & Fakta Unik",
+            type: "textarea",
+            placeholder: "contoh: Tolok ukur waktu setup, kompatibilitas 27 agen AI, batasan frontmatter 64/1024 karakter, serta studi kasus migrasi",
+            info: "Bukti kuantitatif atau definisi otoritatif yang membuat AI mengutip halaman Anda.",
+          },
+          {
+            name: "targetAiEngines",
+            label: "Target Mesin Jawaban AI",
+            type: "select",
+            options: [
+              "Multi-Engine (Google AI Overviews, Perplexity, ChatGPT Search, Claude)",
+              "Perplexity & Technical Research Citations",
+              "Google AI Overviews & Featured Snippets",
+            ],
+            info: "Platform pencarian AI utama yang menjadi sasaran visibilitas sitasi.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Tempatkan definisi ringkas 40-60 kata yang dapat berdiri sendiri (self-contained) di bawah setiap heading H2/H3 dan hindari kalimat pembuka bertele-tele.",
+        output: "natural_language_prompt",
+      },
+      "AEO (Answer Engine Optimization) Schema & Snippet Writer": {
+        description: "Menghasilkan pasangan konten ringkas berorientasi jawaban instan (Answer Engine Optimization) beserta markup JSON-LD valid (FAQPage, HowTo, SoftwareApplication) yang siap disematkan ke halaman web.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah Technical SEO & Structured Data Schema Architect. Tulis blok jawaban zero-fluff berpresisi tinggi lalu kompilasi skema JSON-LD Schema.org valid tanpa properti usang atau error sintaks.",
+        components: [
+          {
+            name: "targetQuestionsAndPage",
+            label: "Halaman Sasaran & Daftar Pertanyaan Inti",
+            type: "textarea",
+            placeholder: "contoh: Halaman dokumentasi PromptMatrix 2.0: Cara kerja SKILL.md, privasi client-side, dan cara pakai 400+ framework",
+            info: "Kumpulan pertanyaan spesifik pengguna yang ingin dijawab secara instan.",
+          },
+          {
+            name: "schemaOrgType",
+            label: "Tipe Skema JSON-LD",
+            type: "select",
+            options: [
+              "FAQPage + SoftwareApplication (Kombinasi Produk & FAQ)",
+              "HowTo Step-by-Step + FAQPage",
+              "TechArticle + Dataset / DefinedTerm",
+            ],
+            info: "Jenis markup terstruktur Schema.org yang akan dihasilkan.",
+          },
+          {
+            name: "canonicalBrandData",
+            label: "Nama Brand, URL Kanonis & Penulis",
+            type: "text",
+            placeholder: "contoh: PromptMatrix 2.0, https://prompt.sigitadi.id/, Sigit Adi",
+            info: "Identitas entitas resmi untuk field publisher/author pada JSON-LD.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan seluruh JSON-LD berada dalam blok valid tanpa trailing comma dan setiap jawaban teks di schema 100% sinkron dengan salinan visual halaman.",
+        output: "json_prompt",
       },
     },
     "Pemasaran & Komunikasi Modern": {
@@ -2767,7 +3396,9 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "Pilih pilar pembangunan nasional yang paling beririsan langsung dengan riset Anda."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan hasil prompt natural, relevan, dan memikat.",
+        output: "natural_language_prompt"
       },
       "Feynman Technique Explainer (Analogi Sederhana)": {
         description: "Terjemahkan materi teknis, sains, finansial, atau hukum yang rumit menjadi penjelasan mudah dipahami menggunakan analogi sehari-hari.",
@@ -4175,7 +4806,9 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "Pilih persona gaya penyampaian naskah copywriting."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan hasil prompt natural, relevan, dan memikat.",
+        output: "natural_language_prompt"
       },
       "TikTok Shop & Shopee Live High-Converting Stream Script": {
         description: "Naskah siaran langsung (live streaming) interaktif untuk host TikTok Shop & Shopee Live. Menggunakan formula hook 3 detik penahan scroll, penumpukan nilai (value stacking), hitung mundur flash sale, dan interaksi komentar real-time pemicu keranjang kuning.",
@@ -4229,7 +4862,9 @@ export const PROMPT_FRAMEWORKS: PromptFrameworksType = {
             ],
             info: "Pilih vibe pembawaan host di depan kamera."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan hasil prompt natural, relevan, dan memikat.",
+        output: "natural_language_prompt"
       },
       "Deskripsi Produk Marketplace (Shopee & Tokopedia)": {
         description: "Copywriting deskripsi produk toko online yang menonjolkan manfaat emosional, detail spesifikasi, garansi toko, dan pemicu checkout instan.",
@@ -4962,6 +5597,70 @@ Email 3: Studi kasus pengguna`,
             validation: { min_length: 10 },
           },
         ],
+      },
+      "Landing Page Anti-Slop Value Proposition Rewriter": {
+        description: "Menulis ulang hero headline, subheadline, benefit cards, dan CTA landing page dengan membuang jargon klise AI agar pembaca paham nilai produk dalam 5 detik pertama.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah Conversion Copywriter & Anti-Slop Editorial Director. Ganti kata kosong ('revolusioner', 'seamless', 'bertenaga AI') dengan mekanisme nyata, hasil spesifik, dan bukti sosial yang dapat diverifikasi.",
+        components: [
+          {
+            name: "currentLandingCopy",
+            label: "Naskah Hero & Fitur Saat Ini",
+            type: "textarea",
+            placeholder: "contoh: Platform AI revolusioner dan seamless untuk mengubah prompt biasa menjadi hasil luar biasa secara instan",
+            info: "Tempelkan teks landing page yang terasa klise atau terlalu abstrak.",
+          },
+          {
+            name: "concreteMechanismProof",
+            label: "Mekanisme Nyata & Angka Spesifik Produk",
+            type: "textarea",
+            placeholder: "contoh: 400+ framework terstruktur, 100% jalan lokal di browser tanpa login, ekspor langsung ke SKILL.md dan JSON",
+            info: "Fakta konkret tentang cara kerja produk dan metrik yang boleh diklaim.",
+          },
+          {
+            name: "primaryBuyerPersona",
+            label: "Pengunjung Target Utama",
+            type: "text",
+            placeholder: "contoh: Software engineer, kreator konten, dan AI builder yang bosan prompt coba-coba",
+            info: "Siapa yang membaca halaman dalam 5 detik pertama?",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Dilarang keras memakai em-dash atau kata buzzword ('ultimate', 'cutting-edge', 'game-changer', 'revolutionize'). Sediakan 3 variasi hero beserta alasan konversinya.",
+        output: "natural_language_prompt",
+      },
+      "Marketplace Product Listing Copywriter (Agensi & Gumroad)": {
+        description: "Menyusun halaman listing produk digital (Agent Skill, template kode, UI kit, prompt pack) di Agensi.io atau Gumroad: judul SEO, tagline tajam, daftar isi paket jujur, dan FAQ pra-beli.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah Digital Product Merchandising & Developer Copywriter. Tulis deskripsi listing yang jelas bagi pembeli teknis: jelaskan syarat lingkungan, isi folder aktual, alur penggunaan, dan batasan produk secara jujur.",
+        components: [
+          {
+            name: "packageContents",
+            label: "Nama Produk & Isi Paket Sebenarnya",
+            type: "textarea",
+            placeholder: "contoh: Fullstack TS & Next.js Architect Skill (SKILL.md + 2 references/*.md + 1 script audit TypeScript anti-any)",
+            info: "Sebutkan file, skrip, atau template persis yang didapat pembeli.",
+          },
+          {
+            name: "listingPlatformTarget",
+            label: "Marketplace Sasaran",
+            type: "select",
+            options: [
+              "Agensi.io Open Agent Skills Marketplace",
+              "Gumroad / LemonSqueezy Digital Storefront",
+              "Dual Listing (Agensi.io + Website Sendiri)",
+            ],
+            info: "Platform listing menentukan struktur metadata dan kata kunci pencarian.",
+          },
+          {
+            name: "pricingAndLicenseTier",
+            label: "Harga & Hak Lisensi",
+            type: "text",
+            placeholder: "contoh: $19 Personal / $59 Team Unlimited Seats (Pembaruan seumur hidup untuk versi minor)",
+            info: "Harga dan cakupan lisensi penggunaan komersial/tim.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Sertakan 8-10 kata kunci SEO pencarian marketplace, blok 'Cocok Untuk / Tidak Cocok Untuk' yang jujur, serta 4 FAQ teknis.",
+        output: "natural_language_prompt",
       },
     },
     "Konten & Pemasaran": {
@@ -5787,6 +6486,100 @@ Email 3: Studi kasus pengguna`,
           },
         ],
       },
+      "B2B Technical Case Study (Evidence-First)": {
+        description: "Menulis studi kasus teknis B2B berbasis bukti terukur: arsitektur sebelum migrasi, kendala operasional nyata, keputusan implementasi, dan metrik dampak yang dapat dipertanggungjawabkan.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah B2B Engineering Content Strategist & Technical Editor. Hindari gaya brosur pemasaran; susun narasi Problem-Architecture-Execution-Measured Impact yang meyakinkan VP Engineering dan CTO.",
+        components: [
+          {
+            name: "clientAndBaseline",
+            label: "Profil Klien & Kondisi Awal (Baseline)",
+            type: "textarea",
+            placeholder: "contoh: Perusahaan logistik B2B dengan 120 ribu pengiriman/hari; waktu deploy 45 menit dan error migrasi DB 2x sebulan",
+            info: "Skala sistem klien dan hambatan kuantitatif sebelum solusi diterapkan.",
+          },
+          {
+            name: "technicalIntervention",
+            label: "Solusi Teknis & Kendala Implementasi",
+            type: "textarea",
+            placeholder: "contoh: Penerapan migrasi expand-contract PostgreSQL, RLS multi-tenant, dan pipeline validasi CI otomatis",
+            info: "Apa yang benar-benar dibangun dan tantangan teknis yang diatasi.",
+          },
+          {
+            name: "verifiedOutcomeMetrics",
+            label: "Metrik Hasil Terverifikasi",
+            type: "text",
+            placeholder: "contoh: Zero downtime selama 9 bulan, waktu rilis turun 68%, dan penghematan biaya DB 22%",
+            info: "Angka nyata pasca-implementasi tanpa melebih-lebihkan.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Sertakan ringkasan eksekutif 3 poin di bagian atas, blok kutipan narasumber yang realistis (atau placeholder kutipan jelas), dan diagram alur teks sebelum/sesudah.",
+        output: "natural_language_prompt",
+      },
+      "Developer Changelog & Release Notes Humanizer": {
+        description: "Mengubah daftar commit Git atau PR teknis mentah menjadi Release Notes / Changelog yang jernih, terkelompok (Features, Fixes, Breaking Changes), lengkap dengan panduan migrasi singkat.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah Developer Advocate & Release Engineering Writer. Terjemahkan log commit menjadi catatan rilis yang berfokus pada manfaat bagi pengguna API/aplikasi tanpa menghilangkan presisi perubahan breaking.",
+        components: [
+          {
+            name: "rawGitCommits",
+            label: "Daftar Commit / PR Mentah",
+            type: "textarea",
+            placeholder: "contoh: feat: add SKILL.md export tab; fix: light theme contrast in CleanJsonViewer; chore: upgrade frameworks 360->400",
+            info: "Tempelkan git log, daftar PR, atau ringkasan perubahan versi ini.",
+          },
+          {
+            name: "releaseVersionAndAudience",
+            label: "Nomor Versi & Pembaca Sasaran",
+            type: "text",
+            placeholder: "contoh: v2.4.0 untuk pengguna PromptMatrix Studio dan pengembang SDK internal",
+            info: "Versi semver dan siapa yang membaca release notes ini.",
+          },
+          {
+            name: "breakingChangesNotes",
+            label: "Catatan Breaking Changes / Aksi Migrasi",
+            type: "text",
+            placeholder: "contoh: Tidak ada breaking change API; pengguna disarankan rebuild cache lokal bila kustom",
+            info: "Perubahan yang menuntut tindakan khusus dari pengguna.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Kelompokkan item ke dalam Highlights, New Capabilities, Fixes & Polish, serta Upgrade Notes secara ringkas tanpa filler pembuka panjang.",
+        output: "natural_language_prompt",
+      },
+      "High-Signal Technical Newsletter & Substack Issue": {
+        description: "Menulis edisi newsletter teknik atau Substack yang padat insight: tesis utama berbasis praktik lapangan, pembedahan contoh nyata, daftar bacaan terkurasi, dan satu pertanyaan diskusi pembaca.",
+        toolType: "text",
+        ai_logic_description: "Persona AI: Anda adalah Principal Engineer & Technical Newsletter Author. Tulis esai teknis bernada percakapan cerdas, langsung membuka dengan observasi tajam, menghindari rangkuman berita dangkal, dan menyertakan contoh konkret.",
+        components: [
+          {
+            name: "coreThesisObservation",
+            label: "Tesis Utama & Pengamatan Lapangan",
+            type: "textarea",
+            placeholder: "contoh: Mengapa tim yang memakai aturan workspace spesifik (.mdc + verifier hook) lebih cepat merilis fitur dibanding prompt panjang acak",
+            info: "Ide sentral atau pelajaran nyata yang menjadi tulang punggung edisi ini.",
+          },
+          {
+            name: "concreteCodeOrCaseExample",
+            label: "Contoh Kasus / Cuplikan Teknis",
+            type: "textarea",
+            placeholder: "contoh: Perbandingan alur 1-agen monolitik vs 3-worker swarm dengan kepemilikan file terpisah",
+            info: "Bukti, potongan kode, atau studi mini yang mendukung argumen utama.",
+          },
+          {
+            name: "targetWordBudget",
+            label: "Target Panjang Edisi",
+            type: "select",
+            options: [
+              "Ringkas & Tajam (600 - 800 Kata, 3 Menit Baca)",
+              "Mendalam / Deep Dive (1.200 - 1.600 Kata, 6 Menit Baca)",
+              "Kurasi Link + Esai Pembuka (500 Kata + 4 Tautan Berkomentar)",
+            ],
+            info: "Format dan durasi baca rata-rata untuk pelanggan Anda.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Buat 3 alternatif judul subjek email yang menggugah rasa ingin tahu teknis tanpa clickbait, dan hindari karakter em-dash.",
+        output: "natural_language_prompt",
+      },
     },
     "Alat Bantu Menulis": {
       "Asisten Pembuat Resume/CV": {
@@ -6150,16 +6943,7 @@ Email 3: Studi kasus pengguna`,
             validation: { min_length: 10 },
           },
         ],
-        crossValidationRules: [
-          {
-            triggerField: "aspectRatio",
-            triggerValue: "Lainnya...",
-            dependentField: "customAspectRatio",
-            validationType: "required",
-            errorMessage:
-              "'Rasio Aspek Kustom' wajib diisi jika 'Rasio Aspek' adalah 'Lainnya...'.",
-          },
-        ],
+        output: "natural_language_prompt",
       },
       "Generator Meta Deskripsi SEO": {
         description:
@@ -7218,6 +8002,36 @@ Email 3: Studi kasus pengguna`,
           },
         ],
       },
+      "Post-Mortem Incident Root Cause Analysis (Blameless)": {
+        description: "Menyusun dokumen Post-Mortem insiden produksi secara blameless: timeline kronologis akurat, 5-Whys root cause analysis, analisis dampak SLO/pelanggan, serta action items dengan pemilik dan tenggat.",
+        toolType: "planning",
+        ai_logic_description: "Persona AI: Anda adalah Principal SRE & Incident Commander. Fasilitasi penyusunan Post-Mortem tanpa menyalahkan individu, bedakan pemicu langsung dari kelemahan sistemik, dan tetapkan langkah pencegahan yang dapat diaudit.",
+        components: [
+          {
+            name: "incidentTimeline",
+            label: "Ringkasan Insiden & Timeline UTC/WIB",
+            type: "textarea",
+            placeholder: "contoh: 09:12 deploy migrasi index; 09:15 p99 latency lonjak ke 12s; 09:24 rollback selesai; 09:30 layanan pulih penuh",
+            info: "Kronologi kejadian, deteksi, mitigasi, dan pemulihan.",
+          },
+          {
+            name: "blastRadiusImpact",
+            label: "Dampak Bisnis & Metrik Terdampak",
+            type: "text",
+            placeholder: "contoh: 18 menit error 503 pada endpoint checkout, berdampak pada ~1.400 permintaan gagal (0 kehilangan data)",
+            info: "Berapa lama insiden berlangsung dan layanan/pengguna apa yang terdampak.",
+          },
+          {
+            name: "systemicRootCause",
+            label: "Temuan Teknis & Kelemahan Kontrol",
+            type: "textarea",
+            placeholder: "contoh: CREATE INDEX tanpa CONCURRENTLY mengunci tabel orders; CI belum memiliki pengecekan DDL lock",
+            info: "Akar penyebab teknis serta celah observabilitas atau proses.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Pertahankan nada objektif bebas menyalahkan individu (blameless); setiap action item wajib memiliki kategori (Prevent/Detect/Mitigate), prioritas, dan kriteria selesai terukur.",
+        output: "natural_language_prompt",
+      },
     },
     "Penerbitan & Kampanye Publik": {
       "Crowdfunding Kickstarter / Indiegogo Campaign Page": {
@@ -7312,6 +8126,75 @@ Email 3: Studi kasus pengguna`,
             info: "Struktur waktu dan metode pengiriman materi",
           },
         ],
+      },
+      "Solo Founder Micro-SaaS 30-Day Launch Blueprint": {
+        description: "Peta eksekusi 30 hari dari nol hingga peluncuran publik Micro-SaaS untuk solo founder: validasi masalah minggu ke-1, MVP ramping minggu ke-2/3, instrumentasi pembayaran, dan strategi distribusi hari peluncuran.",
+        toolType: "planning",
+        ai_logic_description: "Persona AI: Anda adalah Veteran Indie Hacker & Micro-SaaS Product Operator. Pangkas scope fitur berlebihan (anti-overengineering), susun milestone harian/mingguan realistis untuk satu orang, dan prioritaskan jalur ke pengguna berbayar pertama.",
+        components: [
+          {
+            name: "microSaasConcept",
+            label: "Konsep Micro-SaaS & Masalah Spesifik",
+            type: "textarea",
+            placeholder: "contoh: Alat audit aksesibilitas & SEO JSON-LD otomatis untuk website agensi kecil dengan laporan PDF mingguan",
+            info: "Masalah sempit bernilai tinggi apa yang dipecahkan oleh produk ini?",
+          },
+          {
+            name: "founderWeeklyHours",
+            label: "Kapasitas Waktu & Stack Teknis",
+            type: "text",
+            placeholder: "contoh: 20 jam/minggu (malam & akhir pekan), stack Next.js + Supabase + Stripe/LemonSqueezy",
+            info: "Jam kerja yang tersedia dan teknologi yang sudah dikuasai.",
+          },
+          {
+            name: "launchChannelPriority",
+            label: "Kanal Distribusi Peluncuran Utama",
+            type: "select",
+            options: [
+              "Build-in-Public (X/LinkedIn) + Direct Outreach 30 Target Niche",
+              "Marketplace Directory (Agensi.io / Product Hunt / IndieHackers)",
+              "SEO Programmatic Tools + Free Mini-Utility Lead Magnet",
+              "Komunitas Developer & Newsletter Niche",
+            ],
+            info: "Jalur akuisisi 10 pengguna awal yang paling relevan.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan minggu ke-1 menghasilkan bukti validasi permintaan sebelum menulis kode penuh, dan tetapkan batas tegas fitur yang ditunda ke pasca-rilis.",
+        output: "natural_language_prompt",
+      },
+      "AI Agent Product Pricing & Affiliate Funnel Strategy": {
+        description: "Merancang arsitektur monetisasi produk AI, Agent Skill, atau SaaS menggunakan funnel Lead Magnet gratis -> Flagship Tier -> Bundle, serta skema komisi affiliate/referral yang menguntungkan kreator dan mitra.",
+        toolType: "planning",
+        ai_logic_description: "Persona AI: Anda adalah SaaS & Creator Economy Monetization Architect. Modelkan unit economics, harga jangkar (anchoring), alur konversi pengguna gratis ke pembeli berbayar, serta insentif rujukan mitra berbasis angka transparan.",
+        components: [
+          {
+            name: "productCatalogSummary",
+            label: "Daftar Produk / Aset Digital",
+            type: "textarea",
+            placeholder: "contoh: 1 Free Starter Skill (Lead Magnet), 5 Paid Flagship Skills ($19-$39), dan 1 Complete Bundle ($99)",
+            info: "Produk gratis dan berbayar apa saja yang ada dalam katalog Anda.",
+          },
+          {
+            name: "commissionAndPayoutModel",
+            label: "Struktur Komisi & Biaya Platform",
+            type: "text",
+            placeholder: "contoh: Bagi hasil standar 70% kreator, atau 90% untuk user baru via link afiliasi + 20% komisi lintas produk 6 bulan",
+            info: "Aturan pembagian pendapatan platform atau program afiliasi yang berlaku.",
+          },
+          {
+            name: "funnelGoalMetric",
+            label: "Target Konversi & Retensi Utama",
+            type: "select",
+            options: [
+              "Maksimalkan Akuisisi Pembeli Baru via Affiliate Link",
+              "Tingkatkan Average Order Value (AOV) ke Paket Bundle",
+              "Konversi Pengguna Free Tool ke Paid Flagship Product",
+            ],
+            info: "Fokus optimasi corong penjualan saat ini.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Sertakan proyeksi skenario angka sederhana (trafik -> unduhan gratis -> konversi berbayar -> pendapatan bersih) agar strategi mudah dievaluasi.",
+        output: "natural_language_prompt",
       },
     },
     "Kreasi Digital Personal & Acara": {
@@ -7759,7 +8642,7 @@ Email 3: Studi kasus pengguna`,
     "Konten & Pemasaran": {
       "Generator Konten Multi-Platform": {
         description:
-          "Buat konten untuk berbagai platform—artikel blog yang SEO-friendly, postingan media sosial yang menarik, deskripsi produk yang menjual, skrip video pendek, bahkan lirik lagu.",
+          "Buat konten untuk berbagai platform, mulai dari artikel blog yang SEO-friendly, postingan media sosial yang menarik, deskripsi produk yang menjual, skrip video pendek, bahkan lirik lagu.",
         toolType: "text",
         ai_logic_description:
           "Persona AI: Anda adalah seorang Kepala Strategi Konten. AI akan bertindak sebagai Kepala Strategi Konten yang adaptif, memahami jenis konten yang diminta dan bertransformasi menjadi persona spesialis yang relevan untuk menghasilkan konten yang dioptimalkan untuk berbagai platform.",
@@ -9812,6 +10695,74 @@ Email 3: Studi kasus pengguna`,
         konteks_tambahan_instruksi_khusus:
           "AI harus selalu menekankan bahwa output ini adalah untuk tujuan perencanaan dan konseptual, bukan kode atau desain final. Untuk database, gunakan format yang mudah dibaca. Untuk user flow, gunakan penomoran dan panah (->) untuk menunjukkan alur. Selalu gunakan bahasa yang jelas dan hindari jargon teknis yang berlebihan.",
       },
+      "Technical RFC & Architecture Decision Record (ADR)": {
+        description: "Menyusun dokumen Request for Comments (RFC) atau Architecture Decision Record (ADR) berstandar engineering senior: konteks masalah, opsi alternatif beserta trade-off nyata, keputusan, dan rencana migrasi.",
+        toolType: "planning",
+        ai_logic_description: "Persona AI: Anda adalah Staff Engineer & Architecture Review Board Lead. Tulis RFC/ADR yang jernih, menimbang minimal tiga opsi solusi secara jujur termasuk opsi tidak mengubah sistem, serta memetakan risiko operasional.",
+        components: [
+          {
+            name: "architectureProblem",
+            label: "Konteks Masalah & Pendorong Keputusan",
+            type: "textarea",
+            placeholder: "contoh: Migrasi sistem antrean email sinkron ke event-driven worker agar latensi API signup turun di bawah 150ms",
+            info: "Mengapa keputusan arsitektur ini perlu diambil sekarang?",
+          },
+          {
+            name: "candidateOptions",
+            label: "Opsi Kandidat yang Dibandingkan",
+            type: "textarea",
+            placeholder: "contoh: Opsi A: BullMQ + Redis; Opsi B: PostgreSQL pg-boss; Opsi C: Managed Cloud Tasks / SQS",
+            info: "Alternatif arsitektur yang sedang ditimbang oleh tim.",
+          },
+          {
+            name: "decisionFormatType",
+            label: "Format Dokumen Standar",
+            type: "select",
+            options: [
+              "Full Technical RFC (Context, Goals/Non-Goals, Design, Alternatives, Rollout)",
+              "Concise ADR (Status, Context, Decision, Consequences)",
+              "RFC + Security & Cost Review Addendum",
+            ],
+            info: "Kedalaman dokumen yang dibutuhkan untuk forum review tim.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Wajib menyertakan bagian Non-Goals agar ruang lingkup tetap terkendali serta tabel perbandingan kompleksitas, biaya, dan reversibilitas tiap opsi.",
+        output: "natural_language_prompt",
+      },
+      "PRD to Task Graph & Dependency Breakdown": {
+        description: "Mengonversi dokumen Product Requirements Document (PRD) menjadi Task Graph eksekusi teknik lengkap dengan urutan dependensi (DAG), paralelisasi aman, definisi done, dan estimasi risiko integrasi.",
+        toolType: "planning",
+        ai_logic_description: "Persona AI: Anda adalah Technical Program Manager & Engineering Lead. Dekomposisi fitur PRD menjadi tugas atomik siap kerjakan developer atau AI coding swarm, petakan blocker antar tugas, dan identifikasi jalur kritis.",
+        components: [
+          {
+            name: "prdSummaryScope",
+            label: "Ringkasan PRD & Fitur Sasaran",
+            type: "textarea",
+            placeholder: "contoh: Tambah fitur ekspor SKILL.md pada PromptMatrix meliputi service generator, viewer Dark/Light, dan 40 framework baru",
+            info: "Tempelkan ringkasan fitur dan persyaratan utama dari PRD.",
+          },
+          {
+            name: "executionTrackMode",
+            label: "Mode Eksekusi Tim / Agen",
+            type: "select",
+            options: [
+              "Parallel Swarm / Multi-Engineer Tracks (Disjoint File Ownership)",
+              "Sequential Single-Developer Milestone Plan",
+              "2-Week Agile Sprint Breakdown dengan Critical Path",
+            ],
+            info: "Bagaimana pekerjaan akan dibagi selama implementasi.",
+          },
+          {
+            name: "definitionOfDone",
+            label: "Kriteria Selesai Global (DoD)",
+            type: "text",
+            placeholder: "contoh: Strict TypeScript 0 error, build Vite sukses, terjemahan ID/EN lengkap, dan lulus smoke test UI",
+            info: "Standar kualitas agar setiap tugas dapat dinyatakan tuntas.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Format keluaran harus memuat ID tugas (T1, T2, ...), dependensi eksplisit (depends_on), file terdampak, dan verifikasi spesifik per tugas.",
+        output: "json_prompt",
+      },
     },
   },
   "Gambar & Desain": {
@@ -10238,9 +11189,9 @@ Email 3: Studi kasus pengguna`,
     },
     "Prompt AI Gambar Master (Midjourney, DALL-E 3, Flux)": {
       "Midjourney v6.1 Character & Style Consistency Architect": {
-        description: "Formula prompt Midjourney v6.1 canggih untuk mempertahankan konsistensi karakter antar scene (--cref, --cw) dan transfer estetika visual (--sref, --sw, --style raw) dengan parameter presisi.",
+        description: "Formula prompt Midjourney v6.1 / v7 canggih untuk mempertahankan konsistensi karakter antar scene (--oref / --cref, --ow / --cw) dan transfer estetika visual (--sref, --sw, --style raw) dengan parameter presisi.",
         toolType: "image-generation",
-        ai_logic_description: "Persona AI: Anda adalah Midjourney Visual Prompt Engineer & Cinematographer Spesialis Konsistensi Karakter. Susun deskripsi visual yang kaya aksi, pencahayaan realistis, tekstur kulit alami, dan parameter flag Midjourney v6.1 resmi.",
+        ai_logic_description: "Persona AI: Anda adalah Midjourney Visual Prompt Engineer & Cinematographer Spesialis Konsistensi Karakter. Susun deskripsi visual yang kaya aksi, pencahayaan realistis, tekstur kulit alami, dan parameter flag Midjourney v6.1 / v7 resmi.",
         components: [
           {
             name: "subjectAndAction",
@@ -10254,7 +11205,7 @@ Email 3: Studi kasus pengguna`,
             label: "URL Referensi Karakter (--cref) & Bobot (--cw)",
             type: "text",
             placeholder: "contoh: https://media.promptmatrix.app/characters/sarah_ref.jpg --cw 80",
-            info: "Tautan gambar referensi karakter. Gunakan --cw 100 untuk wajah+baju sama, atau --cw 0-20 untuk fokus wajah saja dengan baju berbeda."
+            info: "Tautan gambar referensi karakter. Gunakan --cw 100 (--ow untuk v7) untuk wajah+baju sama, atau --cw 0-20 untuk fokus wajah saja dengan baju berbeda."
           },
           {
             name: "srefStyleUrl",
@@ -10287,19 +11238,21 @@ Email 3: Studi kasus pengguna`,
             label: "Aspek Rasio & Parameter Flags",
             type: "select",
             options: [
-              "--ar 16:9 --v 6.1 --style raw",
-              "--ar 9:16 --v 6.1 --style raw (Vertikal TikTok/Reels)",
+              "--ar 16:9 --v 7 --style raw",
+              "--ar 9:16 --v 7 --style raw (Vertikal TikTok/Reels)",
               "--ar 4:5 --v 6.1 --style raw (Instagram Feed Portrait)",
-              "--ar 21:9 --v 6.1 --style raw (Ultra-wide Cinematic)"
+              "--ar 21:9 --v 7 --style raw (Ultra-wide Cinematic)"
             ],
             info: "Format rasio gambar dan versi mesin Midjourney."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan seluruh parameter flag (--ar, --v, --style raw, --sref, --oref/--cref) berada di bagian paling akhir prompt dalam satu baris valid.",
+        output: "natural_language_prompt"
       },
       "FLUX.1 Photorealistic Descriptive Studio": {
-        description: "Formula prompt deskriptif berbasis bahasa alami murni untuk FLUX.1 (Dev / Schnell / Pro). Menggunakan terminologi optik riil, multi-source lighting, dan detail tekstur mikroskopis tanpa parameter tag negatif.",
+        description: "Formula prompt deskriptif berbasis bahasa alami murni untuk FLUX.1 & FLUX.2 (Dev / Schnell / Pro). Menggunakan terminologi optik riil, multi-source lighting, dan detail tekstur mikroskopis tanpa parameter tag negatif.",
         toolType: "image-generation",
-        ai_logic_description: "Persona AI: Anda adalah Master Photographer & FLUX.1 Prompt Specialist. Tuliskan deskripsi visual mendalam dalam bahasa Inggris deskriptif alami (natural language paragraphs) yang mengarahkan attention mechanism FLUX untuk menghasilkan rendering fotorealistik sekelas kamera profesional.",
+        ai_logic_description: "Persona AI: Anda adalah Master Photographer & FLUX.1 / FLUX.2 Prompt Specialist. Tuliskan deskripsi visual mendalam dalam bahasa Inggris deskriptif alami (natural language paragraphs) yang mengarahkan attention mechanism FLUX untuk menghasilkan rendering fotorealistik sekelas kamera profesional.",
         components: [
           {
             name: "mainSubject",
@@ -10346,10 +11299,12 @@ Email 3: Studi kasus pengguna`,
             ],
             info: "Sudut pandang dan jarak kamera terhadap subjek."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Gunakan kalimat deskriptif utuh tanpa tag kata kunci terpisah koma dan hindari negative prompt agar perhatian model FLUX tetap terfokus pada detail positif.",
+        output: "natural_language_prompt"
       },
       "Flux.1 & Midjourney v6.1 Photorealistic Portrait": {
-        description: "Formula prompt potret manusia fotorealistik 8K dengan tekstur pori-pori kulit mikro, pencahayaan Rembrandt, lensa kamera profesional, dan ekspresi natural.",
+        description: "Formula prompt potret manusia fotorealistik 8K untuk FLUX.1 / FLUX.2 & Midjourney v6.1 / v7 dengan tekstur pori-pori kulit mikro, pencahayaan Rembrandt, lensa kamera profesional, dan ekspresi natural.",
         toolType: "image-generation",
         ai_logic_description: "Persona AI: Anda adalah Master Fashion & Portrait Photographer. Susun deskripsi visual dengan parameter optik kamera nyata (focal length, aperture, ISO, sensor format).",
         components: [
@@ -10445,6 +11400,109 @@ Email 3: Studi kasus pengguna`,
             info: "Metodologi desain visual logo",
           },
         ],
+      },
+      "Midjourney v7 Omniref & Style Weight Director": {
+        description: "Menyusun prompt Midjourney v7 presisi menggunakan Omni-Reference (--oref) dengan kontrol bobot objek/karakter (--ow), Style Reference (--sref, --sw), parameter --stylize, dan --exp tanpa konflik flag.",
+        toolType: "image-generation",
+        ai_logic_description: "Persona AI: Anda adalah Senior Midjourney v7 Visual Architect. Terjemahkan konsep adegan menjadi deskripsi bahasa Inggris ringkas bebas kata pengisi, lalu susun flag resmi Midjourney v7 (--v 7 --oref --ow --sref --sw --ar) secara urut di akhir baris.",
+        components: [
+          {
+            name: "v7SceneConcept",
+            label: "Konsep Adegan & Aksi Subjek",
+            type: "textarea",
+            placeholder: "contoh: A futuristic Indonesian botanical glasshouse cafe at dawn, barista pouring pour-over coffee beside glowing emerald ferns",
+            info: "Deskripsi visual adegan, pose subjek, pencahayaan, dan material permukaan.",
+          },
+          {
+            name: "omniRefAndWeight",
+            label: "Omni-Reference URL (--oref) & Bobot (--ow)",
+            type: "text",
+            placeholder: "contoh: https://example.com/hero-subject.png --ow 180",
+            info: "URL gambar objek/karakter referensi serta nilai --ow (0-1000, default 100).",
+          },
+          {
+            name: "v7RenderFlags",
+            label: "Preset Flag Midjourney v7",
+            type: "select",
+            options: [
+              "--v 7 --ar 16:9 --style raw --stylize 150",
+              "--v 7 --ar 9:16 --style raw --stylize 250",
+              "--v 7 --ar 1:1 --draft (Iterasi Konsep Cepat)",
+              "--v 7 --ar 4:5 --sw 200 --stylize 350",
+            ],
+            info: "Kombinasi flag aspek rasio, stylize, dan mode draft/raw v7.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Jangan sertakan kata 'photorealistic, 8k, masterpiece'; jelaskan optik kamera dan pencahayaan konkret, serta tempatkan seluruh flag v7 di ujung prompt.",
+        output: "natural_language_prompt",
+      },
+      "FLUX.2 / Kontext Precision Image Editing Prompt": {
+        description: "Merancang instruksi penyuntingan gambar presisi untuk FLUX.2 & FLUX.1 Kontext (penggantian objek, ubah pencahayaan, restyle sebagian, teks tipografi) sambil menjaga identitas wajah dan geometri latar tetap terkunci.",
+        toolType: "image-editing",
+        ai_logic_description: "Persona AI: Anda adalah Precision Image Editing & FLUX.2 Kontext Specialist. Tulis perintah edit berbasis konteks yang secara eksplisit menyatakan elemen apa yang diubah dan elemen apa yang wajib tetap identik.",
+        components: [
+          {
+            name: "sourceImageDescription",
+            label: "Kondisi Gambar Sumber",
+            type: "textarea",
+            placeholder: "contoh: Foto studio seorang pendiri startup pria memakai kaus hitam di depan latar abu-abu netral dengan meja kayu",
+            info: "Jelaskan isi foto asli agar instruksi edit mengunci komposisi yang tepat.",
+          },
+          {
+            name: "editInstructionDelta",
+            label: "Perubahan Presisi yang Diinginkan",
+            type: "textarea",
+            placeholder: "contoh: Ganti kaus hitam menjadi blazer linen navy dengan kerah rapi; tambahkan cangkir keramik matte putih di meja",
+            info: "Bagian spesifik apa yang harus dimodifikasi, diganti, atau ditambahkan.",
+          },
+          {
+            name: "identityPreservationLock",
+            label: "Elemen Terkunci (Identity Preservation)",
+            type: "select",
+            options: [
+              "Lock Facial Identity, Skin Texture, Pose & Camera Perspective",
+              "Lock Product Geometry & Brand Label; Relight Background Only",
+              "Preserve Original Typography & Layout; Apply Surface Material Change",
+            ],
+            info: "Aspek gambar asli yang dilarang bergeser selama proses penyuntingan.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Gunakan kalimat imperatif langsung ('Replace X with Y while keeping Z unchanged') agar model Kontext tidak mengubah area latar yang tidak diminta.",
+        output: "natural_language_prompt",
+      },
+      "Nano Banana Pro / Gemini Native Image Composition": {
+        description: "Menyusun prompt komposisi gambar native multimodal (Nano Banana Pro / Gemini Native Image) untuk infografis berteks akurat, konsistensi multi-panel, dan pencahayaan produk e-commerce.",
+        toolType: "image-generation",
+        ai_logic_description: "Persona AI: Anda adalah Multimodal Visual Designer untuk Gemini Native Image (Nano Banana Pro). Manfaatkan pemahaman semantik spasial penuh, instruksi penempatan teks verbatim di dalam tanda kutip, dan relasi antar objek berlapis.",
+        components: [
+          {
+            name: "compositionLayout",
+            label: "Komposisi Spasial & Lapisan Objek",
+            type: "textarea",
+            placeholder: "contoh: Poster produk vertikal terbagi 2 zona: atas botol serum kaca hijau emerald di atas batu basalt basah, bawah kartu spesifikasi bersih",
+            info: "Posisi foreground, midground, background, serta hierarki tata letak.",
+          },
+          {
+            name: "exactRenderedText",
+            label: "Teks Verbatim di Dalam Gambar",
+            type: "text",
+            placeholder: "contoh: Judul besar 'HYDRA SERUM 2.0' di tengah atas, lencana kecil 'DERMATOLOGIST TESTED' di pojok kanan bawah",
+            info: "Teks persis dalam tanda kutip beserta gaya font dan letaknya.",
+          },
+          {
+            name: "visualFinishStyle",
+            label: "Gaya Render & Palet Warna",
+            type: "select",
+            options: [
+              "Commercial Studio Product Photography (Crisp Softbox & Natural Shadow)",
+              "Clean Swiss Editorial Infographic (High-Contrast Vector + Typography)",
+              "Warm Lifestyle Daylight Editorial (35mm Film Look)",
+            ],
+            info: "Estetika keseluruhan yang selaras dengan tujuan gambar.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan ejaan teks verbatim ditulis persis di dalam tanda kutip ganda dan kontras warna teks terhadap latar memenuhi keterbacaan visual tinggi.",
+        output: "natural_language_prompt",
       },
     },
     "Framework Prompt Gambar Master": {
@@ -10856,7 +11914,7 @@ Email 3: Studi kasus pengguna`,
         output: "natural_language_prompt"
       },
       "S-E-L-S-C (Master Prompt Gambar AI)": {
-        description: "Formula standar emas untuk menghasilkan gambar fotorealistik dan artistik di Midjourney, Stable Diffusion, Ideogram, & DALL-E.",
+        description: "Formula standar emas untuk menghasilkan gambar fotorealistik dan artistik di Midjourney v7, FLUX.2, Ideogram 3, & GPT Image / DALL-E.",
         toolType: "image-generation",
         ai_logic_description: "Anda adalah seorang Visual Artist & Prompt Engineer Gambar yang akan menyusun deskripsi visual fotorealistik berdasarkan Subject, Environment, Lighting, Style, dan Camera.",
         components: [
@@ -10892,10 +11950,11 @@ Email 3: Studi kasus pengguna`,
             name: "camera",
             label: "Kamera & Parameter (Camera/Flags)",
             type: "text",
-            placeholder: "e.g., 'Sony A7R V 85mm f/1.4 lens, shallow depth of field, bokeh, --ar 16:9 --v 6.1'",
+            placeholder: "e.g., 'Sony A7R V 85mm f/1.4 lens, shallow depth of field, bokeh, --ar 16:9 --v 7'",
             info: "Sudut lensa, rasio aspek, dan flag parameter model."
           }
-        ]
+        ],
+        output: "natural_language_prompt"
       },
       "Filter Prompt Negatif (Negative Prompt)": {
         description: "Filter prompt wajib untuk Stable Diffusion, Leonardo AI, dan parameter --no Midjourney guna membuang distorsi & kecacatan visual.",
@@ -10924,6 +11983,44 @@ Email 3: Studi kasus pengguna`,
             info: "Komposisi buruk, terpotong, atau objek latar yang mengganggu."
           }
         ]
+      },
+      "Design System Token & Contrast Spec (WCAG AA/AAA)": {
+        description: "Menghasilkan spesifikasi Design System Tokens (CSS variables & Tailwind v4 theme tokens) lengkap dengan matriks pasangan foreground/background teruji WCAG AA (>= 4.5:1) dan AAA untuk Dark & Light mode.",
+        toolType: "image-generation",
+        ai_logic_description: "Persona AI: Anda adalah Principal Design Systems Architect & Accessibility Specialist. Susun token warna semantik (surface, text, border, accent, focus ring) yang mempertahankan kontras >= 4.5:1 di kedua tema tanpa warna neon menyilaukan.",
+        components: [
+          {
+            name: "brandPrimaryPalette",
+            label: "Warna Brand Utama & Nuansa Produk",
+            type: "text",
+            placeholder: "contoh: Emerald (#059669 / #10B981) untuk aksi primer, Slate netral untuk surface, Amber untuk peringatan",
+            info: "Warna dasar merek beserta karakter emosional antarmuka.",
+          },
+          {
+            name: "themeSupportMode",
+            label: "Cakupan Tema & Target Aksesibilitas",
+            type: "select",
+            options: [
+              "Dual Theme (Light + Dark Mode) dengan Kontras Minimum WCAG 2.2 AA (4.5:1)",
+              "High-Contrast Enterprise AAA (7:1 untuk teks isi, 4.5:1 untuk elemen besar)",
+              "Code & Terminal Viewer Theme (Syntax Token Palette Dark/Light)",
+            ],
+            info: "Tingkat kepatuhan kontras dan mode tampilan yang wajib didukung.",
+          },
+          {
+            name: "tokenOutputFormat",
+            label: "Format Output Token",
+            type: "select",
+            options: [
+              "W3C Design Tokens JSON + CSS Custom Properties (:root & .dark)",
+              "Tailwind CSS v4 @theme Variables + Contrast Verification Matrix",
+              "Figma Variables Mapping Table + CSS Snippets",
+            ],
+            info: "Bentuk keluaran teknis untuk langsung dipakai developer dan desainer.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Tampilkan rasio kontras estimasi pada tiap pasangan teks-latar serta aturan wajib focus-visible ring untuk navigasi keyboard.",
+        output: "json_prompt",
       }
     },
     "Perencanaan Video & Visual": {
@@ -11050,10 +12147,10 @@ Email 3: Studi kasus pengguna`,
     "Prompt AI Gambar (Text-to-Image)": {
       "DALL-E 3": {
         description:
-          "Tulis prompt naratif dan deskriptif yang kaya untuk DALL-E 3, yang unggul dalam memahami bahasa alami.",
+          "Tulis prompt naratif dan deskriptif yang kaya untuk GPT Image / DALL-E 3, yang unggul dalam memahami bahasa alami dan rendering teks presisi.",
         toolType: "image-generation",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Pelukis Digital AI. AI akan memproses deskripsi naratif untuk menghasilkan gambar yang kreatif dan akurat, memanfaatkan pemahaman DALL-E 3 tentang bahasa alami dan detail kontekstual.",
+          "Persona AI: Anda adalah seorang Pelukis Digital AI. AI akan memproses deskripsi naratif untuk menghasilkan gambar yang kreatif dan akurat, memanfaatkan pemahaman GPT Image & DALL-E 3 tentang bahasa alami dan detail kontekstual.",
         components: [
           {
             name: "subject",
@@ -11111,6 +12208,7 @@ Email 3: Studi kasus pengguna`,
             validation: { min_length: 10 },
           },
         ],
+        output: "natural_language_prompt"
       },
       "Stable Diffusion": {
         description:
@@ -11364,10 +12462,10 @@ Email 3: Studi kasus pengguna`,
     "Prompt AI Video (Text-to-Video)": {
       "Sora (OpenAI)": {
         description:
-          "Buat prompt yang sangat deskriptif dan sinematik untuk menghasilkan video berkualitas tinggi dengan Sora.",
+          "Buat prompt yang sangat deskriptif dan sinematik untuk menghasilkan video berkualitas tinggi dengan Sora / Sora 2.",
         toolType: "video",
         ai_logic_description:
-          "Persona AI: Anda adalah seorang Sutradara AI. AI akan menginterpretasikan deskripsi adegan yang kaya dan instruksi kamera untuk menghasilkan video sinematik yang detail dan berkualitas tinggi, memanfaatkan kemampuan Sora dalam memahami narasi visual.",
+          "Persona AI: Anda adalah seorang Sutradara AI. AI akan menginterpretasikan deskripsi adegan yang kaya, simulasi fisika, dan instruksi kamera untuk menghasilkan video sinematik yang detail dan berkualitas tinggi, memanfaatkan kemampuan Sora / Sora 2 dalam memahami narasi visual.",
         components: [
           {
             name: "sceneDescription",
@@ -11416,6 +12514,7 @@ Email 3: Studi kasus pengguna`,
             validation: { min_length: 10 },
           },
         ],
+        output: "natural_language_prompt"
       },
       "Google VEO": {
         description:
@@ -11484,8 +12583,8 @@ Email 3: Studi kasus pengguna`,
             name: "resolution",
             label: "Resolusi",
             type: "text",
-            placeholder: "e.g., '1280x720px'",
-            info: "Veo 2 menghasilkan 1280x720px (720p), dengan potensi resolusi 4K.",
+            placeholder: "e.g., '1920x1080px'",
+            info: "Veo 3 mendukung 720p hingga 1080p Full HD dan 4K dengan audio tersinkronisasi.",
             optional: true,
             validation: { min_length: 5 },
           },
@@ -11493,8 +12592,8 @@ Email 3: Studi kasus pengguna`,
             name: "model",
             label: "Model",
             type: "text",
-            placeholder: "e.g., 'veo-2.0-generate-001'",
-            info: 'Tentukan versi model, misalnya, "veo-2.0-generate-001" atau "veo-3.0-generate-preview".',
+            placeholder: "e.g., 'veo-3.0-generate-001'",
+            info: 'Tentukan versi model, misalnya, "veo-3.0-generate-001" atau "veo-3.1-generate-preview".',
             optional: true,
             validation: { min_length: 5 },
           },
@@ -11539,6 +12638,7 @@ Email 3: Studi kasus pengguna`,
             validation: { min_length: 10 },
           },
         ],
+        output: "natural_language_prompt"
       },
     },
     "Platform Desain Berbasis AI": {
@@ -11798,9 +12898,9 @@ Email 3: Studi kasus pengguna`,
     },
     "Format Video Penjualan & Promosi Kreatif": {
       "Kling AI v1.5 Hyper-Realistic Human Action & Physics": {
-        description: "Prompt video adegan aksi bela diri dinamis, interaksi pakaian realistis, dan ekspresi emosional manusia di Kling AI v1.5.",
+        description: "Prompt video adegan aksi bela diri dinamis, interaksi pakaian realistis, dan ekspresi emosional manusia di Kling AI 2.1 (v1.5 / 2.1).",
         toolType: "video",
-        ai_logic_description: "Persona AI: Anda adalah Kling AI Action Director. Susun prompt gerakan dinamis dengan deskripsi anatomi presisi tanpa artefak morphing.",
+        ai_logic_description: "Persona AI: Anda adalah Kling AI 2.1 Action Director. Susun prompt gerakan dinamis dengan deskripsi anatomi dan fisika kain presisi tanpa artefak morphing.",
         components: [
           {
             name: "actionScene",
@@ -11810,6 +12910,7 @@ Email 3: Studi kasus pengguna`,
             info: "Gerakan dinamis apa yang dilakukan subjek?",
           },
         ],
+        output: "natural_language_prompt",
       },
       "Luma Dream Machine 3D VFX Particle & Energy Flow": {
         description: "Efek visual partikel energi magis, portal dimensi, ledakan kosmik, dan simulasi fluida dinamis di Luma Dream Machine.",
@@ -11933,7 +13034,7 @@ Email 3: Studi kasus pengguna`,
         ],
       },
       "Midjourney to Runway Gen-3 Continuous Storyboard": {
-        description: "Rancang storyboard 6 adegan visual konsisten yang memandu transisi dari gambar Midjourney ke gerakan dinamis di Runway Gen-3 / Kling AI.",
+        description: "Rancang storyboard 6 adegan visual konsisten yang memandu transisi dari gambar Midjourney v7 ke gerakan dinamis di Runway Gen-4 / Veo 3 / Kling 2.1.",
         toolType: "video",
         ai_logic_description: "Persona AI: Anda adalah AI Filmmaker & Visual Continuity Supervisor. Buat urutan prompt gambar dan prompt video pendamping yang mempertahankan konsistensi karakter dan lingkungan.",
         components: [
@@ -11945,6 +13046,7 @@ Email 3: Studi kasus pengguna`,
             info: "Kisah singkat 6 adegan yang ingin dibuatkan storyboard",
           },
         ],
+        output: "natural_language_prompt",
       },
     },
     "Produksi Video Sinematik & Edukasi": {
@@ -11997,6 +13099,44 @@ Email 3: Studi kasus pengguna`,
           },
         ],
       },
+      "Product Demo Micro-Animation & Screenflow Director": {
+        description: "Merancang skrip storyboard dan kurva animasi UI micro-interaction untuk video demo produk SaaS (60fps easing, zoom focus ke kursor, transisi antar layar, dan caption sinkron tanpa gangguan visual).",
+        toolType: "video",
+        ai_logic_description: "Persona AI: Anda adalah Product Motion Designer & SaaS Demo Director. Susun timeline per detik yang memandu perhatian mata penonton dari masalah -> klik aksi -> hasil instan menggunakan spring/cubic-bezier easing dan callout tipografi bersih.",
+        components: [
+          {
+            name: "productFeatureWalkthrough",
+            label: "Alur Fitur Produk yang Didemokan",
+            type: "textarea",
+            placeholder: "contoh: Pengguna memilih template SKILL.md -> klik '1-Click Sample' -> salin output JSON/Markdown dalam 8 detik",
+            info: "Urutan aksi di layar yang ingin disorot pada video demo.",
+          },
+          {
+            name: "demoDurationAndFormat",
+            label: "Durasi & Rasio Video Demo",
+            type: "select",
+            options: [
+              "30 Detik Hero Loop Landing Page (16:9 60fps)",
+              "45 Detik Product Hunt / X Launch Walkthrough (16:9)",
+              "20 Detik Reels / TikTok Vertical Feature Spotlight (9:16)",
+            ],
+            info: "Format layar dan durasi total video demo.",
+          },
+          {
+            name: "motionPacingStyle",
+            label: "Gaya Gerak Kamera & Transisi UI",
+            type: "select",
+            options: [
+              "Smooth Cursor Spotlight + 1.35x Optical Zoom (Cubic-Bezier 0.22, 1, 0.36, 1)",
+              "Isometric Tilted Screen Cards dengan Depth Parallax",
+              "Crisp Minimalist Cut + Highlight Ring pada Tombol Aksi",
+            ],
+            info: "Karakter motion design agar tampilan UI tetap terbaca tajam.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan teks callout maksimal 6 kata per adegan agar terbaca sekilas dan jaga agar kursor tidak bergerak terlalu cepat melewati tombol target.",
+        output: "natural_language_prompt",
+      },
     },
     "Short-form & Social Video Scripting": {
       "TikTok / Reels 3-Second Viral Hook & Visual Direction": {
@@ -12037,7 +13177,7 @@ Email 3: Studi kasus pengguna`,
     },
     "Generator Video AI Sinematik (Sora, Kling, Runway, Luma)": {
       "Kling 1.5 & Runway Gen-3 Cinematic Motion Director": {
-        description: "Formula prompt sutradara sinematik generasi video AI (Kling 1.5, Runway Gen-3 Alpha, Hailuo MiniMax, Luma Ray 2). Mengatur pergerakan kamera dinamis, kecepatan frame, kontinuitas fisika, dan emosi adegan.",
+        description: "Formula prompt sutradara sinematik generasi video AI (Kling 2.1, Runway Gen-4, Google Veo 3, Hailuo MiniMax, Luma Ray 2). Mengatur pergerakan kamera dinamis, kecepatan frame, kontinuitas fisika, dan emosi adegan.",
         toolType: "video",
         ai_logic_description: "Persona AI: Anda adalah Director of Photography (DoP) Sinematik & AI Video Motion Engineer. Rancang naskah visual prompt yang memadukan koreografi gerak subjek, pergerakan kamera berbasis istilah industri film (Dolly, Pan, Orbit, Crane), serta kontinuitas fisika dunia nyata.",
         components: [
@@ -12081,7 +13221,9 @@ Email 3: Studi kasus pengguna`,
             placeholder: "contoh: Volumetric sun rays cutting through orange haze, sci-fi blockbuster color grading, teal and orange palette, anamorphic lens flares, photorealistic 8K render",
             info: "Suasana pencahayaan, efek flare lensa, gradasi warna film, dan atmosfer cuaca."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Pertahankan kontinuitas fisika, arah pencahayaan konsisten, dan hindari artefak morphing antar frame.",
+        output: "natural_language_prompt"
       },
       "Sora & Kling Cinematic Scene Director": {
         description: "Rancang formula prompt adegan video sinematik dengan kendali gerakan kamera (pan, tilt, zoom, FPV drone), pencahayaan volumetrik, dan simulasi fisika realistis.",
@@ -12119,9 +13261,9 @@ Email 3: Studi kasus pengguna`,
         ],
       },
       "Runway Gen-3 Alpha Camera Motion Director": {
-        description: "Optimalkan prompt gerakan dinamis khusus Runway Gen-3 Alpha dengan kontrol keyword arah kamera, kecepatan, transisi, dan temporal coherence.",
+        description: "Optimalkan prompt gerakan dinamis khusus Runway Gen-3 Alpha / Gen-4 dengan kontrol keyword arah kamera, kecepatan, transisi, dan temporal coherence.",
         toolType: "video",
-        ai_logic_description: "Persona AI: Anda adalah Runway Gen-3 Prompt Specialist. Rancang prompt presisi dengan sintaks temporal dan deskripsi gerak mulus tanpa distorsi.",
+        ai_logic_description: "Persona AI: Anda adalah Runway Gen-3 / Gen-4 Prompt Specialist. Rancang prompt presisi dengan sintaks temporal dan deskripsi gerak mulus tanpa distorsi.",
         components: [
           {
             name: "baseVisual",
@@ -12146,10 +13288,112 @@ Email 3: Studi kasus pengguna`,
           },
         ],
       },
+      "Google Veo 3 Synchronized Audio-Video Shot Director": {
+        description: "Merancang prompt Google Veo 3 (veo-3.0 / veo-3.1) dengan sinkronisasi native audio-video: dialog spesifik, foley lingkungan (langkah kaki, gemericik hujan), koreografi kamera 24fps, dan pencahayaan realistis.",
+        toolType: "video",
+        ai_logic_description: "Persona AI: Anda adalah Veo 3 Cinematographer & Sound Director. Gabungkan deskripsi visual berkesinambungan (subjek, gerak kamera, lensa) dengan lapisan audio sinkron (dialog verbatim, ambient soundscape, efek foley tepat waktu).",
+        components: [
+          {
+            name: "veoVisualAction",
+            label: "Aksi Visual & Koreografi Kamera",
+            type: "textarea",
+            placeholder: "contoh: Tracking shot 35mm mengikuti seorang chef di dapur terbuka malam hari saat menumis rempah dengan api menyala di wajan",
+            info: "Apa yang terlihat bergerak di layar dan bagaimana kamera mengikutinya.",
+          },
+          {
+            name: "synchronizedAudioLayer",
+            label: "Lapisan Audio, Dialog & Foley Sinkron",
+            type: "textarea",
+            placeholder: "contoh: Suara desisan minyak panas dan denting spatula baja, diikuti suara chef berkata hangat: 'Aroma ini tanda bumbunya matang'",
+            info: "Dialog, suara lingkungan, dan efek suara (foley) yang disinkronkan oleh Veo 3.",
+          },
+          {
+            name: "veoOutputProfile",
+            label: "Profil Resolusi & Rasio Veo 3",
+            type: "select",
+            options: [
+              "16:9 1080p Cinematic 24fps (Native Synchronized Audio)",
+              "9:16 1080p Vertical Social Story (Native Audio + Voice)",
+              "16:9 4K Master Production Preview (veo-3.1-generate-preview)",
+            ],
+            info: "Spesifikasi teknis output video Google Veo 3.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Pisahkan deskripsi visual, gerak kamera, dan cue audio secara terstruktur agar Veo 3 menghasilkan sinkronisasi bibir serta foley yang akurat tanpa musik latar yang bertabrakan.",
+        output: "natural_language_prompt",
+      },
+      "Kling 2.1 Motion Brush & Camera Physics Script": {
+        description: "Prompt kontrol gerak tingkat lanjut untuk Kling 2.1 (Master / Pro): pemetaan jalur Motion Brush per elemen (air, rambut, kain, latar), koherensi fisika gravitasi, dan transisi kamera mulus.",
+        toolType: "video",
+        ai_logic_description: "Persona AI: Anda adalah Kling 2.1 Motion Physics Engineer. Definisikan secara eksplisit elemen mana yang bergerak (jalur vektor gerak), elemen mana yang statis terkunci, serta respons fisika material terhadap angin dan momentum.",
+        components: [
+          {
+            name: "klingSceneSubject",
+            label: "Subjek Utama & Material Fisik",
+            type: "textarea",
+            placeholder: "contoh: Penari tradisional mengenakan selendang sutra merah berdiri di tebing batu saat angin senja bertiup kencang",
+            info: "Subjek beserta elemen lentur (kain, rambut, air, asap) yang bereaksi terhadap fisika.",
+          },
+          {
+            name: "motionBrushVectors",
+            label: "Pemetaan Motion Brush & Area Statis",
+            type: "textarea",
+            placeholder: "contoh: Brush 1 (Selendang sutra): gelombang melambai ke kanan; Brush 2 (Ombak laut jauh): bergulung pelan; Tebing & pilar: terkunci statis",
+            info: "Arah gerak spesifik untuk tiap region gambar/adegan.",
+          },
+          {
+            name: "klingCameraRig",
+            label: "Gerakan Kamera & Mode Kling 2.1",
+            type: "select",
+            options: [
+              "Slow Push-In Dolly + Subtle Orbital Drift (Kling 2.1 Master 1080p)",
+              "Locked Tripod Static Camera (Fokus Murni Motion Brush Subjek)",
+              "Smooth Crane Up Reveal (Start Frame -> End Frame Keyframe Interpolation)",
+            ],
+            info: "Pergerakan kamera dan mode generasi Kling 2.1.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Hindari instruksi gerakan berlawanan arah pada satu frame; kunci satu vektor kamera utama dan perjelas kecepatan gerak (slow, steady, brisk).",
+        output: "natural_language_prompt",
+      },
+      "OpenAI Sora 2 Multi-Shot Storyboard Continuity": {
+        description: "Merancang rangkaian multi-shot storyboard di OpenAI Sora 2 dengan kesinambungan karakter, kostum, pencahayaan, dan logika spasial 3D dari Shot 1 hingga Shot 4 dalam satu alur cerita utuh.",
+        toolType: "video",
+        ai_logic_description: "Persona AI: Anda adalah Sora 2 Storyboard Continuity Director. Rancang urutan shot bernomor (0-4s, 4-8s, 8-12s) dengan deskripsi jangkar visual konsisten (wardrobe, lighting color temperature, prop placement) di setiap potongan.",
+        components: [
+          {
+            name: "narrativeArcIdea",
+            label: "Premis Cerita & Subjek Utama",
+            type: "textarea",
+            placeholder: "contoh: Ilmuwan kelautan meluncurkan drone bawah air kuning dari dek kapal riset saat kabut pagi di Laut Banda",
+            info: "Cerita utuh lintas 3-4 potongan shot yang saling berlanjut.",
+          },
+          {
+            name: "continuityAnchors",
+            label: "Jangkar Konsistensi Lintas Shot",
+            type: "text",
+            placeholder: "contoh: Jaket tahan air oranye kusam bernomor '04', drone kuning goresan ringan, cahaya pagi biru keemasan sejuk",
+            info: "Detail warna, pakaian, dan properti yang wajib konsisten di semua shot.",
+          },
+          {
+            name: "shotSequenceStructure",
+            label: "Struktur Potongan Shot",
+            type: "select",
+            options: [
+              "3-Shot Narrative (Wide Establishing -> Medium Action -> Close-Up Reveal)",
+              "4-Shot Commercial Cutaway (Hook -> Product Action -> Reaction -> Hero End Frame)",
+              "Continuous Single-Take Simulated Steadicam Passage",
+            ],
+            info: "Pola penyuntingan antar shot untuk menjaga kesinambungan ruang.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Tuliskan setiap shot dengan timestamp jelas beserta deskripsi transisi kamera dan ulangi detail visual jangkar secara ringkas agar tidak terjadi drift antar potongan.",
+        output: "natural_language_prompt",
+      },
     },
     "Generator Video AI (Runway/Sora/Pika)": {
       "V-P-M-A (Master Prompt Video AI)": {
-        description: "Formula prompt optimal untuk generator video AI seperti Runway Gen-3, Pika Labs, Kling AI, Luma Dream Machine, dan Sora.",
+        description: "Formula prompt optimal untuk generator video AI seperti Runway Gen-4, Google Veo 3, Kling 2.1, Luma Dream Machine, Pika, dan Sora 2.",
         toolType: "video",
         ai_logic_description: "Anda adalah seorang Sutradara Sinematografi AI yang menyusun instruksi pergerakan kamera, aksi subjek, atmosfer, dan tempo video secara dinamis.",
         components: [
@@ -12188,7 +13432,7 @@ Email 3: Studi kasus pengguna`,
   "Audio & Musik": {
     "Nuansa Audio Internasional, Ibadah & Komposisi Solo": {
       "Suno AI City Pop & Funk Groovy Bassline Producer": {
-        description: "Lagu City Pop Jepang 80s / Funk modern di Suno v4 dengan slap bass groovy, saxophone solo, dan melodi manis nostalgia.",
+        description: "Lagu City Pop Jepang 80s / Funk modern di Suno v4.5 / v5 dengan slap bass groovy, saxophone solo, dan melodi manis nostalgia.",
         toolType: "music-generation",
         ai_logic_description: "Persona AI: Anda adalah Japanese City Pop & Funk Producer (Gaya Tatsuro Yamashita / Mariya Takeuchi).",
         components: [
@@ -12386,7 +13630,7 @@ Email 3: Studi kasus pengguna`,
     },
     "Produksi Genre Musik Spesifik & Podcast Wawancara": {
       "Suno AI Hip Hop / Trap Beat & 16-Bar Verse Flow Producer": {
-        description: "Prompt Suno v4 untuk genre Hip Hop/Trap modern lengkap dengan bass 808 menggelegar, hi-hat rolls cepat, rima 16-bar verse, dan ad-libs.",
+        description: "Prompt Suno v4.5 / v5 untuk genre Hip Hop/Trap modern lengkap dengan bass 808 menggelegar, hi-hat rolls cepat, rima 16-bar verse, dan ad-libs.",
         toolType: "music-generation",
         ai_logic_description: "Persona AI: Anda adalah Grammy-winning Trap Music Producer & Beatmaker. Rancang prompt lengkap dengan struktur beat 808 dan lirik punchline berbobot.",
         components: [
@@ -12608,12 +13852,50 @@ Email 3: Studi kasus pengguna`,
           },
         ],
       },
+      "Podcast & YouTube Voiceover Pacing & SSML Script": {
+        description: "Menyusun naskah voiceover YouTube dan Podcast siap rekam atau siap sintesis TTS modern dengan penanda jeda ([pause 400ms]), penekanan intonasi SSML, pelafalan istilah teknis, serta kontrol ritme napas.",
+        toolType: "audio-generation",
+        ai_logic_description: "Persona AI: Anda adalah Broadcast Voice Director & SSML Script Engineer. Tulis kalimat lisan yang enak diucapkan (maksimal 18 kata per kalimat), sisipkan tag SSML/penanda jeda alami, dan beri catatan pengucapan singkatan teknis.",
+        components: [
+          {
+            name: "voiceoverTopicAndScript",
+            label: "Topik & Pesan Utama Narasi",
+            type: "textarea",
+            placeholder: "contoh: Penjelasan 90 detik cara ekspor SKILL.md dari PromptMatrix dan memasangnya di folder .claude/skills proyek Anda",
+            info: "Poin materi yang ingin dibacakan oleh narator manusia atau AI TTS.",
+          },
+          {
+            name: "pacingAndDeliveryStyle",
+            label: "Ritme Bicara & Karakter Vokal",
+            type: "select",
+            options: [
+              "Conversational Tech Explainer (145 WPM, Jeda Antar Poin Tegas)",
+              "Calm Documentary Storytelling (125 WPM, Warm Chest Resonance)",
+              "Crisp Product Launch Narrator (155 WPM, Dinamis & Antusias)",
+            ],
+            info: "Kecepatan kata per menit (WPM) dan nuansa penyampaian suara.",
+          },
+          {
+            name: "ssmlFormatTarget",
+            label: "Format Penanda Produksi",
+            type: "select",
+            options: [
+              "Standard W3C SSML (<break>, <emphasis>, <say-as>) + Spoken Transcript",
+              "Human Voice Actor Cue Sheet ([PAUSE], **TEKANAN**, [PELAFALAN])",
+              "Dual Output (Clean Spoken Text + Annotated SSML Block)",
+            ],
+            info: "Pilih format teknis yang kompatibel dengan mesin TTS atau studio rekaman Anda.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Cantumkan panduan pelafalan fonetik untuk istilah Inggris atau singkatan ('MCP', 'JSON-LD', 'PostgreSQL') agar pembacaan terdengar alami.",
+        output: "natural_language_prompt",
+      },
     },
     "Prompt AI Musik (Suno & Udio)": {
       "Suno v4 Hit Song Lyric & Prompt Architect": {
-        description: "Arsitektur penulisan prompt dan struktur lirik berstandar Suno v4 & Udio 1.5. Mengintegrasikan tag struktural resmi ([Intro], [Verse], [Pre-Chorus], [Chorus], [Bridge], [Guitar Solo], [Outro]), tempo BPM, fusi genre, dan warna vokal.",
+        description: "Arsitektur penulisan prompt dan struktur lirik berstandar Suno v4.5 / v5 & Udio 1.5. Mengintegrasikan tag struktural resmi ([Intro], [Verse], [Pre-Chorus], [Chorus], [Bridge], [Guitar Solo], [Outro]), tempo BPM, fusi genre, dan warna vokal.",
         toolType: "music-composition",
-        ai_logic_description: "Persona AI: Anda adalah Multi-Platinum Music Producer & Songwriter Spesialis AI Audio Generation (Suno v4). Rancang prompt Style of Music yang kaya layer instrumen serta struktur lirik berima rapi dengan metatag stanzal presisi agar model AI menghasilkan lagu siap edar.",
+        ai_logic_description: "Persona AI: Anda adalah Multi-Platinum Music Producer & Songwriter Spesialis AI Audio Generation (Suno v4.5 / v5). Rancang prompt Style of Music yang kaya layer instrumen serta struktur lirik berima rapi dengan metatag stanzal presisi agar model AI menghasilkan lagu siap edar.",
         components: [
           {
             name: "songThemeStory",
@@ -12649,10 +13931,12 @@ Email 3: Studi kasus pengguna`,
             placeholder: "contoh: Masukkan bait lirik atau biarkan AI meracik lirik berima dengan tag [Intro], [Verse 1], [Chorus], [Guitar Solo], [Bridge], [Big Finish], [Outro]",
             info: "Struktur lirik lengkap dengan tag panduan mesin audio AI."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Pisahkan bagian Style of Music dan lirik ber-metatag dengan jelas, serta jaga rima dan silabel agar nyaman dinyanyikan pada tempo target.",
+        output: "natural_language_prompt"
       },
       "Suno AI v4 Master Song Producer": {
-        description: "Komposisi lagu utuh di Suno AI v4 lengkap dengan genre tags, BPM, instrumentasi, gaya vokal, lirik terstruktur [Verse], [Chorus], [Bridge], dan [Drop].",
+        description: "Komposisi lagu utuh di Suno AI v4.5 / v5 lengkap dengan genre tags, BPM, instrumentasi, gaya vokal, lirik terstruktur [Verse], [Chorus], [Bridge], dan [Drop].",
         toolType: "music-generation",
         ai_logic_description: "Persona AI: Anda adalah Platinum Music Producer & Sound Engineer. Buat prompt musik lengkap dengan style tags presisi, struktur lirik berima kuat, dan instruksi transisi audio.",
         components: [
@@ -12713,6 +13997,40 @@ Email 3: Studi kasus pengguna`,
             info: "Perkiraan durasi pembacaan narasi",
           },
         ],
+      },
+      "Suno v4.5 / v5 Multi-Stem Studio Arrangement": {
+        description: "Merancang aransemen musik berlapis untuk Suno v4.5 / v5 dengan pemisahan peran instrumen per bagian ([Intro], [Verse], [Pre-Chorus], [Chorus], [Bridge], [Outro]), karakter mixing studio, dan dinamika vokal.",
+        toolType: "music-generation",
+        ai_logic_description: "Persona AI: Anda adalah Studio Music Arranger & Suno v4.5 / v5 Prompt Engineer. Susun style tags ringkas berurutan (genre -> tempo BPM -> instrumen utama -> tekstur vokal -> mixing) disertai lirik berpola rima dan metatag aransemen presisi.",
+        components: [
+          {
+            name: "genreMoodAndBpm",
+            label: "Genre, Atmosfer & Tempo BPM",
+            type: "text",
+            placeholder: "contoh: Modern Neo-Soul Indie Pop, 98 BPM, hangat dan groovy dengan Rhodes electric piano dan sub-bass bulat",
+            info: "Gaya musik utama, kecepatan BPM, serta suasana emosional lagu.",
+          },
+          {
+            name: "stemInstrumentationPlan",
+            label: "Lapisan Instrumen & Transisi Bagian",
+            type: "textarea",
+            placeholder: "contoh: Intro hanya petikan gitar clean; Verse masuk rimshot snare + bassline; Chorus meledak dengan brass section & harmony vocals",
+            info: "Bagaimana instrumen masuk dan keluar di setiap bagian agar aransemen dinamis.",
+          },
+          {
+            name: "vocalAndMixProfile",
+            label: "Karakter Vokal & Profil Mixing",
+            type: "select",
+            options: [
+              "Intimate Dry Female Lead Vocal + Wide Stereo Chorus Harmonies",
+              "Gritty Male Baritone + Crisp Modern Pop Radio Compression",
+              "Pure Instrumental Multi-Stem Showcase (No Vocals, Studio Mastering)",
+            ],
+            info: "Gaya vokal dan kualitas akhir produksi audio di Suno v4.5 / v5.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Hasilkan dua blok terpisah siap tempel: 1) Style of Music Prompt (maksimal 200 karakter padat tanpa filler), dan 2) Complete Lyrics & Arrangement Metatags.",
+        output: "natural_language_prompt",
       },
     },
     "Alat Bantu Komposisi": {
@@ -12881,7 +14199,7 @@ Email 3: Studi kasus pengguna`,
             name: "model",
             label: "Model",
             type: "select",
-            options: ["v3.5", "v3.5-turbo", "v4-alpha", "chirp-v3"],
+            options: ["v5", "v4.5-plus", "v4.5", "v4"],
             info: "Pilih versi model Suno AI yang akan digunakan.",
           },
           {
@@ -12911,10 +14229,11 @@ Email 3: Studi kasus pengguna`,
             label: "Konteks Tambahan & Instruksi Khusus",
             type: "textarea",
             placeholder:
-              "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan. Untuk hasil terbaik, gunakan model v3.5 atau v3.5-turbo.",
+              "Contoh: Gunakan gaya bahasa yang sangat personal dan rentan. Sertakan satu analogi tentang berkebun. Akhiri dengan nada yang penuh harapan. Untuk hasil terbaik, gunakan model v4.5-plus atau v5.",
             info: "Instruksi spesifik tentang gaya, nada, atau elemen naratif yang harus ada.",
           },
         ],
+        output: "natural_language_prompt"
       },
       "Stable Audio": {
         description:
@@ -13394,7 +14713,7 @@ Email 3: Studi kasus pengguna`,
     },
     "Pemikiran Terstruktur & Analisis": {
       "Goal-Constraint-Context (GCC) Reasoning Framework": {
-        description: "Framework prompt khusus model penalaran generasi baru (Claude 3.7 Sonnet Thinking, DeepSeek-R1, OpenAI o1/o3). Memberikan otonomi pemikiran penuh dengan mengunci Goal (Tujuan), Hard Constraints (Batasan Mutlak), dan Context (Fakta Dasar) tanpa micromanage alur CoT.",
+        description: "Framework prompt khusus model penalaran generasi baru (Claude 4 / Sonnet 4.5 Thinking, DeepSeek-R1, OpenAI GPT-5 / o3 / o4-mini). Memberikan otonomi pemikiran penuh dengan mengunci Goal (Tujuan), Hard Constraints (Batasan Mutlak), dan Context (Fakta Dasar) tanpa micromanage alur CoT.",
         toolType: "text",
         ai_logic_description: "Persona AI: Anda adalah Autonomous Reasoning Engine dengan kemampuan penalaran mendalam (Chain of Thought tersembunyi). Rencanakan hipotesis, uji skenario ekstrem, dan validasi solusi secara otonom terhadap batasan ketat tanpa terburu-buru memberikan jawaban dangkal.",
         components: [
@@ -13438,7 +14757,9 @@ Email 3: Studi kasus pengguna`,
             placeholder: "contoh: 1. Ringkasan Eksekutif Trade-off, 2. Skema DDL SQL Lengkap, 3. Protokol Penanganan Sharding & Failover.",
             info: "Format struktur deliverables jawaban akhir yang diharapkan."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan hasil prompt natural, relevan, dan memikat.",
+        output: "natural_language_prompt"
       },
       "Analisis SWOT Personal & Strategi Karir": {
         description: "Petakan Kekuatan (Strengths), Kelemahan (Weaknesses), Peluang (Opportunities), dan Ancaman (Threats) karir Anda secara objektif.",
@@ -13689,7 +15010,9 @@ Email 3: Studi kasus pengguna`,
             placeholder: "e.g., '3 paragraf terstruktur dengan bullet points untuk fitur unggulan'",
             info: "Tentukan bagaimana hasil akhir harus disajikan."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan hasil prompt natural, relevan, dan memikat.",
+        output: "natural_language_prompt"
       },
       "CARE (Context-Action-Result-Example)": {
         description: "Framework komprehensif yang menyediakan konteks, mendefinisikan aksi, menentukan hasil yang diharapkan, dan menyertakan contoh referensi.",
@@ -13773,7 +15096,9 @@ Email 3: Studi kasus pengguna`,
             placeholder: "e.g., '5 draft postingan Instagram lengkap dengan hashtag'",
             info: "Bentuk keluaran akhir yang diminta."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan hasil prompt natural, relevan, dan memikat.",
+        output: "natural_language_prompt"
       },
       "RTF-C (Role-Task-Format-Context)": {
         description: "Peningkatan dari formula RTF dengan penambahan konteks mendalam untuk hasil yang lebih bernuansa dan presisi.",
@@ -13976,7 +15301,9 @@ Email 3: Studi kasus pengguna`,
             placeholder: "e.g., 'Cetak biru arsitektur lengkap beserta tabel perbandingan trade-off'",
             info: "Format penyajian solusi final."
           }
-        ]
+        ],
+        konteks_tambahan_instruksi_khusus: "Pastikan hasil prompt natural, relevan, dan memikat.",
+        output: "natural_language_prompt"
       }
     },
     "Formula Persuasi & Pemasaran": {
@@ -14459,6 +15786,7 @@ Email 3: Studi kasus pengguna`,
             info: "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI.",
           },
         ],
+        output: "json_prompt"
       },
       "Text to Table": {
         description:
@@ -14532,6 +15860,74 @@ Email 3: Studi kasus pengguna`,
             info: "Sebutkan batasan, gaya penulisan spesifik, atau informasi latar yang penting untuk dipahami AI.",
           },
         ],
+      },
+      "JSON-Strict Output Contract Wrapper (Zero Decode Error)": {
+        description: "Membungkus tugas apa pun dengan kontrak skema JSON ketat (JSON Schema draft-2020-12 / TypeScript interface) lengkap dengan aturan anti-markdown-fence dan fallback tipe null agar parser produksi bebas error decode.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Strict Serialization & Structured Outputs Engineer. Paksa model mengembalikan tepat satu objek JSON valid tanpa teks pembuka, tanpa blok ```json, dan memenuhi seluruh tipe field serta enum.",
+        components: [
+          {
+            name: "targetJsonSchema",
+            label: "Skema JSON / Interface TypeScript Sasaran",
+            type: "textarea",
+            placeholder: "contoh: { \"summary\": string, \"severity\": \"low\"|\"medium\"|\"high\", \"actionItems\": Array<{ \"title\": string, \"owner\": string }> }",
+            info: "Tempelkan struktur JSON Schema atau interface TypeScript yang wajib diikuti.",
+          },
+          {
+            name: "rawTaskInput",
+            label: "Data Input / Tugas Ekstraksi",
+            type: "textarea",
+            placeholder: "contoh: Ubah catatan rapat insiden server hari Selasa menjadi laporan terstruktur siap masuk API webhook",
+            info: "Teks mentah atau tugas yang harus dipetakan ke skema JSON tersebut.",
+          },
+          {
+            name: "strictDecodeGuardrails",
+            label: "Kebijakan Ketat Serialisasi",
+            type: "select",
+            options: [
+              "Raw JSON Only (No Markdown Backticks, No Leading/Trailing Prose, Null for Missing)",
+              "OpenAI / Anthropic Structured Output Mode (additionalProperties: false)",
+              "JSONL Streaming Array (One Valid JSON Object per Line)",
+            ],
+            info: "Aturan parsing agar JSON.parse() berhasil 100% tanpa pembersihan manual.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Jika informasi untuk field opsional tidak ditemukan di input, isi dengan null atau array kosong [] daripada mengarang nilai atau menambahkan komentar di dalam JSON.",
+        output: "json_prompt",
+      },
+      "Diff-Only Code Review & Surgical Patch Prompt": {
+        description: "Prompt cepat berfokus tinggi untuk melakukan code review berbasis unified diff atau menghasilkan patch bedah minimalis tanpa menulis ulang keseluruhan file atau merusak komentar yang ada.",
+        toolType: "code",
+        ai_logic_description: "Persona AI: Anda adalah Principal Code Reviewer spesialis Surgical Diff. Fokus hanya pada baris yang berubah, temukan bug logika, race condition, atau celah keamanan, lalu sajikan patch unified diff yang ramping.",
+        components: [
+          {
+            name: "gitDiffOrSnippet",
+            label: "Potongan Git Diff atau Kode Target",
+            type: "textarea",
+            placeholder: "contoh: git diff pada fungsi calculateDiscount() dan middleware autentikasi token JWT",
+            info: "Tempelkan diff git atau blok fungsi spesifik yang sedang ditinjau.",
+          },
+          {
+            name: "reviewModeIntent",
+            label: "Mode Review / Output yang Diminta",
+            type: "select",
+            options: [
+              "Find Real Bugs Only (Logic, Edge Cases, Security, Type Safety) + Minimal Diff",
+              "Generate Surgical Unified Diff Patch Only (Zero Unrelated Edits)",
+              "Strict Senior PR Review (Blockers vs Non-Blocking Suggestions)",
+            ],
+            info: "Fokus tinjauan agar output ringkas tanpa nitpick gaya penulisan.",
+          },
+          {
+            name: "preserveConstraints",
+            label: "Bagian yang Wajib Dipertahankan",
+            type: "text",
+            placeholder: "contoh: Jangan ubah signature fungsi publik, jangan sentuh komentar dokumentasi yang sudah ada",
+            info: "Batasan untuk mencegah refaktor melebar di luar ruang lingkup PR.",
+          },
+        ],
+        konteks_tambahan_instruksi_khusus: "Laporkan hanya temuan nyata yang dapat diverifikasi dari potongan kode yang diberikan; jika patch diperlukan, keluarkan diff minimal per hunk.",
+        output: "natural_language_prompt",
       },
     },
   },

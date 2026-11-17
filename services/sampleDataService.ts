@@ -1,6 +1,6 @@
 /**
  * PromptMatrix Realistic Sample Data Engine
- * Generates natural, context-aware sample values for all 360+ Prompt Frameworks
+ * Generates natural, context-aware sample values for all 400+ Prompt Frameworks
  * Fully synchronized for Indonesian (ID) and English (EN)
  * Powers 1-Click Sample Filling & AI Suggestion Context Benchmarks
  */
@@ -95,20 +95,46 @@ const FIELD_SAMPLE_DICTIONARY: Record<string, { id: string; en: string }> = {
   result: { id: "Penjualan meningkat 35% dalam waktu 6 minggu, churn rate berkurang 50%, dan kepuasan pelanggan naik menjadi 4.8/5", en: "Sales increased by 35% within 6 weeks, churn rate dropped by 50%, and CSAT rose to 4.8/5" },
   hasil: { id: "Penjualan meningkat 35% dalam waktu 6 minggu, churn rate berkurang 50%, dan kepuasan pelanggan naik menjadi 4.8/5", en: "Sales increased by 35% within 6 weeks, churn rate dropped by 50%, and CSAT rose to 4.8/5" },
 
-  // Reasoning & Deliberative Models (DeepSeek R1, Claude 3.7 Thinking, o1/o3)
+  // Reasoning & Deliberative Models (Claude 4 / Sonnet 4.5 Thinking, DeepSeek R1, GPT-5 / o3 / o4-mini)
   hardconstraints: { id: "DILARANG menggunakan database NoSQL. Harus kompatibel dengan PostgreSQL 16. Skema harus zero downtime migration.", en: "STRICTLY FORBIDDEN to use NoSQL databases. Must be compatible with PostgreSQL 16. Schema must support zero downtime migration." },
   contextualgrounding: { id: "Tim 4 backend engineer Golang. Berjalan di Kubernetes on-premise dengan batasan lisensi open-source.", en: "Team of 4 Golang backend engineers. Running on-premise Kubernetes with open-source licensing constraints." },
   outputcontract: { id: "1. Ringkasan Eksekutif Trade-off, 2. Skema DDL SQL Lengkap, 3. Protokol Penanganan Sharding & Failover.", en: "1. Executive Trade-off Summary, 2. Complete SQL DDL Schema, 3. Sharding & Failover Protocol." },
 
-  // MCP & AI Coding Agents (.cursorrules / Windsurf)
+  // MCP, Open Agent Skills (SKILL.md) & AI Coding Agents (.cursorrules / Windsurf / Claude Code)
   projecttechstack: { id: "Next.js 15 (App Router), TypeScript 5.5, Tailwind CSS v4, Zustand, Supabase Database, React Query v5", en: "Next.js 15 (App Router), TypeScript 5.5, Tailwind CSS v4, Zustand, Supabase Database, React Query v5" },
   architecturalpatterns: { id: "Gunakan Feature-First Folder Structure (/features/[name]/components, api, hooks). Pisahkan business logic ke custom hooks.", en: "Use Feature-First Folder Structure (/features/[name]/components, api, hooks). Decouple business logic into custom hooks." },
   strictforbiddenrules: { id: "DILARANG menggunakan 'any' di TypeScript. JANGAN install dependensi baru tanpa persetujuan. HINDARI inline styles.", en: "DO NOT use 'any' in TypeScript. NEVER install new dependencies without approval. AVOID inline styles." },
   mcpservername: { id: "PostgreSQL Cloud Analytics MCP Server - Integrasi query database & visualisasi schema", en: "PostgreSQL Cloud Analytics MCP Server - Database query integration & schema visualization" },
   toolsandresources: { id: "1. execute_read_query (SQL SELECT dengan limit proteksi), 2. inspect_table_schema (Ambil DDL & relasi foreign keys), 3. explain_query_plan (Analisis query latency)", en: "1. execute_read_query (Protected SELECT with limit), 2. inspect_table_schema (DDL & foreign keys), 3. explain_query_plan (Query latency analysis)" },
+  skilldomain: { id: "Audit migrasi PostgreSQL zero-downtime dengan pengecekan lock table, RLS policy, dan script dry-run", en: "Zero-downtime PostgreSQL migration audit with lock-table checks, RLS policies, and dry-run validation script" },
+  subagentroles: { id: "1. schema-reviewer (read-only), 2. test-runner (eksekusi Vitest), 3. security-auditor (cek auth & secrets)", en: "1. schema-reviewer (read-only), 2. test-runner (Vitest runner), 3. security-auditor (auth & secrets review)" },
+  workspacetopology: { id: "Monorepo pnpm: apps/web (Next.js 16), apps/api (Fastify), packages/db (Drizzle + Postgres), packages/ui", en: "pnpm monorepo: apps/web (Next.js 16), apps/api (Fastify), packages/db (Drizzle + Postgres), packages/ui" },
+  mcpservicedomain: { id: "Multi-Tenant Billing & Analytics MCP Server dengan endpoint /mcp (Streamable HTTP)", en: "Multi-Tenant Billing & Analytics MCP Server exposing /mcp (Streamable HTTP endpoint)" },
+  hardwareprofile: { id: "Apple M3 Max 64GB Unified Memory atau NVIDIA RTX 4090 24GB VRAM + 64GB RAM", en: "Apple M3 Max 64GB Unified Memory or NVIDIA RTX 4090 24GB VRAM + 64GB RAM" },
+  targetcodesnippet: { id: "Handler API Express & hook React yang masih memakai Record<string, any> dan event: any", en: "Express API handler and React hook currently using Record<string, any> and event: any" },
+  apiendpointspec: { id: "PATCH /api/v1/workspaces/:id/members menggunakan JWT user, body JSON role & billingEmail", en: "PATCH /api/v1/workspaces/:id/members using user JWT with JSON body role & billingEmail" },
+  servicearchitecture: { id: "API Gateway -> Order Service (Node.js) -> Kafka Queue -> Payment Worker (Go) -> PostgreSQL", en: "API Gateway -> Order Service (Node.js) -> Kafka Queue -> Payment Worker (Go) -> PostgreSQL" },
+  userjourneyflow: { id: "Buka galeri template -> cari 'MCP' -> isi form 1-klik sampel -> verifikasi tab SKILL.md & download file", en: "Open template gallery -> search 'MCP' -> click 1-Click Sample -> verify SKILL.md tab and file download" },
+  migrationgoal: { id: "Tambah kolom organization_id NOT NULL pada tabel invoices (40 juta baris) dan aktifkan RLS per tenant", en: "Add NOT NULL organization_id column to invoices table (40M rows) and enable per-tenant RLS policies" },
+  targetjsonschema: { id: "{ \"summary\": string, \"severity\": \"low\"|\"medium\"|\"high\", \"actionItems\": Array<{ \"title\": string, \"owner\": string }> }", en: "{ \"summary\": string, \"severity\": \"low\"|\"medium\"|\"high\", \"actionItems\": Array<{ \"title\": string, \"owner\": string }> }" },
+  gitdifforsnippet: { id: "git diff pada fungsi calculateDiscount() dan middleware autentikasi token JWT", en: "git diff on calculateDiscount() utility and JWT authentication middleware" },
 
-  // Multimodal Video & Suno v4 Audio
+  // Antislop, GEO/AEO, Marketplace & Project Ops (Late 2026)
+  audittargetartifact: { id: "Komponen HeroSection.tsx dan modal output JSON/Markdown pada Light & Dark Mode", en: "HeroSection.tsx component and JSON/Markdown output modal across Light & Dark themes" },
+  devtoolartifact: { id: "Paket 6 Open Agent Skills (SKILL.md + references/ + script validasi) untuk Claude Code & Cursor", en: "Bundle of 6 Open Agent Skills (SKILL.md + references/ + validation scripts) for Claude Code & Cursor" },
+  swarmobjective: { id: "Upgrade 360->400 framework prompt, tambah viewer SKILL.md di UI, dan susun 6 paket skill siap unggah ke Agensi.io", en: "Upgrade 360->400 prompt frameworks, add SKILL.md UI viewer, and package 6 Agensi.io-ready skills" },
+  geotopicintent: { id: "Perbandingan standar Open Agent Skills (SKILL.md) vs MCP Server untuk tim developer di 2026", en: "Open Agent Skills (SKILL.md) vs MCP Server architectural comparison for engineering teams in 2026" },
+  targetquestionsandpage: { id: "Halaman dokumentasi PromptMatrix 2.0: Cara kerja SKILL.md, privasi client-side, dan 400+ framework", en: "PromptMatrix 2.0 docs: How SKILL.md export works, client-side privacy, and 400+ frameworks" },
+  currentlandingcopy: { id: "Platform AI untuk mengubah prompt biasa menjadi instruksi terstruktur siap ekspor SKILL.md", en: "Local prompt workspace transforming plain ideas into structured prompts and SKILL.md exports" },
+  incidenttimeline: { id: "09:12 deploy migrasi index; 09:15 p99 latency lonjak ke 12s; 09:24 rollback selesai; 09:30 layanan pulih penuh", en: "09:12 index migration deploy; 09:15 p99 latency spike to 12s; 09:24 rollback completed; 09:30 full recovery" },
+  architectureproblem: { id: "Migrasi sistem antrean email sinkron ke event-driven worker agar latensi API signup di bawah 150ms", en: "Migrate synchronous email queue to event-driven workers keeping signup API latency below 150ms" },
+  prdsummaryscope: { id: "Tambah fitur ekspor SKILL.md meliputi service generator, viewer Dark/Light, dan 40 framework baru", en: "Add SKILL.md export feature covering generator service, Dark/Light viewer, and 40 new frameworks" },
+
+  // Multimodal Video (Veo 3, Kling 2.1, Sora 2) & Suno v4.5 / v5 Audio
   scenevisualnarrative: { id: "Seorang astronot berdiri di tepi ngarai Planet Mars, mengangkat sensor cuaca saat badai pasir jingga menerjang dan visor memantulkan dua bulan", en: "An astronaut standing at the edge of a Martian canyon, raising a sensor device as orange dust storms sweep across terrain with twin moon visor reflections" },
+  veovisualaction: { id: "Tracking shot 35mm mengikuti seorang chef di dapur terbuka malam hari saat menumis rempah dengan api menyala di wajan", en: "35mm tracking shot following a chef in an open night kitchen sauteing spices over a flaming wok" },
+  klingscenesubject: { id: "Penari tradisional mengenakan selendang sutra merah berdiri di tebing batu saat angin senja bertiup kencang", en: "Traditional dancer wearing a flowing red silk shawl standing on a rocky cliff at dusk in strong coastal wind" },
+  narrativearcidea: { id: "Ilmuwan kelautan meluncurkan drone bawah air kuning dari dek kapal riset saat kabut pagi di Laut Banda", en: "Marine scientist launching a yellow underwater drone from a research vessel deck through morning mist in Banda Sea" },
   songstructurelyrics: { id: "[Intro]\n(Melodi gitar akustik hangat)\n\n[Verse 1]\nPagi buta melangkah di aspal ibukota\nMenatap gedung tinggi menembus cakrawala\n\n[Chorus]\nAku berjanji takkan pulang dengan tangan hampa\nDoa ibu mengiringi setiap tetes peluh rasa\n\n[Guitar Solo]\n\n[Outro]\nSampai esok kita berjumpa di puncak impian", en: "[Intro]\n(Warm acoustic guitar picking)\n\n[Verse 1]\nEarly morning walking on city pavement\nGazing at high-rises reaching the clouds\n\n[Chorus]\nI promised I would never return empty-handed\nMother's prayer carries every step I take\n\n[Guitar Solo]\n\n[Outro]\nUntil we meet tomorrow at the peak of our dreams" },
 
   // Live Stream E-Commerce & Scholarship
@@ -123,11 +149,13 @@ const FIELD_SAMPLE_DICTIONARY: Record<string, { id: string; en: string }> = {
  * Guarantees every single field is filled with rich, realistic, context-aware content
  * that directly serves as an authoritative benchmark for AI idea generation.
  */
+export type RealisticSampleValue = string | string[] | number | boolean;
+
 export const getRealisticSampleForComponent = (
   comp: FrameworkComponent,
   frameworkName: string,
   lang: 'id' | 'en' = 'id'
-): any => {
+): RealisticSampleValue => {
   // 1. Select type: return first valid option (avoiding "Lainnya..." / "Other...")
   if (comp.type === 'select') {
     if (comp.options && comp.options.length > 0) {

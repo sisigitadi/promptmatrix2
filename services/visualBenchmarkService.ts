@@ -1,6 +1,6 @@
 /**
  * Visual Mockup & Benchmark Service
- * Generates context-aware, informative visual mockups for ALL 360+ Prompt Frameworks
+ * Generates context-aware, informative visual mockups for ALL 400+ Prompt Frameworks
  * Strictly aligned with 1-Click Sample Data scenarios in sampleDataService.ts
  * 100% Client-Side, Zero External API Limit / Rate Limit Free
  */
@@ -44,20 +44,20 @@ const VISUAL_MOCKUPS: Record<string, VisualBenchmarkData> = {
     sampleScenarioLink: 'Selaras dengan isian otomatis subjek pengrajin batik dan pencahayaan keemasan studio Jogja.'
   },
 
-  // 2. Midjourney v6.1 Masterclass (--ar 16:9, --sref, lighting)
+  // 2. Midjourney v6.1 / v7 Masterclass (--ar 16:9, --sref, --oref, lighting)
   midjourney_cinematic: {
     id: 'midjourney_cinematic',
     title: 'Gang Hujan Cyberpunk Neo-Tokyo',
     imageUrl: 'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=1080&q=80',
     aspectRatio: '16:9',
-    styleCategory: 'Midjourney v6.1 Cinematic',
+    styleCategory: 'Midjourney v6.1 / v7 Cinematic',
     keyParameters: [
       { label: 'Aksen Neon', value: 'Teal & Magenta Glow' },
       { label: 'Refleksi Basah', value: 'Wet Asphalt Puddles' },
       { label: 'Sudut Kamera', value: 'Low Angle Eye-Level' },
-      { label: 'Sintaks Model', value: '--ar 16:9 --style raw -v 6.1' }
+      { label: 'Sintaks Model', value: '--ar 16:9 --style raw --v 7' }
     ],
-    authorOrModel: 'Midjourney v6.1 (--stylize 250)',
+    authorOrModel: 'Midjourney v7 (--stylize 250)',
     description: 'Refleksi genangan aspal malam dengan pendar neon tajam dan kedalaman ruang sinematik anamorphic.',
     sampleScenarioLink: 'Selaras dengan parameter pencahayaan neon teal dan detail visual fotorealistik 8K.'
   },
@@ -80,39 +80,39 @@ const VISUAL_MOCKUPS: Record<string, VisualBenchmarkData> = {
     sampleScenarioLink: '100% selaras dengan contoh otomatis isian prompt_visual (kucing astronot mini di bulan).'
   },
 
-  // 4. Video Sinematik Kling & Runway Gen-3 (Astronot di Ngarai Mars)
+  // 4. Video Sinematik Kling 2.1, Runway Gen-4 & Veo 3 (Astronot di Ngarai Mars)
   video_mars_canyon: {
     id: 'video_mars_canyon',
     title: 'Astronot di Ngarai Planet Mars (Badai Pasir)',
     imageUrl: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1080&q=80',
     aspectRatio: '16:9',
-    styleCategory: 'Runway Gen-3 / Kling 1.5 Video Shot',
+    styleCategory: 'Veo 3 / Kling 2.1 / Runway Gen-4 Shot',
     keyParameters: [
       { label: 'Visual Scene', value: 'Ngarai Gurun Mars' },
       { label: 'Kondisi Cuaca', value: 'Badai Pasir Jingga' },
       { label: 'Refleksi Visor', value: 'Dua Bulan Kembar' },
       { label: 'Gerak Kamera', value: 'Slow Orbit Cinematic Push' }
     ],
-    authorOrModel: 'Runway Gen-3 & Kling 1.5 Director',
-    description: 'Frame video sinematik astronot berdiri di tepi ngarai Mars saat kabut pasir jingga menerjang helm reflektif.',
+    authorOrModel: 'Veo 3, Runway Gen-4 & Kling 2.1 Director',
+    description: 'Frame video sinematik astronot berdiri di tepi ngarai Mars saat kabut pasir jingga menerjang helm reflektif dengan foley angin sinkron.',
     sampleScenarioLink: '100% selaras dengan contoh otomatis isian scenevisualnarrative (astronot di ngarai Mars).'
   },
 
-  // 5. Suno v4 & Udio Lyrical Architect (Gitar Akustik & Songwriting Studio)
+  // 5. Suno v4.5 / v5 & Udio Lyrical Architect (Gitar Akustik & Songwriting Studio)
   audio_suno_studio: {
     id: 'audio_suno_studio',
-    title: 'Studio Rekaman Akustik & Songwriting',
+    title: 'Studio Rekaman Akustik & Multi-Stem Arrangement',
     imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1080&q=80',
     aspectRatio: '16:9',
-    styleCategory: 'Suno v4 Acoustic Master',
+    styleCategory: 'Suno v4.5 / v5 Studio Master',
     keyParameters: [
-      { label: 'Instrumen Utama', value: 'Gitar Akustik Hangat' },
+      { label: 'Instrumen Utama', value: 'Gitar Akustik & Multi-Stem' },
       { label: 'Struktur Lagu', value: '[Intro] -> [Verse] -> [Chorus]' },
       { label: 'Tema Lirik', value: 'Perjuangan & Doa Ibu di Ibukota' },
       { label: 'Nuansa Suara', value: 'Warm Studio Mic (24-bit/48kHz)' }
     ],
-    authorOrModel: 'Suno v4 Studio Audio',
-    description: 'Visualisasi ruang rekaman musisi dengan instrumen petikan gitar akustik yang hangat dan kertas lirik lagu.',
+    authorOrModel: 'Suno v4.5 / v5 Studio Audio',
+    description: 'Visualisasi ruang rekaman musisi dengan instrumen petikan gitar akustik yang hangat dan kertas lirik lagu terstruktur.',
     sampleScenarioLink: '100% selaras dengan contoh otomatis lirik lagu songstructurelyrics (petikan melodi gitar akustik).'
   },
 
@@ -224,7 +224,7 @@ const VISUAL_MOCKUPS: Record<string, VisualBenchmarkData> = {
     sampleScenarioLink: '100% selaras dengan contoh otomatis situation, action, dan result (peningkatan penjualan 35%).'
   },
 
-  // 12. Model Penalaran GCC (Claude 3.7 Thinking & DeepSeek-R1)
+  // 12. Model Penalaran GCC (Claude 4 / Sonnet 4.5 Thinking, DeepSeek-R1 & GPT-5/o3)
   reasoning_architecture: {
     id: 'reasoning_architecture',
     title: 'Arsitektur Penalaran Jaringan Saraf Kognitif',
@@ -232,7 +232,7 @@ const VISUAL_MOCKUPS: Record<string, VisualBenchmarkData> = {
     aspectRatio: '16:9',
     styleCategory: 'Reasoning GCC Cognitive Graph',
     keyParameters: [
-      { label: 'Model Target', value: 'Claude 3.7 Thinking & DeepSeek R1' },
+      { label: 'Model Target', value: 'Claude 4 Thinking, DeepSeek-R1 & o3' },
       { label: 'Batasan Keras', value: 'Zero-Downtime PostgreSQL 16 DDL' },
       { label: 'Toleransi Error', value: 'Zero-Hallucination Verified DDL' },
       { label: 'Format Keluaran', value: 'Sharding & Failover Protocols' }
@@ -291,9 +291,63 @@ const VISUAL_MOCKUPS: Record<string, VisualBenchmarkData> = {
       { label: 'Nuansa Warna', value: 'Golden Twilight & Royal Blue' },
       { label: 'Detail Latar', value: 'Perlintasan Kereta Api Senja' }
     ],
-    authorOrModel: 'Niji Journey v6 & Anime Studio',
+    authorOrModel: 'Niji Journey v6 / v7 & Anime Studio',
     description: 'Seni lanskap anime puitis dengan sapuan awan megah, pendar matahari tenggelam, dan rel kereta api reflektif.',
     sampleScenarioLink: 'Selaras dengan parameter gaya anime Shinkai dan komposisi langit senja.'
+  },
+
+  // 15B. Open Agent Skills (SKILL.md) & Multi-Agent Swarm Orchestration
+  agent_skill_builder: {
+    id: 'agent_skill_builder',
+    title: 'Open Agent Skill (SKILL.md) & Swarm Orchestrator',
+    imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1080&q=80',
+    aspectRatio: '16:9',
+    styleCategory: 'Open Agent Skills & Agensi.io Standard',
+    keyParameters: [
+      { label: 'Standar Paket', value: 'SKILL.md + references/ + scripts/' },
+      { label: 'Validasi YAML', value: 'Kebab-case <= 64, Desc <= 1024' },
+      { label: 'Kompatibilitas', value: 'Claude Code, Cursor, Gemini CLI' },
+      { label: 'Distribusi', value: 'Agensi.io Ready Package' }
+    ],
+    authorOrModel: 'Open Agent Skills Architect',
+    description: 'Cetak biru skill portabel dengan kontrak YAML frontmatter tervalidasi dan skrip deterministik untuk 27+ agen AI.',
+    sampleScenarioLink: 'Selaras dengan contoh skilldomain & subagentroles (PostgreSQL Audit & Swarm Orchestration).'
+  },
+
+  // 15C. Antislop UI, WCAG AA/AAA & Design System Tokens
+  antislop_design_tokens: {
+    id: 'antislop_design_tokens',
+    title: 'Design System Token & WCAG AA/AAA Contrast Matrix',
+    imageUrl: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1080&q=80',
+    aspectRatio: '16:9',
+    styleCategory: 'Antislop Design System & A11y',
+    keyParameters: [
+      { label: 'Standar Kontras', value: 'WCAG 2.2 AA (>= 4.5:1) Dual Theme' },
+      { label: 'Fokus Keyboard', value: 'Visible Focus Ring & 44px Touch' },
+      { label: 'Kebersihan Teks', value: 'Zero Em-Dash & Zero Buzzwords' },
+      { label: 'Format Token', value: 'W3C JSON + Tailwind v4 @theme' }
+    ],
+    authorOrModel: 'Antislop & WCAG Design System Lead',
+    description: 'Matriks token desain semantik untuk Light dan Dark mode dengan jaminan keterbacaan tinggi dan bebas klise AI.',
+    sampleScenarioLink: 'Selaras dengan contoh audittargetartifact & brandPrimaryPalette.'
+  },
+
+  // 15D. GEO / AEO Citation & Technical Editorial Architecture
+  geo_aeo_citation: {
+    id: 'geo_aeo_citation',
+    title: 'GEO & AEO Structured Citation & JSON-LD Hub',
+    imageUrl: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1080&q=80',
+    aspectRatio: '16:9',
+    styleCategory: 'GEO / AEO & Structured Schema',
+    keyParameters: [
+      { label: 'Target Mesin', value: 'Perplexity, ChatGPT Search, Gemini' },
+      { label: 'Markup JSON-LD', value: 'FAQPage + SoftwareApplication' },
+      { label: 'Gaya Bukti', value: 'Evidence-First Tables & Metrics' },
+      { label: 'Kanonis', value: 'Self-Contained 50-Word Answers' }
+    ],
+    authorOrModel: 'GEO / AEO Technical Strategist',
+    description: 'Struktur artikel berdensitas fakta tinggi lengkap dengan skema JSON-LD valid untuk dikutip mesin jawaban generatif.',
+    sampleScenarioLink: 'Selaras dengan contoh geotopicintent & targetquestionsandpage.'
   },
 
   // 16. Kategori Universal: Teks & Konten (Creative Writing & Editorial)
@@ -462,16 +516,25 @@ export const getVisualBenchmarkForFramework = (
   const toolType = (framework?.toolType || '').toLowerCase();
 
   // 1. Specific Framework Exact Keyword Matches (Matching sampleDataService.ts scenarios)
-  if (name.includes('flux')) {
+  if (name.includes('skill') || name.includes('subagent') || name.includes('agensi') || name.includes('swarm')) {
+    return VISUAL_MOCKUPS.agent_skill_builder;
+  }
+  if (name.includes('antislop') || name.includes('design system') || name.includes('wcag') || name.includes('contrast')) {
+    return VISUAL_MOCKUPS.antislop_design_tokens;
+  }
+  if (name.includes('geo ') || name.includes('aeo ') || name.includes('case study') || name.includes('changelog') || name.includes('newsletter')) {
+    return VISUAL_MOCKUPS.geo_aeo_citation;
+  }
+  if (name.includes('flux') || name.includes('kontext')) {
     return VISUAL_MOCKUPS.flux_artisan;
   }
-  if (name.includes('midjourney') || name.includes('cyberpunk') || name.includes('neon')) {
+  if (name.includes('midjourney') || name.includes('cyberpunk') || name.includes('neon') || name.includes('nano banana')) {
     return VISUAL_MOCKUPS.midjourney_cinematic;
   }
   if (name.includes('karakter') || name.includes('character') || name.includes('pixar') || name.includes('disney')) {
     return VISUAL_MOCKUPS.character_3d_cat;
   }
-  if (name.includes('kling') || name.includes('runway') || (toolType === 'video' && name.includes('video'))) {
+  if (name.includes('kling') || name.includes('runway') || name.includes('veo') || name.includes('sora') || (toolType === 'video' && name.includes('video'))) {
     return VISUAL_MOCKUPS.video_mars_canyon;
   }
   if (name.includes('suno') || name.includes('udio') || toolType === 'music-composition' || toolType === 'music-generation') {
@@ -489,13 +552,13 @@ export const getVisualBenchmarkForFramework = (
   if (name.includes('lpdp') || name.includes('scholarship') || name.includes('beasiswa') || name.includes('esai')) {
     return VISUAL_MOCKUPS.scholarship_medical;
   }
-  if (name.includes('aida') || name.includes('copywriting') || name.includes('sales funnel') || name.includes('saas')) {
+  if (name.includes('aida') || name.includes('copywriting') || name.includes('sales funnel') || name.includes('saas') || name.includes('monetization') || name.includes('pricing')) {
     return VISUAL_MOCKUPS.marketing_saas_dashboard;
   }
   if (name.includes('star') || name.includes('wawancara') || name.includes('interview') || name.includes('karir')) {
     return VISUAL_MOCKUPS.career_star_interview;
   }
-  if (name.includes('reasoning') || name.includes('deepseek') || name.includes('claude 3.7') || name.includes('gcc')) {
+  if (name.includes('reasoning') || name.includes('deepseek') || name.includes('claude') || name.includes('gcc') || name.includes('red-teaming')) {
     return VISUAL_MOCKUPS.reasoning_architecture;
   }
   if (name.includes('makanan') || name.includes('food') || name.includes('kuliner')) {
