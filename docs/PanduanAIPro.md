@@ -75,11 +75,14 @@ PromptMatrix 2.0 telah diaudit dan diselaraskan dengan model kecerdasan buatan s
 
 PromptMatrix 2.0 menerapkan **Model Akses Hibrida**: etalase publik (`Skills 10` & kartu kontekstual Studio) mengarahkan pengunjung ke tautan afiliasi Agensi.io, sedangkan **Pabrik `.zip` & Pengaturan URL Kreator** dikunci di balik gerbang privat **9-ketukan logo** (`showAIFeatures`):
 1. **Tab `Paket Skill (10)` di Modal Pengaturan AI**:
-   - Mengatur **Agensi Affiliate URL (`?ref=...`)**, **Creator Store URL**, dan **Affiliate Ref Code** langsung dari browser (`localStorage` `pm_agensi_urls`).
-   - Mengelola **10 bundel Open Agent Skills (`agensi-skills/`)** lengkap dengan perintah validator, tombol **Salin Listing Copy** untuk `Agensi.io/sell`, dan kesiapan publikasi toko.
+   - Mengatur **Agensi Affiliate URL (`?ref=...`)**, **Creator Store URL**, **Affiliate Ref Code**, serta bagian lipat **Secondary Marketplace Channels** (URL opsional untuk Lemon Squeezy Bundle, Creem.io Bundle, Gumroad Bundle, dan PromptBase Store) langsung dari browser (`localStorage` `pm_agensi_urls`).
+   - Tombol checkout sekunder pada modal katalog publik hanya akan ditampilkan jika URL-nya terisi di sini, sehingga **Agensi.io** tetap menjadi CTA utama dan tidak ada tautan mati.
+   - Mengelola **10 bundel Open Agent Skills (`agensi-skills/`)** lengkap dengan perintah validator, tombol **Salin Listing Copy** untuk `Agensi.io/sell`, kesiapan publikasi toko, serta generator CLI `npm run package:channels` untuk Lead Magnet (`dist-lead-magnet/`), Suite ZIP (`dist-channels/storefronts/`), dan 15 listing PromptBase (`dist-channels/promptbase/`).
 2. **Tab Pratinjau `SKILL.md` di Studio & Layar Penuh**:
    - Otomatis muncul sejajar dengan tab *Terstruktur*, *Teks Polos*, dan *JSON* saat Mode AI Pro & Paket Skill dibuka.
    - Dilengkapi tombol **Unduh Paket `.zip` Agensi.io** (membungkus `SKILL.md` di root + `references/` + `templates/` + `scripts/` secara instan di browser) dan panel **Salin Listing Copy (`Agensi.io/sell`)**.
+3. **Panduan Lengkap Multi-Marketplace & Payout Indonesia**:
+   - Buka kartu **Panduan Multi-Market** di Modal Bantuan (`?`) saat Mode AI Pro aktif, atau buka akordion panduan di dalam tab `Paket Skill (10)` Pengaturan AI untuk langkah lengkap Agensi.io, Pilar 1 Direktori OSS (`dist-lead-magnet/`), Pilar 2 Lemon Squeezy / Creem.io / Gumroad / Whop / Payhip (`$59.00` vs `$133.92`), Pilar 3 PromptBase (`0%` fee `?via=` & Zoneless USDC Solana), serta SOP penarikan dana aman di Indonesia tanpa saldo USD Wise.
 
 ---
 
