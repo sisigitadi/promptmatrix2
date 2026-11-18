@@ -4,6 +4,17 @@
 This document provides a history of major features and updates to the PromptMatrix application, helping users understand its evolution and current capabilities.
 
 ---
+## V7.2.1 (Agensi.io Hybrid Monetization Engine, 10 Packaged `.zip` Skills & 1-Click Browser ZIP Factory)
+*   **Hybrid Access Architecture (Public Affiliate Storefront + Private 9-Tap Creator Factory):**
+    *   **Public Affiliate Storefront (`Header.tsx`, `TemplateGallery.tsx`, `AgensiSkillPromoCard.tsx`, `AgensiCatalogModal.tsx`):** Added public `Skills (10)` catalog access, category-matched contextual Studio promo cards, and filterable catalog modal (*All / Free ($0) / Paid Flagship*) routing visitors via `buildAgensiPackCtaUrl` without exposing free `.zip` downloads to the public.
+    *   **Private 9-Tap `.zip` Factory (`services/skillZipService.ts`, `AgentSkillViewer.tsx`, `AISettingsModal.tsx`):** Added zero-dependency browser POSIX ZIP export (`SKILL.md` at root + `references/framework-guide.md` + `templates/sample-input.json` + `scripts/validate-output.mjs`), 1-click `Agensi.io/sell` Listing Copy generator, and live `pm_agensi_urls` affiliate/store override settings.
+*   **Expanded 10 Packaged Open Agent Skills & CLI Packager (`agensi-skills/`, `scripts/package-agensi-skills.mjs`, `scripts/audit-frameworks.mjs`):**
+    *   Added `scripts/validate-multimodal-params.mjs` and aligned `multimodal-video-image-director` to 2026 target models (`Midjourney v8.2`, `FLUX.3/FLUX.2`, `Veo 3.1`, `Kling 3.0`, `Runway Gen-4.5`, `Suno v6`), plus updated `seo-geo-aeo-content-engine` URLs to `https://prompt.sigitadi.id`.
+    *   Added 4 flagship skill packs (`owasp-api-and-cloud-security-auditor`, `multi-agent-swarm-and-subagent-orchestrator`, `postgres-prisma-zero-downtime-sql-tuner`, `playwright-e2e-and-openapi-contract-suite`).
+    *   Added `npm run package:skills` to validate and package 10 POSIX `.zip` files into `dist-agensi/` alongside `AGENSI-LISTING-MANIFEST.md` (with Indonesia Zoneless USDC Solana payout SOP), and `npm run audit` for automated quality and Antislop checks.
+*   **2026 Frontier Model Alignment:** Standardized presets across Gemini 4 (`Carbon`, `Argon`, `Hydrogen`), OpenAI GPT-6 (`Sol`, `Astra`, `Terra`, `Luna`), and Claude 5.5 (`Sonnet 5.5`, `Opus 5.5`, `Fable 5.2`) while removing defunct legacy models.
+
+---
 ## V7.2.0 (Agent Skill SKILL.md Builder, Agensi.io Ready & 400 Master Frameworks)
 *   **Agent Skill `SKILL.md` Preview & Export (`services/agentSkillService.ts`, `components/AgentSkillViewer.tsx`, `config/agensiConfig.ts`):**
     *   **New `SKILL.md` Preview Tab:** Added a fourth `SKILL.md` view mode alongside *Structured*, *Plain Text*, and *JSON* in both Studio Output Card and Fullscreen Review Modal.

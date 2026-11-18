@@ -1,5 +1,18 @@
 # Changelog - PromptMatrix 2.0
 
+## [7.2.1] - 2026-11-18
+### Ekosistem Monetisasi Agensi.io (Model Hibrida), 10 Paket Skill `.zip` & Pabrik Ekspor 1-Klik
+- **Etalase Afiliasi Publik (`components/Header.tsx`, `components/TemplateGallery.tsx`, `components/AgensiSkillPromoCard.tsx`, `components/AgensiCatalogModal.tsx`)**:
+  - Menambahkan tombol publik **Skills (`10`)** di Header, strip katalog di Galeri, dan kartu promosi kontekstual per kategori di Studio tanpa membuka unduhan `.zip` gratis untuk pengunjung publik.
+  - Menyediakan modal katalog interaktif dengan filter (*All*, *Free ($0)*, *Paid Flagship*), rincian isi paket, dukungan 27 runtime agen, dan CTA afiliasi Agensi.io yang dinamis melalui `buildAgensiPackCtaUrl`.
+- **Pabrik `.zip` 1-Klik & Generator Listing Copy di Mode Kreator 9-Tap (`services/skillZipService.ts`, `components/AgentSkillViewer.tsx`, `components/AISettingsModal.tsx`)**:
+  - Menambahkan pembungkus arsip ZIP murni TypeScript (CRC-32 + path POSIX `/`) di browser untuk mengekspor `<slug>.zip` berisi `SKILL.md` di root, `references/framework-guide.md`, `templates/sample-input.json`, dan `scripts/validate-output.mjs`.
+  - Menambahkan generator *Salin Listing Copy* (`Agensi.io/sell`) serta form override `affiliateUrl`, `creatorStoreUrl`, dan `affiliateRefCode` berbasis `localStorage` (`pm_agensi_urls`) di `AISettingsModal`.
+- **Ekspansi ke 10 Paket Open Agent Skills & CLI Packager (`agensi-skills/`, `scripts/package-agensi-skills.mjs`, `scripts/audit-frameworks.mjs`)**:
+  - Menyempurnakan `seo-geo-aeo-content-engine` (URL `https://prompt.sigitadi.id`) serta `multimodal-video-image-director` (penyelarasan model 2026 + skrip `validate-multimodal-params.mjs`).
+  - Menambahkan 4 paket Flagship baru: `owasp-api-and-cloud-security-auditor` (\$19.99), `multi-agent-swarm-and-subagent-orchestrator` (\$19.99), `postgres-prisma-zero-downtime-sql-tuner` (\$14.99), dan `playwright-e2e-and-openapi-contract-suite` (\$14.99).
+  - Menambahkan skrip `npm run package:skills` untuk membangun 10 arsip POSIX `.zip` di `dist-agensi/` + `AGENSI-LISTING-MANIFEST.md` (termasuk SOP pencairan Zoneless USDC Solana), serta `npm run audit` untuk verifikasi 400 formula, 10 skill, dan kepatuhan Antislop.
+
 ## [7.2.0] - 2026-11-17
 ### Agent Skill SKILL.md Builder, Agensi.io Integration & 400 Master Frameworks (Late-2026 Alignment)
 

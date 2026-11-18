@@ -1,0 +1,156 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PromptMatrix Workspace API",
+    "version": "1.0.0",
+    "description": "Typed REST API contract stub for health checks and workspace item management."
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com",
+      "description": "Production API gateway"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "getHealthStatus",
+        "summary": "Return service readiness status",
+        "responses": {
+          "200": {
+            "description": "Service is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/items": {
+      "get": {
+        "operationId": "listWorkspaceItems",
+        "summary": "List workspace items with cursor pagination",
+        "responses": {
+          "200": {
+            "description": "Paginated list of workspace items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemListResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid authentication token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createWorkspaceItem",
+        "summary": "Create a new workspace item",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateItemInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Workspace item created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HealthStatus": {
+        "type": "object",
+        "required": ["ok", "version"],
+        "properties": {
+          "ok": { "type": "boolean" },
+          "version": { "type": "string" }
+        }
+      },
+      "CreateItemInput": {
+        "type": "object",
+        "required": ["title"],
+        "additionalProperties": false,
+        "properties": {
+          "title": { "type": "string", "minLength": 2, "maxLength": 120 }
+        }
+      },
+      "Item": {
+        "type": "object",
+        "required": ["id", "title", "createdAt"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "title": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "ItemListResponse": {
+        "type": "object",
+        "required": ["items", "nextCursor"],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Item" }
+          },
+          "nextCursor": { "type": ["string", "null"] }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["code", "message"],
+        "properties": {
+          "code": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  }
+}

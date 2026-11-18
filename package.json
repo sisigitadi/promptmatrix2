@@ -12,6 +12,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "audit": "node scripts/audit-frameworks.mjs",
+    "package:skills": "node scripts/package-agensi-skills.mjs",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },

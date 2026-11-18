@@ -4,8 +4,18 @@
 Dokumen ini mencatat perubahan teknis detail untuk setiap versi PromptMatrix.
 
 ---
-## [V7.2.1] - 2026-11-17
-### Penyelarasan Model Frontier 2026, Pembersihan Model Defunct & Perbaikan Tata Letak Responsif
+## [V7.2.1] - 2026-11-18
+### Ekosistem Monetisasi Agensi.io (Model Hibrida), 10 Paket Skill `.zip` & Pabrik Ekspor Browser
+- **Etalase Afiliasi Publik (`components/Header.tsx`, `components/TemplateGallery.tsx`, `components/AgensiSkillPromoCard.tsx`, `components/AgensiCatalogModal.tsx`)**:
+  - Menambahkan tombol publik **Skills (`10`)** di Header, banner katalog di Galeri, kartu rekomendasi kontekstual per kategori di Studio, serta modal katalog 10 paket dengan filter *All / Free ($0) / Paid Flagship* tanpa mengekspos unduhan `.zip` gratis ke pengunjung publik.
+- **Pabrik `.zip` 1-Klik & Generator Listing Copy (`services/skillZipService.ts`, `components/AgentSkillViewer.tsx`, `components/AISettingsModal.tsx`, `config/agensiConfig.ts`)**:
+  - Menambahkan generator `.zip` POSIX bebas dependensi di browser (`SKILL.md` di root, `references/framework-guide.md`, `templates/sample-input.json`, `scripts/validate-output.mjs`), tombol **Salin Listing Copy** untuk form `Agensi.io/sell`, serta form override URL afiliasi/toko berbasis `localStorage` (`pm_agensi_urls`).
+- **10 Paket Agent Skills & CLI Packager (`agensi-skills/`, `scripts/package-agensi-skills.mjs`, `scripts/audit-frameworks.mjs`)**:
+  - Menyempurnakan `multimodal-video-image-director` (validator `validate-multimodal-params.mjs` + penyelarasan model 2026) dan `seo-geo-aeo-content-engine` (`https://prompt.sigitadi.id`).
+  - Menambahkan 4 paket Flagship baru: `owasp-api-and-cloud-security-auditor`, `multi-agent-swarm-and-subagent-orchestrator`, `postgres-prisma-zero-downtime-sql-tuner`, dan `playwright-e2e-and-openapi-contract-suite`.
+  - Menambahkan perintah `npm run package:skills` dan `npm run audit` untuk menghasilkan 10 arsip POSIX `.zip` di `dist-agensi/` beserta `AGENSI-LISTING-MANIFEST.md` (SOP pencairan Zoneless USDC Solana untuk Indonesia).
+
+### Penyelarasan Model Frontier 2026, Pembersihan Model Defunct & Perbaikan Tata Letak Responsif (2026-11-17)
 - **Integrasi Model Frontier 2026 & Pembersihan Model Usang (`services/aiSettingsService.ts`, `services/universalAIService.ts`, `data/aiPlatforms.ts`, `components/AISettingsModal.tsx`)**:
   - **Google Gemini:** Mengintegrasikan model frontier aktif late-2026: `gemini-4-carbon` (default kognisi tertinggi), `gemini-4-argon` (multimodal & reasoning), `gemini-4-hydrogen` (ultra-ringan & latensi terendah), `gemini-3.8-flash`, `gemini-3.7-flash`, dan `gemini-3.5-flash-lite`. Memangkas model yang sudah tidak aktif (`gemini-2.0-flash`, `gemini-1.5-pro`, `gemini-1.5-flash`, `gemini-2.5-flash`).
   - **OpenAI:** Mengintegrasikan model frontier aktif late-2026: `gpt-6.1-sol` (default), `gpt-6-astra`, `gpt-6.1-terra`, `gpt-6.1-luna`, `gpt-5.2-codex`, dan `gpt-5`. Menghapus total model deprecated/defunct (`gpt-4o`, `gpt-4o-mini`, `gpt-4.5-preview`, `o3`, `o4-mini`).

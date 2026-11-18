@@ -1,6 +1,7 @@
 import React from 'react';
 import { getStoredAISettings, AI_PROVIDER_PRESETS, isAIConfigured } from '../services/aiSettingsService';
 import { useLanguage } from '../contexts/LanguageContext';
+import { AGENSI_CONFIG } from '../config/agensiConfig';
 
 interface HeaderProps {
   onLogoClick?: () => void;
@@ -8,6 +9,7 @@ interface HeaderProps {
   onShowStash: () => void;
   onOpenApiKeyModal: () => void;
   onOpenUploadUpgrade?: () => void;
+  onOpenAgensiCatalog?: () => void;
   savedPromptsCount: number;
   isLightTheme: boolean;
   onToggleTheme: () => void;
@@ -22,6 +24,7 @@ const Header: React.FC<HeaderProps> = ({
   onShowStash,
   onOpenApiKeyModal,
   onOpenUploadUpgrade,
+  onOpenAgensiCatalog,
   savedPromptsCount,
   activeMode = 'gallery',
   onSelectMode = () => {},
@@ -197,6 +200,38 @@ const Header: React.FC<HeaderProps> = ({
               </svg>
               <span className="hidden md:inline font-bold text-[11px] sm:text-xs">
                 {language === 'id' ? 'Pasang' : 'Install'}
+              </span>
+            </button>
+          )}
+
+          {/* Public Agensi.io Agent Skills Catalog Button (Visible to all visitors) */}
+          {onOpenAgensiCatalog && (
+            <button
+              type="button"
+              onClick={onOpenAgensiCatalog}
+              className="h-8 px-2 sm:h-9 sm:px-3 rounded-xl text-xs font-semibold bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-cyan-500/60 text-slate-200 hover:text-cyan-300 transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+              title={`${t('header_skills_btn')} (${AGENSI_CONFIG.bundledSkillPacks.length})`}
+              aria-label={`${t('header_skills_btn')} (${AGENSI_CONFIG.bundledSkillPacks.length})`}
+            >
+              <svg
+                className="w-3.5 h-3.5 text-cyan-400 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                />
+              </svg>
+              <span className="hidden sm:inline font-semibold text-[11px] sm:text-xs whitespace-nowrap">
+                {t('header_skills_btn')}
+              </span>
+              <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-cyan-500/15 text-cyan-300 font-semibold border border-cyan-500/25">
+                {AGENSI_CONFIG.bundledSkillPacks.length}
               </span>
             </button>
           )}

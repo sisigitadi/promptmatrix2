@@ -1,0 +1,86 @@
+{
+  "contractVersion": "1.0.0",
+  "swarmId": "feature-api-hardening",
+  "goal": "Implement typed API validation, security tests, and deployment verification without overlapping file edits.",
+  "topology": "coordinator-worker-verifier",
+  "coordinator": {
+    "agentName": "coordinator",
+    "ownedPaths": [
+      "src/index.ts",
+      "package.json"
+    ]
+  },
+  "mergePolicy": {
+    "requireVerification": true,
+    "conflictStrategy": "fail-fast"
+  },
+  "tasks": [
+    {
+      "id": "task-schema",
+      "agentName": "schema-author",
+      "role": "author",
+      "workspaceMode": "inherit",
+      "dependsOn": [],
+      "ownedPaths": [
+        "src/schemas/"
+      ],
+      "forbiddenPaths": [
+        "src/routes/",
+        "tests/"
+      ],
+      "acceptanceCriteria": [
+        "Create strict request and response schemas with zero any types",
+        "Export schema types from src/schemas/api.ts"
+      ],
+      "handoffTo": "route-author",
+      "maxRetries": 2,
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "task-routes",
+      "agentName": "route-author",
+      "role": "author",
+      "workspaceMode": "inherit",
+      "dependsOn": [
+        "task-schema"
+      ],
+      "ownedPaths": [
+        "src/routes/"
+      ],
+      "forbiddenPaths": [
+        "src/schemas/",
+        "tests/"
+      ],
+      "acceptanceCriteria": [
+        "Wire schema validation into all route handlers",
+        "Return typed discriminated error responses"
+      ],
+      "handoffTo": "suite-verifier",
+      "maxRetries": 2,
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "task-verify",
+      "agentName": "suite-verifier",
+      "role": "verifier",
+      "workspaceMode": "inherit",
+      "dependsOn": [
+        "task-routes"
+      ],
+      "ownedPaths": [
+        "tests/"
+      ],
+      "forbiddenPaths": [
+        "src/schemas/",
+        "src/routes/"
+      ],
+      "acceptanceCriteria": [
+        "Add integration tests covering valid and invalid payloads",
+        "Run typecheck and test suite with exit code 0"
+      ],
+      "handoffTo": "coordinator",
+      "maxRetries": 1,
+      "timeoutSeconds": 240
+    }
+  ]
+}

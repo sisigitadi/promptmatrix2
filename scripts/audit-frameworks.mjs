@@ -5,7 +5,7 @@
  *   1. Validates exact 400 frameworks across 8 categories in data/frameworks.ts
  *   2. Checks zero duplicate framework names, valid toolType, non-empty ai_logic_description
  *   3. Verifies 100% localization coverage in services/localizationService.ts
- *   4. Validates all 6 Open Agent Skills in agensi-skills/<pkg>/SKILL.md
+ *   4. Validates all 10 Open Agent Skills in agensi-skills/<pkg>/SKILL.md
  *   5. Audits zero em-dashes ('\u2014'), banned buzzwords, and stale '360' counts
  */
 
@@ -260,8 +260,8 @@ async function main() {
     failures.push('Missing agensi-skills/ directory');
   } else {
     const skillDirs = fs.readdirSync(skillsRoot, { withFileTypes: true }).filter(d => d.isDirectory());
-    if (skillDirs.length !== 6) {
-      failures.push(`Expected 6 packages in agensi-skills/, found ${skillDirs.length}`);
+    if (skillDirs.length !== 10) {
+      failures.push(`Expected 10 packages in agensi-skills/, found ${skillDirs.length}`);
     }
     const nameRegex = /^[a-z0-9-]+$/;
     for (const dir of skillDirs) {
@@ -320,12 +320,17 @@ async function main() {
     path.join(ROOT, 'services', 'aiSettingsService.ts'),
     path.join(ROOT, 'services', 'localizationService.ts'),
     path.join(ROOT, 'services', 'sampleDataService.ts'),
+    path.join(ROOT, 'services', 'skillZipService.ts'),
     path.join(ROOT, 'services', 'visualBenchmarkService.ts'),
     path.join(ROOT, 'components', 'AgentSkillViewer.tsx'),
+    path.join(ROOT, 'components', 'AgensiCatalogModal.tsx'),
+    path.join(ROOT, 'components', 'AgensiSkillPromoCard.tsx'),
+    path.join(ROOT, 'components', 'AISettingsModal.tsx'),
     path.join(ROOT, 'components', 'CleanJsonViewer.tsx'),
     path.join(ROOT, 'components', 'TemplateGallery.tsx'),
     path.join(ROOT, 'data', 'aiPlatforms.ts'),
     path.join(ROOT, 'data', 'frameworks.ts'),
+    path.join(ROOT, 'scripts', 'package-agensi-skills.mjs'),
     path.join(ROOT, 'translations.ts'),
     path.join(ROOT, 'App.tsx'),
     path.join(ROOT, 'docs', 'AgensiMarketplacePlaybook.md'),
@@ -353,11 +358,17 @@ async function main() {
     'App.tsx',
     'components/TemplateGallery.tsx',
     'components/AgentSkillViewer.tsx',
+    'components/AgensiCatalogModal.tsx',
+    'components/AgensiSkillPromoCard.tsx',
+    'components/AISettingsModal.tsx',
     'components/CleanJsonViewer.tsx',
+    'services/skillZipService.ts',
+    'scripts/package-agensi-skills.mjs',
     'translations.ts',
     'index.html',
     'README.md',
     'prd.md',
+    'docs/AgensiMarketplacePlaybook.md',
     'public/manifest.json',
     'public/og-preview.svg',
     'CHANGELOG.md',
@@ -448,7 +459,7 @@ async function main() {
     for (const f of failures) console.error(`  [FAIL] ${f}`);
     process.exit(1);
   } else {
-    console.log('ALL CHECKS PASSED (400 frameworks, 8 categories, 100% localization, 6 valid SKILL.md packages, 0 em-dashes, 0 buzzwords, 0 stale 360 counts).');
+    console.log('ALL CHECKS PASSED (400 frameworks, 8 categories, 100% localization, 10 valid SKILL.md packages, 0 em-dashes, 0 buzzwords, 0 stale 360 counts).');
     process.exit(0);
   }
 }

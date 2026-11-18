@@ -1,0 +1,36 @@
+{
+  "auditVersion": "1.0.0",
+  "target": "example-service/src",
+  "auditedAt": "2026-11-18T00:00:00Z",
+  "summary": {
+    "critical": 0,
+    "high": 1,
+    "medium": 1,
+    "low": 0,
+    "status": "action-required"
+  },
+  "findings": [
+    {
+      "ruleId": "OWASP-API1-BOLA",
+      "owaspCategory": "API1:2023 Broken Object Level Authorization",
+      "severity": "high",
+      "file": "src/routes/invoices.ts",
+      "line": 42,
+      "title": "Invoice lookup queries by primary key without tenant scope",
+      "evidence": "prisma.invoice.findUnique({ where: { id: req.params.id } })",
+      "remediation": "Include tenantId from the verified auth session in the query predicate: where: { id: req.params.id, tenantId: session.tenantId }.",
+      "status": "open"
+    },
+    {
+      "ruleId": "OWASP-API8-CORS",
+      "owaspCategory": "API8:2023 Security Misconfiguration",
+      "severity": "medium",
+      "file": "src/server.ts",
+      "line": 19,
+      "title": "Overly permissive CORS origin configuration",
+      "evidence": "corsMiddleware configured with broad origin reflection",
+      "remediation": "Replace broad origin matching with an explicit allowlist of trusted application origins.",
+      "status": "open"
+    }
+  ]
+}

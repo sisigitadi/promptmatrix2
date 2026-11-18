@@ -1,204 +1,133 @@
 # Agensi.io Marketplace Playbook for PromptMatrix 2.0
 
-A practical commercialization guide for packaging, pricing, listing, and distributing the 6 PromptMatrix Open Agent Skills on [Agensi.io](https://agensi.io).
+A practical commercialization guide for packaging, pricing, listing, and distributing the 10 PromptMatrix Open Agent Skills on [Agensi.io](https://agensi.io), paired with the Hybrid Public Storefront and 9-Tap Creator Studio inside `https://prompt.sigitadi.id`.
 
 ---
 
 ## 1. Economic Breakdown & Creator Revenue Model
 
-Agensi.io is a marketplace for portable Agent Skills (`SKILL.md` bundles) compatible with Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, and other Open Agent Skills runtimes.
+Agensi.io is a marketplace for portable Agent Skills (`SKILL.md` bundles) compatible with Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and 20+ other Open Agent Skills runtimes.
 
 | Term | Value | Operational Impact |
 | :--- | :--- | :--- |
-| **Listing Fee** | $0 (Free) | Zero upfront cost to publish all 6 packages. |
+| **Listing Fee** | $0 (Free) | Zero upfront cost to publish all 10 packages. |
 | **Exclusivity** | Non-exclusive | You retain full IP ownership and can distribute freely on GitHub, sigitadi.id, or PromptMatrix 2.0. |
 | **Standard Revenue Share** | **70% to creator** | Payment processing fees are absorbed by Agensi.io; buyers discovered organically via Agensi search yield 70% net. |
 | **Affiliate Signup Share** | **90% to creator** | When a new buyer registers through your PromptMatrix affiliate link and buys your skill, you keep 90%. |
 | **Cross-Marketplace Referral** | **20% commission (6 months)** | You earn 20% on any other creator's skills that your referred buyer purchases during their first 6 months. |
 
-### Illustrative Net Payout Math (Per Single Sale)
-
-The table below shows exact creator payouts from list price under standard vs. affiliate-referred sales (no conversion assumptions are implied):
+### Net Payout Math (Per Single Sale)
 
 | Tier | List Price (USD) | Standard 70% Net | Affiliate 90% Net |
 | :--- | :--- | :--- | :--- |
-| Lead Magnet (`prompt-matrix-prompt-architect`) | $0 (Free) | $0.00 | $0.00 (drives affiliate cookie & store follows) |
-| Focused Single Skill | $19.00 | $13.30 | $17.10 |
-| Technical / Security Skill | $29.00 | $20.30 | $26.10 |
-| Full Suite Bundle (All 5 Paid Skills) | $89.00 | $62.30 | $80.10 |
+| Lead Magnet (`prompt-matrix-prompt-architect`) | $0.00 (Free) | $0.00 | $0.00 (locks 6-month 20% affiliate cookie & store follows) |
+| Entry Flagship (`multimodal-video-image-director`) | $9.99 | $6.99 | $8.99 |
+| Content Engine (`seo-geo-aeo-content-engine`) | $11.99 | $8.39 | $10.79 |
+| UI & Copy Auditor (`antislop-ui-and-copy-auditor`) | $12.00 | $8.40 | $10.80 |
+| Core Engineering Flagships (4 packs) | $14.99 | $10.49 | $13.49 |
+| Security & Multi-Agent Pro Flagships (2 packs) | $19.99 | $13.99 | $17.99 |
 
 ---
 
-## 2. Recommended Pricing & Funnel Architecture
+## 2. Catalog & Pricing Architecture (10 Verified Packages)
 
-Use a two-step value ladder that pairs PromptMatrix 2.0 (free browser studio) with Agensi.io downloadable workflows:
+All 10 skill directories live in `agensi-skills/` and ship with `SKILL.md`, deep `references/`, runnable offline `scripts/*.mjs` validators, and drop-in `templates/` where applicable.
 
-1. **Free Lead Magnet ($0): `prompt-matrix-prompt-architect`**
-   - Purpose: Lower friction to zero for developers discovering PromptMatrix on Agensi.io or installing from GitHub. Includes a working Node.js JSON prompt validator (`validate-json-prompt.mjs`) so buyers verify craft quality immediately.
-2. **Entry Flagship ($19 each): `antislop-ui-and-copy-auditor` & `multimodal-video-image-director`**
-   - Purpose: High-demand workflows for solo builders, designers, and content teams who want immediate automated copy/UI linting or late-2026 multimodal shot syntax.
-3. **Core Engineering Flagships ($29 each): `fullstack-ts-nextjs-architect`, `mcp-server-production-builder`, `seo-geo-aeo-content-engine`**
-   - Purpose: Production engineering playbooks bundled with runnable Node.js verification scripts (`check-strict-ts.mjs`, `validate-mcp-schema.mjs`, `validate-jsonld.mjs`) that teams drop directly into CI or pre-commit hooks.
-4. **PromptMatrix Pro Skill Pack Bundle ($89, vs. $125 individual total)**
-   - Purpose: Increases average order value by bundling all 5 paid skills at a ~29% bundle discount while keeping the lead magnet free.
-
----
-
-## 3. Ready-to-Copy Agensi.io Listing Copy
-
-All copy below avoids hype adjectives and states exact deliverables verified in `agensi-skills/`.
-
-### Skill 1 (Free Lead Magnet): `prompt-matrix-prompt-architect`
-
-- **Title:** PromptMatrix Prompt Architect (CO-STAR, RTF, GCC & JSON Contracts)
-- **Tagline:** Structure deterministic agent prompts with RFC 8259 JSON contracts and a zero-width Unicode validator.
-- **SEO Keywords:** `prompt engineering`, `CO-STAR framework`, `RFC 8259 JSON prompt`, `few-shot prompting`, `Claude Code skill`, `Cursor skill`, `PromptMatrix`
-- **Description:**
-  Turn ambiguous instructions into deterministic prompt specifications across five structures: RTF, CO-STAR, GCC, Few-Shot calibration, and strict RFC 8259 JSON output contracts. Includes a task-to-framework decision table, untrusted input isolation patterns, and a dependency-free Node.js script that catches JSON parse errors, BOM headers, and hidden zero-width Unicode characters before deployment.
-- **What's Included:**
-  - `SKILL.md`: Complete framework selection matrix and 4-step specification builder.
-  - `references/frameworks-cheatsheet.md`: Copy-ready templates for RTF, CO-STAR, GCC, Few-Shot, and JSON Schema contracts.
-  - `scripts/validate-json-prompt.mjs`: CLI validator checking RFC 8259 syntax, hidden zero-width characters, and `--strict-schema` / `--no-placeholders` flags.
-
----
-
-### Skill 2 (Paid Flagship #1 - $29): `fullstack-ts-nextjs-architect`
-
-- **Title:** Fullstack TypeScript & Next.js App Router Architect
-- **Tagline:** Enforce zero-any TypeScript, Zod API contracts, Server/Client boundaries, and safe SQL migrations.
-- **SEO Keywords:** `Next.js App Router`, `strict TypeScript`, `zero any`, `Zod API contract`, `PostgreSQL zero-downtime migration`, `Server Actions`
-- **Description:**
-  A production architecture workflow for Next.js App Router codebases. Guides coding agents on keeping database clients and secrets inside Server Components, typing Server Actions with discriminated `ActionResult<T>` unions, eliminating `any` escapes, and executing expand-and-contract PostgreSQL migrations without table locks. Ships with a runnable strict-TypeScript scanner for CI and local pre-commit checks.
-- **What's Included:**
-  - `SKILL.md`: Step-by-step App Router boundary rules, Zod contract pattern, and 4-phase migration workflow.
-  - `references/architecture-checklist.md`: Strict `tsconfig.json` baseline, `any` replacement table, and PostgreSQL lock safety gates.
-  - `scripts/check-strict-ts.mjs`: Scans `.ts` and `.tsx` files for `: any`, `any[]`, `<any>`, `as any`, `@ts-ignore`, and `@ts-nocheck`.
+1. **`prompt-matrix-prompt-architect` ($0 Free - Lead Magnet):**
+   - Deliverables: `SKILL.md`, `references/frameworks-cheatsheet.md`, `scripts/validate-json-prompt.mjs`
+   - Purpose: Zero-friction onboarding for developers and PromptMatrix visitors; establishes creator trust and activates the 6-month 20% affiliate cookie on signup.
+2. **`multimodal-video-image-director` ($9.99 - Flagship):**
+   - Deliverables: `SKILL.md`, `references/model-syntax-matrix.md`, `scripts/validate-multimodal-params.mjs`
+   - Purpose: Model-native prompt compiler for Midjourney v8.2, FLUX.3 / FLUX.2, Google Veo 3.1, Kling 3.0, Runway Gen-4.5, and Suno v6 with offline parameter validation.
+3. **`seo-geo-aeo-content-engine` ($11.99 - Flagship):**
+   - Deliverables: `SKILL.md`, `references/schema-jsonld-templates.md`, `scripts/validate-jsonld.mjs`
+   - Purpose: Evidence-first SEO pillar pages, AI synthesis citation blocks (GEO), AEO 40-60 word direct answers, and Schema.org JSON-LD validation.
+4. **`antislop-ui-and-copy-auditor` ($12.00 - Flagship):**
+   - Deliverables: `SKILL.md`, `references/contrast-and-copy-rules.md`, `scripts/audit-slop.mjs`
+   - Purpose: Audits WCAG AA dark/light contrast, 375px mobile reflow, keyboard focus rings, `U+2014` em-dashes, and banned marketing buzzwords.
+5. **`fullstack-ts-nextjs-architect` ($14.99 - Flagship):**
+   - Deliverables: `SKILL.md`, `references/architecture-checklist.md`, `scripts/check-strict-ts.mjs`
+   - Purpose: Enforces Next.js App Router server/client boundaries, zero-`any` TypeScript, Zod API contracts, and lock-safe SQL migrations.
+6. **`mcp-server-production-builder` ($14.99 - Flagship):**
+   - Deliverables: `SKILL.md`, `references/mcp-transport-and-security.md`, `scripts/validate-mcp-schema.mjs`
+   - Purpose: Hardened Model Context Protocol server design for `stdio` and Streamable HTTP transports with strict Zod/JSON Schemas and secret redaction.
+7. **`postgres-prisma-zero-downtime-sql-tuner` ($14.99 - Flagship):**
+   - Deliverables: `SKILL.md`, `references/rls-and-index-playbook.md`, `templates/zero-downtime-migration.sql`, `scripts/lint-sql-migrations.mjs`
+   - Purpose: Lock-safe PostgreSQL and Prisma migrations, `CONCURRENTLY` index enforcement, and Row-Level Security (RLS) policy auditing.
+8. **`playwright-e2e-and-openapi-contract-suite` ($14.99 - Flagship):**
+   - Deliverables: `SKILL.md`, `references/e2e-and-api-contract-matrix.md`, `templates/openapi-contract-stub.json`, `scripts/validate-openapi-and-e2e.mjs`
+   - Purpose: Flake-free Playwright E2E testing (flagging `waitForTimeout` anti-patterns) paired with OpenAPI 3.x schema contract validation.
+9. **`owasp-api-and-cloud-security-auditor` ($19.99 - Flagship):**
+   - Deliverables: `SKILL.md`, `references/owasp-cloud-security-checklist.md`, `templates/security-audit-findings.json`, `scripts/scan-security-risks.mjs`
+   - Purpose: Static security risk scanner for hardcoded API keys, dynamic `eval`/`Function`, wildcard CORS, unsafe HTML sinks, and insecure TLS flags.
+10. **`multi-agent-swarm-and-subagent-orchestrator` ($19.99 - Flagship):**
+    - Deliverables: `SKILL.md`, `references/subagent-handoff-patterns.md`, `templates/swarm-task-contract.json`, `scripts/validate-agent-workspace.mjs`
+    - Purpose: Parallel subagent delegation, strict file ownership boundaries, JSON handoff contracts, and `AGENTS.md`/`SKILL.md` workspace verification.
 
 ---
 
-### Skill 3 (Paid Flagship #2 - $29): `mcp-server-production-builder`
+## 3. Packaging Requirements & Automated CLI Workflow
 
-- **Title:** MCP Server Production Builder (Zod Contracts, Transports & Security)
-- **Tagline:** Design Model Context Protocol servers with strict JSON Schemas, Streamable HTTP, and secret redaction.
-- **SEO Keywords:** `Model Context Protocol`, `MCP server`, `Streamable HTTP`, `stdio transport`, `MCP tool schema`, `MCP security`
-- **Description:**
-  Build security-hardened Model Context Protocol servers in TypeScript or Python. Covers verb-first tool naming, behavioral annotations (`readOnlyHint`, `destructiveHint`), keeping `stdio` stdout reserved strictly for JSON-RPC frames, securing remote Streamable HTTP endpoints against DNS rebinding and SSRF, and redacting API tokens from error payloads. Includes a schema validator for `tools/list` manifests.
-- **What's Included:**
-  - `SKILL.md`: Tool contract design, transport isolation rules, and path/command injection defenses.
-  - `references/mcp-transport-and-security.md`: `stdio` vs. Streamable HTTP matrix, production tool JSON example, and secret redaction regex filter.
-  - `scripts/validate-mcp-schema.mjs`: Validates MCP tool definitions, `required` property mappings, `additionalProperties`, and secret-leak patterns.
+Agensi.io enforces strict archive rules during automated security scanning and manual review:
 
----
+- **One `.zip` per skill** with `SKILL.md` placed **directly at the archive root** (never nested inside `<slug>/SKILL.md`).
+- **POSIX forward-slash (`/`) paths** in all ZIP Local File Headers and Central Directory entries.
+- **Upload size limit:** Strictly `< 50 MB` per `.zip` archive.
+- **Clean security scan:** Bundled `scripts/*.mjs` files must pass `node --check` and contain zero network calls (`fetch(`, `http.`, `https.`), dynamic code execution (`eval(`, `new Function`), `process.env` reads, or `child_process` invocations.
 
-### Skill 4 (Paid Flagship #3 - $19): `antislop-ui-and-copy-auditor`
+> **Do NOT use Windows PowerShell `Compress-Archive`:** `Compress-Archive -Path "agensi-skills/$skill"` nests `<skill>/SKILL.md` inside a parent folder and writes Windows backslash (`\`) separators that fail Linux-based ZIP extractors.
 
-- **Title:** Antislop UI & Copy Auditor (WCAG AA, Focus Rings & Clean Prose)
-- **Tagline:** Audit light/dark theme contrast, mobile viewport reflow, keyboard focus, and synthetic copy patterns.
-- **SEO Keywords:** `UI accessibility audit`, `WCAG AA contrast`, `focus-visible`, `mobile reflow`, `anti-slop copywriting`, `React TSX linter`
-- **Description:**
-  Catch generic UI defects and synthetic prose before shipping. Audits `.tsx`, `.jsx`, `.html`, `.css`, and `.md` files for WCAG AA contrast failures across both dark and light modes, `375px` mobile horizontal overflow, `44px` touch targets, `outline: none` focus traps, `U+2014` em dashes, and banned hype buzzwords. Includes a fast zero-dependency Node.js scanner.
-- **What's Included:**
-  - `SKILL.md`: Automated scan workflow, dual-theme parity checks, and keyboard/mobile verification checklist.
-  - `references/contrast-and-copy-rules.md`: Dark/Light hex contrast pairs, `:focus-visible` patterns, and copy hygiene rules.
-  - `scripts/audit-slop.mjs`: CLI scanner flagging `U+2014` em dashes, banned buzzwords, and unguarded `outline: none` / `outline-none`.
+Use the built-in zero-dependency POSIX packager instead:
 
----
+```bash
+# 1. Validate all 10 packages, build dist-agensi/<slug>.zip, and generate upload copy
+npm run package:skills
 
-### Skill 5 (Paid Flagship #4 - $29): `seo-geo-aeo-content-engine`
-
-- **Title:** SEO, GEO & AEO Content Engine + JSON-LD Validator
-- **Tagline:** Write evidence-first pillar pages structured for search crawlers, AI citations, and Schema.org rich results.
-- **SEO Keywords:** `GEO optimization`, `Answer Engine Optimization`, `JSON-LD validator`, `FAQPage schema`, `HowTo schema`, `technical SEO`
-- **Description:**
-  Structure developer docs, comparison pages, and product pillars so search crawlers (SEO), AI synthesis engines (GEO), and featured-snippet extractors (AEO) parse accurate, attributable facts. Enforces 40 to 60 word direct answers, atomic verifiable claims, and copy-consistent Schema.org markup. Includes a Node.js validator that extracts and verifies JSON-LD blocks inside HTML and Markdown files.
-- **What's Included:**
-  - `SKILL.md`: AEO direct-answer structuring, GEO citation rules, and JSON-LD parity gates.
-  - `references/schema-jsonld-templates.md`: Valid `SoftwareApplication`, `FAQPage`, and `HowTo` JSON-LD templates.
-  - `scripts/validate-jsonld.mjs`: Extracts `<script type="application/ld+json">` and Markdown JSON-LD fences and verifies required Schema.org fields.
-
----
-
-### Skill 6 (Paid Flagship #5 - $19): `multimodal-video-image-director`
-
-- **Title:** Multimodal Video, Image & Audio Director (Late-2026 Model Syntax)
-- **Tagline:** Compile model-native prompts for Midjourney v7, FLUX.2 Kontext, Veo 3, Kling 2.1, Sora 2, and Suno v4.5/v5.
-- **SEO Keywords:** `Midjourney v7`, `FLUX.2 Kontext`, `Google Veo 3`, `Kling 2.1`, `OpenAI Sora 2`, `Suno v5`, `AI video director`
-- **Description:**
-  Replace generic quality-tag spam with model-native parameters, surgical edit invariance clauses, and shot-level camera choreography. Compiles structured prompts tailored to Midjourney v7 (`--oref`, `--sref`, `--raw`), FLUX.2 Kontext spatial editing, Google Veo 3 synchronized audio-video shots, Kling 2.1 Motion Brush masks, Sora 2 multi-shot continuity bibles, and Suno v4.5/v5 section metatags.
-- **What's Included:**
-  - `SKILL.md`: 4-step multimodal compiler covering stills, precision edits, video shot sheets, and audio arrangements.
-  - `references/model-syntax-matrix.md`: Parameter flags, aspect ratios, Veo 3 / Kling 2.1 prompt skeletons, and Suno style header formulas.
-
----
-
-### Bundle Option ($89): `promptmatrix-complete-agent-bundle`
-
-- **Title:** PromptMatrix Complete Agent Skill Suite (5 Flagship Skills)
-- **Tagline:** Fullstack TypeScript, MCP security, Antislop UI/Copy, SEO/GEO/AEO JSON-LD, and Multimodal Shot Director in one pack.
-- **Description:**
-  Combines all five paid PromptMatrix skills plus four runnable Node.js verification scripts (`check-strict-ts.mjs`, `validate-mcp-schema.mjs`, `audit-slop.mjs`, `validate-jsonld.mjs`). Built for solo founders, fullstack engineers, and technical content teams running Claude Code, Cursor, GitHub Copilot, Gemini CLI, or Windsurf.
-
----
-
-## 4. Packaging, Upload & Affiliate Activation Checklist
-
-Follow these steps in order when publishing to Agensi.io and wiring PromptMatrix 2.0.
-
-### Step A: Pre-Package Verification (Run Locally)
-
-Verify every `SKILL.md` frontmatter and syntax-check every Node.js script before zipping:
-
-```powershell
-# 1. Syntax-check all bundled .mjs scripts
-Get-ChildItem -Path agensi-skills -Recurse -Filter *.mjs | ForEach-Object {
-  node --check $_.FullName
-  if ($LASTEXITCODE -ne 0) { throw "Syntax check failed: $($_.FullName)" }
-}
-
-# 2. Run antislop audit across all skill markdown files
-node agensi-skills/antislop-ui-and-copy-auditor/scripts/audit-slop.mjs agensi-skills/
-
-# 3. Validate JSON-LD templates
-node agensi-skills/seo-geo-aeo-content-engine/scripts/validate-jsonld.mjs agensi-skills/seo-geo-aeo-content-engine/references/schema-jsonld-templates.md
+# 2. Run the full PromptMatrix verification audit (400 formulas, 10 skills, 0 em-dashes, 0 buzzwords)
+npm run audit
 ```
 
-### Step B: Create Clean Zip Archives (One Per Skill)
+`npm run package:skills` writes:
+- `dist-agensi/<slug>.zip` (10 verified archives with root `SKILL.md` and POSIX paths, git-ignored via `.gitignore`)
+- `dist-agensi/AGENSI-LISTING-MANIFEST.md` (complete upload checklist, Indonesia payout SOP, and ready-to-copy title/price/tagline/description/tags for all 10 skills)
 
-Each archive should place `SKILL.md`, `references/`, and `scripts/` cleanly inside the skill folder without `.DS_Store`, `__MACOSX`, or `node_modules`:
+---
 
-```powershell
-New-Item -ItemType Directory -Force -Path dist/agensi-zips | Out-Null
+## 4. Indonesia Payout Setup SOP (Zoneless USDC on Solana)
 
-$skills = @(
-  "prompt-matrix-prompt-architect",
-  "fullstack-ts-nextjs-architect",
-  "mcp-server-production-builder",
-  "antislop-ui-and-copy-auditor",
-  "seo-geo-aeo-content-engine",
-  "multimodal-video-image-director"
-)
+### Why Zoneless Instead of Stripe Connect
+Agensi.io restricts Stripe Connect instant payouts to the US, Canada, UK, EEA, and Switzerland. For creators based in **Indonesia**, Agensi.io routes creator earnings through **Zoneless (USDC on Solana)**:
+- **Minimum payout threshold:** `$3.50 USD`
+- **Settlement window:** Within **72 hours** of sale (Agensi acts as Merchant of Record and absorbs buyer card/Stripe processing fees).
+- **Network:** USDC (SPL token) on the Solana blockchain.
 
-foreach ($skill in $skills) {
-  $dest = "dist/agensi-zips/$skill-v1.0.0.zip"
-  if (Test-Path $dest) { Remove-Item $dest }
-  Compress-Archive -Path "agensi-skills/$skill" -DestinationPath $dest -CompressionLevel Optimal
-  Write-Host "Packaged $dest"
-}
-```
+### Two-Stage Cashout Architecture (Zero Lost Funds)
+> **Critical Exchange Rule:** Never paste a centralized exchange (CEX) deposit address directly into Zoneless. Exchanges rotate deposit addresses, occasionally pause SPL-USDC maintenance, and may reject smart-contract payouts. Sending SPL-USDC to an ERC-20 or BEP-20 address results in permanent fund loss.
 
-### Step C: Agensi.io Creator Upload Checklist
+1. **Stage 1: Self-Custody Solana Vault (Phantom or Solflare)**
+   - Install **Phantom** (`phantom.app`) or **Solflare** (`solflare.com`) and record your recovery phrase offline.
+   - Register your Phantom/Solflare Solana address inside **Agensi.io Creator Studio -> Payouts (Zoneless)**.
+   - Keep `~0.05 SOL` in the wallet to cover Solana network fees (`< $0.005` per transfer).
+2. **Stage 2A: Direct SPL-USDC Off-Ramp (Fastest via Pintu)**
+   - Open **Pintu** -> **Deposit USDC** -> explicitly select the **Solana (SPL)** network.
+   - Transfer USDC from Phantom/Solflare to Pintu's Solana USDC address.
+   - Convert USDC to IDR and withdraw to BCA, Mandiri, BRI, or Bank Jago.
+3. **Stage 2B: Universal Fallback via Jupiter -> SOL (Pintu, Tokocrypto, Indodax)**
+   - If SPL-USDC deposits are temporarily paused on your exchange, open **Jupiter (`jup.ag`)** inside Phantom/Solflare and swap **USDC -> SOL**.
+   - Send **SOL** via the native Solana network to **Pintu**, **Tokocrypto**, or **Indodax** (all major Indonesian Bappebti/OJK-registered exchanges natively support SOL deposits).
+   - Sell SOL to IDR on the spot market and withdraw to your Indonesian bank account.
 
-1. Sign in to your creator dashboard at `https://agensi.io`.
-2. Publish `prompt-matrix-prompt-architect` first at **$0 (Free)** to establish your creator store profile and verify archive validation passes cleanly.
-3. Upload the 5 paid skills using the Title, Tagline, SEO Keywords, and Description blocks from Section 3.
-4. Create the **$89 Complete Suite Bundle** grouping all 5 paid skills.
-5. Copy your official **Creator Store URL** and **Affiliate Referral Link** from the Agensi.io creator dashboard.
+---
 
-### Step D: Activate Affiliate Links in PromptMatrix (`config/agensiConfig.ts`)
+## 5. Hybrid Storefront & 9-Tap Creator Factory Architecture
 
-PromptMatrix 2.0 ships with `config/agensiConfig.ts` containing `AGENSI_CONFIG` with empty placeholder strings (`affiliateUrl: ''`, `creatorStoreUrl: ''`) so no unverified URLs are ever exposed prematurely.
+PromptMatrix 2.0 separates **Public Affiliate Conversion** from **Private Creator Packaging Tools**:
 
-1. Open `config/agensiConfig.ts`.
-2. Set `creatorStoreUrl` to your published Agensi.io creator store URL.
-3. Set `affiliateUrl` to your Agensi.io affiliate referral URL so new users clicking from PromptMatrix's `SKILL.md` preview tab trigger the **90% revenue share** and **20% 6-month cross-marketplace commission**.
-4. Run `npm run build` to verify TypeScript compilation passes with zero errors, then deploy with `npm run deploy`.
+### Public Storefront (Visible to All Visitors)
+- **Header (`Skills 10` button)** and **Gallery Catalog Banner**: Open `AgensiCatalogModal` showcasing all 10 official skill packs, filters (`All` / `Free` / `Paid`), price badges, included files, and 27 supported agent runtimes.
+- **Studio Contextual Promo (`AgensiSkillPromoCard`)**: Automatically matches the active framework category to relevant Flagship skills plus the `$0 Free` lead magnet (`prompt-matrix-prompt-architect`).
+- **Affiliate Gate Protection:** Public visitors never see raw `.zip` export buttons in the catalog modal; instead, CTAs route to your configured Agensi.io affiliate/store URL (`?ref=...`) to capture the **90% creator share** and **20% 6-month cross-marketplace commission**.
+
+### Creator Mode (Unlocked via 9-Tap Header Logo)
+- **Studio `SKILL.md` Tab (`AgentSkillViewer`):** Unlocks 1-click browser `.zip` bundle export (`services/skillZipService.ts`, packing `SKILL.md`, `references/framework-guide.md`, `templates/sample-input.json`, and `scripts/validate-output.mjs`) plus **Copy Listing Copy (`Agensi.io/sell`)**.
+- **Creator Settings (`AISettingsModal` -> `Paket Skill` tab):** Configure live `affiliateUrl`, `creatorStoreUrl`, and `affiliateRefCode` overrides persisted in `localStorage` (`pm_agensi_urls`), or hardcode permanent production URLs in `config/agensiConfig.ts` before running `npm run build` and `npm run deploy`.

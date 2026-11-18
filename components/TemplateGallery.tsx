@@ -8,6 +8,7 @@ import {
   translateFrameworkDescription 
 } from '../services/localizationService';
 import { createFormulaShareUrl } from '../services/urlHelper';
+import { AGENSI_CONFIG } from '../config/agensiConfig';
 
 // Master & Popular Frameworks for Quick Guidance & Badging
 export const POPULAR_FRAMEWORK_NAMES = new Set([
@@ -40,6 +41,7 @@ interface TemplateGalleryProps {
   frameworksData: PromptFrameworksType;
   onSelectFramework: (category: string, subcategory: string, frameworkName: string, framework: Framework) => void;
   onOpenBlankCanvas: () => void;
+  onOpenAgensiCatalog?: () => void;
   selectedFrameworkName: string | null;
   activeCategory?: string;
   onCategoryChange?: (category: string) => void;
@@ -167,6 +169,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
   frameworksData,
   onSelectFramework,
   onOpenBlankCanvas,
+  onOpenAgensiCatalog,
   selectedFrameworkName,
   activeCategory,
   onCategoryChange,
@@ -567,6 +570,56 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
         </button>
       </section>
 
+      {/* Public Official Agent Skills Catalog Strip */}
+      {onOpenAgensiCatalog && (
+        <section
+          aria-label={t('catalog_title')}
+          className="rounded-2xl border border-cyan-500/35 bg-[#09131f] p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md"
+        >
+          <div className="flex items-start sm:items-center gap-3 min-w-0">
+            <div
+              className="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/35 text-cyan-300 flex items-center justify-center shrink-0"
+              aria-hidden="true"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                />
+              </svg>
+            </div>
+            <div className="min-w-0 space-y-0.5">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+                  {t('promo_card_badge')}
+                </span>
+                <span className="text-[11px] font-mono text-slate-400">
+                  {AGENSI_CONFIG.bundledSkillPacks.length}{' '}
+                  {language === 'id' ? 'Paket Resmi' : 'Official Packs'} ·{' '}
+                  {AGENSI_CONFIG.supportedAgents.length}+{' '}
+                  {language === 'id' ? 'Agen AI' : 'AI Agents'}
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm font-semibold text-slate-100 font-sans">
+                {t('catalog_subtitle')}
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={onOpenAgensiCatalog}
+            className="w-full sm:w-auto min-h-[44px] px-4 py-2 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/45 hover:border-cyan-400 text-cyan-200 hover:text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09131f]"
+          >
+            <span>{t('promo_card_cta_catalog')}</span>
+            <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-cyan-500/20 text-cyan-200 border border-cyan-500/30">
+              {AGENSI_CONFIG.bundledSkillPacks.length}
+            </span>
+          </button>
+        </section>
+      )}
+
       {/* Category Grid Filter & Sort Selector */}
       <div id="template-category-section" className="space-y-3">
         <div className="flex items-center justify-between gap-2 flex-wrap">
@@ -585,7 +638,7 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 focus:border-emerald-500 focus:outline-none cursor-pointer"
+              className="bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 focus:border-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer"
             >
               <option value="default">{language === 'id' ? 'Default (Kategori)' : 'Default (Category)'}</option>
               <option value="popular">{language === 'id' ? '🔥 Populer Teratas' : '🔥 Popular First'}</option>

@@ -10,19 +10,24 @@
 ---
 
 # ==============================================================================
+
 # ZONA ATAS: BLUEPRINT AWAL (SISTEM & ARSITEKTUR)
+
 # ==============================================================================
 
 ## 1. Latar Belakang & Masalah (Problem Statement)
+
 1. **The Blank Canvas Problem:** Pengguna sering mengalami kebuntuan saat berhadapan dengan chatbox AI kosong, menghasilkan prompt yang ambigu, terlalu singkat, atau minim konteks.
 2. **Kualitas Output Rendah:** Tanpa persona yang spesifik, batasan format, dan variabel konteks terstruktur, model LLM cenderung berhalusinasi atau memberikan respon umum yang tidak dapat langsung dieksekusi.
 3. **Kompleksitas Multi-Modal & Multi-Platform:** Menulis prompt untuk Midjourney v7, FLUX.2, Suno v4.5/v5, Veo 3, Kling 2.1, Sora 2, atau DeepSeek-R1/V3 membutuhkan sintaks, parameter, dan formula yang sangat berbeda satu sama lain.
 4. **Isu Privasi Data:** Banyak generator prompt berbasis cloud menyimpan input dan ide pengguna di server pihak ketiga tanpa transparansi.
 
 ## 2. Visi Produk & Solusi Utama
+
 PromptMatrix 2.0 adalah platform **Guided AI Prompt Engine** berbasis client-side murni yang menyediakan **400 formula master** lintas 8 kategori dan 83 subkategori, memandu pengguna meracik instruksi berkualitas tinggi secara visual, terstruktur, dwibahasa (ID/EN), serta mengekspor definisi `SKILL.md` siap pakai untuk 27 runtime AI coding agent dan katalog Agensi.io.
 
 ## 3. Persona Pengguna & Peran Sistem
+
 - **Pemula / Casual:** Memanfaatkan fitur *1-Click Fill Sample* dan tombol *Quick Launch* untuk langsung belajar dan mencoba prompt ke ChatGPT/Claude/Gemini.
 - **Content Creator & Marketer:** Meracik formula AIDA, PAS, Hook-Story-Offer, GEO/AEO, Script Video TikTok/Reels, dan Copywriting iklan.
 - **Software Engineer & DevOps:** Menggunakan template arsitektur backend, TypeScript strict zero-any, MCP Server v2, refactoring, dan ekspor `SKILL.md` untuk Claude Code/Cursor/Windsurf/Antigravity.
@@ -30,6 +35,7 @@ PromptMatrix 2.0 adalah platform **Guided AI Prompt Engine** berbasis client-sid
 - **Power User / AI Enthusiast:** Mengaktifkan fitur AI Pro via *9-Tap Logo Unlock*, menghubungkan API Key Gemini/Claude/OpenAI/DeepSeek/Ollama lokal untuk fitur *AI Suggest*, *AI Enhance*, dan *Quality Scoring*.
 
 ## 4. Alur Kerja Pengguna (User Journey / Flow)
+
 ```mermaid
 flowchart TD
     A[Akses prompt.sigitadi.id] --> B{Pilih Tampilan}
@@ -49,6 +55,7 @@ flowchart TD
 ```
 
 ## 5. Arsitektur Data & Skema Komponen
+
 - **Master Framework Structure (`data/frameworks.ts`):**
   - Deklaratif, 400 frameworks dalam format hierarkis: `Category -> Subcategory -> Framework` (8 kategori, 83 subkategori).
   - Mencakup formula reasoning modern (GPT-5, o3, o4-mini, Claude 4 / Sonnet 4.5, Gemini 3.7, DeepSeek R1/V3), multimodal generasi terbaru (Midjourney v7, FLUX.2 / Kontext, Veo 3, Kling 2.1, Sora 2, Suno v4.5/v5), serta agentic coding & workflow (`SKILL.md` builder, MCP Server v2, Claude Code Subagents & Hooks, Cursor & Windsurf Multi-Repo Rules).
@@ -62,6 +69,7 @@ flowchart TD
   - Dilengkapi sanitizer otomatis `sanitizePromptText` untuk mencegah kebocoran markdown fence (```markdown) dan bold asterisks (**) saat AI Enhance.
 
 ## 6. Antarmuka UI/UX (Human-Crafted Aesthetic)
+
 - **Tema & Warna:** Dark slate premium (`bg-[#090d16]` & `bg-slate-900`) dengan aksen emerald (`teal-500/emerald-400`) dan purple AI accents.
 - **Layout:**
   - *Galeri View*: Grid responsif kartu formula dengan visual badges, count pill, intent search tags, dan zero-emoji SVG icons (termasuk pada Stash modal).
@@ -70,6 +78,7 @@ flowchart TD
 - **Performa Bundling:** Vite code-splitting via `manualChunks` memecah bundle data (`data-frameworks`, `data-localization`, `vendor-react`) sehingga bundle utama berukuran ultra-ringan (~147 kB).
 
 ## 7. Rencana Pengujian & Kriteria Keberhasilan
+
 - Build tanpa error pada Vite + TypeScript strict mode (< 4 detik).
 - 100% dari 400 formula terkompilasi dengan bersih ke format `AI Logic: ...` dan variabel input, serta valid diekspor ke JSON RFC 8259 maupun `SKILL.md` Open Agent Skills.
 - Sinkronisasi dual-bahasa (ID <-> EN) konsisten di seluruh 400 framework dan ribuan entri label, opsi, serta placeholder tanpa kunci translasi yang hilang.
@@ -78,10 +87,13 @@ flowchart TD
 ---
 
 # ==============================================================================
+
 # ZONA BAWAH: LIVING CONTEXT (STATUS AKTIF & REGISTER TEKNOLOGI)
+
 # ==============================================================================
 
-### Status Sistem Terkini (v7.2.0 - Agent Skill SKILL.md Builder, Agensi.io Ready & 400 Master Formulas)
+### Status Sistem Terkini (v7.2.1 - Agensi.io Hybrid Monetization Engine, 10 Skill Packs & 400 Master Formulas)
+
 - **Framework Utama:** React 18.0.0 (Functional Components + Hooks)
 - **Bahasa & Compiler:** TypeScript 5.5.4 + Vite 5.4.19
 - **Styling Engine:** Tailwind CSS v4.1.10 + PostCSS 8
@@ -90,7 +102,7 @@ flowchart TD
 - **Hosting & CI/CD:** GitHub Actions -> GitHub Pages + Vercel / Netlify Rewrite Ready (`public/CNAME`, `public/_redirects`)
 - **Domain Resmi:** `https://prompt.sigitadi.id`
 - **Total Master Formulas:** 400 Formulas Terverifikasi di 8 Kategori & 83 Subkategori (100% Searchable, Localized Dua Arah ID <-> EN)
-- **Paket Agent Skills (`agensi-skills/`):** 6 Paket Open Agent Skills siap pakai & siap terbit ke Agensi.io (`antislop-ui-and-copy-auditor`, `fullstack-ts-nextjs-architect`, `mcp-server-production-builder`, `multimodal-video-image-director`, `prompt-matrix-prompt-architect`, `seo-geo-aeo-content-engine`)
+- **Paket Agent Skills (`agensi-skills/`):** 10 Paket Open Agent Skills siap pakai & siap kemas via `npm run package:skills` ke `dist-agensi/*.zip` + `AGENSI-LISTING-MANIFEST.md` (`prompt-matrix-prompt-architect` [$0 Free], `multimodal-video-image-director` [$9.99], `seo-geo-aeo-content-engine` [$11.99], `antislop-ui-and-copy-auditor` [$12.00], `fullstack-ts-nextjs-architect` [$14.99], `mcp-server-production-builder` [$14.99], `postgres-prisma-zero-downtime-sql-tuner` [$14.99], `playwright-e2e-and-openapi-contract-suite` [$14.99], `owasp-api-and-cloud-security-auditor` [$19.99], `multi-agent-swarm-and-subagent-orchestrator` [$19.99])
 - **Paket Fitur Lengkap Audit (v6.7.0 & v6.8.0):**
   - **A1. Pagination Batch 24:** Mengeliminasi 15-layar infinite scroll menjadi 3 layar awal + muat bertahap.
   - **A2. Mobile Portfolio Link + Logo SA:** Logo resmi SA (`/sa-logo.png`) selalu terlihat di header mobile & footer.
@@ -122,30 +134,38 @@ flowchart TD
   - **D28. Agent Skill SKILL.md Preview, Export & Agensi.io Integration (v7.2.0 - Gerbang Privat AI Pro):** Mode pratinjau keempat (`SKILL.md`) di Studio dan Modal Layar Penuh (`services/agentSkillService.ts`, `components/AgentSkillViewer.tsx`, `config/agensiConfig.ts`) yang digabung ke dalam gerbang `showAIFeatures` bersama Pengaturan Provider AI (`components/AISettingsModal.tsx`) agar tidak tampil di publik sebelum 9-tap logo unlock. Mengonversi formula aktif menjadi dokumen Open Agent Skills berfrontmatter YAML valid (`name <= 64` kebab-case, `description <= 1024`), dilengkapi badge validasi langsung, salin 1-klik, unduh `-SKILL.md`, dukungan 27 runtime agen, serta tab manajemen 6 bundel Agent Skills di `agensi-skills/`.
   - **D29. 400 Master Formulas Upgrade & Late-2026 Flagship Model Alignment (v7.2.0):** Ekspansi basis data dari 360 menjadi 400 formula master di 8 kategori dan 83 subkategori, audit & revisi 16 provider AI beserta model flagship akhir 2026 (`gemini-4-hydrogen`, `gemini-4-carbon`, `gemini-3.8-flash`, `gpt-6-astra`, `gpt-6.1-sol`, `claude-sonnet-5-5`, `claude-opus-5-5`, `claude-fable-5-2`, `deepseek-v4-pro`, `deepseek-flash`, `grok-4.7`, `grok-420-reasoning`, `command-a-plus-05-2026`, Llama 4 Maverick, Qwen 3.8, Gemma 4, Midjourney v8.2, FLUX.3/FLUX.2, Veo 3.1, Kling 3.0, Runway Gen-4.5, Suno v6), serta sinkronisasi penuh lokalisasi ID <-> EN, sample data, dan visual benchmark.
   - **D30. Pembersihan Model AI Defunct & Integrasi Model Frontier 2026 (v7.2.1):** Penyelarasan menyeluruh arsitektur model frontier aktif lintas seluruh provider: penempatan Google Gemini 4 Carbon (Heavyweight Frontier Reasoning) & Argon (Optimized Frontier Intelligence) di posisi utama bersama Hydrogen, penyelarasan OpenAI GPT-6 (Sol, Astra, Terra, Luna) & Anthropic Claude 5.5 (Sonnet 5.5, Opus 5.5, Fable 5.2), penghapusan model yang telah dimatikan/deprecated (Gemini 2.0 Flash, Gemini 1.5, GPT-4o, Claude 3 legacy), pembersihan tata letak footer responsif SKILL.md, eliminasi strict TypeScript TS2783/TS2688, serta penyempurnaan kartu OpenAI-Compatible di Pengaturan AI.
+  - **D31. Agensi.io Hybrid Monetization Engine, 1-Click Browser `.zip` Factory & 10 Packaged Skills (v7.2.1):** Pemisahan arsitektur menjadi Public Affiliate Storefront (`Header` tombol `Skills 10`, `TemplateGallery` banner katalog, `AgensiSkillPromoCard` kontekstual per kategori di Studio, dan `AgensiCatalogModal` dengan filter All/Free/Paid tanpa tombol unduh `.zip` publik) serta Private Creator Mode di balik *9-Tap Logo Unlock* (`AgentSkillViewer` dilengkapi 1-klik export `.zip` browser berbasis `services/skillZipService.ts` + generator *Copy Listing Copy* `Agensi.io/sell`, serta `AISettingsModal` tab Paket Skill untuk konfigurasi override URL afiliasi/toko di `localStorage`). Seluruh 10 bundel di `agensi-skills/` dilengkapi skrip validator offline (termasuk `validate-multimodal-params.mjs` dan 4 paket flagship baru), serta CLI zero-dependency `npm run package:skills` (`scripts/package-agensi-skills.mjs`) yang memvalidasi keamanan, menghasilkan 10 arsip POSIX `<slug>.zip` ber-`SKILL.md` di root (`< 50 MB`), dan menerbitkan `dist-agensi/AGENSI-LISTING-MANIFEST.md` lengkap dengan SOP payout Zoneless USDC Solana untuk Indonesia.
 
 ### Register Modul & Komponen Utama
+
 | Berkas / Direktori | Tanggung Jawab Teknis |
 | :--- | :--- |
-| `App.tsx` | State orchestrator utama (viewMode, formValues, stash CRUD & Export MD, toast, prompt compiler, 9-tap logo unlock, scroll-to-top FAB, `previewViewMode` structured/raw/json/skill dengan `skill` tersembunyi di publik, dan 34 Quick Launchers) |
-| `config/agensiConfig.ts` | Konfigurasi integrasi Agensi.io (URL marketplace, parameter komisi kreator/afiliasi, katalog 6 bundel `bundledSkillPacks`, dan daftar 27 runtime Open Agent Skills yang didukung) |
+| `App.tsx` | State orchestrator utama (viewMode, formValues, stash CRUD & Export MD, toast, prompt compiler, 9-tap logo unlock, scroll-to-top FAB, `previewViewMode` structured/raw/json/skill dengan `skill` tersembunyi di publik, integrasi `AgensiSkillPromoCard` & `AgensiCatalogModal`, dan 34 Quick Launchers) |
+| `config/agensiConfig.ts` | Konfigurasi integrasi Agensi.io (URL marketplace, parameter komisi kreator/afiliasi, katalog 10 bundel `bundledSkillPacks` beserta harga/kategori/file, helper `pm_agensi_urls`, `buildAgensiPackCtaUrl`, `getContextualSkillPacksForCategory`, dan daftar 27 runtime Open Agent Skills yang didukung) |
 | `services/agentSkillService.ts` | Service konversi state formula aktif menjadi spesifikasi Open Agent Skills (`AgentSkillSpec`), generator kebab-case `<= 64` char, validator frontmatter YAML, dan formatter `SKILL.md` |
-| `components/AgentSkillViewer.tsx` | Visualizer `SKILL.md` berpewarnaan sintaks YAML/Markdown, indikator validasi `name`/`description`, strip 27 agen didukung, tombol salin, unduh `-SKILL.md`, dan info kesiapan Agensi.io |
+| `services/skillZipService.ts` | Engine pembuat arsip ZIP murni TypeScript (CRC-32 + Store method 0 + POSIX paths) di browser untuk mengekspor paket `.zip` Agensi.io (`SKILL.md`, `references/framework-guide.md`, `templates/sample-input.json`, `scripts/validate-output.mjs`) dan generator Listing Copy Markdown siap tempel |
+| `components/AgentSkillViewer.tsx` | Visualizer `SKILL.md` berpewarnaan sintaks YAML/Markdown, indikator validasi `name`/`description`, strip 27 agen didukung, tombol unduh `.zip` Agensi.io, *Salin Listing Copy*, unduh `-SKILL.md`, dan info kesiapan Agensi.io |
+| `components/AgensiSkillPromoCard.tsx` | Kartu promosi kontekstual publik di Studio yang memetakan kategori formula aktif ke paket Flagship Agensi.io + lead magnet `$0 Free` dan tombol pembuka katalog |
+| `components/AgensiCatalogModal.tsx` | Modal katalog publik 10 paket Agent Skills dengan filter All/Free/Paid, badge harga, daftar file & 27 agen; rute afiliasi untuk pengunjung publik dan kontrol *Salin Listing Copy* saat Creator Mode aktif |
 | `components/CleanJsonViewer.tsx` | Komponen visualizer JSON interaktif dengan pewarnaan sintaks murni React JSX, nomor baris monospace, sub-format switch, dan tombol salin terintegrasi |
 | `services/jsonPromptService.ts` | Service pembuat dan sanitizer payload prompt JSON berstandar RFC 8259 dengan validasi internal nol decode error untuk Python, cURL, dan LLM API |
 | `components/VisualPromptPreview.tsx` | Komponen visual mockup & benchmark hasil prompt terkurasi untuk seluruh template dan lightbox zoom modal |
-| `components/TemplateGallery.tsx` | Galeri visual 400 kartu formula, pagination 24-batch, pencarian intent, category switcher, dan badge Populer |
+| `components/TemplateGallery.tsx` | Galeri visual 400 kartu formula, pagination 24-batch, pencarian intent, category switcher, banner katalog 10 Agent Skills, dan badge Populer |
 | `components/FrameworkPane.tsx` | Formulir interaktif dinamis, integrasi Mockup Visual & Contoh Hasil tepat di bawah judul & deskripsi, tombol *1-Click Isi Contoh Nyata*, AI suggestion per-field |
-| `components/Header.tsx` | Navigasi atas, logo tap trigger, portfolio link dengan logo SA (selalu terlihat di mobile & desktop), language switcher (ID/EN), theme switcher (Dark/Light) |
+| `components/Header.tsx` | Navigasi atas, logo tap trigger, tombol publik `Skills (10)` pembuka katalog Agensi.io, portfolio link dengan logo SA (selalu terlihat di mobile & desktop), language switcher (ID/EN), theme switcher (Dark/Light) |
 | `components/Footer.tsx` | Metadata, copyright Sigit Adi, link portfolio sigitadi.id dengan logo SA, kontak email & sosial |
-| `components/AISettingsModal.tsx` | Modal terpadu privat (hanya tampil saat `showAIFeatures` aktif): Tab Provider & Model AI (Gemini 4, Claude 5.5, GPT-6, DeepSeek V4/R1, xAI Grok 4.7, Cohere, HF Router, Ollama, Custom URL) + Tab Paket Skill (`SKILL.md` & 6 bundel `agensi-skills/`) |
+| `components/AISettingsModal.tsx` | Modal terpadu privat (hanya tampil saat `showAIFeatures` aktif): Tab Provider & Model AI (Gemini 4, Claude 5.5, GPT-6, DeepSeek V4/R1, xAI Grok 4.7, Cohere, HF Router, Ollama, Custom URL) + Tab Paket Skill (konfigurasi URL afiliasi/toko `pm_agensi_urls`, 10 bundel `agensi-skills/`, & salin Listing Copy) |
 | `services/visualBenchmarkService.ts` | Registry kurasi gambar benchmark gold-standard untuk 400 formula, deteksi rasio aspek prompt, sanitizer teks prompt untuk engine render publik |
 | `services/universalAIService.ts` | Dispatcher universal pemanggilan AI multi-provider dengan SSE stream parser, error handler, dan sanitizer markdown |
 | `services/aiSettingsService.ts` | Manajemen preset provider, model default late-2026, dan persistensi `localStorage` |
 | `services/localizationService.ts` | Basis data translasi 8.600+ entri & mapping bilingual ID <-> EN presisi (400 framework names, descriptions & AI logics) |
 | `services/sampleDataService.ts` | Data sample realistis untuk pengisian formulir otomatis 1-klik di seluruh 400 formula |
 | `data/frameworks.ts` | Master repository 400 framework lintas 8 kategori dan 83 subkategori beserta definisi komponen dinamis |
-| `agensi-skills/` | 6 paket Open Agent Skills siap pakai (`SKILL.md`, `references/`, `scripts/`) untuk distribusi & publikasi ke Agensi.io |
+| `agensi-skills/` | 10 paket Open Agent Skills siap pakai (`SKILL.md`, `references/`, `scripts/`, `templates/`) untuk distribusi & publikasi ke Agensi.io |
+| `scripts/package-agensi-skills.mjs` | Packager CLI zero-dependency (`npm run package:skills`) yang memvalidasi 10 paket, membangun `dist-agensi/<slug>.zip` ber-POSIX root `SKILL.md` (`< 50 MB`), dan mencetak `dist-agensi/AGENSI-LISTING-MANIFEST.md` |
+| `scripts/audit-frameworks.mjs` | Gerbang audit terprogram (`npm run audit`) untuk validasi 400 formula, 100% lokalisasi, 10 paket `SKILL.md`, 0 em-dash, dan 0 buzzword |
 | `db.ts` | Wrapper IndexedDB untuk Stash (CRUD + JSON Export/Import) |
 
 ### Fitur Rahasia & Kontrol Akses (Security by Discretion)
-- **9-Tap Logo Unlock:** Tombol logo pada header dapat diklik 9 kali berturut-turut untuk membuka/menutup fitur AI Pro dan Paket Skill (`pm_ai_unlocked`). Saat aktif, tombol Pengaturan Provider AI & Paket Skill di header, *Suggest AI*, *AI Enhance*, *Quality Analysis*, serta tab `SKILL.md` dan manajemen 6 bundel `agensi-skills/` akan terbuka. Dalam mode publik bawaan (`pm_ai_unlocked !== 'true'`), seluruh fitur AI dan Paket Skill tersembunyi sepenuhnya.
+
+- **9-Tap Logo Unlock & Hybrid Public Storefront:** Tombol logo pada header dapat diklik 9 kali berturut-turut untuk membuka/menutup fitur AI Pro dan Creator Mode (`pm_ai_unlocked`). Dalam mode publik bawaan (`pm_ai_unlocked !== 'true'`), etalase afiliasi katalog 10 Agent Skills (`Header` tombol `Skills`, `TemplateGallery` banner, `AgensiSkillPromoCard`, dan `AgensiCatalogModal`) tampil terbuka untuk konversi pengunjung tanpa mengekspos tombol ekspor `.zip`. Saat 9-Tap Creator Mode aktif, tombol Pengaturan Provider AI & Paket Skill di header, *Suggest AI*, *AI Enhance*, *Quality Analysis*, tab `SKILL.md` beserta 1-klik ekspor `.zip` (`skillZipService.ts`), dan *Copy Listing Copy* terbuka sepenuhnya.

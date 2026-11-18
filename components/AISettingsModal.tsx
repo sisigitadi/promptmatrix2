@@ -9,12 +9,20 @@ import {
 } from '../services/aiSettingsService';
 import { testAIConnection, fetchModelsFromEndpoint } from '../services/universalAIService';
 import { useLanguage } from '../contexts/LanguageContext';
-import { AGENSI_CONFIG } from '../config/agensiConfig';
+import {
+  AGENSI_CONFIG,
+  AgensiSkillPackItem,
+  AgensiUrlOverrides,
+  getEffectiveAgensiUrls,
+  getStoredAgensiUrlOverrides,
+  saveAgensiUrlOverrides,
+} from '../config/agensiConfig';
 import { AgentSkillSpec, SkillValidationResult } from '../services/agentSkillService';
+import { buildAgensiListingCopy } from '../services/skillZipService';
 
 export type AISettingsTab = 'provider' | 'skills';
 
-interface AISettingsModalProps {
+export interface AISettingsModalProps {
   show: boolean;
   onHide: () => void;
   onSettingsSaved: () => void;
@@ -26,6 +34,7 @@ interface AISettingsModalProps {
   onCopyActiveSkill?: () => void;
   onDownloadActiveSkill?: () => void;
   onOpenSkillInStudio?: () => void;
+  onAgensiUrlsSaved?: () => void;
 }
 
 const FLAGSHIP_QUICK_CHIPS: readonly string[] = [
@@ -56,6 +65,7 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
   onCopyActiveSkill,
   onDownloadActiveSkill,
   onOpenSkillInStudio,
+  onAgensiUrlsSaved,
 }) => {
   const { t, language } = useLanguage();
   const [activeTab, setActiveTab] = useState<AISettingsTab>(initialTab);
@@ -67,6 +77,9 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
   const [fetchedModelsList, setFetchedModelsList] = useState<string[]>([]);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
   const [copiedPackSlug, setCopiedPackSlug] = useState<string | null>(null);
+  const [copiedListingSlug, setCopiedListingSlug] = useState<string | null>(null);
+  const [agensiUrls, setAgensiUrls] = useState<AgensiUrlOverrides>(getStoredAgensiUrlOverrides());
+  const [agensiSavedNotice, setAgensiSavedNotice] = useState(false);
 
   useEffect(() => {
     if (show) {
@@ -76,17 +89,31 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
       setTestResult(null);
       setFetchedModelsList([]);
       setCopiedPackSlug(null);
+      setCopiedListingSlug(null);
+      setAgensiUrls(getStoredAgensiUrlOverrides());
+      setAgensiSavedNotice(false);
       const preset = AI_PROVIDER_PRESETS[current.provider];
       const hasModel = preset?.models?.some((m) => m.id === current.model);
       setCustomModelInput(!hasModel);
     }
   }, [show, initialTab]);
 
+  useEffect(() => {
+    if (!show) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onHide();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [show, onHide]);
+
   if (!show) return null;
 
   const currentPreset = AI_PROVIDER_PRESETS[settings.provider] || AI_PROVIDER_PRESETS.custom;
-  const activeStoreUrl =
-    AGENSI_CONFIG.affiliateUrl.trim() || AGENSI_CONFIG.creatorStoreUrl.trim();
+  const effectiveAgensiUrls = getEffectiveAgensiUrls();
+  const activeStoreUrl = effectiveAgensiUrls.activeUrl;
 
   const handleProviderChange = (providerId: AIProviderId) => {
     const preset = AI_PROVIDER_PRESETS[providerId];
@@ -193,8 +220,45 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
     }
   };
 
+  const handleCopyListingCopy = async (pack: AgensiSkillPackItem) => {
+    const summary = language === 'id' ? pack.summaryId : pack.summaryEn;
+    const listing = buildAgensiListingCopy({
+      slug: pack.slug,
+      title: pack.title,
+      description: summary,
+      category: pack.matchedCategories[0] || 'General',
+      priceUsd: pack.priceUsd,
+      includedFiles: pack.includedFiles,
+      language,
+    });
+    try {
+      await navigator.clipboard.writeText(listing.fullMarkdown);
+      setCopiedListingSlug(pack.slug);
+      setTimeout(() => setCopiedListingSlug(null), 1800);
+    } catch {
+      setCopiedListingSlug(null);
+    }
+  };
+
+  const handleSaveAgensiUrls = () => {
+    saveAgensiUrlOverrides(agensiUrls);
+    setAgensiUrls(getStoredAgensiUrlOverrides());
+    setAgensiSavedNotice(true);
+    onAgensiUrlsSaved?.();
+    setTimeout(() => setAgensiSavedNotice(false), 2500);
+  };
+
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div
+      role="dialog"
+      aria-modal="true"
+      onClick={(event) => {
+        if (event.target === event.currentTarget) {
+          onHide();
+        }
+      }}
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
+    >
       <div className="bg-[#0f172a] border border-slate-800 rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-6 shadow-2xl space-y-4 sm:space-y-5 max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="flex justify-between items-start border-b border-slate-800/80 pb-3 sm:pb-4">
@@ -644,13 +708,87 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
               )}
             </div>
 
-            {/* Bundled 6 Open Agent Skills Catalog (agensi-skills/) */}
+            {/* Agensi.io Affiliate & Creator Store URLs Card */}
+            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h4 className="font-bold text-slate-100 text-xs">
+                  {t('agensi_urls_title')}
+                </h4>
+                {agensiSavedNotice && (
+                  <span className="px-2 py-0.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[10px] font-semibold">
+                    ✓ {t('agensi_urls_saved')}
+                  </span>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <label className="space-y-1 block">
+                  <span className="text-[11px] font-medium text-slate-300 block">
+                    {t('agensi_affiliate_label')}
+                  </span>
+                  <input
+                    type="url"
+                    value={agensiUrls.affiliateUrl}
+                    onChange={(e) => {
+                      setAgensiSavedNotice(false);
+                      setAgensiUrls((prev) => ({ ...prev, affiliateUrl: e.target.value }));
+                    }}
+                    placeholder="https://agensi.io/?ref=yourhandle"
+                    className="w-full min-h-[44px] sm:min-h-[38px] px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 placeholder:text-slate-500 text-xs font-mono focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  />
+                </label>
+
+                <label className="space-y-1 block">
+                  <span className="text-[11px] font-medium text-slate-300 block">
+                    {t('agensi_store_label')}
+                  </span>
+                  <input
+                    type="url"
+                    value={agensiUrls.creatorStoreUrl}
+                    onChange={(e) => {
+                      setAgensiSavedNotice(false);
+                      setAgensiUrls((prev) => ({ ...prev, creatorStoreUrl: e.target.value }));
+                    }}
+                    placeholder="https://agensi.io/@yourhandle"
+                    className="w-full min-h-[44px] sm:min-h-[38px] px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 placeholder:text-slate-500 text-xs font-mono focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  />
+                </label>
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2.5">
+                <label className="space-y-1 block flex-1">
+                  <span className="text-[11px] font-medium text-slate-300 block">
+                    {t('agensi_ref_label')}
+                  </span>
+                  <input
+                    type="text"
+                    value={agensiUrls.affiliateRefCode}
+                    onChange={(e) => {
+                      setAgensiSavedNotice(false);
+                      setAgensiUrls((prev) => ({ ...prev, affiliateRefCode: e.target.value }));
+                    }}
+                    placeholder="sigitadi"
+                    className="w-full min-h-[44px] sm:min-h-[38px] px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 placeholder:text-slate-500 text-xs font-mono focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  />
+                </label>
+
+                <button
+                  type="button"
+                  onClick={handleSaveAgensiUrls}
+                  className="min-h-[44px] sm:min-h-[38px] px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                >
+                  {t('save_settings_btn')}
+                </button>
+              </div>
+            </div>
+
+            {/* Bundled 10 Open Agent Skills Catalog (agensi-skills/) */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <h4 className="font-semibold text-slate-200">
                   {language === 'id'
-                    ? '6 Paket Open Agent Skills (agensi-skills/)'
-                    : '6 Bundled Open Agent Skills (agensi-skills/)'}
+                    ? `${AGENSI_CONFIG.bundledSkillPacks.length} Paket Open Agent Skills (agensi-skills/)`
+                    : `${AGENSI_CONFIG.bundledSkillPacks.length} Bundled Open Agent Skills (agensi-skills/)`}
                 </h4>
                 <span className="text-[10px] font-mono text-slate-400">
                   {AGENSI_CONFIG.supportedAgents.length} {language === 'id' ? 'runtime agen' : 'agent runtimes'}
@@ -660,42 +798,67 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {AGENSI_CONFIG.bundledSkillPacks.map((pack) => {
                   const isCopied = copiedPackSlug === pack.slug;
+                  const isListingCopied = copiedListingSlug === pack.slug;
                   return (
                     <div
                       key={pack.slug}
-                      className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 space-y-1.5 flex flex-col justify-between"
+                      className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 space-y-2 flex flex-col justify-between min-w-0"
                     >
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between gap-1.5">
-                          <span className="font-bold text-slate-100 text-[11px] truncate">{pack.title}</span>
-                          <span
-                            className={`px-1.5 py-0.2 rounded text-[9px] font-mono shrink-0 border ${
-                              pack.tier === 'lead-magnet'
-                                ? 'bg-cyan-950/60 border-cyan-500/30 text-cyan-300'
-                                : 'bg-emerald-950/60 border-emerald-500/30 text-emerald-300'
-                            }`}
-                          >
-                            {pack.tier === 'lead-magnet' ? 'Free Starter' : 'Flagship'}
+                      <div className="space-y-1 min-w-0">
+                        <div className="flex items-start justify-between gap-1.5">
+                          <span className="font-bold text-slate-100 text-[11px] leading-snug break-words min-w-0">
+                            {pack.title}
                           </span>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <span
+                              className={`px-1.5 py-0.5 rounded text-[9px] font-mono border ${
+                                pack.tier === 'lead-magnet'
+                                  ? 'bg-cyan-950/60 border-cyan-500/30 text-cyan-300'
+                                  : 'bg-emerald-950/60 border-emerald-500/30 text-emerald-300'
+                              }`}
+                            >
+                              {pack.tier === 'lead-magnet' ? 'Free Starter' : 'Flagship'}
+                            </span>
+                            <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold bg-slate-950 border border-slate-700 text-slate-200">
+                              {pack.priceLabel}
+                            </span>
+                          </div>
                         </div>
                         <p className="text-[10px] font-mono text-emerald-400/90 truncate">{pack.slug}</p>
-                        <p className="text-[11px] text-slate-400 leading-relaxed">
+                        <p className="text-[11px] text-slate-300 leading-relaxed">
                           {language === 'id' ? pack.summaryId : pack.summaryEn}
                         </p>
                       </div>
 
-                      <div className="pt-1.5 border-t border-slate-800/80 flex items-center justify-between gap-2">
-                        <span className="text-[10px] font-mono text-slate-500 truncate">{pack.folderPath}</span>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleCopyPackCommand(pack.slug, pack.validatorScript || pack.folderPath)
-                          }
-                          className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[10px] font-mono text-slate-300 shrink-0"
-                          title={pack.validatorScript || pack.folderPath}
-                        >
-                          {isCopied ? '✓ Copied' : pack.validatorScript ? 'Copy Check' : 'Copy Path'}
-                        </button>
+                      <div className="pt-2 border-t border-slate-800/80 space-y-1.5">
+                        <p className="text-[10px] font-mono text-slate-400 truncate" title={pack.folderPath}>
+                          {pack.folderPath}
+                        </p>
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              handleCopyPackCommand(pack.slug, pack.validatorScript || pack.folderPath)
+                            }
+                            className="min-h-[44px] sm:min-h-[32px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[10px] font-mono text-slate-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                            title={pack.validatorScript || pack.folderPath}
+                          >
+                            {isCopied ? '✓ Copied' : pack.validatorScript ? 'Copy Check' : 'Copy Path'}
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handleCopyListingCopy(pack)}
+                            className={`min-h-[44px] sm:min-h-[32px] px-2.5 py-1 rounded-lg border text-[10px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                              isListingCopied
+                                ? 'bg-emerald-600 border-emerald-500 text-white'
+                                : 'bg-cyan-950/70 hover:bg-cyan-900/80 border-cyan-500/40 text-cyan-200'
+                            }`}
+                            title="Agensi.io/sell"
+                          >
+                            {isListingCopied ? `✓ ${t('copied_btn')}` : t('copy_listing_btn')}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   );
@@ -709,13 +872,13 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                 <p className="text-[11px] font-semibold text-emerald-400">
                   {t('skill_agensi_ready_title')}
                 </p>
-                <p className="text-[10px] text-slate-400">
+                <p className="text-[10px] text-slate-300">
                   {language === 'id'
                     ? `${AGENSI_CONFIG.commissionInfo.standardSharePercent}% bagian kreator (${AGENSI_CONFIG.commissionInfo.affiliateNewBuyerSharePercent}% via afiliasi, ${AGENSI_CONFIG.commissionInfo.listingModel}).`
                     : `${AGENSI_CONFIG.commissionInfo.standardSharePercent}% creator share (${AGENSI_CONFIG.commissionInfo.affiliateNewBuyerSharePercent}% via affiliate, ${AGENSI_CONFIG.commissionInfo.listingModel}).`}
                 </p>
                 {!activeStoreUrl && (
-                  <p className="text-[10px] text-slate-500">{t('skill_agensi_setup_hint')}</p>
+                  <p className="text-[10px] text-slate-400">{t('skill_agensi_setup_hint')}</p>
                 )}
               </div>
 
@@ -724,7 +887,7 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                   href={activeStoreUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-semibold shrink-0 text-center"
+                  className="min-h-[44px] sm:min-h-[36px] inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-semibold shrink-0 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >
                   {t('skill_agensi_visit_btn')} ↗
                 </a>

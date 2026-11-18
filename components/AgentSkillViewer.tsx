@@ -1,9 +1,14 @@
-import React, { useMemo } from 'react';
-import { AGENSI_CONFIG } from '../config/agensiConfig';
+import React, { useMemo, useState } from 'react';
+import { AGENSI_CONFIG, getEffectiveAgensiUrls } from '../config/agensiConfig';
 import { useLanguage } from '../contexts/LanguageContext';
 import { AgentSkillSpec, SkillValidationResult } from '../services/agentSkillService';
+import {
+  buildAgensiListingCopy,
+  buildFormulaSkillZipBundle,
+  triggerZipDownload,
+} from '../services/skillZipService';
 
-interface AgentSkillViewerProps {
+export interface AgentSkillViewerProps {
   skillSpec: AgentSkillSpec;
   skillMarkdown: string;
   validation: SkillValidationResult;
@@ -11,7 +16,19 @@ interface AgentSkillViewerProps {
   onDownload?: () => void;
   isCopied: boolean;
   isLightTheme?: boolean;
+  formValues?: Record<string, string | number | boolean | string[]>;
+  customOtherValues?: Record<string, string>;
+  compiledPrompt?: string;
+  onZipDownloaded?: (filename: string) => void;
+  onCopyListing?: (listingMarkdown: string) => void;
 }
+
+const ZIP_BUNDLE_FILE_TREE: readonly string[] = [
+  'SKILL.md',
+  'references/framework-guide.md',
+  'templates/sample-input.json',
+  'scripts/validate-output.mjs',
+];
 
 export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   skillSpec,
@@ -21,8 +38,15 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   onDownload,
   isCopied,
   isLightTheme = false,
+  formValues = {},
+  customOtherValues = {},
+  compiledPrompt = '',
+  onZipDownloaded,
+  onCopyListing,
 }) => {
   const { t, language } = useLanguage();
+  const [isListingCopied, setIsListingCopied] = useState(false);
+  const [showListingPreview, setShowListingPreview] = useState(false);
 
   const lines = useMemo(() => skillMarkdown.split('\n'), [skillMarkdown]);
   const featuredAgents = useMemo(
@@ -31,9 +55,22 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   );
   const extraAgentCount = Math.max(0, AGENSI_CONFIG.supportedAgents.length - featuredAgents.length);
 
-  const activeStoreUrl =
-    AGENSI_CONFIG.affiliateUrl.trim() || AGENSI_CONFIG.creatorStoreUrl.trim();
+  const effectiveUrls = getEffectiveAgensiUrls();
+  const activeStoreUrl = effectiveUrls.activeUrl;
   const hasConfiguredStoreUrl = activeStoreUrl.length > 0;
+
+  const listingCopy = useMemo(
+    () =>
+      buildAgensiListingCopy({
+        slug: skillSpec.name,
+        title: skillSpec.metadata.framework || skillSpec.name,
+        description: skillSpec.description,
+        category: skillSpec.metadata.category || 'General',
+        includedFiles: ZIP_BUNDLE_FILE_TREE,
+        language,
+      }),
+    [skillSpec, language]
+  );
 
   const handleDownloadSkill = () => {
     const filename = `${skillSpec.name || 'promptmatrix-skill'}-SKILL.md`;
@@ -47,6 +84,31 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     document.body.removeChild(anchor);
     URL.revokeObjectURL(url);
     onDownload?.();
+  };
+
+  const handleDownloadZip = () => {
+    const bundle = buildFormulaSkillZipBundle({
+      skillSpec,
+      skillMarkdown,
+      formValues,
+      customOtherValues,
+      compiledPrompt,
+    });
+    triggerZipDownload(bundle.filename, bundle.archiveBytes);
+    onZipDownloaded?.(bundle.filename);
+  };
+
+  const handleCopyListing = async () => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(listingCopy.fullMarkdown);
+      } catch {
+        // Ignore clipboard permission errors when parent handles fallback
+      }
+    }
+    onCopyListing?.(listingCopy.fullMarkdown);
+    setIsListingCopied(true);
+    setTimeout(() => setIsListingCopied(false), 1800);
   };
 
   // Track YAML frontmatter boundaries so YAML keys and Markdown headings highlight cleanly
@@ -265,7 +327,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           <button
             type="button"
             onClick={onCopy}
-            className={`min-h-[36px] px-3 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+            className={`min-h-[44px] sm:min-h-[36px] px-3 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
               isCopied
                 ? isLightTheme
                   ? 'bg-emerald-700 text-white'
@@ -314,10 +376,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           <button
             type="button"
             onClick={handleDownloadSkill}
-            className={`min-h-[36px] px-3 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+            className={`min-h-[44px] sm:min-h-[36px] px-3 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
               isLightTheme
-                ? 'bg-emerald-700 hover:bg-emerald-800 text-white'
-                : 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                ? 'bg-white hover:bg-slate-200 text-slate-900 border border-slate-300'
+                : 'bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700'
             }`}
             title={`${skillSpec.name}-SKILL.md`}
           >
@@ -335,6 +397,64 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
               />
             </svg>
             <span>{t('download_skill_btn')}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleDownloadZip}
+            className={`min-h-[44px] sm:min-h-[36px] px-3 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+              isLightTheme
+                ? 'bg-emerald-700 hover:bg-emerald-800 text-white'
+                : 'bg-emerald-600 hover:bg-emerald-500 text-white'
+            }`}
+            title={`${skillSpec.name}.zip`}
+          >
+            <svg
+              className="w-3.5 h-3.5 shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+              />
+            </svg>
+            <span>{t('download_zip_btn')}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleCopyListing}
+            className={`min-h-[44px] sm:min-h-[36px] px-3 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+              isListingCopied
+                ? isLightTheme
+                  ? 'bg-cyan-700 text-white'
+                  : 'bg-cyan-500 text-slate-950'
+                : isLightTheme
+                  ? 'bg-cyan-50 hover:bg-cyan-100 text-cyan-900 border border-cyan-300'
+                  : 'bg-cyan-950/60 hover:bg-cyan-900/70 text-cyan-200 border border-cyan-500/40'
+            }`}
+            title="Agensi.io/sell"
+          >
+            <span>{isListingCopied ? t('copied_btn') : t('copy_listing_btn')}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setShowListingPreview((prev) => !prev)}
+            aria-expanded={showListingPreview}
+            className={`min-h-[44px] sm:min-h-[36px] px-2.5 rounded-lg text-[11px] font-semibold flex items-center gap-1 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+              isLightTheme
+                ? 'bg-white hover:bg-slate-200 text-slate-800 border border-slate-300'
+                : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700'
+            }`}
+            title={t('listing_copy_title')}
+          >
+            <span>{t('listing_copy_title')}</span>
+            <span aria-hidden="true">{showListingPreview ? '▲' : '▼'}</span>
           </button>
         </div>
       </div>
@@ -389,6 +509,91 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           </span>
         )}
       </div>
+
+      {/* ZIP Bundle Archive File Tree Strip */}
+      <div
+        className={`px-3.5 py-2 border-b flex flex-wrap items-center gap-1.5 text-[10px] ${
+          isLightTheme
+            ? 'bg-white border-slate-200 text-slate-700'
+            : 'bg-[#090d16] border-slate-800/80 text-slate-300'
+        }`}
+      >
+        <span className="font-semibold mr-0.5">
+          {language === 'id' ? 'Struktur Arsip .zip:' : '.zip Bundle Structure:'}
+        </span>
+        {ZIP_BUNDLE_FILE_TREE.map((entryPath) => (
+          <span
+            key={entryPath}
+            className={`px-2 py-0.5 rounded-md border font-mono ${
+              isLightTheme
+                ? 'bg-slate-50 border-slate-300 text-slate-800'
+                : 'bg-slate-900 border-slate-700 text-slate-200'
+            }`}
+          >
+            {entryPath}
+          </span>
+        ))}
+      </div>
+
+      {/* Collapsible Agensi.io/sell Listing Copy Preview */}
+      {showListingPreview && (
+        <div
+          className={`px-3.5 py-3 border-b space-y-2 ${
+            isLightTheme
+              ? 'bg-cyan-50/60 border-slate-300 text-slate-900'
+              : 'bg-slate-950/90 border-slate-800 text-slate-200'
+          }`}
+        >
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center gap-2 min-w-0">
+              <span className="text-xs font-bold">{t('listing_copy_title')} (Agensi.io/sell)</span>
+              <span
+                className={`px-2 py-0.5 rounded-md border font-mono text-[10px] font-semibold ${
+                  isLightTheme
+                    ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
+                    : 'bg-emerald-500/15 border-emerald-500/35 text-emerald-300'
+                }`}
+              >
+                ${listingCopy.recommendedPriceUsd.toFixed(2)} USD
+              </span>
+              {listingCopy.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className={`px-1.5 py-0.5 rounded text-[10px] font-mono border ${
+                    isLightTheme
+                      ? 'bg-white border-slate-300 text-slate-700'
+                      : 'bg-slate-900 border-slate-700 text-slate-300'
+                  }`}
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={handleCopyListing}
+              className={`min-h-[44px] sm:min-h-[36px] px-3 rounded-lg text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                isLightTheme
+                  ? 'bg-slate-900 hover:bg-slate-800 text-white'
+                  : 'bg-cyan-600 hover:bg-cyan-500 text-white'
+              }`}
+            >
+              {isListingCopied ? t('copied_btn') : t('copy_listing_btn')}
+            </button>
+          </div>
+
+          <pre
+            className={`p-3 rounded-xl border text-[11px] font-mono whitespace-pre-wrap break-words max-h-[220px] overflow-auto ${
+              isLightTheme
+                ? 'bg-white border-slate-300 text-slate-900'
+                : 'bg-[#070b12] border-slate-800 text-slate-200'
+            }`}
+          >
+            {listingCopy.fullMarkdown}
+          </pre>
+        </div>
+      )}
 
       {/* Monospace Syntax-Highlighted SKILL.md Preview */}
       <div
@@ -469,7 +674,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
               href={activeStoreUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-1 min-h-[28px] px-2.5 rounded-lg text-[11px] font-semibold shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+              className={`inline-flex items-center gap-1 min-h-[44px] sm:min-h-[28px] px-2.5 rounded-lg text-[11px] font-semibold shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                 isLightTheme
                   ? 'bg-emerald-700 hover:bg-emerald-800 text-white'
                   : 'bg-emerald-600 hover:bg-emerald-500 text-white'

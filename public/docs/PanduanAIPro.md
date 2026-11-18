@@ -71,14 +71,15 @@ PromptMatrix 2.0 telah diaudit dan diselaraskan dengan model kecerdasan buatan s
 
 ---
 
-## 🧩 2. Paket Skill Privat (`SKILL.md` & Bundel `agensi-skills/`)
+## 🧩 2. Paket Skill Privat (`SKILL.md`, Pabrik `.zip` & Bundel `agensi-skills/`)
 
-Fitur **Paket Skill** digabung ke dalam gerbang privat **Pengaturan Provider AI** (`showAIFeatures`) agar tidak tampil di tampilan publik:
-1. **Tab `Paket Skill (SKILL.md)` di Modal Pengaturan AI**:
-   - Mengelola 6 bundel Open Agent Skills (`agensi-skills/`) lengkap dengan perintah validator dan kesiapan listing Agensi.io.
-   - Menyalin atau mengunduh dokumen `SKILL.md` dari formula Studio yang sedang aktif.
+PromptMatrix 2.0 menerapkan **Model Akses Hibrida**: etalase publik (`Skills 10` & kartu kontekstual Studio) mengarahkan pengunjung ke tautan afiliasi Agensi.io, sedangkan **Pabrik `.zip` & Pengaturan URL Kreator** dikunci di balik gerbang privat **9-ketukan logo** (`showAIFeatures`):
+1. **Tab `Paket Skill (10)` di Modal Pengaturan AI**:
+   - Mengatur **Agensi Affiliate URL (`?ref=...`)**, **Creator Store URL**, dan **Affiliate Ref Code** langsung dari browser (`localStorage` `pm_agensi_urls`).
+   - Mengelola **10 bundel Open Agent Skills (`agensi-skills/`)** lengkap dengan perintah validator, tombol **Salin Listing Copy** untuk `Agensi.io/sell`, dan kesiapan publikasi toko.
 2. **Tab Pratinjau `SKILL.md` di Studio & Layar Penuh**:
    - Otomatis muncul sejajar dengan tab *Terstruktur*, *Teks Polos*, dan *JSON* saat Mode AI Pro & Paket Skill dibuka.
+   - Dilengkapi tombol **Unduh Paket `.zip` Agensi.io** (membungkus `SKILL.md` di root + `references/` + `templates/` + `scripts/` secara instan di browser) dan panel **Salin Listing Copy (`Agensi.io/sell`)**.
 
 ---
 

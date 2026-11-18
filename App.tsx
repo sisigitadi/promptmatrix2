@@ -53,6 +53,8 @@ import {
 import { VisualPromptPreview } from './components/VisualPromptPreview';
 import { CleanJsonViewer } from './components/CleanJsonViewer';
 import { AgentSkillViewer } from './components/AgentSkillViewer';
+import { AgensiSkillPromoCard } from './components/AgensiSkillPromoCard';
+import { AgensiCatalogModal } from './components/AgensiCatalogModal';
 import {
   buildCleanPromptJSON,
   getCleanJSONString,
@@ -134,6 +136,8 @@ const App: React.FC = () => {
   const [isLightTheme, setIsLightTheme] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showAISettingsModal, setShowAISettingsModal] = useState(false);
+  const [showAgensiCatalogModal, setShowAgensiCatalogModal] = useState(false);
+  const [agensiUrlVersion, setAgensiUrlVersion] = useState(0);
   const [showUploadUpgradeModal, setShowUploadUpgradeModal] = useState<boolean>(false);
   const [isAnalyzingUpload, setIsAnalyzingUpload] = useState<boolean>(false);
   const [uploadUpgradeError, setUploadUpgradeError] = useState<string | null>(null);
@@ -1368,6 +1372,7 @@ const App: React.FC = () => {
         onShowStash={() => setShowStash(!showStash)}
         onOpenApiKeyModal={() => setShowAISettingsModal(true)}
         onOpenUploadUpgrade={showAIFeatures ? handleOpenUploadUpgrade : undefined}
+        onOpenAgensiCatalog={() => setShowAgensiCatalogModal(true)}
         savedPromptsCount={savedPrompts.length}
         isLightTheme={isLightTheme}
         onToggleTheme={() => setIsLightTheme(!isLightTheme)}
@@ -1391,6 +1396,7 @@ const App: React.FC = () => {
             frameworksData={PROMPT_FRAMEWORKS}
             onSelectFramework={handleSelectFramework}
             onOpenBlankCanvas={handleOpenBlankCanvas}
+            onOpenAgensiCatalog={() => setShowAgensiCatalogModal(true)}
             selectedFrameworkName={selectedFrameworkName}
             activeCategory={selectedCategory || undefined}
             onCategoryChange={(cat) => setSelectedCategory(cat)}
@@ -1685,6 +1691,11 @@ const App: React.FC = () => {
                           validation={agentSkillValidation}
                           onCopy={() => copyToClipboard(agentSkillMarkdown, t('toast_skill_copied'))}
                           onDownload={() => showToast(t('toast_skill_downloaded'), 'success')}
+                          formValues={formValues}
+                          customOtherValues={customOtherValues}
+                          compiledPrompt={generatedPrompt}
+                          onZipDownloaded={() => showToast(t('toast_zip_downloaded'), 'success')}
+                          onCopyListing={(txt) => copyToClipboard(txt, t('toast_listing_copied'))}
                           isCopied={isCopied}
                           isLightTheme={isLightTheme}
                         />
@@ -1763,6 +1774,14 @@ const App: React.FC = () => {
                     </div>
                   )}
                 </div>
+
+                {/* Public Contextual Agensi.io Agent Skill Promo Card */}
+                <AgensiSkillPromoCard
+                  categoryName={selectedCategory}
+                  onOpenCatalog={() => setShowAgensiCatalogModal(true)}
+                  isLightTheme={isLightTheme}
+                  agensiUrlVersion={agensiUrlVersion}
+                />
 
                 {/* Direct AI Tool Launchers Section */}
                 <div className="bg-[#0f172a]/95 border border-slate-800/90 rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-2xl space-y-3.5">
@@ -1969,7 +1988,7 @@ const App: React.FC = () => {
                   value={stashSearch}
                   onChange={(e) => setStashSearch(e.target.value)}
                   placeholder={t('search_stash_placeholder')}
-                  className="w-full pl-8 pr-3 py-2 bg-slate-950 border border-slate-700 focus:border-emerald-500 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none"
+                  className="w-full pl-8 pr-3 py-2 bg-slate-950 border border-slate-700 focus:border-emerald-500 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 />
               </div>
             )}
@@ -1991,7 +2010,7 @@ const App: React.FC = () => {
                               type="text"
                               value={editNameInput}
                               onChange={(e) => setEditNameInput(e.target.value)}
-                              className="flex-1 px-2.5 py-1 bg-slate-950 border border-emerald-500 rounded-lg text-xs text-slate-100 focus:outline-none"
+                              className="flex-1 px-2.5 py-1 bg-slate-950 border border-emerald-500 rounded-lg text-xs text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                               autoFocus
                             />
                             <button
@@ -2107,6 +2126,20 @@ const App: React.FC = () => {
         showAIFeatures={showAIFeatures}
       />
 
+      {/* Public Agensi.io Official Agent Skills Catalog Modal */}
+      <AgensiCatalogModal
+        show={showAgensiCatalogModal}
+        onClose={() => setShowAgensiCatalogModal(false)}
+        isCreatorMode={showAIFeatures}
+        isLightTheme={isLightTheme}
+        agensiUrlVersion={agensiUrlVersion}
+        onOpenCreatorSettings={() => {
+          setShowAgensiCatalogModal(false);
+          setShowAISettingsModal(true);
+        }}
+        onCopyText={copyToClipboard}
+      />
+
       {/* Upload & Upgrade Prompt / Skill Modal */}
       {showAIFeatures && (
         <UploadUpgradeModal
@@ -2134,6 +2167,7 @@ const App: React.FC = () => {
           onSettingsSaved={() => {
             showToast(t('toast_settings_saved'), 'success');
           }}
+          onAgensiUrlsSaved={() => setAgensiUrlVersion((v) => v + 1)}
           activeSkillSpec={agentSkillSpec}
           activeSkillMarkdown={agentSkillMarkdown}
           activeSkillValidation={agentSkillValidation}
@@ -2409,6 +2443,11 @@ const App: React.FC = () => {
                     validation={agentSkillValidation}
                     onCopy={() => copyToClipboard(agentSkillMarkdown, t('toast_skill_copied'))}
                     onDownload={() => showToast(t('toast_skill_downloaded'), 'success')}
+                    formValues={formValues}
+                    customOtherValues={customOtherValues}
+                    compiledPrompt={generatedPrompt}
+                    onZipDownloaded={() => showToast(t('toast_zip_downloaded'), 'success')}
+                    onCopyListing={(txt) => copyToClipboard(txt, t('toast_listing_copied'))}
                     isCopied={isCopied}
                     isLightTheme={isLightTheme}
                   />
@@ -2559,7 +2598,7 @@ const App: React.FC = () => {
                   value={compareAlternativePrompt}
                   onChange={(e) => setCompareAlternativePrompt(e.target.value)}
                   placeholder={language === 'id' ? 'Ketik atau tempelkan variasi prompt pembanding di sini...' : 'Type or paste alternative prompt variation here...'}
-                  className="flex-1 min-h-[300px] bg-slate-950/90 border border-slate-800/90 focus:border-cyan-500 rounded-2xl p-4 text-xs font-mono text-slate-200 resize-none leading-relaxed focus:outline-none shadow-inner"
+                  className="flex-1 min-h-[300px] bg-slate-950/90 border border-slate-800/90 focus:border-cyan-500 rounded-2xl p-4 text-xs font-mono text-slate-200 resize-none leading-relaxed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 shadow-inner"
                 />
               </div>
             </div>

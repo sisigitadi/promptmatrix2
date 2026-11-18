@@ -11,7 +11,7 @@ Ready-to-use structured data templates for technical products, tutorials, and FA
   "name": "PromptMatrix 2.0",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "Web Browser",
-  "url": "https://promptmatrix.example.com",
+  "url": "https://prompt.sigitadi.id",
   "offers": {
     "@type": "Offer",
     "price": "0",

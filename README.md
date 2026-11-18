@@ -16,7 +16,9 @@
 ## 🌟 Fitur Unggulan
 
 - 💎 **400 Formula Prompt Master**: Mencakup 8 kategori inti dengan **83 subkategori** spesifik, termasuk workflow Agentic AI (`SKILL.md` Builder, Claude Code Subagents & Hooks, MCP Server v2), GEO/AEO, Antislop UI Audit, Next.js/PostgreSQL, Midjourney v7 (`--oref`), FLUX.2 / Kontext, Veo 3, Kling 2.1, Sora 2, dan Suno v4.5/v5.
-- 🧩 **Pratinjau & Ekspor Agent Skill (`SKILL.md`) Siap Agensi.io**: Konversi formula apa pun di Studio menjadi berkas `SKILL.md` berstandar Open Agent Skills dengan validasi frontmatter YAML (`name <= 64` karakter kebab-case, `description <= 1024`), salin 1-klik, unduh file `-SKILL.md`, dukungan 27 runtime agen (Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, dll.), serta 6 paket siap terbit di `agensi-skills/`.
+- 🧩 **Ekosistem Agent Skill (`SKILL.md`) & Monetisasi Agensi.io (Model Hibrida)**:
+  - **Etalase Afiliasi Publik**: Tombol **Skills (`10`)** di Header, banner katalog di Galeri, kartu rekomendasi kontekstual per kategori di Studio (`AgensiSkillPromoCard`), dan modal katalog 10 paket resmi (`AgensiCatalogModal`) dengan filter *All / Free ($0) / Paid Flagship* serta tautan afiliasi Agensi.io (tanpa membocorkan unduhan `.zip` gratis ke publik).
+  - **Pabrik `.zip` Privat (9-Tap Creator Mode)**: Konversi formula aktif mana pun menjadi berkas `SKILL.md` tervalidasi (`name <= 64` kebab-case, `description <= 1024`), ekspor **1-Klik Paket `.zip` Agensi.io** langsung di browser (`SKILL.md` root + `references/` + `templates/` + `scripts/`), generator **Salin Listing Copy** untuk `Agensi.io/sell`, dukungan 27 runtime agen, pengaturan live URL afiliasi (`pm_agensi_urls`), serta **10 paket siap terbit** di `agensi-skills/`.
 - ⚡ **Pratinjau JSON Bebas "Decode Error" (RFC 8259)**: Tampilan pratinjau JSON terformat dan tervalidasi dengan 3 sub-format (*Struktur Penuh*, *Format Chat API messages*, dan *Prompt String Aman*) yang bebas dari `json.decoder.JSONDecodeError` untuk Python, cURL, LangChain, dan REST API.
 - ✨ **Few-Shot In-Context Learning Booster dengan AI Suggest**: Tingkatkan akurasi prompt dengan contoh acuan masukan dan keluaran yang didukung generator AI Suggest terarah.
 - 🌐 **Deteksi Bahasa Cerdas & Dual Bahasa (EN ⇄ ID)**: Default bahasa Inggris (EN) dengan auto-deteksi preferensi browser (otomatis Bahasa Indonesia jika locale browser ID/IN). Pengguna dapat beralih bahasa dan tema (Dark/Light) kapan saja melalui header switcher dengan persistensi `localStorage`. Seluruh 400 nama formula, logika AI, serta 8.600+ entri kamus label, opsi, dan placeholder tersinkronisasi penuh.
@@ -100,51 +102,61 @@ promptmatrix2/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml                  # CI/CD otomatis untuk GitHub Pages
-├── agensi-skills/                      # 6 paket Open Agent Skills siap pakai & siap Agensi.io
+├── agensi-skills/                      # 10 paket Open Agent Skills siap kemas & terbit ke Agensi.io
 │   ├── antislop-ui-and-copy-auditor/
 │   ├── fullstack-ts-nextjs-architect/
 │   ├── mcp-server-production-builder/
+│   ├── multi-agent-swarm-and-subagent-orchestrator/
 │   ├── multimodal-video-image-director/
+│   ├── owasp-api-and-cloud-security-auditor/
+│   ├── playwright-e2e-and-openapi-contract-suite/
+│   ├── postgres-prisma-zero-downtime-sql-tuner/
 │   ├── prompt-matrix-prompt-architect/
 │   └── seo-geo-aeo-content-engine/
 ├── components/
-│   ├── AISettingsModal.tsx             # Modal pengaturan API key & preferensi model late-2026
-│   ├── AgentSkillViewer.tsx            # Pratinjau, validasi & ekspor SKILL.md siap Agensi.io
+│   ├── AgensiCatalogModal.tsx          # Modal katalog publik 10 paket Agent Skills & mode kreator
+│   ├── AgensiSkillPromoCard.tsx        # Kartu promosi kontekstual Agensi.io per kategori di Studio
+│   ├── AISettingsModal.tsx             # Modal pengaturan API key, model 2026 & URL afiliasi Agensi.io
+│   ├── AgentSkillViewer.tsx            # Pratinjau, validasi, ekspor .zip & Listing Copy Agensi.io
 │   ├── CleanJsonViewer.tsx             # Pratinjau JSON RFC 8259 bebas decode error
 │   ├── Footer.tsx                      # Footer modern dan tautan dokumentasi
 │   ├── FrameworkPane.tsx               # Panel studio peracik formulir & visual preview
-│   ├── Header.tsx                      # Navigasi atas, toggle bahasa/tema, dan Stash badge
+│   ├── Header.tsx                      # Navigasi atas, tombol Skills (10), toggle bahasa/tema & Stash
 │   ├── HelpModal.tsx                   # Panduan interaktif dan FAQ pengguna
 │   ├── InputField.tsx                  # Komponen input dinamis (text, select, textarea, dll.)
 │   ├── NavigationPane.tsx              # Sidebar navigasi kategori & subkategori
-│   ├── TemplateGallery.tsx             # Grid galeri 400 kartu formula & filter instan
+│   ├── TemplateGallery.tsx             # Grid galeri 400 kartu formula, katalog skills & filter instan
 │   └── VisualPromptPreview.tsx         # Pratinjau mockup visual & benchmark gold-standard
 ├── config/
-│   └── agensiConfig.ts                 # Konfigurasi marketplace Agensi.io & 27 runtime agen
+│   └── agensiConfig.ts                 # Konfigurasi 10 paket Agensi.io, helper URL afiliasi & 27 agen
 ├── contexts/
 │   └── LanguageContext.tsx             # State management dwibahasa (ID <-> EN)
 ├── data/
-│   ├── aiPlatforms.ts                  # Daftar preset model LLM (GPT-5, Claude 4, Gemini 3.7, DeepSeek, Grok)
+│   ├── aiPlatforms.ts                  # Daftar preset model LLM frontier 2026
 │   └── frameworks.ts                   # Basis data 400 master prompt frameworks (83 subkategori)
 ├── docs/                               # Katalog 400 formula, AgensiMarketplacePlaybook.md & SOP
 ├── public/
 │   ├── CNAME                           # Custom domain pointer (prompt.sigitadi.id)
 │   ├── _redirects                      # SPA routing rewrite
-│   ├── manifest.json                   # Konfigurasi PWA v7.2.0
+│   ├── manifest.json                   # Konfigurasi PWA v7.2.1
 │   ├── robots.txt                      # SEO robots configuration
 │   ├── sitemap.xml                     # SEO XML sitemap
-│   └── sw.js                           # Service Worker offline cache (promptmatrix-v7.2.0)
+│   └── sw.js                           # Service Worker offline cache (promptmatrix-v7.2.1)
+├── scripts/
+│   ├── audit-frameworks.mjs            # Gerbang audit programatik (400 formula, 10 skills, antislop)
+│   └── package-agensi-skills.mjs       # Pemaket 10 arsip POSIX .zip & generator AGENSI-LISTING-MANIFEST.md
 ├── services/
 │   ├── agentSkillService.ts            # Generator & validator Open Agent Skills SKILL.md
 │   ├── aiSettingsService.ts            # Manajemen preset provider & persistensi localStorage
 │   ├── jsonPromptService.ts            # Sanitizer & formatter payload JSON RFC 8259
 │   ├── localizationService.ts          # Mesin lokalisasi presisi 8.600+ entri (ID <-> EN)
 │   ├── sampleDataService.ts            # Mesin data contoh realistis otomatis (400 formula)
+│   ├── skillZipService.ts              # Pembungkus POSIX .zip in-browser & generator Listing Copy
 │   ├── universalAIService.ts           # Dispatcher universal multi-provider AI
 │   └── visualBenchmarkService.ts       # Kurasi gambar benchmark untuk seluruh 400 formula
-├── App.tsx                             # Root application logic, 33 Quick Launchers & state orchestration
+├── App.tsx                             # Root application logic, 34 Quick Launchers & state orchestration
 ├── DEPLOYMENT.md                       # Panduan teknis publikasi live domain
-├── package.json                        # Konfigurasi dependensi & skrip build (v7.2.0)
+├── package.json                        # Konfigurasi dependensi & skrip build/audit/package:skills (v7.2.1)
 └── vite.config.ts                      # Konfigurasi bundler Vite & alias path
 ```
 
