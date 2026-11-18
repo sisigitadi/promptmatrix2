@@ -81,6 +81,8 @@ PromptMatrix 2.0 menerapkan **Model Akses Hibrida**: etalase publik (`Skills 10`
 2. **Tab Pratinjau `SKILL.md` di Studio & Layar Penuh**:
    - Otomatis muncul sejajar dengan tab *Terstruktur*, *Teks Polos*, dan *JSON* saat Mode AI Pro & Paket Skill dibuka.
    - Dilengkapi tombol **Unduh Paket `.zip` Agensi.io** (membungkus `SKILL.md` di root + `references/` + `templates/` + `scripts/` secara instan di browser) dan panel **Salin Listing Copy (`Agensi.io/sell`)**.
+3. **Panduan Lengkap Multi-Marketplace & Payout Indonesia**:
+   - Buka kartu **Panduan Multi-Market** di Modal Bantuan (`?`) saat Mode AI Pro aktif, atau buka akordion panduan di dalam tab `Paket Skill (10)` Pengaturan AI untuk langkah lengkap Agensi.io, Pilar 1 Direktori OSS (`dist-lead-magnet/`), Pilar 2 Lemon Squeezy / Creem.io / Gumroad / Whop / Payhip (`$59.00` vs `$133.92`), Pilar 3 PromptBase (`0%` fee `?via=` & Zoneless USDC Solana), serta SOP penarikan dana aman di Indonesia tanpa saldo USD Wise.
 
 ---
 

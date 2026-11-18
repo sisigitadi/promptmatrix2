@@ -48,79 +48,202 @@ const HelpModal: React.FC<HelpModalProps> = ({ show, onHide, showAIFeatures = fa
     setDocumentTitle(null);
   };
 
-  // Simple Markdown renderer for headings, lists, bold, and paragraphs
+  // Clean Markdown renderer supporting headings, fenced code blocks, tables, blockquotes, lists, and inline code/bold
+  const renderInlineText = (text: string): React.ReactNode => {
+    const tokens = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
+    return tokens.map((token, idx) => {
+      if (token.startsWith('**') && token.endsWith('**') && token.length > 4) {
+        return (
+          <strong key={idx} className="font-semibold text-slate-100">
+            {token.slice(2, -2)}
+          </strong>
+        );
+      }
+      if (token.startsWith('`') && token.endsWith('`') && token.length > 2) {
+        return (
+          <code
+            key={idx}
+            className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-700/80 font-mono text-[11px] text-emerald-300 break-words"
+          >
+            {token.slice(1, -1)}
+          </code>
+        );
+      }
+      return token;
+    });
+  };
+
   const renderFormattedMarkdown = (content: string) => {
     const lines = content.split('\n');
-    return (
-      <div className="space-y-3 text-xs leading-relaxed text-slate-200">
-        {lines.map((line, idx) => {
-          const trimmed = line.trim();
-          if (!trimmed) return <div key={idx} className="h-1.5" />;
+    const blocks: React.ReactNode[] = [];
+    let i = 0;
 
-          // Headings
-          if (trimmed.startsWith('# ')) {
-            return (
-              <h1 key={idx} className="text-base font-bold text-teal-300 border-b border-slate-700 pb-1 pt-2">
-                {trimmed.replace(/^#\s+/, '')}
-              </h1>
-            );
-          }
-          if (trimmed.startsWith('## ')) {
-            return (
-              <h2 key={idx} className="text-sm font-bold text-teal-400 border-b border-slate-800 pb-1 pt-2">
-                {trimmed.replace(/^##\s+/, '')}
-              </h2>
-            );
-          }
-          if (trimmed.startsWith('### ')) {
-            return (
-              <h3 key={idx} className="text-xs font-bold text-purple-300 pt-1.5">
-                {trimmed.replace(/^###\s+/, '')}
-              </h3>
-            );
-          }
-          if (trimmed.startsWith('#### ')) {
-            return (
-              <h4 key={idx} className="text-xs font-semibold text-slate-100">
-                {trimmed.replace(/^####\s+/, '')}
-              </h4>
-            );
-          }
+    while (i < lines.length) {
+      const trimmed = lines[i].trim();
 
-          // Lists
-          if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
-            return (
-              <li key={idx} className="ml-4 list-disc text-slate-300">
-                {trimmed.replace(/^[-*]\s+/, '')}
-              </li>
-            );
-          }
-          if (/^\d+\.\s/.test(trimmed)) {
-            return (
-              <li key={idx} className="ml-4 list-decimal text-slate-300">
-                {trimmed.replace(/^\d+\.\s+/, '')}
-              </li>
-            );
-          }
+      if (!trimmed) {
+        blocks.push(<div key={`sp-${i}`} className="h-1.5" />);
+        i += 1;
+        continue;
+      }
 
-          // Code blocks
-          if (trimmed.startsWith('```')) {
-            return (
-              <div key={idx} className="font-mono text-[11px] bg-slate-950 p-2 rounded border border-slate-800 text-teal-300">
-                {trimmed}
-              </div>
-            );
-          }
+      if (trimmed.startsWith('```')) {
+        const codeLines: string[] = [];
+        const startIdx = i;
+        i += 1;
+        while (i < lines.length && !lines[i].trim().startsWith('```')) {
+          codeLines.push(lines[i]);
+          i += 1;
+        }
+        if (i < lines.length && lines[i].trim().startsWith('```')) {
+          i += 1;
+        }
+        blocks.push(
+          <pre
+            key={`code-${startIdx}`}
+            className="font-mono text-[11px] bg-slate-950 p-3 rounded-xl border border-slate-800 text-teal-300 overflow-x-auto leading-relaxed"
+          >
+            <code>{codeLines.join('\n')}</code>
+          </pre>
+        );
+        continue;
+      }
 
-          // Regular paragraph
-          return (
-            <p key={idx} className="text-slate-300 leading-relaxed">
-              {trimmed}
-            </p>
+      if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+        const tableLines: string[] = [];
+        const startIdx = i;
+        while (i < lines.length && lines[i].trim().startsWith('|')) {
+          tableLines.push(lines[i].trim());
+          i += 1;
+        }
+        const rows = tableLines
+          .filter((row) => !/^\|[\s:|-]+\|$/.test(row))
+          .map((row) =>
+            row
+              .slice(1, -1)
+              .split('|')
+              .map((cell) => cell.trim())
           );
-        })}
-      </div>
-    );
+
+        if (rows.length > 0) {
+          const [headerRow, ...bodyRows] = rows;
+          blocks.push(
+            <div
+              key={`tbl-${startIdx}`}
+              className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-950/90"
+            >
+              <table className="w-full text-left border-collapse text-[11px]">
+                <thead>
+                  <tr className="border-b border-slate-800 bg-slate-900/90">
+                    {headerRow.map((cell, cIdx) => (
+                      <th key={cIdx} className="px-3 py-2 font-semibold text-emerald-300 whitespace-nowrap">
+                        {renderInlineText(cell)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/70">
+                  {bodyRows.map((bodyRow, rIdx) => (
+                    <tr key={rIdx} className="hover:bg-slate-900/40">
+                      {bodyRow.map((cell, cIdx) => (
+                        <td key={cIdx} className="px-3 py-2 text-slate-300 align-top">
+                          {renderInlineText(cell)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+          continue;
+        }
+      }
+
+      if (trimmed === '---') {
+        blocks.push(<hr key={`hr-${i}`} className="border-slate-800 my-2" />);
+        i += 1;
+        continue;
+      }
+
+      if (trimmed.startsWith('> ')) {
+        blocks.push(
+          <blockquote
+            key={`bq-${i}`}
+            className="border-l-2 border-amber-400/80 bg-amber-950/30 px-3 py-2 rounded-r-xl text-[11px] text-amber-100 leading-relaxed"
+          >
+            {renderInlineText(trimmed.replace(/^>\s+/, ''))}
+          </blockquote>
+        );
+        i += 1;
+        continue;
+      }
+
+      if (trimmed.startsWith('# ')) {
+        blocks.push(
+          <h1 key={`h1-${i}`} className="text-base font-bold text-teal-300 border-b border-slate-700 pb-1 pt-2">
+            {renderInlineText(trimmed.replace(/^#\s+/, ''))}
+          </h1>
+        );
+        i += 1;
+        continue;
+      }
+      if (trimmed.startsWith('## ')) {
+        blocks.push(
+          <h2 key={`h2-${i}`} className="text-sm font-bold text-teal-400 border-b border-slate-800 pb-1 pt-2">
+            {renderInlineText(trimmed.replace(/^##\s+/, ''))}
+          </h2>
+        );
+        i += 1;
+        continue;
+      }
+      if (trimmed.startsWith('### ')) {
+        blocks.push(
+          <h3 key={`h3-${i}`} className="text-xs font-bold text-purple-300 pt-1.5">
+            {renderInlineText(trimmed.replace(/^###\s+/, ''))}
+          </h3>
+        );
+        i += 1;
+        continue;
+      }
+      if (trimmed.startsWith('#### ')) {
+        blocks.push(
+          <h4 key={`h4-${i}`} className="text-xs font-semibold text-slate-100">
+            {renderInlineText(trimmed.replace(/^####\s+/, ''))}
+          </h4>
+        );
+        i += 1;
+        continue;
+      }
+
+      if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+        blocks.push(
+          <li key={`ul-${i}`} className="ml-4 list-disc text-slate-300">
+            {renderInlineText(trimmed.replace(/^[-*]\s+/, ''))}
+          </li>
+        );
+        i += 1;
+        continue;
+      }
+      if (/^\d+\.\s/.test(trimmed)) {
+        blocks.push(
+          <li key={`ol-${i}`} className="ml-4 list-decimal text-slate-300">
+            {renderInlineText(trimmed.replace(/^\d+\.\s+/, ''))}
+          </li>
+        );
+        i += 1;
+        continue;
+      }
+
+      blocks.push(
+        <p key={`p-${i}`} className="text-slate-300 leading-relaxed">
+          {renderInlineText(trimmed)}
+        </p>
+      );
+      i += 1;
+    }
+
+    return <div className="space-y-2.5 text-xs leading-relaxed text-slate-200">{blocks}</div>;
   };
 
   return (
@@ -177,69 +300,110 @@ const HelpModal: React.FC<HelpModalProps> = ({ show, onHide, showAIFeatures = fa
               </div>
 
               {/* Interactive Quick Doc Buttons */}
-              <div className={`grid grid-cols-1 ${showAIFeatures ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-3'} gap-3`}>
+              <div className={`grid grid-cols-1 ${showAIFeatures ? 'sm:grid-cols-2 lg:grid-cols-5' : 'sm:grid-cols-3'} gap-3`}>
                 <button
+                  type="button"
                   onClick={() => loadMarkdown("/docs/PanduanPenggunaanInteraktif.md", t('btn_interactive_guide'))}
-                  className="p-3.5 bg-slate-900/90 hover:bg-emerald-950/40 border border-slate-800 hover:border-emerald-500/50 text-slate-200 hover:text-emerald-300 rounded-2xl font-semibold text-xs flex flex-col items-center justify-center gap-1.5 shadow-sm transition-all"
+                  className="min-h-[44px] p-3.5 bg-slate-900/90 hover:bg-emerald-950/40 border border-slate-800 hover:border-emerald-500/50 text-slate-200 hover:text-emerald-300 rounded-2xl font-semibold text-xs flex flex-col items-center justify-center gap-1.5 shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >
                   <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
-                  <span>{t('btn_interactive_guide')}</span>
-                  <span className="text-[10px] text-slate-500 font-normal">{t('btn_interactive_guide_sub')}</span>
+                  <span className="text-center">{t('btn_interactive_guide')}</span>
+                  <span className="text-[10px] text-slate-400 font-normal text-center">{t('btn_interactive_guide_sub')}</span>
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => loadMarkdown("/docs/FAQ.md", t('btn_faq'))}
-                  className="p-3.5 bg-slate-900/90 hover:bg-emerald-950/40 border border-slate-800 hover:border-emerald-500/50 text-slate-200 hover:text-emerald-300 rounded-2xl font-semibold text-xs flex flex-col items-center justify-center gap-1.5 shadow-sm transition-all"
+                  className="min-h-[44px] p-3.5 bg-slate-900/90 hover:bg-emerald-950/40 border border-slate-800 hover:border-emerald-500/50 text-slate-200 hover:text-emerald-300 rounded-2xl font-semibold text-xs flex flex-col items-center justify-center gap-1.5 shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >
                   <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>{t('btn_faq')}</span>
-                  <span className="text-[10px] text-slate-500 font-normal">{t('btn_faq_sub')}</span>
+                  <span className="text-center">{t('btn_faq')}</span>
+                  <span className="text-[10px] text-slate-400 font-normal text-center">{t('btn_faq_sub')}</span>
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => loadMarkdown("/docs/DaftarKerangkaKerja.md", t('btn_frameworks'))}
-                  className="p-3.5 bg-slate-900/90 hover:bg-emerald-950/40 border border-slate-800 hover:border-emerald-500/50 text-slate-200 hover:text-emerald-300 rounded-2xl font-semibold text-xs flex flex-col items-center justify-center gap-1.5 shadow-sm transition-all"
+                  className="min-h-[44px] p-3.5 bg-slate-900/90 hover:bg-emerald-950/40 border border-slate-800 hover:border-emerald-500/50 text-slate-200 hover:text-emerald-300 rounded-2xl font-semibold text-xs flex flex-col items-center justify-center gap-1.5 shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >
                   <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                   </svg>
-                  <span>{t('btn_frameworks')}</span>
-                  <span className="text-[10px] text-slate-500 font-normal">{t('btn_frameworks_sub')}</span>
+                  <span className="text-center">{t('btn_frameworks')}</span>
+                  <span className="text-[10px] text-slate-400 font-normal text-center">{t('btn_frameworks_sub')}</span>
                 </button>
 
                 {showAIFeatures && (
-                  <button
-                    onClick={() => loadMarkdown("/docs/PanduanAIPro.md", language === 'id' ? '⚡ Panduan Fitur AI Pro & API' : '⚡ AI Pro & API Guide')}
-                    className="p-3.5 bg-gradient-to-br from-purple-950/60 to-slate-900 hover:from-purple-900/60 hover:to-slate-850 border border-purple-700/60 hover:border-purple-500/80 text-purple-200 hover:text-white rounded-2xl font-semibold text-xs flex flex-col items-center justify-center gap-1.5 shadow-sm transition-all animate-fade-in"
-                  >
-                    <svg className="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    <span className="text-center">{language === 'id' ? '⚡ Fitur AI Pro' : '⚡ AI Pro Guide'}</span>
-                    <span className="text-[10px] text-purple-300/70 font-normal">{language === 'id' ? 'Setup & Aksi' : 'Setup & Actions'}</span>
-                  </button>
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => loadMarkdown("/docs/PanduanAIPro.md", language === 'id' ? '⚡ Panduan Fitur AI Pro & API' : '⚡ AI Pro & API Guide')}
+                      className="min-h-[44px] p-3.5 bg-gradient-to-br from-purple-950/60 to-slate-900 hover:from-purple-900/60 hover:to-slate-800 border border-purple-700/60 hover:border-purple-500/80 text-purple-100 hover:text-white rounded-2xl font-semibold text-xs flex flex-col items-center justify-center gap-1.5 shadow-sm transition-all animate-fade-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    >
+                      <svg className="w-5 h-5 text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      <span className="text-center">{language === 'id' ? '⚡ Fitur AI Pro' : '⚡ AI Pro Guide'}</span>
+                      <span className="text-[10px] text-purple-200/80 font-normal text-center">{language === 'id' ? 'Setup & Aksi' : 'Setup & Actions'}</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        loadMarkdown(
+                          "/docs/PanduanMultiMarketplace.md",
+                          language === 'id'
+                            ? '🧭 Panduan Multi-Marketplace & Payout'
+                            : '🧭 Multi-Marketplace & Payout Guide'
+                        )
+                      }
+                      className="min-h-[44px] p-3.5 bg-gradient-to-br from-cyan-950/60 to-slate-900 hover:from-cyan-900/60 hover:to-slate-800 border border-cyan-600/60 hover:border-cyan-400/80 text-cyan-100 hover:text-white rounded-2xl font-semibold text-xs flex flex-col items-center justify-center gap-1.5 shadow-sm transition-all animate-fade-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    >
+                      <svg className="w-5 h-5 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
+                      </svg>
+                      <span className="text-center">{language === 'id' ? '🧭 Multi-Market' : '🧭 Multi-Market'}</span>
+                      <span className="text-[10px] text-cyan-200/80 font-normal text-center">{language === 'id' ? 'Agensi, MoR & Payout' : 'Agensi, MoR & Payout'}</span>
+                    </button>
+                  </>
                 )}
               </div>
 
               {/* Exclusive AI Pro & Skill Pack Active Banner (Only if AI is unlocked) */}
               {showAIFeatures && (
-                <div className="bg-gradient-to-r from-purple-950/40 via-slate-900 to-indigo-950/40 border border-purple-800/50 p-4 rounded-2xl space-y-2 animate-fade-in">
-                  <div className="flex items-center justify-between">
-                    <h5 className="font-bold text-purple-300 text-xs flex items-center gap-1.5 font-sans">
+                <div className="bg-gradient-to-r from-purple-950/40 via-slate-900 to-cyan-950/40 border border-purple-700/50 p-4 rounded-2xl space-y-2.5 animate-fade-in">
+                  <div className="flex items-center justify-between gap-2">
+                    <h5 className="font-bold text-purple-200 text-xs flex items-center gap-1.5 font-sans">
                       <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-                      <span>{language === 'id' ? '⚡ Mode AI Pro & Paket Skill Aktif' : '⚡ AI Pro & Skill Pack Mode Active'}</span>
+                      <span>{language === 'id' ? '⚡ Mode AI Pro, Paket Skill & Multi-Market Aktif' : '⚡ AI Pro, Skill Pack & Multi-Market Mode Active'}</span>
                     </h5>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-purple-900/40 text-purple-200 border border-purple-700/50">Unlocked</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-purple-900/50 text-purple-100 border border-purple-600/50 shrink-0">Unlocked</span>
                   </div>
                   <p className="text-[11px] text-slate-300 leading-relaxed">
                     {language === 'id'
-                      ? 'Fitur AI Suggest (Bantu Ide), AI Enhance (Sempurnakan), AI Quality Analysis, Pengaturan Provider API, serta Paket Skill (tab SKILL.md & 6 bundel agensi-skills) kini terbuka. Untuk menyembunyikannya kembali dari tampilan publik, ketuk logo aplikasi sebanyak 9 kali.'
-                      : 'AI Suggest, AI Enhance, AI Quality Analysis, API Provider Settings, and the Skill Pack (SKILL.md tab & 6 agensi-skills bundles) are now unlocked. To hide them again from public view, tap the app logo 9 times.'}
+                      ? 'Fitur AI Suggest (Bantu Ide), AI Enhance (Sempurnakan), AI Quality Analysis, Pengaturan Provider API, tab SKILL.md (.zip 1-klik & Copy Listing Copy), 10 bundel agensi-skills, serta panduan distribusi 3 Pilar (Agensi.io, direktori OSS gratis, Lemon Squeezy / Creem.io / Gumroad / Payhip, dan PromptBase + SOP Payout Indonesia) kini terbuka. Untuk menyembunyikannya kembali dari publik, ketuk logo aplikasi sebanyak 9 kali.'
+                      : 'AI Suggest, AI Enhance, AI Quality Analysis, API Provider Settings, SKILL.md creator export (.zip + Listing Copy), 10 agensi-skills bundles, and the 3-Pillar Multi-Marketplace & Indonesia Payout Guide (Agensi.io, OSS directories, Lemon Squeezy / Creem.io / Gumroad / Payhip, PromptBase) are now unlocked. To hide them again from public view, tap the app logo 9 times.'}
                   </p>
+                  <div className="flex flex-wrap gap-2 pt-0.5">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        loadMarkdown(
+                          "/docs/PanduanMultiMarketplace.md",
+                          language === 'id'
+                            ? '🧭 Panduan Multi-Marketplace & Payout'
+                            : '🧭 Multi-Marketplace & Payout Guide'
+                        )
+                      }
+                      className="min-h-[44px] sm:min-h-[34px] px-3 py-1.5 rounded-xl bg-cyan-950/80 hover:bg-cyan-900/80 border border-cyan-500/50 text-cyan-100 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    >
+                      {language === 'id' ? '📖 Buka Panduan Lengkap Multi-Market & Payout' : '📖 Open Complete Multi-Market & Payout Guide'}
+                    </button>
+                  </div>
                 </div>
               )}
 

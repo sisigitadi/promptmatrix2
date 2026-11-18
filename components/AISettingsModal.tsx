@@ -875,6 +875,69 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
               </div>
             </div>
 
+            {/* Inline Complete Multi-Marketplace & Indonesia Payout Guide (9-Tap Private) */}
+            <details className="bg-slate-900/90 border border-cyan-500/30 rounded-2xl px-3.5 py-2.5">
+              <summary className="min-h-[44px] sm:min-h-[38px] flex items-center justify-between gap-2 cursor-pointer select-none text-xs font-bold text-cyan-200 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+                <span>
+                  {language === 'id'
+                    ? '🧭 Panduan Lengkap Market Selain Agensi.io & Payout Indonesia'
+                    : '🧭 Complete Guide: Channels Beyond Agensi.io & Indonesia Payouts'}
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/40 text-cyan-200 shrink-0">
+                  {language === 'id' ? '3 Pilar' : '3 Pillars'}
+                </span>
+              </summary>
+
+              <div className="pt-2.5 pb-1 mt-1 border-t border-slate-800/80 space-y-2.5 text-[11px] text-slate-300 leading-relaxed">
+                <p>
+                  {language === 'id'
+                    ? 'Jalankan perintah `npm run package:channels` di terminal root proyek untuk menghasilkan 3 jalur distribusi siap pakai tanpa membocorkan 9 paket flagship berbayar ke repo gratis:'
+                    : 'Run `npm run package:channels` in the project root to build 3 distribution pillars without leaking the 9 paid flagship packs into your public OSS repo:'}
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+                    <p className="font-bold text-cyan-300">
+                      {language === 'id' ? '1. Lead Magnet OSS (Gratis)' : '1. OSS Lead Magnet (Free)'}
+                    </p>
+                    <p className="text-slate-300">
+                      {language === 'id'
+                        ? 'Folder `dist-lead-magnet/` berisi hanya skill gratis `prompt-matrix-prompt-architect`, `.cursor/rules`, `CLAUDE.md`, dan `SUBMISSION-CHECKLIST.md` untuk GitHub publik, `skills.sh`, `skillsmp.com` (>= 2 stars), `clawhub.ai`, `lobehub.com`, `claudemarketplaces.com`, `cursor.directory`, `futuretools.io`, & Product Hunt.'
+                        : '`dist-lead-magnet/` ships ONLY the free `prompt-matrix-prompt-architect` skill, `.cursor/rules`, `CLAUDE.md`, and `SUBMISSION-CHECKLIST.md` for public GitHub, `skills.sh`, `skillsmp.com` (>= 2 stars), `clawhub.ai`, `lobehub.com`, `claudemarketplaces.com`, `cursor.directory`, `futuretools.io`, & Product Hunt.'}
+                    </p>
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+                    <p className="font-bold text-emerald-300">
+                      {language === 'id' ? '2. Toko Global MoR ($59 Suite)' : '2. Global MoR Storefronts ($59 Suite)'}
+                    </p>
+                    <p className="text-slate-300">
+                      {language === 'id'
+                        ? 'Upload `dist-channels/storefronts/promptmatrix-9-flagship-suite.zip` ($59 vs $133.92 satuan, hemat 56%) memakai copy di `STOREFRONT-MANIFEST.md` ke Lemon Squeezy (Direct IDR ~1%), Creem.io (USDC Polygon ~2%), Gumroad (Direct IDR + Discover), Whop, & Payhip (Midtrans/Xendit).'
+                        : 'Upload `dist-channels/storefronts/promptmatrix-9-flagship-suite.zip` ($59 vs $133.92 individual, 56% savings) with `STOREFRONT-MANIFEST.md` copy to Lemon Squeezy (Direct IDR ~1%), Creem.io (USDC Polygon ~2%), Gumroad (Direct IDR + Discover), Whop, & Payhip (Midtrans/Xendit).'}
+                    </p>
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+                    <p className="font-bold text-purple-300">
+                      {language === 'id' ? '3. PromptBase (15 Listing)' : '3. PromptBase (15 Listings)'}
+                    </p>
+                    <p className="text-slate-300">
+                      {language === 'id'
+                        ? 'Unggah 15 template terstruktur ($4.99 - $9.99) dari `dist-channels/promptbase/PROMPTBASE-15-LISTINGS.md`. Gunakan `?via=<handle>` untuk 0% fee (100% hak kreator). Payout: Zoneless USDC Solana ($0 min, harian) -> Phantom/Solflare -> Pintu/Tokocrypto/Indodax.'
+                        : 'Publish 15 structured templates ($4.99 - $9.99) from `dist-channels/promptbase/PROMPTBASE-15-LISTINGS.md`. Share `?via=<handle>` for 0% fee (100% creator share). Payout: Zoneless USDC Solana ($0 min, daily) -> Phantom/Solflare -> Pintu/Tokocrypto/Indodax.'}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-[11px] text-amber-200 bg-amber-950/30 border border-amber-500/30 rounded-xl px-2.5 py-2">
+                  {language === 'id'
+                    ? 'Peringatan Payout ID: Jangan gunakan saldo penerima USD Wise Indonesia. Gunakan Direct IDR Bank (Lemon Squeezy/Gumroad), USDC Polygon (Creem.io), atau Zoneless USDC Solana (Agensi.io/PromptBase). Setelah URL toko live, isi pada bagian "Saluran Marketplace Sekunder" di atas (lokal) atau di `config/agensiConfig.ts` lalu jalankan `npm run build` & `npm run deploy`. Versi lengkap juga ada di modal Bantuan (?) -> Panduan Multi-Market.'
+                    : 'Indonesia Payout Note: Do not route USD payouts to an Indonesia Wise USD balance. Use Direct IDR Bank (Lemon Squeezy/Gumroad), USDC Polygon (Creem.io), or Zoneless USDC Solana (Agensi.io/PromptBase). Once your store links are live, paste them in "Secondary Marketplace Channels" above (local) or `config/agensiConfig.ts` and run `npm run build` & `npm run deploy`. Full reference is also in Help (?) -> Multi-Market Guide.'}
+                </p>
+              </div>
+            </details>
+
             {/* Bundled 10 Open Agent Skills Catalog (agensi-skills/) */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
