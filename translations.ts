@@ -305,6 +305,19 @@ export const allTranslations: TranslationSet = {
     agensi_store_label: 'URL Toko Kreator Agensi.io',
     agensi_ref_label: 'Kode Referal (?ref=)',
     agensi_urls_saved: 'Tautan Agensi.io berhasil disimpan di browser lokal!',
+    suite_bundle_badge: 'Paket Suite Lengkap (9 Flagship)',
+    suite_bundle_title: 'Bundel Suite PromptMatrix 9-Skill',
+    suite_bundle_desc: 'Dapatkan seluruh 9 paket flagship dalam satu arsip ZIP ($59.00, hemat $74.92 / 56% dari total harga satuan $133.92).',
+    suite_cta_lemonsqueezy: 'Beli Suite di Lemon Squeezy',
+    suite_cta_creem: 'Beli Suite di Creem.io',
+    suite_cta_gumroad: 'Beli Suite di Gumroad',
+    suite_cta_promptbase: 'Jelajahi PromptBase',
+    secondary_channels_title: 'Saluran Marketplace Sekunder (Opsional)',
+    secondary_channels_hint: 'Kosongkan jika tidak digunakan. Tautan hanya tampil di katalog jika URL telah diisi.',
+    secondary_ls_label: 'URL Bundel Lemon Squeezy',
+    secondary_creem_label: 'URL Bundel Creem.io',
+    secondary_gumroad_label: 'URL Bundel Gumroad',
+    secondary_promptbase_label: 'URL Profil Toko PromptBase',
 
     // Footer
     footer_text: '© 2025-2026 Sigit Adi · Optimalkan Prompt AI Anda'
@@ -607,6 +620,19 @@ export const allTranslations: TranslationSet = {
     agensi_store_label: 'Agensi.io Creator Store URL',
     agensi_ref_label: 'Referral Code (?ref=)',
     agensi_urls_saved: 'Agensi.io URLs saved locally in your browser!',
+    suite_bundle_badge: 'Complete Suite Bundle (9 Flagship)',
+    suite_bundle_title: 'PromptMatrix 9-Skill Suite Bundle',
+    suite_bundle_desc: 'Get all 9 flagship packs in one ZIP archive ($59.00, save $74.92 / 56% off the $133.92 individual total).',
+    suite_cta_lemonsqueezy: 'Buy Suite on Lemon Squeezy',
+    suite_cta_creem: 'Buy Suite on Creem.io',
+    suite_cta_gumroad: 'Buy Suite on Gumroad',
+    suite_cta_promptbase: 'Explore PromptBase Store',
+    secondary_channels_title: 'Secondary Marketplace Channels (Optional)',
+    secondary_channels_hint: 'Leave blank to hide. Links only appear in the catalog once a URL is configured.',
+    secondary_ls_label: 'Lemon Squeezy Bundle URL',
+    secondary_creem_label: 'Creem.io Bundle URL',
+    secondary_gumroad_label: 'Gumroad Bundle URL',
+    secondary_promptbase_label: 'PromptBase Store URL',
 
     // Footer
     footer_text: '© 2025-2026 Sigit Adi · Optimize Your AI Prompts'

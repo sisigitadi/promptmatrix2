@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-agensi/
+dist-lead-magnet/
+dist-channels/
 dist-ssr
 *.local
 

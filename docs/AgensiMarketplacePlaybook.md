@@ -119,7 +119,39 @@ Agensi.io restricts Stripe Connect instant payouts to the US, Canada, UK, EEA, a
 
 ---
 
-## 5. Hybrid Storefront & 9-Tap Creator Factory Architecture
+## 5. Multi-Marketplace Expansion (3 Pillars)
+
+Beyond Agensi.io individual listings, `npm run package:channels` compiles three ready-to-publish distribution channels directly from `agensi-skills/`, `config/agensiConfig.ts`, `data/frameworks.ts`, `services/localizationService.ts`, and `services/sampleDataService.ts`:
+
+```bash
+npm run package:channels
+```
+
+1. **Pillar 1: Public OSS Lead Magnet (`dist-lead-magnet/`)**
+   - Exports ONLY the free `prompt-matrix-prompt-architect` pack (`SKILL.md`, `references/frameworks-cheatsheet.md`, `scripts/validate-json-prompt.mjs`) with an automated guard ensuring zero paid flagship files leak into the public repo.
+   - Generates `.cursor/rules/prompt-matrix-architect.mdc` (for `cursor.directory`), `CLAUDE.md` (for Claude Code and `claudemarketplaces.com`), `README.md` (`npx skills add <github-user>/prompt-matrix-skill` plus upgrade table linking `https://prompt.sigitadi.id` and `https://www.agensi.io/r/SIGITADI`), and `SUBMISSION-CHECKLIST.md` (`skills.sh`, `skillsmp.com` requiring `>= 2` GitHub stars, `clawhub.ai`, `lobehub.com`, `claudemarketplaces.com`, `cursor.directory`, `futuretools.io`, and `Product Hunt`).
+2. **Pillar 2: Global MoR Storefront Suite (`dist-channels/storefronts/`)**
+   - Bundles all 9 paid flagship folders into `promptmatrix-9-flagship-suite.zip` (POSIX `/` paths, `SUITE-README.md` at ZIP root, `< 50 MB`) and generates `STOREFRONT-MANIFEST.md` with ready-to-paste copy for **Lemon Squeezy**, **Creem.io**, **Gumroad**, **Whop**, and **Payhip** ($59.00 bundle vs individual total computed from `config/agensiConfig.ts`).
+3. **Pillar 3: PromptBase 15 Structured Systems (`dist-channels/promptbase/`)**
+   - Extracts 15 high-intent frameworks across Agent Engineering, SaaS/SEO, and Multimodal (Midjourney v7, FLUX.2, Veo 3, Sora 2, Suno v4.5/v5) and outputs `PROMPTBASE-15-LISTINGS.md` and `promptbase-15-listings.json` with `<= 40` char titles, `[Variable]` prompt templates, populated testing examples, and `?via=` 0% fee referral instructions.
+
+### Verified Indonesia Payout & MoR Matrix
+
+> **Wise Indonesia USD Balance Warning:** Indonesian-registered Wise accounts cannot open or hold a general commercial USD receiving account balance. Never route marketplace USD payouts to a non-existent Wise USD balance; use the verified rails below instead.
+
+| Channel | Tax / MoR Model | Verified Indonesia Payout Rail | Fee, Minimum & Settlement Notes |
+| :--- | :--- | :--- | :--- |
+| **Agensi.io** | Merchant of Record | **Zoneless USDC (Solana)** -> Phantom/Solflare -> Pintu/Tokocrypto/Indodax | `$3.50` min, 72h settlement; `70%` organic / `90%` via `?ref=` (`https://www.agensi.io/r/SIGITADI`) |
+| **PromptBase** | Marketplace | **Zoneless USDC (Solana)** -> Phantom/Solflare -> Pintu/Tokocrypto/Indodax | `$0` min, **daily** payouts; `0%` fee (`100%` share) on self-referred `?via=` sales |
+| **Lemon Squeezy** | Full MoR (global VAT/GST) | **Direct IDR Bank Transfer** (BCA/Mandiri/BRI/Jago) | ~`1%` FX conversion to IDR; zero foreign tax registration needed |
+| **Creem.io** | Full MoR (global VAT/GST) | **USDC on Polygon** -> self-custody wallet -> Pintu/Indodax | ~`2%` payout fee; fast crypto settlement |
+| **Gumroad** | MoR + Discover | **Direct IDR Bank Transfer** | Built-in Gumroad Discover traffic; direct IDR bank payout |
+| **Apify** | Actor Marketplace | **Wise -> Direct IDR Bank** (automated IDR conversion payout) | Use Wise IDR bank transfer flow rather than holding a Wise USD balance |
+| **Payhip** | Direct / EU-UK VAT MoR | **Midtrans / Xendit (IDR local)** + PayPal | Best for domestic Indonesian buyers paying via QRIS or Virtual Account |
+
+---
+
+## 6. Hybrid Storefront & 9-Tap Creator Factory Architecture
 
 PromptMatrix 2.0 separates **Public Affiliate Conversion** from **Private Creator Packaging Tools**:
 

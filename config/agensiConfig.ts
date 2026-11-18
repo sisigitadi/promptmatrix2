@@ -34,6 +34,10 @@ export interface AgensiConfig {
   readonly affiliateUrl: string;
   readonly creatorStoreUrl: string;
   readonly affiliateRefCode?: string;
+  readonly lemonSqueezyBundleUrl?: string;
+  readonly creemBundleUrl?: string;
+  readonly gumroadBundleUrl?: string;
+  readonly promptBaseStoreUrl?: string;
   readonly commissionInfo: AgensiCommissionInfo;
   readonly supportedAgents: readonly AgensiSupportedAgent[];
   readonly bundledSkillPacks: readonly AgensiSkillPackItem[];
@@ -43,6 +47,10 @@ export interface AgensiUrlOverrides {
   readonly affiliateUrl: string;
   readonly creatorStoreUrl: string;
   readonly affiliateRefCode: string;
+  readonly lemonSqueezyBundleUrl: string;
+  readonly creemBundleUrl: string;
+  readonly gumroadBundleUrl: string;
+  readonly promptBaseStoreUrl: string;
 }
 
 export interface EffectiveAgensiUrls {
@@ -50,6 +58,20 @@ export interface EffectiveAgensiUrls {
   readonly creatorStoreUrl: string;
   readonly affiliateRefCode: string;
   readonly activeUrl: string;
+  readonly lemonSqueezyBundleUrl: string;
+  readonly creemBundleUrl: string;
+  readonly gumroadBundleUrl: string;
+  readonly promptBaseStoreUrl: string;
+}
+
+export interface SuiteBundleInfo {
+  readonly flagshipCount: number;
+  readonly individualTotalUsd: number;
+  readonly bundlePriceUsd: number;
+  readonly bundlePriceLabel: string;
+  readonly savingsUsd: number;
+  readonly savingsPercent: number;
+  readonly zipFilename: string;
 }
 
 export const AGENSI_URLS_STORAGE_KEY = 'pm_agensi_urls';
@@ -61,6 +83,10 @@ export const AGENSI_CONFIG: AgensiConfig = {
   affiliateUrl: 'https://www.agensi.io/r/SIGITADI',
   creatorStoreUrl: 'https://www.agensi.io/users/sigitadi',
   affiliateRefCode: 'SIGITADI',
+  lemonSqueezyBundleUrl: '',
+  creemBundleUrl: '',
+  gumroadBundleUrl: '',
+  promptBaseStoreUrl: '',
   commissionInfo: {
     standardSharePercent: 70,
     affiliateNewBuyerSharePercent: 90,
@@ -276,10 +302,42 @@ export const AGENSI_CONFIG: AgensiConfig = {
   ],
 };
 
+const computeSuiteBundleInfo = (packs: readonly AgensiSkillPackItem[]): SuiteBundleInfo => {
+  const flagshipPacks = packs.filter((pack) => pack.tier === 'flagship');
+  const flagshipCount = flagshipPacks.length;
+  const individualTotalUsd = Number(
+    flagshipPacks.reduce((sum, pack) => sum + pack.priceUsd, 0).toFixed(2)
+  );
+  const bundlePriceUsd = 59;
+  const savingsUsd = Number((individualTotalUsd - bundlePriceUsd).toFixed(2));
+  const savingsPercent =
+    individualTotalUsd > 0
+      ? Math.round(((individualTotalUsd - bundlePriceUsd) / individualTotalUsd) * 100)
+      : 0;
+
+  return {
+    flagshipCount,
+    individualTotalUsd,
+    bundlePriceUsd,
+    bundlePriceLabel: '$59.00',
+    savingsUsd,
+    savingsPercent,
+    zipFilename: 'promptmatrix-9-flagship-suite.zip',
+  };
+};
+
+export const SUITE_BUNDLE_INFO: SuiteBundleInfo = computeSuiteBundleInfo(
+  AGENSI_CONFIG.bundledSkillPacks
+);
+
 const EMPTY_OVERRIDES: AgensiUrlOverrides = {
-  affiliateUrl: 'https://www.agensi.io/r/SIGITADI',
-  creatorStoreUrl: 'https://www.agensi.io/users/sigitadi',
-  affiliateRefCode: 'SIGITADI',
+  affiliateUrl: AGENSI_CONFIG.affiliateUrl,
+  creatorStoreUrl: AGENSI_CONFIG.creatorStoreUrl,
+  affiliateRefCode: AGENSI_CONFIG.affiliateRefCode || '',
+  lemonSqueezyBundleUrl: AGENSI_CONFIG.lemonSqueezyBundleUrl || '',
+  creemBundleUrl: AGENSI_CONFIG.creemBundleUrl || '',
+  gumroadBundleUrl: AGENSI_CONFIG.gumroadBundleUrl || '',
+  promptBaseStoreUrl: AGENSI_CONFIG.promptBaseStoreUrl || '',
 };
 
 const isBrowserStorageAvailable = (): boolean => {
@@ -291,7 +349,7 @@ const normalizeStoredString = (value: unknown): string => {
 };
 
 /**
- * Reads user-configured Agensi.io URL overrides from localStorage (`pm_agensi_urls`).
+ * Reads user-configured Agensi.io and secondary channel URL overrides from localStorage (`pm_agensi_urls`).
  */
 export const getStoredAgensiUrlOverrides = (): AgensiUrlOverrides => {
   if (!isBrowserStorageAvailable()) {
@@ -312,6 +370,10 @@ export const getStoredAgensiUrlOverrides = (): AgensiUrlOverrides => {
       affiliateUrl: normalizeStoredString(record.affiliateUrl),
       creatorStoreUrl: normalizeStoredString(record.creatorStoreUrl),
       affiliateRefCode: normalizeStoredString(record.affiliateRefCode),
+      lemonSqueezyBundleUrl: normalizeStoredString(record.lemonSqueezyBundleUrl),
+      creemBundleUrl: normalizeStoredString(record.creemBundleUrl),
+      gumroadBundleUrl: normalizeStoredString(record.gumroadBundleUrl),
+      promptBaseStoreUrl: normalizeStoredString(record.promptBaseStoreUrl),
     };
   } catch {
     return { ...EMPTY_OVERRIDES };
@@ -319,7 +381,7 @@ export const getStoredAgensiUrlOverrides = (): AgensiUrlOverrides => {
 };
 
 /**
- * Persists user-configured Agensi.io URL overrides into localStorage (`pm_agensi_urls`).
+ * Persists user-configured Agensi.io and secondary channel URL overrides into localStorage (`pm_agensi_urls`).
  */
 export const saveAgensiUrlOverrides = (overrides: AgensiUrlOverrides): void => {
   if (!isBrowserStorageAvailable()) {
@@ -330,6 +392,10 @@ export const saveAgensiUrlOverrides = (overrides: AgensiUrlOverrides): void => {
     affiliateUrl: overrides.affiliateUrl.trim(),
     creatorStoreUrl: overrides.creatorStoreUrl.trim(),
     affiliateRefCode: overrides.affiliateRefCode.trim(),
+    lemonSqueezyBundleUrl: (overrides.lemonSqueezyBundleUrl || '').trim(),
+    creemBundleUrl: (overrides.creemBundleUrl || '').trim(),
+    gumroadBundleUrl: (overrides.gumroadBundleUrl || '').trim(),
+    promptBaseStoreUrl: (overrides.promptBaseStoreUrl || '').trim(),
   };
 
   try {
@@ -340,13 +406,19 @@ export const saveAgensiUrlOverrides = (overrides: AgensiUrlOverrides): void => {
 };
 
 /**
- * Resolves effective Agensi.io URLs by merging stored localStorage overrides over AGENSI_CONFIG defaults.
+ * Resolves effective Agensi.io and secondary channel URLs by merging stored localStorage overrides over AGENSI_CONFIG defaults.
  */
 export const getEffectiveAgensiUrls = (): EffectiveAgensiUrls => {
   const stored = getStoredAgensiUrlOverrides();
   const affiliateUrl = stored.affiliateUrl || AGENSI_CONFIG.affiliateUrl.trim();
   const creatorStoreUrl = stored.creatorStoreUrl || AGENSI_CONFIG.creatorStoreUrl.trim();
   const affiliateRefCode = stored.affiliateRefCode || (AGENSI_CONFIG.affiliateRefCode || '').trim();
+  const lemonSqueezyBundleUrl =
+    stored.lemonSqueezyBundleUrl || (AGENSI_CONFIG.lemonSqueezyBundleUrl || '').trim();
+  const creemBundleUrl = stored.creemBundleUrl || (AGENSI_CONFIG.creemBundleUrl || '').trim();
+  const gumroadBundleUrl = stored.gumroadBundleUrl || (AGENSI_CONFIG.gumroadBundleUrl || '').trim();
+  const promptBaseStoreUrl =
+    stored.promptBaseStoreUrl || (AGENSI_CONFIG.promptBaseStoreUrl || '').trim();
   const activeUrl = affiliateUrl || creatorStoreUrl;
 
   return {
@@ -354,7 +426,23 @@ export const getEffectiveAgensiUrls = (): EffectiveAgensiUrls => {
     creatorStoreUrl,
     affiliateRefCode,
     activeUrl,
+    lemonSqueezyBundleUrl,
+    creemBundleUrl,
+    gumroadBundleUrl,
+    promptBaseStoreUrl,
   };
+};
+
+/**
+ * Returns true if at least one secondary marketplace URL has been configured.
+ */
+export const hasSecondaryMarketplaceUrls = (effective: EffectiveAgensiUrls): boolean => {
+  return Boolean(
+    effective.lemonSqueezyBundleUrl.trim() ||
+      effective.creemBundleUrl.trim() ||
+      effective.gumroadBundleUrl.trim() ||
+      effective.promptBaseStoreUrl.trim()
+  );
 };
 
 const appendAffiliateRef = (baseUrl: string, refCode: string): string => {

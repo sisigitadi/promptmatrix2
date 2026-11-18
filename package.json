@@ -14,6 +14,7 @@
     "preview": "vite preview",
     "audit": "node scripts/audit-frameworks.mjs",
     "package:skills": "node scripts/package-agensi-skills.mjs",
+    "package:channels": "node scripts/package-multi-channels.mjs",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },

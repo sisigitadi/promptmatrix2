@@ -2,8 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   AGENSI_CONFIG,
   AgensiSkillPackItem,
+  SUITE_BUNDLE_INFO,
   buildAgensiPackCtaUrl,
   getEffectiveAgensiUrls,
+  hasSecondaryMarketplaceUrls,
 } from '../config/agensiConfig';
 import { useLanguage } from '../contexts/LanguageContext';
 import { buildAgensiListingCopy } from '../services/skillZipService';
@@ -77,6 +79,42 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
 
   const supportedAgentsCount = AGENSI_CONFIG.supportedAgents.length;
   const hasConfiguredStoreUrl = Boolean(effectiveUrls.activeUrl);
+  const primarySuiteAgensiUrl =
+    effectiveUrls.creatorStoreUrl.trim() ||
+    effectiveUrls.affiliateUrl.trim() ||
+    AGENSI_CONFIG.marketplaceBaseUrl;
+  const primarySuiteCtaLabel =
+    effectiveUrls.creatorStoreUrl.trim() || effectiveUrls.affiliateUrl.trim()
+      ? t('catalog_cta_agensi')
+      : 'Agensi.io';
+  const secondaryCheckoutChannels: ReadonlyArray<{
+    readonly id: string;
+    readonly url: string;
+    readonly label: string;
+  }> = [
+    {
+      id: 'lemonsqueezy',
+      url: effectiveUrls.lemonSqueezyBundleUrl.trim(),
+      label: t('suite_cta_lemonsqueezy'),
+    },
+    {
+      id: 'creem',
+      url: effectiveUrls.creemBundleUrl.trim(),
+      label: t('suite_cta_creem'),
+    },
+    {
+      id: 'gumroad',
+      url: effectiveUrls.gumroadBundleUrl.trim(),
+      label: t('suite_cta_gumroad'),
+    },
+    {
+      id: 'promptbase',
+      url: effectiveUrls.promptBaseStoreUrl.trim(),
+      label: t('suite_cta_promptbase'),
+    },
+  ].filter((channel) => channel.url.length > 0);
+  const showSecondaryChannels =
+    hasSecondaryMarketplaceUrls(effectiveUrls) && secondaryCheckoutChannels.length > 0;
 
   const handleCopyListingCopy = async (pack: AgensiSkillPackItem) => {
     const summary = language === 'id' ? pack.summaryId : pack.summaryEn;
@@ -248,8 +286,128 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
           })}
         </div>
 
-        {/* Cards Grid */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-5">
+        {/* Suite Bundle & Cards Grid */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
+          {/* Suite Bundle & Multi-Channel Checkout Section */}
+          <section
+            aria-labelledby="suite-bundle-heading"
+            className={`rounded-2xl border p-4 space-y-3 ${
+              isLightTheme
+                ? 'bg-emerald-50/80 border-emerald-300 text-slate-900'
+                : 'bg-[#090d16] border-emerald-500/35 text-slate-100'
+            }`}
+          >
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div className="space-y-1.5 min-w-0">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold border ${
+                      isLightTheme
+                        ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
+                        : 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300'
+                    }`}
+                  >
+                    {t('suite_bundle_badge')}
+                  </span>
+                  <span
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono border break-all ${
+                      isLightTheme
+                        ? 'bg-white border-slate-300 text-slate-800'
+                        : 'bg-slate-900 border-slate-700 text-slate-200'
+                    }`}
+                  >
+                    {SUITE_BUNDLE_INFO.zipFilename}
+                  </span>
+                </div>
+
+                <h3
+                  id="suite-bundle-heading"
+                  className={`text-sm sm:text-base font-bold leading-snug break-words ${
+                    isLightTheme ? 'text-slate-900' : 'text-slate-100'
+                  }`}
+                >
+                  {t('suite_bundle_title')}
+                </h3>
+
+                <p
+                  className={`text-xs leading-relaxed break-words ${
+                    isLightTheme ? 'text-slate-700' : 'text-slate-300'
+                  }`}
+                >
+                  {t('suite_bundle_desc')}
+                </p>
+              </div>
+
+              <div className="flex sm:flex-col items-baseline sm:items-end justify-between sm:justify-start gap-1.5 shrink-0">
+                <div className="flex items-baseline gap-2">
+                  <span
+                    className={`text-lg font-mono font-bold ${
+                      isLightTheme ? 'text-slate-900' : 'text-slate-100'
+                    }`}
+                  >
+                    {SUITE_BUNDLE_INFO.bundlePriceLabel}
+                  </span>
+                  <span
+                    className={`text-xs font-mono line-through ${
+                      isLightTheme ? 'text-slate-600' : 'text-slate-400'
+                    }`}
+                  >
+                    ${SUITE_BUNDLE_INFO.individualTotalUsd.toFixed(2)}
+                  </span>
+                </div>
+                <span
+                  className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold border ${
+                    isLightTheme
+                      ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
+                      : 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300'
+                  }`}
+                >
+                  {language === 'id'
+                    ? `${SUITE_BUNDLE_INFO.flagshipCount} Flagship · Hemat $${SUITE_BUNDLE_INFO.savingsUsd.toFixed(2)} (${SUITE_BUNDLE_INFO.savingsPercent}%)`
+                    : `${SUITE_BUNDLE_INFO.flagshipCount} Flagship · Save $${SUITE_BUNDLE_INFO.savingsUsd.toFixed(2)} (${SUITE_BUNDLE_INFO.savingsPercent}%)`}
+                </span>
+              </div>
+            </div>
+
+            <div
+              className={`pt-3 border-t flex flex-wrap items-center gap-2 ${
+                isLightTheme ? 'border-emerald-200' : 'border-slate-800'
+              }`}
+            >
+              <a
+                href={primarySuiteAgensiUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`min-h-[44px] px-4 py-2 rounded-xl text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                  isLightTheme
+                    ? 'bg-emerald-700 hover:bg-emerald-800 text-white'
+                    : 'bg-emerald-700 hover:bg-emerald-600 text-white'
+                }`}
+              >
+                <span>{primarySuiteCtaLabel}</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+
+              {showSecondaryChannels &&
+                secondaryCheckoutChannels.map((channel) => (
+                  <a
+                    key={channel.id}
+                    href={channel.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-semibold inline-flex items-center justify-center gap-1.5 border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                      isLightTheme
+                        ? 'bg-white hover:bg-slate-100 border-slate-300 text-slate-900'
+                        : 'bg-slate-800 hover:bg-slate-700 border-slate-600 text-slate-100'
+                    }`}
+                  >
+                    <span>{channel.label}</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                ))}
+            </div>
+          </section>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             {filteredPacks.map((pack) => {
               const isFreeStarter = pack.tier === 'lead-magnet';

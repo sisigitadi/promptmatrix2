@@ -15,6 +15,7 @@ import {
   AgensiUrlOverrides,
   getEffectiveAgensiUrls,
   getStoredAgensiUrlOverrides,
+  hasSecondaryMarketplaceUrls,
   saveAgensiUrlOverrides,
 } from '../config/agensiConfig';
 import { AgentSkillSpec, SkillValidationResult } from '../services/agentSkillService';
@@ -53,6 +54,55 @@ const FLAGSHIP_QUICK_CHIPS: readonly string[] = [
   'local-model',
 ];
 
+type SecondaryAgensiUrlFieldKey =
+  | 'lemonSqueezyBundleUrl'
+  | 'creemBundleUrl'
+  | 'gumroadBundleUrl'
+  | 'promptBaseStoreUrl';
+
+interface SecondaryChannelField {
+  readonly key: SecondaryAgensiUrlFieldKey;
+  readonly labelKey:
+    | 'secondary_ls_label'
+    | 'secondary_creem_label'
+    | 'secondary_gumroad_label'
+    | 'secondary_promptbase_label';
+  readonly placeholder: string;
+}
+
+const SECONDARY_CHANNEL_FIELDS: readonly SecondaryChannelField[] = [
+  {
+    key: 'lemonSqueezyBundleUrl',
+    labelKey: 'secondary_ls_label',
+    placeholder: 'https://store.lemonsqueezy.com/buy/...',
+  },
+  {
+    key: 'creemBundleUrl',
+    labelKey: 'secondary_creem_label',
+    placeholder: 'https://www.creem.io/payment/...',
+  },
+  {
+    key: 'gumroadBundleUrl',
+    labelKey: 'secondary_gumroad_label',
+    placeholder: 'https://gumroad.com/l/...',
+  },
+  {
+    key: 'promptBaseStoreUrl',
+    labelKey: 'secondary_promptbase_label',
+    placeholder: 'https://promptbase.com/profile/...',
+  },
+];
+
+const normalizeAgensiUrlOverrides = (overrides: AgensiUrlOverrides): AgensiUrlOverrides => ({
+  affiliateUrl: overrides.affiliateUrl || '',
+  creatorStoreUrl: overrides.creatorStoreUrl || '',
+  affiliateRefCode: overrides.affiliateRefCode || '',
+  lemonSqueezyBundleUrl: overrides.lemonSqueezyBundleUrl || '',
+  creemBundleUrl: overrides.creemBundleUrl || '',
+  gumroadBundleUrl: overrides.gumroadBundleUrl || '',
+  promptBaseStoreUrl: overrides.promptBaseStoreUrl || '',
+});
+
 const AISettingsModal: React.FC<AISettingsModalProps> = ({
   show,
   onHide,
@@ -78,7 +128,9 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
   const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
   const [copiedPackSlug, setCopiedPackSlug] = useState<string | null>(null);
   const [copiedListingSlug, setCopiedListingSlug] = useState<string | null>(null);
-  const [agensiUrls, setAgensiUrls] = useState<AgensiUrlOverrides>(getStoredAgensiUrlOverrides());
+  const [agensiUrls, setAgensiUrls] = useState<AgensiUrlOverrides>(() =>
+    normalizeAgensiUrlOverrides(getStoredAgensiUrlOverrides())
+  );
   const [agensiSavedNotice, setAgensiSavedNotice] = useState(false);
 
   useEffect(() => {
@@ -90,7 +142,7 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
       setFetchedModelsList([]);
       setCopiedPackSlug(null);
       setCopiedListingSlug(null);
-      setAgensiUrls(getStoredAgensiUrlOverrides());
+      setAgensiUrls(normalizeAgensiUrlOverrides(getStoredAgensiUrlOverrides()));
       setAgensiSavedNotice(false);
       const preset = AI_PROVIDER_PRESETS[current.provider];
       const hasModel = preset?.models?.some((m) => m.id === current.model);
@@ -114,6 +166,7 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
   const currentPreset = AI_PROVIDER_PRESETS[settings.provider] || AI_PROVIDER_PRESETS.custom;
   const effectiveAgensiUrls = getEffectiveAgensiUrls();
   const activeStoreUrl = effectiveAgensiUrls.activeUrl;
+  const hasSecondaryChannels = hasSecondaryMarketplaceUrls(effectiveAgensiUrls);
 
   const handleProviderChange = (providerId: AIProviderId) => {
     const preset = AI_PROVIDER_PRESETS[providerId];
@@ -242,7 +295,7 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
 
   const handleSaveAgensiUrls = () => {
     saveAgensiUrlOverrides(agensiUrls);
-    setAgensiUrls(getStoredAgensiUrlOverrides());
+    setAgensiUrls(normalizeAgensiUrlOverrides(getStoredAgensiUrlOverrides()));
     setAgensiSavedNotice(true);
     onAgensiUrlsSaved?.();
     setTimeout(() => setAgensiSavedNotice(false), 2500);
@@ -755,6 +808,46 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                 </label>
               </div>
 
+              <details className="rounded-xl bg-slate-950/70 border border-slate-800 px-3 py-2">
+                <summary className="min-h-[44px] sm:min-h-[38px] flex items-center justify-between gap-2 cursor-pointer select-none text-[11px] font-semibold text-slate-200 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+                  <span>{t('secondary_channels_title')}</span>
+                  {hasSecondaryChannels && (
+                    <span className="px-2 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/35 text-emerald-300 text-[10px] font-mono">
+                      ✓
+                    </span>
+                  )}
+                </summary>
+
+                <div className="pt-2.5 pb-1 space-y-2.5 border-t border-slate-800/80 mt-1">
+                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                    {t('secondary_channels_hint')}
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {SECONDARY_CHANNEL_FIELDS.map((field) => (
+                      <label key={field.key} className="space-y-1 block">
+                        <span className="text-[11px] font-medium text-slate-300 block">
+                          {t(field.labelKey)}
+                        </span>
+                        <input
+                          type="url"
+                          value={agensiUrls[field.key]}
+                          onChange={(e) => {
+                            setAgensiSavedNotice(false);
+                            setAgensiUrls((prev) => ({
+                              ...prev,
+                              [field.key]: e.target.value,
+                            }));
+                          }}
+                          placeholder={field.placeholder}
+                          className="w-full min-h-[44px] sm:min-h-[38px] px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 placeholder:text-slate-400 text-xs font-mono focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                        />
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </details>
+
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2.5">
                 <label className="space-y-1 block flex-1">
                   <span className="text-[11px] font-medium text-slate-300 block">
@@ -775,7 +868,7 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                 <button
                   type="button"
                   onClick={handleSaveAgensiUrls}
-                  className="min-h-[44px] sm:min-h-[38px] px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="min-h-[44px] sm:min-h-[38px] px-4 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-semibold text-xs transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >
                   {t('save_settings_btn')}
                 </button>
