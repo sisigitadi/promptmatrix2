@@ -58,9 +58,9 @@ export const AGENSI_CONFIG: AgensiConfig = {
   marketplaceBaseUrl: 'https://agensi.io',
   // Configure these in production when your Agensi.io creator account is active.
   // Leave empty ('') when unconfigured so no placeholder link is shown in the UI.
-  affiliateUrl: '',
-  creatorStoreUrl: '',
-  affiliateRefCode: '',
+  affiliateUrl: 'https://www.agensi.io/r/SIGITADI',
+  creatorStoreUrl: 'https://www.agensi.io/users/sigitadi',
+  affiliateRefCode: 'SIGITADI',
   commissionInfo: {
     standardSharePercent: 70,
     affiliateNewBuyerSharePercent: 90,
@@ -277,9 +277,9 @@ export const AGENSI_CONFIG: AgensiConfig = {
 };
 
 const EMPTY_OVERRIDES: AgensiUrlOverrides = {
-  affiliateUrl: '',
-  creatorStoreUrl: '',
-  affiliateRefCode: '',
+  affiliateUrl: 'https://www.agensi.io/r/SIGITADI',
+  creatorStoreUrl: 'https://www.agensi.io/users/sigitadi',
+  affiliateRefCode: 'SIGITADI',
 };
 
 const isBrowserStorageAvailable = (): boolean => {
@@ -369,6 +369,9 @@ const appendAffiliateRef = (baseUrl: string, refCode: string): string => {
 
   try {
     const parsed = new URL(trimmedUrl);
+    if (parsed.pathname.startsWith('/r/')) {
+      return trimmedUrl;
+    }
     if (!parsed.searchParams.has('ref')) {
       parsed.searchParams.set('ref', trimmedRef);
     }
