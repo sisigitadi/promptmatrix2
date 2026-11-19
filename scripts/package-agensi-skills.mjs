@@ -30,9 +30,22 @@ const BANNED_BUZZWORDS = [
   ['seam', 'less'],
   ['cutting', 'edge'],
   ['ulti', 'mate'],
+  ['next', 'generation'],
+  ['game', 'changer'],
+  ['un', 'lock'],
+  ['ele', 'vate'],
+  ['em', 'power'],
+  ['del', 've'],
+  ['show', 'case'],
+  ['ro', 'bust'],
 ].map(([a, b]) => ({
-  label: `${a} ${b}`,
-  regex: new RegExp(`\\b${a}[\\s-]+${b}\\b`, 'gi'),
+  label: `${a}${b === 'powered' || b === 'edge' || b === 'generation' || b === 'changer' ? ` ${b}` : b}`,
+  regex: new RegExp(
+    a === 'ai' || b === 'edge' || b === 'generation' || b === 'changer'
+      ? `\\b${a}[\\s-]+${b}\\b`
+      : `\\b${a}${b}\\b`,
+    'gi'
+  ),
 }));
 
 const FORBIDDEN_SCRIPT_PATTERNS = [
@@ -47,44 +60,64 @@ const FORBIDDEN_SCRIPT_PATTERNS = [
 
 const LISTING_METADATA_BY_SLUG = {
   'prompt-matrix-prompt-architect': {
-    tagline: 'Structure deterministic agent prompts with CO-STAR, RTF, GCC, Few-Shot, and RFC 8259 JSON contracts.',
+    tagline: 'Compile rough instructions into RTF, CO-STAR, GCC, and strict RFC 8259 JSON contracts.',
     tags: ['prompt-engineering', 'co-star', 'json-schema', 'rfc-8259', 'prompt-matrix', 'claude-code', 'cursor'],
+    overviewNote:
+      'Includes a framework selection matrix, input delimiter isolation rules, `templates/sample-prompt.json`, `references/frameworks-cheatsheet.md`, and `scripts/validate-json-prompt.mjs` to catch syntax errors, hidden zero-width Unicode characters, and stray placeholders locally.',
   },
   'multimodal-video-image-director': {
     tagline: 'Compile model-native prompts for Midjourney v8.2, FLUX.3, Veo 3.1, Kling 3.0, Runway Gen-4.5, and Suno v6.',
     tags: ['midjourney-v8', 'flux-3', 'veo-3', 'kling-3', 'runway-gen4', 'suno-v6', 'multimodal-prompts'],
+    overviewNote:
+      'Ships engine-specific syntax tables in `references/model-syntax-matrix.md` plus `scripts/validate-multimodal-params.mjs` to verify Midjourney flags, bounded 4s-16s video shot blocks, and Suno v6 headers under the 200-character cap.',
   },
   'seo-geo-aeo-content-engine': {
-    tagline: 'Author evidence-first SEO pillar pages, AI citation blocks (GEO), AEO answers, and validated JSON-LD schemas.',
+    tagline: 'Write evidence-first pillar copy for SEO crawlers, AI citation engines (GEO), AEO answers, and JSON-LD.',
     tags: ['technical-seo', 'geo-optimization', 'aeo', 'json-ld', 'schema-org', 'content-engineering'],
+    overviewNote:
+      'Pairs 40-to-60 word direct-answer structures and verifiable comparison tables with copy-ready schemas in `references/schema-jsonld-templates.md` and `scripts/validate-jsonld.mjs` for offline `FAQPage`, `HowTo`, and `SoftwareApplication` validation.',
   },
   'antislop-ui-and-copy-auditor': {
-    tagline: 'Audit WCAG AA dark/light contrast, 375px mobile reflow, keyboard focus rings, em dashes, and copy hygiene.',
+    tagline: 'Catch WCAG AA contrast gaps, 375px overflow, missing focus rings, and AI copy slop before shipping.',
     tags: ['wcag-aa', 'accessibility', 'ui-audit', 'copywriting', 'react-tsx', 'focus-visible'],
+    overviewNote:
+      'Bundles light/dark contrast thresholds and copy rules in `references/contrast-and-copy-rules.md` alongside `scripts/audit-slop.mjs` to flag em dashes, synthetic hype claims, unreplaced `outline-none` styles, and horizontal overflow risks.',
   },
   'fullstack-ts-nextjs-architect': {
-    tagline: 'Enforce Next.js App Router server boundaries, strict zero-any TypeScript, Zod contracts, and safe SQL migrations.',
+    tagline: 'Enforce Next.js App Router boundaries, strict zero-any TypeScript, Zod schemas, and safe SQL rollouts.',
     tags: ['nextjs-app-router', 'strict-typescript', 'zero-any', 'zod', 'server-actions', 'architecture'],
+    overviewNote:
+      'Provides Server/Client boundary patterns, Next.js 15 async `params` typing, and tenant-scoped Route Handler templates in `references/architecture-checklist.md`, backed by `scripts/check-strict-ts.mjs` to catch `any` leaks and unsafe casts.',
   },
   'mcp-server-production-builder': {
-    tagline: 'Build hardened Model Context Protocol servers with Zod tool schemas, stdio/Streamable HTTP, and secret redaction.',
+    tagline: 'Design hardened MCP servers with strict tool schemas, stdio/Streamable HTTP isolation, and secret redaction.',
     tags: ['mcp-server', 'model-context-protocol', 'zod-schema', 'streamable-http', 'stdio', 'security'],
+    overviewNote:
+      'Covers `additionalProperties: false` tool contracts, path-traversal guards, `stdout`/`stderr` separation for `stdio`, and Streamable HTTP Origin checks in `references/mcp-transport-and-security.md`, verified by `scripts/validate-mcp-schema.mjs`.',
   },
   'postgres-prisma-zero-downtime-sql-tuner': {
     tagline: 'Author lock-safe PostgreSQL and Prisma migrations with CONCURRENTLY indexes, RLS policies, and SQL linting.',
     tags: ['postgresql', 'prisma', 'zero-downtime-migration', 'rls', 'sql-linter', 'database'],
+    overviewNote:
+      'Packages expand-and-contract DDL patterns, `lock_timeout` guards, and tenant Row-Level Security templates (`references/rls-and-index-playbook.md`, `templates/zero-downtime-migration.sql`) with `scripts/lint-sql-migrations.mjs`.',
   },
   'playwright-e2e-and-openapi-contract-suite': {
-    tagline: 'Deliver flake-free Playwright E2E tests and OpenAPI 3.x API schema contracts with automated validation.',
+    tagline: 'Deliver flake-free Playwright E2E specs and OpenAPI 3.x API contracts verified by one CLI check.',
     tags: ['playwright', 'e2e-testing', 'openapi-3', 'api-contracts', 'qa-automation', 'testing'],
+    overviewNote:
+      'Replaces brittle sleeps and `force` clicks with role locators and `waitForResponse` assertions paired with OpenAPI 3.x response schemas (`references/e2e-and-api-contract-matrix.md`, `templates/openapi-contract-stub.json`) and `scripts/validate-openapi-and-e2e.mjs`.',
   },
   'owasp-api-and-cloud-security-auditor': {
-    tagline: 'Audit OWASP API Top 10 risks, CORS policies, hardcoded secrets, and cloud IAM posture via CLI scanner.',
+    tagline: 'Detect OWASP API Top 10 flaws, BOLA/IDOR gaps, wildcard CORS, and leaked keys with CLI scanning.',
     tags: ['owasp-api', 'cloud-security', 'iam-hardening', 'secret-scanner', 'appsec', 'devsecops'],
+    overviewNote:
+      'Maps code-level checks for BOLA, BOPLA, SSRF, wildcard CORS, and IAM least-privilege (`references/owasp-cloud-security-checklist.md`, `templates/security-audit-findings.json`) and scans source directories offline via `scripts/scan-security-risks.mjs`.',
   },
   'multi-agent-swarm-and-subagent-orchestrator': {
-    tagline: 'Coordinate parallel subagent swarms with strict file ownership, JSON handoff contracts, and workspace checks.',
+    tagline: 'Coordinate parallel coding agents with disjoint file ownership, JSON handoff contracts, and workspace checks.',
     tags: ['multi-agent', 'swarm-orchestration', 'subagents', 'agents-md', 'claude-code', 'automation'],
+    overviewNote:
+      'Defines Fan-Out/Fan-In and Author-Verifier topologies with disjoint `ownedPaths` (`references/subagent-handoff-patterns.md`, `templates/swarm-task-contract.json`) and checks dependency cycles and `SKILL.md` frontmatter via `scripts/validate-agent-workspace.mjs`.',
   },
 };
 
@@ -432,20 +465,105 @@ function collectSkillFiles(skillDir, currentDir = skillDir) {
   return results;
 }
 
+/**
+ * Parses `## See It in Action (Demo)` -> `### The Request` and `### The Result`
+ * from a SKILL.md markdown body while respecting fenced code blocks.
+ */
+function parseSeeItInActionDemo(skillMdRaw) {
+  const lines = skillMdRaw.split(/\r?\n/);
+  let inFence = false;
+  let fenceMarker = '';
+  let inDemoSection = false;
+  let activeSubheading = null;
+  const requestLines = [];
+  const resultLines = [];
+  let foundDemoHeading = false;
+  let foundRequestHeading = false;
+  let foundResultHeading = false;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    const fenceMatch = trimmed.match(/^(```+|~~~+)/);
+    if (fenceMatch) {
+      const marker = fenceMatch[1][0];
+      if (!inFence) {
+        inFence = true;
+        fenceMarker = marker;
+      } else if (marker === fenceMarker) {
+        inFence = false;
+        fenceMarker = '';
+      }
+    }
+
+    if (!inFence) {
+      if (/^##\s+See It in Action \(Demo\)\s*$/i.test(trimmed)) {
+        inDemoSection = true;
+        foundDemoHeading = true;
+        activeSubheading = null;
+        continue;
+      }
+      if (inDemoSection) {
+        if (/^###\s+The Request\s*$/i.test(trimmed)) {
+          foundRequestHeading = true;
+          activeSubheading = 'request';
+          continue;
+        }
+        if (/^###\s+The Result\s*$/i.test(trimmed)) {
+          foundResultHeading = true;
+          activeSubheading = 'result';
+          continue;
+        }
+      }
+    }
+
+    if (inDemoSection && activeSubheading === 'request') {
+      requestLines.push(line);
+    } else if (inDemoSection && activeSubheading === 'result') {
+      resultLines.push(line);
+    }
+  }
+
+  return {
+    foundDemoHeading,
+    foundRequestHeading,
+    foundResultHeading,
+    demoRequest: requestLines.join('\n').trim(),
+    demoResult: resultLines.join('\n').trim(),
+  };
+}
+
+function findTextSlopViolations(text, labelPrefix) {
+  const violations = [];
+  const lines = String(text || '').split(/\r?\n/);
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.includes(EMDASH)) {
+      violations.push(`${labelPrefix}:${i + 1} contains em-dash (U+2014)`);
+    }
+    for (const bw of BANNED_BUZZWORDS) {
+      bw.regex.lastIndex = 0;
+      if (bw.regex.test(line)) {
+        violations.push(`${labelPrefix}:${i + 1} contains banned buzzword "${bw.label}"`);
+      }
+    }
+  }
+  return violations;
+}
+
 function validateSkillPackage(slug, skillDir, expectedConfigPack) {
   const errors = [];
   const skillMdPath = path.join(skillDir, 'SKILL.md');
 
   if (!fs.existsSync(skillMdPath)) {
     errors.push(`Missing SKILL.md at root of agensi-skills/${slug}`);
-    return { errors, frontmatter: null, files: [] };
+    return { errors, frontmatter: null, files: [], demoRequest: '', demoResult: '' };
   }
 
   const skillMdRaw = fs.readFileSync(skillMdPath, 'utf8');
   const parsed = parseSimpleYamlFrontmatter(skillMdRaw);
   if (!parsed) {
     errors.push(`Invalid or missing YAML frontmatter in agensi-skills/${slug}/SKILL.md`);
-    return { errors, frontmatter: null, files: [] };
+    return { errors, frontmatter: null, files: [], demoRequest: '', demoResult: '' };
   }
 
   const { frontmatter, body } = parsed;
@@ -473,6 +591,41 @@ function validateSkillPackage(slug, skillDir, expectedConfigPack) {
     errors.push('SKILL.md markdown body is empty or too short');
   }
 
+  const demo = parseSeeItInActionDemo(skillMdRaw);
+  if (!demo.foundDemoHeading) {
+    errors.push(`${slug}/SKILL.md missing "## See It in Action (Demo)" section`);
+  }
+  if (!demo.foundRequestHeading || demo.demoRequest.length < 25) {
+    errors.push(`${slug}/SKILL.md missing or too-short "### The Request" under See It in Action (Demo)`);
+  }
+  if (!demo.foundResultHeading) {
+    errors.push(`${slug}/SKILL.md missing "### The Result" under See It in Action (Demo)`);
+  }
+  if (demo.demoResult.length < 700) {
+    errors.push(`${slug}/SKILL.md "### The Result" must be >= 700 chars (got ${demo.demoResult.length})`);
+  }
+  if (!/^##\s+Summary\b/m.test(demo.demoResult)) {
+    errors.push(`${slug}/SKILL.md "### The Result" must contain "## Summary"`);
+  }
+  errors.push(...findTextSlopViolations(demo.demoRequest, `${slug}/SKILL.md (The Request)`));
+  errors.push(...findTextSlopViolations(demo.demoResult, `${slug}/SKILL.md (The Result)`));
+
+  const listingMeta = LISTING_METADATA_BY_SLUG[slug];
+  if (!listingMeta) {
+    errors.push(`Missing LISTING_METADATA_BY_SLUG entry for "${slug}"`);
+  } else {
+    if (!listingMeta.tagline || listingMeta.tagline.length < 20) {
+      errors.push(`LISTING_METADATA_BY_SLUG["${slug}"].tagline is missing or too short`);
+    }
+    if (!Array.isArray(listingMeta.tags) || listingMeta.tags.length < 3 || listingMeta.tags.length > 7) {
+      errors.push(`LISTING_METADATA_BY_SLUG["${slug}"].tags must have 3..7 entries`);
+    } else if (listingMeta.tags.some((t) => t.startsWith('#') || t === 'and' || !/^[a-z0-9-]+$/.test(t))) {
+      errors.push(`LISTING_METADATA_BY_SLUG["${slug}"].tags must be clean kebab-case without "#" or "and"`);
+    }
+    errors.push(...findTextSlopViolations(listingMeta.tagline, `LISTING_METADATA[${slug}].tagline`));
+    errors.push(...findTextSlopViolations(listingMeta.overviewNote, `LISTING_METADATA[${slug}].overviewNote`));
+  }
+
   const files = collectSkillFiles(skillDir);
   if (files.length === 0) {
     errors.push('No package files found');
@@ -490,20 +643,7 @@ function validateSkillPackage(slug, skillDir, expectedConfigPack) {
     if (!TEXT_EXTS.has(ext)) continue;
 
     const raw = fs.readFileSync(file.absPath, 'utf8');
-    const lines = raw.split(/\r?\n/);
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      if (line.includes(EMDASH)) {
-        errors.push(`${slug}/${file.relPosix}:${i + 1} contains em-dash (U+2014)`);
-      }
-      for (const bw of BANNED_BUZZWORDS) {
-        bw.regex.lastIndex = 0;
-        if (bw.regex.test(line)) {
-          errors.push(`${slug}/${file.relPosix}:${i + 1} contains banned buzzword "${bw.label}"`);
-        }
-      }
-    }
+    errors.push(...findTextSlopViolations(raw, `${slug}/${file.relPosix}`));
 
     if (file.relPosix.startsWith('scripts/') && ext === '.mjs') {
       try {
@@ -521,7 +661,13 @@ function validateSkillPackage(slug, skillDir, expectedConfigPack) {
     }
   }
 
-  return { errors, frontmatter, files };
+  return {
+    errors,
+    frontmatter,
+    files,
+    demoRequest: demo.demoRequest,
+    demoResult: demo.demoResult,
+  };
 }
 
 function formatBytes(bytes) {
@@ -563,45 +709,65 @@ function buildListingManifest(packagedResults) {
   lines.push('2. **Upload #2 to #10 (Paid Flagships `$9.99` to `$19.99`):** Upload each `.zip` directly from `dist-agensi/<slug>.zip`. Every archive places `SKILL.md` at the ZIP root with POSIX `/` paths and passes size (`< 50 MB`) and script security checks.');
   lines.push('3. **Wire Production Affiliate Links:** Copy your Creator Store URL, Affiliate Referral URL, and `ref` code into PromptMatrix (`9-tap header logo -> Pengaturan AI -> Tab Paket Skill` or `config/agensiConfig.ts`) so public visitors on `https://prompt.sigitadi.id` route through your 90% affiliate funnel.');
   lines.push('');
-  lines.push('| # | Slug | Tier | Price (USD) | Archive | Size | Root `SKILL.md` |');
-  lines.push('| :--- | :--- | :--- | :--- | :--- | :--- | :--- |');
+  lines.push('| # | Slug | Tier | Price (USD) | Archive | Size | Root `SKILL.md` | Demo Result |');
+  lines.push('| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |');
   ordered.forEach((item, idx) => {
     lines.push(
-      `| ${idx + 1} | \`${item.pack.slug}\` | ${item.pack.tier} | ${item.pack.priceLabel} | \`${item.zipFileName}\` | ${formatBytes(item.zipBytes)} | Verified (${item.centralDirEntries.length} files) |`
+      `| ${idx + 1} | \`${item.pack.slug}\` | ${item.pack.tier} | ${item.pack.priceLabel} | \`${item.zipFileName}\` | ${formatBytes(item.zipBytes)} | Verified (${item.centralDirEntries.length} files) | ${item.demoResult.length} chars |`
     );
   });
   lines.push('');
   lines.push('---');
   lines.push('');
-  lines.push('## 3. Ready-to-Copy Listing Copy (All 10 Skills)');
+  lines.push('## 3. Ready-to-Copy Listing Copy (Step 1, Step 2, Step 3 for All 10 Skills)');
   lines.push('');
 
   ordered.forEach((item, idx) => {
     const meta = LISTING_METADATA_BY_SLUG[item.pack.slug] || {
       tagline: item.pack.summaryEn,
       tags: ['agent-skills', 'promptmatrix', 'automation'],
+      overviewNote: `Packaged with deterministic offline references and Node.js verification tooling (${item.pack.includedFiles.join(', ')}).`,
     };
-    const descriptionText = `${item.frontmatter.description} Built from PromptMatrix 2.0 (${item.pack.summaryEn}) and packaged with deterministic offline references and Node.js verification tooling (${item.pack.includedFiles.join(', ')}).`;
+    const cleanTags = meta.tags.map((t) => t.replace(/^#+/, '').trim()).filter(Boolean);
 
     lines.push(`### ${idx + 1}. ${item.pack.title} (\`${item.pack.slug}\`)`);
     lines.push('');
     lines.push(`- **Archive:** \`dist-agensi/${item.zipFileName}\` (${formatBytes(item.zipBytes)}, ${item.centralDirEntries.length} files)`);
+    lines.push('');
+    lines.push('#### Step 1: Listing Details & Pricing');
     lines.push(`- **Title:** ${item.pack.title}`);
     lines.push(`- **Price (USD):** ${item.pack.priceLabel}`);
     lines.push(`- **Tagline:** ${meta.tagline}`);
-    lines.push(`- **Tags:** ${meta.tags.map((t) => `\`${t}\``).join(', ')}`);
-    lines.push('- **Description Markdown:**');
+    lines.push(`- **Tags:** ${cleanTags.join(', ')}`);
     lines.push('');
-    lines.push('```markdown');
-    lines.push(descriptionText);
+    lines.push('#### Step 2: Description Markdown');
+    lines.push('');
+    lines.push('````markdown');
+    lines.push(item.frontmatter.description);
+    lines.push('');
+    lines.push(meta.overviewNote);
     lines.push('');
     lines.push('Included in this skill package:');
     for (const fileEntry of item.centralDirEntries) {
       lines.push(`- \`${fileEntry}\``);
     }
     lines.push('');
-    lines.push('Compatible with Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and 20+ Open Agent Skills runtimes.');
-    lines.push('```');
+    lines.push('Compatible with Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and 27 Open Agent Skills runtimes.');
+    lines.push('````');
+    lines.push('');
+    lines.push('#### Step 3: See it in action (demo)');
+    lines.push('');
+    lines.push('**The request (what the buyer types):**');
+    lines.push('');
+    lines.push('````text');
+    lines.push(item.demoRequest);
+    lines.push('````');
+    lines.push('');
+    lines.push(`**The result (what your agent delivers) (${item.demoResult.length} chars):**`);
+    lines.push('');
+    lines.push('````markdown');
+    lines.push(item.demoResult);
+    lines.push('````');
     lines.push('');
   });
 
@@ -640,7 +806,7 @@ function main() {
 
   for (const pack of configPacks) {
     const skillDir = path.join(SKILLS_ROOT, pack.slug);
-    const { errors, frontmatter, files } = validateSkillPackage(pack.slug, skillDir, pack);
+    const { errors, frontmatter, files, demoRequest, demoResult } = validateSkillPackage(pack.slug, skillDir, pack);
 
     if (errors.length > 0) {
       allErrors.push(...errors);
@@ -690,10 +856,12 @@ function main() {
       zipFileName,
       zipBytes: writtenBuffer.length,
       centralDirEntries: cdFilenames,
+      demoRequest,
+      demoResult,
     });
 
     console.log(
-      `  [PACK] ${zipFileName} (${formatBytes(writtenBuffer.length)}, ${cdFilenames.length} entries, root SKILL.md OK)`
+      `  [PACK] ${zipFileName} (${formatBytes(writtenBuffer.length)}, ${cdFilenames.length} entries, demo ${demoResult.length} chars, root SKILL.md OK)`
     );
   }
 
@@ -706,6 +874,15 @@ function main() {
   }
 
   const manifestContent = buildListingManifest(packagedResults);
+  const manifestViolations = findTextSlopViolations(manifestContent, 'dist-agensi/AGENSI-LISTING-MANIFEST.md');
+  if (manifestViolations.length > 0) {
+    console.error(`\nManifest slop check FAILED with ${manifestViolations.length} error(s):`);
+    for (const err of manifestViolations) {
+      console.error(`  - ${err}`);
+    }
+    process.exit(1);
+  }
+
   const manifestPath = path.join(OUT_DIR, 'AGENSI-LISTING-MANIFEST.md');
   fs.writeFileSync(manifestPath, manifestContent, 'utf8');
 

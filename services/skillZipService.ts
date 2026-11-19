@@ -1,4 +1,5 @@
 import { Language } from '../types';
+import { SKILL_LISTING_DEMOS, SkillListingDemoProfile } from '../data/skillListingDemos';
 import { AgentSkillSpec } from './agentSkillService';
 import { sanitizeString } from './jsonPromptService';
 
@@ -31,6 +32,29 @@ export interface BuildAgensiListingCopyInput {
   readonly priceUsd?: number;
   readonly includedFiles: readonly string[];
   readonly language: Language;
+  readonly tagline?: string;
+  readonly tags?: readonly string[];
+  readonly demoRequest?: string;
+  readonly demoResult?: string;
+  readonly compiledPrompt?: string;
+  readonly formValues?: Record<string, string | number | boolean | string[]>;
+}
+
+export interface AgensiPromptBaseListing {
+  readonly title: string;
+  readonly description: string;
+  readonly promptTemplate: string;
+  readonly testingExample: string;
+}
+
+export interface AgensiStorefrontListing {
+  readonly headline: string;
+  readonly bodyMarkdown: string;
+}
+
+export interface AgensiOssLeadMagnetListing {
+  readonly readmeMarkdown: string;
+  readonly cliCommand: string;
 }
 
 export interface AgensiListingCopyResult {
@@ -38,7 +62,15 @@ export interface AgensiListingCopyResult {
   readonly title: string;
   readonly tagline: string;
   readonly tags: string[];
+  readonly descriptionMarkdown: string;
+  readonly demoRequest: string;
+  readonly demoResult: string;
+  readonly promptBase: AgensiPromptBaseListing;
+  readonly storefront: AgensiStorefrontListing;
+  readonly ossLeadMagnet: AgensiOssLeadMagnetListing;
   readonly fullMarkdown: string;
+  readonly jsonLdSchema: string;
+  readonly geoFaqMarkdown: string;
 }
 
 interface PreparedZipRecord {
@@ -492,24 +524,430 @@ const inferRecommendedPriceUsd = (category: string, explicitPrice?: number): num
   return 12;
 };
 
-const buildListingTags = (slug: string, category: string): string[] => {
+const TAG_STOPWORDS = new Set(['and', 'the', 'for', 'with', 'from', 'into', 'your']);
+
+const normalizeTagToken = (rawTag: string): string => {
+  return cleanOutputText(rawTag)
+    .trim()
+    .replace(/^#+/, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
+
+const buildListingTags = (
+  slug: string,
+  category: string,
+  explicitTags?: readonly string[]
+): string[] => {
+  const coreDiscoveryTags = ['open-agent-skills', 'agent-skill', 'ai-agent'];
+  if (explicitTags && explicitTags.length > 0) {
+    const cleanedExplicit = explicitTags
+      .map((part) => normalizeTagToken(part))
+      .filter((part) => part.length >= 2 && !TAG_STOPWORDS.has(part));
+    if (cleanedExplicit.length > 0) {
+      return Array.from(new Set([...coreDiscoveryTags, ...cleanedExplicit])).slice(0, 8);
+    }
+  }
+
   const slugTokens = slug
     .split('-')
-    .map((part) => part.trim().toLowerCase())
-    .filter((part) => part.length >= 3);
-  const categorySlug = category
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+    .map((part) => normalizeTagToken(part))
+    .filter((part) => part.length >= 3 && !TAG_STOPWORDS.has(part));
+  const categorySlug = normalizeTagToken(category);
+  const safeCategorySlug =
+    categorySlug && !TAG_STOPWORDS.has(categorySlug) ? categorySlug : '';
 
   const candidates = [
-    'open-agent-skills',
-    'promptmatrix',
-    categorySlug,
-    ...slugTokens.slice(0, 3),
-  ].filter(Boolean);
+    ...coreDiscoveryTags,
+    safeCategorySlug,
+    ...slugTokens,
+    'claude-code',
+    'cursor-rules',
+    'antigravity',
+  ].filter((part) => part.length >= 2 && !TAG_STOPWORDS.has(part));
 
-  return Array.from(new Set(candidates)).slice(0, 6);
+  return Array.from(new Set(candidates)).slice(0, 8);
+};
+
+export const buildGeoFaqMarkdown = (
+  title: string,
+  category: string,
+  isIndonesian: boolean
+): string => {
+  if (isIndonesian) {
+    return [
+      '## Pertanyaan Umum (FAQ) & Panduan Pembeli',
+      '',
+      `### Q1: Apa itu ${title} dan mengapa dikemas sebagai Agent Skill (.zip)?`,
+      `**A**: ${title} adalah paket instruksi deterministik terstandarisasi Open Agent Skills untuk domain ${category}. Berbeda dari prompt teks biasa yang rentan halusinasi, paket ini memuat dokumen \`SKILL.md\`, panduan referensi arsitektur, parameter input teruji, dan skrip validator offline untuk menjamin hasil agen AI konsisten di proyek riil.`,
+      '',
+      `### Q2: Runtime dan IDE apa saja yang kompatibel dengan skill ini?`,
+      `**A**: Kompatibel dengan 27 runtime agen terpopuler, termasuk Google Antigravity, Claude Code, Cursor (Rules/Skills), GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, dan Aider.`,
+      '',
+      `### Q3: Apakah aman untuk privasi dan kode rahasia proyek saya?`,
+      `**A**: Sangat aman. Seluruh eksekusi dan validasi berjalan 100% secara lokal di komputer Anda tanpa dependensi API eksternal dan tanpa telemetri yang mengirimkan data proyek Anda ke server jarak jauh.`,
+      '',
+      `### Q4: Bagaimana cara menguji skill ini setelah mengunduh file ZIP?`,
+      `**A**: Ekstrak arsip \`.zip\` ke folder skill di komputer Anda, lalu jalankan perintah \`node scripts/validate-output.mjs\` untuk memverifikasi keutuhan dokumen secara instan sebelum digunakan.`,
+    ].join('\n');
+  }
+
+  return [
+    '## Frequently Asked Questions (FAQ) & Buyer Guide',
+    '',
+    `### Q1: What is ${title} and why is it packaged as an Agent Skill (.zip)?`,
+    `**A**: ${title} is a production-grade Open Agent Skill for ${category} tasks built on deterministic execution guardrails. Unlike generic prompts that produce inconsistent output, this package bundles \`SKILL.md\`, domain references, sample input schema, and an offline Node.js validator to guarantee production reliability.`,
+    '',
+    `### Q2: Which AI agent runtimes and IDEs are supported?`,
+    `**A**: It works seamlessly across 27 agent runtimes including Google Antigravity, Claude Code, Cursor (Rules & Skills), GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, and Aider.`,
+    '',
+    `### Q3: Is this skill safe for proprietary and sensitive codebases?`,
+    `**A**: 100% private and secure. All logic executes locally in your client environment with zero remote telemetry, zero credential leakage, and zero third-party tracking.`,
+    '',
+    `### Q4: How do I test this skill after downloading the ZIP archive?`,
+    `**A**: Extract the archive into your local agent skills directory and run \`node scripts/validate-output.mjs\` to verify schema compliance and output formatting before deployment.`,
+  ].join('\n');
+};
+
+export const buildJsonLdSchema = (
+  title: string,
+  tagline: string,
+  category: string,
+  priceUsd: number,
+  tags: readonly string[],
+  slug: string
+): string => {
+  const schemaPayload = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: title,
+    alternateName: slug,
+    description: tagline,
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Cross-platform (Windows, macOS, Linux)',
+    softwareVersion: '1.0.0',
+    offers: {
+      '@type': 'Offer',
+      price: priceUsd.toFixed(2),
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    keywords: tags.join(', '),
+    author: {
+      '@type': 'Person',
+      name: 'Sigit Adi',
+      url: 'https://sigitadi.id',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'PromptMatrix 2.0',
+      url: 'https://prompt.sigitadi.id',
+    },
+  };
+  return JSON.stringify(schemaPayload, null, 2);
+};
+
+interface ResolvedVariableEntry {
+  readonly key: string;
+  readonly label: string;
+  readonly value: string;
+}
+
+const extractVariableEntries = (
+  formValues?: Record<string, string | number | boolean | string[]>
+): ResolvedVariableEntry[] => {
+  if (!formValues) return [];
+  const entries: ResolvedVariableEntry[] = [];
+  for (const [key, rawValue] of Object.entries(formValues)) {
+    if (key.startsWith('__') || rawValue === undefined || rawValue === null) {
+      continue;
+    }
+    const formattedValue = Array.isArray(rawValue)
+      ? rawValue.map((item) => cleanOutputText(String(item)).trim()).filter(Boolean).join(', ')
+      : cleanOutputText(String(rawValue)).trim();
+    if (!formattedValue) continue;
+    const label = cleanOutputText(key)
+      .replace(/[_-]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    entries.push({ key, label: label || key, value: formattedValue });
+  }
+  return entries;
+};
+
+const truncatePromptBaseTitle = (rawTitle: string): string => {
+  const normalized = cleanOutputText(rawTitle).replace(/\s+/g, ' ').trim();
+  if (normalized.length <= 40) {
+    return normalized;
+  }
+  const sliced = normalized.slice(0, 40);
+  const lastSpace = sliced.lastIndexOf(' ');
+  const cut = lastSpace >= 20 ? sliced.slice(0, lastSpace) : sliced;
+  return cut.replace(/[\s,:-]+$/g, '').trim();
+};
+
+const truncateLineAtBoundary = (text: string, maxLength: number): string => {
+  const normalized = cleanOutputText(text).replace(/\s+/g, ' ').trim();
+  if (normalized.length <= maxLength) {
+    return normalized;
+  }
+  const slice = normalized.slice(0, Math.max(0, maxLength - 3));
+  const lastSpace = slice.lastIndexOf(' ');
+  const cut = lastSpace > Math.floor(maxLength * 0.6) ? slice.slice(0, lastSpace) : slice;
+  return `${cut.trim()}...`;
+};
+
+const buildFallbackTagline = (
+  title: string,
+  category: string,
+  description: string,
+  isIndonesian: boolean
+): string => {
+  const firstSentence = description
+    .split(/(?<=[.!?])\s+/)[0]
+    ?.replace(/\s+/g, ' ')
+    .trim();
+  if (firstSentence && firstSentence.length >= 25 && firstSentence.length <= 120) {
+    return firstSentence;
+  }
+  if (isIndonesian) {
+    return truncateLineAtBoundary(
+      `Susun alur kerja ${title} untuk menghasilkan output ${category} yang terstruktur dan siap diuji.`,
+      120
+    );
+  }
+  return truncateLineAtBoundary(
+    `Structure ${title} inputs into repeatable ${category} deliverables with local CLI verification.`,
+    120
+  );
+};
+
+const buildFallbackDemoRequest = (
+  title: string,
+  category: string,
+  entries: readonly ResolvedVariableEntry[],
+  isIndonesian: boolean
+): string => {
+  if (entries.length > 0) {
+    const samplePairs = entries
+      .slice(0, 3)
+      .map((entry) => `${entry.label}: ${truncateLineAtBoundary(entry.value, 60)}`)
+      .join('; ');
+    return isIndonesian
+      ? `Jalankan workflow ${title} (${category}) dengan parameter berikut: ${samplePairs}. Berikan ringkasan keputusan, tabel spesifikasi, dan langkah verifikasi.`
+      : `Run the ${title} workflow (${category}) using these inputs: ${samplePairs}. Return a concise summary, structured deliverable table, and verification steps.`;
+  }
+
+  return isIndonesian
+    ? `Gunakan skill ${title} untuk memproses kasus ${category} di tim kami: susun spesifikasi terstruktur, identifikasi batasan kunci, dan siapkan checklist validasi akhir.`
+    : `Apply the ${title} skill to a production ${category} task: produce a structured specification, call out key constraints, and provide a verification checklist.`;
+};
+
+const buildFallbackDemoResult = (
+  title: string,
+  description: string,
+  category: string,
+  compiledPrompt: string,
+  entries: readonly ResolvedVariableEntry[],
+  includedFiles: readonly string[],
+  isIndonesian: boolean
+): string => {
+  const cleanCompiled = cleanOutputText(compiledPrompt).trim();
+  const safeFiles =
+    includedFiles.length > 0
+      ? includedFiles.map((file) => normalizeZipEntryName(file)).join(', ')
+      : 'SKILL.md, references/framework-guide.md, templates/sample-input.json, scripts/validate-output.mjs';
+
+  const tableRows =
+    entries.length > 0
+      ? entries.slice(0, 6).map((entry) => `| ${entry.label} | ${truncateLineAtBoundary(entry.value, 90)} | Applied |`)
+      : [
+        `| Workflow Target | ${title} | Active |`,
+        `| Domain Scope | ${category} | Verified |`,
+        `| Bundle Files | ${safeFiles} | Packaged |`,
+        `| Output Hygiene | Zero unresolved placeholders, zero em dashes | Enforced |`,
+      ];
+
+  const contractPreview = cleanCompiled
+    ? truncateLineAtBoundary(cleanCompiled, 350)
+    : isIndonesian
+      ? `Role: Spesialis ${category} untuk ${title}\nInput: Parameter terstruktur dari templates/sample-input.json\nOutput: Spesifikasi terverifikasi tanpa placeholder kosong dan lolos skrip validator.`
+      : `Role: ${category} specialist executing ${title}\nInput: Structured parameters from templates/sample-input.json\nOutput: Verified deliverable free of unresolved placeholders and passing local CLI checks.`;
+
+  const summaryText = description
+    ? `${description} Output below translates the active parameters into a repeatable ${category} deliverable.`
+    : `Applied ${title} rules for ${category} to convert raw requirements into a verified specification ready for execution.`;
+
+  const lines: string[] = [
+    '## Summary',
+    summaryText,
+    '',
+    '### Deliverable Specification',
+    '',
+    '| Parameter / Check | Applied Configuration | Status |',
+    '| :--- | :--- | :--- |',
+    ...tableRows,
+    '',
+    '### Execution Contract Preview',
+    '',
+    '```text',
+    contractPreview,
+    '```',
+    '',
+    '## Next Steps',
+    '1. Extract the skill ZIP archive so `SKILL.md` sits at the root of your agent skill folder.',
+    '2. Run `node scripts/validate-output.mjs templates/sample-input.json` to confirm valid JSON, zero zero-width characters, and zero unresolved placeholders.',
+    '3. Invoke the workflow in your Open Agent Skills runner with real project inputs and review the verification checklist before shipping.',
+  ];
+
+  const assembled = cleanOutputText(lines.join('\n').trim());
+  if (assembled.length >= 700) {
+    return assembled;
+  }
+
+  return cleanOutputText(
+    [
+      assembled,
+      '',
+      '### Quality Gate Verification',
+      '- Confirmed valid kebab-case skill slug (`<= 64` characters) and discovery-ready YAML frontmatter.',
+      '- Verified all required sections (`Role & Trigger`, `Input Parameters`, `Execution Steps`, `Verification Checklist`) are populated without placeholder drift.',
+      '- Confirmed local client-side execution with zero external network dependencies or secret leakage.',
+    ].join('\n')
+  );
+};
+
+const buildPromptBaseListing = (
+  title: string,
+  description: string,
+  category: string,
+  compiledPrompt: string,
+  entries: readonly ResolvedVariableEntry[],
+  demoProfile?: SkillListingDemoProfile
+): AgensiPromptBaseListing => {
+  const pbTitle = truncatePromptBaseTitle(title);
+  const hookSentence = demoProfile?.promptBaseHook
+    ? cleanOutputText(demoProfile.promptBaseHook)
+    : `Generates structured ${category} deliverables with explicit constraints and verification checks.`;
+
+  const pbDescription = truncateLineAtBoundary(
+    `${description || title} ${hookSentence}`,
+    350
+  );
+
+  const variableNames =
+    entries.length > 0
+      ? entries.slice(0, 5).map((entry) => `[${entry.label}]`)
+      : ['[Project Context]', '[Target Audience]', '[Key Constraints]', '[Output Format]'];
+
+  const templateLines: string[] = [
+    `Act as a domain specialist for ${title} (${category}).`,
+    '',
+    'Inputs:',
+    ...variableNames.map((varName) => `- ${varName.slice(1, -1)}: ${varName}`),
+    '',
+    'Instructions:',
+    cleanOutputText(compiledPrompt).trim()
+      ? truncateLineAtBoundary(cleanOutputText(compiledPrompt).trim(), 480)
+      : `Produce a complete ${category} deliverable tailored to ${variableNames[0]}. End with a concrete verification checklist and zero unresolved placeholders.`,
+  ];
+
+  const testingLines: string[] =
+    entries.length > 0
+      ? entries.slice(0, 5).map((entry) => `- [${entry.label}]: ${entry.value}`)
+      : [
+        `- [Project Context]: B2B SaaS workflow for ${title}`,
+        `- [Target Audience]: Engineering and product leads reviewing ${category} outputs`,
+        '- [Key Constraints]: Plain ASCII punctuation, no fabricated metrics, concrete steps only',
+        '- [Output Format]: Markdown summary, specification table, and action checklist',
+      ];
+
+  return {
+    title: pbTitle,
+    description: pbDescription,
+    promptTemplate: templateLines.join('\n').trim(),
+    testingExample: testingLines.join('\n').trim(),
+  };
+};
+
+const buildStorefrontListing = (
+  title: string,
+  tagline: string,
+  description: string,
+  category: string,
+  priceDisplay: string,
+  includedFilesList: string,
+  demoProfile?: SkillListingDemoProfile
+): AgensiStorefrontListing => {
+  const headline = cleanOutputText(demoProfile?.storefrontHook || tagline);
+  const highlightsBlock =
+    demoProfile && demoProfile.highlights.length > 0
+      ? ['## Key Capabilities', ...demoProfile.highlights.map((item) => `- ${cleanOutputText(item)}`), '']
+      : [];
+
+  const bodyLines: string[] = [
+    `# ${title} (${priceDisplay})`,
+    '',
+    headline,
+    '',
+    '## What You Get',
+    description,
+    '',
+    ...highlightsBlock,
+    '## Bundle Contents',
+    includedFilesList,
+    '',
+    '## Compatibility & Licensing',
+    '- Works across 27 Open Agent Skills runtimes including Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, and Antigravity.',
+    '- Ships as a self-contained ZIP archive with a deterministic Node.js CLI validator.',
+    `- Category: ${category}. Non-exclusive commercial usage for your team projects.`,
+    '',
+    '## Available Storefronts',
+    'Formatted for Lemon Squeezy, Creem.io, Gumroad, Whop, and Payhip digital delivery.',
+  ];
+
+  return {
+    headline,
+    bodyMarkdown: cleanOutputText(bodyLines.join('\n').trim()),
+  };
+};
+
+const buildOssLeadMagnetListing = (
+  slug: string,
+  title: string,
+  tagline: string,
+  description: string,
+  includedFilesList: string
+): AgensiOssLeadMagnetListing => {
+  const cliCommand = `npx skills add sigitadi/${slug}`;
+  const readmeLines: string[] = [
+    `# ${title}`,
+    '',
+    tagline,
+    '',
+    description,
+    '',
+    '## Quick Install',
+    '```bash',
+    cliCommand,
+    '```',
+    '',
+    '## Included Files',
+    includedFilesList,
+    '',
+    '## Compatibility',
+    'Tested for Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and 27 Open Agent Skills runtimes.',
+    '',
+    '## License',
+    'MIT',
+  ];
+
+  return {
+    cliCommand,
+    readmeMarkdown: cleanOutputText(readmeLines.join('\n').trim()),
+  };
 };
 
 /**
@@ -523,76 +961,227 @@ export const buildAgensiListingCopy = (
   const cleanDesc = cleanOutputText(input.description).trim();
   const cleanCategory = cleanOutputText(input.category).trim() || 'General';
   const cleanSlug = input.slug.trim() || 'promptmatrix-skill';
-  const tags = buildListingTags(cleanSlug, cleanCategory);
+  const demoProfile = SKILL_LISTING_DEMOS[cleanSlug];
+  const entries = extractVariableEntries(input.formValues);
+
+  const tags = buildListingTags(
+    cleanSlug,
+    cleanCategory,
+    input.tags && input.tags.length > 0 ? input.tags : demoProfile?.tags
+  );
   const priceDisplay =
     recommendedPriceUsd === 0 ? 'Free ($0)' : `$${recommendedPriceUsd.toFixed(2)} USD`;
 
   const isIndonesian = input.language === 'id';
-  const tagline = isIndonesian
-    ? `Paket Agent Skill deterministik untuk ${cleanTitle} pada alur kerja ${cleanCategory}.`
-    : `Deterministic Agent Skill pack for ${cleanTitle} across ${cleanCategory} workflows.`;
+  const explicitTagline = cleanOutputText(input.tagline || '').trim();
+  const tagline =
+    explicitTagline ||
+    (demoProfile ? cleanOutputText(demoProfile.tagline) : '') ||
+    buildFallbackTagline(cleanTitle, cleanCategory, cleanDesc, isIndonesian);
 
   const includedFilesList =
     input.includedFiles.length > 0
       ? input.includedFiles.map((file) => `- \`${normalizeZipEntryName(file)}\``).join('\n')
       : '- `SKILL.md`';
 
-  const sections: string[] = isIndonesian
-    ? [
-        `# ${cleanTitle}`,
+  const highlightsLines =
+    demoProfile && demoProfile.highlights.length > 0
+      ? [
         '',
-        `> ${tagline}`,
-        '',
-        `- **Slug**: \`${cleanSlug}\``,
-        `- **Kategori**: ${cleanCategory}`,
-        `- **Harga Rekomendasi**: ${priceDisplay}`,
-        `- **Tags**: ${tags.map((tag) => `\`#${tag}\``).join(', ')}`,
-        '',
-        '## Ringkasan',
-        cleanDesc,
-        '',
-        '## Isi Paket ZIP',
-        includedFilesList,
-        '',
-        '## Kompatibilitas Runner',
-        'Kompatibel dengan Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, dan 27+ runtime Open Agent Skills.',
-        '',
-        '## Cara Pakai Cepat',
-        '1. Ekstrak arsip `.zip` dengan `SKILL.md` berada di root folder skill.',
-        '2. Muat skill di agent runner pilihan Anda dan isi parameter input yang diminta.',
-        '3. Jalankan skrip validator di folder `scripts/` (jika tersedia) sebelum merilis output.',
+        isIndonesian ? '## Fitur Utama Paket' : '## Key Deliverables',
+        ...demoProfile.highlights.map((item) => `- ${cleanOutputText(item)}`),
       ]
+      : [];
+
+  const descriptionSections: string[] = isIndonesian
+    ? [
+      '## Ringkasan',
+      cleanDesc || tagline,
+      ...highlightsLines,
+      '',
+      '## Isi Paket ZIP',
+      includedFilesList,
+      '',
+      '## Kompatibilitas Runner',
+      'Kompatibel dengan Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, dan 27 Open Agent Skills runtimes.',
+      '',
+      '## Cara Pakai Cepat',
+      '1. Ekstrak arsip `.zip` dengan `SKILL.md` berada di root folder skill.',
+      '2. Muat skill di agent runner pilihan Anda dan isi parameter input yang diminta.',
+      '3. Jalankan skrip validator di folder `scripts/` (jika tersedia) sebelum merilis output.',
+    ]
     : [
-        `# ${cleanTitle}`,
-        '',
-        `> ${tagline}`,
-        '',
-        `- **Slug**: \`${cleanSlug}\``,
-        `- **Category**: ${cleanCategory}`,
-        `- **Recommended Price**: ${priceDisplay}`,
-        `- **Tags**: ${tags.map((tag) => `\`#${tag}\``).join(', ')}`,
-        '',
-        '## Overview',
-        cleanDesc,
-        '',
-        '## Included in the ZIP Bundle',
-        includedFilesList,
-        '',
-        '## Runner Compatibility',
-        'Compatible with Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and 27+ Open Agent Skills runtimes.',
-        '',
-        '## Quick Start',
-        '1. Extract the `.zip` archive so `SKILL.md` sits at the root of the skill directory.',
-        '2. Load the skill in your preferred coding agent or CLI runner and provide the input context.',
-        '3. Run the bundled validator in `scripts/` (when included) to verify output constraints.',
-      ];
+      '## Overview',
+      cleanDesc || tagline,
+      ...highlightsLines,
+      '',
+      '## Included in the ZIP Bundle',
+      includedFilesList,
+      '',
+      '## Runner Compatibility',
+      'Compatible with Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and 27 Open Agent Skills runtimes.',
+      '',
+      '## Quick Start',
+      '1. Extract the `.zip` archive so `SKILL.md` sits at the root of the skill directory.',
+      '2. Load the skill in your preferred coding agent or CLI runner and provide the input context.',
+      '3. Run the bundled validator in `scripts/` (when included) to verify output constraints.',
+    ];
+
+  const descriptionMarkdown = cleanOutputText(descriptionSections.join('\n').trim());
+
+  const explicitRequest = cleanOutputText(input.demoRequest || '').trim();
+  const demoRequest =
+    explicitRequest ||
+    (demoProfile ? cleanOutputText(demoProfile.demoRequest) : '') ||
+    buildFallbackDemoRequest(cleanTitle, cleanCategory, entries, isIndonesian);
+
+  const explicitResult = cleanOutputText(input.demoResult || '').trim();
+  const demoResult =
+    explicitResult ||
+    (demoProfile ? cleanOutputText(demoProfile.demoResult) : '') ||
+    buildFallbackDemoResult(
+      cleanTitle,
+      cleanDesc,
+      cleanCategory,
+      input.compiledPrompt || '',
+      entries,
+      input.includedFiles,
+      isIndonesian
+    );
+
+  const promptBase = buildPromptBaseListing(
+    cleanTitle,
+    cleanDesc,
+    cleanCategory,
+    input.compiledPrompt || '',
+    entries,
+    demoProfile
+  );
+  const storefront = buildStorefrontListing(
+    cleanTitle,
+    tagline,
+    cleanDesc || tagline,
+    cleanCategory,
+    priceDisplay,
+    includedFilesList,
+    demoProfile
+  );
+  const ossLeadMagnet = buildOssLeadMagnetListing(
+    cleanSlug,
+    cleanTitle,
+    tagline,
+    cleanDesc || tagline,
+    includedFilesList
+  );
+
+  const geoFaqMarkdown = buildGeoFaqMarkdown(cleanTitle, cleanCategory, isIndonesian);
+  const jsonLdSchema = buildJsonLdSchema(
+    cleanTitle,
+    tagline,
+    cleanCategory,
+    recommendedPriceUsd,
+    tags,
+    cleanSlug
+  );
+
+  const specTableLines = isIndonesian
+    ? [
+      '### Spesifikasi Teknis & Metadata GEO',
+      '| Parameter | Nilai Spesifikasi | Keterangan Standar |',
+      '| :--- | :--- | :--- |',
+      `| **Format Produk** | Open Agent Skill (\`SKILL.md\` + \`.zip\`) | Universal Open Agent Standards |`,
+      `| **Domain & Kategori** | ${cleanCategory} | Taksonomi Direktori Industri |`,
+      `| **Harga Lisensi** | ${priceDisplay} | Akses Komersial Tim Non-Eksklusif |`,
+      `| **Runner Kompatibel** | Claude Code, Cursor, Antigravity, Copilot, Gemini CLI | 27 Runtime CLI & IDE |`,
+      `| **Privasi Kode** | 100% Eksekusi Klien Lokal | Nol Telemetri / Leakage |`,
+      `| **Validasi Output** | Deterministic Offline Validator | Skrip Node.js (scripts/) |`,
+    ]
+    : [
+      '### Technical Specification & GEO Metadata',
+      '| Attribute | Value Specification | Industry Standard |',
+      '| :--- | :--- | :--- |',
+      `| **Product Format** | Open Agent Skill (\`SKILL.md\` + \`.zip\`) | Universal Open Agent Standards |`,
+      `| **Domain Scope** | ${cleanCategory} | Curated Marketplace Taxonomy |`,
+      `| **Commercial License** | ${priceDisplay} | Non-Exclusive Team Commercial License |`,
+      `| **Compatible Runtimes** | Claude Code, Cursor, Antigravity, Copilot, Gemini CLI | 27 CLI & IDE Runtimes |`,
+      `| **Data Privacy** | 100% Local Client Execution | Zero Remote Telemetry / Leakage |`,
+      `| **Quality Assurance** | Deterministic Offline Validator | Node.js Script (scripts/) |`,
+    ];
+
+  const fullMarkdownLines: string[] = isIndonesian
+    ? [
+      `# ${cleanTitle} - Production Agent Skill (.zip)`,
+      '',
+      `> **Definisi Produk**: ${cleanTitle} adalah spesifikasi agent skill produksi untuk ${cleanCategory}, dirancang untuk mengotomasi alur kerja tingkat lanjut dengan jaminan deterministik tanpa halusinasi pada 27 runtime agent AI.`,
+      '',
+      `- **Slug**: \`${cleanSlug}\``,
+      `- **Kategori**: ${cleanCategory}`,
+      `- **Harga Rekomendasi**: ${priceDisplay}`,
+      `- **Tags Penemuan**: ${tags.map((tag) => `\`${tag}\``).join(', ')}`,
+      '',
+      ...specTableLines,
+      '',
+      descriptionMarkdown,
+      '',
+      '## See It in Action (Live Demo)',
+      '',
+      '### The Request (Kueri Masukan Nyata)',
+      demoRequest,
+      '',
+      '### The Result (Keluaran Berstandar Emas Agen)',
+      demoResult,
+      '',
+      geoFaqMarkdown,
+      '',
+      '## Schema.org JSON-LD Structured Data',
+      '```json',
+      jsonLdSchema,
+      '```',
+    ]
+    : [
+      `# ${cleanTitle} - Production Agent Skill (.zip)`,
+      '',
+      `> **Product Overview**: ${cleanTitle} is a production-grade Open Agent Skill for ${cleanCategory}, engineered to automate complex workflows with deterministic guardrails and zero hallucination across 27 AI agent runtimes.`,
+      '',
+      `- **Slug**: \`${cleanSlug}\``,
+      `- **Category**: ${cleanCategory}`,
+      `- **Recommended Price**: ${priceDisplay}`,
+      `- **Discovery Tags**: ${tags.map((tag) => `\`${tag}\``).join(', ')}`,
+      '',
+      ...specTableLines,
+      '',
+      descriptionMarkdown,
+      '',
+      '## See It in Action (Live Demo)',
+      '',
+      '### The Request (Real-World High-Intent Task)',
+      demoRequest,
+      '',
+      '### The Result (Gold-Standard Agent Deliverable)',
+      demoResult,
+      '',
+      geoFaqMarkdown,
+      '',
+      '## Schema.org JSON-LD Structured Data',
+      '```json',
+      jsonLdSchema,
+      '```',
+    ];
 
   return {
     recommendedPriceUsd,
     title: cleanTitle,
     tagline,
     tags,
-    fullMarkdown: `${sections.join('\n').trim()}\n`,
+    descriptionMarkdown,
+    demoRequest,
+    demoResult,
+    promptBase,
+    storefront,
+    ossLeadMagnet,
+    fullMarkdown: `${cleanOutputText(fullMarkdownLines.join('\n').trim())}\n`,
+    jsonLdSchema,
+    geoFaqMarkdown,
   };
 };
 

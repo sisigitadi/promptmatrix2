@@ -2,7 +2,7 @@
 name: seo-geo-aeo-content-engine
 description: Produces evidence-first SEO pillar articles, Generative Engine Optimization (GEO) citation blocks, Answer Engine Optimization (AEO) direct answers, and valid JSON-LD structured data (FAQPage, HowTo, SoftwareApplication). Use when writing technical landing pages, documentation hubs, comparison guides, or validating embedded JSON-LD markup in HTML or Markdown.
 license: MIT
-compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, and Open Agent Skills compatible runtimes (Node.js 18+ for JSON-LD validator)
+compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and Open Agent Skills compatible runtimes (Node.js 18+ for JSON-LD validator)
 metadata:
   author: "Sigit Adi (PromptMatrix)"
   version: "1.0.0"
@@ -62,3 +62,48 @@ The script extracts `<script type="application/ld+json">` tags from `.html` file
 - [ ] All numerical claims and compatibility lists cite real sources or product specifications.
 - [ ] JSON-LD matches visible page copy word-for-word on prices, steps, and FAQ answers.
 - [ ] `node scripts/validate-jsonld.mjs <file>` exits `0`.
+
+## See It in Action (Demo)
+
+### The Request
+
+Rewrite this product section for SEO, GEO AI citations, and AEO featured snippets, and attach a valid SoftwareApplication JSON-LD block: "PromptMatrix is the #1 prompt builder on the market, trusted by 50,000+ teams worldwide to 10x productivity."
+
+### The Result
+
+## Summary
+Replaced unverified claims and generic hype with a 49-word AEO direct answer, verifiable local-execution facts for GEO citations, and a schema-compliant `SoftwareApplication` JSON-LD block.
+
+### Rewritten Product Section
+
+## What is PromptMatrix 2.0?
+
+PromptMatrix 2.0 is a browser-based prompt workbench containing 360 structured templates across 9 categories. It builds CO-STAR, RTF, GCC, Few-Shot, and RFC 8259 JSON specifications locally in the browser without transmitting user prompt inputs to external telemetry servers, and exports Open Agent Skills (`SKILL.md`) packages.
+
+| Attribute | Verifiable Specification |
+| :--- | :--- |
+| Template library | 360 prompt formulas across 9 categories |
+| Execution model | 100% client-side browser SPA (zero prompt telemetry) |
+| Export formats | Plain text, RFC 8259 JSON, and Open Agent Skills (`SKILL.md` ZIP) |
+
+### Embedded JSON-LD (`application/ld+json`)
+
+```jsonld
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PromptMatrix 2.0",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web",
+  "description": "Browser-based prompt workbench with 360 structured templates and Open Agent Skills export.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+```
+
+## Next Steps
+1. Run `node scripts/validate-jsonld.mjs docs/product-page.md` to confirm `@context`, `@type`, and required `SoftwareApplication` keys pass with exit code `0`.
+2. Confirm visible pricing and feature counts on the page match the JSON-LD `offers` block verbatim.

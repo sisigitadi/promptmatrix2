@@ -71,6 +71,19 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
   const [showFewShot, setShowFewShot] = useState<boolean>(
     Boolean(state.fewShotInput.trim() || state.fewShotOutput.trim())
   );
+  const [showMarketProfile, setShowMarketProfile] = useState<boolean>(
+    Boolean(
+      (state.skillTagline || '').trim() ||
+      typeof state.skillPriceUsd === 'number' ||
+      (state.skillTags || '').trim() ||
+      (state.skillDemoRequest || '').trim() ||
+      (state.skillDemoResult || '').trim()
+    )
+  );
+
+  const demoResultChars = (state.skillDemoResult || '').trim().length;
+  const demoResultHasSummary = /^##\s+Summary\b/im.test(state.skillDemoResult || '');
+  const demoResultReady = demoResultChars >= 700 && demoResultHasSummary;
 
   const hasContent = useMemo(() => hasBlankCanvasContent(state), [state]);
 
@@ -196,20 +209,18 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
     >
       {/* 1. Header Breadcrumb & Clear Action */}
       <div
-        className={`border-b pb-4 sm:pb-5 space-y-3 ${
-          isLightTheme ? 'border-slate-200' : 'border-slate-800/80'
-        }`}
+        className={`border-b pb-4 sm:pb-5 space-y-3 ${isLightTheme ? 'border-slate-200' : 'border-slate-800/80'
+          }`}
       >
         <div className="flex flex-wrap items-center justify-between gap-2.5">
           <div className="flex flex-wrap items-center gap-2 min-w-0">
             <button
               type="button"
               onClick={onBackToGallery}
-              className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all active:scale-[0.98] ${focusRingClass} ${
-                isLightTheme
-                  ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
-                  : 'bg-[#090d16] hover:bg-slate-800 text-slate-200 border-slate-800'
-              }`}
+              className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all active:scale-[0.98] ${focusRingClass} ${isLightTheme
+                ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
+                : 'bg-[#090d16] hover:bg-slate-800 text-slate-200 border-slate-800'
+                }`}
             >
               <svg
                 className="w-4 h-4 shrink-0"
@@ -234,11 +245,10 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
 
             <div className="flex items-center gap-2 min-w-0">
               <span
-                className={`w-7 h-7 rounded-lg flex items-center justify-center border shrink-0 ${
-                  isLightTheme
-                    ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
-                    : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-                }`}
+                className={`w-7 h-7 rounded-lg flex items-center justify-center border shrink-0 ${isLightTheme
+                  ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                  : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                  }`}
                 aria-hidden="true"
               >
                 <svg
@@ -264,24 +274,22 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
           <div className="flex flex-wrap items-center gap-2">
             {/* Local Auto-Saved Status */}
             <div
-              className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 ${
-                hasContent
-                  ? isLightTheme
-                    ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
-                    : 'bg-emerald-950/50 border-emerald-800/70 text-emerald-300'
-                  : isLightTheme
+              className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 ${hasContent
+                ? isLightTheme
+                  ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                  : 'bg-emerald-950/50 border-emerald-800/70 text-emerald-300'
+                : isLightTheme
                   ? 'bg-slate-50 border-slate-200 text-slate-600'
                   : 'bg-[#090d16] border-slate-800 text-slate-300'
-              }`}
+                }`}
             >
               <svg
-                className={`w-3.5 h-3.5 shrink-0 ${
-                  hasContent
-                    ? isLightTheme
-                      ? 'text-emerald-700'
-                      : 'text-emerald-400'
-                    : mutedTextClass
-                }`}
+                className={`w-3.5 h-3.5 shrink-0 ${hasContent
+                  ? isLightTheme
+                    ? 'text-emerald-700'
+                    : 'text-emerald-400'
+                  : mutedTextClass
+                  }`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -299,15 +307,14 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                 type="button"
                 onClick={() => setShowClearConfirm(true)}
                 disabled={!hasContent}
-                className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all active:scale-[0.98] ${focusRingClass} ${
-                  hasContent
-                    ? isLightTheme
-                      ? 'bg-white hover:bg-rose-50 text-rose-700 border-rose-200 hover:border-rose-300'
-                      : 'bg-[#090d16] hover:bg-rose-950/40 text-rose-300 border-slate-800 hover:border-rose-700/60'
-                    : isLightTheme
-                    ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
-                    : 'bg-[#090d16] text-slate-500 border-slate-800/60 cursor-not-allowed'
-                }`}
+                className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all active:scale-[0.98] ${focusRingClass} ${hasContent
+                  ? isLightTheme
+                    ? 'bg-white hover:bg-rose-50 text-rose-700 border-rose-200 hover:border-rose-300'
+                    : 'bg-[#090d16] hover:bg-rose-950/40 text-rose-300 border-slate-800 hover:border-rose-700/60'
+                  : isLightTheme
+                    ? 'bg-slate-100 text-slate-600 border-slate-200 cursor-not-allowed'
+                    : 'bg-[#090d16] text-slate-400 border-slate-800/60 cursor-not-allowed'
+                  }`}
               >
                 <svg
                   className="w-4 h-4 shrink-0"
@@ -334,33 +341,30 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
           <div
             role="alertdialog"
             aria-label={t('blank_canvas_clear_confirm')}
-            className={`p-3 sm:p-3.5 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-              isLightTheme
-                ? 'bg-rose-50 border-rose-200 text-rose-900'
-                : 'bg-rose-950/35 border-rose-800/70 text-rose-100'
-            }`}
+            className={`p-3 sm:p-3.5 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${isLightTheme
+              ? 'bg-rose-50 border-rose-200 text-rose-900'
+              : 'bg-rose-950/35 border-rose-800/70 text-rose-100'
+              }`}
           >
             <span className="text-xs font-medium">{t('blank_canvas_clear_confirm')}</span>
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={handleConfirmClear}
-                className={`min-h-[44px] px-4 py-2 rounded-xl text-xs font-semibold transition-all active:scale-[0.98] ${focusRingClass} ${
-                  isLightTheme
-                    ? 'bg-rose-700 hover:bg-rose-600 text-white'
-                    : 'bg-rose-600 hover:bg-rose-500 text-white'
-                }`}
+                className={`min-h-[44px] px-4 py-2 rounded-xl text-xs font-semibold transition-all active:scale-[0.98] ${focusRingClass} ${isLightTheme
+                  ? 'bg-rose-700 hover:bg-rose-600 text-white'
+                  : 'bg-rose-600 hover:bg-rose-500 text-white'
+                  }`}
               >
                 {t('blank_canvas_confirm_yes')}
               </button>
               <button
                 type="button"
                 onClick={() => setShowClearConfirm(false)}
-                className={`min-h-[44px] px-4 py-2 rounded-xl border text-xs font-medium transition-all active:scale-[0.98] ${focusRingClass} ${
-                  isLightTheme
-                    ? 'bg-white hover:bg-slate-100 text-slate-800 border-slate-300'
-                    : 'bg-[#090d16] hover:bg-slate-800 text-slate-200 border-slate-700'
-                }`}
+                className={`min-h-[44px] px-4 py-2 rounded-xl border text-xs font-medium transition-all active:scale-[0.98] ${focusRingClass} ${isLightTheme
+                  ? 'bg-white hover:bg-slate-100 text-slate-800 border-slate-300'
+                  : 'bg-[#090d16] hover:bg-slate-800 text-slate-200 border-slate-700'
+                  }`}
               >
                 {t('cancel_btn')}
               </button>
@@ -391,24 +395,22 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
               <div
                 role="radiogroup"
                 aria-label={t('blank_canvas_mode_label')}
-                className={`grid grid-cols-1 sm:grid-cols-2 gap-2 p-1 rounded-xl border ${
-                  isLightTheme
-                    ? 'bg-white border-slate-200'
-                    : 'bg-[#070b12] border-slate-800'
-                }`}
+                className={`grid grid-cols-1 sm:grid-cols-2 gap-2 p-1 rounded-xl border ${isLightTheme
+                  ? 'bg-white border-slate-200'
+                  : 'bg-[#070b12] border-slate-800'
+                  }`}
               >
                 <button
                   type="button"
                   role="radio"
                   aria-checked={state.targetMode === 'prompt'}
                   onClick={() => handleModeChange('prompt')}
-                  className={`min-h-[44px] px-3.5 py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${focusRingClass} ${
-                    state.targetMode === 'prompt'
-                      ? 'bg-emerald-500 text-slate-950 shadow-sm'
-                      : isLightTheme
+                  className={`min-h-[44px] px-3.5 py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${focusRingClass} ${state.targetMode === 'prompt'
+                    ? 'bg-emerald-500 text-slate-950 shadow-sm'
+                    : isLightTheme
                       ? 'text-slate-700 hover:bg-slate-100'
                       : 'text-slate-300 hover:bg-slate-800/80'
-                  }`}
+                    }`}
                 >
                   <svg
                     className="w-4 h-4 shrink-0"
@@ -432,13 +434,12 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                   role="radio"
                   aria-checked={state.targetMode === 'skill'}
                   onClick={() => handleModeChange('skill')}
-                  className={`min-h-[44px] px-3.5 py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${focusRingClass} ${
-                    state.targetMode === 'skill'
-                      ? 'bg-emerald-500 text-slate-950 shadow-sm'
-                      : isLightTheme
+                  className={`min-h-[44px] px-3.5 py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${focusRingClass} ${state.targetMode === 'skill'
+                    ? 'bg-emerald-500 text-slate-950 shadow-sm'
+                    : isLightTheme
                       ? 'text-slate-700 hover:bg-slate-100'
                       : 'text-slate-300 hover:bg-slate-800/80'
-                  }`}
+                    }`}
                 >
                   <svg
                     className="w-4 h-4 shrink-0"
@@ -462,20 +463,18 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
             {/* Clean YAML Metadata Sub-Panel when targetMode === 'skill' */}
             {state.targetMode === 'skill' && (
               <div
-                className={`pt-3 mt-1 border-t space-y-3 ${
-                  isLightTheme ? 'border-slate-200' : 'border-slate-800/80'
-                }`}
+                className={`pt-3 mt-1 border-t space-y-3 ${isLightTheme ? 'border-slate-200' : 'border-slate-800/80'
+                  }`}
               >
                 <div className="flex items-center justify-between gap-2">
                   <h3 className={`text-xs font-bold uppercase tracking-wider font-sans ${secondaryTextClass}`}>
                     {t('blank_canvas_skill_meta_title')}
                   </h3>
                   <span
-                    className={`text-[11px] font-mono px-2 py-0.5 rounded-lg border ${
-                      isLightTheme
-                        ? 'bg-white border-slate-200 text-slate-700'
-                        : 'bg-[#070b12] border-slate-800 text-teal-400'
-                    }`}
+                    className={`text-[11px] font-mono px-2 py-0.5 rounded-lg border ${isLightTheme
+                      ? 'bg-white border-slate-200 text-slate-700'
+                      : 'bg-[#070b12] border-slate-800 text-teal-400'
+                      }`}
                   >
                     SKILL.md YAML
                   </span>
@@ -491,13 +490,12 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                       {t('blank_canvas_skill_name')}
                     </label>
                     <span
-                      className={`text-[11px] font-mono ${
-                        rawSkillNameOverLimit
-                          ? isLightTheme
-                            ? 'text-amber-700 font-semibold'
-                            : 'text-amber-400 font-semibold'
-                          : mutedTextClass
-                      }`}
+                      className={`text-[11px] font-mono ${rawSkillNameOverLimit
+                        ? isLightTheme
+                          ? 'text-amber-700 font-semibold'
+                          : 'text-amber-400 font-semibold'
+                        : mutedTextClass
+                        }`}
                     >
                       {resolvedSkillSlug.length}/{MAX_SKILL_NAME_LENGTH}
                     </span>
@@ -531,13 +529,12 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                       {t('blank_canvas_skill_desc')}
                     </label>
                     <span
-                      className={`text-[11px] font-mono ${
-                        skillDescOverLimit
-                          ? isLightTheme
-                            ? 'text-rose-700 font-semibold'
-                            : 'text-rose-400 font-semibold'
-                          : mutedTextClass
-                      }`}
+                      className={`text-[11px] font-mono ${skillDescOverLimit
+                        ? isLightTheme
+                          ? 'text-rose-700 font-semibold'
+                          : 'text-rose-400 font-semibold'
+                        : mutedTextClass
+                        }`}
                     >
                       {skillDescLength}/{MAX_SKILL_DESCRIPTION_LENGTH}
                     </span>
@@ -580,6 +577,245 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                     className={`w-full min-h-[44px] px-3.5 py-2.5 border rounded-xl text-xs font-mono transition-colors ${focusRingClass} ${inputClass}`}
                   />
                 </div>
+
+                {/* Collapsible Market Listing Profile & Step 3 Demo */}
+                <div
+                  className={`rounded-xl border overflow-hidden transition-colors ${isLightTheme
+                    ? 'bg-white border-slate-200'
+                    : 'bg-[#070b12] border-slate-800/90'
+                    }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setShowMarketProfile((prev) => !prev)}
+                    aria-expanded={showMarketProfile}
+                    aria-controls="canvas-skill-market-panel"
+                    className={`w-full min-h-[44px] px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2 text-left transition-colors ${focusRingClass} ${isLightTheme ? 'hover:bg-slate-50' : 'hover:bg-slate-900/60'
+                      }`}
+                  >
+                    <div className="flex flex-wrap items-center gap-2 min-w-0">
+                      <span className={`text-xs font-bold ${labelTextClass}`}>
+                        {language === 'id'
+                          ? 'Profil Market & Demo Step 3'
+                          : 'Market Profile & Step 3 Demo'}
+                      </span>
+                      <span
+                        className={`text-[10px] font-mono px-2 py-0.5 rounded-lg border ${demoResultReady
+                          ? isLightTheme
+                            ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
+                            : 'bg-emerald-500/15 border-emerald-500/35 text-emerald-300'
+                          : isLightTheme
+                            ? 'bg-slate-100 border-slate-300 text-slate-700'
+                            : 'bg-slate-900 border-slate-700 text-slate-300'
+                          }`}
+                      >
+                        {demoResultChars >= 700
+                          ? `${demoResultChars} chars (>= 700)`
+                          : `${demoResultChars}/700 chars`}
+                      </span>
+                    </div>
+
+                    <svg
+                      className={`w-4 h-4 shrink-0 transition-transform duration-200 ${mutedTextClass} ${showMarketProfile ? 'rotate-180' : ''
+                        }`}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      aria-hidden="true"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {showMarketProfile && (
+                    <div
+                      id="canvas-skill-market-panel"
+                      className={`p-3.5 pt-3 border-t space-y-3 ${isLightTheme ? 'border-slate-200' : 'border-slate-800/80'
+                        }`}
+                    >
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <div className="space-y-1 sm:col-span-2">
+                          <label
+                            htmlFor="canvas-skill-tagline"
+                            className={`text-xs font-semibold block ${labelTextClass}`}
+                          >
+                            {language === 'id'
+                              ? 'Tagline Market (1 kalimat)'
+                              : 'Marketplace Tagline (1 sentence)'}
+                          </label>
+                          <input
+                            id="canvas-skill-tagline"
+                            type="text"
+                            value={state.skillTagline ?? ''}
+                            onChange={(e) =>
+                              onChange((prev) => ({
+                                ...prev,
+                                skillTagline: e.target.value,
+                                updatedAt: Date.now(),
+                              }))
+                            }
+                            placeholder={
+                              language === 'id'
+                                ? 'Contoh: Ubah input produk mentah menjadi kontrak JSON RFC 8259 yang teruji.'
+                                : 'e.g. Compile rough specs into validated RFC 8259 JSON contracts.'
+                            }
+                            className={`w-full min-h-[44px] px-3 py-2 border rounded-xl text-xs transition-colors ${focusRingClass} ${inputClass}`}
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label
+                            htmlFor="canvas-skill-price"
+                            className={`text-xs font-semibold block ${labelTextClass}`}
+                          >
+                            {language === 'id' ? 'Harga (USD)' : 'Price (USD)'}
+                          </label>
+                          <input
+                            id="canvas-skill-price"
+                            type="number"
+                            min={0}
+                            step="0.01"
+                            value={
+                              typeof state.skillPriceUsd === 'number' &&
+                                Number.isFinite(state.skillPriceUsd)
+                                ? String(state.skillPriceUsd)
+                                : ''
+                            }
+                            onChange={(e) => {
+                              const raw = e.target.value;
+                              if (raw.trim() === '') {
+                                onChange((prev) => ({
+                                  ...prev,
+                                  skillPriceUsd: undefined,
+                                  updatedAt: Date.now(),
+                                }));
+                                return;
+                              }
+                              const parsed = Number.parseFloat(raw);
+                              if (Number.isFinite(parsed) && parsed >= 0) {
+                                onChange((prev) => ({
+                                  ...prev,
+                                  skillPriceUsd: parsed,
+                                  updatedAt: Date.now(),
+                                }));
+                              }
+                            }}
+                            placeholder="12.00"
+                            className={`w-full min-h-[44px] px-3 py-2 border rounded-xl text-xs font-mono transition-colors ${focusRingClass} ${inputClass}`}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <label
+                          htmlFor="canvas-skill-tags"
+                          className={`text-xs font-semibold block ${labelTextClass}`}
+                        >
+                          {language === 'id'
+                            ? 'Tags (3-7 tag kebab-case, pisahkan koma, tanpa #)'
+                            : 'Tags (3-7 kebab-case tags, comma-separated, without #)'}
+                        </label>
+                        <input
+                          id="canvas-skill-tags"
+                          type="text"
+                          value={state.skillTags ?? ''}
+                          onChange={(e) =>
+                            onChange((prev) => ({
+                              ...prev,
+                              skillTags: e.target.value,
+                              updatedAt: Date.now(),
+                            }))
+                          }
+                          placeholder="prompt-engineering, json-schema, automation"
+                          className={`w-full min-h-[44px] px-3 py-2 border rounded-xl text-xs font-mono transition-colors ${focusRingClass} ${inputClass}`}
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <label
+                            htmlFor="canvas-skill-demo-request"
+                            className={`text-xs font-semibold ${labelTextClass}`}
+                          >
+                            {language === 'id'
+                              ? 'Demo Step 3: The Request (Prompt Pembeli)'
+                              : 'Step 3 Demo: The Request (Buyer Prompt)'}
+                          </label>
+                          <span className={`text-[11px] font-mono ${mutedTextClass}`}>
+                            {(state.skillDemoRequest ?? '').trim().length} chars
+                          </span>
+                        </div>
+                        <textarea
+                          id="canvas-skill-demo-request"
+                          rows={3}
+                          value={state.skillDemoRequest ?? ''}
+                          onChange={(e) =>
+                            onChange((prev) => ({
+                              ...prev,
+                              skillDemoRequest: e.target.value,
+                              updatedAt: Date.now(),
+                            }))
+                          }
+                          placeholder={
+                            language === 'id'
+                              ? 'Tulis contoh permintaan nyata pembeli untuk menguji skill ini (>= 25 karakter)...'
+                              : 'Write a concrete buyer request to test this skill (>= 25 chars)...'
+                          }
+                          className={`w-full px-3 py-2 border rounded-xl text-xs leading-relaxed resize-y transition-colors ${focusRingClass} ${inputClass}`}
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <label
+                            htmlFor="canvas-skill-demo-result"
+                            className={`text-xs font-semibold ${labelTextClass}`}
+                          >
+                            {language === 'id'
+                              ? 'Demo Step 3: The Result (Hasil Agen >= 700 karakter)'
+                              : 'Step 3 Demo: The Result (Agent Output >= 700 chars)'}
+                          </label>
+                          <span
+                            className={`text-[11px] font-mono px-2 py-0.5 rounded-lg border font-semibold ${demoResultReady
+                              ? isLightTheme
+                                ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
+                                : 'bg-emerald-500/15 border-emerald-500/35 text-emerald-300'
+                              : isLightTheme
+                                ? 'bg-amber-100 border-amber-300 text-amber-900'
+                                : 'bg-amber-500/15 border-amber-500/35 text-amber-300'
+                              }`}
+                          >
+                            {demoResultChars} / 700+ chars
+                            {!demoResultHasSummary
+                              ? language === 'id'
+                                ? ' (butuh ## Summary)'
+                                : ' (needs ## Summary)'
+                              : ''}
+                          </span>
+                        </div>
+                        <textarea
+                          id="canvas-skill-demo-result"
+                          rows={6}
+                          value={state.skillDemoResult ?? ''}
+                          onChange={(e) =>
+                            onChange((prev) => ({
+                              ...prev,
+                              skillDemoResult: e.target.value,
+                              updatedAt: Date.now(),
+                            }))
+                          }
+                          placeholder={
+                            language === 'id'
+                              ? 'Tempel hasil keluaran agen nyata lengkap dengan heading ## Summary, tabel/kode, dan langkah lanjut (>= 700 karakter)...'
+                              : 'Paste verified real-agent output starting with ## Summary, concrete table/code, and next steps (>= 700 chars)...'
+                          }
+                          className={`w-full px-3 py-2.5 border rounded-xl text-xs font-mono leading-relaxed resize-y transition-colors ${focusRingClass} ${inputClass}`}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -589,9 +825,8 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <svg
-                  className={`w-4 h-4 shrink-0 ${
-                    isLightTheme ? 'text-emerald-700' : 'text-emerald-400'
-                  }`}
+                  className={`w-4 h-4 shrink-0 ${isLightTheme ? 'text-emerald-700' : 'text-emerald-400'
+                    }`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -614,11 +849,10 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                   <button
                     type="button"
                     onClick={onOpenUploadUpgrade}
-                    className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-all active:scale-[0.98] ${focusRingClass} ${
-                      isLightTheme
-                        ? 'bg-white hover:bg-emerald-50 text-emerald-800 border-slate-300 hover:border-emerald-400'
-                        : 'bg-[#070b12] hover:bg-slate-800 text-emerald-300 border-slate-800 hover:border-emerald-600/60'
-                    }`}
+                    className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-all active:scale-[0.98] ${focusRingClass} ${isLightTheme
+                      ? 'bg-white hover:bg-emerald-50 text-emerald-800 border-slate-300 hover:border-emerald-400'
+                      : 'bg-[#070b12] hover:bg-slate-800 text-emerald-300 border-slate-800 hover:border-emerald-600/60'
+                      }`}
                   >
                     <svg
                       className="w-4 h-4 shrink-0"
@@ -645,11 +879,10 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                 <button
                   type="button"
                   onClick={onOpenAiSettings}
-                  className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all ${focusRingClass} ${
-                    isLightTheme
-                      ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300'
-                      : 'bg-[#070b12] hover:bg-slate-800 text-slate-300 border-slate-800'
-                  }`}
+                  className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all ${focusRingClass} ${isLightTheme
+                    ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300'
+                    : 'bg-[#070b12] hover:bg-slate-800 text-slate-300 border-slate-800'
+                    }`}
                 >
                   <svg
                     className="w-3.5 h-3.5 shrink-0"
@@ -691,13 +924,12 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                 type="button"
                 onClick={handleDraftSubmit}
                 disabled={isAiDrafting}
-                className={`min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] ${focusRingClass} ${
-                  isAiDrafting
-                    ? isLightTheme
-                      ? 'bg-emerald-200 text-emerald-950 cursor-wait'
-                      : 'bg-emerald-950 text-emerald-300 border border-emerald-700 cursor-wait'
-                    : 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-sm'
-                }`}
+                className={`min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] ${focusRingClass} ${isAiDrafting
+                  ? isLightTheme
+                    ? 'bg-emerald-200 text-emerald-950 cursor-wait'
+                    : 'bg-emerald-950 text-emerald-300 border border-emerald-700 cursor-wait'
+                  : 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-sm'
+                  }`}
               >
                 {renderSuggestIcon()}
                 <span>
@@ -713,8 +945,8 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                   {emptyIdeaNotice
                     ? t('toast_canvas_need_idea')
                     : language === 'id'
-                    ? 'Draft AI akan mengisi judul, blok relevan, dan scratchpad secara otomatis.'
-                    : 'AI draft will populate the title, relevant blocks, and scratchpad automatically.'}
+                      ? 'Draft AI akan mengisi judul, blok relevan, dan scratchpad secara otomatis.'
+                      : 'AI draft will populate the title, relevant blocks, and scratchpad automatically.'}
                 </p>
               )}
             </div>
@@ -724,11 +956,10 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
               <div
                 role="status"
                 aria-live="polite"
-                className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs ${
-                  isLightTheme
-                    ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                    : 'bg-emerald-950/40 border-emerald-800/70 text-emerald-300'
-                }`}
+                className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs ${isLightTheme
+                  ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
+                  : 'bg-emerald-950/40 border-emerald-800/70 text-emerald-300'
+                  }`}
               >
                 <svg
                   className="w-4 h-4 animate-spin shrink-0"
@@ -758,18 +989,16 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
             {aiDraftError && (
               <div
                 role="alert"
-                className={`p-3.5 rounded-xl border space-y-2.5 ${
-                  isLightTheme
-                    ? 'bg-rose-50 border-rose-200 text-rose-900'
-                    : 'bg-rose-950/40 border-rose-800/80 text-rose-200'
-                }`}
+                className={`p-3.5 rounded-xl border space-y-2.5 ${isLightTheme
+                  ? 'bg-rose-50 border-rose-200 text-rose-900'
+                  : 'bg-rose-950/40 border-rose-800/80 text-rose-200'
+                  }`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-start gap-2 min-w-0">
                     <svg
-                      className={`w-4 h-4 shrink-0 mt-0.5 ${
-                        isLightTheme ? 'text-rose-700' : 'text-rose-300'
-                      }`}
+                      className={`w-4 h-4 shrink-0 mt-0.5 ${isLightTheme ? 'text-rose-700' : 'text-rose-300'
+                        }`}
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -789,11 +1018,10 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                     onClick={onClearAiDraftError}
                     aria-label={t('close_btn')}
                     title={t('close_btn')}
-                    className={`min-h-[44px] min-w-[44px] -my-2 -mr-2 rounded-xl flex items-center justify-center transition-colors shrink-0 ${focusRingClass} ${
-                      isLightTheme
-                        ? 'text-rose-700 hover:bg-rose-100'
-                        : 'text-rose-300 hover:bg-rose-900/50'
-                    }`}
+                    className={`min-h-[44px] min-w-[44px] -my-2 -mr-2 rounded-xl flex items-center justify-center transition-colors shrink-0 ${focusRingClass} ${isLightTheme
+                      ? 'text-rose-700 hover:bg-rose-100'
+                      : 'text-rose-300 hover:bg-rose-900/50'
+                      }`}
                   >
                     <svg
                       className="w-4 h-4"
@@ -816,11 +1044,10 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                   <button
                     type="button"
                     onClick={onOpenAiSettings}
-                    className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-all ${focusRingClass} ${
-                      isLightTheme
-                        ? 'bg-white hover:bg-rose-100 text-rose-800 border-rose-300'
-                        : 'bg-[#090d16] hover:bg-rose-900/40 text-rose-200 border-rose-700/70'
-                    }`}
+                    className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-all ${focusRingClass} ${isLightTheme
+                      ? 'bg-white hover:bg-rose-100 text-rose-800 border-rose-300'
+                      : 'bg-[#090d16] hover:bg-rose-900/40 text-rose-200 border-rose-700/70'
+                      }`}
                   >
                     <svg
                       className="w-3.5 h-3.5 shrink-0"
@@ -899,9 +1126,8 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
             <svg
-              className={`w-4 h-4 shrink-0 ${
-                isLightTheme ? 'text-emerald-700' : 'text-emerald-400'
-              }`}
+              className={`w-4 h-4 shrink-0 ${isLightTheme ? 'text-emerald-700' : 'text-emerald-400'
+                }`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -932,16 +1158,14 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                 key={preset.type}
                 type="button"
                 onClick={() => handleAddBlock(preset.type)}
-                className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all active:scale-[0.98] ${focusRingClass} ${
-                  isLightTheme
-                    ? 'bg-slate-50 hover:bg-emerald-50 text-slate-800 hover:text-emerald-800 border-slate-300 hover:border-emerald-400'
-                    : 'bg-[#090d16] hover:bg-emerald-950/40 text-slate-200 hover:text-emerald-300 border-slate-800 hover:border-emerald-600/60'
-                }`}
+                className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all active:scale-[0.98] ${focusRingClass} ${isLightTheme
+                  ? 'bg-slate-50 hover:bg-emerald-50 text-slate-800 hover:text-emerald-800 border-slate-300 hover:border-emerald-400'
+                  : 'bg-[#090d16] hover:bg-emerald-950/40 text-slate-200 hover:text-emerald-300 border-slate-800 hover:border-emerald-600/60'
+                  }`}
               >
                 <svg
-                  className={`w-3.5 h-3.5 shrink-0 ${
-                    isLightTheme ? 'text-emerald-700' : 'text-emerald-400'
-                  }`}
+                  className={`w-3.5 h-3.5 shrink-0 ${isLightTheme ? 'text-emerald-700' : 'text-emerald-400'
+                    }`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -959,11 +1183,10 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
         {/* Ordered Blocks List or Empty State */}
         {state.blocks.length === 0 ? (
           <div
-            className={`rounded-2xl border border-dashed p-4 text-center text-xs leading-relaxed ${
-              isLightTheme
-                ? 'bg-slate-50/70 border-slate-300 text-slate-600'
-                : 'bg-[#090d16]/60 border-slate-800 text-slate-400'
-            }`}
+            className={`rounded-2xl border border-dashed p-4 text-center text-xs leading-relaxed ${isLightTheme
+              ? 'bg-slate-50/70 border-slate-300 text-slate-600'
+              : 'bg-[#090d16]/60 border-slate-800 text-slate-400'
+              }`}
           >
             {language === 'id'
               ? 'Belum ada blok modular ditambahkan. Pilih salah satu tombol blok di atas jika ingin struktur terpandu, atau langsung tulis di Scratchpad di bawah.'
@@ -986,11 +1209,10 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2 flex-1 min-w-0">
                       <span
-                        className={`text-[11px] font-mono px-2 py-1 rounded-lg border shrink-0 ${
-                          isLightTheme
-                            ? 'bg-white border-slate-200 text-slate-700'
-                            : 'bg-[#070b12] border-slate-800 text-slate-300'
-                        }`}
+                        className={`text-[11px] font-mono px-2 py-1 rounded-lg border shrink-0 ${isLightTheme
+                          ? 'bg-white border-slate-200 text-slate-700'
+                          : 'bg-[#070b12] border-slate-800 text-slate-300'
+                          }`}
                       >
                         {String(index + 1).padStart(2, '0')}
                       </span>
@@ -1022,15 +1244,14 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                           type="button"
                           onClick={() => onAiSuggestBlock(block.id, block.label)}
                           disabled={isSuggesting}
-                          className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all ${focusRingClass} ${
-                            isSuggesting
-                              ? isLightTheme
-                                ? 'bg-emerald-100 text-emerald-900 border-emerald-300 cursor-wait'
-                                : 'bg-emerald-950/80 text-emerald-300 border-emerald-700 cursor-wait'
-                              : isLightTheme
+                          className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all ${focusRingClass} ${isSuggesting
+                            ? isLightTheme
+                              ? 'bg-emerald-100 text-emerald-900 border-emerald-300 cursor-wait'
+                              : 'bg-emerald-950/80 text-emerald-300 border-emerald-700 cursor-wait'
+                            : isLightTheme
                               ? 'bg-white hover:bg-emerald-50 text-emerald-800 border-slate-300 hover:border-emerald-400'
                               : 'bg-[#070b12] hover:bg-slate-800 text-emerald-300 border-slate-800 hover:border-emerald-600/60'
-                          }`}
+                            }`}
                         >
                           {renderSuggestIcon()}
                           <span>
@@ -1045,15 +1266,14 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                         disabled={index === 0}
                         aria-label={t('blank_canvas_move_up')}
                         title={t('blank_canvas_move_up')}
-                        className={`min-h-[44px] min-w-[44px] rounded-xl border flex items-center justify-center transition-colors ${focusRingClass} ${
-                          index === 0
-                            ? isLightTheme
-                              ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
-                              : 'bg-[#070b12] text-slate-600 border-slate-800/50 cursor-not-allowed'
-                            : isLightTheme
+                        className={`min-h-[44px] min-w-[44px] rounded-xl border flex items-center justify-center transition-colors ${focusRingClass} ${index === 0
+                          ? isLightTheme
+                            ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
+                            : 'bg-[#070b12] text-slate-600 border-slate-800/50 cursor-not-allowed'
+                          : isLightTheme
                             ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300'
                             : 'bg-[#070b12] hover:bg-slate-800 text-slate-200 border-slate-800'
-                        }`}
+                          }`}
                       >
                         <svg
                           className="w-4 h-4"
@@ -1077,15 +1297,14 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                         disabled={index === state.blocks.length - 1}
                         aria-label={t('blank_canvas_move_down')}
                         title={t('blank_canvas_move_down')}
-                        className={`min-h-[44px] min-w-[44px] rounded-xl border flex items-center justify-center transition-colors ${focusRingClass} ${
-                          index === state.blocks.length - 1
-                            ? isLightTheme
-                              ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
-                              : 'bg-[#070b12] text-slate-600 border-slate-800/50 cursor-not-allowed'
-                            : isLightTheme
+                        className={`min-h-[44px] min-w-[44px] rounded-xl border flex items-center justify-center transition-colors ${focusRingClass} ${index === state.blocks.length - 1
+                          ? isLightTheme
+                            ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
+                            : 'bg-[#070b12] text-slate-600 border-slate-800/50 cursor-not-allowed'
+                          : isLightTheme
                             ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300'
                             : 'bg-[#070b12] hover:bg-slate-800 text-slate-200 border-slate-800'
-                        }`}
+                          }`}
                       >
                         <svg
                           className="w-4 h-4"
@@ -1108,11 +1327,10 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                         onClick={() => handleRemoveBlock(block.id)}
                         aria-label={t('blank_canvas_remove_block')}
                         title={t('blank_canvas_remove_block')}
-                        className={`min-h-[44px] min-w-[44px] rounded-xl border flex items-center justify-center transition-colors ${focusRingClass} ${
-                          isLightTheme
-                            ? 'bg-white hover:bg-rose-50 text-rose-700 border-slate-300 hover:border-rose-300'
-                            : 'bg-[#070b12] hover:bg-rose-950/50 text-rose-300 border-slate-800 hover:border-rose-700/60'
-                        }`}
+                        className={`min-h-[44px] min-w-[44px] rounded-xl border flex items-center justify-center transition-colors ${focusRingClass} ${isLightTheme
+                          ? 'bg-white hover:bg-rose-50 text-rose-700 border-slate-300 hover:border-rose-300'
+                          : 'bg-[#070b12] hover:bg-rose-950/50 text-rose-300 border-slate-800 hover:border-rose-700/60'
+                          }`}
                       >
                         <svg
                           className="w-4 h-4"
@@ -1169,11 +1387,10 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
 
         {hasUnappliedEnhancedPrompt && onApplyEnhancedToScratchpad && (
           <div
-            className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 ${
-              isLightTheme
-                ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                : 'bg-emerald-950/35 border-emerald-700/60 text-emerald-200'
-            }`}
+            className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 ${isLightTheme
+              ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
+              : 'bg-emerald-950/35 border-emerald-700/60 text-emerald-200'
+              }`}
           >
             <span className="text-xs font-medium">
               {language === 'id'
@@ -1223,15 +1440,13 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
           onClick={() => setShowFewShot((prev) => !prev)}
           aria-expanded={showFewShot}
           aria-controls="canvas-fewshot-panel"
-          className={`w-full min-h-[44px] px-4 py-3 flex items-center justify-between gap-2 text-left transition-colors ${focusRingClass} ${
-            isLightTheme ? 'hover:bg-slate-100' : 'hover:bg-slate-900/60'
-          }`}
+          className={`w-full min-h-[44px] px-4 py-3 flex items-center justify-between gap-2 text-left transition-colors ${focusRingClass} ${isLightTheme ? 'hover:bg-slate-100' : 'hover:bg-slate-900/60'
+            }`}
         >
           <div className="flex flex-wrap items-center gap-2 min-w-0">
             <svg
-              className={`w-4 h-4 shrink-0 ${
-                isLightTheme ? 'text-emerald-700' : 'text-emerald-400'
-              }`}
+              className={`w-4 h-4 shrink-0 ${isLightTheme ? 'text-emerald-700' : 'text-emerald-400'
+                }`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -1249,11 +1464,10 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
             </span>
             {(state.fewShotInput.trim() || state.fewShotOutput.trim()) && (
               <span
-                className={`text-[11px] px-2 py-0.5 rounded-lg border font-mono ${
-                  isLightTheme
-                    ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
-                    : 'bg-emerald-950/60 border-emerald-800 text-emerald-300'
-                }`}
+                className={`text-[11px] px-2 py-0.5 rounded-lg border font-mono ${isLightTheme
+                  ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                  : 'bg-emerald-950/60 border-emerald-800 text-emerald-300'
+                  }`}
               >
                 {language === 'id' ? 'Aktif' : 'Active'}
               </span>
@@ -1261,9 +1475,8 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
           </div>
 
           <svg
-            className={`w-4 h-4 shrink-0 transition-transform duration-200 ${mutedTextClass} ${
-              showFewShot ? 'rotate-180' : ''
-            }`}
+            className={`w-4 h-4 shrink-0 transition-transform duration-200 ${mutedTextClass} ${showFewShot ? 'rotate-180' : ''
+              }`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -1277,9 +1490,8 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
         {showFewShot && (
           <div
             id="canvas-fewshot-panel"
-            className={`p-4 pt-3 border-t space-y-3.5 ${
-              isLightTheme ? 'border-slate-200 bg-white' : 'border-slate-800/80 bg-[#080c14]'
-            }`}
+            className={`p-4 pt-3 border-t space-y-3.5 ${isLightTheme ? 'border-slate-200 bg-white' : 'border-slate-800/80 bg-[#080c14]'
+              }`}
           >
             {/* Few-Shot Input */}
             <div className="space-y-1.5">
@@ -1297,15 +1509,14 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                       onAiSuggestFewShot('__few_shot_input', t('blank_canvas_fewshot_input'))
                     }
                     disabled={loadingBlockId === '__few_shot_input'}
-                    className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all ${focusRingClass} ${
-                      loadingBlockId === '__few_shot_input'
-                        ? isLightTheme
-                          ? 'bg-emerald-100 text-emerald-900 border-emerald-300 cursor-wait'
-                          : 'bg-emerald-950/80 text-emerald-300 border-emerald-700 cursor-wait'
-                        : isLightTheme
+                    className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all ${focusRingClass} ${loadingBlockId === '__few_shot_input'
+                      ? isLightTheme
+                        ? 'bg-emerald-100 text-emerald-900 border-emerald-300 cursor-wait'
+                        : 'bg-emerald-950/80 text-emerald-300 border-emerald-700 cursor-wait'
+                      : isLightTheme
                         ? 'bg-slate-50 hover:bg-emerald-50 text-emerald-800 border-slate-300 hover:border-emerald-400'
                         : 'bg-[#090d16] hover:bg-slate-800 text-emerald-300 border-slate-800 hover:border-emerald-600/60'
-                    }`}
+                      }`}
                   >
                     {renderSuggestIcon()}
                     <span>
@@ -1352,15 +1563,14 @@ const BlankCanvasPane: React.FC<BlankCanvasPaneProps> = ({
                       onAiSuggestFewShot('__few_shot_output', t('blank_canvas_fewshot_output'))
                     }
                     disabled={loadingBlockId === '__few_shot_output'}
-                    className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all ${focusRingClass} ${
-                      loadingBlockId === '__few_shot_output'
-                        ? isLightTheme
-                          ? 'bg-emerald-100 text-emerald-900 border-emerald-300 cursor-wait'
-                          : 'bg-emerald-950/80 text-emerald-300 border-emerald-700 cursor-wait'
-                        : isLightTheme
+                    className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all ${focusRingClass} ${loadingBlockId === '__few_shot_output'
+                      ? isLightTheme
+                        ? 'bg-emerald-100 text-emerald-900 border-emerald-300 cursor-wait'
+                        : 'bg-emerald-950/80 text-emerald-300 border-emerald-700 cursor-wait'
+                      : isLightTheme
                         ? 'bg-slate-50 hover:bg-emerald-50 text-emerald-800 border-slate-300 hover:border-emerald-400'
                         : 'bg-[#090d16] hover:bg-slate-800 text-emerald-300 border-slate-800 hover:border-emerald-600/60'
-                    }`}
+                      }`}
                   >
                     {renderSuggestIcon()}
                     <span>

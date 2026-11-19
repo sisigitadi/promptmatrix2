@@ -2,7 +2,7 @@
 name: mcp-server-production-builder
 description: Designs and hardens Model Context Protocol (MCP) servers with strict Zod and JSON Schema tool contracts, stdio and Streamable HTTP transports, OAuth2/bearer boundary checks, and secret sanitization. Use when building an MCP server, defining MCP tool schemas, migrating SSE transports to Streamable HTTP, or auditing tool handlers for prompt/command injection.
 license: MIT
-compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, and Open Agent Skills compatible runtimes (Node.js 18+ for schema validator)
+compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and Open Agent Skills compatible runtimes (Node.js 18+ for schema validator)
 metadata:
   author: "Sigit Adi (PromptMatrix)"
   version: "1.0.0"
@@ -70,3 +70,56 @@ The validator checks:
 - [ ] All tools enforce `additionalProperties: false` and explicit `required` arrays.
 - [ ] File and URL inputs are validated against allowlists / root boundaries.
 - [ ] `node scripts/validate-mcp-schema.mjs <schema.json> --strict` exits `0`.
+
+## See It in Action (Demo)
+
+### The Request
+
+Design a hardened stdio MCP tool contract and handler for reading workspace markdown docs without path traversal, stdout corruption, or leaked tokens in error output.
+
+### The Result
+
+## Summary
+Defined the `read_workspace_doc` MCP tool schema with `additionalProperties: false` and `readOnlyHint: true`, paired with a `stdio`-safe handler that enforces root-path containment and secret redaction.
+
+### Tool Schema (`tools.json`)
+
+```json
+{
+  "tools": [
+    {
+      "name": "read_workspace_doc",
+      "description": "Read a UTF-8 markdown file inside the approved docs directory. Rejects traversal paths outside docs/.",
+      "annotations": { "readOnlyHint": true, "destructiveHint": false, "idempotentHint": true, "openWorldHint": false },
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["relativePath"],
+        "properties": {
+          "relativePath": { "type": "string", "minLength": 1, "maxLength": 180, "pattern": "^[a-zA-Z0-9/_.-]+\\.md$" }
+        }
+      }
+    }
+  ]
+}
+```
+
+### Handler Guardrails (`src/tools/readDoc.ts`)
+
+```typescript
+const DOCS_ROOT = path.resolve(process.cwd(), 'docs');
+
+export async function handleReadDoc(relativePath: string) {
+  const target = path.resolve(DOCS_ROOT, relativePath);
+  if (!target.startsWith(DOCS_ROOT + path.sep)) {
+    console.error('[mcp] blocked traversal attempt');
+    return { isError: true, content: [{ type: 'text', text: 'Path must stay inside docs/.' }] };
+  }
+  const body = await fs.readFile(target, 'utf8');
+  return { content: [{ type: 'text', text: redactSecrets(body) }] };
+}
+```
+
+## Next Steps
+1. Run `node scripts/validate-mcp-schema.mjs tools.json --strict` to verify schema compliance and zero leaked tokens.
+2. Test `../../.env` against `handleReadDoc` and confirm logs go to `stderr` only so `stdout` carries pure JSON-RPC frames.

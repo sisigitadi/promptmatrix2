@@ -259,7 +259,7 @@ const FrameworkPane: React.FC<FrameworkPaneProps> = ({
       {/* Header Info with Breadcrumbs & Action Buttons */}
       <div className="border-b border-slate-800/80 pb-4 sm:pb-5 space-y-3">
         <div className="flex items-center justify-between gap-2.5 flex-wrap">
-          <div className="flex items-center gap-1.5 sm:gap-2 text-xs">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs min-w-0">
             {onBackToGallery && (
               <button
                 type="button"

@@ -47,6 +47,27 @@ export interface SkillValidationResult {
   descriptionLength: number;
 }
 
+export interface SkillMarketAuditCheck {
+  readonly id: string;
+  readonly label: string;
+  readonly passed: boolean;
+  readonly detail: string;
+}
+
+export interface SkillMarketAuditOptions {
+  readonly demoRequest?: string;
+  readonly demoResult?: string;
+  readonly tags?: readonly string[];
+  readonly tagline?: string;
+}
+
+export interface SkillMarketAuditResult {
+  readonly score: number;
+  readonly passedCount: number;
+  readonly totalCount: number;
+  readonly checks: SkillMarketAuditCheck[];
+}
+
 export interface BuildAgentSkillInput {
   framework: Framework | null | undefined;
   frameworkName: string | null | undefined;
@@ -486,4 +507,193 @@ export const formatAgentSkillMarkdown = (spec: AgentSkillSpec): string => {
   ];
 
   return `${frontmatterLines.join('\n')}\n\n${spec.body.trim()}\n`;
+};
+
+const MARKET_STOPWORD_TAGS = new Set(['and', 'the', 'for', 'with', 'from', 'into', 'your']);
+const BANNED_AI_BUZZWORDS: readonly string[] = [
+  'unlock',
+  'elevate',
+  'empower',
+  'delve',
+  'showcase',
+  'testament',
+  'landscape',
+  'journey',
+  'robust',
+  'game-' + 'changer',
+  'next-' + 'level',
+  'next-' + 'generation',
+  'seamless',
+  'seamlessly',
+  'cutting-' + 'edge',
+  'revolutionary',
+  'revolutionizing',
+  'ultimate',
+  'unleash',
+  'tapestry',
+];
+const BANNED_AI_BUZZWORD_REGEX = new RegExp(`\\b(${BANNED_AI_BUZZWORDS.join('|')})\\b`, 'gi');
+
+const REQUIRED_MARKET_SECTIONS: ReadonlyArray<{
+  readonly heading: string;
+  readonly pattern: RegExp;
+}> = [
+  { heading: 'Role & Trigger', pattern: /^##\s+Role\s*&\s*Trigger\b/im },
+  { heading: 'Input Parameters', pattern: /^##\s+Input\s+Parameters\b/im },
+  { heading: 'Execution Steps', pattern: /^##\s+Execution\s+Steps\b/im },
+  { heading: 'Verification Checklist', pattern: /^##\s+Verification\s+Checklist\b/im },
+];
+
+/**
+ * Audits an AgentSkillSpec and optional Agensi.io marketplace metadata for listing readiness.
+ */
+export const auditSkillMarketReadiness = (
+  spec: AgentSkillSpec,
+  options?: SkillMarketAuditOptions
+): SkillMarketAuditResult => {
+  const trimmedName = spec.name.trim();
+  const trimmedDesc = spec.description.trim();
+  const trimmedBody = spec.body.trim();
+  const tagline = (options?.tagline ?? '').trim();
+  const demoRequest = (options?.demoRequest ?? '').trim();
+  const demoResult = (options?.demoResult ?? '').trim();
+  const tags = options?.tags ?? [];
+
+  const nameValid =
+    trimmedName.length > 0 &&
+    trimmedName.length <= MAX_SKILL_NAME_LENGTH &&
+    KEBAB_CASE_REGEX.test(trimmedName);
+
+  const descValid = trimmedDesc.length >= 40 && trimmedDesc.length <= MAX_SKILL_DESCRIPTION_LENGTH;
+
+  const missingSections = REQUIRED_MARKET_SECTIONS.filter(
+    (section) => !section.pattern.test(trimmedBody)
+  ).map((section) => section.heading);
+  const sectionsValid = missingSections.length === 0;
+
+  const combinedText = [
+    trimmedName,
+    trimmedDesc,
+    spec.compatibility,
+    trimmedBody,
+    tagline,
+    demoRequest,
+    demoResult,
+    tags.join(' '),
+  ].join('\n');
+
+  const emDashCount = (combinedText.match(/\u2014/g) || []).length;
+  const zeroEmDashes = emDashCount === 0;
+
+  const buzzwordMatches = Array.from(
+    new Set(
+      (combinedText.match(BANNED_AI_BUZZWORD_REGEX) || []).map((word) => word.toLowerCase())
+    )
+  );
+  const zeroAiBuzzwords = buzzwordMatches.length === 0;
+
+  const invalidTags = tags.filter((rawTag) => {
+    const tag = rawTag.trim();
+    return (
+      !tag ||
+      tag.startsWith('#') ||
+      MARKET_STOPWORD_TAGS.has(tag.toLowerCase()) ||
+      !KEBAB_CASE_REGEX.test(tag)
+    );
+  });
+  const tagsCountValid = tags.length >= 3 && tags.length <= 7;
+  const cleanTagsValid = tagsCountValid && invalidTags.length === 0;
+
+  const taglinePresent = tagline.length > 0;
+  const demoRequestValid = demoRequest.length >= 25;
+  const hasSummaryHeading = /^##\s+Summary\b/im.test(demoResult);
+  const demoResultValid = demoResult.length >= 700 && hasSummaryHeading;
+
+  const checks: SkillMarketAuditCheck[] = [
+    {
+      id: 'valid-name',
+      label: 'Valid kebab-case slug (<= 64 chars)',
+      passed: nameValid,
+      detail: nameValid
+        ? `${trimmedName} (${trimmedName.length}/${MAX_SKILL_NAME_LENGTH} chars)`
+        : 'Skill name must be non-empty lowercase kebab-case and at most 64 characters.',
+    },
+    {
+      id: 'valid-description',
+      label: 'Discovery description (40-1024 chars)',
+      passed: descValid,
+      detail: descValid
+        ? `${trimmedDesc.length} chars (within 40-1024 limit)`
+        : `Description is ${trimmedDesc.length} chars; target 40-1024 chars.`,
+    },
+    {
+      id: 'required-sections',
+      label: 'Required SKILL.md playbook sections',
+      passed: sectionsValid,
+      detail: sectionsValid
+        ? 'All 4 sections present (Role & Trigger, Input Parameters, Execution Steps, Verification Checklist).'
+        : `Missing sections: ${missingSections.join(', ')}`,
+    },
+    {
+      id: 'zero-em-dashes',
+      label: 'Zero em-dash characters (U+2014)',
+      passed: zeroEmDashes,
+      detail: zeroEmDashes
+        ? 'No em-dash characters found.'
+        : `Found ${emDashCount} em-dash character(s); replace with commas, colons, or parentheses.`,
+    },
+    {
+      id: 'zero-ai-buzzwords',
+      label: 'Zero banned AI marketing buzzwords',
+      passed: zeroAiBuzzwords,
+      detail: zeroAiBuzzwords
+        ? 'Copy passes anti-buzzword check.'
+        : `Remove buzzwords: ${buzzwordMatches.join(', ')}`,
+    },
+    {
+      id: 'clean-tags',
+      label: 'Clean marketplace tags (3-7 kebab-case, no # or stopwords)',
+      passed: cleanTagsValid,
+      detail: cleanTagsValid
+        ? `${tags.length} clean tags: ${tags.join(', ')}`
+        : !tagsCountValid
+          ? `Expected 3-7 tags; received ${tags.length}.`
+          : `Invalid tag(s): ${invalidTags.join(', ')}`,
+    },
+    {
+      id: 'tagline-present',
+      label: 'Marketplace tagline present',
+      passed: taglinePresent,
+      detail: taglinePresent
+        ? `${tagline.length} chars`
+        : 'Add a concise 1-sentence tagline describing the concrete skill outcome.',
+    },
+    {
+      id: 'demo-request',
+      label: 'Step 3 demo request (>= 25 chars)',
+      passed: demoRequestValid,
+      detail: demoRequestValid
+        ? `${demoRequest.length} chars`
+        : `Demo request is ${demoRequest.length} chars (minimum 25 chars).`,
+    },
+    {
+      id: 'demo-result',
+      label: 'Step 3 demo result (>= 700 chars + ## Summary)',
+      passed: demoResultValid,
+      detail: demoResultValid
+        ? `${demoResult.length} chars with ## Summary section`
+        : `Demo result is ${demoResult.length} chars (need >= 700 chars and a ## Summary heading).`,
+    },
+  ];
+
+  const totalCount = checks.length;
+  const passedCount = checks.filter((check) => check.passed).length;
+  const score = totalCount > 0 ? Math.round((passedCount / totalCount) * 100) : 0;
+
+  return {
+    score,
+    passedCount,
+    totalCount,
+    checks,
+  };
 };

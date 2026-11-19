@@ -54,6 +54,11 @@ export interface BlankCanvasState {
   skillName: string;
   skillDescription: string;
   skillCompatibility: string;
+  skillTagline?: string;
+  skillPriceUsd?: number;
+  skillTags?: string;
+  skillDemoRequest?: string;
+  skillDemoResult?: string;
   updatedAt: number;
 }
 

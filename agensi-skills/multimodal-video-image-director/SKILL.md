@@ -2,7 +2,7 @@
 name: multimodal-video-image-director
 description: Compiles structured, model-native prompts for Midjourney v8.2, FLUX.3 / FLUX.2, Google Veo 3.1, Kling 3.0, Runway Gen-4.5, and Suno v6. Use when directing AI image generation, multi-reference character edits, synchronized audio-video shots, camera motion scripts, or multi-stem music arrangements.
 license: MIT
-compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, and Open Agent Skills compatible runtimes (Node.js 18+ for parameter validator)
+compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and Open Agent Skills compatible runtimes (Node.js 18+ for parameter validator)
 metadata:
   author: "Sigit Adi (PromptMatrix)"
   version: "1.0.0"
@@ -96,3 +96,43 @@ node scripts/validate-multimodal-params.mjs --self-test
 - [ ] Suno v6 Style Headers stay at or below 200 characters and lyrics include bracketed section tags (`[Intro]`, `[Verse]`, `[Chorus]`, `[Outro]`).
 - [ ] Character and wardrobe anchors are repeated verbatim across Runway Gen-4.5 or Midjourney `--oref` sequences.
 - [ ] Zero banned slop phrases or artist-name copyright triggers appear in generated outputs.
+
+## See It in Action (Demo)
+
+### The Request
+
+Compile a model-native prompt pack for a quiet rainy-night ramen shop launch: one Midjourney v8.2 editorial still, one 8s Google Veo 3.1 video shot with audio cues, and one Suno v6 lo-fi intro arrangement.
+
+### The Result
+
+## Summary
+Compiled three engine-native prompts without quality-tag spam: a Midjourney v8.2 still with bounded flags, an `8s` Google Veo 3.1 shot sheet with separated audio cues, and a Suno v6 arrangement under the 200-character header cap.
+
+### 1. Midjourney v8.2 Editorial Still
+
+```text
+Late-night Tokyo alley ramen counter with chef ladling broth through rising steam, wet cedar counter and hand-painted ceramic bowls, 50mm f/1.8 medium shot, warm tungsten lantern key against cool rain-slicked asphalt reflections, damp wood grain and condensation --ar 16:9 --v 8.2 --stylize 180 --raw
+```
+
+### 2. Google Veo 3.1 Video Shot (`8s`)
+
+- **Camera and Lens**: 35mm slow dolly-in from street curb toward the warm noren curtain, eye-level medium framing.
+- **Primary Motion**: Over 8s, steam drifts upward from the iron pot as the chef sets a bowl onto the cedar counter.
+- **Environment**: Steady night drizzle, soft lantern light reflecting off wet cobblestones.
+- **Audio Layer**: Quiet rainfall on awning, muffled broth simmer, porcelain clink on cedar, calm voice saying: "Bowl is ready."
+
+### 3. Suno v6 Arrangement
+
+- **Style Header (114 chars)**: `Japanese lo-fi hip-hop, 76 BPM, F minor, muted Rhodes electric piano, brushed snare, warm upright bass, vinyl crackle`
+- **Structure**:
+
+```text
+[Intro: muted Rhodes chords, gentle rain foley]
+[Verse: warm upright bass, brushed rimshot groove]
+[Chorus: layered Rhodes harmony, soft tape saturation]
+[Outro: vinyl crackle fade]
+```
+
+## Next Steps
+1. Save the prompts to a file and run `node scripts/validate-multimodal-params.mjs shot-pack.md` to confirm `--v 8.2`, `8s` bounds, and header length pass with exit code `0`.
+2. Run `node scripts/validate-multimodal-params.mjs --self-test` before adding Runway Gen-4.5 follow-up shots.

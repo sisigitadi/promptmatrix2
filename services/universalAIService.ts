@@ -1267,3 +1267,338 @@ ${trimmedContent}
     };
   }
 };
+
+/**
+ * 6. AI Suggest for Agent Skill & Creator Hub (Product Profile, Tagline, Demo Request & Result)
+ */
+export interface SkillAiSuggestionInput {
+  skillName: string;
+  frameworkName?: string;
+  compiledPrompt?: string;
+  field: 'all' | 'title' | 'tagline' | 'tags' | 'description' | 'demoRequest' | 'demoResult';
+  existingTitle?: string;
+  existingTagline?: string;
+  existingDemoRequest?: string;
+  language?: 'id' | 'en';
+}
+
+export interface SkillAiSuggestionOutput {
+  title?: string;
+  tagline?: string;
+  tags?: string[];
+  description?: string;
+  demoRequest?: string;
+  demoResult?: string;
+  priceUsd?: number;
+}
+
+export const suggestSkillMetadataWithUniversalAI = async (
+  input: SkillAiSuggestionInput
+): Promise<SkillAiSuggestionOutput> => {
+  const {
+    skillName,
+    frameworkName = 'Custom Agent Skill',
+    compiledPrompt = '',
+    field,
+    existingTitle = '',
+    existingTagline = '',
+    existingDemoRequest = '',
+    language = 'id',
+  } = input;
+
+  const isIndonesian = language === 'id';
+
+  const systemInstruction = isIndonesian
+    ? `Anda adalah Principal Product Architect & Spesialis Optimasi SEO & GEO (Generative Engine Optimization) untuk AI Agent Skills. Tugas Anda adalah merancang profil produk dan live demo berkualitas tinggi yang mudah ditemukan oleh mesin pencari web (Google, Bing) dan mesin jawaban AI (Perplexity, ChatGPT Search, Claude, Google AI Overviews) serta calon pembeli di marketplace digital.
+ATURAN MUTLAK:
+1. DILARANG menggunakan tanda em-dash (—). Gunakan koma, strip (-), atau tanda kurung.
+2. DILARANG menggunakan kata klise generik AI seperti "Revolusioner", "Unleash", "Game-changer", "Delve", "Transformasi tanpa batas".
+3. Gunakan kata kunci pencarian berniat tinggi (search intent): production agent skill, verified workflow, cross-runtime, deterministic, zero hallucination.
+4. Buat kalimat padat, bernilai tinggi, dan memiliki definisi konkret (answer capsule) yang dapat dikutip langsung oleh LLM dan mesin pencari.`
+    : `You are a Principal Product Architect and SEO/GEO (Generative Engine Optimization) Specialist for AI Agent Skills. Your mission is to craft commercial, discoverable product copy and real-world demo exemplars (Request and Result) optimized for web search engines (Google, Bing) and AI answer engines (Perplexity, ChatGPT Search, Claude, Google AI Overviews).
+STRICT RULES:
+1. NEVER use em-dashes (—). Use commas, hyphens (-), or parentheses.
+2. NEVER use generic AI cliches such as "Revolutionary", "Unleash", "Game-changer", "Delve", "Tapestry".
+3. Incorporate high-intent search keywords: production agent skill, deterministic workflow, cross-runtime, zero hallucination.
+4. Provide concrete, quotable definition capsules and structured deliverables that search engines and AI agents can cite as authoritative sources.`;
+
+  if (field === 'title') {
+    const prompt = isIndonesian
+      ? `Nama Kebab-Case Skill: "${skillName}"
+Kerangka Kerja Terkait: "${frameworkName}"
+Konteks Prompt Bawaan:
+${compiledPrompt ? compiledPrompt.slice(0, 1500) : '(Kompiler prompt otomatis)'}
+
+Buat SATU judul produk komersial ramah SEO yang mengandung kata kunci pencarian berniat tinggi (maksimal 60 karakter, contoh: "Next.js Fullstack Production Agent Skill").
+HANYA kembalikan teks judul saja tanpa tanda kutip dan tanpa penjelasan:`
+      : `Kebab-Case Skill Name: "${skillName}"
+Related Framework: "${frameworkName}"
+Prompt Context:
+${compiledPrompt ? compiledPrompt.slice(0, 1500) : '(Auto-compiled prompt)'}
+
+Generate ONE high-intent, SEO-friendly commercial title for an agent skill marketplace (max 60 chars, e.g. "Next.js Fullstack Production Agent Skill").
+Return ONLY the title text without quotes or explanations:`;
+
+    const raw = await generateTextWithUniversalAI(prompt, systemInstruction);
+    return { title: sanitizePromptText(raw).replace(/^["']|["']$/g, '').trim() };
+  }
+
+  if (field === 'tagline') {
+    const prompt = isIndonesian
+      ? `Nama Skill: "${existingTitle || skillName}"
+Kerangka Kerja: "${frameworkName}"
+Konteks Prompt:
+${compiledPrompt ? compiledPrompt.slice(0, 1500) : ''}
+
+Buat SATU kalimat tagline bernilai tinggi dan ramah GEO (answer capsule, maksimal 120 karakter, fokus pada hasil kerja konkret yang diotomasi).
+HANYA kembalikan teks tagline saja tanpa tanda kutip:`
+      : `Skill Name: "${existingTitle || skillName}"
+Framework: "${frameworkName}"
+Prompt Context:
+${compiledPrompt ? compiledPrompt.slice(0, 1500) : ''}
+
+Create ONE punchy value-proposition tagline and GEO answer capsule stating the concrete buyer outcome (max 120 chars).
+Return ONLY the tagline text without quotes:`;
+
+    const raw = await generateTextWithUniversalAI(prompt, systemInstruction);
+    return { tagline: sanitizePromptText(raw).replace(/^["']|["']$/g, '').trim() };
+  }
+
+  if (field === 'tags') {
+    const prompt = isIndonesian
+      ? `Nama Skill: "${existingTitle || skillName}"
+Kerangka Kerja: "${frameworkName}"
+
+Berikan 5 hingga 7 tag penemuan SEO & marketplace tanpa tanda pagar (#), dipisahkan dengan koma.
+Sertakan tag format ('open-agent-skills', 'agent-skill'), runtime ('claude-code', 'cursor-rules', 'antigravity'), serta kata kunci domain teknis.
+HANYA kembalikan teks tag dipisahkan koma:`
+      : `Skill Name: "${existingTitle || skillName}"
+Framework: "${frameworkName}"
+
+Provide 5 to 7 high-intent SEO & marketplace discovery tags without hash symbols (#), separated by commas.
+Include format tags ('open-agent-skills', 'agent-skill'), runtime keywords ('claude-code', 'cursor-rules', 'antigravity'), and specific technical domain keywords.
+Return ONLY comma-separated tags:`;
+
+    const raw = await generateTextWithUniversalAI(prompt, systemInstruction);
+    const cleaned = sanitizePromptText(raw).replace(/^["']|["']$/g, '').trim();
+    const tags = cleaned
+      .split(',')
+      .map((t) => t.trim().replace(/^#/, ''))
+      .filter(Boolean);
+    return { tags };
+  }
+
+  if (field === 'description') {
+    const prompt = isIndonesian
+      ? `Nama Produk Skill: "${existingTitle || skillName}"
+Tagline: "${existingTagline || ''}"
+Kerangka Kerja: "${frameworkName}"
+Konteks Prompt:
+${compiledPrompt ? compiledPrompt.slice(0, 2000) : ''}
+
+Susun draf deskripsi produk Markdown listing SEO & GEO friendly dengan format terstruktur:
+## Definisi Produk & Ringkasan Eksekutif
+(Satu paragraf padat 40-60 kata menjelaskan fungsi spesifik skill dan masalah konkret yang diotomasi, siap dikutip oleh Perplexity & Google AI Overviews)
+
+## Kemampuan Utama & Alur Kerja
+- Fitur teknis konkret 1
+- Fitur teknis konkret 2
+- Fitur teknis konkret 3
+- Fitur teknis konkret 4
+
+## Sasaran Pengguna & Nilai Tambah
+(Siapa yang membutuhkan skill ini dan perbandingannya dengan prompt biasa)
+
+## Kompatibilitas Runner
+Didukung penuh pada 27 runtime Open Agent Skills termasuk Google Antigravity, Claude Code, Cursor, Gemini CLI, GitHub Copilot, Codex, dan OpenCode.`
+      : `Skill Product Name: "${existingTitle || skillName}"
+Tagline: "${existingTagline || ''}"
+Framework: "${frameworkName}"
+Prompt Context:
+${compiledPrompt ? compiledPrompt.slice(0, 2000) : ''}
+
+Draft an SEO & GEO-optimized Markdown listing description formatted as:
+## Product Overview & Executive Summary
+(One concise 40-60 word quotable answer capsule explaining what this skill automates, ready for Perplexity & Google AI citation)
+
+## Key Capabilities & Workflow
+- Concrete technical capability 1
+- Concrete technical capability 2
+- Concrete technical capability 3
+- Concrete technical capability 4
+
+## Target Audience & Value Proposition
+(Who needs this skill and why it outperforms generic prompt templates)
+
+## Runner Compatibility
+Supported across 27 Open Agent Skills runtimes including Google Antigravity, Claude Code, Cursor, Gemini CLI, GitHub Copilot, Codex, and OpenCode.`;
+
+    const raw = await generateTextWithUniversalAI(prompt, systemInstruction);
+    return { description: sanitizePromptText(raw).trim() };
+  }
+
+  if (field === 'demoRequest') {
+    const prompt = isIndonesian
+      ? `Nama Skill: "${existingTitle || skillName}"
+Kerangka Kerja: "${frameworkName}"
+Konteks Prompt:
+${compiledPrompt ? compiledPrompt.slice(0, 1500) : ''}
+
+Susun SATU contoh permintaan nyata (Demo Request) yang realistis, menantang, dan mencerminkan kueri pencarian pembeli potensial (high-intent user search query).
+Permintaan harus spesifik, memberikan konteks masalah nyata, dan meminta solusi teknis lengkap.
+HANYA kembalikan teks prompt permintaan tanpa kata pengantar:`
+      : `Skill Name: "${existingTitle || skillName}"
+Framework: "${frameworkName}"
+Prompt Context:
+${compiledPrompt ? compiledPrompt.slice(0, 1500) : ''}
+
+Draft ONE realistic, high-intent demo request (the user prompt) that mirrors real customer search queries when looking for an agent solution.
+It should provide realistic task context and request complete deliverables.
+Return ONLY the prompt request text without preamble:`;
+
+    const raw = await generateTextWithUniversalAI(prompt, systemInstruction);
+    return { demoRequest: sanitizePromptText(raw).trim() };
+  }
+
+  if (field === 'demoResult') {
+    const prompt = isIndonesian
+      ? `Nama Skill: "${existingTitle || skillName}"
+Kerangka Kerja: "${frameworkName}"
+Permintaan Pengguna (Demo Request):
+"${existingDemoRequest || 'Lakukan audit dan implementasi solusi sesuai standar arsitektur terbaik.'}"
+Konteks Prompt:
+${compiledPrompt ? compiledPrompt.slice(0, 1500) : ''}
+
+Susun SATU contoh hasil eksekusi (Demo Result) berstandar emas yang diberikan oleh AI Agent.
+Hasil harus ramah GEO (mudah dikutip oleh Perplexity / SearchGPT) dan mencakup:
+## Ringkasan Eksekutif
+## Hasil Eksekusi / Spesifikasi Solusi
+## Langkah Penerapan & Verifikasi Mutu
+Minimal 700 karakter, terstruktur rapi, deterministik, dan konkret.
+HANYA kembalikan teks output hasil tanpa kata pengantar:`
+      : `Skill Name: "${existingTitle || skillName}"
+Framework: "${frameworkName}"
+User Request (Demo Request):
+"${existingDemoRequest || 'Perform an audit and deliver the production solution following architecture best practices.'}"
+Prompt Context:
+${compiledPrompt ? compiledPrompt.slice(0, 1500) : ''}
+
+Draft ONE gold-standard execution result (Demo Result) delivered by the AI Agent.
+It must be GEO-friendly (quotable by Perplexity / SearchGPT) and include:
+## Executive Summary
+## Deliverable / Solution Specification
+## Quality Gate & Verification Steps
+At least 700 characters, structured, concrete.
+Return ONLY the output result markdown without preamble:`;
+
+    const raw = await generateTextWithUniversalAI(prompt, systemInstruction);
+    return { demoResult: sanitizePromptText(raw).trim() };
+  }
+
+  // field === 'all'
+  const allPrompt = isIndonesian
+    ? `Nama Kebab-Case Skill: "${skillName}"
+Kerangka Kerja: "${frameworkName}"
+Konteks Prompt:
+${compiledPrompt ? compiledPrompt.slice(0, 2000) : ''}
+
+Susun paket lengkap listing komersial berstandar SEO & GEO (mudah ditemukan di Google Search, marketplace, dan dikutip oleh AI Answer Engines) dalam format JSON murni:
+{
+  "title": "Judul Komersial Berkata Kunci (maksimal 60 karakter, contoh: Next.js Fullstack Production Agent Skill)",
+  "tagline": "Satu kalimat manfaat utama konkret bernada pasti (maksimal 120 karakter)",
+  "tags": ["open-agent-skills", "agent-skill", "claude-code", "cursor-rules", "antigravity", "TagDomain"],
+  "priceUsd": 14.99,
+  "description": "Deskripsi lengkap Markdown dengan ## Definisi Produk & Ringkasan, ## Kemampuan Utama, ## Nilai Tambah, dan ## Kompatibilitas Runner",
+  "demoRequest": "Contoh pertanyaan/tugas teknis realistis dan berniat tinggi dari pengguna (The Request)",
+  "demoResult": "Contoh hasil eksekusi agen yang berstandar emas, terstruktur dengan ## Executive Summary, ## Solution Deliverable, ## Verification Checklist, minimal 700 karakter (The Result)"
+}
+Kembalikan HANYA format JSON valid tanpa tanda pembungkus markdown quotes (\`\`\`json):`
+    : `Kebab-Case Skill Name: "${skillName}"
+Framework: "${frameworkName}"
+Prompt Context:
+${compiledPrompt ? compiledPrompt.slice(0, 2000) : ''}
+
+Generate a complete commercial listing package and demo exemplar adhering to SEO & GEO standards in pure JSON format:
+{
+  "title": "Keyword-Rich Commercial Title (max 60 chars, e.g. Next.js Fullstack Production Agent Skill)",
+  "tagline": "One clear sentence stating concrete outcome in answer-capsule style (max 120 chars)",
+  "tags": ["open-agent-skills", "agent-skill", "claude-code", "cursor-rules", "antigravity", "DomainTag"],
+  "priceUsd": 14.99,
+  "description": "Full Markdown description with ## Product Overview & Summary, ## Key Capabilities, ## Value Proposition, and ## Runner Compatibility",
+  "demoRequest": "Realistic, high-intent user task prompt mirroring real search queries (The Request)",
+  "demoResult": "Comprehensive, structured agent execution result with ## Executive Summary, ## Deliverable Specification, ## Verification Steps, at least 700 characters (The Result)"
+}
+Return ONLY valid JSON without markdown codeblock wrapper (\`\`\`json):`;
+
+  const raw = await generateTextWithUniversalAI(allPrompt, systemInstruction);
+  const cleanJson = raw
+    .replace(/^```json\s*/i, '')
+    .replace(/^```\s*/, '')
+    .replace(/\s*```$/, '')
+    .trim();
+
+  try {
+    const parsed = JSON.parse(cleanJson);
+    return {
+      title: typeof parsed.title === 'string' ? parsed.title.trim() : undefined,
+      tagline: typeof parsed.tagline === 'string' ? parsed.tagline.trim() : undefined,
+      tags: Array.isArray(parsed.tags) ? parsed.tags.map(String) : undefined,
+      priceUsd: typeof parsed.priceUsd === 'number' ? parsed.priceUsd : 14.99,
+      description: typeof parsed.description === 'string' ? parsed.description.trim() : undefined,
+      demoRequest: typeof parsed.demoRequest === 'string' ? parsed.demoRequest.trim() : undefined,
+      demoResult: typeof parsed.demoResult === 'string' ? parsed.demoResult.trim() : undefined,
+    };
+  } catch {
+    return {
+      title: isIndonesian ? `Paket Spesialis ${frameworkName}` : `${frameworkName} Specialist Pack`,
+      tagline: isIndonesian
+        ? 'Otomasi alur kerja prompt cerdas dan deterministik dengan panduan teruji.'
+        : 'Automates intelligent, deterministic prompt workflows with production guardrails.',
+      tags: ['AI Agent', 'Prompt Engineering', 'Productivity'],
+      priceUsd: 14.99,
+      description: raw,
+    };
+  }
+};
+
+/**
+ * 8. Agent Skill Pack Pitch Hook Generator
+ * Generates an engaging, high-converting social media promotional pitch or listing hook
+ * for any agent skill pack or active formula.
+ */
+export const generatePackPitchWithUniversalAI = async (
+  packTitle: string,
+  packSummary: string,
+  language: 'id' | 'en' = 'id'
+): Promise<string> => {
+  const isId = language === 'id';
+  const systemInstruction = isId
+    ? `Anda adalah Copywriter Produk AI dan Penjualan Agent Skills berstandar tinggi. Buat teks promosi singkat, menarik, dan bernilai tinggi untuk mempromosikan paket skill ini kepada praktisi AI, kreator, dan engineer.
+DILARANG menggunakan kata-kata klise seperti "Revolusioner", "Game-changer", "Unleash", atau tanda em-dash (—). Gunakan kalimat lugas, profesional, dan tajam.`
+    : `You are an elite AI Product and Agent Skills copywriter. Create a concise, compelling, high-converting promotional post for this skill pack targeting AI practitioners, creators, and engineers.
+DO NOT use overused AI cliches like "Revolutionary", "Game-changer", "Unleash", or em-dashes (—). Keep it crisp, professional, and punchy.`;
+
+  const prompt = isId
+    ? `Nama Paket Skill: "${packTitle}"
+Ringkasan Kemampuan: "${packSummary}"
+
+Susun 1 draft posting promosi / pitch singkat (X / LinkedIn / Komunitas):
+1. Hook pembuka yang menyorot masalah nyata (pain point) yang sering dihadapi.
+2. Solusi konkret yang diberikan oleh paket skill ini dalam format 3 poin ringkas.
+3. Call to Action (CTA) yang jelas.
+
+Format teks polos yang rapi dan siap disalin:`
+    : `Skill Pack Name: "${packTitle}"
+Capability Summary: "${packSummary}"
+
+Draft 1 concise promotional post / pitch hook (for X / LinkedIn / Communities):
+1. Opening hook highlighting a real workflow pain point.
+2. Concrete solution delivered by this skill pack in 3 bullet points.
+3. Clear Call to Action (CTA).
+
+Plain text format, cleanly formatted and ready to copy:`;
+
+  const raw = await generateTextWithUniversalAI(prompt, systemInstruction);
+  return sanitizePromptText(raw).trim();
+};
+

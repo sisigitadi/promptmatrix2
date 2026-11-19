@@ -570,15 +570,15 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
         </button>
       </section>
 
-      {/* Public Official Agent Skills Catalog Strip */}
+      {/* Official Agent Skills Reference Library Strip (Only displayed when Creator Mode is unlocked) */}
       {onOpenAgensiCatalog && (
         <section
-          aria-label={t('catalog_title')}
-          className="rounded-2xl border border-cyan-500/35 bg-[#09131f] p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md"
+          aria-label={t('sample_skills_library_title')}
+          className="rounded-2xl border border-slate-800 bg-[#090d16] p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md"
         >
           <div className="flex items-start sm:items-center gap-3 min-w-0">
             <div
-              className="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/35 text-cyan-300 flex items-center justify-center shrink-0"
+              className="w-10 h-10 rounded-xl bg-slate-900 border border-emerald-500/35 text-emerald-300 flex items-center justify-center shrink-0"
               aria-hidden="true"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -591,18 +591,18 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
             </div>
             <div className="min-w-0 space-y-0.5">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
-                  {t('promo_card_badge')}
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                  {t('sample_skills_library_title')}
                 </span>
                 <span className="text-[11px] font-mono text-slate-400">
                   {AGENSI_CONFIG.bundledSkillPacks.length}{' '}
-                  {language === 'id' ? 'Paket Resmi' : 'Official Packs'} ·{' '}
-                  {AGENSI_CONFIG.supportedAgents.length}+{' '}
-                  {language === 'id' ? 'Agen AI' : 'AI Agents'}
+                  {language === 'id' ? 'Paket Referensi' : 'Reference Packs'} ·{' '}
+                  {AGENSI_CONFIG.supportedAgents.length}{' '}
+                  {language === 'id' ? 'Runtime Agen' : 'Agent Runtimes'}
                 </span>
               </div>
-              <p className="text-xs sm:text-sm font-semibold text-slate-100 font-sans">
-                {t('catalog_subtitle')}
+              <p className="text-xs sm:text-sm font-semibold text-slate-200 font-sans">
+                {t('sample_skills_library_subtitle')}
               </p>
             </div>
           </div>
@@ -610,10 +610,10 @@ const TemplateGallery: React.FC<TemplateGalleryProps> = ({
           <button
             type="button"
             onClick={onOpenAgensiCatalog}
-            className="w-full sm:w-auto min-h-[44px] px-4 py-2 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/45 hover:border-cyan-400 text-cyan-200 hover:text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09131f]"
+            className="w-full sm:w-auto min-h-[44px] px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-100 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
           >
-            <span>{t('promo_card_cta_catalog')}</span>
-            <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-cyan-500/20 text-cyan-200 border border-cyan-500/30">
+            <span>{language === 'id' ? 'Buka Pustaka Referensi' : 'Browse Reference Library'}</span>
+            <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
               {AGENSI_CONFIG.bundledSkillPacks.length}
             </span>
           </button>

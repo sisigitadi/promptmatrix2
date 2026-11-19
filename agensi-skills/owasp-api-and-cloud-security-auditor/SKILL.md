@@ -2,7 +2,7 @@
 name: owasp-api-and-cloud-security-auditor
 description: Audits REST, GraphQL, and serverless APIs plus cloud configurations against OWASP API Security Top 10 and cloud hardening baselines. Use when reviewing authentication, BOLA/IDOR authorization, SSRF, CORS, TLS settings, secret handling, or running static security scans before production release.
 license: MIT
-compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, and Open Agent Skills compatible runtimes (Node.js 18+ for static risk scanner)
+compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and Open Agent Skills compatible runtimes (Node.js 18+ for static risk scanner)
 metadata:
   author: "Sigit Adi (PromptMatrix)"
   version: "1.0.0"
@@ -71,3 +71,55 @@ Record confirmed vulnerabilities and remediation steps using the schema in `temp
 - [ ] Outbound HTTP fetchers validate target hosts and block private/metadata IP ranges (SSRF).
 - [ ] CORS origins are explicitly allowlisted and TLS certificate validation remains enabled everywhere.
 - [ ] Audit output conforms to `templates/security-audit-findings.json` with reproducible evidence.
+
+## See It in Action (Demo)
+
+### The Request
+
+Audit this Express endpoint for OWASP API Top 10 risks and return structured findings: `app.get('/api/invoices/:id', async (req, res) => { const inv = await prisma.invoice.findUnique({ where: { id: req.params.id } }); res.setHeader('Access-Control-Allow-Origin', '*'); return res.json(inv); });`
+
+### The Result
+
+## Summary
+Audited `GET /api/invoices/:id` against OWASP API Top 10 (2023) and flagged 3 vulnerabilities: missing tenant scoping (API1 BOLA), unprojected database response (API3 BOPLA), and wildcard CORS (API8).
+
+### Structured Audit Findings (`templates/security-audit-findings.json` format)
+
+```json
+{
+  "summary": { "critical": 0, "high": 2, "medium": 1, "low": 0, "status": "action-required" },
+  "findings": [
+    {
+      "ruleId": "OWASP-API1-BOLA",
+      "owaspCategory": "API1:2023 Broken Object Level Authorization",
+      "severity": "high",
+      "file": "src/routes/invoices.ts",
+      "line": 1,
+      "evidence": "prisma.invoice.findUnique({ where: { id: req.params.id } })",
+      "remediation": "Require verified session and scope query with tenantId: session.tenantId."
+    },
+    {
+      "ruleId": "OWASP-API3-BOPLA",
+      "owaspCategory": "API3:2023 Broken Object Property Level Authorization",
+      "severity": "high",
+      "file": "src/routes/invoices.ts",
+      "line": 1,
+      "evidence": "return res.json(inv)",
+      "remediation": "Add explicit Prisma select projection for public invoice fields only."
+    },
+    {
+      "ruleId": "OWASP-API8-CORS",
+      "owaspCategory": "API8:2023 Security Misconfiguration",
+      "severity": "medium",
+      "file": "src/routes/invoices.ts",
+      "line": 1,
+      "evidence": "Access-Control-Allow-Origin: *",
+      "remediation": "Restrict Origin header to an explicit allowlist of trusted origins."
+    }
+  ]
+}
+```
+
+## Next Steps
+1. Run `node scripts/scan-security-risks.mjs src/ --strict` after applying tenant scoping, explicit `select` fields, and CORS allowlisting.
+2. Add an authorization test confirming cross-tenant requests to `/api/invoices/:id` return `404` or `403`.

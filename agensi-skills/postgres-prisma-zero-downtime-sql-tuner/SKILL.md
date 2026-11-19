@@ -2,7 +2,7 @@
 name: postgres-prisma-zero-downtime-sql-tuner
 description: Authors and lints zero-downtime PostgreSQL, Prisma, and Drizzle SQL migrations, concurrent indexes, and Row-Level Security (RLS) policies. Use when writing DDL migrations, adding NOT NULL columns, creating indexes on live tables, dropping columns safely, or auditing multi-tenant RLS isolation.
 license: MIT
-compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, and Open Agent Skills compatible runtimes (Node.js 18+ for SQL migration linter)
+compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and Open Agent Skills compatible runtimes (Node.js 18+ for SQL migration linter)
 metadata:
   author: "Sigit Adi (PromptMatrix)"
   version: "1.0.0"
@@ -61,3 +61,53 @@ Use `templates/zero-downtime-migration.sql` as the starting pattern for new tabl
 - [ ] Every `CREATE INDEX` uses `CONCURRENTLY` outside a transaction block.
 - [ ] No `ADD COLUMN ... NOT NULL` lacks a safe `DEFAULT` or expand-and-contract steps.
 - [ ] Every user/tenant table enables Row-Level Security with explicit policies and supporting indexes.
+
+## See It in Action (Demo)
+
+### The Request
+
+Write a zero-downtime PostgreSQL migration to create a tenant-scoped `api_tokens` table with Row-Level Security, add a non-blocking index, and safely add a non-null `rate_limit` column to an existing `workspaces` table.
+
+### The Result
+
+## Summary
+Generated a lock-safe PostgreSQL migration using `3s` lock timeouts, tenant-scoped Row-Level Security policies, a non-blocking `CONCURRENTLY` index, and a constant-default `ADD COLUMN` statement.
+
+### Lock-Safe Migration (`001_api_tokens.sql`)
+
+```sql
+SET lock_timeout = '3s';
+SET statement_timeout = '30s';
+
+CREATE TABLE IF NOT EXISTS public.api_tokens (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id uuid NOT NULL,
+  token_hash text NOT NULL,
+  revoked_at timestamptz NULL,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+ALTER TABLE public.api_tokens ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY api_tokens_tenant_isolation
+  ON public.api_tokens
+  FOR ALL
+  USING (tenant_id = current_setting('app.current_tenant_id', true)::uuid)
+  WITH CHECK (tenant_id = current_setting('app.current_tenant_id', true)::uuid);
+
+ALTER TABLE public.workspaces
+  ADD COLUMN IF NOT EXISTS rate_limit integer NOT NULL DEFAULT 120;
+```
+
+### Concurrent Index File (`002_api_tokens_index.sql`)
+
+```sql
+-- Run outside an explicit transaction block in Prisma/PostgreSQL
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_api_tokens_tenant_active
+  ON public.api_tokens (tenant_id)
+  WHERE revoked_at IS NULL;
+```
+
+## Next Steps
+1. Run `node scripts/lint-sql-migrations.mjs prisma/migrations/` to verify zero `SQL-INDEX-NOT-CONCURRENT`, `SQL-ADD-NOT-NULL-NO-DEFAULT`, or `SQL-MISSING-RLS` errors.
+2. Apply `001_api_tokens.sql` first, then run `002_api_tokens_index.sql` without a wrapping `BEGIN`/`COMMIT` transaction.

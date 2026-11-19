@@ -5,48 +5,71 @@ interface FooterProps {
   isLightTheme?: boolean;
 }
 
-const Footer: React.FC<FooterProps> = () => {
+const Footer: React.FC<FooterProps> = ({ isLightTheme = false }) => {
   const { t, language } = useLanguage();
 
+  const linkClassName = `min-h-[44px] inline-flex items-center gap-1.5 font-medium py-2 px-2.5 rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+    isLightTheme
+      ? 'text-slate-700 hover:text-emerald-800 hover:bg-slate-100'
+      : 'text-slate-300 hover:text-emerald-300 hover:bg-slate-800/60'
+  }`;
+
   return (
-    <footer className="border-t border-slate-800/80 bg-[#090d16]/95 py-5 px-4 sm:px-6 mt-16 transition-colors">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-slate-400">
-        {/* Left: Brand & Informative Attribution without repetition */}
+    <footer
+      className={`border-t py-5 px-4 sm:px-6 mt-16 transition-colors ${
+        isLightTheme
+          ? 'border-slate-200 bg-white/95 text-slate-700'
+          : 'border-slate-800/80 bg-[#090d16]/95 text-slate-300'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-xs">
+        {/* Left: Brand & Informative Attribution */}
         <div className="flex flex-col sm:flex-row items-center sm:items-start md:items-center gap-1.5 sm:gap-2.5 text-center sm:text-left">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-200 tracking-tight">PromptMatrix 2.0</span>
-            <span className="text-slate-600 hidden sm:inline">•</span>
+            <span
+              className={`font-bold tracking-tight ${
+                isLightTheme ? 'text-slate-900' : 'text-slate-100'
+              }`}
+            >
+              PromptMatrix 2.0
+            </span>
+            <span
+              className={`hidden sm:inline ${isLightTheme ? 'text-slate-400' : 'text-slate-600'}`}
+              aria-hidden="true"
+            >
+              ·
+            </span>
           </div>
-          <p className="text-slate-400 font-normal">
+          <p className={`font-normal ${isLightTheme ? 'text-slate-600' : 'text-slate-400'}`}>
             {t('footer_text')}
           </p>
         </div>
 
         {/* Right: Quick Links & Jump to Top */}
-        <div className="flex items-center justify-center gap-2.5 sm:gap-4 text-slate-400 flex-wrap">
+        <div className="flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
           <a
             href="https://sigitadi.id/"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-emerald-400 transition-colors flex items-center gap-1.5 text-slate-300 hover:text-emerald-300 font-medium py-1 px-1.5 rounded-md hover:bg-slate-800/50"
+            className={linkClassName}
             aria-label="Portfolio Sigit Adi"
             title={language === 'id' ? 'Web Portfolio Sigit Adi' : "Sigit Adi's Portfolio"}
           >
-            <img 
-              src="/sa-logo.png" 
-              alt="SA Logo" 
-              className="w-4 h-4 rounded object-cover inline-block border border-emerald-500/40 shadow-xs" 
+            <img
+              src="/sa-logo.png"
+              alt="SA Logo"
+              className="w-4 h-4 rounded object-cover inline-block border border-emerald-500/40"
             />
             <span>sigitadi.id</span>
           </a>
 
           <a
             href="mailto:si.sigitadi@gmail.com"
-            className="hover:text-emerald-400 transition-colors flex items-center gap-1.5 py-1 px-1.5 rounded-md hover:bg-slate-800/50"
+            className={linkClassName}
             aria-label="Email"
             title={language === 'id' ? 'Kirim Email ke Sigit Adi' : 'Send Email to Sigit Adi'}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
               <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
             </svg>
             <span>Email</span>
@@ -56,11 +79,11 @@ const Footer: React.FC<FooterProps> = () => {
             href="https://github.com/sisigitadi"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-emerald-400 transition-colors flex items-center gap-1.5 py-1 px-1.5 rounded-md hover:bg-slate-800/50"
+            className={linkClassName}
             aria-label="GitHub"
             title={language === 'id' ? 'Profil GitHub Pengembang' : "Developer's GitHub Profile"}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
             </svg>
             <span>GitHub</span>
@@ -70,11 +93,11 @@ const Footer: React.FC<FooterProps> = () => {
             href="https://medium.com/@si.sigitadi"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-emerald-400 transition-colors flex items-center gap-1.5 py-1 px-1.5 rounded-md hover:bg-slate-800/50"
+            className={linkClassName}
             aria-label="Medium"
             title={language === 'id' ? 'Publikasi Blog Medium' : 'Medium Blog Publication'}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
               <path d="M9.025 8c0 2.485-2.02 4.505-4.505 4.505S0 10.485 0 8 2.02 3.495 4.52 3.495c2.485 0 4.505 2.02 4.505 4.505M16 8c0 2.485-2.02 4.505-4.505 4.505S7 10.485 7 8s2.02-4.505 4.505-4.505S16 5.515 16 8M13.15 8c0 1.7-.97 3.09-2.17 3.09S8.81 9.7 8.81 8s.97-3.09 2.17-3.09 2.17.97 2.17 3.09" />
             </svg>
             <span>Medium</span>
@@ -83,10 +106,18 @@ const Footer: React.FC<FooterProps> = () => {
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="hover:text-emerald-400 transition-colors flex items-center gap-1 text-slate-400 hover:text-emerald-300 py-1 px-1.5 rounded-md hover:bg-slate-800/50 ml-0.5"
+            className={linkClassName}
             title={language === 'id' ? 'Lompat kembali ke atas' : 'Jump back to top'}
+            aria-label={language === 'id' ? 'Kembali ke atas halaman' : 'Back to top'}
           >
-            <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+            <svg
+              className={`w-3.5 h-3.5 ${isLightTheme ? 'text-emerald-700' : 'text-emerald-400'}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              aria-hidden="true"
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
             <span>{language === 'id' ? 'Ke Atas' : 'Top'}</span>

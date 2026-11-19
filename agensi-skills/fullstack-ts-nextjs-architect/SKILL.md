@@ -2,7 +2,7 @@
 name: fullstack-ts-nextjs-architect
 description: Enforces production Next.js App Router architecture, strict zero-any TypeScript, Zod-validated API contracts, and zero-downtime database migrations. Use when scaffolding Next.js features, auditing TypeScript files for unsafe type escapes, reviewing Server Actions or Route Handlers, or planning schema migrations.
 license: MIT
-compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, and Open Agent Skills compatible runtimes (Node.js 18+ for strict TS scanner)
+compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and Open Agent Skills compatible runtimes (Node.js 18+ for strict TS scanner)
 metadata:
   author: "Sigit Adi (PromptMatrix)"
   version: "1.0.0"
@@ -78,3 +78,65 @@ Consult `references/architecture-checklist.md` for the full migration safety mat
 - [ ] Every Route Handler and Server Action validates input with Zod and checks session/ownership.
 - [ ] No database client or server secret is reachable from `'use client'` modules.
 - [ ] `npx tsc --noEmit` and `npm run build` pass cleanly.
+
+## See It in Action (Demo)
+
+### The Request
+
+Refactor this Next.js 15 Route Handler so it removes unsafe type casts, validates the body with Zod, enforces workspace ownership, and returns a typed union: `export async function PATCH(req: Request, context: { params: { id: string } }) { const body = (await req.json()) as Record<string, string>; const updated = await db.project.update({ where: { id: context.params.id }, data: body }); return Response.json(updated); }`
+
+### The Result
+
+## Summary
+Removed the unsafe `Record<string, string>` cast on `req.json()`, awaited Next.js 15 `params`, added strict Zod input validation to block mass assignment, scoped the database update by authenticated `workspaceId`, and returned a typed `ActionResult` union.
+
+### Hardened Route Handler (`app/api/projects/[id]/route.ts`)
+
+```typescript
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import { db } from '@/lib/db';
+import { requireSession } from '@/lib/auth';
+
+const PatchProjectSchema = z.object({
+  name: z.string().trim().min(2).max(80).optional(),
+  visibility: z.enum(['private', 'workspace']).optional(),
+});
+
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
+export async function PATCH(req: Request, context: RouteContext) {
+  const session = await requireSession();
+  if (!session) {
+    return NextResponse.json({ ok: false, code: 'UNAUTHORIZED', message: 'Authentication required.' }, { status: 401 });
+  }
+
+  const { id } = await context.params;
+  const rawBody: unknown = await req.json();
+  const parsed = PatchProjectSchema.safeParse(rawBody);
+  if (!parsed.success) {
+    return NextResponse.json({ ok: false, code: 'VALIDATION_ERROR', message: 'Invalid project payload.' }, { status: 400 });
+  }
+
+  const updated = await db.project.updateMany({
+    where: { id, workspaceId: session.workspaceId },
+    data: parsed.data,
+  });
+  if (updated.count === 0) {
+    return NextResponse.json({ ok: false, code: 'NOT_FOUND', message: 'Project not found.' }, { status: 404 });
+  }
+
+  return NextResponse.json({ ok: true, data: { id, ...parsed.data } }, { status: 200 });
+}
+```
+
+| Defect Fixed | Original Risk | Applied Guard |
+| :--- | :--- | :--- |
+| Unsafe cast & sync `params` | Unchecked runtime payload and Next.js 15 param error | `RouteContext` Promise type + `unknown` + `PatchProjectSchema` |
+| Unscoped `where: { id }` | Cross-tenant IDOR overwrite | Compound predicate `{ id, workspaceId: session.workspaceId }` |
+
+## Next Steps
+1. Run `node scripts/check-strict-ts.mjs src/` and `npx tsc --noEmit` to confirm zero `any` types and zero compiler errors.
+2. Add an integration test verifying a cross-workspace `PATCH` returns HTTP `404`.

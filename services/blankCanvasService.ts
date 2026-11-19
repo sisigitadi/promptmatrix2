@@ -120,6 +120,19 @@ const cleanCanvasText = (text: string): string => {
     .replace(/\u2013/g, '-');
 };
 
+const sanitizeOptionalPrice = (value: unknown): number | undefined => {
+  if (typeof value === 'number' && Number.isFinite(value) && value >= 0) {
+    return Number(value.toFixed(2));
+  }
+  if (typeof value === 'string' && value.trim()) {
+    const parsed = Number(value.trim());
+    if (Number.isFinite(parsed) && parsed >= 0) {
+      return Number(parsed.toFixed(2));
+    }
+  }
+  return undefined;
+};
+
 const truncateCleanly = (text: string, maxLength: number): string => {
   const normalized = text.replace(/\s+/g, ' ').trim();
   if (normalized.length <= maxLength) {
@@ -181,6 +194,11 @@ export const createEmptyCanvasState = (): BlankCanvasState => ({
   skillName: '',
   skillDescription: '',
   skillCompatibility: DEFAULT_SKILL_COMPATIBILITY,
+  skillTagline: '',
+  skillPriceUsd: undefined,
+  skillTags: '',
+  skillDemoRequest: '',
+  skillDemoResult: '',
   updatedAt: Date.now(),
 });
 
@@ -255,6 +273,14 @@ export const loadBlankCanvasDraft = (): BlankCanvasState => {
         typeof obj.skillCompatibility === 'string' && obj.skillCompatibility.trim()
           ? cleanCanvasText(obj.skillCompatibility)
           : DEFAULT_SKILL_COMPATIBILITY,
+      skillTagline:
+        typeof obj.skillTagline === 'string' ? cleanCanvasText(obj.skillTagline) : '',
+      skillPriceUsd: sanitizeOptionalPrice(obj.skillPriceUsd),
+      skillTags: typeof obj.skillTags === 'string' ? cleanCanvasText(obj.skillTags) : '',
+      skillDemoRequest:
+        typeof obj.skillDemoRequest === 'string' ? cleanCanvasText(obj.skillDemoRequest) : '',
+      skillDemoResult:
+        typeof obj.skillDemoResult === 'string' ? cleanCanvasText(obj.skillDemoResult) : '',
       updatedAt:
         typeof obj.updatedAt === 'number' && Number.isFinite(obj.updatedAt)
           ? obj.updatedAt
@@ -276,6 +302,13 @@ export const saveBlankCanvasDraft = (state: BlankCanvasState): void => {
   try {
     const payload: BlankCanvasState = {
       ...state,
+      skillTagline: typeof state.skillTagline === 'string' ? cleanCanvasText(state.skillTagline) : '',
+      skillPriceUsd: sanitizeOptionalPrice(state.skillPriceUsd),
+      skillTags: typeof state.skillTags === 'string' ? cleanCanvasText(state.skillTags) : '',
+      skillDemoRequest:
+        typeof state.skillDemoRequest === 'string' ? cleanCanvasText(state.skillDemoRequest) : '',
+      skillDemoResult:
+        typeof state.skillDemoResult === 'string' ? cleanCanvasText(state.skillDemoResult) : '',
       updatedAt: state.updatedAt || Date.now(),
     };
     localStorage.setItem(BLANK_CANVAS_STORAGE_KEY, JSON.stringify(payload));
@@ -310,6 +343,11 @@ export const hasBlankCanvasContent = (state: BlankCanvasState): boolean => {
       state.fewShotOutput.trim() ||
       state.skillName.trim() ||
       state.skillDescription.trim() ||
+      (state.skillTagline || '').trim() ||
+      typeof state.skillPriceUsd === 'number' ||
+      (state.skillTags || '').trim() ||
+      (state.skillDemoRequest || '').trim() ||
+      (state.skillDemoResult || '').trim() ||
       state.blocks.length > 0
   );
 };
@@ -777,6 +815,20 @@ const extractFewShotFromSection = (
   return { input, output };
 };
 
+const extractDemoFromSection = (
+  sectionBody: string
+): { request: string; result: string } => {
+  const cleanSection = sectionBody.trim();
+  const requestMatch = cleanSection.match(
+    /###\s*The\s+Request\s*\n([\s\S]*?)(?=###\s*The\s+Result\b|$)/i
+  );
+  const resultMatch = cleanSection.match(/###\s*The\s+Result\s*\n([\s\S]*)$/i);
+  return {
+    request: requestMatch ? cleanCanvasText(requestMatch[1].trim()) : '',
+    result: resultMatch ? cleanCanvasText(resultMatch[1].trim()) : '',
+  };
+};
+
 const parseMarkdownSections = (
   bodyText: string,
   language: Language
@@ -786,6 +838,8 @@ const parseMarkdownSections = (
   scratchpadParts: string[];
   fewShotInput: string;
   fewShotOutput: string;
+  demoRequest: string;
+  demoResult: string;
 } => {
   const lines = bodyText.split('\n');
   let headingTitle = '';
@@ -824,6 +878,8 @@ const parseMarkdownSections = (
   const scratchpadParts: string[] = [];
   let fewShotInput = '';
   let fewShotOutput = '';
+  let demoRequest = '';
+  let demoResult = '';
 
   const preamble = cleanCanvasText(preambleLines.join('\n').trim());
   if (preamble) {
@@ -834,6 +890,13 @@ const parseMarkdownSections = (
     const rawContent = section.lines.join('\n').trim();
     const cleanedContent = cleanCanvasText(rawContent);
     if (!cleanedContent) continue;
+
+    if (/see\s+it\s+in\s+action/i.test(section.heading)) {
+      const parsedDemo = extractDemoFromSection(rawContent);
+      if (parsedDemo.request && !demoRequest) demoRequest = parsedDemo.request;
+      if (parsedDemo.result && !demoResult) demoResult = parsedDemo.result;
+      continue;
+    }
 
     if (/few[\s-]*shot/i.test(section.heading)) {
       const parsedFewShot = extractFewShotFromSection(rawContent);
@@ -862,6 +925,8 @@ const parseMarkdownSections = (
     scratchpadParts,
     fewShotInput,
     fewShotOutput,
+    demoRequest,
+    demoResult,
   };
 };
 
@@ -1022,6 +1087,11 @@ export const parseUploadedPromptOrSkill = (
           state.skillDescription = cleanCanvasText(
             formatUnknownValue(obj.skillDescription) || jsonDesc
           ).slice(0, MAX_SKILL_DESCRIPTION_LENGTH);
+          state.skillTagline = formatUnknownValue(obj.skillTagline);
+          state.skillPriceUsd = sanitizeOptionalPrice(obj.skillPriceUsd);
+          state.skillTags = formatUnknownValue(obj.skillTags);
+          state.skillDemoRequest = formatUnknownValue(obj.skillDemoRequest);
+          state.skillDemoResult = formatUnknownValue(obj.skillDemoResult);
         }
         state.updatedAt = Date.now();
         return state;
@@ -1061,6 +1131,12 @@ export const parseUploadedPromptOrSkill = (
     state.scratchpad = cleanCanvasText(parsedMd.scratchpadParts.join('\n\n'));
     state.fewShotInput = parsedMd.fewShotInput;
     state.fewShotOutput = parsedMd.fewShotOutput;
+    if (parsedMd.demoRequest) {
+      state.skillDemoRequest = parsedMd.demoRequest;
+    }
+    if (parsedMd.demoResult) {
+      state.skillDemoResult = parsedMd.demoResult;
+    }
     state.updatedAt = Date.now();
     return state;
   }

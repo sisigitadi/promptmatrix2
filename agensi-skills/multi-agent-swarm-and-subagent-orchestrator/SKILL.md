@@ -67,3 +67,50 @@ The validator checks:
 - [ ] No two concurrent `inherit` workers share overlapping `ownedPaths`.
 - [ ] Every worker brief includes explicit `acceptanceCriteria` and a clear `handoffTo` peer or coordinator.
 - [ ] Verification is assigned to an independent verifier or final coordinator pass before delivery.
+
+## See It in Action (Demo)
+
+### The Request
+
+Design a 3-worker swarm handoff contract to add Stripe webhook verification, database idempotency storage, and Playwright checkout tests without file conflicts.
+
+### The Result
+
+## Summary
+Structured a 3-worker swarm contract (`migration-author`, `webhook-author`, `suite-verifier`) with disjoint `ownedPaths`, explicit `forbiddenPaths`, and coordinator-owned shared entrypoints.
+
+### Ownership Matrix
+
+| Agent Name | Role | `ownedPaths` | `dependsOn` | `handoffTo` |
+| :--- | :--- | :--- | :--- | :--- |
+| `migration-author` | `author` | `prisma/migrations/` | `[]` | `webhook-author` |
+| `webhook-author` | `author` | `src/webhooks/` | `["task-migration"]` | `suite-verifier` |
+| `suite-verifier` | `verifier` | `tests/checkout/` | `["task-webhook"]` | `coordinator` |
+
+### Contract Excerpt (`templates/swarm-task-contract.json` schema)
+
+```json
+{
+  "contractVersion": "1.0.0",
+  "swarmId": "stripe-webhook-idempotency",
+  "topology": "coordinator-worker-verifier",
+  "coordinator": { "agentName": "coordinator", "ownedPaths": ["src/index.ts", "package.json"] },
+  "tasks": [
+    {
+      "id": "task-webhook",
+      "agentName": "webhook-author",
+      "role": "author",
+      "workspaceMode": "inherit",
+      "dependsOn": ["task-migration"],
+      "ownedPaths": ["src/webhooks/"],
+      "forbiddenPaths": ["prisma/", "tests/checkout/"],
+      "acceptanceCriteria": ["Verify Stripe signature header", "Persist eventId idempotency key"],
+      "handoffTo": "suite-verifier"
+    }
+  ]
+}
+```
+
+## Next Steps
+1. Save the full contract JSON and run `node scripts/validate-agent-workspace.mjs swarm-contract.json --strict` to verify zero overlapping `ownedPaths` and an acyclic dependency graph.
+2. Spawn workers with their exact briefs and integrate `src/index.ts` only after `suite-verifier` reports exit code `0`.

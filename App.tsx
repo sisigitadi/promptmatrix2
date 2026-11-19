@@ -132,6 +132,27 @@ const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<'gallery' | 'studio'>('gallery');
   const [launcherCategory, setLauncherCategory] = useState<'all' | 'chat' | 'image' | 'video' | 'audio' | 'code'>('all');
 
+  // Collapsible Direct AI Tool Launchers Section with local persistence
+  const [showAiLaunchers, setShowAiLaunchers] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('pm_show_ai_launchers') !== 'false';
+    } catch {
+      return true;
+    }
+  });
+
+  const toggleAiLaunchers = () => {
+    setShowAiLaunchers(prev => {
+      const next = !prev;
+      try {
+        localStorage.setItem('pm_show_ai_launchers', String(next));
+      } catch {
+        // safe fallback
+      }
+      return next;
+    });
+  };
+
   // Theme & Modals
   const [isLightTheme, setIsLightTheme] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
@@ -255,6 +276,49 @@ const App: React.FC = () => {
   }, [cleanJsonPayload, jsonFormatType]);
 
   // Open Agent Skills (SKILL.md) Serialization & Validation
+  const isBlankCanvasActive = isBlankCanvasMode || !selectedFramework || !selectedFrameworkName;
+
+  const blankCanvasListingOverrides = useMemo(() => {
+    if (!isBlankCanvasActive) return undefined;
+    const parsedTags = (blankCanvasState.skillTags || '')
+      .split(/[\s,]+/)
+      .map((tag) => tag.replace(/^#+/, '').trim().toLowerCase())
+      .filter(Boolean);
+    return {
+      tagline: blankCanvasState.skillTagline?.trim() ? blankCanvasState.skillTagline : undefined,
+      priceUsd: blankCanvasState.skillPriceUsd,
+      tags: parsedTags.length > 0 ? parsedTags : undefined,
+      demoRequest:
+        blankCanvasState.skillDemoRequest && blankCanvasState.skillDemoRequest.length > 0
+          ? blankCanvasState.skillDemoRequest
+          : undefined,
+      demoResult:
+        blankCanvasState.skillDemoResult && blankCanvasState.skillDemoResult.length > 0
+          ? blankCanvasState.skillDemoResult
+          : undefined,
+    };
+  }, [
+    isBlankCanvasActive,
+    blankCanvasState.skillTagline,
+    blankCanvasState.skillPriceUsd,
+    blankCanvasState.skillTags,
+    blankCanvasState.skillDemoRequest,
+    blankCanvasState.skillDemoResult,
+  ]);
+
+  const handleUpdateBlankCanvasDemoFields = isBlankCanvasActive
+    ? (patch: { demoRequest?: string; demoResult?: string }) => {
+        setBlankCanvasState((prev) => ({
+          ...prev,
+          skillDemoRequest:
+            patch.demoRequest !== undefined ? patch.demoRequest : prev.skillDemoRequest,
+          skillDemoResult:
+            patch.demoResult !== undefined ? patch.demoResult : prev.skillDemoResult,
+          updatedAt: Date.now(),
+        }));
+      }
+    : undefined;
+
   const agentSkillSpec = useMemo(() => {
     if (isBlankCanvasMode) {
       return buildBlankCanvasAgentSkillSpec(effectiveBlankCanvasState, generatedPrompt, language);
@@ -345,8 +409,8 @@ const App: React.FC = () => {
           }
           showToast(
             updated
-              ? (language === 'id' ? '⚡ Fitur AI Pro & Paket Skill Berhasil Diaktifkan!' : '⚡ AI Pro & Skill Pack Unlocked!')
-              : (language === 'id' ? '🔒 Fitur AI Pro & Paket Skill Disembunyikan' : '🔒 AI Pro & Skill Pack Hidden'),
+              ? (language === 'id' ? 'Fitur AI Pro & Paket Skill Berhasil Diaktifkan.' : 'AI Pro & Skill Pack Unlocked.')
+              : (language === 'id' ? 'Fitur AI Pro & Paket Skill Disembunyikan.' : 'AI Pro & Skill Pack Hidden.'),
             'success'
           );
           return updated;
@@ -370,6 +434,23 @@ const App: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<PromptAnalysisResult | null>(null);
   const [showAnalysisModal, setShowAnalysisModal] = useState(false);
+
+  // Close inline modals with Escape key
+  useEffect(() => {
+    if (!showAnalysisModal && !showExpandReviewModal && !showCompareModal) return;
+    const handleModalEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      if (showCompareModal) {
+        setShowCompareModal(false);
+      } else if (showExpandReviewModal) {
+        setShowExpandReviewModal(false);
+      } else if (showAnalysisModal) {
+        setShowAnalysisModal(false);
+      }
+    };
+    window.addEventListener('keydown', handleModalEscape);
+    return () => window.removeEventListener('keydown', handleModalEscape);
+  }, [showAnalysisModal, showExpandReviewModal, showCompareModal]);
 
   // Floating Scroll to top state
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -505,8 +586,15 @@ const App: React.FC = () => {
     if (!text) return null;
     const blocks = text.split(/\n{2,}/).map(b => b.trim()).filter(Boolean);
 
+    const blockBg = isLightTheme
+      ? 'bg-white border-slate-200 hover:border-slate-300'
+      : 'bg-slate-900/70 border-slate-800/80 hover:border-slate-700/80';
+    const bodyColor = isLightTheme ? 'text-slate-800' : 'text-slate-200';
+    const labelColor = isLightTheme ? 'text-emerald-800' : 'text-emerald-400';
+    const tagColor = isLightTheme ? 'text-teal-800' : 'text-emerald-300';
+
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 min-w-0">
         {blocks.map((block, idx) => {
           const colonMatch = block.match(/^([A-Za-z0-9\s()&/._-]{2,45}):\s*([\s\S]*)$/);
           const tagMatch = block.match(/^(\[[^\]]+\])\s*([\s\S]*)$/);
@@ -515,15 +603,15 @@ const App: React.FC = () => {
             const label = colonMatch[1];
             const content = colonMatch[2];
             return (
-              <div 
-                key={idx} 
-                className="bg-slate-900/70 rounded-xl p-3 sm:p-3.5 border border-slate-800/80 hover:border-slate-700/80 transition-colors shadow-sm"
+              <div
+                key={idx}
+                className={`rounded-xl p-3 sm:p-3.5 border transition-colors shadow-sm min-w-0 ${blockBg}`}
               >
-                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-400 uppercase tracking-wider mb-1.5 select-none">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
-                  <span>{label}</span>
+                <div className={`flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider mb-1.5 select-none ${labelColor}`}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+                  <span className="break-words">{label}</span>
                 </div>
-                <div className="text-xs sm:text-[13px] leading-relaxed text-slate-200 whitespace-pre-wrap font-sans">
+                <div className={`text-xs sm:text-[13px] leading-relaxed whitespace-pre-wrap break-words [overflow-wrap:anywhere] font-sans ${bodyColor}`}>
                   {content}
                 </div>
               </div>
@@ -534,16 +622,16 @@ const App: React.FC = () => {
             const tag = tagMatch[1];
             const content = tagMatch[2];
             return (
-              <div 
-                key={idx} 
-                className="bg-slate-900/70 rounded-xl p-3 sm:p-3.5 border border-slate-800/80 hover:border-slate-700/80 transition-colors shadow-sm"
+              <div
+                key={idx}
+                className={`rounded-xl p-3 sm:p-3.5 border transition-colors shadow-sm min-w-0 ${blockBg}`}
               >
-                <div className="flex items-center gap-1.5 text-[11px] font-mono font-semibold text-cyan-400 tracking-wider mb-1.5 select-none">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>
-                  <span>{tag}</span>
+                <div className={`flex items-center gap-1.5 text-[11px] font-mono font-semibold tracking-wider mb-1.5 select-none ${tagColor}`}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+                  <span className="break-words">{tag}</span>
                 </div>
                 {content && (
-                  <div className="text-xs sm:text-[13px] leading-relaxed text-slate-200 whitespace-pre-wrap font-sans">
+                  <div className={`text-xs sm:text-[13px] leading-relaxed whitespace-pre-wrap break-words [overflow-wrap:anywhere] font-sans ${bodyColor}`}>
                     {content}
                   </div>
                 )}
@@ -552,9 +640,9 @@ const App: React.FC = () => {
           }
 
           return (
-            <div 
-              key={idx} 
-              className="bg-slate-900/50 rounded-xl p-3 sm:p-3.5 border border-slate-800/70 text-xs sm:text-[13px] leading-relaxed text-slate-200 whitespace-pre-wrap font-sans"
+            <div
+              key={idx}
+              className={`rounded-xl p-3 sm:p-3.5 border text-xs sm:text-[13px] leading-relaxed whitespace-pre-wrap break-words [overflow-wrap:anywhere] font-sans min-w-0 ${blockBg} ${bodyColor}`}
             >
               {block}
             </div>
@@ -1339,17 +1427,17 @@ const App: React.FC = () => {
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
       isLightTheme 
         ? 'bg-slate-50 text-slate-800 selection:bg-teal-200 selection:text-teal-900' 
-        : 'bg-slate-900 text-slate-100 selection:bg-teal-700 selection:text-white'
+        : 'bg-[#090d16] text-slate-100 selection:bg-emerald-700 selection:text-white'
     }`}>
       {/* Toast Notification */}
       {toast && (
-        <div className="fixed bottom-5 right-5 z-50 animate-bounce">
-          <div className={`px-4 py-3 rounded-lg shadow-xl border flex items-center gap-2 text-sm font-medium ${
+        <div role="status" aria-live="polite" className="fixed bottom-24 lg:bottom-5 right-5 z-50">
+          <div className={`px-4 py-3 rounded-xl shadow-xl border flex items-center gap-2 text-sm font-medium ${
             toast.type === 'success' 
-              ? 'bg-teal-900 border-teal-500 text-teal-100' 
+              ? 'bg-emerald-950 border-emerald-500 text-emerald-100' 
               : toast.type === 'error'
-              ? 'bg-red-900 border-red-500 text-red-100'
-              : 'bg-slate-800 border-slate-600 text-slate-100'
+              ? 'bg-red-950 border-red-500 text-red-100'
+              : 'bg-slate-900 border-slate-700 text-slate-100'
           }`}>
             <span>{toast.message}</span>
           </div>
@@ -1396,7 +1484,7 @@ const App: React.FC = () => {
             frameworksData={PROMPT_FRAMEWORKS}
             onSelectFramework={handleSelectFramework}
             onOpenBlankCanvas={handleOpenBlankCanvas}
-            onOpenAgensiCatalog={() => setShowAgensiCatalogModal(true)}
+            onOpenAgensiCatalog={showAIFeatures ? () => setShowAgensiCatalogModal(true) : undefined}
             selectedFrameworkName={selectedFrameworkName}
             activeCategory={selectedCategory || undefined}
             onCategoryChange={(cat) => setSelectedCategory(cat)}
@@ -1454,7 +1542,7 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               {/* Left Column: Form Editor or Blank Canvas (Spacious 7 cols / ~58%) */}
-              <div className="lg:col-span-7">
+              <div className="lg:col-span-7 min-w-0">
                 {isBlankCanvasMode || !selectedFramework || !selectedFrameworkName ? (
                   <BlankCanvasPane
                     state={effectiveBlankCanvasState}
@@ -1509,58 +1597,104 @@ const App: React.FC = () => {
               </div>
 
               {/* Right Column: Monolithic Studio Output Card (5 cols / ~42%) */}
-              <div id="prompt-output-card" className="lg:col-span-5 flex flex-col gap-4 sticky top-20">
+              <div
+                id="prompt-output-card"
+                className={`lg:col-span-5 min-w-0 flex flex-col gap-4 ${
+                  showAIFeatures && previewViewMode === 'skill' ? '' : 'lg:sticky lg:top-20'
+                }`}
+              >
                 {/* Live Output Box */}
-                <div className="bg-[#0f172a]/95 border border-slate-800/90 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4">
-                  <div className="flex flex-col gap-2.5 border-b border-slate-800/80 pb-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <div
+                  className={`border rounded-2xl sm:rounded-3xl p-4 sm:p-5 space-y-4 min-w-0 overflow-hidden transition-colors ${
+                    isLightTheme
+                      ? 'bg-white border-slate-200 text-slate-900 shadow-lg'
+                      : 'bg-[#0f172a]/95 border-slate-800/90 text-slate-100 shadow-2xl'
+                  }`}
+                >
+                  <div
+                    className={`flex flex-col gap-2.5 border-b pb-3 min-w-0 ${
+                      isLightTheme ? 'border-slate-200' : 'border-slate-800/80'
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-2 min-w-0">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <svg className={`w-4 h-4 shrink-0 ${isLightTheme ? 'text-emerald-700' : 'text-emerald-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        <h2 className="text-xs font-bold uppercase tracking-wider text-slate-200 font-sans">
+                        <h2
+                          className={`text-xs font-bold uppercase tracking-wider font-sans truncate ${
+                            isLightTheme ? 'text-slate-800' : 'text-slate-200'
+                          }`}
+                        >
                           {t('prompt_preview')}
                         </h2>
                       </div>
                       {generatedPrompt && (
-                        <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-400">
+                        <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px]">
                           {previewViewMode === 'json' ? (
                             <>
-                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-cyan-400 font-medium">
+                              <span
+                                className={`px-2 py-0.5 rounded-lg border font-medium ${
+                                  isLightTheme
+                                    ? 'bg-slate-100 border-slate-300 text-emerald-800'
+                                    : 'bg-slate-950 border-slate-800 text-emerald-400'
+                                }`}
+                              >
                                 {cleanJsonString.length} {t('chars_count')}
                               </span>
-                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-400">
+                              <span
+                                className={`px-2 py-0.5 rounded-lg border ${
+                                  isLightTheme
+                                    ? 'bg-slate-100 border-slate-300 text-slate-600'
+                                    : 'bg-slate-950 border-slate-800 text-slate-400'
+                                }`}
+                              >
                                 ~{Math.round(cleanJsonString.length / 4)} tokens
-                              </span>
-                              <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-medium">
-                                <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>{t('preview_json_badge')}</span>
                               </span>
                             </>
                           ) : showAIFeatures && previewViewMode === 'skill' ? (
                             <>
-                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-emerald-400 font-medium">
+                              <span
+                                className={`px-2 py-0.5 rounded-lg border font-medium ${
+                                  isLightTheme
+                                    ? 'bg-slate-100 border-slate-300 text-emerald-800'
+                                    : 'bg-slate-950 border-slate-800 text-emerald-400'
+                                }`}
+                              >
                                 {agentSkillMarkdown.length} {t('chars_count')}
                               </span>
-                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-400">
-                                ~{Math.round(agentSkillMarkdown.length / 4)} tokens
-                              </span>
-                              <span className={`hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-lg border font-medium ${
-                                agentSkillValidation.valid
-                                  ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
-                                  : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
-                              }`}>
-                                <span>{agentSkillValidation.valid ? t('skill_valid_badge') : t('skill_invalid_badge')}</span>
+                              <span
+                                className={`px-2 py-0.5 rounded-lg border font-medium ${
+                                  agentSkillValidation.valid
+                                    ? isLightTheme
+                                      ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
+                                      : 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
+                                    : isLightTheme
+                                      ? 'bg-rose-100 border-rose-300 text-rose-900'
+                                      : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+                                }`}
+                              >
+                                {agentSkillValidation.valid ? t('skill_valid_badge') : t('skill_invalid_badge')}
                               </span>
                             </>
                           ) : (
                             <>
-                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-emerald-400 font-medium">
+                              <span
+                                className={`px-2 py-0.5 rounded-lg border font-medium ${
+                                  isLightTheme
+                                    ? 'bg-slate-100 border-slate-300 text-emerald-800'
+                                    : 'bg-slate-950 border-slate-800 text-emerald-400'
+                                }`}
+                              >
                                 {generatedPrompt.length} {t('chars_count')}
                               </span>
-                              <span className="px-2 py-0.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-400">
+                              <span
+                                className={`px-2 py-0.5 rounded-lg border ${
+                                  isLightTheme
+                                    ? 'bg-slate-100 border-slate-300 text-slate-600'
+                                    : 'bg-slate-950 border-slate-800 text-slate-400'
+                                }`}
+                              >
                                 ~{Math.round(generatedPrompt.length / 4)} tokens
                               </span>
                             </>
@@ -1572,8 +1706,13 @@ const App: React.FC = () => {
                               setCompareAlternativePrompt(generatedPrompt);
                               setShowCompareModal(true);
                             }}
-                            className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-cyan-400 border border-slate-800 transition-colors"
+                            className={`min-w-[32px] min-h-[32px] p-1.5 rounded-lg border transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                              isLightTheme
+                                ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'
+                                : 'bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-emerald-400 border-slate-800'
+                            }`}
                             title={language === 'id' ? 'Bandingkan Prompt Berdampingan' : 'Compare Prompts Side-by-Side'}
+                            aria-label={language === 'id' ? 'Bandingkan Prompt Berdampingan' : 'Compare Prompts Side-by-Side'}
                           >
                             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -1583,8 +1722,13 @@ const App: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => setShowExpandReviewModal(true)}
-                            className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-emerald-400 border border-slate-800 transition-colors ml-0.5"
+                            className={`min-w-[32px] min-h-[32px] p-1.5 rounded-lg border transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                              isLightTheme
+                                ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'
+                                : 'bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-emerald-400 border-slate-800'
+                            }`}
                             title={t('expand_review_btn')}
+                            aria-label={t('expand_review_btn')}
                           >
                             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
@@ -1596,81 +1740,109 @@ const App: React.FC = () => {
 
                     {/* Mode Tampilan Pratinjau (Terstruktur vs Teks Polos vs JSON vs SKILL.md) */}
                     {generatedPrompt && (
-                      <div className="flex items-center justify-between pt-0.5 min-w-0">
-                        <div className="flex flex-wrap bg-slate-950/90 border border-slate-800/90 rounded-xl p-0.5 text-[11px] font-sans gap-0.5">
+                      <div className="pt-0.5 min-w-0">
+                        <div
+                          className={`grid ${
+                            showAIFeatures ? 'grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4' : 'grid-cols-3'
+                          } border rounded-xl p-1 text-[11px] font-sans gap-1 ${
+                            isLightTheme
+                              ? 'bg-slate-100 border-slate-300'
+                              : 'bg-slate-950/90 border-slate-800/90'
+                          }`}
+                        >
                           <button
                             type="button"
                             onClick={() => setPreviewViewMode('structured')}
-                            className={`px-2.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                            className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                               previewViewMode === 'structured'
-                                ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
-                                : 'text-slate-300 hover:text-white'
+                                ? 'bg-emerald-700 text-white font-semibold shadow-sm'
+                                : isLightTheme
+                                  ? 'text-slate-700 hover:text-slate-950 hover:bg-slate-200/70'
+                                  : 'text-slate-300 hover:text-white hover:bg-slate-900'
                             }`}
                           >
-                            <svg className="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
                             </svg>
-                            <span>{t('preview_structured')}</span>
+                            <span className="truncate">{t('preview_structured')}</span>
                           </button>
                           <button
                             type="button"
                             onClick={() => setPreviewViewMode('raw')}
-                            className={`px-2.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                            className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                               previewViewMode === 'raw'
-                                ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
-                                : 'text-slate-300 hover:text-white'
+                                ? 'bg-emerald-700 text-white font-semibold shadow-sm'
+                                : isLightTheme
+                                  ? 'text-slate-700 hover:text-slate-950 hover:bg-slate-200/70'
+                                  : 'text-slate-300 hover:text-white hover:bg-slate-900'
                             }`}
                           >
-                            <svg className="w-3 h-3 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                             </svg>
-                            <span>{t('preview_raw')}</span>
+                            <span className="truncate">{t('preview_raw')}</span>
                           </button>
                           <button
                             type="button"
                             onClick={() => setPreviewViewMode('json')}
-                            className={`px-2.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                            className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                               previewViewMode === 'json'
-                                ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
-                                : 'text-slate-300 hover:text-white'
+                                ? 'bg-emerald-700 text-white font-semibold shadow-sm'
+                                : isLightTheme
+                                  ? 'text-slate-700 hover:text-slate-950 hover:bg-slate-200/70'
+                                  : 'text-slate-300 hover:text-white hover:bg-slate-900'
                             }`}
                           >
-                            <svg className="w-3 h-3 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            <span>{t('preview_json')}</span>
+                            <span className="truncate">{t('preview_json')}</span>
                           </button>
                           {showAIFeatures && (
                             <button
                               type="button"
                               onClick={() => setPreviewViewMode('skill')}
-                              className={`px-2.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                              className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                                 previewViewMode === 'skill'
-                                  ? 'bg-emerald-600/90 text-white font-semibold shadow-sm shadow-emerald-950'
-                                  : 'text-slate-300 hover:text-white'
+                                  ? 'bg-emerald-700 text-white font-semibold shadow-sm'
+                                  : isLightTheme
+                                    ? 'text-slate-700 hover:text-slate-950 hover:bg-slate-200/70'
+                                    : 'text-slate-300 hover:text-white hover:bg-slate-900'
                               }`}
                             >
-                              <svg className="w-3 h-3 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                               </svg>
-                              <span>{t('preview_skill')}</span>
+                              <span className="truncate">{t('preview_skill')}</span>
                             </button>
                           )}
                         </div>
                       </div>
                     )}
                   </div>
-                  
+
                   {generatedPrompt ? (
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 min-w-0">
                       {/* Kontainer Teks Pratinjau Terbaca */}
                       {previewViewMode === 'structured' && (
-                        <div className="bg-[#070b12] border border-slate-800/90 rounded-2xl p-4 sm:p-5 min-h-[220px] max-h-[460px] overflow-y-auto selection:bg-emerald-900/60 shadow-inner">
+                        <div
+                          className={`border rounded-2xl p-3.5 sm:p-4 min-h-[220px] max-h-[460px] overflow-y-auto overflow-x-hidden shadow-inner min-w-0 ${
+                            isLightTheme
+                              ? 'bg-slate-50 border-slate-200 selection:bg-emerald-200 selection:text-emerald-950'
+                              : 'bg-[#070b12] border-slate-800/90 selection:bg-emerald-900/60'
+                          }`}
+                        >
                           {renderStructuredContent(generatedPrompt)}
                         </div>
                       )}
                       {previewViewMode === 'raw' && (
-                        <div className="bg-[#070b12] border border-slate-800/90 rounded-2xl p-4 sm:p-5 min-h-[220px] max-h-[460px] overflow-y-auto text-xs sm:text-[13px] leading-[1.85] font-mono text-slate-200 whitespace-pre-wrap break-words selection:bg-emerald-900/60 shadow-inner">
+                        <div
+                          className={`border rounded-2xl p-3.5 sm:p-4 min-h-[220px] max-h-[460px] overflow-y-auto overflow-x-hidden text-xs sm:text-[13px] leading-[1.85] font-mono whitespace-pre-wrap break-words [overflow-wrap:anywhere] shadow-inner min-w-0 ${
+                            isLightTheme
+                              ? 'bg-slate-50 border-slate-200 text-slate-900 selection:bg-emerald-200 selection:text-emerald-950'
+                              : 'bg-[#070b12] border-slate-800/90 text-slate-200 selection:bg-emerald-900/60'
+                          }`}
+                        >
                           {generatedPrompt}
                         </div>
                       )}
@@ -1696,8 +1868,14 @@ const App: React.FC = () => {
                           compiledPrompt={generatedPrompt}
                           onZipDownloaded={() => showToast(t('toast_zip_downloaded'), 'success')}
                           onCopyListing={(txt) => copyToClipboard(txt, t('toast_listing_copied'))}
+                          listingOverrides={blankCanvasListingOverrides}
+                          onUpdateDemoFields={handleUpdateBlankCanvasDemoFields}
                           isCopied={isCopied}
                           isLightTheme={isLightTheme}
+                          isExpanded={false}
+                          onExpand={() => setShowExpandReviewModal(true)}
+                          onOpenAiSettings={() => setShowAISettingsModal(true)}
+                          onAiSuggestToast={(msg, type) => showToast(msg, type)}
                         />
                       )}
 
@@ -1736,7 +1914,7 @@ const App: React.FC = () => {
                           className={`w-full h-11 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
                             isCopied 
                               ? 'bg-emerald-400 text-slate-950 scale-[1.01] shadow-emerald-500/30' 
-                              : 'bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white shadow-emerald-950/50'
+                              : 'bg-emerald-700 hover:bg-emerald-600 active:scale-[0.99] text-white shadow-emerald-950/50'
                           }`}
                         >
                           {isCopied ? (
@@ -1756,7 +1934,7 @@ const App: React.FC = () => {
                         </button>
                         <button
                           onClick={handleSavePrompt}
-                          className="w-full h-9 px-4 bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-slate-100 rounded-xl font-medium text-xs flex items-center justify-center gap-2 transition-all border border-slate-800 hover:border-slate-700"
+                          className="w-full h-11 px-4 bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-slate-100 rounded-xl font-medium text-xs flex items-center justify-center gap-2 transition-all border border-slate-800 hover:border-slate-700"
                         >
                           <svg className="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
@@ -1766,8 +1944,8 @@ const App: React.FC = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="bg-[#090d16]/80 border border-dashed border-slate-800/90 rounded-2xl p-8 sm:p-10 text-center text-slate-500 text-xs flex flex-col items-center justify-center min-h-[180px] sm:min-h-[220px]">
-                      <svg className="w-8 h-8 text-slate-600 mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <div className="bg-[#090d16]/80 border border-dashed border-slate-800/90 rounded-2xl p-8 sm:p-10 text-center text-slate-400 text-xs flex flex-col items-center justify-center min-h-[180px] sm:min-h-[220px]">
+                      <svg className="w-8 h-8 text-slate-400 mb-2 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                       </svg>
                       <p className="max-w-xs">{t('prompt_placeholder_hint')}</p>
@@ -1775,84 +1953,182 @@ const App: React.FC = () => {
                   )}
                 </div>
 
-                {/* Public Contextual Agensi.io Agent Skill Promo Card */}
+                {/* Contextual Agent Skill Creator CTA (Only visible in 9-tap Creator Mode) */}
                 <AgensiSkillPromoCard
                   categoryName={selectedCategory}
                   onOpenCatalog={() => setShowAgensiCatalogModal(true)}
+                  onOpenSkillCreator={() => setPreviewViewMode('skill')}
                   isLightTheme={isLightTheme}
                   agensiUrlVersion={agensiUrlVersion}
+                  showAIFeatures={showAIFeatures}
                 />
 
                 {/* Direct AI Tool Launchers Section */}
-                <div className="bg-[#0f172a]/95 border border-slate-800/90 rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-2xl space-y-3.5">
-                  <div className="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
-                    <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2 font-sans">
-                      <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                      <span>{t('popular_tools_title')}</span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-md bg-slate-800 text-emerald-400 font-semibold border border-slate-700">
-                        {AI_TOOL_LAUNCHERS.filter(t => launcherCategory === 'all' || t.category === launcherCategory).length}
-                      </span>
-                    </h3>
-                    <span className="text-[10px] text-slate-500 font-sans">{language === 'id' ? 'Auto-salin ke clipboard' : 'Auto-copies prompt'}</span>
-                  </div>
-
-                  {/* Launcher Category Filter Chips */}
-                  <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 text-[11px] font-medium">
-                    {[
-                      { id: 'all', label: language === 'id' ? 'Semua' : 'All' },
-                      { id: 'chat', label: language === 'id' ? '💬 Chat & Teks' : '💬 Chat & Text' },
-                      { id: 'image', label: language === 'id' ? '🎨 Gambar AI' : '🎨 Image AI' },
-                      { id: 'video', label: language === 'id' ? '🎬 Video AI' : '🎬 Video AI' },
-                      { id: 'audio', label: language === 'id' ? '🎵 Audio AI' : '🎵 Audio AI' },
-                      { id: 'code', label: language === 'id' ? '💻 Coding AI' : '💻 Coding AI' },
-                    ].map(cat => (
-                      <button
-                        key={cat.id}
-                        onClick={() => setLauncherCategory(cat.id as any)}
-                        className={`px-2.5 py-1 rounded-lg shrink-0 transition-all font-sans ${
-                          launcherCategory === cat.id
-                            ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold'
-                            : 'bg-slate-900/80 text-slate-400 hover:text-slate-200 border border-slate-800'
+                <div
+                  className={`border rounded-2xl sm:rounded-3xl p-4 sm:p-5 ${
+                    showAiLaunchers ? 'space-y-3.5' : 'space-y-0'
+                  } min-w-0 overflow-hidden transition-all duration-200 ${
+                    isLightTheme
+                      ? 'bg-white border-slate-200 text-slate-900 shadow-lg'
+                      : 'bg-[#0f172a]/95 border-slate-800/90 text-slate-100 shadow-2xl'
+                  }`}
+                >
+                  <div
+                    className={`flex flex-wrap items-center justify-between gap-2 transition-colors ${
+                      showAiLaunchers
+                        ? `border-b pb-2.5 ${isLightTheme ? 'border-slate-200' : 'border-slate-800/80'}`
+                        : 'border-b-0 pb-0'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <h3
+                        className={`text-xs font-bold uppercase tracking-wider flex items-center gap-2 font-sans ${
+                          isLightTheme ? 'text-slate-800' : 'text-slate-200'
                         }`}
                       >
-                        {cat.label}
+                        <svg className={`w-4 h-4 shrink-0 ${isLightTheme ? 'text-emerald-700' : 'text-emerald-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        <span>{t('popular_tools_title')}</span>
+                        <span
+                          className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md font-semibold border ${
+                            isLightTheme
+                              ? 'bg-emerald-100 text-emerald-900 border-emerald-300'
+                              : 'bg-slate-800 text-emerald-400 border-slate-700'
+                          }`}
+                        >
+                          {AI_TOOL_LAUNCHERS.filter(t => launcherCategory === 'all' || t.category === launcherCategory).length}
+                        </span>
+                      </h3>
+                    </div>
+
+                    <div className="flex items-center gap-2.5">
+                      {showAiLaunchers && (
+                        <span className={`text-[10px] font-sans hidden sm:inline ${isLightTheme ? 'text-slate-600' : 'text-slate-400'}`}>
+                          {language === 'id' ? 'Auto-salin ke clipboard' : 'Auto-copies prompt'}
+                        </span>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={toggleAiLaunchers}
+                        aria-expanded={showAiLaunchers}
+                        aria-label={
+                          showAiLaunchers
+                            ? (language === 'id' ? 'Sembunyikan Peluncur Cepat AI' : 'Hide AI Tool Launchers')
+                            : (language === 'id' ? 'Tampilkan Peluncur Cepat AI' : 'Show AI Tool Launchers')
+                        }
+                        className={`min-h-[38px] sm:min-h-[32px] px-2.5 py-1 rounded-lg border text-xs font-semibold flex items-center gap-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer ${
+                          isLightTheme
+                            ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
+                            : 'bg-slate-900/80 hover:bg-slate-800 text-slate-200 border-slate-700/80 hover:border-slate-600'
+                        }`}
+                      >
+                        <span>
+                          {showAiLaunchers
+                            ? (language === 'id' ? 'Sembunyikan' : 'Hide')
+                            : (language === 'id' ? 'Buka Peluncur' : 'Open Launchers')}
+                        </span>
+                        <svg
+                          className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                            showAiLaunchers ? 'rotate-180 text-emerald-600 dark:text-emerald-400' : 'text-slate-400'
+                          }`}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          aria-hidden="true"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
                       </button>
-                    ))}
+                    </div>
                   </div>
 
-                  {/* Launcher Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 max-h-72 overflow-y-auto pr-1">
-                    {AI_TOOL_LAUNCHERS
-                      .filter(tool => launcherCategory === 'all' || tool.category === launcherCategory)
-                      .map((tool, idx) => (
-                        <a
-                          key={idx}
-                          href={tool.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={() => {
-                            if (generatedPrompt) {
-                              handleCopyActiveOutput();
-                            }
-                          }}
-                          className="p-2.5 bg-slate-900/60 hover:bg-emerald-950/30 border border-slate-800 hover:border-emerald-500/40 rounded-xl text-xs font-medium text-slate-300 hover:text-emerald-200 transition-all flex items-center justify-between group truncate"
-                          title={language === 'id' ? `Buka ${tool.name} (Otomatis menyalin prompt)` : `Open ${tool.name} (Auto-copies prompt)`}
-                        >
-                          <div className="flex items-center gap-1.5 truncate">
-                            <span className="text-sm shrink-0">{tool.icon}</span>
-                            <div className="truncate flex flex-col items-start leading-tight">
-                              <span className="truncate font-semibold text-slate-200 group-hover:text-emerald-300">{tool.name}</span>
-                              {tool.badge && (
-                                <span className="text-[9px] text-slate-500 font-mono">{tool.badge}</span>
-                              )}
-                            </div>
-                          </div>
-                          <span className="text-[10px] text-slate-500 group-hover:text-emerald-400 ml-1 shrink-0">↗</span>
-                        </a>
-                      ))}
-                  </div>
+                  {showAiLaunchers && (
+                    <>
+                      {/* Launcher Category Filter Chips */}
+                      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 text-[11px] font-medium pt-1">
+                        {(
+                          [
+                            { id: 'all', label: language === 'id' ? 'Semua' : 'All' },
+                            { id: 'chat', label: language === 'id' ? 'Chat & Teks' : 'Chat & Text' },
+                            { id: 'image', label: language === 'id' ? 'Gambar AI' : 'Image AI' },
+                            { id: 'video', label: language === 'id' ? 'Video AI' : 'Video AI' },
+                            { id: 'audio', label: language === 'id' ? 'Audio AI' : 'Audio AI' },
+                            { id: 'code', label: language === 'id' ? 'Coding AI' : 'Coding AI' },
+                          ] as const
+                        ).map(cat => (
+                          <button
+                            key={cat.id}
+                            type="button"
+                            onClick={() => setLauncherCategory(cat.id)}
+                            className={`min-h-[38px] sm:min-h-[32px] px-2.5 py-1 rounded-lg shrink-0 transition-all font-sans border ${
+                              launcherCategory === cat.id
+                                ? isLightTheme
+                                  ? 'bg-emerald-700 text-white border-emerald-700 font-semibold'
+                                  : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30 font-semibold'
+                                : isLightTheme
+                                  ? 'bg-slate-100 text-slate-700 hover:text-slate-950 border-slate-300'
+                                  : 'bg-slate-900/80 text-slate-400 hover:text-slate-200 border-slate-800'
+                            }`}
+                          >
+                            {cat.label}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Launcher Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-72 overflow-y-auto pr-1">
+                        {AI_TOOL_LAUNCHERS
+                          .filter(tool => launcherCategory === 'all' || tool.category === launcherCategory)
+                          .map((tool, idx) => (
+                            <a
+                              key={idx}
+                              href={tool.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              onClick={() => {
+                                if (generatedPrompt) {
+                                  handleCopyActiveOutput();
+                                }
+                              }}
+                              className={`p-2.5 border rounded-xl text-xs font-medium transition-all flex items-center justify-between gap-2 group min-w-0 ${
+                                isLightTheme
+                                  ? 'bg-slate-50 hover:bg-emerald-50 border-slate-200 hover:border-emerald-400 text-slate-800'
+                                  : 'bg-slate-900/60 hover:bg-emerald-950/30 border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-200'
+                              }`}
+                              title={language === 'id' ? `Buka ${tool.name} (Otomatis menyalin prompt)` : `Open ${tool.name} (Auto-copies prompt)`}
+                            >
+                              <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                                <span className="text-sm shrink-0">{tool.icon}</span>
+                                <div className="min-w-0 flex flex-col items-start leading-tight">
+                                  <span
+                                    className={`truncate max-w-full font-semibold ${
+                                      isLightTheme
+                                        ? 'text-slate-900 group-hover:text-emerald-800'
+                                        : 'text-slate-200 group-hover:text-emerald-300'
+                                    }`}
+                                  >
+                                    {tool.name}
+                                  </span>
+                                  {tool.badge && (
+                                    <span
+                                      className={`truncate max-w-full text-[9px] font-mono ${
+                                        isLightTheme ? 'text-slate-600' : 'text-slate-400'
+                                      }`}
+                                    >
+                                      {tool.badge}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                              <span className={`text-[10px] shrink-0 ${isLightTheme ? 'text-slate-500 group-hover:text-emerald-700' : 'text-slate-400 group-hover:text-emerald-400'}`} aria-hidden="true">↗</span>
+                            </a>
+                          ))}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -1878,7 +2154,7 @@ const App: React.FC = () => {
                   className={`flex-1 h-11 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
                     isCopied
                       ? 'bg-emerald-400 text-slate-950 font-bold'
-                      : 'bg-emerald-600 text-white'
+                      : 'bg-emerald-700 hover:bg-emerald-600 text-white'
                   }`}
                 >
                   {isCopied ? (
@@ -1980,7 +2256,7 @@ const App: React.FC = () => {
             {/* Search Input */}
             {savedPrompts.length > 0 && (
               <div className="relative w-full max-w-sm mb-5">
-                <svg className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <svg className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <input
@@ -1988,7 +2264,7 @@ const App: React.FC = () => {
                   value={stashSearch}
                   onChange={(e) => setStashSearch(e.target.value)}
                   placeholder={t('search_stash_placeholder')}
-                  className="w-full pl-8 pr-3 py-2 bg-slate-950 border border-slate-700 focus:border-emerald-500 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="w-full pl-8 pr-3 py-2 bg-slate-950 border border-slate-700 focus:border-emerald-500 rounded-xl text-xs text-slate-200 placeholder-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 />
               </div>
             )}
@@ -2014,8 +2290,9 @@ const App: React.FC = () => {
                               autoFocus
                             />
                             <button
+                              type="button"
                               onClick={() => handleSaveRename(prompt)}
-                              className="px-2 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-[11px] font-semibold"
+                              className="px-2 py-1 bg-emerald-700 hover:bg-emerald-600 text-white rounded-lg text-[11px] font-semibold"
                             >
                               ✓
                             </button>
@@ -2126,18 +2403,33 @@ const App: React.FC = () => {
         showAIFeatures={showAIFeatures}
       />
 
-      {/* Public Agensi.io Official Agent Skills Catalog Modal */}
+      {/* Dedicated Agent Skill Packs & Creator Hub Modal */}
       <AgensiCatalogModal
         show={showAgensiCatalogModal}
         onClose={() => setShowAgensiCatalogModal(false)}
         isCreatorMode={showAIFeatures}
         isLightTheme={isLightTheme}
         agensiUrlVersion={agensiUrlVersion}
-        onOpenCreatorSettings={() => {
-          setShowAgensiCatalogModal(false);
-          setShowAISettingsModal(true);
+        onAgensiUrlsSaved={() => {
+          setAgensiUrlVersion((v) => v + 1);
+          showToast(t('agensi_urls_saved'), 'success');
+        }}
+        activeSkillSpec={agentSkillSpec}
+        activeSkillMarkdown={agentSkillMarkdown}
+        activeSkillValidation={agentSkillValidation}
+        hasActivePrompt={Boolean(generatedPrompt)}
+        onCopyActiveSkill={() => copyToClipboard(agentSkillMarkdown, t('toast_skill_copied'))}
+        onDownloadActiveSkill={handleDownloadActiveSkill}
+        onOpenSkillInStudio={() => {
+          setPreviewViewMode('skill');
+          if (!selectedFramework && !isBlankCanvasMode) {
+            handleOpenBlankCanvas();
+          } else {
+            setViewMode('studio');
+          }
         }}
         onCopyText={copyToClipboard}
+        onOpenAiSettings={() => setShowAISettingsModal(true)}
       />
 
       {/* Upload & Upgrade Prompt / Skill Modal */}
@@ -2159,7 +2451,7 @@ const App: React.FC = () => {
         />
       )}
 
-      {/* Universal Multi-Provider AI Settings & Private Skill Pack Modal */}
+      {/* Dedicated AI Provider & Model Settings Modal */}
       {showAIFeatures && (
         <AISettingsModal
           show={showAISettingsModal}
@@ -2167,36 +2459,37 @@ const App: React.FC = () => {
           onSettingsSaved={() => {
             showToast(t('toast_settings_saved'), 'success');
           }}
-          onAgensiUrlsSaved={() => setAgensiUrlVersion((v) => v + 1)}
-          activeSkillSpec={agentSkillSpec}
-          activeSkillMarkdown={agentSkillMarkdown}
-          activeSkillValidation={agentSkillValidation}
-          hasActivePrompt={Boolean(generatedPrompt)}
-          onCopyActiveSkill={() => copyToClipboard(agentSkillMarkdown, t('toast_skill_copied'))}
-          onDownloadActiveSkill={handleDownloadActiveSkill}
-          onOpenSkillInStudio={() => {
-            setPreviewViewMode('skill');
-            if (!selectedFramework && !isBlankCanvasMode) {
-              handleOpenBlankCanvas();
-            } else {
-              setViewMode('studio');
-            }
-          }}
         />
       )}
 
       {/* AI Analysis Quality Modal */}
       {showAnalysisModal && analysisResult && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="ai-analysis-modal-title"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              setShowAnalysisModal(false);
+            }
+          }}
+          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
+        >
           <div className="bg-slate-800 border border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5">
             <div className="flex justify-between items-start">
               <div className="flex items-center gap-2">
-                <span className="text-xl">📊</span>
-                <h3 className="text-lg font-bold text-slate-100">{t('ai_analysis_title')}</h3>
+                <span className="w-7 h-7 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0" aria-hidden="true">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </span>
+                <h3 id="ai-analysis-modal-title" className="text-lg font-bold text-slate-100">{t('ai_analysis_title')}</h3>
               </div>
               <button
+                type="button"
                 onClick={() => setShowAnalysisModal(false)}
-                className="text-slate-400 hover:text-slate-200 text-sm"
+                aria-label={t('close_btn')}
+                className="min-w-[44px] min-h-[44px] -mr-2 -mt-2 rounded-lg text-slate-400 hover:text-slate-200 text-sm flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
               >
                 ✕
               </button>
@@ -2220,9 +2513,8 @@ const App: React.FC = () => {
 
             {/* Qualitative Feedback */}
             <div className="bg-slate-900/60 border border-slate-700/80 p-3.5 rounded-xl space-y-1.5">
-              <h4 className="text-xs font-semibold text-slate-200 uppercase tracking-wide flex items-center gap-1.5">
-                <span>💡</span>
-                <span>{t('feedback_title')}</span>
+              <h4 className="text-xs font-semibold text-slate-200 uppercase tracking-wide">
+                {t('feedback_title')}
               </h4>
               <p className="text-xs text-slate-300 leading-relaxed">
                 {analysisResult.feedback}
@@ -2232,9 +2524,8 @@ const App: React.FC = () => {
             {/* Actionable Suggestions */}
             {analysisResult.suggestions.length > 0 && (
               <div className="space-y-2">
-                <h4 className="text-xs font-semibold text-slate-200 uppercase tracking-wide flex items-center gap-1.5">
-                  <span>🚀</span>
-                  <span>{t('suggestions_title')}</span>
+                <h4 className="text-xs font-semibold text-slate-200 uppercase tracking-wide">
+                  {t('suggestions_title')}
                 </h4>
                 <ul className="space-y-1.5">
                   {analysisResult.suggestions.map((sug, i) => (
@@ -2248,8 +2539,9 @@ const App: React.FC = () => {
             )}
 
             <button
+              type="button"
               onClick={() => setShowAnalysisModal(false)}
-              className="w-full py-2.5 bg-teal-600 hover:bg-teal-500 text-white rounded-lg text-xs font-semibold transition-colors"
+              className="w-full min-h-[44px] py-2.5 bg-emerald-700 hover:bg-emerald-600 text-white rounded-lg text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
             >
               {t('close_btn')}
             </button>
@@ -2259,10 +2551,20 @@ const App: React.FC = () => {
 
       {/* Fullscreen Spacious Review & Copy Modal */}
       {showExpandReviewModal && generatedPrompt && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="expand-review-modal-title"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              setShowExpandReviewModal(false);
+            }
+          }}
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn"
+        >
           <div className="bg-[#0b101b] border border-slate-800 rounded-2xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
             {/* Modal Header */}
-            <div className="px-5 py-4 border-b border-slate-800 bg-[#0e1424] flex items-center justify-between gap-3">
+            <div className="px-4 sm:px-5 py-3.5 border-b border-slate-800 bg-[#0e1424] flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-3 min-w-0">
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -2270,7 +2572,7 @@ const App: React.FC = () => {
                   </svg>
                 </div>
                 <div className="min-w-0">
-                  <h3 className="text-sm sm:text-base font-bold text-slate-100 truncate">
+                  <h3 id="expand-review-modal-title" className="text-sm sm:text-base font-bold text-slate-100 truncate">
                     {t('review_modal_title')}
                   </h3>
                   <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono mt-0.5">
@@ -2330,11 +2632,11 @@ const App: React.FC = () => {
                     onClick={() => setPreviewViewMode('structured')}
                     className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                       previewViewMode === 'structured'
-                        ? 'bg-emerald-600 text-white font-semibold shadow-sm'
+                        ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                         : 'text-slate-300 hover:text-white'
                     }`}
                   >
-                    <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <svg className="w-3.5 h-3.5 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
                     </svg>
                     <span className="hidden sm:inline">{t('preview_structured')}</span>
@@ -2344,7 +2646,7 @@ const App: React.FC = () => {
                     onClick={() => setPreviewViewMode('raw')}
                     className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                       previewViewMode === 'raw'
-                        ? 'bg-emerald-600 text-white font-semibold shadow-sm'
+                        ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                         : 'text-slate-300 hover:text-white'
                     }`}
                   >
@@ -2358,11 +2660,11 @@ const App: React.FC = () => {
                     onClick={() => setPreviewViewMode('json')}
                     className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                       previewViewMode === 'json'
-                        ? 'bg-emerald-600 text-white font-semibold shadow-sm'
+                        ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                         : 'text-slate-300 hover:text-white'
                     }`}
                   >
-                    <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <svg className="w-3.5 h-3.5 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <span className="hidden sm:inline">{t('preview_json')}</span>
@@ -2373,7 +2675,7 @@ const App: React.FC = () => {
                       onClick={() => setPreviewViewMode('skill')}
                       className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                         previewViewMode === 'skill'
-                          ? 'bg-emerald-600 text-white font-semibold shadow-sm'
+                          ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                           : 'text-slate-300 hover:text-white'
                       }`}
                     >
@@ -2399,9 +2701,13 @@ const App: React.FC = () => {
             </div>
 
             {/* Modal Body - Spacious & Comfortable Reading Area */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[#070b13] space-y-4">
+            <div
+              className={`flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 space-y-4 ${
+                isLightTheme ? 'bg-slate-50' : 'bg-[#070b13]'
+              }`}
+            >
               {/* Visual Mockup & Contoh Hasil in Expanded Modal */}
-              {!isBlankCanvasMode && (
+              {!isBlankCanvasMode && previewViewMode !== 'skill' && (
                 <div className="max-w-3xl mx-auto">
                   <VisualPromptPreview
                     promptText={generatedPrompt}
@@ -2419,7 +2725,13 @@ const App: React.FC = () => {
                 </div>
               )}
               {previewViewMode === 'raw' && (
-                <div className="max-w-3xl mx-auto bg-slate-950/80 border border-slate-800/90 rounded-2xl p-5 sm:p-6 text-xs sm:text-sm leading-loose font-mono text-slate-200 whitespace-pre-wrap break-words selection:bg-emerald-900/60 shadow-inner">
+                <div
+                  className={`max-w-3xl mx-auto border rounded-2xl p-5 sm:p-6 text-xs sm:text-sm leading-loose font-mono whitespace-pre-wrap break-words [overflow-wrap:anywhere] shadow-inner ${
+                    isLightTheme
+                      ? 'bg-white border-slate-200 text-slate-900 selection:bg-emerald-200 selection:text-emerald-950'
+                      : 'bg-slate-950/80 border-slate-800/90 text-slate-200 selection:bg-emerald-900/60'
+                  }`}
+                >
                   {generatedPrompt}
                 </div>
               )}
@@ -2436,7 +2748,7 @@ const App: React.FC = () => {
                 </div>
               )}
               {showAIFeatures && previewViewMode === 'skill' && (
-                <div className="max-w-3xl mx-auto">
+                <div className="max-w-4xl mx-auto">
                   <AgentSkillViewer
                     skillSpec={agentSkillSpec}
                     skillMarkdown={agentSkillMarkdown}
@@ -2448,8 +2760,13 @@ const App: React.FC = () => {
                     compiledPrompt={generatedPrompt}
                     onZipDownloaded={() => showToast(t('toast_zip_downloaded'), 'success')}
                     onCopyListing={(txt) => copyToClipboard(txt, t('toast_listing_copied'))}
+                    listingOverrides={blankCanvasListingOverrides}
+                    onUpdateDemoFields={handleUpdateBlankCanvasDemoFields}
                     isCopied={isCopied}
                     isLightTheme={isLightTheme}
+                    isExpanded={true}
+                    onOpenAiSettings={() => setShowAISettingsModal(true)}
+                    onAiSuggestToast={(msg, type) => showToast(msg, type)}
                   />
                 </div>
               )}
@@ -2482,7 +2799,7 @@ const App: React.FC = () => {
                   className={`h-10 px-5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
                     isCopied
                       ? 'bg-emerald-500 text-slate-950 shadow-emerald-900/40'
-                      : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-950/50'
+                      : 'bg-emerald-700 hover:bg-emerald-600 text-white shadow-emerald-950/50'
                   }`}
                 >
                   {isCopied ? (
@@ -2509,10 +2826,20 @@ const App: React.FC = () => {
 
       {/* Side-by-Side Prompt Comparison Modal */}
       {showCompareModal && generatedPrompt && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="compare-modal-title"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              setShowCompareModal(false);
+            }
+          }}
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn"
+        >
           <div className="bg-[#0b101b] border border-slate-800 rounded-2xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
             {/* Modal Header */}
-            <div className="px-5 py-4 border-b border-slate-800 bg-[#0e1424] flex items-center justify-between gap-3">
+            <div className="px-4 sm:px-5 py-3.5 border-b border-slate-800 bg-[#0e1424] flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -2520,7 +2847,7 @@ const App: React.FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold text-slate-100">
+                  <h3 id="compare-modal-title" className="text-sm sm:text-base font-bold text-slate-100">
                     {language === 'id' ? 'Komparasi Prompt Berdampingan (Side-by-Side)' : 'Side-by-Side Prompt Comparison'}
                   </h3>
                   <p className="text-[11px] text-slate-400">
@@ -2532,7 +2859,8 @@ const App: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowCompareModal(false)}
-                className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-750 text-slate-400 hover:text-slate-200 border border-slate-700 transition-colors"
+                aria-label={t('close_btn')}
+                className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-750 text-slate-400 hover:text-slate-200 border border-slate-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 title={t('close_btn')}
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -2605,13 +2933,13 @@ const App: React.FC = () => {
 
             {/* Modal Footer */}
             <div className="px-5 py-3 border-t border-slate-800 bg-[#0e1424] flex items-center justify-between gap-3">
-              <span className="text-[11px] text-slate-500 font-sans hidden sm:inline">
-                {language === 'id' ? '💡 Tip: Anda dapat mengedit Versi B langsung untuk menguji variasi instruksi.' : '💡 Tip: You can edit Version B directly to experiment with different prompt variations.'}
+              <span className="text-[11px] text-slate-400 font-sans hidden sm:inline">
+                {language === 'id' ? 'Tip: Anda dapat mengedit Versi B langsung untuk menguji variasi instruksi.' : 'Tip: You can edit Version B directly to experiment with different prompt variations.'}
               </span>
               <button
                 type="button"
                 onClick={() => setShowCompareModal(false)}
-                className="h-9 px-4 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white border border-slate-700 text-xs font-medium ml-auto transition-colors"
+                className="h-9 px-4 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white border border-slate-700 text-xs font-medium ml-auto transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
               >
                 {t('close_btn')}
               </button>
@@ -2627,7 +2955,7 @@ const App: React.FC = () => {
           onClick={scrollToTop}
           aria-label={language === 'id' ? 'Kembali ke atas' : 'Scroll to top'}
           title={language === 'id' ? 'Kembali ke atas' : 'Scroll to top'}
-          className="fixed bottom-6 right-6 z-30 p-3 rounded-full bg-slate-900/90 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/40 hover:border-emerald-400 shadow-xl shadow-slate-950/80 backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 group"
+          className="fixed bottom-24 lg:bottom-6 right-6 z-30 p-3 rounded-full bg-slate-900/90 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/40 hover:border-emerald-400 shadow-xl shadow-slate-950/80 backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 group"
         >
           <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />

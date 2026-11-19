@@ -2,7 +2,7 @@
 name: antislop-ui-and-copy-auditor
 description: Audits web UIs and product copy for WCAG AA color contrast, mobile viewport reflow, keyboard focus rings, em dash removal (U+2014), and banned marketing buzzwords. Use when reviewing TSX/HTML/CSS components, checking dark and light theme legibility, auditing landing-page prose, or running automated slop checks before shipping.
 license: MIT
-compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, and Open Agent Skills compatible runtimes (Node.js 18+ for slop auditor script)
+compatibility: Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and Open Agent Skills compatible runtimes (Node.js 18+ for slop auditor script)
 metadata:
   author: "Sigit Adi (PromptMatrix)"
   version: "1.0.0"
@@ -58,3 +58,46 @@ When running in audit mode, output a numbered findings table citing `[File:Line]
 - [ ] Both Light and Dark themes pass WCAG AA contrast (`>= 4.5:1` body, `>= 3.0:1` large/UI).
 - [ ] All interactive elements display visible `:focus-visible` indicators.
 - [ ] Zero horizontal scroll at `375px` width and zero dead controls.
+
+## See It in Action (Demo)
+
+### The Request
+
+Audit this pricing card JSX and headline for WCAG AA contrast, 375px mobile overflow, keyboard focus visibility, and generic template copy: `<section className="p-6"><span className="text-slate-400 bg-slate-100">Beta</span><h2>World-class developer workflow -- trusted by 10,000+ teams</h2><button className="outline-none px-4 py-2 whitespace-nowrap">Get Started</button></section>`
+
+### The Result
+
+## Summary
+Audited the pricing card snippet against WCAG 2.1 AA contrast, 375px mobile reflow, keyboard focus visibility, and copy honesty. Found 4 high-priority defects across copy, contrast, and focus styling.
+
+### Audit Findings
+
+| Rule ID | Severity | Finding | Concrete Fix |
+| :--- | :--- | :--- | :--- |
+| `COPY-NO-UNVERIFIED` | `HIGH` | Headline claims `"World-class"` and `"trusted by 10,000+ teams"` with no verifiable source, and uses a double-hyphen prose dash. | State concrete product behavior in plain punctuation: `"Built for engineering teams."` |
+| `COPY-GENERIC-CTA` | `HIGH` | Badge `"Beta"` lacks context (`R-09`) and CTA `"Get Started"` is generic (`R-15`). | Label the real mode (`"Client-Side Audit"`) and action (`"Run Slop Audit"`). |
+| `WCAG-CONTRAST-AA` | `HIGH` | `text-slate-400` (`#94a3b8`) on `bg-slate-100` (`#f1f5f9`) yields ~2.3:1 contrast, failing the 4.5:1 body threshold. | Switch badge text to `text-slate-800` (`#1e293b`, > 10:1 contrast). |
+| `A11Y-NO-OUTLINE-NONE` | `HIGH` | `outline-none` strips the browser focus ring without a `focus-visible:ring-2` replacement, and `py-2` falls below the 44px touch target. | Add `min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500`. |
+
+### Patched Component
+
+```tsx
+<section className="p-6">
+  <span className="inline-block rounded px-2.5 py-1 text-xs font-medium text-slate-800 bg-slate-100">
+    Client-Side Audit
+  </span>
+  <h2 className="mt-3 text-xl font-semibold text-slate-900">
+    Ship accessible product pages without template copy.
+  </h2>
+  <button
+    type="button"
+    className="mt-4 min-h-[44px] rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+  >
+    Run Slop Audit
+  </button>
+</section>
+```
+
+## Next Steps
+1. Run `node scripts/audit-slop.mjs src/` to confirm zero `COPY-NO-EMDASH`, `COPY-NO-BUZZWORD`, and `A11Y-NO-OUTLINE-NONE` hits.
+2. Inspect the patched card at `375px` viewport width in both light and dark modes.

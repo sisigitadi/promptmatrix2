@@ -4,6 +4,39 @@
 Dokumen ini mencatat perubahan teknis detail untuk setiap versi PromptMatrix.
 
 ---
+## [V7.4.0] - 2026-11-19
+### Floating Sticky Header, Mesin SEO & GEO, serta Elaborasi Multi-Marketplace (Anti-Monopoli)
+- **Perbaikan Header Mengambang & Sticky (`styles.css`, `components/Header.tsx`)**:
+  - Mengganti `overflow-x: hidden` pada `html` dan `body` menjadi `overflow-x: clip`, memulihkan kapabilitas `position: sticky` tanpa memicu pembatasan scroll container browser.
+  - Menambahkan listener pasif `isScrolled`, border ring emerald dinamis, dan efek bayangan mengambang saat halaman digulir.
+- **Pemisahan Modal Paket Skill & Pengaturan AI (`components/AgensiCatalogModal.tsx`, `components/AISettingsModal.tsx`, `App.tsx`)**:
+  - Memisahkan modal Paket Skill dari modal Pengaturan Provider AI, memberikan alur kerja mandiri yang lebih mudah diakses dan dipahami pengguna.
+  - Menambahkan generator AI Suggestion terintegrasi untuk judul, tagline, deskripsi, dan demo skill.
+- **Peluncur Cepat AI Dapat Diciutkan (`components/BlankCanvasPane.tsx`, `components/FrameworkPane.tsx`)**:
+  - Menambahkan kontrol ciut/bentang untuk 34 peluncur cepat AI dengan status persistensi di `localStorage` (`pm_quick_launchers_expanded`).
+- **Mesin SEO & GEO untuk Produk & Live Demo (`services/skillZipService.ts`, `services/universalAIService.ts`, `components/AgentSkillViewer.tsx`)**:
+  - Menyematkan taksonomi tag berniat tinggi (`open-agent-skills`, `agent-skill`, `ai-agent`, runtimes `claude-code`, `cursor-rules`, `antigravity`).
+  - Menghasilkan Direct Definition Answer Capsule (40-60 kata siap kutip Perplexity dan AI Overviews), Tabel Spesifikasi Teknis, dan 4 blok FAQ terstruktur.
+  - Menghasilkan Schema.org `SoftwareApplication` JSON-LD terverifikasi lengkap dengan tombol 1-klik salin Schema dan FAQ GEO.
+  - Menyediakan 4 indikator mutu SEO & GEO real-time di Langkah 1 formulir skill.
+- **Elaborasi Multi-Marketplace Anti-Monopoli (7 Toko Komersial + 1 OSS Lead Magnet)**:
+  - **Format Switcher 5 Platform di Langkah 3 (`components/AgentSkillViewer.tsx`)**: Tab khusus untuk format Universal (SEO/GEO), PromptBase (judul <= 40 char, variabel `[VARIABLE]`, contoh tes, payout 80%), Storefront/MoR (Gumroad, Lemon Squeezy, Whop, Payhip, Creem.io), GitHub OSS Lead Magnet (`npx skills add`), dan Schema JSON-LD.
+  - **Dashboard 7 Marketplace di Tab 3 (`components/AgensiCatalogModal.tsx`)**: Menghilangkan sekat "Kanal Sekunder" tertutup dan menampilkan kartu terbuka untuk Gumroad, Lemon Squeezy, PromptBase, Whop, Creem.io, Payhip, dan Agensi.io dengan rincian fee dan jalur payout.
+  - **Matriks Komparasi 8 Platform di Tab 4 (`components/AgensiCatalogModal.tsx`)**: Tabel perbandingan lengkap model bisnis, potongan fee, jalur payout Indonesia, deliverable kiriman, 4 pilar omnichannel playbook, dan advisory perbankan Indonesia (Direct IDR Bank, USDC Polygon, USDC Solana).
+  - **Multi-Marketplace Checkout di Tab 1**: Tombol direct checkout untuk setiap platform yang dikonfigurasi dan shortcut pengaturan pasar.
+
+---
+## [V7.3.0] - 2026-11-18
+### Universal Agent Skill Creator, Header 1-Baris Minimalis & Privasi 9-Tap
+- **Penyederhanaan Header Ramping 1-Baris (`components/Header.tsx`)**:
+  - Mengeliminasi bilah sekunder mobile dan memadatkan kontrol header menjadi tata letak 1-baris responsif.
+- **Privasi Penuh Fitur Kreator & AI**:
+  - Fitur pembuatan skill dan pengaturan AI terkunci aman di balik gerbang privat 9-Tap Logo Unlock (`showAIFeatures`).
+- **Universal Agent Skill & Market Kit (All-in-One)**:
+  - Merombak formulir studio menjadi alur 3 langkah bersih (Identitas & Harga, Deskripsi & Live Demo >= 700 karakter, serta Salin & Jual).
+  - Standarisasi format live demo paritas tinggi dengan heading `## Summary` dan langkah kerja agen AI.
+
+---
 ## [V7.2.1] - 2026-11-18
 ### Ekosistem Monetisasi Agensi.io (Model Hibrida), 10 Paket Skill `.zip` & Pabrik Ekspor Browser
 - **Etalase Afiliasi Publik (`components/Header.tsx`, `components/TemplateGallery.tsx`, `components/AgensiSkillPromoCard.tsx`, `components/AgensiCatalogModal.tsx`)**:
