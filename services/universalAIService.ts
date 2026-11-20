@@ -1,4 +1,11 @@
-import { getStoredAISettings, AISettings, AI_PROVIDER_PRESETS, AIProviderId } from './aiSettingsService';
+import {
+  getStoredAISettings,
+  AISettings,
+  AI_PROVIDER_PRESETS,
+  AIProviderId,
+  sanitizeApiKey,
+  detectKeyProviderMismatch,
+} from './aiSettingsService';
 import { BlankCanvasTargetMode, CanvasBlockType, Language } from '../types';
 import {
   buildBlankCanvasAgentSkillSpec,
@@ -89,7 +96,8 @@ const generateWithGemini = async (
   baseUrl?: string,
   options?: GenerateOptions
 ): Promise<string> => {
-  if (!apiKey) throw new Error('API Key Google Gemini belum diisi. Silakan atur di menu Pengaturan AI ⚙️.');
+  const cleanKey = sanitizeApiKey(apiKey);
+  if (!cleanKey) throw new Error('API Key Google Gemini belum diisi. Silakan atur di menu Pengaturan AI ⚙️.');
 
   let cleanBase = (baseUrl || 'https://generativelanguage.googleapis.com').replace(/\/+$/, '');
   cleanBase = cleanBase.replace(/\/models$/, '').replace(/\/chat\/completions$/, '');
@@ -115,7 +123,7 @@ const generateWithGemini = async (
   }
 
   const sendRequest = async (modelToUse: string): Promise<Response> => {
-    const url = `${root}/models/${modelToUse}:generateContent?key=${encodeURIComponent(apiKey.trim())}`;
+    const url = `${root}/models/${modelToUse}:generateContent?key=${encodeURIComponent(cleanKey)}`;
     return fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -175,8 +183,9 @@ const generateWithOpenAICompatible = async (
     'Accept': 'application/json, text/event-stream'
   };
 
-  if (apiKey && apiKey.trim()) {
-    headers['Authorization'] = `Bearer ${apiKey.trim()}`;
+  const cleanKey = sanitizeApiKey(apiKey);
+  if (cleanKey) {
+    headers['Authorization'] = `Bearer ${cleanKey}`;
   }
 
   // OpenRouter additional header identification
@@ -221,7 +230,7 @@ const generateWithOpenAICompatible = async (
     }
     let hint = '';
     if (response.status === 401 || response.status === 403) {
-      const keyLen = apiKey ? apiKey.trim().length : 0;
+      const keyLen = cleanKey.length;
       if (keyLen === 0) {
         hint = ` (Diagnostik: API Key kosong. Harap isi API Key dari dashboard provider Anda.)`;
       } else if (cleanBase.includes('intern-ai.org.cn')) {
@@ -298,14 +307,15 @@ const generateWithAnthropic = async (
   model: string,
   options?: GenerateOptions
 ): Promise<string> => {
-  if (!apiKey) throw new Error('API Key Anthropic Claude belum diisi.');
+  const cleanKey = sanitizeApiKey(apiKey);
+  if (!cleanKey) throw new Error('API Key Anthropic Claude belum diisi.');
 
   const cleanBase = (baseUrl || 'https://api.anthropic.com/v1').replace(/\/+$/, '');
   const endpoint = cleanBase.endsWith('/messages') ? cleanBase : `${cleanBase}/messages`;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    'x-api-key': apiKey.trim(),
+    'x-api-key': cleanKey,
     'anthropic-version': '2023-06-01',
     'anthropic-dangerous-direct-browser-access': 'true'
   };
@@ -395,21 +405,22 @@ export const fetchModelsFromEndpoint = async (
     'Content-Type': 'application/json',
   };
 
+  const cleanKey = sanitizeApiKey(apiKey);
   if (isGeminiEndpoint) {
-    if (!apiKey || !apiKey.trim()) {
+    if (!cleanKey) {
       throw new Error('API Key Google Gemini diperlukan untuk mengambil daftar model.');
     }
     const geminiRoot = cleanBase.endsWith('/v1beta') ? cleanBase : `${cleanBase}/v1beta`;
-    endpoint = `${geminiRoot}/models?key=${encodeURIComponent(apiKey.trim())}`;
+    endpoint = `${geminiRoot}/models?key=${encodeURIComponent(cleanKey)}`;
   } else if (isAnthropicEndpoint) {
-    if (!apiKey || !apiKey.trim()) {
+    if (!cleanKey) {
       throw new Error('API Key Anthropic diperlukan untuk mengambil daftar model.');
     }
-    headers['x-api-key'] = apiKey.trim();
+    headers['x-api-key'] = cleanKey;
     headers['anthropic-version'] = '2023-06-01';
     headers['anthropic-dangerous-direct-browser-access'] = 'true';
-  } else if (apiKey && apiKey.trim()) {
-    headers['Authorization'] = `Bearer ${apiKey.trim()}`;
+  } else if (cleanKey) {
+    headers['Authorization'] = `Bearer ${cleanKey}`;
   }
 
   try {
@@ -775,9 +786,21 @@ export const testAIConnection = async (
     };
   }
 
-  // Pre-flight: validate API Key presence for providers that require it
   const preset = AI_PROVIDER_PRESETS[settings.provider] || AI_PROVIDER_PRESETS.custom;
-  if (preset.requiresApiKey && (!settings.apiKey || !settings.apiKey.trim())) {
+  const cleanKey = sanitizeApiKey(settings.apiKey);
+
+  // Pre-flight: Check if the key format belongs to a completely different provider
+  const mismatchWarning = detectKeyProviderMismatch(cleanKey, settings.provider);
+  if (mismatchWarning) {
+    return {
+      success: false,
+      isAuthError: true,
+      message: `Format API Key tidak cocok dengan ${preset.name}!\n\n⚠️ ${mismatchWarning}\n\nPastikan Anda menyalin kunci dari dashboard resmi yang sesuai (${preset.docUrl || 'dashboard provider'}).`
+    };
+  }
+
+  // Pre-flight: validate API Key presence for providers that require it
+  if (preset.requiresApiKey && !cleanKey) {
     return {
       success: false,
       isAuthError: true,
@@ -785,9 +808,10 @@ export const testAIConnection = async (
     };
   }
 
-  // Build a clean settings copy to avoid sentinel model values
+  // Build a clean settings copy to avoid sentinel model values and malformed keys
   const cleanSettings: AISettings = {
     ...settings,
+    apiKey: cleanKey,
     model: sanitizedModel,
   };
 
@@ -816,16 +840,16 @@ export const testAIConnection = async (
     }
 
     // 401/403 Auth Error
-    if (msg.includes('401') || msg.includes('403') || msg.toLowerCase().includes('invalid token') || msg.toLowerCase().includes('unauthorized') || msg.toLowerCase().includes('forbidden')) {
-      const keyLen = settings.apiKey ? settings.apiKey.trim().length : 0;
+    if (msg.includes('401') || msg.includes('403') || msg.toLowerCase().includes('invalid token') || msg.toLowerCase().includes('invalid_api_key') || msg.toLowerCase().includes('unauthorized') || msg.toLowerCase().includes('forbidden')) {
+      const keyLen = cleanKey.length;
       const isInternAi = settings.baseUrl?.includes('intern-ai.org.cn') || settings.provider === 'internai';
       let authDiagnostic = '';
       if (keyLen === 0) {
         authDiagnostic = 'API Key kosong. Harap isi API Key dari dashboard provider Anda.';
       } else if (isInternAi) {
-        authDiagnostic = `API Key terdeteksi (${keyLen} karakter) namun ditolak server Intern-Discovery.\n\nLangkah perbaikan:\n1. Buka https://discovery.intern-ai.org.cn/ dan login\n2. Klik tab "API Key" di halaman Research Models\n3. Salin API Key secara utuh (klik tombol copy)\n4. Tempel kembali di kolom API Key PromptMatrix tanpa spasi tambahan\n5. Pastikan API Key belum expired atau direvoke`;
+        authDiagnostic = `API Key terdeteksi (${keyLen} karakter) namun ditolak server Intern-Discovery (Shanghai AI Lab).\n\n📌 Mengapa error ini muncul di SEMUA model?\nKarena HTTP 401 adalah penolakan otentikasi token akun di gateway server, sebelum server mengecek nama model apa pun.\n\n💡 Panduan Perbaikan:\n1. Buka https://discovery.intern-ai.org.cn/ dan masuk ke akun Anda\n2. Klik tab "API Key" (di sebelah kiri tab "Models")\n3. Buat API Key baru jika belum ada, atau klik tombol salin (copy) pada API Key aktif\n4. Tempel di kolom API Key PromptMatrix (sistem otomatis membersihkan spasi/tanda kutip)\n5. Pastikan yang disalin adalah API Key, bukan Session ID atau Cookie peramban`;
       } else {
-        authDiagnostic = `API Key terdeteksi (${keyLen} karakter) namun ditolak server.\n\nLangkah perbaikan:\n1. Pastikan API Key disalin lengkap dari dashboard ${preset.name}\n2. Periksa apakah key belum expired, direvoke, atau dibatasi IP\n3. Pastikan Base API URL sesuai provider (saat ini: ${settings.baseUrl})\n4. Untuk proxy/router (OneAPI, LiteLLM), pastikan key dikonfigurasi di panel admin proxy`;
+        authDiagnostic = `API Key terdeteksi (${keyLen} karakter) namun ditolak server.\n\n📌 Mengapa error ini muncul di SEMUA model?\nKarena HTTP 401 adalah penolakan otentikasi token pada tingkat server, sebelum server memproses permintaan ke model spesifik.\n\n💡 Panduan Perbaikan:\n1. Pastikan API Key disalin lengkap dari dashboard ${preset.name}\n2. Periksa apakah key belum expired, dinonaktifkan, atau memiliki batasan IP\n3. Pastikan Base API URL sesuai provider (saat ini: ${settings.baseUrl})\n4. Untuk gateway proxy/router (OneAPI/LiteLLM), pastikan token terdaftar di panel admin`;
       }
       return {
         success: false,

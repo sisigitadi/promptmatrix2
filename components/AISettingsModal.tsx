@@ -6,6 +6,8 @@ import {
   getStoredAISettings,
   saveAISettings,
   removeAISettings,
+  sanitizeApiKey,
+  detectKeyProviderMismatch,
 } from '../services/aiSettingsService';
 import { testAIConnection, fetchModelsFromEndpoint } from '../services/universalAIService';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -86,11 +88,22 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
 
   const handleProviderChange = (providerId: AIProviderId) => {
     const preset = AI_PROVIDER_PRESETS[providerId];
+    const cleanCurrentKey = sanitizeApiKey(settings.apiKey);
+
+    const updatedKeys: Partial<Record<AIProviderId, string>> = {
+      ...(settings.providerKeys || {}),
+      ...(cleanCurrentKey ? { [settings.provider]: cleanCurrentKey } : {})
+    };
+
+    const nextKey = updatedKeys[providerId] || '';
+
     setSettings((prev) => ({
       ...prev,
       provider: providerId,
       baseUrl: preset.defaultBaseUrl,
       model: preset.defaultModel,
+      apiKey: nextKey,
+      providerKeys: updatedKeys,
     }));
     setCustomModelInput(false);
     setTestResult(null);
@@ -181,7 +194,16 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
 
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    saveAISettings(settings);
+    const cleanKey = sanitizeApiKey(settings.apiKey);
+    const updated: AISettings = {
+      ...settings,
+      apiKey: cleanKey,
+      providerKeys: {
+        ...(settings.providerKeys || {}),
+        [settings.provider]: cleanKey,
+      }
+    };
+    saveAISettings(updated);
     onSettingsSaved();
     onHide();
   };
@@ -364,6 +386,11 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                 >
                   {currentPreset.requiresApiKey ? t('step3_apikey_required') : t('step3_apikey_optional')}
                 </span>
+                {settings.apiKey ? (
+                  <span className="text-[10px] text-slate-400 font-mono">
+                    ({sanitizeApiKey(settings.apiKey).length} {language === 'id' ? 'karakter' : 'chars'})
+                  </span>
+                ) : null}
               </label>
               <button
                 type="button"
@@ -376,10 +403,25 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
             <input
               type={showKey ? 'text' : 'password'}
               value={settings.apiKey}
-              onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
-              placeholder={currentPreset.requiresApiKey ? 'sk-...' : '(Tidak diperlukan untuk server lokal offline)'}
+              onChange={(e) => {
+                const cleaned = sanitizeApiKey(e.target.value);
+                setSettings({ ...settings, apiKey: cleaned });
+              }}
+              placeholder={currentPreset.requiresApiKey ? (currentPreset.placeholderKey || 'sk-...') : '(Tidak diperlukan untuk server lokal offline)'}
               className="w-full min-h-[44px] sm:min-h-[38px] px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 font-mono text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
             />
+            {(() => {
+              const mismatch = detectKeyProviderMismatch(settings.apiKey, settings.provider);
+              if (mismatch) {
+                return (
+                  <div className="p-2 rounded-lg bg-amber-950/60 border border-amber-600/50 text-[11px] text-amber-300 flex items-start gap-1.5 mt-1">
+                    <span className="shrink-0 mt-0.5">⚠️</span>
+                    <span>{mismatch}</span>
+                  </div>
+                );
+              }
+              return null;
+            })()}
           </div>
 
           {/* Target Model Input / Selection */}

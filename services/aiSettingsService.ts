@@ -410,16 +410,68 @@ export interface AISettings {
   baseUrl: string;
   model: string;
   customHeaders?: Record<string, string>;
+  providerKeys?: Partial<Record<AIProviderId, string>>;
 }
 
 const SETTINGS_STORAGE_KEY = 'promptmatrix_ai_unified_settings';
 const LEGACY_GEMINI_KEY = 'promptmatrix_gemini_api_key';
 
+/**
+ * Thoroughly sanitizes an AI API Key by stripping surrounding quotes,
+ * accidental "Bearer " prefixes, zero-width unicode characters, carriage returns,
+ * and surrounding whitespace.
+ */
+export const sanitizeApiKey = (key: string): string => {
+  if (!key) return '';
+  let clean = key.trim();
+  // Strip zero-width unicode spaces, BOM, non-breaking spaces
+  clean = clean.replace(/[\u200B-\u200D\uFEFF\u00A0]/g, '');
+  // Strip carriage returns, newlines, tabs
+  clean = clean.replace(/[\r\n\t]/g, '');
+  // Strip surrounding double or single quotes
+  clean = clean.replace(/^["']+|["']+$/g, '');
+  // Strip accidental "Bearer " or "bearer " prefix
+  clean = clean.replace(/^bearer\s+/i, '');
+  return clean.trim();
+};
+
+/**
+ * Detects if a provided API key appears to belong to a completely different provider,
+ * such as pasting a Google Gemini key into an OpenAI or Intern-Discovery configuration.
+ */
+export const detectKeyProviderMismatch = (key: string, provider: AIProviderId): string | null => {
+  const clean = sanitizeApiKey(key);
+  if (!clean || clean.length < 10) return null;
+
+  // Google Gemini API keys start with "AIzaSy"
+  if (clean.startsWith('AIzaSy') && provider !== 'gemini') {
+    return 'Kunci ini berformat Google Gemini (AIzaSy...). Anda saat ini memilih provider lain. Harap gunakan API Key resmi dari provider yang dipilih.';
+  }
+
+  // Anthropic API keys start with "sk-ant-"
+  if (clean.startsWith('sk-ant-') && provider !== 'anthropic') {
+    return 'Kunci ini berformat Anthropic Claude (sk-ant-...). Harap gunakan API Key yang sesuai dengan provider yang dipilih.';
+  }
+
+  // Groq API keys start with "gsk_"
+  if (clean.startsWith('gsk_') && provider !== 'groq') {
+    return 'Kunci ini berformat Groq (gsk_...). Harap gunakan API Key yang sesuai dengan provider yang dipilih.';
+  }
+
+  // Hugging Face tokens start with "hf_"
+  if (clean.startsWith('hf_') && provider !== 'huggingface') {
+    return 'Kunci ini berformat Hugging Face (hf_...). Harap gunakan API Key yang sesuai dengan provider yang dipilih.';
+  }
+
+  return null;
+};
+
 export const getDefaultSettings = (): AISettings => ({
   provider: 'gemini',
   apiKey: '',
   baseUrl: AI_PROVIDER_PRESETS.gemini.defaultBaseUrl,
-  model: AI_PROVIDER_PRESETS.gemini.defaultModel
+  model: AI_PROVIDER_PRESETS.gemini.defaultModel,
+  providerKeys: {},
 });
 
 export const getStoredAISettings = (): AISettings => {
@@ -427,27 +479,40 @@ export const getStoredAISettings = (): AISettings => {
     const raw = localStorage.getItem(SETTINGS_STORAGE_KEY);
     if (raw) {
       const parsed: AISettings = JSON.parse(raw);
+      const provider = parsed.provider || 'gemini';
+      const providerKeys: Partial<Record<AIProviderId, string>> = parsed.providerKeys || {};
+
+      if (parsed.apiKey && !providerKeys[provider]) {
+        providerKeys[provider] = sanitizeApiKey(parsed.apiKey);
+      }
+
       return {
         ...getDefaultSettings(),
-        ...parsed
+        ...parsed,
+        apiKey: sanitizeApiKey(parsed.apiKey || providerKeys[provider] || ''),
+        providerKeys,
       };
     }
 
     // Check legacy Gemini key
     const legacyKey = localStorage.getItem(LEGACY_GEMINI_KEY);
     if (legacyKey && legacyKey.trim()) {
+      const cleanLegacy = sanitizeApiKey(legacyKey);
       return {
         ...getDefaultSettings(),
-        apiKey: legacyKey.trim()
+        apiKey: cleanLegacy,
+        providerKeys: { gemini: cleanLegacy },
       };
     }
 
     // Check env vars
     if (typeof import.meta !== 'undefined' && import.meta.env) {
       if (import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_API_KEY) {
+        const envKey = sanitizeApiKey(import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_API_KEY);
         return {
           ...getDefaultSettings(),
-          apiKey: import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_API_KEY
+          apiKey: envKey,
+          providerKeys: { gemini: envKey },
         };
       }
     }
@@ -460,9 +525,21 @@ export const getStoredAISettings = (): AISettings => {
 
 export const saveAISettings = (settings: AISettings): void => {
   try {
-    localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
-    if (settings.provider === 'gemini') {
-      localStorage.setItem(LEGACY_GEMINI_KEY, settings.apiKey);
+    const cleanKey = sanitizeApiKey(settings.apiKey);
+    const providerKeys: Partial<Record<AIProviderId, string>> = {
+      ...(settings.providerKeys || {}),
+      [settings.provider]: cleanKey,
+    };
+    const sanitized: AISettings = {
+      ...settings,
+      apiKey: cleanKey,
+      baseUrl: (settings.baseUrl || '').trim(),
+      model: (settings.model || '').trim(),
+      providerKeys,
+    };
+    localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(sanitized));
+    if (sanitized.provider === 'gemini') {
+      localStorage.setItem(LEGACY_GEMINI_KEY, sanitized.apiKey);
     }
   } catch (e) {
     console.error('Error saving AI settings:', e);
@@ -482,5 +559,5 @@ export const isAIConfigured = (): boolean => {
   const settings = getStoredAISettings();
   const preset = AI_PROVIDER_PRESETS[settings.provider] || AI_PROVIDER_PRESETS.custom;
   if (!preset.requiresApiKey) return true; // e.g. Ollama or local endpoint
-  return Boolean(settings.apiKey && settings.apiKey.trim().length > 0);
+  return Boolean(settings.apiKey && sanitizeApiKey(settings.apiKey).length > 0);
 };
