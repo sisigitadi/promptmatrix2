@@ -55,7 +55,7 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
   const [isTesting, setIsTesting] = useState(false);
   const [isFetchingModels, setIsFetchingModels] = useState(false);
   const [fetchedModelsList, setFetchedModelsList] = useState<string[]>([]);
-  const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [testResult, setTestResult] = useState<{ success: boolean; message: string; isQuotaExceeded?: boolean } | null>(null);
 
   useEffect(() => {
     if (show) {
@@ -153,6 +153,16 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
   };
 
   const handleTestConnection = async () => {
+    if (!settings.model || !settings.model.trim()) {
+      setTestResult({
+        success: false,
+        message:
+          language === 'id'
+            ? 'Harap ketik nama model AI pada kolom input sebelum melakukan uji coba koneksi.'
+            : 'Please enter an AI model name in the input field before testing connection.',
+      });
+      return;
+    }
     setIsTesting(true);
     setTestResult(null);
     try {
@@ -389,27 +399,70 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
 
             {customModelInput ? (
               <div className="space-y-2">
-                <input
-                  type="text"
-                  value={settings.model}
-                  onChange={(e) => setSettings({ ...settings, model: e.target.value })}
-                  placeholder="e.g. gpt-6-astra, claude-sonnet-5-5, gemini-4-carbon, deepseek-v4-pro"
-                  className="w-full min-h-[44px] sm:min-h-[38px] px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 font-mono text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={settings.model}
+                    onChange={(e) => setSettings({ ...settings, model: e.target.value })}
+                    placeholder={
+                      language === 'id'
+                        ? 'Ketik nama model AI (misal: Agents-A1, Sage-S2.1-Flash, intern-s2)'
+                        : 'Type AI model name (e.g. Agents-A1, Sage-S2.1-Flash, intern-s2)'
+                    }
+                    className="w-full min-h-[44px] sm:min-h-[38px] px-3 py-2 pr-24 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 font-mono text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    autoFocus
+                  />
+                  {settings.model ? (
+                    <button
+                      type="button"
+                      onClick={() => setSettings({ ...settings, model: '' })}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-0.5 text-[10px] text-slate-400 hover:text-white rounded bg-slate-800 hover:bg-slate-700 font-semibold transition-colors"
+                      title={language === 'id' ? 'Kosongkan input model' : 'Clear model input'}
+                    >
+                      ✕ {language === 'id' ? 'Kosongkan' : 'Clear'}
+                    </button>
+                  ) : (
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-amber-400 font-mono pointer-events-none">
+                      {language === 'id' ? '(Model Kosong)' : '(Empty Model)'}
+                    </span>
+                  )}
+                </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] text-slate-400 block">
-                    {language === 'id' ? 'Chip Cepat Flagship:' : 'Flagship Quick Chips:'}
-                  </span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-slate-400 block">
+                      {language === 'id' ? 'Chip Cepat Flagship:' : 'Flagship Quick Chips:'}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setSettings({ ...settings, model: '' })}
+                      className="text-[10px] text-amber-400 hover:underline font-medium"
+                    >
+                      {language === 'id' ? '✍️ Kosongkan (Input Baru)' : '✍️ Clear (New Input)'}
+                    </button>
+                  </div>
                   <div className="flex flex-wrap gap-1">
+                    <button
+                      type="button"
+                      onClick={() => setSettings({ ...settings, model: '' })}
+                      className={`min-h-[38px] sm:min-h-[30px] px-2 py-0.5 rounded-lg text-[10px] font-mono border transition-colors ${
+                        settings.model === ''
+                          ? 'bg-amber-600 text-white border-amber-500 font-semibold'
+                          : 'bg-slate-900 hover:bg-slate-800 text-amber-300 border-slate-700'
+                      }`}
+                      title={language === 'id' ? 'Kosongkan input untuk ketik model baru' : 'Clear input to type a new model'}
+                    >
+                      ✍️ {language === 'id' ? 'Kosong (Input Sendiri)' : 'Empty (Type Custom)'}
+                    </button>
                     {FLAGSHIP_QUICK_CHIPS.map((chip) => (
                       <button
                         type="button"
                         key={chip}
                         onClick={() => setSettings({ ...settings, model: chip })}
-                        className={`min-h-[38px] sm:min-h-[30px] px-2 py-0.5 rounded-lg text-[10px] font-mono border transition-colors ${settings.model === chip
+                        className={`min-h-[38px] sm:min-h-[30px] px-2 py-0.5 rounded-lg text-[10px] font-mono border transition-colors ${
+                          settings.model === chip
                             ? 'bg-emerald-700 text-white border-emerald-600 font-semibold'
                             : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-700'
-                          }`}
+                        }`}
                       >
                         {chip}
                       </button>
@@ -420,10 +473,23 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
             ) : (
               <div className="space-y-2">
                 <select
-                  value={settings.model}
-                  onChange={(e) => setSettings({ ...settings, model: e.target.value })}
+                  value={settings.model || '__custom_empty__'}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === '__custom_empty__') {
+                      setCustomModelInput(true);
+                      setSettings({ ...settings, model: '' });
+                      return;
+                    }
+                    setSettings({ ...settings, model: val });
+                  }}
                   className="w-full min-h-[44px] sm:min-h-[38px] px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 font-mono text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >
+                  <optgroup label={language === 'id' ? 'Pilihan Kustom / Manual' : 'Custom / Manual Option'}>
+                    <option value="__custom_empty__">
+                      ✍️ {language === 'id' ? '+ Input Model Kustom Sendiri (Kosong)...' : '+ Enter Custom Model Name (Empty)...'}
+                    </option>
+                  </optgroup>
                   {fetchedModelsList.length > 0 && (
                     <optgroup label={language === 'id' ? 'Model dari Server Endpoint' : 'Models from Server Endpoint'}>
                       {fetchedModelsList.map((m) => (
@@ -460,20 +526,55 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
           {/* Connection Test Result Box */}
           {testResult && (
             <div
-              className={`p-3 rounded-xl border text-xs leading-relaxed flex items-start gap-2 ${testResult.success
+              className={`p-3 rounded-xl border text-xs leading-relaxed flex items-start gap-2 ${
+                testResult.success
                   ? 'bg-emerald-950/60 border-emerald-500/60 text-emerald-200'
-                  : 'bg-rose-950/60 border-rose-500/60 text-rose-200'
-                }`}
+                  : testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')
+                    ? 'bg-amber-950/60 border-amber-500/60 text-amber-200'
+                    : 'bg-rose-950/60 border-rose-500/60 text-rose-200'
+              }`}
             >
-              <svg className="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                {testResult.success ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M10.29 3.86l-7.5 13A1 1 0 003.65 18h16.7a1 1 0 00.86-1.5l-7.5-13a1 1 0 00-1.72 0z" />
-                )}
-              </svg>
+              <span className="text-base shrink-0 mt-0.5">
+                {testResult.success
+                  ? '✅'
+                  : testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')
+                    ? '⚠️'
+                    : '❌'}
+              </span>
               <div className="flex-1 space-y-1">
-                <p>{testResult.message}</p>
+                <span className="font-bold block">
+                  {testResult.success
+                    ? (language === 'id' ? 'Tes Koneksi Berhasil' : 'Connection Successful')
+                    : testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')
+                      ? (language === 'id' ? 'Otentikasi Berhasil · Kuota Akun Habis (HTTP 429)' : 'Authentication Succeeded · Account Quota Exceeded (HTTP 429)')
+                      : (language === 'id' ? 'Tes Koneksi Gagal' : 'Connection Failed')}
+                </span>
+                <p className="whitespace-pre-line">{testResult.message}</p>
+                {(testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')) && (
+                  <div className="pt-2 border-t border-amber-800/60 flex flex-wrap items-center gap-2 mt-2">
+                    {currentPreset.docUrl && (
+                      <a
+                        href={currentPreset.docUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-2.5 py-1 rounded-lg bg-amber-700 hover:bg-amber-600 text-white font-semibold text-[11px] inline-flex items-center gap-1"
+                      >
+                        <span>{language === 'id' ? 'Cek Saldo Kuota di Dashboard' : 'Check Balance on Dashboard'}</span>
+                        <span>↗</span>
+                      </a>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSettings((prev) => ({ ...prev, model: 'Agents-A1' }));
+                        setTestResult(null);
+                      }}
+                      className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-semibold text-[11px] border border-amber-600/40"
+                    >
+                      {language === 'id' ? 'Coba Model Hemat: Agents-A1 (4 Kredit)' : 'Try Low-Cost Model: Agents-A1 (4 Credits)'}
+                    </button>
+                  </div>
+                )}
                 {!testResult.success && testResult.message.includes('No available channel') && (
                   <p className="text-[11px] text-amber-300 border-t border-rose-800/80 pt-1 mt-1">
                     <strong>{t('router_tip_title')}</strong> {t('router_tip_desc')}

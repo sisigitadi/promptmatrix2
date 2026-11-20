@@ -364,6 +364,7 @@ export const AI_PROVIDER_PRESETS: Record<AIProviderId, AIProviderPreset> = {
     defaultBaseUrl: 'http://localhost:1234/v1',
     defaultModel: 'local-model',
     models: [
+      { id: '__custom_empty__', label: '✍️ [Kustom] Ketik Model Sendiri (Kosong)', description: 'Pilihan kosong untuk mengetik model AI kustom Anda sendiri' },
       { id: 'local-model', label: 'local-model', description: 'Model aktif di LM Studio / vLLM / Local Host' },
       { id: 'intern-s2', label: 'intern-s2', description: 'Intern-Discovery Flagship Multimodal (Shanghai AI Lab)' },
       { id: 'Sage-S2.1-Flash', label: 'Sage-S2.1-Flash', description: 'Intern-Discovery Sage-S2.1-Flash Multimodal 512K (New)' },

@@ -42,29 +42,36 @@ interface OpenAIMessage {
   content: string;
 }
 
+export interface GenerateOptions {
+  maxTokens?: number;
+  temperature?: number;
+  stream?: boolean;
+}
+
 /**
  * Universal text generation dispatcher supporting Gemini, OpenAI, DeepSeek, OpenRouter, Groq, Anthropic, and Local Ollama/Custom Base URLs.
  */
 export const generateTextWithUniversalAI = async (
   prompt: string,
   systemInstruction: string = '',
-  overrideSettings?: AISettings
+  overrideSettings?: AISettings,
+  options?: GenerateOptions
 ): Promise<string> => {
   const settings = overrideSettings || getStoredAISettings();
   const { provider, apiKey, baseUrl, model } = settings;
 
   // 1. Google Gemini Provider
   if (provider === 'gemini') {
-    return generateWithGemini(prompt, systemInstruction, apiKey, model, baseUrl);
+    return generateWithGemini(prompt, systemInstruction, apiKey, model, baseUrl, options);
   }
 
   // 2. Anthropic Claude Provider (Official Direct)
   if (provider === 'anthropic' && (!baseUrl || baseUrl.includes('anthropic.com'))) {
-    return generateWithAnthropic(prompt, systemInstruction, apiKey, baseUrl, model);
+    return generateWithAnthropic(prompt, systemInstruction, apiKey, baseUrl, model, options);
   }
 
   // 3. OpenAI, DeepSeek, OpenRouter, Groq, One API/New API Router, Ollama, and all OpenAI-compatible Custom endpoints
-  return generateWithOpenAICompatible(prompt, systemInstruction, apiKey, baseUrl, model);
+  return generateWithOpenAICompatible(prompt, systemInstruction, apiKey, baseUrl, model, options);
 };
 
 // --- GEMINI HANDLER ---
@@ -73,7 +80,8 @@ const generateWithGemini = async (
   systemInstruction: string,
   apiKey: string,
   model: string,
-  baseUrl?: string
+  baseUrl?: string,
+  options?: GenerateOptions
 ): Promise<string> => {
   if (!apiKey) throw new Error('API Key Google Gemini belum diisi. Silakan atur di menu Pengaturan AI ⚙️.');
 
@@ -89,8 +97,8 @@ const generateWithGemini = async (
       }
     ],
     generationConfig: {
-      temperature: 0.7,
-      maxOutputTokens: 2048,
+      temperature: options?.temperature ?? 0.7,
+      maxOutputTokens: options?.maxTokens ?? 2048,
     }
   };
 
@@ -150,7 +158,8 @@ const generateWithOpenAICompatible = async (
   systemInstruction: string,
   apiKey: string,
   baseUrl: string,
-  model: string
+  model: string,
+  options?: GenerateOptions
 ): Promise<string> => {
   let cleanBase = (baseUrl || 'https://api.openai.com/v1').replace(/\/+$/, '');
   let endpoint = cleanBase.endsWith('/chat/completions') ? cleanBase : `${cleanBase}/chat/completions`;
@@ -176,12 +185,17 @@ const generateWithOpenAICompatible = async (
   }
   messages.push({ role: 'user', content: prompt });
 
-  const payload = {
+  const payload: Record<string, unknown> = {
     model: model || 'gpt-6.1-sol',
     messages,
-    temperature: 0.7,
-    stream: false // Explicitly disable stream, though we also parse SSE chunks below
+    temperature: options?.temperature ?? 0.7,
+    stream: options?.stream ?? false // Explicitly disable stream, though we also parse SSE chunks below
   };
+
+  if (options?.maxTokens) {
+    payload['max_tokens'] = options.maxTokens;
+    payload['max_completion_tokens'] = options.maxTokens;
+  }
 
   const response = await fetch(endpoint, {
     method: 'POST',
@@ -202,6 +216,12 @@ const generateWithOpenAICompatible = async (
     let hint = '';
     if (response.status === 404 && model.includes('gemini')) {
       hint = ' (Tips: Untuk router kustom / OpenAI-compatible, pastikan model terdaftar atau coba gunakan prefix seperti "google/gemini-4-carbon" atau "gemini-4-argon")';
+    } else if (response.status === 429) {
+      if (cleanBase.includes('intern-ai.org.cn')) {
+        hint = ' (Tips Intern-Discovery: Server terhubung & API Key valid, namun saldo kredit akun habis atau rate-limited. Silakan periksa sisa kredit di dashboard https://discovery.intern-ai.org.cn/ atau pilih model hemat seperti Agents-A1 atau Sage-A1.5)';
+      } else {
+        hint = ' (Tips: Server terhubung & API Key valid, namun kuota atau saldo kredit akun Anda di provider habis)';
+      }
     }
     throw new Error(`AI Provider Error (${response.status}): ${parsedMsg || response.statusText}${hint}`);
   }
@@ -258,7 +278,8 @@ const generateWithAnthropic = async (
   systemInstruction: string,
   apiKey: string,
   baseUrl: string,
-  model: string
+  model: string,
+  options?: GenerateOptions
 ): Promise<string> => {
   if (!apiKey) throw new Error('API Key Anthropic Claude belum diisi.');
 
@@ -279,7 +300,7 @@ const generateWithAnthropic = async (
     system?: string;
   } = {
     model: model || 'claude-sonnet-5-5',
-    max_tokens: 2048,
+    max_tokens: options?.maxTokens ?? 2048,
     messages: [
       { role: 'user', content: prompt }
     ]
@@ -726,16 +747,37 @@ ${promptToAnalyze}
 /**
  * 4. Test Provider Connection
  */
-export const testAIConnection = async (settings: AISettings): Promise<{ success: boolean; message: string }> => {
+export const testAIConnection = async (
+  settings: AISettings
+): Promise<{ success: boolean; message: string; isQuotaExceeded?: boolean }> => {
+  if (!settings.model || !settings.model.trim()) {
+    return {
+      success: false,
+      message: 'Harap tentukan atau ketik nama model AI terlebih dahulu sebelum melakukan uji coba koneksi.'
+    };
+  }
+
   try {
     const res = await generateTextWithUniversalAI(
-      'Uji coba koneksi: balas dengan kata "OK" jika terhubung.',
-      'Balas hanya "OK".',
-      settings
+      'Ping',
+      'Balas hanya kata "OK".',
+      settings,
+      { maxTokens: 8, temperature: 0.1 }
     );
     return { success: true, message: `Koneksi berhasil! Respons model: "${res.slice(0, 100)}"` };
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
+    if (msg.includes('429') || msg.toLowerCase().includes('quota') || msg.toLowerCase().includes('rate limit')) {
+      const isInternAi = settings.baseUrl?.includes('intern-ai.org.cn') || settings.provider === 'internai';
+      const diagnostic = isInternAi
+        ? 'Endpoint & API Key BERHASIL terhubung dan terotentikasi oleh server Shanghai AI Lab! Namun akun Anda saat ini kehabisan saldo kredit (HTTP 429 Quota Exceeded). Silakan cek saldo kredit di dashboard https://discovery.intern-ai.org.cn/ (menu Usage/API Key) atau coba model hemat seperti Agents-A1 atau Sage-A1.5 yang membutuhkan hanya 4 kredit.'
+        : 'Endpoint & API Key BERHASIL terhubung dan terotentikasi! Namun akun Anda di provider mengalami limitasi kuota atau saldo kredit habis (HTTP 429 Quota Exceeded). Silakan periksa sisa kuota/billing di dashboard provider Anda.';
+      return {
+        success: false,
+        isQuotaExceeded: true,
+        message: `${msg}\n\n💡 Diagnostik: ${diagnostic}`
+      };
+    }
     return { success: false, message: msg || 'Gagal terhubung ke API endpoint.' };
   }
 };
