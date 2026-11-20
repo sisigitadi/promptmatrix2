@@ -18,8 +18,16 @@ export interface AISettingsModalProps {
 
 const FLAGSHIP_QUICK_CHIPS: readonly string[] = [
   'intern-s2',
-  'intern-s2-preview-397b',
-  'internvl3.5-241b-a28b',
+  'Sage-S2.1-Flash',
+  'Agents-A1',
+  'Atria-Dawn',
+  'Sage-A1.5',
+  'Sage-A1.5-Taiyi',
+  'deepseek-v4.1-flash-1017',
+  'kimi-k3.1-pro',
+  'qwen3.8-27b',
+  'glm-5.3',
+  'intern-decision-4b',
   'gemini-4-carbon',
   'gemini-4-argon',
   'gemini-4-hydrogen',
@@ -318,7 +326,7 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
             />
             {settings.baseUrl.includes('intern-ai.org.cn') && (
               <div className="p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-[11px] text-emerald-300 flex items-center justify-between gap-2">
-                <span>✨ Terdeteksi endpoint Intern-Discovery (书生·端砚 - Shanghai AI Lab). Model resmi (Intern-S2, InternVL 3.5, Intern-S1) siap digunakan.</span>
+                <span>✨ Terdeteksi endpoint Intern-Discovery (书生·端砚 - Shanghai AI Lab). 11 model riset resmi (Agents-A1, Sage-S2.1-Flash, Intern-S2, DeepSeek-V4.1-Flash, Kimi-K3.1-Pro) siap digunakan.</span>
                 <button
                   type="button"
                   onClick={handleFetchServerModels}

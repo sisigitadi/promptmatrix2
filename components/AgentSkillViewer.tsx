@@ -985,41 +985,27 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       </div>
 
       {/* Skill Source Switcher Bar & Local Draft Controls */}
-      <div className={`p-2.5 sm:p-3 rounded-xl border space-y-2 ${insetBoxClass}`}>
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 min-w-0">
-          <label className="flex items-center gap-2 min-w-0 flex-1">
-            <span className={`text-[11px] font-bold shrink-0 ${labelTextClass}`}>
-              {t('skill_editor_source_label')}
-            </span>
-            <select
-              value={activeSourceSlug}
-              onChange={(e) => {
-                const val = e.target.value;
-                onSelectSkillSlug?.(val === 'current_formula' ? null : val);
-              }}
-              className={`h-9 px-2.5 rounded-xl border text-xs font-semibold truncate transition-colors flex-1 ${inputClass} ${focusRingClass}`}
+      <div className={`p-3 rounded-2xl border space-y-2.5 min-w-0 ${insetBoxClass}`}>
+        {/* Top Header Row: Label + Target Counter Badge & Action Buttons */}
+        <div className="flex flex-wrap items-center justify-between gap-2 min-w-0">
+          <div className="flex items-center gap-2 min-w-0">
+            <label
+              htmlFor="studio-skill-source-select"
+              className={`text-xs font-bold flex items-center gap-1.5 shrink-0 ${labelTextClass}`}
             >
-              <option value="current_formula">
-                ⚡ {t('skill_editor_formula_option')}{selectedFrameworkName ? `: ${selectedFrameworkName}` : ''}
-              </option>
-              <optgroup label={t('skill_editor_flagship_group')}>
-                {flagshipPacks.map((pack) => (
-                  <option key={pack.slug} value={pack.slug}>
-                    📦 {pack.title} ({pack.slug})
-                  </option>
-                ))}
-              </optgroup>
-              <option value="custom_new">
-                ✨ {t('skill_editor_custom_option')}
-              </option>
-            </select>
-          </label>
+              <span>🎯</span>
+              <span>{t('skill_editor_source_label')}</span>
+            </label>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
+              {1 + flagshipPacks.length + 1} {isId ? 'Target' : 'Targets'}
+            </span>
+          </div>
 
-          <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-auto">
+          <div className="flex items-center gap-1.5 shrink-0">
             <button
               type="button"
               onClick={handleSaveDraft}
-              className={`h-9 px-3 rounded-xl border text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-sm ${
+              className={`min-h-[34px] px-2.5 sm:px-3 py-1 rounded-xl border text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-sm ${
                 isLightTheme
                   ? 'bg-emerald-50 border-emerald-300 text-emerald-800 hover:bg-emerald-100'
                   : 'bg-emerald-950/40 border-emerald-600/50 text-emerald-300 hover:bg-emerald-900/60'
@@ -1033,13 +1019,66 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
             <button
               type="button"
               onClick={handleResetDraft}
-              className={`h-9 px-3 rounded-xl border text-xs font-semibold transition-colors flex items-center gap-1.5 ${secondaryBtnClass} ${focusRingClass}`}
+              className={`min-h-[34px] px-2.5 sm:px-3 py-1 rounded-xl border text-xs font-semibold transition-colors flex items-center gap-1.5 ${secondaryBtnClass} ${focusRingClass}`}
               title={isId ? 'Kembalikan isian draf ke nilai awal bawaan' : 'Reset draft fields to default'}
             >
               <span>↺</span>
               <span>{t('skill_btn_reset_draft')}</span>
             </button>
           </div>
+        </div>
+
+        {/* Full-Width Select Dropdown with Dedicated Focus Ring & Truncation */}
+        <div className="w-full min-w-0 relative">
+          <select
+            id="studio-skill-source-select"
+            value={activeSourceSlug}
+            onChange={(e) => {
+              const val = e.target.value;
+              onSelectSkillSlug?.(val === 'current_formula' ? null : val);
+            }}
+            className={`w-full min-h-[42px] px-3 py-2 pr-9 rounded-xl border text-xs font-semibold truncate transition-colors appearance-none cursor-pointer ${inputClass} ${focusRingClass}`}
+          >
+            <option value="current_formula">
+              ⚡ {isId ? '[Formula Aktif]' : '[Active Formula]'} {selectedFrameworkName || t('skill_editor_formula_option')}
+            </option>
+            <optgroup label={t('skill_editor_flagship_group')}>
+              {flagshipPacks.map((pack) => (
+                <option key={pack.slug} value={pack.slug}>
+                  📦 {pack.title} ({pack.slug})
+                </option>
+              ))}
+            </optgroup>
+            <option value="custom_new">
+              ✨ {t('skill_editor_custom_option')}
+            </option>
+          </select>
+          {/* Custom Dropdown Chevron Icon */}
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Active Source Sub-Banner Pill */}
+        <div className={`px-2.5 py-1.5 rounded-lg border text-[11px] flex items-center justify-between gap-2 ${
+          activeSourceSlug === 'current_formula'
+            ? 'bg-emerald-950/30 border-emerald-500/30 text-emerald-300'
+            : activeSourceSlug === 'custom_new'
+              ? 'bg-amber-950/30 border-amber-500/30 text-amber-300'
+              : 'bg-indigo-950/30 border-indigo-500/30 text-indigo-300'
+        }`}>
+          <span className="truncate">
+            {activeSourceSlug === 'current_formula'
+              ? `⚡ ${isId ? 'Terhubung ke formula aktif Studio:' : 'Synced to active Studio formula:'} ${selectedFrameworkName || 'PromptMatrix'}`
+              : activeSourceSlug === 'custom_new'
+                ? `✨ ${isId ? 'Mode Draf Kustom Baru (Siap diekspor ke semua pasar)' : 'Custom New Draft Mode (Ready for export)'}`
+                : `📦 ${isId ? 'Mengedit Flagship Skill:' : 'Editing Flagship Skill:'} ${flagshipPacks.find((p) => p.slug === activeSourceSlug)?.title || activeSourceSlug}`}
+          </span>
+          <span className="font-mono text-[10px] shrink-0 opacity-80 font-bold">
+            {activeSourceSlug === 'current_formula' ? 'Live Sync' : activeSourceSlug === 'custom_new' ? 'New Pack' : 'Flagship'}
+          </span>
         </div>
       </div>
 
@@ -1121,7 +1160,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           {/* Product Identity & Pricing */}
           <div className={`p-3.5 rounded-xl border space-y-3 min-w-0 ${cardClass}`}>
             {/* One-Click AI Generate Full Profile & Demo Banner */}
-            <div className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 ${
+            <div className={`p-3 rounded-xl border flex flex-col ${isExpanded ? 'md:flex-row md:items-center' : ''} justify-between gap-2.5 ${
               isLightTheme
                 ? 'bg-emerald-50/80 border-emerald-300 text-emerald-950'
                 : 'bg-emerald-950/25 border-emerald-500/35 text-emerald-200'
@@ -1141,7 +1180,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                 type="button"
                 onClick={() => handleAiSuggestSkill('all')}
                 disabled={Boolean(aiSuggestingField)}
-                className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl font-semibold text-xs bg-emerald-700 hover:bg-emerald-600 text-white flex items-center justify-center gap-1.5 shadow-sm transition-colors disabled:opacity-50 shrink-0 ${focusRingClass}`}
+                className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl font-semibold text-xs bg-emerald-700 hover:bg-emerald-600 text-white flex items-center justify-center gap-1.5 shadow-sm transition-colors disabled:opacity-50 ${isExpanded ? 'shrink-0' : 'w-full sm:w-auto'} ${focusRingClass}`}
               >
                 <svg className={`w-3.5 h-3.5 ${aiSuggestingField === 'all' ? 'animate-spin' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -1168,7 +1207,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
               <p className={`text-[11px] leading-relaxed ${mutedTextClass}`}>
                 {t('skill_seo_geo_desc')}
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 pt-1 text-[10px] font-mono">
+              <div className={`grid grid-cols-2 ${isExpanded ? 'sm:grid-cols-4' : ''} gap-1.5 pt-1 text-[10px] font-mono`}>
                 <div className={`p-1.5 rounded-lg border text-center ${activeTitle.length >= 10 && activeTitle.length <= 60 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300' : 'bg-slate-900 border-slate-800 text-slate-400'}`}>
                   Judul SEO {activeTitle.length >= 10 && activeTitle.length <= 60 ? '✓' : `(${activeTitle.length}/60)`}
                 </div>
@@ -1226,7 +1265,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                 </p>
               </label>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+              <div className={`grid grid-cols-1 ${isExpanded ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-2'} gap-2.5`}>
                 <label className="space-y-1 block min-w-0">
                   <span className={`text-[11px] font-semibold block ${labelTextClass}`}>
                     {t('skill_field_category')}

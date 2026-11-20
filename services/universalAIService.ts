@@ -332,20 +332,20 @@ export const fetchModelsFromEndpoint = async (
 
   // Intern-Discovery gateway blocks CORS on /v1/models (405 on OPTIONS / no Access-Control-Allow-Origin),
   // but /v1/chat/completions works with CORS in browser fetch.
-  // Return verified official Intern-Discovery model roster directly.
+  // Return verified official Intern-Discovery research models roster directly from https://discovery.intern-ai.org.cn/
   if (cleanBase.includes('intern-ai.org.cn') || provider === 'internai') {
     return [
+      'Agents-A1',
+      'Atria-Dawn',
+      'Sage-A1.5',
+      'Sage-A1.5-Taiyi',
+      'Sage-S2.1-Flash',
+      'deepseek-v4.1-flash-1017',
+      'glm-5.3',
+      'intern-decision-4b',
       'intern-s2',
-      'intern-s2-preview-397b',
-      'intern-s2-preview-35b',
-      'internvl3.5-241b-a28b',
-      'intern-s1',
-      'intern-s1-pro',
-      'intern-s1-mini',
-      'internlm3-latest',
-      'internlm2.5-latest',
-      'internlm2.5-20b-chat',
-      'internlm2.5-7b-chat',
+      'kimi-k3.1-pro',
+      'qwen3.8-27b',
     ];
   }
 
@@ -417,17 +417,17 @@ export const fetchModelsFromEndpoint = async (
   } catch (err: unknown) {
     if (cleanBase.includes('intern-ai.org.cn')) {
       return [
+        'Agents-A1',
+        'Atria-Dawn',
+        'Sage-A1.5',
+        'Sage-A1.5-Taiyi',
+        'Sage-S2.1-Flash',
+        'deepseek-v4.1-flash-1017',
+        'glm-5.3',
+        'intern-decision-4b',
         'intern-s2',
-        'intern-s2-preview-397b',
-        'intern-s2-preview-35b',
-        'internvl3.5-241b-a28b',
-        'intern-s1',
-        'intern-s1-pro',
-        'intern-s1-mini',
-        'internlm3-latest',
-        'internlm2.5-latest',
-        'internlm2.5-20b-chat',
-        'internlm2.5-7b-chat',
+        'kimi-k3.1-pro',
+        'qwen3.8-27b',
       ];
     }
     const msg = err instanceof Error ? err.message : String(err);
