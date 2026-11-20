@@ -58,7 +58,13 @@ export const generateTextWithUniversalAI = async (
   options?: GenerateOptions
 ): Promise<string> => {
   const settings = overrideSettings || getStoredAISettings();
-  const { provider, apiKey, baseUrl, model } = settings;
+  const { provider, apiKey, baseUrl } = settings;
+
+  // Sanitize model: strip sentinel values and whitespace
+  const model = (settings.model || '').trim();
+  if (model === '__custom_empty__') {
+    throw new Error('Harap pilih atau ketik nama model AI terlebih dahulu.');
+  }
 
   // 1. Google Gemini Provider
   if (provider === 'gemini') {
@@ -214,8 +220,19 @@ const generateWithOpenAICompatible = async (
       parsedMsg = responseText;
     }
     let hint = '';
-    if (response.status === 404 && model.includes('gemini')) {
+    if (response.status === 401 || response.status === 403) {
+      const keyLen = apiKey ? apiKey.trim().length : 0;
+      if (keyLen === 0) {
+        hint = ` (Diagnostik: API Key kosong. Harap isi API Key dari dashboard provider Anda.)`;
+      } else if (cleanBase.includes('intern-ai.org.cn')) {
+        hint = ` (Diagnostik Intern-Discovery: API Key terdeteksi (${keyLen} karakter) namun ditolak server. Pastikan API Key disalin lengkap dari tab "API Key" di https://discovery.intern-ai.org.cn/ tanpa spasi tambahan. Model yang dikirim: "${model}")`;
+      } else {
+        hint = ` (Diagnostik: API Key terdeteksi (${keyLen} karakter) namun ditolak server. Pastikan key disalin lengkap tanpa spasi dari dashboard provider. Endpoint: ${endpoint}, Model: "${model}")`;
+      }
+    } else if (response.status === 404 && model.includes('gemini')) {
       hint = ' (Tips: Untuk router kustom / OpenAI-compatible, pastikan model terdaftar atau coba gunakan prefix seperti "google/gemini-4-carbon" atau "gemini-4-argon")';
+    } else if (response.status === 404) {
+      hint = ` (Tips: Model "${model}" tidak ditemukan di server endpoint ${cleanBase}. Pastikan nama model benar atau gunakan tombol "Muat Model" untuk melihat model yang tersedia.)`;
     } else if (response.status === 429) {
       if (cleanBase.includes('intern-ai.org.cn')) {
         hint = ' (Tips Intern-Discovery: Server terhubung & API Key valid, namun saldo kredit akun habis atau rate-limited. Silakan periksa sisa kredit di dashboard https://discovery.intern-ai.org.cn/ atau pilih model hemat seperti Agents-A1 atau Sage-A1.5)';
@@ -749,24 +766,43 @@ ${promptToAnalyze}
  */
 export const testAIConnection = async (
   settings: AISettings
-): Promise<{ success: boolean; message: string; isQuotaExceeded?: boolean }> => {
-  if (!settings.model || !settings.model.trim()) {
+): Promise<{ success: boolean; message: string; isQuotaExceeded?: boolean; isAuthError?: boolean }> => {
+  const sanitizedModel = (settings.model || '').trim();
+  if (!sanitizedModel || sanitizedModel === '__custom_empty__') {
     return {
       success: false,
       message: 'Harap tentukan atau ketik nama model AI terlebih dahulu sebelum melakukan uji coba koneksi.'
     };
   }
 
+  // Pre-flight: validate API Key presence for providers that require it
+  const preset = AI_PROVIDER_PRESETS[settings.provider] || AI_PROVIDER_PRESETS.custom;
+  if (preset.requiresApiKey && (!settings.apiKey || !settings.apiKey.trim())) {
+    return {
+      success: false,
+      isAuthError: true,
+      message: `API Key untuk ${preset.name} belum diisi.\n\nHarap salin API Key dari dashboard provider dan tempel di kolom "API Key" sebelum melakukan uji coba koneksi.`
+    };
+  }
+
+  // Build a clean settings copy to avoid sentinel model values
+  const cleanSettings: AISettings = {
+    ...settings,
+    model: sanitizedModel,
+  };
+
   try {
     const res = await generateTextWithUniversalAI(
       'Ping',
       'Balas hanya kata "OK".',
-      settings,
+      cleanSettings,
       { maxTokens: 8, temperature: 0.1 }
     );
     return { success: true, message: `Koneksi berhasil! Respons model: "${res.slice(0, 100)}"` };
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
+
+    // 429 Quota Exceeded
     if (msg.includes('429') || msg.toLowerCase().includes('quota') || msg.toLowerCase().includes('rate limit')) {
       const isInternAi = settings.baseUrl?.includes('intern-ai.org.cn') || settings.provider === 'internai';
       const diagnostic = isInternAi
@@ -775,9 +811,44 @@ export const testAIConnection = async (
       return {
         success: false,
         isQuotaExceeded: true,
-        message: `${msg}\n\n💡 Diagnostik: ${diagnostic}`
+        message: `${msg}\n\n--- Diagnostik: ${diagnostic}`
       };
     }
+
+    // 401/403 Auth Error
+    if (msg.includes('401') || msg.includes('403') || msg.toLowerCase().includes('invalid token') || msg.toLowerCase().includes('unauthorized') || msg.toLowerCase().includes('forbidden')) {
+      const keyLen = settings.apiKey ? settings.apiKey.trim().length : 0;
+      const isInternAi = settings.baseUrl?.includes('intern-ai.org.cn') || settings.provider === 'internai';
+      let authDiagnostic = '';
+      if (keyLen === 0) {
+        authDiagnostic = 'API Key kosong. Harap isi API Key dari dashboard provider Anda.';
+      } else if (isInternAi) {
+        authDiagnostic = `API Key terdeteksi (${keyLen} karakter) namun ditolak server Intern-Discovery.\n\nLangkah perbaikan:\n1. Buka https://discovery.intern-ai.org.cn/ dan login\n2. Klik tab "API Key" di halaman Research Models\n3. Salin API Key secara utuh (klik tombol copy)\n4. Tempel kembali di kolom API Key PromptMatrix tanpa spasi tambahan\n5. Pastikan API Key belum expired atau direvoke`;
+      } else {
+        authDiagnostic = `API Key terdeteksi (${keyLen} karakter) namun ditolak server.\n\nLangkah perbaikan:\n1. Pastikan API Key disalin lengkap dari dashboard ${preset.name}\n2. Periksa apakah key belum expired, direvoke, atau dibatasi IP\n3. Pastikan Base API URL sesuai provider (saat ini: ${settings.baseUrl})\n4. Untuk proxy/router (OneAPI, LiteLLM), pastikan key dikonfigurasi di panel admin proxy`;
+      }
+      return {
+        success: false,
+        isAuthError: true,
+        message: `${msg}\n\n--- Diagnostik Autentikasi:\n${authDiagnostic}`
+      };
+    }
+
+    // Network / CORS / generic errors
+    if (msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('networkerror') || msg.toLowerCase().includes('cors')) {
+      const isLocal = settings.baseUrl?.includes('localhost') || settings.baseUrl?.includes('127.0.0.1');
+      let netDiagnostic = '';
+      if (isLocal) {
+        netDiagnostic = `Tidak dapat terhubung ke server lokal ${settings.baseUrl}.\n\nPastikan:\n1. Server AI lokal (Ollama / LM Studio / vLLM) sedang berjalan\n2. Port yang dikonfigurasi sudah benar\n3. Server mengizinkan koneksi dari browser (CORS)`;
+      } else {
+        netDiagnostic = `Tidak dapat terhubung ke endpoint ${settings.baseUrl}.\n\nKemungkinan penyebab:\n1. URL endpoint salah atau tidak aktif\n2. Server memblokir permintaan dari browser (CORS restriction)\n3. Jaringan internet terputus atau firewall memblokir`;
+      }
+      return {
+        success: false,
+        message: `${msg}\n\n--- Diagnostik Jaringan:\n${netDiagnostic}`
+      };
+    }
+
     return { success: false, message: msg || 'Gagal terhubung ke API endpoint.' };
   }
 };

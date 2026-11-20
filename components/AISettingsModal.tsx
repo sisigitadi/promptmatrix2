@@ -55,7 +55,7 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
   const [isTesting, setIsTesting] = useState(false);
   const [isFetchingModels, setIsFetchingModels] = useState(false);
   const [fetchedModelsList, setFetchedModelsList] = useState<string[]>([]);
-  const [testResult, setTestResult] = useState<{ success: boolean; message: string; isQuotaExceeded?: boolean } | null>(null);
+  const [testResult, setTestResult] = useState<{ success: boolean; message: string; isQuotaExceeded?: boolean; isAuthError?: boolean } | null>(null);
 
   useEffect(() => {
     if (show) {
@@ -531,7 +531,9 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                   ? 'bg-emerald-950/60 border-emerald-500/60 text-emerald-200'
                   : testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')
                     ? 'bg-amber-950/60 border-amber-500/60 text-amber-200'
-                    : 'bg-rose-950/60 border-rose-500/60 text-rose-200'
+                    : testResult.isAuthError || testResult.message.includes('401') || testResult.message.includes('403')
+                      ? 'bg-rose-950/60 border-rose-500/60 text-rose-200'
+                      : 'bg-rose-950/60 border-rose-500/60 text-rose-200'
               }`}
             >
               <span className="text-base shrink-0 mt-0.5">
@@ -539,15 +541,19 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                   ? '✅'
                   : testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')
                     ? '⚠️'
-                    : '❌'}
+                    : testResult.isAuthError || testResult.message.includes('401') || testResult.message.includes('403')
+                      ? '🔑'
+                      : '❌'}
               </span>
               <div className="flex-1 space-y-1">
                 <span className="font-bold block">
                   {testResult.success
                     ? (language === 'id' ? 'Tes Koneksi Berhasil' : 'Connection Successful')
                     : testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')
-                      ? (language === 'id' ? 'Otentikasi Berhasil · Kuota Akun Habis (HTTP 429)' : 'Authentication Succeeded · Account Quota Exceeded (HTTP 429)')
-                      : (language === 'id' ? 'Tes Koneksi Gagal' : 'Connection Failed')}
+                      ? (language === 'id' ? 'Otentikasi Berhasil - Kuota Akun Habis (HTTP 429)' : 'Authentication Succeeded - Account Quota Exceeded (HTTP 429)')
+                      : testResult.isAuthError || testResult.message.includes('401') || testResult.message.includes('403')
+                        ? (language === 'id' ? 'Otentikasi Gagal - API Key Ditolak' : 'Authentication Failed - API Key Rejected')
+                        : (language === 'id' ? 'Tes Koneksi Gagal' : 'Connection Failed')}
                 </span>
                 <p className="whitespace-pre-line">{testResult.message}</p>
                 {(testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')) && (
@@ -572,6 +578,31 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                       className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-semibold text-[11px] border border-amber-600/40"
                     >
                       {language === 'id' ? 'Coba Model Hemat: Agents-A1 (4 Kredit)' : 'Try Low-Cost Model: Agents-A1 (4 Credits)'}
+                    </button>
+                  </div>
+                )}
+                {(testResult.isAuthError || (!testResult.success && (testResult.message.includes('401') || testResult.message.includes('403')))) && (
+                  <div className="pt-2 border-t border-rose-800/60 flex flex-wrap items-center gap-2 mt-2">
+                    {currentPreset.docUrl && (
+                      <a
+                        href={currentPreset.docUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-2.5 py-1 rounded-lg bg-rose-700 hover:bg-rose-600 text-white font-semibold text-[11px] inline-flex items-center gap-1"
+                      >
+                        <span>{language === 'id' ? 'Buka Dashboard API Key' : 'Open API Key Dashboard'}</span>
+                        <span>↗</span>
+                      </a>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSettings((prev) => ({ ...prev, apiKey: '' }));
+                        setTestResult(null);
+                      }}
+                      className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 font-semibold text-[11px] border border-rose-600/40"
+                    >
+                      {language === 'id' ? 'Hapus & Isi Ulang API Key' : 'Clear & Re-enter API Key'}
                     </button>
                   </div>
                 )}
