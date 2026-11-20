@@ -17,6 +17,9 @@ export interface AISettingsModalProps {
 }
 
 const FLAGSHIP_QUICK_CHIPS: readonly string[] = [
+  'intern-s2',
+  'intern-s2-preview-397b',
+  'internvl3.5-241b-a28b',
   'gemini-4-carbon',
   'gemini-4-argon',
   'gemini-4-hydrogen',
@@ -112,12 +115,17 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
         setFetchedModelsList(models);
         setSettings((prev) => ({ ...prev, model: models[0] }));
         setCustomModelInput(false);
+        const isInternAi = settings.baseUrl.includes('intern-ai.org.cn') || settings.provider === 'internai';
         setTestResult({
           success: true,
           message:
-            language === 'id'
-              ? `Berhasil mengambil ${models.length} model aktif dari server! Model otomatis disetel ke: ${models[0]}`
-              : `Fetched ${models.length} active models from endpoint! Model set to: ${models[0]}`,
+            isInternAi
+              ? (language === 'id'
+                ? `Berhasil memuat ${models.length} model aktif dari endpoint Intern-Discovery (书生·端砚 - Shanghai AI Lab)! Model disetel ke: ${models[0]}`
+                : `Fetched ${models.length} active models from Intern-Discovery gateway! Model set to: ${models[0]}`)
+              : (language === 'id'
+                ? `Berhasil mengambil ${models.length} model aktif dari server! Model otomatis disetel ke: ${models[0]}`
+                : `Fetched ${models.length} active models from endpoint! Model set to: ${models[0]}`),
         });
       } else {
         setTestResult({
@@ -226,11 +234,10 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                     type="button"
                     key={id}
                     onClick={() => handleProviderChange(id)}
-                    className={`p-2 rounded-xl border text-left transition-all flex flex-col justify-between gap-1 min-h-[58px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                      isSelected
+                    className={`p-2 rounded-xl border text-left transition-all flex flex-col justify-between gap-1 min-h-[58px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${isSelected
                         ? 'bg-emerald-950/80 border-emerald-500 text-emerald-200 ring-1 ring-emerald-500/50 shadow-sm'
                         : 'bg-slate-900/70 hover:bg-slate-850 border-slate-700 text-slate-300'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-sm">{preset.icon}</span>
@@ -297,10 +304,30 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
             <input
               type="text"
               value={settings.baseUrl}
-              onChange={(e) => setSettings({ ...settings, baseUrl: e.target.value })}
+              onChange={(e) => {
+                const newUrl = e.target.value;
+                const isInternAi = newUrl.includes('intern-ai.org.cn');
+                if (isInternAi && settings.provider === 'custom' && (!settings.model || settings.model === 'local-model')) {
+                  setSettings({ ...settings, baseUrl: newUrl, model: 'intern-s2' });
+                } else {
+                  setSettings({ ...settings, baseUrl: newUrl });
+                }
+              }}
               placeholder={currentPreset.defaultBaseUrl || 'https://api.openai.com/v1'}
               className="w-full min-h-[44px] sm:min-h-[38px] px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 font-mono text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
             />
+            {settings.baseUrl.includes('intern-ai.org.cn') && (
+              <div className="p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-[11px] text-emerald-300 flex items-center justify-between gap-2">
+                <span>✨ Terdeteksi endpoint Intern-Discovery (书生·端砚 - Shanghai AI Lab). Model resmi (Intern-S2, InternVL 3.5, Intern-S1) siap digunakan.</span>
+                <button
+                  type="button"
+                  onClick={handleFetchServerModels}
+                  className="px-2 py-0.5 rounded bg-emerald-700 hover:bg-emerald-600 text-white font-semibold text-[10px] shrink-0"
+                >
+                  Muat Model
+                </button>
+              </div>
+            )}
             <p className="text-[10px] text-slate-400">
               {t('step2_baseurl_hint')} ({language === 'id' ? 'contoh:' : 'e.g.:'} {currentPreset.defaultBaseUrl})
             </p>
@@ -312,11 +339,10 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
               <label className="font-semibold text-slate-200 flex items-center gap-1.5">
                 <span>{t('step3_apikey')}</span>
                 <span
-                  className={`text-[9px] px-1.5 py-0.5 rounded font-mono uppercase ${
-                    currentPreset.requiresApiKey
+                  className={`text-[9px] px-1.5 py-0.5 rounded font-mono uppercase ${currentPreset.requiresApiKey
                       ? 'bg-rose-950 text-rose-300 border border-rose-800'
                       : 'bg-emerald-950 text-emerald-300 border border-emerald-800'
-                  }`}
+                    }`}
                 >
                   {currentPreset.requiresApiKey ? t('step3_apikey_required') : t('step3_apikey_optional')}
                 </span>
@@ -372,11 +398,10 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                         type="button"
                         key={chip}
                         onClick={() => setSettings({ ...settings, model: chip })}
-                        className={`min-h-[38px] sm:min-h-[30px] px-2 py-0.5 rounded-lg text-[10px] font-mono border transition-colors ${
-                          settings.model === chip
+                        className={`min-h-[38px] sm:min-h-[30px] px-2 py-0.5 rounded-lg text-[10px] font-mono border transition-colors ${settings.model === chip
                             ? 'bg-emerald-700 text-white border-emerald-600 font-semibold'
                             : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-700'
-                        }`}
+                          }`}
                       >
                         {chip}
                       </button>
@@ -427,11 +452,10 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
           {/* Connection Test Result Box */}
           {testResult && (
             <div
-              className={`p-3 rounded-xl border text-xs leading-relaxed flex items-start gap-2 ${
-                testResult.success
+              className={`p-3 rounded-xl border text-xs leading-relaxed flex items-start gap-2 ${testResult.success
                   ? 'bg-emerald-950/60 border-emerald-500/60 text-emerald-200'
                   : 'bg-rose-950/60 border-rose-500/60 text-rose-200'
-              }`}
+                }`}
             >
               <svg className="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 {testResult.success ? (

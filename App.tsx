@@ -9,20 +9,20 @@ import HelpModal from './components/HelpModal';
 import AISettingsModal from './components/AISettingsModal';
 import UploadUpgradeModal from './components/UploadUpgradeModal';
 import { useLanguage } from './contexts/LanguageContext';
-import { 
-  addPromptToDB, 
-  getAllPromptsFromDB, 
-  deletePromptFromDB, 
+import {
+  addPromptToDB,
+  getAllPromptsFromDB,
+  deletePromptFromDB,
   updatePromptInDB,
   exportPromptsToJSONFile,
   exportPromptsToPlainTextFile,
-  importPromptsFromJSONFile 
+  importPromptsFromJSONFile
 } from './db';
 import { isAIConfigured } from './services/aiSettingsService';
-import { 
-  enhancePromptWithUniversalAI, 
-  suggestFieldContentWithUniversalAI, 
-  analyzePromptQualityWithUniversalAI, 
+import {
+  enhancePromptWithUniversalAI,
+  suggestFieldContentWithUniversalAI,
+  analyzePromptQualityWithUniversalAI,
   generateCanvasDraftWithUniversalAI,
   analyzeAndUpgradeUploadedContentWithUniversalAI,
   PromptAnalysisResult,
@@ -42,7 +42,7 @@ import {
 } from './services/blankCanvasService';
 import { BlankCanvasState, BlankCanvasTargetMode, CanvasBlock, SavedPrompt } from './types';
 import { slugifyFormula } from './services/urlHelper';
-import { 
+import {
   AI_LOGICS_MAP,
   translateComponentLabel,
   translateInfo,
@@ -90,7 +90,7 @@ const AI_TOOL_LAUNCHERS: ToolLauncher[] = [
   { name: 'Grok (xAI)', url: 'https://x.com/i/grok', category: 'chat', icon: '🖤', badge: 'Grok 4.7' },
   { name: 'Poe by Quora', url: 'https://poe.com/', category: 'chat', icon: '🤖', badge: 'Multi-Bot' },
   { name: 'HuggingChat', url: 'https://huggingface.co/chat/', category: 'chat', icon: '🤗', badge: 'Open Models' },
-  
+
   // 🎨 Image & Design AI
   { name: 'Midjourney', url: 'https://www.midjourney.com/explore', category: 'image', icon: '🎨', badge: 'V8.2 / Edit' },
   { name: 'ChatGPT Images', url: 'https://chatgpt.com/', category: 'image', icon: '🖼️', badge: 'GPT-Image' },
@@ -158,6 +158,7 @@ const App: React.FC = () => {
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showAISettingsModal, setShowAISettingsModal] = useState(false);
   const [showAgensiCatalogModal, setShowAgensiCatalogModal] = useState(false);
+  const [editingSkillSlug, setEditingSkillSlug] = useState<string | null>(null);
   const [agensiUrlVersion, setAgensiUrlVersion] = useState(0);
   const [showUploadUpgradeModal, setShowUploadUpgradeModal] = useState<boolean>(false);
   const [isAnalyzingUpload, setIsAnalyzingUpload] = useState<boolean>(false);
@@ -308,15 +309,15 @@ const App: React.FC = () => {
 
   const handleUpdateBlankCanvasDemoFields = isBlankCanvasActive
     ? (patch: { demoRequest?: string; demoResult?: string }) => {
-        setBlankCanvasState((prev) => ({
-          ...prev,
-          skillDemoRequest:
-            patch.demoRequest !== undefined ? patch.demoRequest : prev.skillDemoRequest,
-          skillDemoResult:
-            patch.demoResult !== undefined ? patch.demoResult : prev.skillDemoResult,
-          updatedAt: Date.now(),
-        }));
-      }
+      setBlankCanvasState((prev) => ({
+        ...prev,
+        skillDemoRequest:
+          patch.demoRequest !== undefined ? patch.demoRequest : prev.skillDemoRequest,
+        skillDemoResult:
+          patch.demoResult !== undefined ? patch.demoResult : prev.skillDemoResult,
+        updatedAt: Date.now(),
+      }));
+    }
     : undefined;
 
   const agentSkillSpec = useMemo(() => {
@@ -544,7 +545,7 @@ const App: React.FC = () => {
         val = otherValues[comp.name] ? `${val} (${otherValues[comp.name]})` : val;
       }
       if (val !== undefined && val !== null && String(val).trim() !== '') {
-        const labelToDisplay = language === 'en' 
+        const labelToDisplay = language === 'en'
           ? translateComponentLabel(comp.label || comp.name, 'en')
           : (comp.label || comp.name);
         const valToDisplay = typeof val === 'string' && language === 'en' ? translateOption(val, 'en') : val;
@@ -870,20 +871,20 @@ const App: React.FC = () => {
       if (prompt.frameworkId === BLANK_CANVAS_ID) {
         const restoredState: BlankCanvasState = prompt.blankCanvasSnapshot
           ? {
-              ...createEmptyCanvasState(),
-              ...prompt.blankCanvasSnapshot,
-              blocks: Array.isArray(prompt.blankCanvasSnapshot.blocks)
-                ? prompt.blankCanvasSnapshot.blocks
-                : [],
-              updatedAt: Date.now(),
-            }
+            ...createEmptyCanvasState(),
+            ...prompt.blankCanvasSnapshot,
+            blocks: Array.isArray(prompt.blankCanvasSnapshot.blocks)
+              ? prompt.blankCanvasSnapshot.blocks
+              : [],
+            updatedAt: Date.now(),
+          }
           : {
-              ...createEmptyCanvasState(),
-              title: prompt.selectedFrameworkName || prompt.name || '',
-              scratchpad: prompt.generatedPrompt || '',
-              targetMode: prompt.category === 'agent-skill' ? 'skill' : 'prompt',
-              updatedAt: Date.now(),
-            };
+            ...createEmptyCanvasState(),
+            title: prompt.selectedFrameworkName || prompt.name || '',
+            scratchpad: prompt.generatedPrompt || '',
+            targetMode: prompt.category === 'agent-skill' ? 'skill' : 'prompt',
+            updatedAt: Date.now(),
+          };
 
         setSelectedCategory(null);
         setSelectedSubcategory(null);
@@ -1416,7 +1417,7 @@ const App: React.FC = () => {
 
   // Filter stash prompts
   const displayedSavedPrompts = savedPrompts.filter(prompt => {
-    const matchesQuery = !stashSearch.trim() || 
+    const matchesQuery = !stashSearch.trim() ||
       prompt.name.toLowerCase().includes(stashSearch.toLowerCase()) ||
       prompt.generatedPrompt.toLowerCase().includes(stashSearch.toLowerCase()) ||
       (prompt.selectedFrameworkName && prompt.selectedFrameworkName.toLowerCase().includes(stashSearch.toLowerCase()));
@@ -1424,21 +1425,19 @@ const App: React.FC = () => {
   });
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
-      isLightTheme 
-        ? 'bg-slate-50 text-slate-800 selection:bg-teal-200 selection:text-teal-900' 
+    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${isLightTheme
+        ? 'bg-slate-50 text-slate-800 selection:bg-teal-200 selection:text-teal-900'
         : 'bg-[#090d16] text-slate-100 selection:bg-emerald-700 selection:text-white'
-    }`}>
+      }`}>
       {/* Toast Notification */}
       {toast && (
         <div role="status" aria-live="polite" className="fixed bottom-24 lg:bottom-5 right-5 z-50">
-          <div className={`px-4 py-3 rounded-xl shadow-xl border flex items-center gap-2 text-sm font-medium ${
-            toast.type === 'success' 
-              ? 'bg-emerald-950 border-emerald-500 text-emerald-100' 
+          <div className={`px-4 py-3 rounded-xl shadow-xl border flex items-center gap-2 text-sm font-medium ${toast.type === 'success'
+              ? 'bg-emerald-950 border-emerald-500 text-emerald-100'
               : toast.type === 'error'
-              ? 'bg-red-950 border-red-500 text-red-100'
-              : 'bg-slate-900 border-slate-700 text-slate-100'
-          }`}>
+                ? 'bg-red-950 border-red-500 text-red-100'
+                : 'bg-slate-900 border-slate-700 text-slate-100'
+            }`}>
             <span>{toast.message}</span>
           </div>
         </div>
@@ -1526,7 +1525,7 @@ const App: React.FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                     </svg>
                     <span>
-                      {language === 'id' 
+                      {language === 'id'
                         ? `Kategori: ${translateCategoryName(selectedCategory, language)}`
                         : `Category: ${translateCategoryName(selectedCategory, language)}`}
                     </span>
@@ -1599,22 +1598,19 @@ const App: React.FC = () => {
               {/* Right Column: Monolithic Studio Output Card (5 cols / ~42%) */}
               <div
                 id="prompt-output-card"
-                className={`lg:col-span-5 min-w-0 flex flex-col gap-4 ${
-                  showAIFeatures && previewViewMode === 'skill' ? '' : 'lg:sticky lg:top-20'
-                }`}
+                className={`lg:col-span-5 min-w-0 flex flex-col gap-4 ${showAIFeatures && previewViewMode === 'skill' ? '' : 'lg:sticky lg:top-20'
+                  }`}
               >
                 {/* Live Output Box */}
                 <div
-                  className={`border rounded-2xl sm:rounded-3xl p-4 sm:p-5 space-y-4 min-w-0 overflow-hidden transition-colors ${
-                    isLightTheme
+                  className={`border rounded-2xl sm:rounded-3xl p-4 sm:p-5 space-y-4 min-w-0 overflow-hidden transition-colors ${isLightTheme
                       ? 'bg-white border-slate-200 text-slate-900 shadow-lg'
                       : 'bg-[#0f172a]/95 border-slate-800/90 text-slate-100 shadow-2xl'
-                  }`}
+                    }`}
                 >
                   <div
-                    className={`flex flex-col gap-2.5 border-b pb-3 min-w-0 ${
-                      isLightTheme ? 'border-slate-200' : 'border-slate-800/80'
-                    }`}
+                    className={`flex flex-col gap-2.5 border-b pb-3 min-w-0 ${isLightTheme ? 'border-slate-200' : 'border-slate-800/80'
+                      }`}
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 min-w-0">
                       <div className="flex items-center gap-2 min-w-0">
@@ -1622,9 +1618,8 @@ const App: React.FC = () => {
                           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                         <h2
-                          className={`text-xs font-bold uppercase tracking-wider font-sans truncate ${
-                            isLightTheme ? 'text-slate-800' : 'text-slate-200'
-                          }`}
+                          className={`text-xs font-bold uppercase tracking-wider font-sans truncate ${isLightTheme ? 'text-slate-800' : 'text-slate-200'
+                            }`}
                         >
                           {t('prompt_preview')}
                         </h2>
@@ -1634,20 +1629,18 @@ const App: React.FC = () => {
                           {previewViewMode === 'json' ? (
                             <>
                               <span
-                                className={`px-2 py-0.5 rounded-lg border font-medium ${
-                                  isLightTheme
+                                className={`px-2 py-0.5 rounded-lg border font-medium ${isLightTheme
                                     ? 'bg-slate-100 border-slate-300 text-emerald-800'
                                     : 'bg-slate-950 border-slate-800 text-emerald-400'
-                                }`}
+                                  }`}
                               >
                                 {cleanJsonString.length} {t('chars_count')}
                               </span>
                               <span
-                                className={`px-2 py-0.5 rounded-lg border ${
-                                  isLightTheme
+                                className={`px-2 py-0.5 rounded-lg border ${isLightTheme
                                     ? 'bg-slate-100 border-slate-300 text-slate-600'
                                     : 'bg-slate-950 border-slate-800 text-slate-400'
-                                }`}
+                                  }`}
                               >
                                 ~{Math.round(cleanJsonString.length / 4)} tokens
                               </span>
@@ -1655,24 +1648,22 @@ const App: React.FC = () => {
                           ) : showAIFeatures && previewViewMode === 'skill' ? (
                             <>
                               <span
-                                className={`px-2 py-0.5 rounded-lg border font-medium ${
-                                  isLightTheme
+                                className={`px-2 py-0.5 rounded-lg border font-medium ${isLightTheme
                                     ? 'bg-slate-100 border-slate-300 text-emerald-800'
                                     : 'bg-slate-950 border-slate-800 text-emerald-400'
-                                }`}
+                                  }`}
                               >
                                 {agentSkillMarkdown.length} {t('chars_count')}
                               </span>
                               <span
-                                className={`px-2 py-0.5 rounded-lg border font-medium ${
-                                  agentSkillValidation.valid
+                                className={`px-2 py-0.5 rounded-lg border font-medium ${agentSkillValidation.valid
                                     ? isLightTheme
                                       ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
                                       : 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
                                     : isLightTheme
                                       ? 'bg-rose-100 border-rose-300 text-rose-900'
                                       : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
-                                }`}
+                                  }`}
                               >
                                 {agentSkillValidation.valid ? t('skill_valid_badge') : t('skill_invalid_badge')}
                               </span>
@@ -1680,20 +1671,18 @@ const App: React.FC = () => {
                           ) : (
                             <>
                               <span
-                                className={`px-2 py-0.5 rounded-lg border font-medium ${
-                                  isLightTheme
+                                className={`px-2 py-0.5 rounded-lg border font-medium ${isLightTheme
                                     ? 'bg-slate-100 border-slate-300 text-emerald-800'
                                     : 'bg-slate-950 border-slate-800 text-emerald-400'
-                                }`}
+                                  }`}
                               >
                                 {generatedPrompt.length} {t('chars_count')}
                               </span>
                               <span
-                                className={`px-2 py-0.5 rounded-lg border ${
-                                  isLightTheme
+                                className={`px-2 py-0.5 rounded-lg border ${isLightTheme
                                     ? 'bg-slate-100 border-slate-300 text-slate-600'
                                     : 'bg-slate-950 border-slate-800 text-slate-400'
-                                }`}
+                                  }`}
                               >
                                 ~{Math.round(generatedPrompt.length / 4)} tokens
                               </span>
@@ -1706,11 +1695,10 @@ const App: React.FC = () => {
                               setCompareAlternativePrompt(generatedPrompt);
                               setShowCompareModal(true);
                             }}
-                            className={`min-w-[32px] min-h-[32px] p-1.5 rounded-lg border transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                              isLightTheme
+                            className={`min-w-[32px] min-h-[32px] p-1.5 rounded-lg border transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${isLightTheme
                                 ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'
                                 : 'bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-emerald-400 border-slate-800'
-                            }`}
+                              }`}
                             title={language === 'id' ? 'Bandingkan Prompt Berdampingan' : 'Compare Prompts Side-by-Side'}
                             aria-label={language === 'id' ? 'Bandingkan Prompt Berdampingan' : 'Compare Prompts Side-by-Side'}
                           >
@@ -1722,11 +1710,10 @@ const App: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => setShowExpandReviewModal(true)}
-                            className={`min-w-[32px] min-h-[32px] p-1.5 rounded-lg border transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                              isLightTheme
+                            className={`min-w-[32px] min-h-[32px] p-1.5 rounded-lg border transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${isLightTheme
                                 ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'
                                 : 'bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-emerald-400 border-slate-800'
-                            }`}
+                              }`}
                             title={t('expand_review_btn')}
                             aria-label={t('expand_review_btn')}
                           >
@@ -1742,24 +1729,21 @@ const App: React.FC = () => {
                     {generatedPrompt && (
                       <div className="pt-0.5 min-w-0">
                         <div
-                          className={`grid ${
-                            showAIFeatures ? 'grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4' : 'grid-cols-3'
-                          } border rounded-xl p-1 text-[11px] font-sans gap-1 ${
-                            isLightTheme
+                          className={`grid ${showAIFeatures ? 'grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4' : 'grid-cols-3'
+                            } border rounded-xl p-1 text-[11px] font-sans gap-1 ${isLightTheme
                               ? 'bg-slate-100 border-slate-300'
                               : 'bg-slate-950/90 border-slate-800/90'
-                          }`}
+                            }`}
                         >
                           <button
                             type="button"
                             onClick={() => setPreviewViewMode('structured')}
-                            className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                              previewViewMode === 'structured'
+                            className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${previewViewMode === 'structured'
                                 ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                                 : isLightTheme
                                   ? 'text-slate-700 hover:text-slate-950 hover:bg-slate-200/70'
                                   : 'text-slate-300 hover:text-white hover:bg-slate-900'
-                            }`}
+                              }`}
                           >
                             <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
@@ -1769,13 +1753,12 @@ const App: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => setPreviewViewMode('raw')}
-                            className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                              previewViewMode === 'raw'
+                            className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${previewViewMode === 'raw'
                                 ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                                 : isLightTheme
                                   ? 'text-slate-700 hover:text-slate-950 hover:bg-slate-200/70'
                                   : 'text-slate-300 hover:text-white hover:bg-slate-900'
-                            }`}
+                              }`}
                           >
                             <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -1785,13 +1768,12 @@ const App: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => setPreviewViewMode('json')}
-                            className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                              previewViewMode === 'json'
+                            className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${previewViewMode === 'json'
                                 ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                                 : isLightTheme
                                   ? 'text-slate-700 hover:text-slate-950 hover:bg-slate-200/70'
                                   : 'text-slate-300 hover:text-white hover:bg-slate-900'
-                            }`}
+                              }`}
                           >
                             <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -1802,13 +1784,12 @@ const App: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => setPreviewViewMode('skill')}
-                              className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                                previewViewMode === 'skill'
+                              className={`min-h-[36px] px-2 py-1.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${previewViewMode === 'skill'
                                   ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                                   : isLightTheme
                                     ? 'text-slate-700 hover:text-slate-950 hover:bg-slate-200/70'
                                     : 'text-slate-300 hover:text-white hover:bg-slate-900'
-                              }`}
+                                }`}
                             >
                               <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -1826,22 +1807,20 @@ const App: React.FC = () => {
                       {/* Kontainer Teks Pratinjau Terbaca */}
                       {previewViewMode === 'structured' && (
                         <div
-                          className={`border rounded-2xl p-3.5 sm:p-4 min-h-[220px] max-h-[460px] overflow-y-auto overflow-x-hidden shadow-inner min-w-0 ${
-                            isLightTheme
+                          className={`border rounded-2xl p-3.5 sm:p-4 min-h-[220px] max-h-[460px] overflow-y-auto overflow-x-hidden shadow-inner min-w-0 ${isLightTheme
                               ? 'bg-slate-50 border-slate-200 selection:bg-emerald-200 selection:text-emerald-950'
                               : 'bg-[#070b12] border-slate-800/90 selection:bg-emerald-900/60'
-                          }`}
+                            }`}
                         >
                           {renderStructuredContent(generatedPrompt)}
                         </div>
                       )}
                       {previewViewMode === 'raw' && (
                         <div
-                          className={`border rounded-2xl p-3.5 sm:p-4 min-h-[220px] max-h-[460px] overflow-y-auto overflow-x-hidden text-xs sm:text-[13px] leading-[1.85] font-mono whitespace-pre-wrap break-words [overflow-wrap:anywhere] shadow-inner min-w-0 ${
-                            isLightTheme
+                          className={`border rounded-2xl p-3.5 sm:p-4 min-h-[220px] max-h-[460px] overflow-y-auto overflow-x-hidden text-xs sm:text-[13px] leading-[1.85] font-mono whitespace-pre-wrap break-words [overflow-wrap:anywhere] shadow-inner min-w-0 ${isLightTheme
                               ? 'bg-slate-50 border-slate-200 text-slate-900 selection:bg-emerald-200 selection:text-emerald-950'
                               : 'bg-[#070b12] border-slate-800/90 text-slate-200 selection:bg-emerald-900/60'
-                          }`}
+                            }`}
                         >
                           {generatedPrompt}
                         </div>
@@ -1876,6 +1855,9 @@ const App: React.FC = () => {
                           onExpand={() => setShowExpandReviewModal(true)}
                           onOpenAiSettings={() => setShowAISettingsModal(true)}
                           onAiSuggestToast={(msg, type) => showToast(msg, type)}
+                          selectedSkillSlug={editingSkillSlug}
+                          onSelectSkillSlug={setEditingSkillSlug}
+                          selectedFrameworkName={selectedFrameworkName ?? undefined}
                         />
                       )}
 
@@ -1906,16 +1888,15 @@ const App: React.FC = () => {
                           </button>
                         </div>
                       )}
-                      
+
                       {/* Copy & Save Action Buttons */}
                       <div className="flex flex-col gap-2 pt-2 border-t border-slate-800/80">
                         <button
                           onClick={handleCopyActiveOutput}
-                          className={`w-full h-11 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
-                            isCopied 
-                              ? 'bg-emerald-400 text-slate-950 scale-[1.01] shadow-emerald-500/30' 
+                          className={`w-full h-11 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${isCopied
+                              ? 'bg-emerald-400 text-slate-950 scale-[1.01] shadow-emerald-500/30'
                               : 'bg-emerald-700 hover:bg-emerald-600 active:scale-[0.99] text-white shadow-emerald-950/50'
-                          }`}
+                            }`}
                         >
                           {isCopied ? (
                             <svg className="w-4 h-4 text-slate-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
@@ -1927,8 +1908,8 @@ const App: React.FC = () => {
                             </svg>
                           )}
                           <span>
-                            {isCopied 
-                              ? (language === 'id' ? 'Tersalin ke Clipboard!' : 'Copied to Clipboard!') 
+                            {isCopied
+                              ? (language === 'id' ? 'Tersalin ke Clipboard!' : 'Copied to Clipboard!')
                               : activeCopyLabel}
                           </span>
                         </button>
@@ -1965,37 +1946,32 @@ const App: React.FC = () => {
 
                 {/* Direct AI Tool Launchers Section */}
                 <div
-                  className={`border rounded-2xl sm:rounded-3xl p-4 sm:p-5 ${
-                    showAiLaunchers ? 'space-y-3.5' : 'space-y-0'
-                  } min-w-0 overflow-hidden transition-all duration-200 ${
-                    isLightTheme
+                  className={`border rounded-2xl sm:rounded-3xl p-4 sm:p-5 ${showAiLaunchers ? 'space-y-3.5' : 'space-y-0'
+                    } min-w-0 overflow-hidden transition-all duration-200 ${isLightTheme
                       ? 'bg-white border-slate-200 text-slate-900 shadow-lg'
                       : 'bg-[#0f172a]/95 border-slate-800/90 text-slate-100 shadow-2xl'
-                  }`}
+                    }`}
                 >
                   <div
-                    className={`flex flex-wrap items-center justify-between gap-2 transition-colors ${
-                      showAiLaunchers
+                    className={`flex flex-wrap items-center justify-between gap-2 transition-colors ${showAiLaunchers
                         ? `border-b pb-2.5 ${isLightTheme ? 'border-slate-200' : 'border-slate-800/80'}`
                         : 'border-b-0 pb-0'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-2">
                       <h3
-                        className={`text-xs font-bold uppercase tracking-wider flex items-center gap-2 font-sans ${
-                          isLightTheme ? 'text-slate-800' : 'text-slate-200'
-                        }`}
+                        className={`text-xs font-bold uppercase tracking-wider flex items-center gap-2 font-sans ${isLightTheme ? 'text-slate-800' : 'text-slate-200'
+                          }`}
                       >
                         <svg className={`w-4 h-4 shrink-0 ${isLightTheme ? 'text-emerald-700' : 'text-emerald-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
                         <span>{t('popular_tools_title')}</span>
                         <span
-                          className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md font-semibold border ${
-                            isLightTheme
+                          className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md font-semibold border ${isLightTheme
                               ? 'bg-emerald-100 text-emerald-900 border-emerald-300'
                               : 'bg-slate-800 text-emerald-400 border-slate-700'
-                          }`}
+                            }`}
                         >
                           {AI_TOOL_LAUNCHERS.filter(t => launcherCategory === 'all' || t.category === launcherCategory).length}
                         </span>
@@ -2018,11 +1994,10 @@ const App: React.FC = () => {
                             ? (language === 'id' ? 'Sembunyikan Peluncur Cepat AI' : 'Hide AI Tool Launchers')
                             : (language === 'id' ? 'Tampilkan Peluncur Cepat AI' : 'Show AI Tool Launchers')
                         }
-                        className={`min-h-[38px] sm:min-h-[32px] px-2.5 py-1 rounded-lg border text-xs font-semibold flex items-center gap-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer ${
-                          isLightTheme
+                        className={`min-h-[38px] sm:min-h-[32px] px-2.5 py-1 rounded-lg border text-xs font-semibold flex items-center gap-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer ${isLightTheme
                             ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
                             : 'bg-slate-900/80 hover:bg-slate-800 text-slate-200 border-slate-700/80 hover:border-slate-600'
-                        }`}
+                          }`}
                       >
                         <span>
                           {showAiLaunchers
@@ -2030,9 +2005,8 @@ const App: React.FC = () => {
                             : (language === 'id' ? 'Buka Peluncur' : 'Open Launchers')}
                         </span>
                         <svg
-                          className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                            showAiLaunchers ? 'rotate-180 text-emerald-600 dark:text-emerald-400' : 'text-slate-400'
-                          }`}
+                          className={`w-3.5 h-3.5 transition-transform duration-200 ${showAiLaunchers ? 'rotate-180 text-emerald-600 dark:text-emerald-400' : 'text-slate-400'
+                            }`}
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -2063,15 +2037,14 @@ const App: React.FC = () => {
                             key={cat.id}
                             type="button"
                             onClick={() => setLauncherCategory(cat.id)}
-                            className={`min-h-[38px] sm:min-h-[32px] px-2.5 py-1 rounded-lg shrink-0 transition-all font-sans border ${
-                              launcherCategory === cat.id
+                            className={`min-h-[38px] sm:min-h-[32px] px-2.5 py-1 rounded-lg shrink-0 transition-all font-sans border ${launcherCategory === cat.id
                                 ? isLightTheme
                                   ? 'bg-emerald-700 text-white border-emerald-700 font-semibold'
                                   : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30 font-semibold'
                                 : isLightTheme
                                   ? 'bg-slate-100 text-slate-700 hover:text-slate-950 border-slate-300'
                                   : 'bg-slate-900/80 text-slate-400 hover:text-slate-200 border-slate-800'
-                            }`}
+                              }`}
                           >
                             {cat.label}
                           </button>
@@ -2093,30 +2066,27 @@ const App: React.FC = () => {
                                   handleCopyActiveOutput();
                                 }
                               }}
-                              className={`p-2.5 border rounded-xl text-xs font-medium transition-all flex items-center justify-between gap-2 group min-w-0 ${
-                                isLightTheme
+                              className={`p-2.5 border rounded-xl text-xs font-medium transition-all flex items-center justify-between gap-2 group min-w-0 ${isLightTheme
                                   ? 'bg-slate-50 hover:bg-emerald-50 border-slate-200 hover:border-emerald-400 text-slate-800'
                                   : 'bg-slate-900/60 hover:bg-emerald-950/30 border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-200'
-                              }`}
+                                }`}
                               title={language === 'id' ? `Buka ${tool.name} (Otomatis menyalin prompt)` : `Open ${tool.name} (Auto-copies prompt)`}
                             >
                               <div className="flex items-center gap-1.5 min-w-0 flex-1">
                                 <span className="text-sm shrink-0">{tool.icon}</span>
                                 <div className="min-w-0 flex flex-col items-start leading-tight">
                                   <span
-                                    className={`truncate max-w-full font-semibold ${
-                                      isLightTheme
+                                    className={`truncate max-w-full font-semibold ${isLightTheme
                                         ? 'text-slate-900 group-hover:text-emerald-800'
                                         : 'text-slate-200 group-hover:text-emerald-300'
-                                    }`}
+                                      }`}
                                   >
                                     {tool.name}
                                   </span>
                                   {tool.badge && (
                                     <span
-                                      className={`truncate max-w-full text-[9px] font-mono ${
-                                        isLightTheme ? 'text-slate-600' : 'text-slate-400'
-                                      }`}
+                                      className={`truncate max-w-full text-[9px] font-mono ${isLightTheme ? 'text-slate-600' : 'text-slate-400'
+                                        }`}
                                     >
                                       {tool.badge}
                                     </span>
@@ -2151,11 +2121,10 @@ const App: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleCopyActiveOutput}
-                  className={`flex-1 h-11 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
-                    isCopied
+                  className={`flex-1 h-11 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${isCopied
                       ? 'bg-emerald-400 text-slate-950 font-bold'
                       : 'bg-emerald-700 hover:bg-emerald-600 text-white'
-                  }`}
+                    }`}
                 >
                   {isCopied ? (
                     <svg className="w-4 h-4 text-slate-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
@@ -2273,8 +2242,8 @@ const App: React.FC = () => {
             {displayedSavedPrompts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {displayedSavedPrompts.map(prompt => (
-                  <div 
-                    key={prompt.id} 
+                  <div
+                    key={prompt.id}
                     className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all shadow-lg"
                   >
                     <div>
@@ -2339,7 +2308,7 @@ const App: React.FC = () => {
                         </div>
                       ) : (
                         <div className="mb-3 space-y-1.5">
-                          <p 
+                          <p
                             onClick={() => setExpandedStashPromptId(prompt.id)}
                             className="text-xs text-slate-300 font-mono line-clamp-3 bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80 leading-relaxed cursor-pointer hover:border-slate-700 transition-colors"
                             title={language === 'id' ? 'Klik untuk membaca selengkapnya' : 'Click to expand and read full prompt'}
@@ -2420,7 +2389,8 @@ const App: React.FC = () => {
         hasActivePrompt={Boolean(generatedPrompt)}
         onCopyActiveSkill={() => copyToClipboard(agentSkillMarkdown, t('toast_skill_copied'))}
         onDownloadActiveSkill={handleDownloadActiveSkill}
-        onOpenSkillInStudio={() => {
+        onOpenSkillInStudio={(slug) => {
+          setEditingSkillSlug(slug || null);
           setPreviewViewMode('skill');
           if (!selectedFramework && !isBlankCanvasMode) {
             handleOpenBlankCanvas();
@@ -2605,11 +2575,10 @@ const App: React.FC = () => {
                         <span className="text-emerald-400 font-medium">{agentSkillMarkdown.length} {t('chars_count')}</span>
                         <span>•</span>
                         <span>~{Math.round(agentSkillMarkdown.length / 4)} tokens</span>
-                        <span className={`hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] border font-medium ml-1 ${
-                          agentSkillValidation.valid
+                        <span className={`hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] border font-medium ml-1 ${agentSkillValidation.valid
                             ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
                             : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
-                        }`}>
+                          }`}>
                           {agentSkillValidation.valid ? `✓ ${t('skill_valid_badge')}` : t('skill_invalid_badge')}
                         </span>
                       </>
@@ -2630,11 +2599,10 @@ const App: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setPreviewViewMode('structured')}
-                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                      previewViewMode === 'structured'
+                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${previewViewMode === 'structured'
                         ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                         : 'text-slate-300 hover:text-white'
-                    }`}
+                      }`}
                   >
                     <svg className="w-3.5 h-3.5 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
@@ -2644,11 +2612,10 @@ const App: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setPreviewViewMode('raw')}
-                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                      previewViewMode === 'raw'
+                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${previewViewMode === 'raw'
                         ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                         : 'text-slate-300 hover:text-white'
-                    }`}
+                      }`}
                   >
                     <svg className="w-3.5 h-3.5 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -2658,11 +2625,10 @@ const App: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setPreviewViewMode('json')}
-                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                      previewViewMode === 'json'
+                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${previewViewMode === 'json'
                         ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                         : 'text-slate-300 hover:text-white'
-                    }`}
+                      }`}
                   >
                     <svg className="w-3.5 h-3.5 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -2673,11 +2639,10 @@ const App: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setPreviewViewMode('skill')}
-                      className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                        previewViewMode === 'skill'
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${previewViewMode === 'skill'
                           ? 'bg-emerald-700 text-white font-semibold shadow-sm'
                           : 'text-slate-300 hover:text-white'
-                      }`}
+                        }`}
                     >
                       <svg className="w-3.5 h-3.5 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -2702,9 +2667,8 @@ const App: React.FC = () => {
 
             {/* Modal Body - Spacious & Comfortable Reading Area */}
             <div
-              className={`flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 space-y-4 ${
-                isLightTheme ? 'bg-slate-50' : 'bg-[#070b13]'
-              }`}
+              className={`flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 space-y-4 ${isLightTheme ? 'bg-slate-50' : 'bg-[#070b13]'
+                }`}
             >
               {/* Visual Mockup & Contoh Hasil in Expanded Modal */}
               {!isBlankCanvasMode && previewViewMode !== 'skill' && (
@@ -2726,11 +2690,10 @@ const App: React.FC = () => {
               )}
               {previewViewMode === 'raw' && (
                 <div
-                  className={`max-w-3xl mx-auto border rounded-2xl p-5 sm:p-6 text-xs sm:text-sm leading-loose font-mono whitespace-pre-wrap break-words [overflow-wrap:anywhere] shadow-inner ${
-                    isLightTheme
+                  className={`max-w-3xl mx-auto border rounded-2xl p-5 sm:p-6 text-xs sm:text-sm leading-loose font-mono whitespace-pre-wrap break-words [overflow-wrap:anywhere] shadow-inner ${isLightTheme
                       ? 'bg-white border-slate-200 text-slate-900 selection:bg-emerald-200 selection:text-emerald-950'
                       : 'bg-slate-950/80 border-slate-800/90 text-slate-200 selection:bg-emerald-900/60'
-                  }`}
+                    }`}
                 >
                   {generatedPrompt}
                 </div>
@@ -2767,6 +2730,9 @@ const App: React.FC = () => {
                     isExpanded={true}
                     onOpenAiSettings={() => setShowAISettingsModal(true)}
                     onAiSuggestToast={(msg, type) => showToast(msg, type)}
+                    selectedSkillSlug={editingSkillSlug}
+                    onSelectSkillSlug={setEditingSkillSlug}
+                    selectedFrameworkName={selectedFrameworkName ?? undefined}
                   />
                 </div>
               )}
@@ -2796,11 +2762,10 @@ const App: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleCopyActiveOutput}
-                  className={`h-10 px-5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
-                    isCopied
+                  className={`h-10 px-5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${isCopied
                       ? 'bg-emerald-500 text-slate-950 shadow-emerald-900/40'
                       : 'bg-emerald-700 hover:bg-emerald-600 text-white shadow-emerald-950/50'
-                  }`}
+                    }`}
                 >
                   {isCopied ? (
                     <>

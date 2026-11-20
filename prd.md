@@ -3,7 +3,7 @@
 > **Sistem:** PromptMatrix 2.0 - Guided AI Prompt Studio & Agent Skill Builder  
 > **Arsitek & Pemilik:** Sigit Adi ([https://sigitadi.id](https://sigitadi.id))  
 > **Domain Live:** [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
-> **Versi Saat Ini:** v7.4.0  
+> **Versi Saat Ini:** v7.5.0  
 > **Lisensi:** MIT  
 > **Standar Rekayasa:** Dikelola oleh RetroBOT (`RetroBOT.md`)
 
@@ -92,7 +92,7 @@ flowchart TD
 
 # ==============================================================================
 
-### Status Sistem Terkini (v7.4.0 - Floating Sticky Header, SEO/GEO Engine & Elaborasi Multi-Marketplace)
+### Status Sistem Terkini (v7.5.0 - Intern-Discovery AI & Studio Skill Editor Multi-Target)
 
 - **Framework Utama:** React 18.0.0 (Functional Components + Hooks)
 - **Bahasa & Compiler:** TypeScript 5.5.4 + Vite 5.4.19
@@ -150,6 +150,15 @@ flowchart TD
     - Di `AgentSkillViewer.tsx` Langkah 3: Tab format switcher 5 platform (Universal SEO/GEO, PromptBase, Storefront/MoR, GitHub OSS, Schema JSON-LD) dengan tombol salin spesifik per target pasar.
     - Di `AgensiCatalogModal.tsx` Tab 3: Menghapus pembagian kanal sekunder dan menggantikannya dengan Dashboard Integrasi 7 Marketplace Komersial (Gumroad, Lemon Squeezy, PromptBase, Whop, Creem.io, Payhip, Agensi.io).
     - Di `AgensiCatalogModal.tsx` Tab 4: Matriks Komparasi 8 Marketplace, 4 Pilar Omnichannel Playbook, dan advisory jalur payout aman untuk kreator Indonesia (Direct IDR Bank, USDC Polygon, USDC Solana).
+
+  - **D35. Integrasi Intern-Discovery AI & Studio Skill Editor Multi-Target (v7.5.0):**
+    - Dukungan penuh endpoint OpenAI-Compatible Shanghai AI Lab `https://discovery-api.intern-ai.org.cn/v1` dengan preset `internai` dan 11 model resmi (`intern-s2`, `intern-s2-preview-397b`, `intern-s2-preview-35b`, `internvl3.5-241b-a28b`, `intern-s1`, dll), bypass CORS browser pada `/v1/models` (405 OPTIONS), dan auto-detection domain saat menempel URL di `AISettingsModal`.
+    - Transformasi Studio menjadi Skill Editor Lengkap (`AgentSkillViewer.tsx`, `data/flagshipSkillsData.ts`):
+      - Switcher target: Formula Studio Aktif, 10 Paket Flagship Bawaan, dan Draf Kustom Baru.
+      - Tombol `[✏️ Edit di Studio]` pada setiap kartu paket di Tab 1 Katalog 10 Paket (`AgensiCatalogModal.tsx`).
+      - Formulir lengkap metadata marketplace: Nama Identifier Skill (`name` kebab-case dengan validasi visual & AI Suggest), Kategori Pasar (`category`), Penulis (`author`), Versi (`version`), Lisensi (`license`), Instruksi Pemicu Aktivasi (`description` YAML frontmatter maks 1024 kar), Judul Komersial, Tagline, Harga USD, Tag, Deskripsi Markdown, serta Live Demo (Request & Result).
+      - Persistensi draf lokal (`localStorage` kunci `pm_skill_draft_<slug>`), tombol `💾 Simpan Draf` dan `↺ Reset ke Bawaan`.
+      - Ekspor `.zip` dinamis (`<slug>.zip`) yang menyertakan seluruh frontmatter YAML dan isi markdown yang telah disunting, serta tombol salin cepat `SKILL.md`.
 
 ### Register Modul & Komponen Utama
 

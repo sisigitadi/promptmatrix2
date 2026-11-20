@@ -217,9 +217,9 @@ const generateWithOpenAICompatible = async (
         const jsonString = trimmed.replace(/^data:\s*/, '');
         try {
           const chunk = JSON.parse(jsonString);
-          const delta = chunk?.choices?.[0]?.delta?.content || 
-                        chunk?.choices?.[0]?.message?.content || 
-                        chunk?.choices?.[0]?.text || '';
+          const delta = chunk?.choices?.[0]?.delta?.content ||
+            chunk?.choices?.[0]?.message?.content ||
+            chunk?.choices?.[0]?.text || '';
           fullContent += delta;
         } catch {
           // ignore single chunk parse errors
@@ -234,9 +234,9 @@ const generateWithOpenAICompatible = async (
   // Case 2: Standard JSON response
   try {
     const data = JSON.parse(responseText);
-    const content = data?.choices?.[0]?.message?.content || 
-                    data?.choices?.[0]?.text || 
-                    data?.content?.[0]?.text;
+    const content = data?.choices?.[0]?.message?.content ||
+      data?.choices?.[0]?.text ||
+      data?.content?.[0]?.text;
     if (content) {
       return content.trim();
     }
@@ -330,6 +330,25 @@ export const fetchModelsFromEndpoint = async (
   // Remove /chat/completions if included in base URL
   cleanBase = cleanBase.replace(/\/chat\/completions$/, '');
 
+  // Intern-Discovery gateway blocks CORS on /v1/models (405 on OPTIONS / no Access-Control-Allow-Origin),
+  // but /v1/chat/completions works with CORS in browser fetch.
+  // Return verified official Intern-Discovery model roster directly.
+  if (cleanBase.includes('intern-ai.org.cn') || provider === 'internai') {
+    return [
+      'intern-s2',
+      'intern-s2-preview-397b',
+      'intern-s2-preview-35b',
+      'internvl3.5-241b-a28b',
+      'intern-s1',
+      'intern-s1-pro',
+      'intern-s1-mini',
+      'internlm3-latest',
+      'internlm2.5-latest',
+      'internlm2.5-20b-chat',
+      'internlm2.5-7b-chat',
+    ];
+  }
+
   const isGeminiEndpoint = provider === 'gemini' || cleanBase.includes('generativelanguage.googleapis.com');
   const isAnthropicEndpoint = provider === 'anthropic' || cleanBase.includes('api.anthropic.com');
 
@@ -355,25 +374,25 @@ export const fetchModelsFromEndpoint = async (
     headers['Authorization'] = `Bearer ${apiKey.trim()}`;
   }
 
-  const response = await fetch(endpoint, {
-    method: 'GET',
-    headers
-  });
-
-  const text = await response.text();
-
-  if (!response.ok) {
-    let msg = '';
-    try {
-      const parsed = JSON.parse(text);
-      msg = parsed?.error?.message || parsed?.message || '';
-    } catch {
-      msg = text;
-    }
-    throw new Error(`Gagal mengambil model (${response.status}): ${msg || response.statusText}`);
-  }
-
   try {
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers
+    });
+
+    const text = await response.text();
+
+    if (!response.ok) {
+      let msg = '';
+      try {
+        const parsed = JSON.parse(text);
+        msg = parsed?.error?.message || parsed?.message || '';
+      } catch {
+        msg = text;
+      }
+      throw new Error(`Gagal mengambil model (${response.status}): ${msg || response.statusText}`);
+    }
+
     const data = JSON.parse(text) as {
       data?: Array<{ id?: string; name?: string }>;
       models?: Array<{ id?: string; name?: string }>;
@@ -395,8 +414,27 @@ export const fetchModelsFromEndpoint = async (
         .map((item) => (typeof item === 'string' ? item : item.id || item.name || ''))
         .filter(Boolean);
     }
-  } catch {
-    // ignore malformed model payload
+  } catch (err: unknown) {
+    if (cleanBase.includes('intern-ai.org.cn')) {
+      return [
+        'intern-s2',
+        'intern-s2-preview-397b',
+        'intern-s2-preview-35b',
+        'internvl3.5-241b-a28b',
+        'intern-s1',
+        'intern-s1-pro',
+        'intern-s1-mini',
+        'internlm3-latest',
+        'internlm2.5-latest',
+        'internlm2.5-20b-chat',
+        'internlm2.5-7b-chat',
+      ];
+    }
+    const msg = err instanceof Error ? err.message : String(err);
+    if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+      throw new Error('Koneksi ke endpoint /models terhalang kebijakan CORS browser atau server tidak aktif. Silakan pilih model dari daftar terkurasi atau ketik nama model secara manual.');
+    }
+    throw err;
   }
 
   return [];
@@ -793,13 +831,12 @@ Skema JSON wajib:
     }
   ],
   "fewShotInput": "Contoh input singkat (opsional, kosongkan string jika tidak perlu)",
-  "fewShotOutput": "Contoh output ideal (opsional, kosongkan string jika tidak perlu)"${
-    targetMode === 'skill'
+  "fewShotOutput": "Contoh output ideal (opsional, kosongkan string jika tidak perlu)"${targetMode === 'skill'
       ? `,
   "skillName": "nama-skill-kebab-case",
   "skillDescription": "Gunakan skill ini saat..."`
       : ''
-  }
+    }
 }
 Gunakan 3 sampai 5 blok yang paling relevan dari daftar type yang tersedia.`
     : `You are a Principal Prompt & Agent Skill Architect. Transform the user's brief idea into a structured Blank Canvas draft.
@@ -819,13 +856,12 @@ Required JSON schema:
     }
   ],
   "fewShotInput": "Brief sample input (optional, empty string if unnecessary)",
-  "fewShotOutput": "Ideal expected output (optional, empty string if unnecessary)"${
-    targetMode === 'skill'
+  "fewShotOutput": "Ideal expected output (optional, empty string if unnecessary)"${targetMode === 'skill'
       ? `,
   "skillName": "kebab-case-skill-name",
   "skillDescription": "Use this skill when..."`
       : ''
-  }
+    }
 }
 Select 3 to 5 of the most relevant block types.`;
 
@@ -1040,12 +1076,11 @@ Skema JSON wajib:
       }
     ],
     "fewShotInput": "Contoh masukan (opsional, string kosong jika tidak perlu)",
-    "fewShotOutput": "Contoh keluaran ideal (opsional, string kosong jika tidak perlu)"${
-      effectiveTarget === 'skill'
-        ? `,
+    "fewShotOutput": "Contoh keluaran ideal (opsional, string kosong jika tidak perlu)"${effectiveTarget === 'skill'
+      ? `,
     "skillName": "nama-skill-kebab-case",
     "skillDescription": "Gunakan skill ini saat..."`
-        : ''
+      : ''
     }
   },
   "upgradedFullText": "Teks lengkap prompt hasil upgrade atau dokumen SKILL.md lengkap dengan YAML frontmatter"
@@ -1084,12 +1119,11 @@ Required JSON schema:
       }
     ],
     "fewShotInput": "Sample input (optional, empty string if unnecessary)",
-    "fewShotOutput": "Ideal expected output (optional, empty string if unnecessary)"${
-      effectiveTarget === 'skill'
-        ? `,
+    "fewShotOutput": "Ideal expected output (optional, empty string if unnecessary)"${effectiveTarget === 'skill'
+      ? `,
     "skillName": "kebab-case-skill-name",
     "skillDescription": "Use this skill when..."`
-        : ''
+      : ''
     }
   },
   "upgradedFullText": "Complete upgraded prompt text or full SKILL.md document with YAML frontmatter"
@@ -1209,18 +1243,18 @@ ${trimmedContent}
         strengths.length > 0
           ? strengths
           : [
-              isIndonesian
-                ? 'Memiliki maksud dan arah tugas dasar yang dapat dikenali.'
-                : 'Has an identifiable core objective and direction.',
-            ],
+            isIndonesian
+              ? 'Memiliki maksud dan arah tugas dasar yang dapat dikenali.'
+              : 'Has an identifiable core objective and direction.',
+          ],
       weaknesses:
         weaknesses.length > 0
           ? weaknesses
           : [
-              isIndonesian
-                ? 'Dapat diperkuat dengan batasan eksplisit dan format keluaran yang lebih terstruktur.'
-                : 'Can be strengthened with explicit constraints and a stricter output format.',
-            ],
+            isIndonesian
+              ? 'Dapat diperkuat dengan batasan eksplisit dan format keluaran yang lebih terstruktur.'
+              : 'Can be strengthened with explicit constraints and a stricter output format.',
+          ],
       upgradeSummary,
       upgradedDraft,
       upgradedFullText,
@@ -1275,7 +1309,7 @@ export interface SkillAiSuggestionInput {
   skillName: string;
   frameworkName?: string;
   compiledPrompt?: string;
-  field: 'all' | 'title' | 'tagline' | 'tags' | 'description' | 'demoRequest' | 'demoResult';
+  field: 'all' | 'title' | 'tagline' | 'tags' | 'description' | 'demoRequest' | 'demoResult' | 'name';
   existingTitle?: string;
   existingTagline?: string;
   existingDemoRequest?: string;
@@ -1283,6 +1317,7 @@ export interface SkillAiSuggestionInput {
 }
 
 export interface SkillAiSuggestionOutput {
+  name?: string;
   title?: string;
   tagline?: string;
   tags?: string[];
@@ -1321,6 +1356,31 @@ STRICT RULES:
 2. NEVER use generic AI cliches such as "Revolutionary", "Unleash", "Game-changer", "Delve", "Tapestry".
 3. Incorporate high-intent search keywords: production agent skill, deterministic workflow, cross-runtime, zero hallucination.
 4. Provide concrete, quotable definition capsules and structured deliverables that search engines and AI agents can cite as authoritative sources.`;
+
+  if (field === 'name') {
+    const prompt = isIndonesian
+      ? `Nama Judul Skill: "${existingTitle || frameworkName || skillName}"
+Konteks Prompt:
+${compiledPrompt ? compiledPrompt.slice(0, 1000) : '(Kompiler otomatis)'}
+
+Buat SATU nama identifier skill standar Open Agent Skills dalam format KEBAB-CASE murni (hanya huruf kecil a-z, angka 0-9, dan tanda hubung '-', maksimal 64 karakter, contoh: "nextjs-fullstack-architect" atau "seo-geo-content-engine").
+HANYA kembalikan teks kebab-case saja tanpa tanda kutip, tanpa spasi, dan tanpa penjelasan:`
+      : `Skill Title: "${existingTitle || frameworkName || skillName}"
+Prompt Context:
+${compiledPrompt ? compiledPrompt.slice(0, 1000) : '(Auto-compiled)'}
+
+Generate ONE clean Open Agent Skills identifier name in pure KEBAB-CASE format (lowercase a-z, numbers 0-9, and '-' only, max 64 chars, e.g. "nextjs-fullstack-architect" or "seo-geo-content-engine").
+Return ONLY the kebab-case identifier without quotes, without spaces, and without explanation:`;
+
+    const raw = await generateTextWithUniversalAI(prompt, systemInstruction);
+    const cleaned = sanitizePromptText(raw)
+      .toLowerCase()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 64);
+    return { name: cleaned || 'custom-agent-skill' };
+  }
 
   if (field === 'title') {
     const prompt = isIndonesian

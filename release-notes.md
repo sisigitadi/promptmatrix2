@@ -4,6 +4,29 @@
 Dokumen ini mencatat perubahan teknis detail untuk setiap versi PromptMatrix.
 
 ---
+## [V7.5.0] - 2026-11-21
+### Integrasi Intern-Discovery AI & Studio Skill Editor untuk Flagship & Kustom
+- **Dukungan Provider Intern-Discovery (Shanghai AI Lab) (`services/aiSettingsService.ts`, `services/universalAIService.ts`, `components/AISettingsModal.tsx`)**:
+  - Menambahkan preset provider `internai` dan integrasi ke OpenAI-Compatible dengan Base API URL `https://discovery-api.intern-ai.org.cn/v1`.
+  - Mengatasi pembatasan browser CORS pada endpoint `/v1/models` (yang mengembalikan HTTP 405 pada preflight OPTIONS) dengan mendeteksi domain `intern-ai.org.cn` secara otomatis dan menyediakan daftar 11 model resmi: `intern-s2`, `intern-s2-preview-397b`, `intern-s2-preview-35b`, `internvl3.5-241b-a28b`, `intern-s1`, `intern-s1-pro`, `intern-s1-mini`, `internlm3-latest`, `internlm2.5-latest`, `internlm2.5-20b-chat`, dan `internlm2.5-7b-chat`.
+  - Auto-detection URL pada `AISettingsModal`: mendeteksi otomatis saat pengguna menempel URL `intern-ai.org.cn`, mengatur default model ke `intern-s2`, dan menampilkan pill panduan.
+  - Menambahkan chip cepat di modal pengaturan AI untuk `intern-s2`, `intern-s2-preview-397b`, dan `internvl3.5-241b-a28b`.
+- **Studio Skill Editor untuk 10 Flagship & Skill Kustom (`components/AgentSkillViewer.tsx`, `components/AgensiCatalogModal.tsx`, `data/flagshipSkillsData.ts`, `App.tsx`)**:
+  - Menambahkan **Skill Source Switcher** di bagian atas Studio (`AgentSkillViewer.tsx`) yang memungkinkan beralih instan antara: (a) Formula Studio Aktif, (b) 10 Paket Flagship bawaan, dan (c) Draf Skill Baru Mandiri (Custom Draft).
+  - Menambahkan tombol `[✏️ Edit di Studio]` pada setiap kartu paket di Tab 1 Katalog 10 Paket (`AgensiCatalogModal.tsx`) yang langsung membuka paket tersebut ke editor Studio.
+  - Menyediakan kolom formulir lengkap untuk keperluan upload marketplace & metadata Open Agent Skills:
+    - Nama Identifier Skill / Slug (`name` dalam format kebab-case valid dengan live validation badge dan tombol `✨ AI Suggest`).
+    - Kategori Pasar (`category`).
+    - Penulis / Pembuat (`author`).
+    - Versi SemVer (`version`).
+    - Lisensi (`license`).
+    - Instruksi Pemicu Aktivasi (`description` YAML frontmatter dengan batas 1024 karakter dan live counter).
+    - Judul Komersial, Tagline, Harga USD, Tag, Deskripsi Markdown, serta Live Demo (The Request & The Result).
+  - Menambahkan persistensi draft lokal (`localStorage` kunci `pm_skill_draft_<slug>`) dengan tombol `💾 Simpan Draf` dan `↺ Reset ke Bawaan`.
+  - Integrasi pembuatan paket ZIP: tombol unduh ZIP secara otomatis mengompilasi nama file `<slug>.zip` dan menyertakan frontmatter YAML serta isi markdown yang telah disunting.
+  - Menambahkan tombol cepat salin `SKILL.md` berdampingan dengan tombol unduh ZIP di Langkah 2.
+
+---
 ## [V7.4.0] - 2026-11-19
 ### Floating Sticky Header, Mesin SEO & GEO, serta Elaborasi Multi-Marketplace (Anti-Monopoli)
 - **Perbaikan Header Mengambang & Sticky (`styles.css`, `components/Header.tsx`)**:

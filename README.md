@@ -15,6 +15,10 @@
 
 ## 🌟 Fitur Unggulan
 
+- 🛠️ **Multi-Target Studio Skill Editor & Dukungan Model Shanghai AI Lab (v7.5.0)**:
+  - Beralih instan antara Formula Studio Aktif, 10 Paket Flagship Bawaan, dan Draf Skill Baru Mandiri langsung di Studio (`AgentSkillViewer.tsx`), dilengkapi tombol `[✏️ Edit di Studio]` pada katalog.
+  - Lengkap dengan isian identitas marketplace (slug kebab-case tervalidasi dengan AI Suggest, kategori, author, version, license, trigger description), persistensi draft lokal browser (`localStorage`), dan 1-klik unduh ZIP siap jual (`<slug>.zip`).
+  - Dukungan penuh OpenAI-Compatible gateway `https://discovery-api.intern-ai.org.cn/v1` (Shanghai AI Lab: `intern-s2`, `internvl3.5`, `intern-s1`, dll.) dengan deteksi URL otomatis dan bypass batasan CORS browser.
 - 💎 **400 Formula Prompt Master**: Mencakup 8 kategori inti dengan **83 subkategori** spesifik, termasuk workflow Agentic AI (`SKILL.md` Builder, Claude Code Subagents & Hooks, MCP Server v2), GEO/AEO, Antislop UI Audit, Next.js/PostgreSQL, Midjourney v7 (`--oref`), FLUX.2 / Kontext, Veo 3, Kling 2.1, Sora 2, dan Suno v4.5/v5.
 - 🧩 **Ekosistem Agent Skill (`SKILL.md`) & Monetisasi Agensi.io (Model Hibrida)**:
   - **Etalase Afiliasi Publik & Suite Bundle Opsional**: Tombol **Skills (`10`)** di Header, banner katalog di Galeri, kartu rekomendasi kontekstual per kategori di Studio (`AgensiSkillPromoCard`), dan modal katalog 10 paket resmi (`AgensiCatalogModal`) dengan filter *All / Free ($0) / Paid Flagship*, kartu **Suite Bundle (`$59.00` vs `$133.92` satuan, hemat `56%`)**, serta tautan checkout sekunder opsional (Lemon Squeezy, Creem.io, Gumroad, PromptBase) yang hanya tampil jika dikonfigurasi (Agensi.io tetap CTA utama).

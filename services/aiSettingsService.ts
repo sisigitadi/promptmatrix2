@@ -14,6 +14,7 @@ export type AIProviderId =
   | 'cohere'
   | 'huggingface'
   | 'ollama'
+  | 'internai'
   | 'custom';
 
 export interface AIModelOption {
@@ -330,6 +331,31 @@ export const AI_PROVIDER_PRESETS: Record<AIProviderId, AIProviderPreset> = {
     placeholderKey: 'Opsional (tidak wajib untuk Ollama)',
     icon: '🦙'
   },
+  internai: {
+    id: 'internai',
+    name: 'Intern-Discovery / 书生·端砚 (Shanghai AI Lab)',
+    shortLabel: 'Intern-AI',
+    badge: 'INTERN-AI',
+    defaultBaseUrl: 'https://discovery-api.intern-ai.org.cn/v1',
+    defaultModel: 'intern-s2',
+    models: [
+      { id: 'intern-s2', label: 'intern-s2', description: 'Flagship Multimodal Scientific Reasoning Agent (Intern-S2) Shanghai AI Lab' },
+      { id: 'intern-s2-preview-397b', label: 'intern-s2-preview-397b', description: 'Intern-S2 397B MoE Frontier Scientific Discovery Model' },
+      { id: 'intern-s2-preview-35b', label: 'intern-s2-preview-35b', description: 'Intern-S2 35B High-Efficiency Scientific Agent' },
+      { id: 'internvl3.5-241b-a28b', label: 'internvl3.5-241b-a28b', description: 'InternVL 3.5 241B MoE Frontier Vision-Language Model' },
+      { id: 'intern-s1', label: 'intern-s1', description: 'Intern-S1 Scientific Reasoning & Chemistry/Physics Analysis' },
+      { id: 'intern-s1-pro', label: 'intern-s1-pro', description: 'Intern-S1 Pro Deep Mathematical & Cross-Modal Logic' },
+      { id: 'intern-s1-mini', label: 'intern-s1-mini', description: 'Intern-S1 Mini Fast Reasoning & Extraction' },
+      { id: 'internlm3-latest', label: 'internlm3-latest', description: 'InternLM3 8B Latest General Instruct Model' },
+      { id: 'internlm2.5-latest', label: 'internlm2.5-latest', description: 'InternLM2.5 Workhorse Long-Context Reasoning' },
+      { id: 'internlm2.5-20b-chat', label: 'internlm2.5-20b-chat', description: 'InternLM2.5 20B High-Capability Chat' },
+      { id: 'internlm2.5-7b-chat', label: 'internlm2.5-7b-chat', description: 'InternLM2.5 7B Lightweight Chat' },
+    ],
+    requiresApiKey: true,
+    docUrl: 'https://discovery.intern-ai.org.cn/',
+    placeholderKey: 'API key dari https://discovery.intern-ai.org.cn/',
+    icon: '🧪'
+  },
   custom: {
     id: 'custom',
     name: 'OpenAI-Compatible / Kustom (LM Studio, vLLM, LiteLLM, Cloudflare AI)',
@@ -339,6 +365,14 @@ export const AI_PROVIDER_PRESETS: Record<AIProviderId, AIProviderPreset> = {
     defaultModel: 'local-model',
     models: [
       { id: 'local-model', label: 'local-model', description: 'Model aktif di LM Studio / vLLM / Local Host' },
+      { id: 'intern-s2', label: 'intern-s2', description: 'Intern-Discovery Flagship Scientific Reasoning Agent (Shanghai AI Lab)' },
+      { id: 'intern-s2-preview-397b', label: 'intern-s2-preview-397b', description: 'Intern-S2 397B MoE Frontier Scientific Discovery' },
+      { id: 'intern-s2-preview-35b', label: 'intern-s2-preview-35b', description: 'Intern-S2 35B High-Efficiency Scientific Agent' },
+      { id: 'internvl3.5-241b-a28b', label: 'internvl3.5-241b-a28b', description: 'InternVL 3.5 241B MoE Frontier Vision-Language Model' },
+      { id: 'intern-s1', label: 'intern-s1', description: 'Intern-S1 Scientific Reasoning & Chemistry/Physics Analysis' },
+      { id: 'intern-s1-pro', label: 'intern-s1-pro', description: 'Intern-S1 Pro Deep Logic & Extraction' },
+      { id: 'internlm3-latest', label: 'internlm3-latest', description: 'InternLM3 8B Latest General Instruct Model' },
+      { id: 'internlm2.5-latest', label: 'internlm2.5-latest', description: 'InternLM2.5 Workhorse Long-Context Reasoning' },
       { id: 'gemini-4-carbon', label: 'gemini-4-carbon', description: 'Google Gemini 4 Carbon (Frontier Reasoning Flagship)' },
       { id: 'gemini-4-argon', label: 'gemini-4-argon', description: 'Google Gemini 4 Argon (Optimized Frontier Intelligence)' },
       { id: 'gemini-4-hydrogen', label: 'gemini-4-hydrogen', description: 'Google Gemini 4 Hydrogen (Agentic & Daily Coding)' },

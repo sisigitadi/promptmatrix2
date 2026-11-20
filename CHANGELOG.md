@@ -1,5 +1,47 @@
 # Changelog - PromptMatrix 2.0
 
+## [7.5.0] - 2026-11-21
+### Integrasi Intern-Discovery AI & Studio Skill Editor Multi-Target
+- **Dukungan Provider Intern-Discovery (Shanghai AI Lab) (`services/aiSettingsService.ts`, `services/universalAIService.ts`, `components/AISettingsModal.tsx`)**:
+  - Menambahkan preset provider `internai` dan integrasi ke OpenAI-Compatible dengan Base API URL `https://discovery-api.intern-ai.org.cn/v1`.
+  - Mengatasi pembatasan browser CORS pada endpoint `/v1/models` (yang mengembalikan HTTP 405 pada preflight OPTIONS) dengan mendeteksi domain `intern-ai.org.cn` secara otomatis dan menyediakan daftar 11 model resmi: `intern-s2`, `intern-s2-preview-397b`, `intern-s2-preview-35b`, `internvl3.5-241b-a28b`, `intern-s1`, `intern-s1-pro`, `intern-s1-mini`, `internlm3-latest`, `internlm2.5-latest`, `internlm2.5-20b-chat`, dan `internlm2.5-7b-chat`.
+  - Auto-detection URL pada `AISettingsModal`: mendeteksi otomatis saat pengguna menempel URL `intern-ai.org.cn`, mengatur default model ke `intern-s2`, dan menampilkan pill panduan.
+  - Menambahkan chip cepat di modal pengaturan AI untuk `intern-s2`, `intern-s2-preview-397b`, dan `internvl3.5-241b-a28b`.
+- **Studio Skill Editor untuk 10 Flagship & Skill Kustom (`components/AgentSkillViewer.tsx`, `components/AgensiCatalogModal.tsx`, `data/flagshipSkillsData.ts`, `App.tsx`)**:
+  - Menambahkan **Skill Source Switcher** di bagian atas Studio (`AgentSkillViewer.tsx`) yang memungkinkan beralih instan antara: (a) Formula Studio Aktif, (b) 10 Paket Flagship bawaan, dan (c) Draf Skill Baru Mandiri (Custom Draft).
+  - Menambahkan tombol `[✏️ Edit di Studio]` pada setiap kartu paket di Tab 1 Katalog 10 Paket (`AgensiCatalogModal.tsx`) yang langsung membuka paket tersebut ke editor Studio.
+  - Menyediakan kolom formulir lengkap untuk keperluan upload marketplace & metadata Open Agent Skills:
+    - Nama Identifier Skill / Slug (`name` dalam format kebab-case valid dengan live validation badge dan tombol `✨ AI Suggest`).
+    - Kategori Pasar (`category`).
+    - Penulis / Pembuat (`author`).
+    - Versi SemVer (`version`).
+    - Lisensi (`license`).
+    - Instruksi Pemicu Aktivasi (`description` YAML frontmatter dengan batas 1024 karakter dan live counter).
+    - Judul Komersial, Tagline, Harga USD, Tag, Deskripsi Markdown, serta Live Demo (The Request & The Result).
+  - Menambahkan persistensi draft lokal (`localStorage` kunci `pm_skill_draft_<slug>`) dengan tombol `💾 Simpan Draf` dan `↺ Reset ke Bawaan`.
+  - Integrasi pembuatan paket ZIP: tombol unduh ZIP secara otomatis mengompilasi nama file `<slug>.zip` dan menyertakan frontmatter YAML serta isi markdown yang telah disunting.
+  - Menambahkan tombol cepat salin `SKILL.md` berdampingan dengan tombol unduh ZIP di Langkah 2.
+
+## [7.4.0] - 2026-11-19
+### Floating Sticky Header, Mesin SEO & GEO, serta Elaborasi Multi-Marketplace (Anti-Monopoli)
+- **Perbaikan Header Mengambang & Sticky (`styles.css`, `components/Header.tsx`)**:
+  - Mengganti `overflow-x: hidden` pada `html` dan `body` menjadi `overflow-x: clip`, memulihkan kapabilitas `position: sticky` tanpa memicu pembatasan scroll container browser.
+  - Menambahkan listener pasif `isScrolled`, border ring emerald dinamis, dan efek bayangan mengambang saat halaman digulir.
+- **Pemisahan Modal Paket Skill & Pengaturan AI (`components/AgensiCatalogModal.tsx`, `components/AISettingsModal.tsx`, `App.tsx`)**:
+  - Memisahkan modal Paket Skill dari modal Pengaturan Provider AI, memberikan alur kerja mandiri yang lebih mudah diakses dan dipahami pengguna.
+  - Menambahkan generator AI Suggestion terintegrasi untuk judul, tagline, deskripsi, dan demo skill.
+- **Peluncur Cepat AI Dapat Diciutkan (`components/BlankCanvasPane.tsx`, `components/FrameworkPane.tsx`)**:
+  - Menambahkan kontrol ciut/bentang untuk 34 peluncur cepat AI dengan status persistensi di `localStorage` (`pm_quick_launchers_expanded`).
+- **Mesin SEO & GEO untuk Produk & Live Demo (`services/skillZipService.ts`, `services/universalAIService.ts`, `components/AgentSkillViewer.tsx`)**:
+  - Menyematkan taksonomi tag berniat tinggi (`open-agent-skills`, `agent-skill`, `ai-agent`, runtimes `claude-code`, `cursor-rules`, `antigravity`).
+  - Menghasilkan Direct Definition Answer Capsule, Tabel Spesifikasi Teknis, dan 4 blok FAQ terstruktur.
+  - Menghasilkan Schema.org `SoftwareApplication` JSON-LD terverifikasi lengkap dengan tombol 1-klik salin Schema dan FAQ GEO.
+  - Menyediakan 4 indikator mutu SEO & GEO real-time di Langkah 1 formulir skill.
+- **Elaborasi Multi-Marketplace Anti-Monopoli (7 Toko Komersial + 1 OSS Lead Magnet)**:
+  - Format Switcher 5 Platform di Langkah 3 (`AgentSkillViewer.tsx`) untuk Universal, PromptBase, Storefront/MoR, GitHub OSS, dan Schema JSON-LD.
+  - Dashboard 7 Marketplace di Tab 3 (`AgensiCatalogModal.tsx`) untuk Gumroad, Lemon Squeezy, PromptBase, Whop, Creem.io, Payhip, dan Agensi.io.
+  - Matriks Komparasi 8 Platform di Tab 4 (`AgensiCatalogModal.tsx`) dan rekomendasi payout aman untuk kreator Indonesia.
+
 ## [7.2.1] - 2026-11-18
 ### Ekosistem Monetisasi Agensi.io (Model Hibrida), 10 Paket Skill `.zip` & Pabrik Ekspor 1-Klik
 - **Etalase Afiliasi Publik (`components/Header.tsx`, `components/TemplateGallery.tsx`, `components/AgensiSkillPromoCard.tsx`, `components/AgensiCatalogModal.tsx`)**:

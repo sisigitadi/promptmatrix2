@@ -39,7 +39,7 @@ export interface AgensiCatalogModalProps {
   hasActivePrompt?: boolean;
   onCopyActiveSkill?: () => void;
   onDownloadActiveSkill?: () => void;
-  onOpenSkillInStudio?: () => void;
+  onOpenSkillInStudio?: (slug?: string) => void;
   onCopyText?: (text: string, toastMessage?: string) => void | Promise<void>;
   onOpenAiSettings?: () => void;
 }
@@ -766,6 +766,21 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
                             >
                               <span>{isCopied ? `✓ ${t('copied_btn')}` : t('copy_listing_btn')}</span>
                             </button>
+
+                            {onOpenSkillInStudio && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  onOpenSkillInStudio(pack.slug);
+                                  onClose();
+                                }}
+                                className="min-h-[44px] sm:min-h-[34px] px-2.5 py-1 rounded-lg bg-indigo-950/70 hover:bg-indigo-900 border border-indigo-700/80 text-indigo-200 text-xs font-semibold transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                                title={language === 'id' ? 'Buka dan edit paket ini di Studio' : 'Open and edit this pack in Studio'}
+                              >
+                                <span>✏️</span>
+                                <span>{t('edit_in_studio_btn')}</span>
+                              </button>
+                            )}
 
                             <button
                               type="button"

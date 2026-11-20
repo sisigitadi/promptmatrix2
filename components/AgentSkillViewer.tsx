@@ -5,6 +5,7 @@ import {
   AgentSkillSpec,
   SkillValidationResult,
   auditSkillMarketReadiness,
+  validateAgentSkillSpec,
 } from '../services/agentSkillService';
 import {
   buildAgensiListingCopy,
@@ -13,6 +14,7 @@ import {
 } from '../services/skillZipService';
 import { suggestSkillMetadataWithUniversalAI } from '../services/universalAIService';
 import { isAIConfigured } from '../services/aiSettingsService';
+import { FLAGSHIP_SKILLS_DATA } from '../data/flagshipSkillsData';
 
 export interface SkillListingOverrides {
   readonly tagline?: string;
@@ -41,6 +43,9 @@ export interface AgentSkillViewerProps {
   onExpand?: () => void;
   onOpenAiSettings?: () => void;
   onAiSuggestToast?: (msg: string, type: 'success' | 'error' | 'info') => void;
+  selectedSkillSlug?: string | null;
+  onSelectSkillSlug?: (slug: string | null) => void;
+  selectedFrameworkName?: string | null;
 }
 
 type CreatorStep = 'info' | 'test' | 'sell';
@@ -338,6 +343,9 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   onExpand,
   onOpenAiSettings,
   onAiSuggestToast,
+  selectedSkillSlug,
+  onSelectSkillSlug,
+  selectedFrameworkName,
 }) => {
   const { t, language } = useLanguage();
   const isId = language === 'id';
@@ -352,7 +360,140 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   const [aiSuggestingField, setAiSuggestingField] = useState<string | null>(null);
   const [marketFormatTab, setMarketFormatTab] = useState<'universal' | 'promptbase' | 'storefront' | 'oss' | 'jsonld'>('universal');
 
-  // Local editable draft overrides (null means "use auto-compiled listingCopy default")
+  // Active skill source resolution: current formula, one of 10 flagships, or custom draft
+  const activeSourceSlug = selectedSkillSlug || 'current_formula';
+  const flagshipPacks = useMemo(() => Object.values(FLAGSHIP_SKILLS_DATA), []);
+
+  const baseRecord = useMemo(() => {
+    if (activeSourceSlug && activeSourceSlug !== 'current_formula' && activeSourceSlug !== 'custom_new' && FLAGSHIP_SKILLS_DATA[activeSourceSlug]) {
+      const f = FLAGSHIP_SKILLS_DATA[activeSourceSlug];
+      return {
+        name: f.name,
+        title: f.title,
+        category: f.category,
+        priceUsd: f.priceUsd,
+        tagline: f.tagline,
+        tags: f.tags,
+        demoRequest: f.demoRequest,
+        demoResult: f.demoResult,
+        rawMarkdown: f.rawMarkdown,
+        author: f.spec.metadata.author,
+        version: f.spec.metadata.version,
+        license: f.spec.license,
+        compatibility: f.spec.compatibility,
+        description: f.spec.description,
+        body: f.spec.body,
+        spec: f.spec,
+      };
+    }
+
+    if (activeSourceSlug === 'custom_new') {
+      const defaultDesc = isId
+        ? 'Mengeksekusi workflow domain kustom, kontrak tugas deterministik, dan prompt operasional. Aktifkan saat diminta pengguna atau pipeline otomatis.'
+        : 'Executes custom domain workflows, deterministic task contracts, and operational prompts. Activate when prompted by user request or automated pipeline.';
+
+      const defaultBody = [
+        '# Custom Agent Skill',
+        '',
+        isId
+          ? 'Ubah alur kerja domain khusus menjadi spesifikasi prompt dan kontrak agen yang deterministik dan dapat diuji.'
+          : 'Turn custom domain workflows into deterministic, testable prompt specifications and agent contracts.',
+        '',
+        '## When to Activate',
+        '',
+        isId
+          ? '- Mengonversi instruksi ambigu menjadi alur kerja agen yang terstruktur.\n- Menjalankan tugas operasional multi-langkah dengan verifikasi ketat.'
+          : '- Converting ambiguous instructions into structured agent workflows.\n- Executing multi-step operational tasks with explicit verification checks.',
+        '',
+        '## Step 1: Execution Instructions',
+        '',
+        isId
+          ? 'Kumpulkan konteks masukan dan terapkan aturan batasan bernomor sebelum menyusun hasil akhir.'
+          : 'Assemble task context and apply numbered hard constraints before generating final output.',
+        '',
+        '## Verification Checklist',
+        '',
+        isId
+          ? '- [ ] Masukan diisolasi dari input yang tidak tepercaya.\n- [ ] Keluaran sesuai skema yang diminta tanpa kesalahan parse.'
+          : '- [ ] Input payload is isolated from untrusted input.\n- [ ] Output conforms to required schema with zero parse errors.',
+      ].join('\n');
+
+      const customSpec: AgentSkillSpec = {
+        name: 'custom-agent-skill',
+        description: defaultDesc,
+        license: 'MIT',
+        compatibility: 'Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and Open Agent Skills compatible runtimes',
+        metadata: {
+          author: 'Sigit Adi (PromptMatrix)',
+          version: '1.0.0',
+          source: 'PromptMatrix 2.0 Studio',
+          category: 'General',
+          language,
+          framework: 'Custom Agent Skill',
+        },
+        body: defaultBody,
+        sections: {
+          roleAndTrigger: defaultDesc,
+          inputParameters: 'custom-parameters',
+          executionSteps: isId ? '1. Parse input\n2. Eksekusi alur\n3. Verifikasi checklist' : '1. Parse input\n2. Execute workflow\n3. Verify checklist',
+          verificationChecklist: 'Standard Open Agent Skills Quality Gateway',
+        },
+      };
+
+      return {
+        name: 'custom-agent-skill',
+        title: 'Custom Agent Skill',
+        category: 'General',
+        priceUsd: 9.99,
+        tagline: isId
+          ? 'Agent skill otonom untuk alur kerja kustom dan eksekusi tugas deterministik.'
+          : 'Autonomous agent skill for custom domain workflows and deterministic execution.',
+        tags: ['agent-skill', 'workflow', 'automation', 'productivity'] as readonly string[],
+        demoRequest: isId
+          ? 'Jalankan alur kerja kustom untuk spesifikasi proyek saya.'
+          : 'Execute custom agent workflow for my project specifications.',
+        demoResult: isId
+          ? '## Summary\nBerhasil mengeksekusi alur kerja kustom tanpa kesalahan parse.\n\n### Hasil Pekerjaan\n- Seluruh checklist verifikasi terpenuhi dengan baik.\n\n## Next Steps\nJalankan smoke test pada runner agen.'
+          : '## Summary\nExecuted custom workflow cleanly with zero parse errors.\n\n### Deliverables\n- Verification checklist verified.\n\n## Next Steps\nRun smoke test on agent runner.',
+        rawMarkdown: defaultBody,
+        author: 'Sigit Adi (PromptMatrix)',
+        version: '1.0.0',
+        license: 'MIT',
+        compatibility: 'Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity, and Open Agent Skills compatible runtimes',
+        description: defaultDesc,
+        body: defaultBody,
+        spec: customSpec,
+      };
+    }
+
+    // Default: active studio formula
+    return {
+      name: skillSpec.name,
+      title: skillSpec.metadata.framework || skillSpec.name,
+      category: skillSpec.metadata.category || 'General',
+      priceUsd: listingOverrides?.priceUsd,
+      tagline: listingOverrides?.tagline,
+      tags: listingOverrides?.tags,
+      demoRequest: listingOverrides?.demoRequest,
+      demoResult: listingOverrides?.demoResult,
+      rawMarkdown: skillMarkdown,
+      author: skillSpec.metadata.author,
+      version: skillSpec.metadata.version,
+      license: skillSpec.license,
+      compatibility: skillSpec.compatibility,
+      description: skillSpec.description,
+      body: skillSpec.body,
+      spec: skillSpec,
+    };
+  }, [activeSourceSlug, skillSpec, skillMarkdown, listingOverrides, language, isId]);
+
+  // Local editable draft overrides (null means "use auto-compiled base default")
+  const [editedSkillName, setEditedSkillName] = useState<string | null>(null);
+  const [editedCategory, setEditedCategory] = useState<string | null>(null);
+  const [editedAuthor, setEditedAuthor] = useState<string | null>(null);
+  const [editedVersion, setEditedVersion] = useState<string | null>(null);
+  const [editedLicense, setEditedLicense] = useState<string | null>(null);
+  const [editedTriggerDesc, setEditedTriggerDesc] = useState<string | null>(null);
   const [editedTitle, setEditedTitle] = useState<string | null>(null);
   const [editedTagline, setEditedTagline] = useState<string | null>(null);
   const [editedPriceStr, setEditedPriceStr] = useState<string | null>(null);
@@ -364,7 +505,41 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   const prevReqRef = useRef<string | undefined>(listingOverrides?.demoRequest);
   const prevResRef = useRef<string | undefined>(listingOverrides?.demoResult);
 
+  const draftStorageKey = `pm_skill_draft_${activeSourceSlug}`;
+
+  // Sync draft from localStorage when switching skills or when base formula changes
   useEffect(() => {
+    try {
+      const raw = localStorage.getItem(draftStorageKey);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          setEditedSkillName(parsed.name ?? null);
+          setEditedCategory(parsed.category ?? null);
+          setEditedAuthor(parsed.author ?? null);
+          setEditedVersion(parsed.version ?? null);
+          setEditedLicense(parsed.license ?? null);
+          setEditedTriggerDesc(parsed.triggerDesc ?? null);
+          setEditedTitle(parsed.title ?? null);
+          setEditedTagline(parsed.tagline ?? null);
+          setEditedPriceStr(parsed.priceStr ?? null);
+          setEditedTagsStr(parsed.tagsStr ?? null);
+          setEditedDescMd(parsed.descMd ?? null);
+          setEditedDemoRequest(parsed.demoRequest ?? null);
+          setEditedDemoResult(parsed.demoResult ?? null);
+          return;
+        }
+      }
+    } catch (e) {
+      console.error('Failed to parse skill draft:', e);
+    }
+
+    setEditedSkillName(null);
+    setEditedCategory(null);
+    setEditedAuthor(null);
+    setEditedVersion(null);
+    setEditedLicense(null);
+    setEditedTriggerDesc(null);
     setEditedTitle(null);
     setEditedTagline(null);
     setEditedPriceStr(null);
@@ -372,7 +547,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     setEditedDescMd(null);
     setEditedDemoRequest(null);
     setEditedDemoResult(null);
-  }, [skillSpec.name]);
+  }, [activeSourceSlug, skillSpec.name, draftStorageKey]);
 
   useEffect(() => {
     if (listingOverrides?.demoRequest !== prevReqRef.current) {
@@ -392,33 +567,89 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     }
   }, [listingOverrides?.demoResult]);
 
+  const effectiveName = useMemo(() => {
+    const raw = (editedSkillName ?? baseRecord.name).trim().toLowerCase();
+    return raw.replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '') || 'agent-skill';
+  }, [editedSkillName, baseRecord.name]);
+
+  const effectiveTitle = editedTitle ?? baseRecord.title;
+  const effectiveCategory = editedCategory ?? baseRecord.category;
+  const effectiveAuthor = editedAuthor ?? baseRecord.author;
+  const effectiveVersion = editedVersion ?? baseRecord.version;
+  const effectiveLicense = editedLicense ?? baseRecord.license;
+  const effectiveTriggerDesc = editedTriggerDesc ?? baseRecord.description;
+  const effectiveBody = editedDescMd ?? baseRecord.body;
+
+  const activeSpec: AgentSkillSpec = useMemo(() => {
+    return {
+      ...baseRecord.spec,
+      name: effectiveName,
+      description: effectiveTriggerDesc,
+      license: effectiveLicense,
+      metadata: {
+        ...baseRecord.spec.metadata,
+        author: effectiveAuthor,
+        version: effectiveVersion,
+        category: effectiveCategory,
+        framework: effectiveTitle || effectiveName,
+      },
+      body: effectiveBody,
+    };
+  }, [baseRecord.spec, effectiveName, effectiveTriggerDesc, effectiveLicense, effectiveAuthor, effectiveVersion, effectiveCategory, effectiveTitle, effectiveBody]);
+
+  const activeSkillMarkdown: string = useMemo(() => {
+    const cleanDesc = effectiveTriggerDesc.replace(/\r?\n/g, ' ').replace(/"/g, '\\"');
+    return [
+      '---',
+      `name: ${effectiveName}`,
+      `description: "${cleanDesc}"`,
+      `license: ${effectiveLicense}`,
+      `compatibility: ${activeSpec.compatibility}`,
+      'metadata:',
+      `  author: "${effectiveAuthor}"`,
+      `  version: "${effectiveVersion}"`,
+      `  category: "${effectiveCategory}"`,
+      '---',
+      '',
+      effectiveBody.trim(),
+      '',
+    ].join('\n');
+  }, [effectiveName, effectiveTriggerDesc, effectiveLicense, activeSpec.compatibility, effectiveAuthor, effectiveVersion, effectiveCategory, effectiveBody]);
+
+  const activeValidation: SkillValidationResult = useMemo(() => {
+    return validateAgentSkillSpec(activeSpec);
+  }, [activeSpec]);
+
+  const nameRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+  const isNameValid = effectiveName.length >= 3 && effectiveName.length <= 64 && nameRegex.test(effectiveName);
+
   const listingCopy = useMemo(
     () =>
       buildAgensiListingCopy({
-        slug: skillSpec.name,
-        title: skillSpec.metadata.framework || skillSpec.name,
-        description: skillSpec.description,
-        category: skillSpec.metadata.category || 'General',
-        priceUsd: listingOverrides?.priceUsd,
+        slug: effectiveName,
+        title: effectiveTitle,
+        description: effectiveTriggerDesc,
+        category: effectiveCategory,
+        priceUsd: baseRecord.priceUsd,
         includedFiles: ZIP_BUNDLE_FILE_TREE,
         language,
-        tagline: listingOverrides?.tagline,
-        tags: listingOverrides?.tags,
-        demoRequest: listingOverrides?.demoRequest,
-        demoResult: listingOverrides?.demoResult,
-        compiledPrompt,
-        formValues,
+        tagline: baseRecord.tagline,
+        tags: baseRecord.tags,
+        demoRequest: baseRecord.demoRequest,
+        demoResult: baseRecord.demoResult,
+        compiledPrompt: activeSourceSlug === 'current_formula' ? compiledPrompt : undefined,
+        formValues: activeSourceSlug === 'current_formula' ? formValues : undefined,
       }),
-    [skillSpec, language, listingOverrides, compiledPrompt, formValues]
+    [effectiveName, effectiveTitle, effectiveTriggerDesc, effectiveCategory, baseRecord, language, activeSourceSlug, compiledPrompt, formValues]
   );
 
   const activeTitle = editedTitle ?? listingCopy.title;
   const activeTagline = editedTagline ?? listingCopy.tagline;
-  const activePriceStr = editedPriceStr ?? listingCopy.recommendedPriceUsd.toFixed(2);
-  const activeTagsStr = editedTagsStr ?? listingCopy.tags.join(', ');
-  const activeDescMd = editedDescMd ?? listingCopy.descriptionMarkdown;
-  const activeDemoRequest = editedDemoRequest ?? listingCopy.demoRequest;
-  const activeDemoResult = editedDemoResult ?? listingCopy.demoResult;
+  const activePriceStr = editedPriceStr ?? (baseRecord.priceUsd !== undefined ? baseRecord.priceUsd.toFixed(2) : listingCopy.recommendedPriceUsd.toFixed(2));
+  const activeTagsStr = editedTagsStr ?? (baseRecord.tags ? baseRecord.tags.join(', ') : listingCopy.tags.join(', '));
+  const activeDescMd = editedDescMd ?? (baseRecord.rawMarkdown || listingCopy.descriptionMarkdown);
+  const activeDemoRequest = editedDemoRequest ?? (baseRecord.demoRequest || listingCopy.demoRequest);
+  const activeDemoResult = editedDemoResult ?? (baseRecord.demoResult || listingCopy.demoResult);
 
   const activeTagsList = useMemo(() => {
     return activeTagsStr
@@ -439,14 +670,61 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
 
   const auditResult = useMemo(
     () =>
-      auditSkillMarketReadiness(skillSpec, {
+      auditSkillMarketReadiness(activeSpec, {
         tagline: activeTagline,
         tags: activeTagsList,
         demoRequest: activeDemoRequest,
         demoResult: activeDemoResult,
       }),
-    [skillSpec, activeTagline, activeTagsList, activeDemoRequest, activeDemoResult]
+    [activeSpec, activeTagline, activeTagsList, activeDemoRequest, activeDemoResult]
   );
+
+  const handleSaveDraft = () => {
+    try {
+      const draftPayload = {
+        name: effectiveName,
+        category: effectiveCategory,
+        author: effectiveAuthor,
+        version: effectiveVersion,
+        license: effectiveLicense,
+        triggerDesc: effectiveTriggerDesc,
+        title: activeTitle,
+        tagline: activeTagline,
+        priceStr: activePriceStr,
+        tagsStr: activeTagsStr,
+        descMd: activeDescMd,
+        demoRequest: activeDemoRequest,
+        demoResult: activeDemoResult,
+        savedAt: Date.now(),
+      };
+      localStorage.setItem(draftStorageKey, JSON.stringify(draftPayload));
+      onAiSuggestToast?.(t('toast_skill_draft_saved'), 'success');
+    } catch (e) {
+      console.error('Failed to save skill draft:', e);
+    }
+  };
+
+  const handleResetDraft = () => {
+    try {
+      localStorage.removeItem(draftStorageKey);
+      setEditedSkillName(null);
+      setEditedCategory(null);
+      setEditedAuthor(null);
+      setEditedVersion(null);
+      setEditedLicense(null);
+      setEditedTriggerDesc(null);
+      setEditedTitle(null);
+      setEditedTagline(null);
+      setEditedPriceStr(null);
+      setEditedTagsStr(null);
+      setEditedDescMd(null);
+      setEditedDemoRequest(null);
+      setEditedDemoResult(null);
+      onAiSuggestToast?.(t('toast_skill_draft_reset'), 'info');
+    } catch (e) {
+      console.error('Failed to reset skill draft:', e);
+    }
+  };
 
   const failedAuditChecks = useMemo(
     () => auditResult.checks.filter((check) => !check.passed),
@@ -489,8 +767,8 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
 
   const handleDownloadZip = () => {
     const bundle = buildFormulaSkillZipBundle({
-      skillSpec,
-      skillMarkdown,
+      skillSpec: activeSpec,
+      skillMarkdown: activeSkillMarkdown,
       formValues,
       customOtherValues,
       compiledPrompt,
@@ -510,7 +788,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   };
 
   const handleAiSuggestSkill = async (
-    field: 'all' | 'title' | 'tagline' | 'tags' | 'description' | 'demoRequest' | 'demoResult'
+    field: 'all' | 'name' | 'title' | 'tagline' | 'tags' | 'description' | 'demoRequest' | 'demoResult'
   ) => {
     if (!isAIConfigured()) {
       onAiSuggestToast?.(t('toast_need_ai_setup'), 'info');
@@ -521,8 +799,8 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     setAiSuggestingField(field);
     try {
       const res = await suggestSkillMetadataWithUniversalAI({
-        skillName: skillSpec.name,
-        frameworkName: activeTitle || skillSpec.name,
+        skillName: effectiveName,
+        frameworkName: activeTitle || effectiveName,
         compiledPrompt,
         field,
         existingTitle: activeTitle,
@@ -531,7 +809,9 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
         language,
       });
 
-      if (field === 'title' && res.title) {
+      if (field === 'name' && res.name) {
+        setEditedSkillName(res.name.toLowerCase().replace(/[^a-z0-9-]+/g, '-'));
+      } else if (field === 'title' && res.title) {
         setEditedTitle(res.title);
       } else if (field === 'tagline' && res.tagline) {
         setEditedTagline(res.tagline);
@@ -546,6 +826,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
         setEditedDemoResult(res.demoResult);
         onUpdateDemoFields?.({ demoResult: res.demoResult });
       } else if (field === 'all') {
+        if (res.name) setEditedSkillName(res.name.toLowerCase().replace(/[^a-z0-9-]+/g, '-'));
         if (res.title) setEditedTitle(res.title);
         if (res.tagline) setEditedTagline(res.tagline);
         if (res.tags) setEditedTagsStr(res.tags.join(', '));
@@ -591,8 +872,8 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   const focusRingClass =
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500';
 
-  const resolvedWinPath = currentRunner.windowsPath.replace(/<slug>/g, skillSpec.name);
-  const resolvedUnixPath = currentRunner.unixPath.replace(/<slug>/g, skillSpec.name);
+  const resolvedWinPath = currentRunner.windowsPath.replace(/<slug>/g, activeSpec.name);
+  const resolvedUnixPath = currentRunner.unixPath.replace(/<slug>/g, activeSpec.name);
   const validateCmd = 'node scripts/validate-output.mjs templates/sample-input.json';
 
   return (
@@ -613,7 +894,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
               </span>
               <span
                 className={`px-2 py-0.5 rounded-md font-mono text-[10px] font-semibold border ${
-                  validation.valid
+                  activeValidation.valid
                     ? isLightTheme
                       ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
                       : 'bg-emerald-500/15 border-emerald-500/35 text-emerald-300'
@@ -627,9 +908,9 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
             </div>
             <p
               className={`text-[11px] font-mono break-all ${accentTextClass}`}
-              title={`${skillSpec.name}.zip`}
+              title={`${activeSpec.name}.zip`}
             >
-              {skillSpec.name}.zip
+              {activeSpec.name}.zip
             </p>
           </div>
 
@@ -670,8 +951,8 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           <div className={`p-3 rounded-xl border space-y-2 text-xs leading-relaxed ${cardClass}`}>
             <p className={`font-semibold ${labelTextClass}`}>
               {isId
-                ? 'Cara Kerja: Prompt yang Anda susun di panel kiri otomatis dibungkus menjadi produk Agent Skill siap jual (.zip) + Teks Listing Marketplace.'
-                : 'How it works: Your prompt on the left is automatically packaged into a sellable Agent Skill (.zip) plus ready-to-paste marketplace listing copy.'}
+                ? 'Cara Kerja: Formula prompt atau paket skill di studio otomatis dibungkus menjadi produk Agent Skill siap jual (.zip) + Teks Listing Marketplace.'
+                : 'How it works: Studio formulas or packaged skills are automatically bundled into sellable Agent Skill packages (.zip) plus ready-to-paste marketplace copy.'}
             </p>
             <ol className={`list-decimal pl-4 space-y-1 text-[11px] ${bodyTextClass}`}>
               <li>
@@ -679,8 +960,8 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   {isId ? 'Langkah 1 (Info & Demo):' : 'Step 1 (Info & Demo):'}
                 </strong>{' '}
                 {isId
-                  ? 'Sesuaikan Judul, Harga, Deskripsi, dan Contoh Hasil (Request & Result) agar meyakinkan calon pembeli.'
-                  : 'Adjust Title, Price, Description, and a real Request + Result demo so buyers see exact value.'}
+                  ? 'Sesuaikan Nama Skill, Judul, Kategori, Harga, Deskripsi, dan Contoh Hasil (Request & Result) agar meyakinkan calon pembeli.'
+                  : 'Adjust Skill Name, Title, Category, Price, Description, and a real Request + Result demo so buyers see exact value.'}
               </li>
               <li>
                 <strong className={labelTextClass}>
@@ -701,6 +982,65 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
             </ol>
           </div>
         )}
+      </div>
+
+      {/* Skill Source Switcher Bar & Local Draft Controls */}
+      <div className={`p-2.5 sm:p-3 rounded-xl border space-y-2 ${insetBoxClass}`}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 min-w-0">
+          <label className="flex items-center gap-2 min-w-0 flex-1">
+            <span className={`text-[11px] font-bold shrink-0 ${labelTextClass}`}>
+              {t('skill_editor_source_label')}
+            </span>
+            <select
+              value={activeSourceSlug}
+              onChange={(e) => {
+                const val = e.target.value;
+                onSelectSkillSlug?.(val === 'current_formula' ? null : val);
+              }}
+              className={`h-9 px-2.5 rounded-xl border text-xs font-semibold truncate transition-colors flex-1 ${inputClass} ${focusRingClass}`}
+            >
+              <option value="current_formula">
+                ⚡ {t('skill_editor_formula_option')}{selectedFrameworkName ? `: ${selectedFrameworkName}` : ''}
+              </option>
+              <optgroup label={t('skill_editor_flagship_group')}>
+                {flagshipPacks.map((pack) => (
+                  <option key={pack.slug} value={pack.slug}>
+                    📦 {pack.title} ({pack.slug})
+                  </option>
+                ))}
+              </optgroup>
+              <option value="custom_new">
+                ✨ {t('skill_editor_custom_option')}
+              </option>
+            </select>
+          </label>
+
+          <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-auto">
+            <button
+              type="button"
+              onClick={handleSaveDraft}
+              className={`h-9 px-3 rounded-xl border text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-sm ${
+                isLightTheme
+                  ? 'bg-emerald-50 border-emerald-300 text-emerald-800 hover:bg-emerald-100'
+                  : 'bg-emerald-950/40 border-emerald-600/50 text-emerald-300 hover:bg-emerald-900/60'
+              } ${focusRingClass}`}
+              title={isId ? 'Simpan draf isian skill ini ke browser lokal' : 'Save this skill draft to local browser storage'}
+            >
+              <span>💾</span>
+              <span>{t('skill_btn_save_draft')}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleResetDraft}
+              className={`h-9 px-3 rounded-xl border text-xs font-semibold transition-colors flex items-center gap-1.5 ${secondaryBtnClass} ${focusRingClass}`}
+              title={isId ? 'Kembalikan isian draf ke nilai awal bawaan' : 'Reset draft fields to default'}
+            >
+              <span>↺</span>
+              <span>{t('skill_btn_reset_draft')}</span>
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* 3-Step Switcher Navigation (Always fits cleanly without crowding) */}
@@ -845,8 +1185,120 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
             </div>
 
             <h4 className={`text-xs font-bold uppercase tracking-wider ${accentTextClass}`}>
-              {isId ? 'Profil Produk' : 'Product Profile'}
+              {isId ? 'Profil Produk & Metadata Listing' : 'Product Profile & Listing Metadata'}
             </h4>
+
+            {/* Marketplace Identifier & YAML Spec Fields */}
+            <div className="space-y-3 p-3 rounded-xl border border-dashed border-emerald-500/30 bg-emerald-950/10">
+              <label className="space-y-1 block min-w-0">
+                <div className="flex items-center justify-between gap-1">
+                  <div className="flex items-center gap-2">
+                    <span className={`text-[11px] font-semibold block ${labelTextClass}`}>
+                      {t('skill_field_name')}
+                    </span>
+                    <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold border ${
+                      isNameValid
+                        ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300'
+                        : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+                    }`}>
+                      {isNameValid ? '✓ kebab-case' : 'kebab-case required'}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleAiSuggestSkill('name')}
+                    disabled={Boolean(aiSuggestingField)}
+                    className="text-[10px] font-semibold text-emerald-400 hover:underline flex items-center gap-1 disabled:opacity-50"
+                  >
+                    <span>✨ {aiSuggestingField === 'name' ? '...' : t('ai_suggest_btn')}</span>
+                  </button>
+                </div>
+                <input
+                  type="text"
+                  value={effectiveName}
+                  onChange={(e) => setEditedSkillName(e.target.value.toLowerCase().replace(/\s+/g, '-'))}
+                  placeholder="contoh: code-review-architect"
+                  maxLength={64}
+                  className={`w-full min-h-[42px] px-3 py-1.5 rounded-xl border text-xs font-mono font-bold ${focusRingClass} ${inputClass}`}
+                />
+                <p className={`text-[10px] ${mutedTextClass}`}>
+                  {t('skill_field_name_hint')} ({effectiveName.length}/64)
+                </p>
+              </label>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+                <label className="space-y-1 block min-w-0">
+                  <span className={`text-[11px] font-semibold block ${labelTextClass}`}>
+                    {t('skill_field_category')}
+                  </span>
+                  <input
+                    type="text"
+                    value={effectiveCategory}
+                    onChange={(e) => setEditedCategory(e.target.value)}
+                    placeholder="General"
+                    className={`w-full min-h-[42px] px-3 py-1.5 rounded-xl border text-xs font-medium ${focusRingClass} ${inputClass}`}
+                  />
+                </label>
+
+                <label className="space-y-1 block min-w-0">
+                  <span className={`text-[11px] font-semibold block ${labelTextClass}`}>
+                    {t('skill_field_author')}
+                  </span>
+                  <input
+                    type="text"
+                    value={effectiveAuthor}
+                    onChange={(e) => setEditedAuthor(e.target.value)}
+                    placeholder="Sigit Adi"
+                    className={`w-full min-h-[42px] px-3 py-1.5 rounded-xl border text-xs font-medium ${focusRingClass} ${inputClass}`}
+                  />
+                </label>
+
+                <label className="space-y-1 block min-w-0">
+                  <span className={`text-[11px] font-semibold block ${labelTextClass}`}>
+                    {t('skill_field_version')}
+                  </span>
+                  <input
+                    type="text"
+                    value={effectiveVersion}
+                    onChange={(e) => setEditedVersion(e.target.value)}
+                    placeholder="1.0.0"
+                    className={`w-full min-h-[42px] px-3 py-1.5 rounded-xl border text-xs font-mono ${focusRingClass} ${inputClass}`}
+                  />
+                </label>
+
+                <label className="space-y-1 block min-w-0">
+                  <span className={`text-[11px] font-semibold block ${labelTextClass}`}>
+                    {t('skill_field_license')}
+                  </span>
+                  <input
+                    type="text"
+                    value={effectiveLicense}
+                    onChange={(e) => setEditedLicense(e.target.value)}
+                    placeholder="MIT"
+                    className={`w-full min-h-[42px] px-3 py-1.5 rounded-xl border text-xs font-mono ${focusRingClass} ${inputClass}`}
+                  />
+                </label>
+              </div>
+
+              <label className="space-y-1 block min-w-0">
+                <div className="flex items-center justify-between gap-1">
+                  <span className={`text-[11px] font-semibold block ${labelTextClass}`}>
+                    {t('skill_field_trigger_desc')}
+                  </span>
+                  <span className={`text-[10px] font-mono ${effectiveTriggerDesc.length <= 1024 ? 'text-emerald-400' : 'text-rose-400 font-bold'}`}>
+                    {effectiveTriggerDesc.length}/1024
+                  </span>
+                </div>
+                <textarea
+                  rows={2}
+                  value={effectiveTriggerDesc}
+                  onChange={(e) => setEditedTriggerDesc(e.target.value)}
+                  placeholder={isId ? 'Jelaskan peran skill dan kapan agen AI harus mengaktifkannya...' : 'Describe skill role and when the AI agent should activate it...'}
+                  maxLength={1024}
+                  className={`w-full px-3 py-2 rounded-xl border text-xs font-mono leading-relaxed resize-y ${focusRingClass} ${inputClass}`}
+                />
+              </label>
+            </div>
 
             <div className={isExpanded ? 'grid grid-cols-1 md:grid-cols-2 gap-3' : 'space-y-3'}>
               <label className="space-y-1 block min-w-0">
@@ -1170,18 +1622,35 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
               ))}
             </ul>
 
-            <button
-              type="button"
-              onClick={handleDownloadZip}
-              className={`w-full min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-600 text-white shadow-sm flex items-center justify-center gap-2 transition-colors ${focusRingClass}`}
-            >
-              <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              <span>
-                {t('skill_download_bundle_btn')} ({skillSpec.name}.zip)
-              </span>
-            </button>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={handleDownloadZip}
+                className={`w-full min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-600 text-white shadow-sm flex items-center justify-center gap-2 transition-colors ${focusRingClass}`}
+              >
+                <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                <span>
+                  {t('skill_download_bundle_btn')} ({activeSpec.name}.zip)
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleCopyField('skill_md_copy', activeSkillMarkdown)}
+                className={`w-full min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold border transition-colors flex items-center justify-center gap-2 ${focusRingClass} ${
+                  copiedKey === 'skill_md_copy'
+                    ? 'bg-emerald-700 border-emerald-600 text-white'
+                    : secondaryBtnClass
+                }`}
+              >
+                <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                <span>{copiedKey === 'skill_md_copy' ? `✓ ${t('copied_btn')}` : t('copy_skill_btn')}</span>
+              </button>
+            </div>
           </div>
 
           {/* Local Smoke Test Guide */}
@@ -1857,14 +2326,14 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                 {isId ? 'Lihat Kode Mentah SKILL.md (Opsional)' : 'Inspect Raw SKILL.md Source (Optional)'}
               </span>
               <span className={`text-[10px] font-mono ${mutedTextClass}`}>
-                {skillMarkdown.split('\n').length} {isId ? 'baris' : 'lines'}
+                {activeSkillMarkdown.split('\n').length} {isId ? 'baris' : 'lines'}
               </span>
             </summary>
 
             <pre
               className={`mt-3 p-3 rounded-xl border text-[11px] font-mono overflow-x-auto leading-relaxed max-h-[360px] select-all ${insetBoxClass}`}
             >
-              <code>{skillMarkdown}</code>
+              <code>{activeSkillMarkdown}</code>
             </pre>
           </details>
 
