@@ -8,6 +8,7 @@ import {
   removeAISettings,
   sanitizeApiKey,
   detectKeyProviderMismatch,
+  inferProviderFromUrlAndModel,
 } from '../services/aiSettingsService';
 import { testAIConnection, fetchModelsFromEndpoint } from '../services/universalAIService';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -346,9 +347,15 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
               value={settings.baseUrl}
               onChange={(e) => {
                 const newUrl = e.target.value;
-                const isInternAi = newUrl.includes('intern-ai.org.cn');
-                if (isInternAi && settings.provider === 'custom' && (!settings.model || settings.model === 'local-model')) {
-                  setSettings({ ...settings, baseUrl: newUrl, model: 'intern-s2' });
+                const detected = inferProviderFromUrlAndModel(settings.provider, newUrl, settings.model);
+                if (detected !== settings.provider) {
+                  const preset = AI_PROVIDER_PRESETS[detected];
+                  setSettings((prev) => ({
+                    ...prev,
+                    provider: detected,
+                    baseUrl: newUrl,
+                    model: prev.model && prev.model !== 'gemini-4-carbon' ? prev.model : preset.defaultModel,
+                  }));
                 } else {
                   setSettings({ ...settings, baseUrl: newUrl });
                 }
@@ -358,7 +365,7 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
             />
             {settings.baseUrl.includes('intern-ai.org.cn') && (
               <div className="p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-[11px] text-emerald-300 flex items-center justify-between gap-2">
-                <span>✨ Terdeteksi endpoint Intern-Discovery (书生·端砚 - Shanghai AI Lab). 11 model riset resmi (Agents-A1, Sage-S2.1-Flash, Intern-S2, DeepSeek-V4.1-Flash, Kimi-K3.1-Pro) siap digunakan.</span>
+                <span>✨ Terdeteksi endpoint Intern-Discovery (书生·端砚 - Shanghai AI Lab). Provider: <strong>{currentPreset.name}</strong>. 11 model riset resmi aktif.</span>
                 <button
                   type="button"
                   onClick={handleFetchServerModels}
@@ -445,7 +452,19 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                   <input
                     type="text"
                     value={settings.model}
-                    onChange={(e) => setSettings({ ...settings, model: e.target.value })}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const detected = inferProviderFromUrlAndModel(settings.provider, settings.baseUrl, val);
+                      if (detected !== settings.provider && val.trim().length > 3) {
+                        setSettings((prev) => ({
+                          ...prev,
+                          provider: detected,
+                          model: val,
+                        }));
+                      } else {
+                        setSettings({ ...settings, model: val });
+                      }
+                    }}
                     placeholder={
                       language === 'id'
                         ? 'Ketik nama model AI (misal: Agents-A1, Sage-S2.1-Flash, intern-s2)'
@@ -499,7 +518,18 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                       <button
                         type="button"
                         key={chip}
-                        onClick={() => setSettings({ ...settings, model: chip })}
+                        onClick={() => {
+                          const detected = inferProviderFromUrlAndModel(settings.provider, settings.baseUrl, chip);
+                          if (detected !== settings.provider) {
+                            setSettings((prev) => ({
+                              ...prev,
+                              provider: detected,
+                              model: chip,
+                            }));
+                          } else {
+                            setSettings((prev) => ({ ...prev, model: chip }));
+                          }
+                        }}
                         className={`min-h-[38px] sm:min-h-[30px] px-2 py-0.5 rounded-lg text-[10px] font-mono border transition-colors ${
                           settings.model === chip
                             ? 'bg-emerald-700 text-white border-emerald-600 font-semibold'
@@ -523,7 +553,16 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
                       setSettings({ ...settings, model: '' });
                       return;
                     }
-                    setSettings({ ...settings, model: val });
+                    const detected = inferProviderFromUrlAndModel(settings.provider, settings.baseUrl, val);
+                    if (detected !== settings.provider) {
+                      setSettings((prev) => ({
+                        ...prev,
+                        provider: detected,
+                        model: val,
+                      }));
+                    } else {
+                      setSettings((prev) => ({ ...prev, model: val }));
+                    }
                   }}
                   className="w-full min-h-[44px] sm:min-h-[38px] px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 font-mono text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >

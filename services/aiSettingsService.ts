@@ -466,6 +466,83 @@ export const detectKeyProviderMismatch = (key: string, provider: AIProviderId): 
   return null;
 };
 
+/**
+ * Automatically infers the correct AIProviderId based on the endpoint Base URL
+ * and target model name. This prevents routing errors (such as calling Google Gemini's
+ * endpoint when the user entered an Intern-Discovery, DeepSeek, or OpenAI URL).
+ */
+export const inferProviderFromUrlAndModel = (
+  currentProvider: AIProviderId,
+  baseUrl: string,
+  model: string
+): AIProviderId => {
+  const cleanUrl = (baseUrl || '').toLowerCase().trim();
+  const cleanModel = (model || '').toLowerCase().trim();
+
+  // 1. Intern-Discovery (Shanghai AI Lab)
+  if (cleanUrl.includes('intern-ai.org.cn')) {
+    return 'internai';
+  }
+  const internModels = [
+    'atria-dawn',
+    'agents-a1',
+    'sage-a1.5',
+    'sage-a1.5-taiyi',
+    'sage-s2.1-flash',
+    'deepseek-v4.1-flash-1017',
+    'glm-5.3',
+    'intern-decision-4b',
+    'intern-s2',
+    'kimi-k3.1-pro',
+    'qwen3.8-27b',
+  ];
+  if (internModels.includes(cleanModel) && (currentProvider === 'gemini' || currentProvider === 'custom')) {
+    return cleanUrl.includes('intern-ai.org.cn') ? 'internai' : 'custom';
+  }
+
+  // 2. OpenRouter
+  if (cleanUrl.includes('openrouter.ai')) {
+    return 'openrouter';
+  }
+
+  // 3. DeepSeek
+  if (cleanUrl.includes('deepseek.com')) {
+    return 'deepseek';
+  }
+
+  // 4. Groq
+  if (cleanUrl.includes('groq.com')) {
+    return 'groq';
+  }
+
+  // 5. Anthropic Claude
+  if (cleanUrl.includes('anthropic.com')) {
+    return 'anthropic';
+  }
+
+  // 6. Ollama Local
+  if (cleanUrl.includes('localhost:11434') || cleanUrl.includes('127.0.0.1:11434')) {
+    return 'ollama';
+  }
+
+  // 7. OpenAI Direct
+  if (cleanUrl.includes('api.openai.com')) {
+    return 'openai';
+  }
+
+  // 8. If current is Gemini but Base URL is a custom/local/proxy non-Google endpoint
+  if (
+    currentProvider === 'gemini' &&
+    cleanUrl &&
+    !cleanUrl.includes('generativelanguage.googleapis.com') &&
+    !cleanUrl.includes('googleapis.com')
+  ) {
+    return 'custom';
+  }
+
+  return currentProvider;
+};
+
 export const getDefaultSettings = (): AISettings => ({
   provider: 'gemini',
   apiKey: '',

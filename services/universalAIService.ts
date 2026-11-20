@@ -5,6 +5,7 @@ import {
   AIProviderId,
   sanitizeApiKey,
   detectKeyProviderMismatch,
+  inferProviderFromUrlAndModel,
 } from './aiSettingsService';
 import { BlankCanvasTargetMode, CanvasBlockType, Language } from '../types';
 import {
@@ -64,7 +65,16 @@ export const generateTextWithUniversalAI = async (
   overrideSettings?: AISettings,
   options?: GenerateOptions
 ): Promise<string> => {
-  const settings = overrideSettings || getStoredAISettings();
+  const rawSettings = overrideSettings || getStoredAISettings();
+  const effectiveProvider = inferProviderFromUrlAndModel(
+    rawSettings.provider,
+    rawSettings.baseUrl,
+    rawSettings.model
+  );
+  const settings: AISettings = {
+    ...rawSettings,
+    provider: effectiveProvider,
+  };
   const { provider, apiKey, baseUrl } = settings;
 
   // Sanitize model: strip sentinel values and whitespace
@@ -73,8 +83,9 @@ export const generateTextWithUniversalAI = async (
     throw new Error('Harap pilih atau ketik nama model AI terlebih dahulu.');
   }
 
-  // 1. Google Gemini Provider
-  if (provider === 'gemini') {
+  // 1. Google Gemini Provider (Only when effective provider is gemini AND baseUrl is Google's endpoint)
+  const isGeminiBaseUrl = !baseUrl || baseUrl.includes('generativelanguage.googleapis.com') || baseUrl.includes('googleapis.com');
+  if (provider === 'gemini' && isGeminiBaseUrl) {
     return generateWithGemini(prompt, systemInstruction, apiKey, model, baseUrl, options);
   }
 
@@ -83,7 +94,7 @@ export const generateTextWithUniversalAI = async (
     return generateWithAnthropic(prompt, systemInstruction, apiKey, baseUrl, model, options);
   }
 
-  // 3. OpenAI, DeepSeek, OpenRouter, Groq, One API/New API Router, Ollama, and all OpenAI-compatible Custom endpoints
+  // 3. OpenAI, Intern-AI, DeepSeek, OpenRouter, Groq, One API/New API Router, Ollama, and all OpenAI-compatible Custom endpoints
   return generateWithOpenAICompatible(prompt, systemInstruction, apiKey, baseUrl, model, options);
 };
 
@@ -378,10 +389,12 @@ export const fetchModelsFromEndpoint = async (
   // Remove /chat/completions if included in base URL
   cleanBase = cleanBase.replace(/\/chat\/completions$/, '');
 
+  const effectiveProvider = inferProviderFromUrlAndModel(provider || 'custom', cleanBase, '');
+
   // Intern-Discovery gateway blocks CORS on /v1/models (405 on OPTIONS / no Access-Control-Allow-Origin),
   // but /v1/chat/completions works with CORS in browser fetch.
   // Return verified official Intern-Discovery research models roster directly from https://discovery.intern-ai.org.cn/
-  if (cleanBase.includes('intern-ai.org.cn') || provider === 'internai') {
+  if (cleanBase.includes('intern-ai.org.cn') || effectiveProvider === 'internai') {
     return [
       'Agents-A1',
       'Atria-Dawn',
@@ -397,8 +410,12 @@ export const fetchModelsFromEndpoint = async (
     ];
   }
 
-  const isGeminiEndpoint = provider === 'gemini' || cleanBase.includes('generativelanguage.googleapis.com');
-  const isAnthropicEndpoint = provider === 'anthropic' || cleanBase.includes('api.anthropic.com');
+  const isGeminiEndpoint =
+    effectiveProvider === 'gemini' &&
+    (cleanBase.includes('generativelanguage.googleapis.com') || cleanBase.includes('googleapis.com'));
+  const isAnthropicEndpoint =
+    effectiveProvider === 'anthropic' &&
+    (cleanBase.includes('api.anthropic.com') || cleanBase.includes('anthropic.com'));
 
   let endpoint = cleanBase.endsWith('/models') ? cleanBase : `${cleanBase}/models`;
   const headers: Record<string, string> = {
@@ -786,11 +803,16 @@ export const testAIConnection = async (
     };
   }
 
-  const preset = AI_PROVIDER_PRESETS[settings.provider] || AI_PROVIDER_PRESETS.custom;
+  const effectiveProvider = inferProviderFromUrlAndModel(
+    settings.provider,
+    settings.baseUrl,
+    sanitizedModel
+  );
+  const preset = AI_PROVIDER_PRESETS[effectiveProvider] || AI_PROVIDER_PRESETS.custom;
   const cleanKey = sanitizeApiKey(settings.apiKey);
 
   // Pre-flight: Check if the key format belongs to a completely different provider
-  const mismatchWarning = detectKeyProviderMismatch(cleanKey, settings.provider);
+  const mismatchWarning = detectKeyProviderMismatch(cleanKey, effectiveProvider);
   if (mismatchWarning) {
     return {
       success: false,
@@ -808,9 +830,10 @@ export const testAIConnection = async (
     };
   }
 
-  // Build a clean settings copy to avoid sentinel model values and malformed keys
+  // Build a clean settings copy with effectiveProvider
   const cleanSettings: AISettings = {
     ...settings,
+    provider: effectiveProvider,
     apiKey: cleanKey,
     model: sanitizedModel,
   };
