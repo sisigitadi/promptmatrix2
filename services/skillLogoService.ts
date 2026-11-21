@@ -34,12 +34,16 @@ export const sanitizeSvgMarkup = (raw: string): string => {
     cleaned = svgMatch[0];
   }
 
-  // Security: eliminate active script tags and event handlers
+  // Security: eliminate active script tags, foreignObject, iframe, object, embed, event handlers, and javascript/data URIs
   cleaned = cleaned
     .replace(/<script[\s\S]*?<\/script>/gi, '')
-    .replace(/\son\w+="[^"]*"/gi, '')
-    .replace(/\son\w+='[^']*'/gi, '')
-    .replace(/javascript:[^"']*/gi, '');
+    .replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi, '')
+    .replace(/<iframe[\s\S]*?<\/iframe>/gi, '')
+    .replace(/<object[\s\S]*?<\/object>/gi, '')
+    .replace(/<embed[\s\S]*?<\/embed>/gi, '')
+    .replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+    .replace(/(?:href|xlink:href)\s*=\s*["']?\s*javascript:[^"'>\s]*/gi, '')
+    .replace(/(?:href|xlink:href)\s*=\s*["']?\s*data:[^"'>\s]*/gi, '');
 
   // Ensure mandatory attributes
   if (!cleaned.includes('xmlns="http://www.w3.org/2000/svg"')) {

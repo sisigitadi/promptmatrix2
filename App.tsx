@@ -2105,13 +2105,23 @@ const App: React.FC = () => {
 
             {/* Mobile Floating Quick Action Dock */}
             {generatedPrompt && (
-              <div className="lg:hidden fixed bottom-0 left-0 right-0 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] bg-[#090d16]/95 backdrop-blur-md border-t border-slate-800 z-30 flex items-center justify-between gap-3 shadow-2xl">
+              <div
+                className={`lg:hidden fixed bottom-0 left-0 right-0 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] backdrop-blur-md border-t z-30 flex items-center justify-between gap-3 shadow-2xl transition-colors ${
+                  isLightTheme
+                    ? 'bg-white/95 border-slate-300 text-slate-900 shadow-slate-300/60'
+                    : 'bg-[#090d16]/95 border-slate-800 text-slate-100 shadow-2xl'
+                }`}
+              >
                 <button
                   type="button"
                   onClick={() => setShowExpandReviewModal(true)}
-                  className="h-11 px-3.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-emerald-500 text-xs font-semibold text-slate-200 flex items-center gap-1.5 shrink-0 transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className={`h-11 px-3.5 rounded-xl border text-xs font-semibold flex items-center gap-1.5 shrink-0 transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                    isLightTheme
+                      ? 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-800'
+                      : 'bg-slate-900 hover:bg-slate-800 border-slate-700 text-slate-200 hover:border-emerald-500'
+                  }`}
                 >
-                  <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <svg className={`w-4 h-4 ${isLightTheme ? 'text-emerald-700' : 'text-emerald-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
@@ -2920,7 +2930,11 @@ const App: React.FC = () => {
           onClick={scrollToTop}
           aria-label={language === 'id' ? 'Kembali ke atas' : 'Scroll to top'}
           title={language === 'id' ? 'Kembali ke atas' : 'Scroll to top'}
-          className="fixed bottom-24 lg:bottom-6 right-6 z-30 p-3 rounded-full bg-slate-900/90 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/40 hover:border-emerald-400 shadow-xl shadow-slate-950/80 backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 group"
+          className={`fixed bottom-24 lg:bottom-6 right-6 z-30 p-3 rounded-full border shadow-xl backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 group ${
+            isLightTheme
+              ? 'bg-white/95 text-emerald-800 border-emerald-300 hover:bg-emerald-600 hover:text-white shadow-slate-300/80'
+              : 'bg-slate-900/90 text-emerald-400 border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 shadow-slate-950/80'
+          }`}
         >
           <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />

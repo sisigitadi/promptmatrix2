@@ -109,7 +109,7 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-40 w-full px-2 sm:px-4 lg:px-6 pt-2 sm:pt-3 pointer-events-none transition-all duration-200">
       <div
-        className={`max-w-7xl mx-auto rounded-2xl sm:rounded-3xl border shadow-lg backdrop-blur-md px-2.5 sm:px-5 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-4 min-w-0 pointer-events-auto transition-all duration-200 ${
+        className={`max-w-7xl mx-auto rounded-2xl sm:rounded-3xl border shadow-lg backdrop-blur-md px-2 sm:px-5 h-14 sm:h-16 flex items-center justify-between gap-1 sm:gap-4 min-w-0 pointer-events-auto transition-all duration-200 ${
           isScrolled
             ? isLightTheme
               ? 'border-emerald-400/80 bg-white/95 text-slate-900 shadow-xl shadow-slate-300/60 ring-1 ring-emerald-500/20'

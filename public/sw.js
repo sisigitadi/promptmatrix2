@@ -1,4 +1,4 @@
-const CACHE_NAME = 'promptmatrix-v7.6.9';
+const CACHE_NAME = 'promptmatrix-v7.7.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
