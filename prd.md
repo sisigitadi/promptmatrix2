@@ -3,7 +3,7 @@
 > **Sistem:** PromptMatrix 2.0 - Guided AI Prompt Studio & Agent Skill Builder  
 > **Arsitek & Pemilik:** Sigit Adi ([https://sigitadi.id](https://sigitadi.id))  
 > **Domain Live:** [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
-> **Versi Saat Ini:** v7.6.0  
+> **Versi Saat Ini:** v7.6.1  
 > **Lisensi:** MIT  
 > **Standar Rekayasa:** Dikelola oleh RetroBOT (`RetroBOT.md`)
 
@@ -175,6 +175,12 @@ flowchart TD
     - **Generator Cerdas Listing & Pricing (`services/skillZipService.ts`):** Fungsi `inferAgensiPillar` untuk auto-deteksi pilar dari kategori/tags/slug, rekomendasi harga berbasis pilar, dan injeksi metadata pilar ke spesifikasi GEO & Schema JSON-LD.
     - **Distribusi Multi-Channel Suite Update (`scripts/package-multi-channels.mjs`):** Paket suite 14 flagship `promptmatrix-14-flagship-suite.zip` ($59.00 vs $195.87 satuan) dengan verifikasi otomatis keutuhan arsip POSIX.
 
+  - **D38. Resolusi Judul Dinamis & Sanitasi Draf Universal Agent Skill & Market Kit (v7.6.1):**
+    - **Resolusi Judul Dinamis:** Memperbaiki status bar atas `components/AgentSkillViewer.tsx` agar menampilkan nama riil paket/formula yang dimuat (`activeTitle` / `effectiveTitle` / `activeSpec.name`) alih-alih teks statis *"Universal Agent Skill & Market Kit"*.
+    - **Hierarki Status Bar Premium:** Menempatkan badge konteks `UNIVERSAL AGENT SKILL & MARKET KIT`, audit compliance score (`95/100`), dan badge kategori di baris lencana atas, diikuti judul H3 yang tegas dan subline metadata paket (`📦 <slug>.zip • v1.0.0 • MIT`).
+    - **Sanitasi Draf LocalStorage:** Menambahkan mekanisme pembersih draf lokal otomatis pada `useEffect` agar placeholder generik lawas tidak menimpa judul paket komersial.
+    - **Label Opsi Dropdown Interaktif:** Memperkaya label opsi `[Formula Aktif]` di dropdown switcher studio dengan nama framework atau draf canvas aktif.
+
 ### Register Modul & Komponen Utama
 
 | Berkas / Direktori | Tanggung Jawab Teknis |
@@ -183,7 +189,7 @@ flowchart TD
 | `config/agensiConfig.ts` | Konfigurasi integrasi Agensi.io (URL marketplace, parameter komisi kreator/afiliasi, katalog 15 bundel `bundledSkillPacks` lintas 4 Pilar beserta harga/kategori/file, helper `pm_agensi_urls`, `buildAgensiPackCtaUrl`, `getContextualSkillPacksForCategory`, dan daftar 27 runtime Open Agent Skills yang didukung) |
 | `services/agentSkillService.ts` | Service konversi state formula aktif menjadi spesifikasi Open Agent Skills (`AgentSkillSpec`), generator kebab-case `<= 64` char, validator frontmatter YAML, dan formatter `SKILL.md` |
 | `services/skillZipService.ts` | Engine pembuat arsip ZIP murni TypeScript (CRC-32 + Store method 0 + POSIX paths) di browser untuk mengekspor paket `.zip` Agensi.io (`SKILL.md`, `references/framework-guide.md`, `templates/sample-input.json`, `scripts/validate-output.mjs`) dan generator Listing Copy Markdown siap tempel dengan auto-deteksi 4 pilar |
-| `components/AgentSkillViewer.tsx` | Visualizer `SKILL.md` berpewarnaan sintaks YAML/Markdown, indikator validasi `name`/`description`, strip 27 agen didukung, tombol unduh `.zip` Agensi.io, *Salin Listing Copy*, unduh `-SKILL.md`, dan info kesiapan Agensi.io |
+| `components/AgentSkillViewer.tsx` | Visualizer `SKILL.md` & studio paket siap jual: Resolusi judul dinamis multi-tingkat, badge skor audit kepatuhan, sanitasi draf lokal, pewarnaan sintaks YAML/Markdown, strip 27 agen didukung, tombol unduh `.zip` Agensi.io, *Salin Listing Copy*, unduh `-SKILL.md`, dan panduan multi-channel |
 | `components/AgensiSkillPromoCard.tsx` | Kartu promosi kontekstual publik di Studio yang memetakan kategori formula aktif ke paket Flagship Agensi.io + lead magnet `$0 Free` dan tombol pembuka katalog |
 | `components/AgensiCatalogModal.tsx` | Modal terpisah Paket Agent Skill & Hub Kreator: Mode publik untuk eksplorasi 15 paket acuan 4 pilar & Suite $59; Mode privat kreator (9-tap logo unlock) dengan 4 tab terstruktur: 1. Katalog 15 Paket (copy listing/demo/check), 2. Ekspor Formula Aktif ke SKILL.md/ZIP, 3. URL Toko & Saluran Pasar (Agensi.io, Lemon Squeezy, Creem, Gumroad, PromptBase, Whop, Payhip), dan 4. Panduan Multi-Market & Payout Indonesia |
 | `components/CleanJsonViewer.tsx` | Komponen visualizer JSON interaktif dengan pewarnaan sintaks murni React JSX, nomor baris monospace, sub-format switch, dan tombol salin terintegrasi |
