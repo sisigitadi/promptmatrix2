@@ -3,6 +3,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { RUNNER_INSTALL_GUIDES, RunnerInstallGuide } from '../data/skillListingDemos';
 import {
   AgentSkillSpec,
+  SKILL_LICENSE_PRESETS,
+  SkillLicensePreset,
   SkillValidationResult,
   auditSkillMarketReadiness,
   validateAgentSkillSpec,
@@ -637,6 +639,13 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
 
   const nameRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
   const isNameValid = effectiveName.length >= 3 && effectiveName.length <= 64 && nameRegex.test(effectiveName);
+
+  const matchedPreset: SkillLicensePreset | undefined = useMemo(() => {
+    const raw = effectiveLicense.trim().toLowerCase();
+    return SKILL_LICENSE_PRESETS.find(
+      (p) => p.id.toLowerCase() === raw || p.name.toLowerCase() === raw
+    );
+  }, [effectiveLicense]);
 
   const listingCopy = useMemo(
     () =>
@@ -1342,18 +1351,64 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   />
                 </label>
 
-                <label className="space-y-1 block min-w-0">
-                  <span className={`text-[11px] font-semibold block ${labelTextClass}`}>
-                    {t('skill_field_license')}
-                  </span>
-                  <input
-                    type="text"
-                    value={effectiveLicense}
-                    onChange={(e) => setEditedLicense(e.target.value)}
-                    placeholder="MIT"
-                    className={`w-full min-h-[42px] px-3 py-1.5 rounded-xl border text-xs font-mono ${focusRingClass} ${inputClass}`}
-                  />
-                </label>
+                <div className="space-y-1 block min-w-0">
+                  <div className="flex items-center justify-between gap-1">
+                    <span className={`text-[11px] font-semibold block ${labelTextClass}`}>
+                      {t('skill_field_license')}
+                    </span>
+                    {matchedPreset && (
+                      <span
+                        className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider ${
+                          matchedPreset.category === 'commercial'
+                            ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                            : matchedPreset.category === 'open-source'
+                            ? 'bg-blue-500/15 text-blue-400 border border-blue-500/30'
+                            : matchedPreset.category === 'hybrid'
+                            ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30'
+                            : 'bg-purple-500/15 text-purple-400 border border-purple-500/30'
+                        }`}
+                      >
+                        {matchedPreset.badge}
+                      </span>
+                    )}
+                  </div>
+                  <select
+                    value={matchedPreset ? matchedPreset.id : 'Custom'}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === 'Custom') {
+                        if (matchedPreset && matchedPreset.id !== 'Custom') {
+                          setEditedLicense('Proprietary Commercial');
+                        }
+                      } else {
+                        setEditedLicense(val);
+                      }
+                    }}
+                    className={`w-full min-h-[42px] px-3 py-1.5 rounded-xl border text-xs font-medium cursor-pointer ${focusRingClass} ${inputClass}`}
+                  >
+                    {SKILL_LICENSE_PRESETS.map((preset) => (
+                      <option key={preset.id} value={preset.id} className="bg-slate-900 text-slate-100">
+                        {preset.name}
+                      </option>
+                    ))}
+                  </select>
+
+                  {(!matchedPreset || matchedPreset.id === 'Custom') && (
+                    <input
+                      type="text"
+                      value={effectiveLicense === 'Custom' ? '' : effectiveLicense}
+                      onChange={(e) => setEditedLicense(e.target.value)}
+                      placeholder={isId ? 'Contoh: Proprietary Commercial, Custom EULA v1.0, BSD-3-Clause' : 'e.g. Proprietary Commercial, Custom EULA v1.0, BSD-3-Clause'}
+                      className={`w-full min-h-[38px] mt-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono ${focusRingClass} ${inputClass}`}
+                    />
+                  )}
+
+                  {matchedPreset && (
+                    <p className={`text-[10px] leading-tight mt-1 ${mutedTextClass}`}>
+                      {isId ? matchedPreset.descriptionId : matchedPreset.descriptionEn}
+                    </p>
+                  )}
+                </div>
               </div>
 
               <label className="space-y-1 block min-w-0">

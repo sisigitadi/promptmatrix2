@@ -3,7 +3,7 @@
 > **Sistem:** PromptMatrix 2.0 - Guided AI Prompt Studio & Agent Skill Builder  
 > **Arsitek & Pemilik:** Sigit Adi ([https://sigitadi.id](https://sigitadi.id))  
 > **Domain Live:** [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
-> **Versi Saat Ini:** v7.6.2  
+> **Versi Saat Ini:** v7.6.3  
 > **Lisensi:** MIT  
 > **Standar Rekayasa:** Dikelola oleh RetroBOT (`RetroBOT.md`)
 
@@ -185,6 +185,11 @@ flowchart TD
     - **Pemisahan Tegas Body vs Deskripsi Listing (`components/AgentSkillViewer.tsx`):** Memperbaiki isolasi `effectiveBody` di `AgentSkillViewer.tsx` agar selalu mempertahankan playbook instruksi teknis utuh dari `baseRecord.body`, mencegah tertimpa oleh deskripsi pemasaran marketplace (`activeDescMd`).
     - **Sanitasi Draf LocalStorage:** Menambahkan mekanisme pembersih draf lokal otomatis pada `useEffect` agar placeholder generik atau raw markdown lawas tidak menimpa judul dan body paket komersial.
     - **Default Deskripsi Listing yang Bersih:** Mengarahkan nilai awal `activeDescMd` ke `listingCopy.descriptionMarkdown` alih-alih `baseRecord.rawMarkdown`, menjaga area pratinjau teks jual bebas dari kebocoran frontmatter `---`.
+
+  - **D40. Studio License Presets Selector & Engine Standar Lisensi Marketplace (v7.6.3):**
+    - **Engine Preset Lisensi Terkurasi (`services/agentSkillService.ts`):** Menyediakan konstanta `SKILL_LICENSE_PRESETS` lintas 4 kategori (Komersial Marketplace Single-Seat, Multi-Seat Team, Extended Agency, Open Source MIT, Apache-2.0, CC-BY-NC-4.0, dan Custom EULA) lengkap dengan lencana status, rekomendasi marketplace, dan deskripsi bilingual ID/EN.
+    - **Selector Lisensi Interaktif (`components/AgentSkillViewer.tsx`):** Mengganti input teks mentah lisensi dengan dropdown interaktif adaptif ber-lencana visual, deskripsi cakupan hak cipta dinamis, dan fallback input manual otomatis saat memilih opsi kustom atau varian lisensi proprietary.
+    - **Penyelarasan Peringatan Kepatuhan:** Memperbarui validator `validateAgentSkillSpec` untuk merekomendasikan lisensi komersial maupun open-source yang sah tanpa mengunci kreator semata-mata pada lisensi MIT saat bersiap menjual ke marketplace.
 
 ### Register Modul & Komponen Utama
 

@@ -54,6 +54,82 @@ export interface SkillMarketAuditCheck {
   readonly detail: string;
 }
 
+export interface SkillLicensePreset {
+  readonly id: string;
+  readonly name: string;
+  readonly category: 'commercial' | 'open-source' | 'hybrid' | 'custom';
+  readonly badge: string;
+  readonly recommendedFor: string;
+  readonly descriptionId: string;
+  readonly descriptionEn: string;
+}
+
+export const SKILL_LICENSE_PRESETS: readonly SkillLicensePreset[] = [
+  {
+    id: 'Commercial',
+    name: 'Commercial License (Single-Seat)',
+    category: 'commercial',
+    badge: 'Marketplace Standard',
+    recommendedFor: 'Agensi.io, Gumroad, Lemon Squeezy',
+    descriptionId: 'Izin komersial 1 entitas/pengguna. Boleh digunakan untuk proyek bisnis & klien. Dilarang keras menjual ulang atau mendistribusikan kode sumber.',
+    descriptionEn: 'Single-seat commercial rights. Allowed for client & business projects. Source code redistribution or resale strictly prohibited.',
+  },
+  {
+    id: 'Team Commercial',
+    name: 'Team Commercial License (Multi-Seat)',
+    category: 'commercial',
+    badge: 'Agency & Teams',
+    recommendedFor: 'Enterprise & Agency Packages',
+    descriptionId: 'Izin penggunaan untuk seluruh tim dalam 1 organisasi/agensi. Bebas untuk deliverable klien internal, dilarang publikasi terbuka.',
+    descriptionEn: 'Organization-wide multi-seat license for teams and agencies. Permitted for internal workflows and client deliverables.',
+  },
+  {
+    id: 'Extended Commercial',
+    name: 'Extended Agency License',
+    category: 'commercial',
+    badge: 'High-Ticket',
+    recommendedFor: 'White-Label & Unlimited Clients',
+    descriptionId: 'Hak integrasi penuh untuk agensi melayani klien tak terbatas. Termasuk kustomisasi mendalam, tanpa hak resale paket mentah.',
+    descriptionEn: 'Full commercial rights for agencies delivering white-label client solutions without limits. No raw asset resale.',
+  },
+  {
+    id: 'MIT',
+    name: 'MIT License',
+    category: 'open-source',
+    badge: 'Free / Lead Magnet',
+    recommendedFor: 'Community & Free Audience Growth',
+    descriptionId: 'Lisensi open source paling permisif. Siapapun bebas menggunakan, memodifikasi, bahkan menjual ulang. Bagus untuk portofolio gratis ($0).',
+    descriptionEn: 'Permissive open source. Anyone can use, modify, and even resell. Ideal for free lead magnets and community trust.',
+  },
+  {
+    id: 'Apache-2.0',
+    name: 'Apache 2.0 License',
+    category: 'open-source',
+    badge: 'Open Enterprise',
+    recommendedFor: 'Open Source Enterprise Tooling',
+    descriptionId: 'Lisensi open source dengan klausul proteksi hak paten eksplisit dan proteksi merek dagang.',
+    descriptionEn: 'Permissive open source with explicit contributor patent grants and trademark protection clauses.',
+  },
+  {
+    id: 'CC-BY-NC-4.0',
+    name: 'CC BY-NC 4.0 (Non-Commercial)',
+    category: 'hybrid',
+    badge: 'Freemium / Personal Only',
+    recommendedFor: 'Dual-Licensing (Free Personal, Paid Commercial)',
+    descriptionId: 'Bebas digunakan dan dimodifikasi untuk riset/personal. Penggunaan komersial bisnis memerlukan izin/lisensi terpisah.',
+    descriptionEn: 'Free to use and adapt for non-commercial personal purposes only. Commercial business use requires a paid commercial license.',
+  },
+  {
+    id: 'Custom',
+    name: 'Custom License / EULA Khusus',
+    category: 'custom',
+    badge: 'Custom EULA',
+    recommendedFor: 'Bespoke Enterprise Contracts',
+    descriptionId: 'Tentukan klausul lisensi kustom atau End User License Agreement (EULA) spesifik sesuai kebutuhan kontrak legal Anda.',
+    descriptionEn: 'Specify a custom licensing clause or proprietary End User License Agreement (EULA) tailored to your legal terms.',
+  },
+];
+
 export interface SkillMarketAuditOptions {
   readonly demoRequest?: string;
   readonly demoResult?: string;
@@ -470,7 +546,7 @@ export const validateAgentSkillSpec = (spec: AgentSkillSpec): SkillValidationRes
   }
 
   if (!spec.license.trim()) {
-    warnings.push('License field is empty; MIT is recommended.');
+    warnings.push('License field is empty; specify Commercial or an open-source license.');
   }
 
   if (trimmedDesc.length > 0 && trimmedDesc.length < 40) {
