@@ -155,3 +155,22 @@ Memilih lisensi yang tepat sangat menentukan apakah karya prompt dan agen AI And
 Lisensi MIT bersifat permisif penuh. Jika Anda menjual paket berbayar seharga $19.99 dengan lisensi MIT, secara hukum pembeli berhak menjual ulang atau mengunggah source code tersebut ke GitHub secara cuma-cuma. Oleh karena itu, gunakan **Commercial License (Single-Seat)** untuk semua produk komersial di Agensi.io, Gumroad, dan Lemon Squeezy, serta simpan lisensi **MIT** secara eksklusif untuk paket lead magnet $0 di GitHub.
 
 PromptMatrix v7.6.3 menyediakan **License Selector** terintegrasi di Step 1 Studio Agent Skill (`components/AgentSkillViewer.tsx`), memungkinkan pemilihan preset resmi lengkap dengan deskripsi hak cipta bilingual dan opsi kustom EULA otomatis.
+
+---
+
+## 9. Lokalisasi Dwibahasa Penuh & Sanitasi Otomatis Studio (v7.6.4)
+
+Pada versi 7.6.4, Studio Agent Skill menerapkan sistem lokalisasi 100% dwibahasa (ID/EN) untuk seluruh 15 paket flagship dan formula aktif:
+
+1. **Judul & Profil Flagship Bahasa Indonesia:**
+   - Seluruh 15 paket resmi kini memiliki judul resmi berbahasa Indonesia di katalog dan studio (misalnya *Arsitek Fullstack TS & Next.js*, *Pembangun Server MCP Produksi*, *Auditor Keamanan Cloud & API OWASP*).
+   - Tagline manfaat, kategori, poin keunggulan, serta skenario uji demo terisi otomatis dalam bahasa Indonesia yang baku tanpa kebocoran istilah bahasa Inggris mentah.
+
+2. **Copy Listing & Spesifikasi Deliverable Dwibahasa:**
+   - Generator teks listing marketplace (`services/skillZipService.ts`) memproduksi format Markdown berbahasa Indonesia lengkap dengan header terjemahan (`## Ringkasan`, `### Spesifikasi Deliverable`, `### Pratinjau Kontrak Eksekusi`, `### Verifikasi Standar Kualitas (Quality Gateway)`, dan `## Langkah Selanjutnya`).
+   - Lencana status deliverable disesuaikan menjadi `Diterapkan`, `Aktif`, `Terverifikasi`, `Terkemas`, dan `Ditegakkan`.
+
+3. **Pencegahan Polusi Draf Usang (Cache Sanitization):**
+   - Sistem secara otomatis mendeteksi jika `localStorage` menyimpan draf bawaan bahasa Inggris dari sesi sebelumnya saat pengguna memilih bahasa Indonesia.
+   - Draf bawaan usang tersebut digantikan secara instan dengan profil resmi bahasa Indonesia tanpa menghilangkan perubahan kustom yang dilakukan pengguna.
+

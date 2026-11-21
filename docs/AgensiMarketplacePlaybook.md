@@ -212,3 +212,26 @@ Packaging and selling Open Agent Skills requires rigorous licensing boundaries t
 
 ### Key Creator Takeaway
 Never release paid assets under a permissive open source license (such as MIT) because buyers obtain a legal right to resell or publicly redistribute your code. PromptMatrix Studio v7.6.3 (`components/AgentSkillViewer.tsx`) includes an interactive **License Selector** that defaults to **Commercial License (Single-Seat)** for paid products while preserving **MIT** for free lead magnets.
+
+---
+
+## 8. Bilingual Listing Localization & Deterministic Sanitization Engine (v7.6.4)
+
+PromptMatrix 2.0 provides native dual-language localization (Indonesian and English) across the entire Skill Creator workflow, ensuring that Indonesian creators and international buyers experience frictionless, culturally aligned copy without English leakage:
+
+### Architecture of the Localization Engine
+1. **Flagship Title Localization (`config/agensiConfig.ts`):**
+   - Each of the 15 official packs supports `titleId` alongside the English `title` (e.g., *Auditor UI & Teks Bebas Slop (Antislop)* for `antislop-ui-and-copy-auditor`).
+   - The helper `getAgensiPackTitle(pack, language)` resolves the accurate title based on active locale.
+
+2. **Full Listing Demo Profiles (`data/skillListingDemos.ts`):**
+   - `SKILL_LISTING_DEMOS_ID` maps every skill to translated `tagline`, `categoryLabel`, `highlights`, `demoRequest`, and comprehensive `demoResult` markdown.
+   - The accessor `getSkillListingDemo(slug, language)` guarantees fallback-free Indonesian profiles.
+
+3. **Localized Listing Markdown & Deliverable Specs (`services/skillZipService.ts`):**
+   - When exporting `.zip` packages or copying marketplace listing copy in Indonesian, the markdown generator creates localized section headers (`## Ringkasan`, `### Spesifikasi Deliverable`, `### Pratinjau Kontrak Eksekusi`, `### Verifikasi Standar Kualitas (Quality Gateway)`, and `## Langkah Selanjutnya`).
+   - Deliverable status badges are emitted in Indonesian (`Diterapkan`, `Aktif`, `Terverifikasi`, `Terkemas`, `Ditegakkan`).
+
+4. **Stale Draft Sanitization (`components/AgentSkillViewer.tsx`):**
+   - To prevent outdated English drafts cached in browser `localStorage` from overriding fresh Indonesian defaults, `AgentSkillViewer` detects default English text when switching to Indonesian and automatically replaces it with the official Indonesian title and profile.
+
