@@ -10,7 +10,7 @@ import {
   detectKeyProviderMismatch,
   inferProviderFromUrlAndModel,
 } from '../services/aiSettingsService';
-import { testAIConnection, fetchModelsFromEndpoint } from '../services/universalAIService';
+import { testAIConnection, fetchModelsFromEndpoint, resolveAIEndpoint } from '../services/universalAIService';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export interface AISettingsModalProps {
@@ -377,6 +377,10 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
             )}
             <p className="text-[10px] text-slate-400">
               {t('step2_baseurl_hint')} ({language === 'id' ? 'contoh:' : 'e.g.:'} {currentPreset.defaultBaseUrl})
+            </p>
+            <p className="text-[10px] text-slate-400 font-mono break-all">
+              {language === 'id' ? 'Endpoint aktif: ' : 'Active endpoint: '}
+              <span className="text-emerald-300">{resolveAIEndpoint(settings.baseUrl, settings.provider).chatUrl}</span>
             </p>
           </div>
 

@@ -43,7 +43,7 @@ export const AI_PROVIDER_PRESETS: Record<AIProviderId, AIProviderPreset> = {
     name: 'Google Gemini (AI Studio)',
     shortLabel: 'Gemini',
     badge: 'GOOGLE',
-    defaultBaseUrl: 'https://generativelanguage.googleapis.com',
+    defaultBaseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
     defaultModel: 'gemini-4-carbon',
     models: [
       { id: 'gemini-4-carbon', label: 'Gemini 4 Carbon', description: 'Flagship frontier penalaran mendalam, rekayasa software kompleks & arsitektur sistem (1M+ konteks, Rekomendasi Utama)' },

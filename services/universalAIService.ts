@@ -54,157 +54,311 @@ export interface GenerateOptions {
   maxTokens?: number;
   temperature?: number;
   stream?: boolean;
+  /** Omit the temperature field (reasoning models reject custom values). */
+  skipTemperature?: boolean;
+  /** Accept an empty completion as success (used by the connection probe). */
+  allowEmpty?: boolean;
 }
 
 /**
- * Universal text generation dispatcher supporting Gemini, OpenAI, DeepSeek, OpenRouter, Groq, Anthropic, and Local Ollama/Custom Base URLs.
+ * Endpoint resolution (pattern adopted from SocialBiz Manager).
+ * Every provider except Anthropic is called through the OpenAI-compatible protocol,
+ * including Google Gemini via its /v1beta/openai gateway. Routing depends only on the
+ * Base URL, so a stale provider tab can never send an Intern-Discovery or OpenAI URL
+ * through the Gemini-native route again.
  */
-export const generateTextWithUniversalAI = async (
-  prompt: string,
-  systemInstruction: string = '',
-  overrideSettings?: AISettings,
-  options?: GenerateOptions
-): Promise<string> => {
-  const rawSettings = overrideSettings || getStoredAISettings();
-  const effectiveProvider = inferProviderFromUrlAndModel(
-    rawSettings.provider,
-    rawSettings.baseUrl,
-    rawSettings.model
-  );
-  const settings: AISettings = {
-    ...rawSettings,
-    provider: effectiveProvider,
-  };
-  const { provider, apiKey, baseUrl } = settings;
+export type AIEndpointProtocol = 'openai' | 'anthropic';
 
-  // Sanitize model: strip sentinel values and whitespace
-  const model = (settings.model || '').trim();
-  if (model === '__custom_empty__') {
-    throw new Error('Harap pilih atau ketik nama model AI terlebih dahulu.');
+export interface ResolvedAIEndpoint {
+  protocol: AIEndpointProtocol;
+  base: string;
+  chatUrl: string;
+  modelsUrl: string;
+  isGemini: boolean;
+  isInternAI: boolean;
+  isOpenRouter: boolean;
+  isOpenAIOfficial: boolean;
+}
+
+const GEMINI_OPENAI_BASE = 'https://generativelanguage.googleapis.com/v1beta/openai';
+
+const INTERN_DISCOVERY_MODELS: readonly string[] = [
+  'Agents-A1',
+  'Atria-Dawn',
+  'Sage-A1.5',
+  'Sage-A1.5-Taiyi',
+  'Sage-S2.1-Flash',
+  'deepseek-v4.1-flash-1017',
+  'glm-5.3',
+  'intern-decision-4b',
+  'intern-s2',
+  'kimi-k3.1-pro',
+  'qwen3.8-27b',
+];
+
+export const resolveAIEndpoint = (baseUrl: string, provider: AIProviderId = 'custom'): ResolvedAIEndpoint => {
+  const preset = AI_PROVIDER_PRESETS[provider] || AI_PROVIDER_PRESETS.custom;
+  let base = (baseUrl || '').trim() || preset.defaultBaseUrl || 'https://api.openai.com/v1';
+  base = base
+    .replace(/\/+$/, '')
+    .replace(/\/(chat\/completions|models|messages)$/i, '')
+    .replace(/\/+$/, '');
+  let lower = base.toLowerCase();
+
+  const isGemini = lower.includes('generativelanguage.googleapis.com');
+  if (isGemini && !lower.includes('/openai')) {
+    base = GEMINI_OPENAI_BASE;
+    lower = base.toLowerCase();
   }
 
-  // 1. Google Gemini Provider (Only when effective provider is gemini AND baseUrl is Google's endpoint)
-  const isGeminiBaseUrl = !baseUrl || baseUrl.includes('generativelanguage.googleapis.com') || baseUrl.includes('googleapis.com');
-  if (provider === 'gemini' && isGeminiBaseUrl) {
-    return generateWithGemini(prompt, systemInstruction, apiKey, model, baseUrl, options);
-  }
-
-  // 2. Anthropic Claude Provider (Official Direct)
-  if (provider === 'anthropic' && (!baseUrl || baseUrl.includes('anthropic.com'))) {
-    return generateWithAnthropic(prompt, systemInstruction, apiKey, baseUrl, model, options);
-  }
-
-  // 3. OpenAI, Intern-AI, DeepSeek, OpenRouter, Groq, One API/New API Router, Ollama, and all OpenAI-compatible Custom endpoints
-  return generateWithOpenAICompatible(prompt, systemInstruction, apiKey, baseUrl, model, options);
-};
-
-// --- GEMINI HANDLER ---
-const generateWithGemini = async (
-  prompt: string,
-  systemInstruction: string,
-  apiKey: string,
-  model: string,
-  baseUrl?: string,
-  options?: GenerateOptions
-): Promise<string> => {
-  const cleanKey = sanitizeApiKey(apiKey);
-  if (!cleanKey) throw new Error('API Key Google Gemini belum diisi. Silakan atur di menu Pengaturan AI ⚙️.');
-
-  let cleanBase = (baseUrl || 'https://generativelanguage.googleapis.com').replace(/\/+$/, '');
-  cleanBase = cleanBase.replace(/\/models$/, '').replace(/\/chat\/completions$/, '');
-  const root = cleanBase.endsWith('/v1beta') ? cleanBase : `${cleanBase}/v1beta`;
-
-  const payload: GeminiPayload = {
-    contents: [
-      {
-        role: 'user',
-        parts: [{ text: prompt }]
-      }
-    ],
-    generationConfig: {
-      temperature: options?.temperature ?? 0.7,
-      maxOutputTokens: options?.maxTokens ?? 2048,
+  if (lower.includes('anthropic.com')) {
+    if (!/\/v1$/i.test(base)) {
+      base = `${base}/v1`;
     }
-  };
-
-  if (systemInstruction) {
-    payload.systemInstruction = {
-      parts: [{ text: systemInstruction }]
+    return {
+      protocol: 'anthropic',
+      base,
+      chatUrl: `${base}/messages`,
+      modelsUrl: `${base}/models`,
+      isGemini: false,
+      isInternAI: false,
+      isOpenRouter: false,
+      isOpenAIOfficial: false,
     };
   }
 
-  const sendRequest = async (modelToUse: string): Promise<Response> => {
-    const url = `${root}/models/${modelToUse}:generateContent?key=${encodeURIComponent(cleanKey)}`;
-    return fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+  return {
+    protocol: 'openai',
+    base,
+    chatUrl: `${base}/chat/completions`,
+    modelsUrl: `${base}/models`,
+    isGemini,
+    isInternAI: lower.includes('intern-ai.org.cn'),
+    isOpenRouter: lower.includes('openrouter.ai'),
+    isOpenAIOfficial: lower.includes('api.openai.com'),
   };
-
-  let targetModel = model || 'gemini-4-carbon';
-  let response = await sendRequest(targetModel);
-
-  // Auto-fallback: If 404 (model not found on API), try sibling active models in the Gemini lineup
-  if (response.status === 404) {
-    const alternativeModels = ['gemini-4-argon', 'gemini-4-hydrogen', 'gemini-3.8-flash'].filter((m) => m !== targetModel);
-    for (const alt of alternativeModels) {
-      const altResponse = await sendRequest(alt);
-      if (altResponse.ok) {
-        response = altResponse;
-        targetModel = alt;
-        break;
-      }
-    }
-  }
-
-  if (!response.ok) {
-    const errData = await response.json().catch(() => ({})) as { error?: { message?: string } };
-    const msg = errData?.error?.message || response.statusText;
-    let hint = '';
-    if (response.status === 404) {
-      hint = ' (Tips: Pastikan model aktif di Google AI Studio atau pilih gemini-4-carbon / gemini-4-argon / gemini-4-hydrogen)';
-    }
-    throw new Error(`Google Gemini Error (${response.status}): ${msg}${hint}`);
-  }
-
-  const data = await response.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> };
-  const candidate = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!candidate) {
-    throw new Error('Google Gemini tidak menghasilkan respons teks.');
-  }
-
-  return candidate.trim();
 };
 
-// --- OPENAI-COMPATIBLE & CUSTOM BASE URL HANDLER (WITH STREAM & SSE PARSER) ---
-const generateWithOpenAICompatible = async (
-  prompt: string,
-  systemInstruction: string,
-  apiKey: string,
-  baseUrl: string,
-  model: string,
-  options?: GenerateOptions
-): Promise<string> => {
-  let cleanBase = (baseUrl || 'https://api.openai.com/v1').replace(/\/+$/, '');
-  let endpoint = cleanBase.endsWith('/chat/completions') ? cleanBase : `${cleanBase}/chat/completions`;
+/**
+ * Normalizes model names for the target gateway (SocialBiz pattern):
+ * Gemini's OpenAI gateway expects bare ids, so "google/" and "models/" prefixes are removed.
+ */
+const sanitizeModelForEndpoint = (model: string, endpoint: ResolvedAIEndpoint): string => {
+  const clean = (model || '').trim();
+  if (endpoint.isGemini) {
+    return clean.replace(/^models\//, '').replace(/^google\//, '');
+  }
+  return clean;
+};
 
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json, text/event-stream'
-  };
+export type AIErrorKind =
+  | 'auth'
+  | 'quota'
+  | 'not_found'
+  | 'network'
+  | 'bad_request'
+  | 'server'
+  | 'empty_response'
+  | 'config';
 
-  const cleanKey = sanitizeApiKey(apiKey);
-  if (cleanKey) {
-    headers['Authorization'] = `Bearer ${cleanKey}`;
+export class AIRequestError extends Error {
+  readonly status: number;
+  readonly kind: AIErrorKind;
+  readonly endpoint: string;
+  readonly providerMessage: string;
+
+  constructor(params: {
+    message: string;
+    status: number;
+    kind: AIErrorKind;
+    endpoint: string;
+    providerMessage: string;
+  }) {
+    super(params.message);
+    this.name = 'AIRequestError';
+    this.status = params.status;
+    this.kind = params.kind;
+    this.endpoint = params.endpoint;
+    this.providerMessage = params.providerMessage;
+  }
+}
+
+interface AIRequestContext {
+  endpoint: ResolvedAIEndpoint;
+  model: string;
+  keyLength: number;
+  operation: 'chat' | 'models';
+}
+
+const MODEL_NOT_FOUND_PATTERN = /model.{0,40}(not.?found|not exist|does not exist|unknown|invalid|unsupported|not available)|no such model|无效的模型|模型不存在/i;
+
+const classifyAIError = (status: number, providerMessage: string): AIErrorKind => {
+  if (status === 0) return 'network';
+  if (status === 401 || status === 403) return 'auth';
+  if (status === 429 || /quota|rate.?limit|insufficient.?(balance|credit|quota)/i.test(providerMessage)) return 'quota';
+  if (status === 404 || MODEL_NOT_FOUND_PATTERN.test(providerMessage)) return 'not_found';
+  if (status >= 500) return 'server';
+  return 'bad_request';
+};
+
+const extractProviderMessage = (text: string): string => {
+  if (!text) return '';
+  try {
+    const parsed = JSON.parse(text) as {
+      error?: { message?: string } | string;
+      message?: string;
+      detail?: string;
+    };
+    if (typeof parsed.error === 'string') return parsed.error;
+    return parsed.error?.message || parsed.message || parsed.detail || text.slice(0, 300);
+  } catch {
+    return text.slice(0, 300);
+  }
+};
+
+const buildErrorHint = (kind: AIErrorKind, ctx: AIRequestContext): string => {
+  const { endpoint, model, keyLength, operation } = ctx;
+  if (kind === 'auth') {
+    if (keyLength === 0) {
+      return ' (Diagnostik: API Key kosong. Harap isi API Key dari dashboard provider Anda.)';
+    }
+    if (endpoint.isInternAI) {
+      return ` (Diagnostik Intern-Discovery: API Key (${keyLength} karakter) ditolak gateway. Salin ulang API Key dari tab "API Key" di https://discovery.intern-ai.org.cn/)`;
+    }
+    return ` (Diagnostik: API Key (${keyLength} karakter) ditolak server. Pastikan key berasal dari dashboard provider yang sama dengan Base URL.)`;
+  }
+  if (kind === 'not_found') {
+    if (operation === 'models') {
+      return ' (Server ini tidak menyediakan endpoint /models. Ketik nama model secara manual.)';
+    }
+    if (model.includes('gemini') && !endpoint.isGemini) {
+      return ' (Tips: Untuk router OpenAI-compatible, coba prefix seperti "google/gemini-4-carbon".)';
+    }
+    return ` (Tips: Model "${model}" tidak dikenali server ${endpoint.base}. Gunakan tombol "Muat Model" untuk melihat model yang tersedia.)`;
+  }
+  if (kind === 'quota') {
+    if (endpoint.isInternAI) {
+      return ' (Tips Intern-Discovery: API Key valid, namun saldo kredit habis atau rate-limited. Cek kredit di https://discovery.intern-ai.org.cn/ atau pilih model hemat Agents-A1 / Sage-A1.5.)';
+    }
+    return ' (Tips: API Key valid, namun kuota atau saldo kredit akun Anda di provider habis.)';
+  }
+  return '';
+};
+
+const sendAIRequest = async (url: string, init: RequestInit, ctx: AIRequestContext): Promise<string> => {
+  let response: Response;
+  try {
+    response = await fetch(url, init);
+  } catch (err: unknown) {
+    const raw = err instanceof Error ? err.message : String(err);
+    throw new AIRequestError({
+      status: 0,
+      kind: 'network',
+      endpoint: url,
+      providerMessage: raw,
+      message: `Gagal menghubungi ${url}: ${raw}. Kemungkinan URL salah, server tidak aktif, atau permintaan diblokir kebijakan CORS browser.`,
+    });
   }
 
-  // OpenRouter additional header identification
-  if (cleanBase.includes('openrouter.ai')) {
+  const text = await response.text();
+  if (!response.ok) {
+    const providerMessage = extractProviderMessage(text) || response.statusText;
+    const kind = classifyAIError(response.status, providerMessage);
+    throw new AIRequestError({
+      status: response.status,
+      kind,
+      endpoint: url,
+      providerMessage,
+      message: `AI Provider Error (${response.status}): ${providerMessage}${buildErrorHint(kind, ctx)} [Endpoint: ${url}]`,
+    });
+  }
+  return text;
+};
+
+const buildAIHeaders = (endpoint: ResolvedAIEndpoint, apiKey: string, withJsonBody: boolean): Record<string, string> => {
+  const headers: Record<string, string> = {};
+  if (withJsonBody) {
+    headers['Content-Type'] = 'application/json';
+  }
+  if (endpoint.protocol === 'anthropic') {
+    headers['x-api-key'] = apiKey;
+    headers['anthropic-version'] = '2023-06-01';
+    headers['anthropic-dangerous-direct-browser-access'] = 'true';
+    return headers;
+  }
+  if (apiKey) {
+    headers['Authorization'] = `Bearer ${apiKey}`;
+  }
+  if (endpoint.isOpenRouter) {
     headers['HTTP-Referer'] = 'https://github.com/sisigitadi/promptmatrix';
     headers['X-Title'] = 'PromptMatrix';
   }
+  return headers;
+};
 
+interface CompletionChoice {
+  message?: { content?: string | Array<{ text?: string }> | null };
+  delta?: { content?: string | null };
+  text?: string;
+}
+
+interface CompletionPayload {
+  choices?: CompletionChoice[];
+  content?: Array<{ text?: string }>;
+}
+
+const readChoiceText = (choice: CompletionChoice | undefined): string => {
+  if (!choice) return '';
+  const messageContent = choice.message?.content;
+  if (typeof messageContent === 'string') return messageContent;
+  if (Array.isArray(messageContent)) {
+    return messageContent.map((part) => part.text || '').join('');
+  }
+  return choice.delta?.content || choice.text || '';
+};
+
+const extractCompletionText = (responseText: string): string => {
+  const trimmed = responseText.trim();
+  if (!trimmed) return '';
+
+  // SSE stream format (some gateways stream even when stream=false)
+  if (trimmed.startsWith('data:')) {
+    let full = '';
+    for (const line of trimmed.split('\n')) {
+      const row = line.trim();
+      if (!row.startsWith('data:')) continue;
+      const json = row.replace(/^data:\s*/, '');
+      if (!json || json === '[DONE]') continue;
+      try {
+        const chunk = JSON.parse(json) as CompletionPayload;
+        full += readChoiceText(chunk.choices?.[0]);
+      } catch {
+        // ignore malformed chunk
+      }
+    }
+    return full.trim();
+  }
+
+  try {
+    const data = JSON.parse(trimmed) as CompletionPayload;
+    const fromChoices = readChoiceText(data.choices?.[0]);
+    if (fromChoices) return fromChoices.trim();
+    const fromAnthropic = data.content?.map((part) => part.text || '').join('') || '';
+    return fromAnthropic.trim();
+  } catch {
+    // Plain-text gateways
+    return trimmed.startsWith('{') || trimmed.startsWith('[') ? '' : trimmed;
+  }
+};
+
+const callOpenAICompatible = async (
+  prompt: string,
+  systemInstruction: string,
+  apiKey: string,
+  endpoint: ResolvedAIEndpoint,
+  model: string,
+  options?: GenerateOptions
+): Promise<string> => {
   const messages: OpenAIMessage[] = [];
   if (systemInstruction) {
     messages.push({ role: 'system', content: systemInstruction });
@@ -212,170 +366,142 @@ const generateWithOpenAICompatible = async (
   messages.push({ role: 'user', content: prompt });
 
   const payload: Record<string, unknown> = {
-    model: model || 'gpt-6.1-sol',
+    model,
     messages,
-    temperature: options?.temperature ?? 0.7,
-    stream: options?.stream ?? false // Explicitly disable stream, though we also parse SSE chunks below
+    stream: false,
   };
-
+  if (!options?.skipTemperature) {
+    payload['temperature'] = options?.temperature ?? 0.7;
+  }
   if (options?.maxTokens) {
-    payload['max_tokens'] = options.maxTokens;
-    payload['max_completion_tokens'] = options.maxTokens;
+    // OpenAI official reasoning models reject max_tokens; every other gateway expects it.
+    payload[endpoint.isOpenAIOfficial ? 'max_completion_tokens' : 'max_tokens'] = options.maxTokens;
   }
 
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(payload)
+  const ctx: AIRequestContext = { endpoint, model, keyLength: apiKey.length, operation: 'chat' };
+  const text = await sendAIRequest(
+    endpoint.chatUrl,
+    { method: 'POST', headers: buildAIHeaders(endpoint, apiKey, true), body: JSON.stringify(payload) },
+    ctx
+  );
+
+  const content = extractCompletionText(text);
+  if (content || options?.allowEmpty) {
+    return content;
+  }
+  throw new AIRequestError({
+    status: 200,
+    kind: 'empty_response',
+    endpoint: endpoint.chatUrl,
+    providerMessage: text.slice(0, 200),
+    message: 'Model AI tidak mengembalikan konten teks yang valid.',
   });
-
-  const responseText = await response.text();
-
-  if (!response.ok) {
-    let parsedMsg = '';
-    try {
-      const parsed = JSON.parse(responseText) as { error?: { message?: string }; message?: string };
-      parsedMsg = parsed?.error?.message || parsed?.message || '';
-    } catch {
-      parsedMsg = responseText;
-    }
-    let hint = '';
-    if (response.status === 401 || response.status === 403) {
-      const keyLen = cleanKey.length;
-      if (keyLen === 0) {
-        hint = ` (Diagnostik: API Key kosong. Harap isi API Key dari dashboard provider Anda.)`;
-      } else if (cleanBase.includes('intern-ai.org.cn')) {
-        hint = ` (Diagnostik Intern-Discovery: API Key terdeteksi (${keyLen} karakter) namun ditolak server. Pastikan API Key disalin lengkap dari tab "API Key" di https://discovery.intern-ai.org.cn/ tanpa spasi tambahan. Model yang dikirim: "${model}")`;
-      } else {
-        hint = ` (Diagnostik: API Key terdeteksi (${keyLen} karakter) namun ditolak server. Pastikan key disalin lengkap tanpa spasi dari dashboard provider. Endpoint: ${endpoint}, Model: "${model}")`;
-      }
-    } else if (response.status === 404 && model.includes('gemini')) {
-      hint = ' (Tips: Untuk router kustom / OpenAI-compatible, pastikan model terdaftar atau coba gunakan prefix seperti "google/gemini-4-carbon" atau "gemini-4-argon")';
-    } else if (response.status === 404) {
-      hint = ` (Tips: Model "${model}" tidak ditemukan di server endpoint ${cleanBase}. Pastikan nama model benar atau gunakan tombol "Muat Model" untuk melihat model yang tersedia.)`;
-    } else if (response.status === 429) {
-      if (cleanBase.includes('intern-ai.org.cn')) {
-        hint = ' (Tips Intern-Discovery: Server terhubung & API Key valid, namun saldo kredit akun habis atau rate-limited. Silakan periksa sisa kredit di dashboard https://discovery.intern-ai.org.cn/ atau pilih model hemat seperti Agents-A1 atau Sage-A1.5)';
-      } else {
-        hint = ' (Tips: Server terhubung & API Key valid, namun kuota atau saldo kredit akun Anda di provider habis)';
-      }
-    }
-    throw new Error(`AI Provider Error (${response.status}): ${parsedMsg || response.statusText}${hint}`);
-  }
-
-  // Case 1: Response is SSE Stream format (e.g. "data: {"id": ...}")
-  if (responseText.trim().startsWith('data:')) {
-    const lines = responseText.split('\n');
-    let fullContent = '';
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed === 'data: [DONE]' || trimmed === '[DONE]') continue;
-      if (trimmed.startsWith('data:')) {
-        const jsonString = trimmed.replace(/^data:\s*/, '');
-        try {
-          const chunk = JSON.parse(jsonString);
-          const delta = chunk?.choices?.[0]?.delta?.content ||
-            chunk?.choices?.[0]?.message?.content ||
-            chunk?.choices?.[0]?.text || '';
-          fullContent += delta;
-        } catch {
-          // ignore single chunk parse errors
-        }
-      }
-    }
-    if (fullContent.trim()) {
-      return fullContent.trim();
-    }
-  }
-
-  // Case 2: Standard JSON response
-  try {
-    const data = JSON.parse(responseText);
-    const content = data?.choices?.[0]?.message?.content ||
-      data?.choices?.[0]?.text ||
-      data?.content?.[0]?.text;
-    if (content) {
-      return content.trim();
-    }
-  } catch (err) {
-    console.warn('Direct JSON parse failed, trying chunk extraction:', err);
-  }
-
-  // Case 3: Fallback raw text if valid
-  if (responseText && !responseText.includes('{"error":')) {
-    return responseText.trim();
-  }
-
-  throw new Error('Model AI tidak mengembalikan konten teks yang valid.');
 };
 
-// --- ANTHROPIC CLAUDE HANDLER ---
-const generateWithAnthropic = async (
+const callAnthropic = async (
   prompt: string,
   systemInstruction: string,
   apiKey: string,
-  baseUrl: string,
+  endpoint: ResolvedAIEndpoint,
   model: string,
   options?: GenerateOptions
 ): Promise<string> => {
-  const cleanKey = sanitizeApiKey(apiKey);
-  if (!cleanKey) throw new Error('API Key Anthropic Claude belum diisi.');
-
-  const cleanBase = (baseUrl || 'https://api.anthropic.com/v1').replace(/\/+$/, '');
-  const endpoint = cleanBase.endsWith('/messages') ? cleanBase : `${cleanBase}/messages`;
-
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    'x-api-key': cleanKey,
-    'anthropic-version': '2023-06-01',
-    'anthropic-dangerous-direct-browser-access': 'true'
-  };
-
-  const payload: {
-    model: string;
-    max_tokens: number;
-    messages: Array<{ role: string; content: string }>;
-    system?: string;
-  } = {
-    model: model || 'claude-sonnet-5-5',
+  const payload: Record<string, unknown> = {
+    model,
     max_tokens: options?.maxTokens ?? 2048,
-    messages: [
-      { role: 'user', content: prompt }
-    ]
+    messages: [{ role: 'user', content: prompt }],
   };
-
   if (systemInstruction) {
-    payload.system = systemInstruction;
+    payload['system'] = systemInstruction;
+  }
+  if (!options?.skipTemperature && options?.temperature !== undefined) {
+    payload['temperature'] = options.temperature;
   }
 
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(payload)
+  const ctx: AIRequestContext = { endpoint, model, keyLength: apiKey.length, operation: 'chat' };
+  const text = await sendAIRequest(
+    endpoint.chatUrl,
+    { method: 'POST', headers: buildAIHeaders(endpoint, apiKey, true), body: JSON.stringify(payload) },
+    ctx
+  );
+
+  const content = extractCompletionText(text);
+  if (content || options?.allowEmpty) {
+    return content;
+  }
+  throw new AIRequestError({
+    status: 200,
+    kind: 'empty_response',
+    endpoint: endpoint.chatUrl,
+    providerMessage: text.slice(0, 200),
+    message: 'Anthropic tidak mengembalikan konten teks yang valid.',
   });
+};
 
-  const responseText = await response.text();
-
-  if (!response.ok) {
-    let msg = '';
-    try {
-      const errData = JSON.parse(responseText);
-      msg = errData?.error?.message || response.statusText;
-    } catch {
-      msg = responseText;
-    }
-    throw new Error(`Anthropic Error (${response.status}): ${msg}`);
+/**
+ * Universal text generation dispatcher supporting Gemini, OpenAI, Intern-Discovery, DeepSeek,
+ * OpenRouter, Groq, Anthropic, Ollama and every OpenAI-compatible Base URL.
+ */
+export const generateTextWithUniversalAI = async (
+  prompt: string,
+  systemInstruction: string = '',
+  overrideSettings?: AISettings,
+  options?: GenerateOptions
+): Promise<string> => {
+  const settings = overrideSettings || getStoredAISettings();
+  const rawModel = (settings.model || '').trim();
+  if (rawModel === '__custom_empty__') {
+    throw new Error('Harap pilih atau ketik nama model AI terlebih dahulu.');
   }
 
+  const effectiveProvider = inferProviderFromUrlAndModel(settings.provider, settings.baseUrl, rawModel);
+  const endpoint = resolveAIEndpoint(settings.baseUrl, effectiveProvider);
+  const preset = AI_PROVIDER_PRESETS[effectiveProvider] || AI_PROVIDER_PRESETS.custom;
+  const model = sanitizeModelForEndpoint(rawModel || preset.defaultModel, endpoint);
+  const apiKey = sanitizeApiKey(settings.apiKey);
+
+  if (endpoint.protocol === 'anthropic') {
+    if (!apiKey) throw new Error('API Key Anthropic Claude belum diisi.');
+    return callAnthropic(prompt, systemInstruction, apiKey, endpoint, model, options);
+  }
+  if (endpoint.isGemini && !apiKey) {
+    throw new Error('API Key Google Gemini belum diisi. Silakan atur di menu Pengaturan AI ⚙️.');
+  }
+  return callOpenAICompatible(prompt, systemInstruction, apiKey, endpoint, model, options);
+};
+
+interface ModelListPayload {
+  data?: Array<{ id?: string; name?: string }>;
+  models?: Array<{ id?: string; name?: string }>;
+}
+
+const parseModelList = (text: string, endpoint: ResolvedAIEndpoint): string[] => {
+  let ids: string[] = [];
   try {
-    const data = JSON.parse(responseText);
-    const text = data?.content?.[0]?.text;
-    if (text) return text.trim();
+    const parsed = JSON.parse(text) as ModelListPayload | Array<string | { id?: string; name?: string }>;
+    if (Array.isArray(parsed)) {
+      ids = parsed.map((item) => (typeof item === 'string' ? item : item.id || item.name || ''));
+    } else {
+      const list = parsed.data || parsed.models || [];
+      ids = list.map((item) => item.id || item.name || '');
+    }
   } catch {
-    // Fallback
+    return [];
   }
+  const cleaned = ids
+    .map((id) => (endpoint.isGemini ? id.replace(/^models\//, '') : id).trim())
+    .filter(Boolean);
+  return Array.from(new Set(cleaned)).sort((a, b) => a.localeCompare(b));
+};
 
-  return responseText.trim();
+const listModelsFromEndpoint = async (endpoint: ResolvedAIEndpoint, apiKey: string): Promise<string[]> => {
+  const ctx: AIRequestContext = { endpoint, model: '', keyLength: apiKey.length, operation: 'models' };
+  const text = await sendAIRequest(
+    endpoint.modelsUrl,
+    { method: 'GET', headers: buildAIHeaders(endpoint, apiKey, false) },
+    ctx
+  );
+  return parseModelList(text, endpoint);
 };
 
 // --- FETCH AVAILABLE MODELS FROM ENDPOINT ---
@@ -384,126 +510,30 @@ export const fetchModelsFromEndpoint = async (
   apiKey: string,
   provider?: AIProviderId
 ): Promise<string[]> => {
-  let cleanBase = (baseUrl || 'https://api.openai.com/v1').replace(/\/+$/, '');
+  const effectiveProvider = inferProviderFromUrlAndModel(provider || 'custom', baseUrl, '');
+  const endpoint = resolveAIEndpoint(baseUrl, effectiveProvider);
 
-  // Remove /chat/completions if included in base URL
-  cleanBase = cleanBase.replace(/\/chat\/completions$/, '');
-
-  const effectiveProvider = inferProviderFromUrlAndModel(provider || 'custom', cleanBase, '');
-
-  // Intern-Discovery gateway blocks CORS on /v1/models (405 on OPTIONS / no Access-Control-Allow-Origin),
-  // but /v1/chat/completions works with CORS in browser fetch.
-  // Return verified official Intern-Discovery research models roster directly from https://discovery.intern-ai.org.cn/
-  if (cleanBase.includes('intern-ai.org.cn') || effectiveProvider === 'internai') {
-    return [
-      'Agents-A1',
-      'Atria-Dawn',
-      'Sage-A1.5',
-      'Sage-A1.5-Taiyi',
-      'Sage-S2.1-Flash',
-      'deepseek-v4.1-flash-1017',
-      'glm-5.3',
-      'intern-decision-4b',
-      'intern-s2',
-      'kimi-k3.1-pro',
-      'qwen3.8-27b',
-    ];
+  // Intern-Discovery gateway blocks CORS on /v1/models (405 on OPTIONS), while /v1/chat/completions
+  // allows browser calls. Serve the verified roster from https://discovery.intern-ai.org.cn/ instead.
+  if (endpoint.isInternAI) {
+    return [...INTERN_DISCOVERY_MODELS];
   }
 
-  const isGeminiEndpoint =
-    effectiveProvider === 'gemini' &&
-    (cleanBase.includes('generativelanguage.googleapis.com') || cleanBase.includes('googleapis.com'));
-  const isAnthropicEndpoint =
-    effectiveProvider === 'anthropic' &&
-    (cleanBase.includes('api.anthropic.com') || cleanBase.includes('anthropic.com'));
-
-  let endpoint = cleanBase.endsWith('/models') ? cleanBase : `${cleanBase}/models`;
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
-
   const cleanKey = sanitizeApiKey(apiKey);
-  if (isGeminiEndpoint) {
-    if (!cleanKey) {
-      throw new Error('API Key Google Gemini diperlukan untuk mengambil daftar model.');
-    }
-    const geminiRoot = cleanBase.endsWith('/v1beta') ? cleanBase : `${cleanBase}/v1beta`;
-    endpoint = `${geminiRoot}/models?key=${encodeURIComponent(cleanKey)}`;
-  } else if (isAnthropicEndpoint) {
-    if (!cleanKey) {
-      throw new Error('API Key Anthropic diperlukan untuk mengambil daftar model.');
-    }
-    headers['x-api-key'] = cleanKey;
-    headers['anthropic-version'] = '2023-06-01';
-    headers['anthropic-dangerous-direct-browser-access'] = 'true';
-  } else if (cleanKey) {
-    headers['Authorization'] = `Bearer ${cleanKey}`;
+  if ((endpoint.isGemini || endpoint.protocol === 'anthropic') && !cleanKey) {
+    throw new Error('API Key diperlukan untuk mengambil daftar model dari provider ini.');
   }
 
   try {
-    const response = await fetch(endpoint, {
-      method: 'GET',
-      headers
-    });
-
-    const text = await response.text();
-
-    if (!response.ok) {
-      let msg = '';
-      try {
-        const parsed = JSON.parse(text);
-        msg = parsed?.error?.message || parsed?.message || '';
-      } catch {
-        msg = text;
-      }
-      throw new Error(`Gagal mengambil model (${response.status}): ${msg || response.statusText}`);
-    }
-
-    const data = JSON.parse(text) as {
-      data?: Array<{ id?: string; name?: string }>;
-      models?: Array<{ id?: string; name?: string }>;
-    } | Array<string | { id?: string; name?: string }>;
-
-    if (!Array.isArray(data) && Array.isArray(data?.data)) {
-      return data.data.map((item) => item.id || item.name || '').filter(Boolean);
-    }
-    if (!Array.isArray(data) && Array.isArray(data?.models)) {
-      return data.models
-        .map((item) => {
-          const raw = item.id || item.name || '';
-          return isGeminiEndpoint ? raw.replace(/^models\//, '') : raw;
-        })
-        .filter(Boolean);
-    }
-    if (Array.isArray(data)) {
-      return data
-        .map((item) => (typeof item === 'string' ? item : item.id || item.name || ''))
-        .filter(Boolean);
-    }
+    return await listModelsFromEndpoint(endpoint, cleanKey);
   } catch (err: unknown) {
-    if (cleanBase.includes('intern-ai.org.cn')) {
-      return [
-        'Agents-A1',
-        'Atria-Dawn',
-        'Sage-A1.5',
-        'Sage-A1.5-Taiyi',
-        'Sage-S2.1-Flash',
-        'deepseek-v4.1-flash-1017',
-        'glm-5.3',
-        'intern-decision-4b',
-        'intern-s2',
-        'kimi-k3.1-pro',
-        'qwen3.8-27b',
-      ];
-    }
-    const msg = err instanceof Error ? err.message : String(err);
-    if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
-      throw new Error('Koneksi ke endpoint /models terhalang kebijakan CORS browser atau server tidak aktif. Silakan pilih model dari daftar terkurasi atau ketik nama model secara manual.');
+    if (err instanceof AIRequestError && err.kind === 'network') {
+      throw new Error(
+        `Koneksi ke ${endpoint.modelsUrl} terhalang kebijakan CORS browser atau server tidak aktif. Pilih model dari daftar terkurasi atau ketik nama model secara manual.`
+      );
     }
     throw err;
   }
-
-  return [];
 };
 
 // --- HIGH-LEVEL CAPABILITIES ---
@@ -791,112 +821,161 @@ ${promptToAnalyze}
 
 /**
  * 4. Test Provider Connection
+ * Two-stage diagnostic adopted from SocialBiz Manager:
+ *   Stage 1 (auth probe): GET /models verifies the API Key without spending quota and
+ *   independently of the model name.
+ *   Stage 2 (model probe): a minimal chat completion verifies that the chosen model answers.
  */
-export const testAIConnection = async (
-  settings: AISettings
-): Promise<{ success: boolean; message: string; isQuotaExceeded?: boolean; isAuthError?: boolean }> => {
+export interface AIConnectionTestResult {
+  success: boolean;
+  message: string;
+  isQuotaExceeded?: boolean;
+  isAuthError?: boolean;
+  latencyMs?: number;
+  modelsCount?: number;
+  endpoint?: string;
+}
+
+const buildAuthDiagnostic = (
+  keyLength: number,
+  endpoint: ResolvedAIEndpoint,
+  presetName: string,
+  providerMessage: string
+): string => {
+  if (keyLength === 0) {
+    return 'API Key kosong. Harap isi API Key dari dashboard provider Anda.';
+  }
+  if (endpoint.isInternAI) {
+    return `API Key terdeteksi (${keyLength} karakter) namun ditolak gateway Intern-Discovery (Shanghai AI Lab).\n\nMengapa error ini muncul di SEMUA model?\nHTTP 401 adalah penolakan token di gateway, sebelum server memeriksa nama model.\n\nPanduan perbaikan:\n1. Buka https://discovery.intern-ai.org.cn/ dan masuk ke akun Anda\n2. Klik tab "API Key" (di sebelah kiri tab "Models")\n3. Buat API Key baru atau klik tombol salin pada API Key aktif\n4. Tempel di kolom API Key PromptMatrix (spasi dan tanda kutip dibersihkan otomatis)\n5. Pastikan yang disalin adalah API Key, bukan Session ID atau cookie peramban`;
+  }
+  const routerNote = /invalid token/i.test(providerMessage)
+    ? '\n\nCatatan: pesan "Invalid token" umumnya berasal dari router/proxy (One API, New API, LiteLLM). Gateway Intern-Discovery membalas "invalid API key". Periksa apakah Base URL di atas memang endpoint yang Anda maksud.'
+    : '';
+  return `API Key terdeteksi (${keyLength} karakter) namun ditolak server ${endpoint.base}.\n\nMengapa error ini muncul di SEMUA model?\nHTTP 401 adalah penolakan token di tingkat server, sebelum model diproses.\n\nPanduan perbaikan:\n1. Pastikan API Key disalin lengkap dari dashboard ${presetName}\n2. Pastikan key berasal dari provider yang SAMA dengan Base URL\n3. Periksa apakah key belum expired, dinonaktifkan, atau dibatasi IP\n4. Untuk router/proxy (One API, LiteLLM), pastikan token terdaftar di panel admin${routerNote}`;
+};
+
+export const testAIConnection = async (settings: AISettings): Promise<AIConnectionTestResult> => {
   const sanitizedModel = (settings.model || '').trim();
   if (!sanitizedModel || sanitizedModel === '__custom_empty__') {
     return {
       success: false,
-      message: 'Harap tentukan atau ketik nama model AI terlebih dahulu sebelum melakukan uji coba koneksi.'
+      message: 'Harap tentukan atau ketik nama model AI terlebih dahulu sebelum melakukan uji coba koneksi.',
     };
   }
 
-  const effectiveProvider = inferProviderFromUrlAndModel(
-    settings.provider,
-    settings.baseUrl,
-    sanitizedModel
-  );
+  const effectiveProvider = inferProviderFromUrlAndModel(settings.provider, settings.baseUrl, sanitizedModel);
   const preset = AI_PROVIDER_PRESETS[effectiveProvider] || AI_PROVIDER_PRESETS.custom;
   const cleanKey = sanitizeApiKey(settings.apiKey);
 
-  // Pre-flight: Check if the key format belongs to a completely different provider
   const mismatchWarning = detectKeyProviderMismatch(cleanKey, effectiveProvider);
   if (mismatchWarning) {
     return {
       success: false,
       isAuthError: true,
-      message: `Format API Key tidak cocok dengan ${preset.name}!\n\n⚠️ ${mismatchWarning}\n\nPastikan Anda menyalin kunci dari dashboard resmi yang sesuai (${preset.docUrl || 'dashboard provider'}).`
+      message: `Format API Key tidak cocok dengan ${preset.name}!\n\n⚠️ ${mismatchWarning}\n\nPastikan Anda menyalin kunci dari dashboard resmi yang sesuai (${preset.docUrl || 'dashboard provider'}).`,
     };
   }
 
-  // Pre-flight: validate API Key presence for providers that require it
   if (preset.requiresApiKey && !cleanKey) {
     return {
       success: false,
       isAuthError: true,
-      message: `API Key untuk ${preset.name} belum diisi.\n\nHarap salin API Key dari dashboard provider dan tempel di kolom "API Key" sebelum melakukan uji coba koneksi.`
+      message: `API Key untuk ${preset.name} belum diisi.\n\nHarap salin API Key dari dashboard provider dan tempel di kolom "API Key" sebelum melakukan uji coba koneksi.`,
     };
   }
 
-  // Build a clean settings copy with effectiveProvider
-  const cleanSettings: AISettings = {
-    ...settings,
-    provider: effectiveProvider,
-    apiKey: cleanKey,
-    model: sanitizedModel,
-  };
+  const endpoint = resolveAIEndpoint(settings.baseUrl, effectiveProvider);
+  const targetModel = sanitizeModelForEndpoint(sanitizedModel, endpoint);
+  const startedAt = Date.now();
+  let serverModels: string[] | null = null;
 
+  // Stage 1: auth probe via GET /models. Skipped for Intern-Discovery (gateway blocks CORS on /models).
+  if (!endpoint.isInternAI) {
+    try {
+      serverModels = await listModelsFromEndpoint(endpoint, cleanKey);
+    } catch (err: unknown) {
+      if (err instanceof AIRequestError && err.kind === 'auth') {
+        return {
+          success: false,
+          isAuthError: true,
+          endpoint: endpoint.modelsUrl,
+          latencyMs: Date.now() - startedAt,
+          message: `${err.message}\n\n--- Diagnostik Autentikasi:\n${buildAuthDiagnostic(cleanKey.length, endpoint, preset.name, err.providerMessage)}`,
+        };
+      }
+      // CORS, 404 or 405 on /models is inconclusive. Continue with the chat probe.
+    }
+  }
+
+  // Stage 2: model probe via a minimal chat completion.
   try {
-    const res = await generateTextWithUniversalAI(
-      'Ping',
-      'Balas hanya kata "OK".',
-      cleanSettings,
-      { maxTokens: 8, temperature: 0.1 }
+    const probeOptions: GenerateOptions = { maxTokens: 16, skipTemperature: true, allowEmpty: true };
+    const reply =
+      endpoint.protocol === 'anthropic'
+        ? await callAnthropic('Ping', 'Balas hanya kata "OK".', cleanKey, endpoint, targetModel, probeOptions)
+        : await callOpenAICompatible('Ping', 'Balas hanya kata "OK".', cleanKey, endpoint, targetModel, probeOptions);
+    const latencyMs = Date.now() - startedAt;
+    const lines = [
+      `Koneksi berhasil dalam ${latencyMs}ms.`,
+      `Endpoint: ${endpoint.chatUrl}`,
+      `Model: ${targetModel}`,
+    ];
+    if (serverModels) {
+      lines.push(`${serverModels.length} model terdeteksi di server.`);
+    }
+    lines.push(
+      reply
+        ? `Respons model: "${reply.slice(0, 100)}"`
+        : 'Model merespons dengan konten kosong (normal untuk model penalaran karena batas token uji coba).'
     );
-    return { success: true, message: `Koneksi berhasil! Respons model: "${res.slice(0, 100)}"` };
+    return {
+      success: true,
+      message: lines.join('\n'),
+      latencyMs,
+      modelsCount: serverModels?.length,
+      endpoint: endpoint.chatUrl,
+    };
   } catch (err: unknown) {
+    const latencyMs = Date.now() - startedAt;
     const msg = err instanceof Error ? err.message : String(err);
+    const kind: AIErrorKind = err instanceof AIRequestError ? err.kind : 'bad_request';
+    const providerMessage = err instanceof AIRequestError ? err.providerMessage : msg;
+    const base = { latencyMs, endpoint: endpoint.chatUrl, modelsCount: serverModels?.length };
 
-    // 429 Quota Exceeded
-    if (msg.includes('429') || msg.toLowerCase().includes('quota') || msg.toLowerCase().includes('rate limit')) {
-      const isInternAi = settings.baseUrl?.includes('intern-ai.org.cn') || settings.provider === 'internai';
-      const diagnostic = isInternAi
-        ? 'Endpoint & API Key BERHASIL terhubung dan terotentikasi oleh server Shanghai AI Lab! Namun akun Anda saat ini kehabisan saldo kredit (HTTP 429 Quota Exceeded). Silakan cek saldo kredit di dashboard https://discovery.intern-ai.org.cn/ (menu Usage/API Key) atau coba model hemat seperti Agents-A1 atau Sage-A1.5 yang membutuhkan hanya 4 kredit.'
-        : 'Endpoint & API Key BERHASIL terhubung dan terotentikasi! Namun akun Anda di provider mengalami limitasi kuota atau saldo kredit habis (HTTP 429 Quota Exceeded). Silakan periksa sisa kuota/billing di dashboard provider Anda.';
-      return {
-        success: false,
-        isQuotaExceeded: true,
-        message: `${msg}\n\n--- Diagnostik: ${diagnostic}`
-      };
+    if (kind === 'quota') {
+      const diagnostic = endpoint.isInternAI
+        ? 'Endpoint & API Key BERHASIL terotentikasi oleh server Shanghai AI Lab, namun saldo kredit akun habis (HTTP 429). Cek saldo di https://discovery.intern-ai.org.cn/ (menu Usage/API Key) atau coba model hemat Agents-A1 / Sage-A1.5 (4 kredit).'
+        : 'Endpoint & API Key BERHASIL terotentikasi, namun kuota atau saldo kredit akun di provider habis (HTTP 429). Periksa billing di dashboard provider Anda.';
+      return { ...base, success: false, isQuotaExceeded: true, message: `${msg}\n\n--- Diagnostik: ${diagnostic}` };
     }
 
-    // 401/403 Auth Error
-    if (msg.includes('401') || msg.includes('403') || msg.toLowerCase().includes('invalid token') || msg.toLowerCase().includes('invalid_api_key') || msg.toLowerCase().includes('unauthorized') || msg.toLowerCase().includes('forbidden')) {
-      const keyLen = cleanKey.length;
-      const isInternAi = settings.baseUrl?.includes('intern-ai.org.cn') || settings.provider === 'internai';
-      let authDiagnostic = '';
-      if (keyLen === 0) {
-        authDiagnostic = 'API Key kosong. Harap isi API Key dari dashboard provider Anda.';
-      } else if (isInternAi) {
-        authDiagnostic = `API Key terdeteksi (${keyLen} karakter) namun ditolak server Intern-Discovery (Shanghai AI Lab).\n\n📌 Mengapa error ini muncul di SEMUA model?\nKarena HTTP 401 adalah penolakan otentikasi token akun di gateway server, sebelum server mengecek nama model apa pun.\n\n💡 Panduan Perbaikan:\n1. Buka https://discovery.intern-ai.org.cn/ dan masuk ke akun Anda\n2. Klik tab "API Key" (di sebelah kiri tab "Models")\n3. Buat API Key baru jika belum ada, atau klik tombol salin (copy) pada API Key aktif\n4. Tempel di kolom API Key PromptMatrix (sistem otomatis membersihkan spasi/tanda kutip)\n5. Pastikan yang disalin adalah API Key, bukan Session ID atau Cookie peramban`;
-      } else {
-        authDiagnostic = `API Key terdeteksi (${keyLen} karakter) namun ditolak server.\n\n📌 Mengapa error ini muncul di SEMUA model?\nKarena HTTP 401 adalah penolakan otentikasi token pada tingkat server, sebelum server memproses permintaan ke model spesifik.\n\n💡 Panduan Perbaikan:\n1. Pastikan API Key disalin lengkap dari dashboard ${preset.name}\n2. Periksa apakah key belum expired, dinonaktifkan, atau memiliki batasan IP\n3. Pastikan Base API URL sesuai provider (saat ini: ${settings.baseUrl})\n4. Untuk gateway proxy/router (OneAPI/LiteLLM), pastikan token terdaftar di panel admin`;
-      }
+    if (kind === 'auth') {
       return {
+        ...base,
         success: false,
         isAuthError: true,
-        message: `${msg}\n\n--- Diagnostik Autentikasi:\n${authDiagnostic}`
+        message: `${msg}\n\n--- Diagnostik Autentikasi:\n${buildAuthDiagnostic(cleanKey.length, endpoint, preset.name, providerMessage)}`,
       };
     }
 
-    // Network / CORS / generic errors
-    if (msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('networkerror') || msg.toLowerCase().includes('cors')) {
-      const isLocal = settings.baseUrl?.includes('localhost') || settings.baseUrl?.includes('127.0.0.1');
-      let netDiagnostic = '';
-      if (isLocal) {
-        netDiagnostic = `Tidak dapat terhubung ke server lokal ${settings.baseUrl}.\n\nPastikan:\n1. Server AI lokal (Ollama / LM Studio / vLLM) sedang berjalan\n2. Port yang dikonfigurasi sudah benar\n3. Server mengizinkan koneksi dari browser (CORS)`;
-      } else {
-        netDiagnostic = `Tidak dapat terhubung ke endpoint ${settings.baseUrl}.\n\nKemungkinan penyebab:\n1. URL endpoint salah atau tidak aktif\n2. Server memblokir permintaan dari browser (CORS restriction)\n3. Jaringan internet terputus atau firewall memblokir`;
-      }
+    if (kind === 'not_found' && serverModels && serverModels.length > 0) {
+      const suggestions = serverModels.slice(0, 8).join(', ');
       return {
+        ...base,
         success: false,
-        message: `${msg}\n\n--- Diagnostik Jaringan:\n${netDiagnostic}`
+        message: `${msg}\n\n--- Diagnostik Model:\nAPI Key VALID (${serverModels.length} model terdeteksi di server), tetapi model "${targetModel}" tidak tersedia.\nContoh model yang tersedia: ${suggestions}\n\nKlik "Muat Model" untuk memilih dari daftar lengkap.`,
       };
     }
 
-    return { success: false, message: msg || 'Gagal terhubung ke API endpoint.' };
+    if (kind === 'network') {
+      const isLocal = /localhost|127\.0\.0\.1/.test(endpoint.base);
+      const netDiagnostic = isLocal
+        ? `Tidak dapat terhubung ke server lokal ${endpoint.base}.\n\nPastikan:\n1. Server AI lokal (Ollama / LM Studio / vLLM) sedang berjalan\n2. Port yang dikonfigurasi sudah benar\n3. Server mengizinkan koneksi dari browser (CORS, misal OLLAMA_ORIGINS=*)`
+        : `Tidak dapat terhubung ke ${endpoint.chatUrl}.\n\nKemungkinan penyebab:\n1. URL endpoint salah atau tidak aktif\n2. Server memblokir permintaan dari browser (CORS)\n3. Jaringan internet terputus atau firewall memblokir`;
+      return { ...base, success: false, message: `${msg}\n\n--- Diagnostik Jaringan:\n${netDiagnostic}` };
+    }
+
+    return { ...base, success: false, message: msg || 'Gagal terhubung ke API endpoint.' };
   }
 };
 
