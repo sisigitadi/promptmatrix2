@@ -258,4 +258,28 @@ To streamline creator preparation and provide immediate feedback when utilizing 
 4. **Strict Kebab-Case Tag Sanitization:**
    - Tags returned by AI are deterministically formatted to lowercase kebab-case, stripped of `#` symbols, uppercase letters, spaces, and stopwords to ensure 100% adherence to marketplace discovery rules.
 
+---
+
+## 10. AI Skill Vector Logo Generator & Visual Branding (v7.6.6)
+
+Every commercial listing and portable agent package benefits from a distinct visual identity. PromptMatrix 2.0 provides an integrated AI Vector Logo Designer and deterministic SVG emblem generator in `services/skillLogoService.ts`:
+
+### Key Features
+1. **Pillar-Aligned Vector Palette & Geometry:**
+   - Develop (Slate with Neon Emerald & Electric Cyan)
+   - Grow (Midnight Navy with Royal Indigo & Laser Blue)
+   - Operate (Dark Bronze with Warm Amber & Gold)
+   - Create (Matte Obsidian with Vibrant Fuchsia & Neon Coral)
+
+2. **One-Click AI Logo Generation in Studio:**
+   - An interactive `[Generate Logo with AI]` button directly in Step 1 of `AgentSkillViewer.tsx` calls Universal AI to design a modern squircle SVG icon (`128x128` viewBox) tailored to the skill's functional domain.
+   - Built-in instant fallback generator provides offline, high-precision SVG vector icons for all 15 flagship packages and 400 formula templates.
+
+3. **Multi-Format Export & ZIP Packaging:**
+   - **Live Preview:** Renders crisp 80x80 vector emblem in Step 1 and 28x28 mini emblem in the header.
+   - **`icon.svg` in Archive:** The generated SVG is automatically bundled into `dist-agensi/<slug>.zip` and custom formula `.zip` downloads (`services/skillZipService.ts`).
+   - **Download & Copy:** One-click `Download SVG` and `Copy SVG Code` buttons.
+   - **Midjourney v7 / FLUX Prompt Generator:** Automatically formats a ready-to-use 3D app icon prompt (`--ar 1:1 --v 7`) for Discord or Midjourney web.
+
+
 

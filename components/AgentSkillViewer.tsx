@@ -12,12 +12,18 @@ import {
 import {
   buildAgensiListingCopy,
   buildFormulaSkillZipBundle,
+  inferAgensiPillar,
   triggerZipDownload,
 } from '../services/skillZipService';
 import { suggestSkillMetadataWithUniversalAI } from '../services/universalAIService';
 import { isAIConfigured } from '../services/aiSettingsService';
 import { FLAGSHIP_SKILLS_DATA } from '../data/flagshipSkillsData';
 import { translateFrameworkName } from '../services/localizationService';
+import {
+  generateSkillLogoSvgWithUniversalAI,
+  generateAlignedSkillLogoSvg,
+  generateMidjourneyLogoPrompt,
+} from '../services/skillLogoService';
 
 export interface SkillListingOverrides {
   readonly tagline?: string;
@@ -515,6 +521,9 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     passedChecksCount: number;
   } | null>(null);
 
+  const [skillLogoSvg, setSkillLogoSvg] = useState<string | null>(null);
+  const [isGeneratingLogo, setIsGeneratingLogo] = useState(false);
+
   const prevReqRef = useRef<string | undefined>(listingOverrides?.demoRequest);
   const prevResRef = useRef<string | undefined>(listingOverrides?.demoResult);
 
@@ -564,6 +573,11 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           const rawDemoRes = parsed.demoResult;
           const isStaleEnglishRes = isId && f && f.demoResultId && rawDemoRes === f.demoResult;
           setEditedDemoResult(!isStaleEnglishRes ? (rawDemoRes ?? null) : null);
+          if (parsed.logoSvg && typeof parsed.logoSvg === 'string' && parsed.logoSvg.trim().startsWith('<svg')) {
+            setSkillLogoSvg(parsed.logoSvg.trim());
+          } else {
+            setSkillLogoSvg(null);
+          }
           return;
         }
       }
@@ -585,6 +599,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     setEditedDemoRequest(null);
     setEditedDemoResult(null);
     setAiUpdateRecord(null);
+    setSkillLogoSvg(null);
   }, [activeSourceSlug, skillSpec.name, draftStorageKey]);
 
   useEffect(() => {
@@ -714,6 +729,19 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     [selectedRunnerId]
   );
 
+  const effectiveLogoSvg = useMemo(() => {
+    if (skillLogoSvg && skillLogoSvg.trim().startsWith('<svg')) {
+      return skillLogoSvg.trim();
+    }
+    return generateAlignedSkillLogoSvg({
+      slug: activeSourceSlug,
+      name: effectiveName,
+      title: activeTitle,
+      category: effectiveCategory,
+      pillar: inferAgensiPillar(effectiveCategory, activeTagsList, activeSourceSlug),
+    });
+  }, [skillLogoSvg, activeSourceSlug, effectiveName, activeTitle, effectiveCategory, activeTagsList]);
+
   const auditResult = useMemo(
     () =>
       auditSkillMarketReadiness(activeSpec, {
@@ -741,6 +769,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
         descMd: activeDescMd,
         demoRequest: activeDemoRequest,
         demoResult: activeDemoResult,
+        logoSvg: skillLogoSvg,
         savedAt: Date.now(),
       };
       localStorage.setItem(draftStorageKey, JSON.stringify(draftPayload));
@@ -767,6 +796,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       setEditedDemoRequest(null);
       setEditedDemoResult(null);
       setAiUpdateRecord(null);
+      setSkillLogoSvg(null);
       onAiSuggestToast?.(t('toast_skill_draft_reset'), 'info');
     } catch (e) {
       console.error('Failed to reset skill draft:', e);
@@ -819,9 +849,84 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       formValues,
       customOtherValues,
       compiledPrompt,
+      logoSvg: effectiveLogoSvg,
     });
     triggerZipDownload(bundle.filename, bundle.archiveBytes);
     onZipDownloaded?.(bundle.filename);
+  };
+
+  const handleGenerateSkillLogo = async () => {
+    if (!isAIConfigured()) {
+      onAiSuggestToast?.(t('toast_need_ai_setup'), 'info');
+      onOpenAiSettings?.();
+      return;
+    }
+
+    setIsGeneratingLogo(true);
+    try {
+      const svg = await generateSkillLogoSvgWithUniversalAI({
+        slug: effectiveName,
+        name: effectiveName,
+        title: activeTitle,
+        category: effectiveCategory,
+        pillar: inferAgensiPillar(effectiveCategory, activeTagsList, effectiveName),
+        description: activeDescMd,
+        language,
+      });
+
+      setSkillLogoSvg(svg);
+      onAiSuggestToast?.(t('toast_skill_logo_generated'), 'success');
+
+      setAiUpdateRecord((prev) => ({
+        timestamp: Date.now(),
+        field: 'logo',
+        previousScore: prev?.newScore ?? auditResult.score,
+        newScore: prev?.newScore ?? auditResult.score,
+        resolvedChecks: prev?.resolvedChecks ?? [],
+        updatedFields: Array.from(
+          new Set([...(prev?.updatedFields ?? []), isId ? 'Logo Vektor SVG' : 'Vector SVG Logo'])
+        ),
+        totalChecksCount: prev?.totalChecksCount ?? auditResult.totalCount,
+        passedChecksCount: prev?.passedChecksCount ?? auditResult.passedCount,
+      }));
+    } catch (err) {
+      console.error('Failed to generate skill logo:', err);
+      onAiSuggestToast?.(t('toast_skill_ai_error'), 'error');
+    } finally {
+      setIsGeneratingLogo(false);
+    }
+  };
+
+  const handleDownloadLogoSvg = () => {
+    try {
+      const blob = new Blob([effectiveLogoSvg], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${effectiveName}-icon.svg`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error('Failed to download SVG:', e);
+    }
+  };
+
+  const handleCopyLogoSvg = async () => {
+    await handleCopyField('logo_svg', effectiveLogoSvg);
+    onAiSuggestToast?.(t('toast_skill_logo_copied'), 'success');
+  };
+
+  const handleCopyMidjourneyPrompt = async () => {
+    const prompt = generateMidjourneyLogoPrompt({
+      name: effectiveName,
+      title: activeTitle,
+      category: effectiveCategory,
+      pillar: inferAgensiPillar(effectiveCategory, activeTagsList, effectiveName),
+    });
+    await handleCopyField('logo_mj', prompt);
+    onAiSuggestToast?.(t('toast_skill_logo_mj_copied'), 'success');
   };
 
   const handleCopyFullListingKit = () => {
@@ -1034,7 +1139,12 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       <div className={`space-y-2.5 pb-3 border-b ${dividerClass}`}>
         <div className="flex flex-wrap items-center justify-between gap-2 min-w-0">
           <div className="min-w-0 flex-1 space-y-1.5">
-            <div className="flex flex-wrap items-center gap-1.5">
+            <div className="flex flex-wrap items-center gap-2">
+              <div
+                className="w-7 h-7 rounded-lg overflow-hidden shrink-0 shadow-sm border border-slate-700/60 bg-slate-900 flex items-center justify-center p-0.5"
+                dangerouslySetInnerHTML={{ __html: effectiveLogoSvg }}
+                title={effectiveTitle}
+              />
               <span
                 className={`px-2 py-0.5 rounded-md text-[10px] font-semibold tracking-wide border uppercase ${isLightTheme
                     ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
@@ -1536,6 +1646,102 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                 </div>
                 <div className={`p-1.5 rounded-lg border text-center ${demoResultReady ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300' : 'bg-slate-900 border-slate-800 text-slate-400'}`}>
                   Demo GEO {demoResultReady ? '✓' : `(${demoResultChars}/700+)`}
+                </div>
+              </div>
+            </div>
+
+            {/* Skill Logo & Visual Emblem Card (1:1 Vector SVG aligned with skill domain & pillar) */}
+            <div className={`p-3.5 rounded-xl border space-y-3 ${insetBoxClass}`}>
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3.5">
+                {/* SVG Visual Emblem Preview (80x80 px) */}
+                <div className="relative group shrink-0">
+                  <div
+                    className="w-20 h-20 rounded-2xl overflow-hidden shadow-lg border border-slate-700/60 bg-slate-900 flex items-center justify-center p-1.5 transition-transform group-hover:scale-105"
+                    dangerouslySetInnerHTML={{ __html: effectiveLogoSvg }}
+                  />
+                  <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-md text-[9px] font-mono font-bold bg-slate-950 text-emerald-400 border border-emerald-500/30 shadow-sm">
+                    128x128
+                  </span>
+                </div>
+
+                <div className="flex-1 space-y-2 text-center sm:text-left min-w-0">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs font-bold text-slate-100 flex items-center gap-1.5">
+                        <span>🎨</span>
+                        <span>{t('skill_logo_title')}</span>
+                      </span>
+                      <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        SVG Vector
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleGenerateSkillLogo}
+                      disabled={isGeneratingLogo}
+                      className={`min-h-[32px] px-3 py-1 rounded-xl font-semibold text-xs bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center gap-1.5 shadow-sm transition-colors disabled:opacity-50 ${focusRingClass}`}
+                    >
+                      <svg
+                        className={`w-3.5 h-3.5 ${isGeneratingLogo ? 'animate-spin' : ''}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      <span>
+                        {isGeneratingLogo
+                          ? t('skill_logo_btn_generating')
+                          : t('skill_logo_btn_generate')}
+                      </span>
+                    </button>
+                  </div>
+
+                  <p className={`text-[11px] leading-relaxed ${mutedTextClass}`}>
+                    {t('skill_logo_desc')}
+                  </p>
+
+                  {/* Actions: Download SVG, Copy SVG, Copy Midjourney Prompt */}
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 pt-0.5">
+                    <button
+                      type="button"
+                      onClick={handleDownloadLogoSvg}
+                      className={`px-2.5 py-1 rounded-lg border text-[11px] font-medium transition-colors ${focusRingClass} ${secondaryBtnClass}`}
+                      title={t('skill_logo_btn_download')}
+                    >
+                      <span>📥 {t('skill_logo_btn_download')}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleCopyLogoSvg}
+                      className={`px-2.5 py-1 rounded-lg border text-[11px] font-medium transition-colors ${focusRingClass} ${
+                        copiedKey === 'logo_svg'
+                          ? 'bg-emerald-600 border-emerald-500 text-white'
+                          : secondaryBtnClass
+                      }`}
+                      title={t('skill_logo_btn_copy_svg')}
+                    >
+                      <span>{copiedKey === 'logo_svg' ? `✓ ${t('copied_btn')}` : `📋 ${t('skill_logo_btn_copy_svg')}`}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleCopyMidjourneyPrompt}
+                      className={`px-2.5 py-1 rounded-lg border text-[11px] font-medium transition-colors ${focusRingClass} ${
+                        copiedKey === 'logo_mj'
+                          ? 'bg-purple-600 border-purple-500 text-white'
+                          : secondaryBtnClass
+                      }`}
+                      title={t('skill_logo_btn_prompt_midjourney')}
+                    >
+                      <span>{copiedKey === 'logo_mj' ? `✓ ${t('copied_btn')}` : `✨ ${t('skill_logo_btn_prompt_midjourney')}`}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

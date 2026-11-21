@@ -16,6 +16,7 @@ export interface BuildFormulaSkillZipBundleInput {
   readonly formValues: Record<string, string | number | boolean | string[]>;
   readonly customOtherValues: Record<string, string>;
   readonly compiledPrompt: string;
+  readonly logoSvg?: string;
 }
 
 export interface FormulaSkillZipBundleResult {
@@ -498,6 +499,10 @@ export const buildFormulaSkillZipBundle = (
     { name: 'templates/sample-input.json', content: sampleInputJson },
     { name: 'scripts/validate-output.mjs', content: validatorScript },
   ];
+
+  if (input.logoSvg && input.logoSvg.trim().startsWith('<svg')) {
+    entries.push({ name: 'icon.svg', content: input.logoSvg.trim() });
+  }
 
   const archiveBytes = buildZipArchive(entries);
   const fileList = entries.map((entry) => entry.name);

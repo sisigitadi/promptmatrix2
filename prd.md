@@ -3,7 +3,7 @@
 > **Sistem:** PromptMatrix 2.0 - Guided AI Prompt Studio & Agent Skill Builder  
 > **Arsitek & Pemilik:** Sigit Adi ([https://sigitadi.id](https://sigitadi.id))  
 > **Domain Live:** [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
-> **Versi Saat Ini:** v7.6.5  
+> **Versi Saat Ini:** v7.6.6  
 > **Lisensi:** MIT  
 > **Standar Rekayasa:** Dikelola oleh RetroBOT (`RetroBOT.md`)
 
@@ -201,6 +201,12 @@ flowchart TD
     - **Banner Status Pembaruan Pasca-AI (`aiUpdateRecord`):** Menampilkan ringkasan audit realtime setelah fitur AI generate atau suggestion dijalankan, memuat delta skor kesiapan (sebelum ➔ sesudah, contoh: 67/100 ➔ 100/100), daftar perbaikan yang berhasil diselesaikan, bidang yang dimutakhirkan, dan konfirmasi kelayakan rilis 100%.
     - **Penyelarasan Header Audit Bahasa Indonesia:** Mengizinkan header `## Ringkasan` di samping `## Summary` pada validator `auditSkillMarketReadiness` dan `AgentSkillViewer` sehingga hasil demo berbahasa Indonesia lolos uji kepatuhan secara otomatis.
     - **Sanitasi Kebab-Case Tag AI (`services/universalAIService.ts`):** Memastikan tag hasil saran AI selalu dibersihkan menjadi format kebab-case murni (bebas huruf kapital, tanda pagar, spasi, dan stopword) agar 100% lolos verifikasi kepatuhan marketplace.
+
+  - **D43. Generator Logo Vektor AI Skill & Visual Emblem Studio (v7.6.6):**
+    - **Layanan Logo Vektor AI (`services/skillLogoService.ts`):** Mesin perancang logo vektor 1:1 SVG (viewBox `0 0 128 128`) menggunakan Universal AI yang menghasilkan squircle modern bergradien sesuai 4 pilar ekosistem (Develop, Grow, Operate, Create) dan glif geometris selaras dengan spesifikasi skill.
+    - **Generator Emblem Aligned Deterministik & Fallback:** Menghasilkan logo vektor instan dan presisi untuk seluruh 15 paket flagship dan 400 formula secara offline tanpa dependensi API eksternal.
+    - **Kartu Logo & Ikon Visual di Studio (`components/AgentSkillViewer.tsx`):** Menampilkan pratinjau live SVG 80x80, tombol `Buat Logo dengan AI`, unduh `icon.svg`, salin kode SVG, serta generator prompt Midjourney v7 / FLUX.2 untuk render 3D app icon.
+    - **Integrasi Arsip ZIP (`services/skillZipService.ts`):** Otomatis menyertakan file `icon.svg` ke dalam paket `.zip` yang diekspor untuk registri marketplace.
 
 ### Register Modul & Komponen Utama
 

@@ -195,4 +195,25 @@ Fitur perbaikan kesiapan AI di Studio Agent Skill (`components/AgentSkillViewer.
 4. **Sanitasi Otomatis Tag Marketplace:**
    - Seluruh tag hasil rekomendasi AI secara otomatis dikonversi ke format kebab-case murni (bebas huruf besar, tanda pagar, dan spasi) agar selalu memenuhi standar registri publik.
 
+---
+
+## 11. Generator Logo Vektor AI & Branding Visual Skill (v7.6.6)
+
+Identitas visual yang profesional sangat penting agar paket skill Anda menonjol di katalog marketplace (Agensi.io, ClawHub, PromptBase) dan etalase digital:
+
+1. **Tombol 'Buat Logo dengan AI' di Studio:**
+   - Terintegrasi langsung pada Step 1 Studio (`components/AgentSkillViewer.tsx`).
+   - Memanfaatkan Universal AI untuk merancang logo vektor SVG 1:1 (`viewBox 0 0 128 128`) berbentuk squircle modern dengan palet warna dan glif simbolik yang selaras dengan domain skill.
+
+2. **Generator Aligned Deterministik (Offline & Instan):**
+   - Menyediakan generator emblem deterministik berbasis pilar (Develop, Grow, Operate, Create) yang menghasilkan logo SVG tajam untuk seluruh 15 paket flagship dan 400 formula tanpa dependensi API luar.
+
+3. **Otomasi Bundel `icon.svg` ke Arsip ZIP:**
+   - Berkas `icon.svg` otomatis dikemas ke dalam arsip `.zip` saat tombol *Unduh Paket .zip* diklik (`services/skillZipService.ts`).
+   - Kreator dapat mengunduh berkas SVG secara terpisah atau menyalin kode SVG langsung ke clipboard.
+
+4. **Generator Prompt Midjourney v7 / FLUX.2:**
+   - Menyediakan tombol salin prompt Midjourney v7 berformat `--ar 1:1 --v 7` bagi kreator yang menginginkan render 3D fotorealistik atau ikon aplikasi gaya iOS.
+
+
 
