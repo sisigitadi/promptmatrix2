@@ -19,6 +19,7 @@ export type AgensiPillar = 'develop' | 'grow' | 'operate' | 'create';
 export interface AgensiSkillPackItem {
   readonly slug: string;
   readonly title: string;
+  readonly titleId?: string;
   readonly tier: 'lead-magnet' | 'flagship';
   readonly pillar: AgensiPillar;
   readonly priceUsd: number;
@@ -139,6 +140,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'prompt-matrix-prompt-architect',
       title: 'PromptMatrix Prompt Architect',
+      titleId: 'PromptMatrix Prompt Architect',
       tier: 'lead-magnet',
       pillar: 'develop',
       priceUsd: 0,
@@ -158,6 +160,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'antislop-ui-and-copy-auditor',
       title: 'Antislop UI & Copy Auditor',
+      titleId: 'Auditor UI & Teks Bebas Slop (Antislop)',
       tier: 'flagship',
       pillar: 'create',
       priceUsd: 12,
@@ -176,6 +179,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'fullstack-ts-nextjs-architect',
       title: 'Fullstack TS & Next.js Architect',
+      titleId: 'Arsitek Fullstack TS & Next.js',
       tier: 'flagship',
       pillar: 'develop',
       priceUsd: 14.99,
@@ -194,6 +198,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'mcp-server-production-builder',
       title: 'MCP Server Production Builder',
+      titleId: 'Pembangun Server MCP Produksi',
       tier: 'flagship',
       pillar: 'develop',
       priceUsd: 14.99,
@@ -212,6 +217,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'seo-geo-aeo-content-engine',
       title: 'SEO, GEO & AEO Content Engine',
+      titleId: 'Mesin Konten SEO, GEO & AEO',
       tier: 'flagship',
       pillar: 'grow',
       priceUsd: 11.99,
@@ -230,6 +236,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'multimodal-video-image-director',
       title: 'Multimodal Video & Image Director',
+      titleId: 'Sutradara Gambar & Video Multimodal',
       tier: 'flagship',
       pillar: 'create',
       priceUsd: 9.99,
@@ -248,6 +255,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'owasp-api-and-cloud-security-auditor',
       title: 'OWASP API & Cloud Security Auditor',
+      titleId: 'Auditor Keamanan Cloud & API OWASP',
       tier: 'flagship',
       pillar: 'develop',
       priceUsd: 19.99,
@@ -267,6 +275,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'multi-agent-swarm-and-subagent-orchestrator',
       title: 'Multi-Agent Swarm & Subagent Orchestrator',
+      titleId: 'Orkestrator Swarm Multi-Agen & Sub-Agen',
       tier: 'flagship',
       pillar: 'develop',
       priceUsd: 19.99,
@@ -286,6 +295,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'postgres-prisma-zero-downtime-sql-tuner',
       title: 'Postgres & Prisma Zero-Downtime SQL Tuner',
+      titleId: 'Tuner SQL Zero-Downtime Postgres & Prisma',
       tier: 'flagship',
       pillar: 'develop',
       priceUsd: 14.99,
@@ -305,6 +315,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'playwright-e2e-and-openapi-contract-suite',
       title: 'Playwright E2E & OpenAPI Contract Suite',
+      titleId: 'Suite Pengujian E2E Playwright & Kontrak OpenAPI',
       tier: 'flagship',
       pillar: 'develop',
       priceUsd: 14.99,
@@ -324,6 +335,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'ai-product-manager-and-prd-architect',
       title: 'AI Product Manager & PRD Architect',
+      titleId: 'Manajer Produk AI & Arsitek PRD',
       tier: 'flagship',
       pillar: 'operate',
       priceUsd: 14.99,
@@ -343,6 +355,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'business-workflow-and-n8n-integrator',
       title: 'Business Workflow & n8n Integrator',
+      titleId: 'Integrator Alur Kerja Bisnis & n8n',
       tier: 'flagship',
       pillar: 'operate',
       priceUsd: 14.99,
@@ -362,6 +375,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'b2b-cold-outreach-and-sales-engine',
       title: 'B2B Cold Outreach & Sales Engine',
+      titleId: 'Mesin Prospeksi & Penjualan B2B (Cold Outreach)',
       tier: 'flagship',
       pillar: 'grow',
       priceUsd: 11.99,
@@ -381,6 +395,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'viral-short-form-video-hook-architect',
       title: 'Viral Short-Form Video Hook Architect',
+      titleId: 'Arsitek Hook Video Pendek Viral',
       tier: 'flagship',
       pillar: 'grow',
       priceUsd: 9.99,
@@ -400,6 +415,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
     {
       slug: 'suno-ai-music-and-audio-director',
       title: 'Suno AI Music & Audio Director',
+      titleId: 'Sutradara Musik & Audio Suno AI',
       tier: 'flagship',
       pillar: 'create',
       priceUsd: 9.99,
@@ -667,4 +683,14 @@ export const getContextualSkillPacksForCategory = (
     matchedFlagships.length > 0 ? matchedFlagships.slice(0, 3) : flagshipPacks.slice(0, 2);
 
   return leadMagnet ? [...selectedFlagships, leadMagnet] : selectedFlagships;
+};
+
+/**
+ * Returns the localized title of a skill pack based on the active language.
+ */
+export const getAgensiPackTitle = (
+  pack: AgensiSkillPackItem,
+  language: 'id' | 'en'
+): string => {
+  return language === 'id' && pack.titleId ? pack.titleId : pack.title;
 };

@@ -17,6 +17,7 @@ import {
 import { suggestSkillMetadataWithUniversalAI } from '../services/universalAIService';
 import { isAIConfigured } from '../services/aiSettingsService';
 import { FLAGSHIP_SKILLS_DATA } from '../data/flagshipSkillsData';
+import { translateFrameworkName } from '../services/localizationService';
 
 export interface SkillListingOverrides {
   readonly tagline?: string;
@@ -369,23 +370,29 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   const baseRecord = useMemo(() => {
     if (activeSourceSlug && activeSourceSlug !== 'current_formula' && activeSourceSlug !== 'custom_new' && FLAGSHIP_SKILLS_DATA[activeSourceSlug]) {
       const f = FLAGSHIP_SKILLS_DATA[activeSourceSlug];
+      const localizedTitle = isId && f.titleId ? f.titleId : f.title;
+      const localizedTagline = isId && f.taglineId ? f.taglineId : f.tagline;
+      const localizedDemoReq = isId && f.demoRequestId ? f.demoRequestId : f.demoRequest;
+      const localizedDemoRes = isId && f.demoResultId ? f.demoResultId : f.demoResult;
+      const localizedCategory = isId && f.categoryId ? f.categoryId : f.category;
       return {
         name: f.name,
-        title: f.title,
-        category: f.category,
+        title: localizedTitle,
+        category: localizedCategory,
         priceUsd: f.priceUsd,
-        tagline: f.tagline,
+        tagline: localizedTagline,
         tags: f.tags,
-        demoRequest: f.demoRequest,
-        demoResult: f.demoResult,
+        demoRequest: localizedDemoReq,
+        demoResult: localizedDemoRes,
         rawMarkdown: f.rawMarkdown,
         author: f.spec.metadata.author,
         version: f.spec.metadata.version,
         license: f.spec.license,
         compatibility: f.spec.compatibility,
-        description: f.spec.description,
+        description: isId && f.taglineId ? `${f.taglineId} Gunakan skill ini saat memerlukan alur kerja terstruktur.` : f.spec.description,
         body: f.spec.body,
         spec: f.spec,
+        pillar: f.pillar,
       };
     }
 
@@ -469,10 +476,12 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     }
 
     // Default: active studio formula
+    const rawFwName = selectedFrameworkName || skillSpec.metadata.framework || skillSpec.name;
+    const localizedFwTitle = isId ? translateFrameworkName(rawFwName, 'id') : translateFrameworkName(rawFwName, 'en');
     return {
       name: skillSpec.name,
-      title: skillSpec.metadata.framework || skillSpec.name,
-      category: skillSpec.metadata.category || 'General',
+      title: localizedFwTitle || rawFwName,
+      category: skillSpec.metadata.category || (isId ? 'Umum' : 'General'),
       priceUsd: listingOverrides?.priceUsd,
       tagline: listingOverrides?.tagline,
       tags: listingOverrides?.tags,
@@ -516,6 +525,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       if (raw) {
         const parsed = JSON.parse(raw);
         if (parsed && typeof parsed === 'object') {
+          const f = FLAGSHIP_SKILLS_DATA[activeSourceSlug];
           setEditedSkillName(parsed.name ?? null);
           setEditedCategory(parsed.category ?? null);
           setEditedAuthor(parsed.author ?? null);
@@ -523,14 +533,18 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           setEditedLicense(parsed.license ?? null);
           setEditedTriggerDesc(parsed.triggerDesc ?? null);
           const rawTitle = parsed.title;
+          const isStaleEnglishTitle = isId && f && f.titleId && rawTitle === f.title;
           const sanitizedTitle =
             rawTitle &&
             rawTitle !== 'Universal Agent Skill & Market Kit' &&
-            rawTitle !== t('skill_universal_kit_title')
+            rawTitle !== t('skill_universal_kit_title') &&
+            !isStaleEnglishTitle
               ? rawTitle
               : null;
           setEditedTitle(sanitizedTitle);
-          setEditedTagline(parsed.tagline ?? null);
+          const rawTagline = parsed.tagline;
+          const isStaleEnglishTagline = isId && f && f.taglineId && rawTagline === f.tagline;
+          setEditedTagline(!isStaleEnglishTagline ? (rawTagline ?? null) : null);
           setEditedPriceStr(parsed.priceStr ?? null);
           setEditedTagsStr(parsed.tagsStr ?? null);
           const rawDescMd = parsed.descMd;
@@ -542,8 +556,12 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
               ? rawDescMd
               : null;
           setEditedDescMd(sanitizedDescMd);
-          setEditedDemoRequest(parsed.demoRequest ?? null);
-          setEditedDemoResult(parsed.demoResult ?? null);
+          const rawDemoReq = parsed.demoRequest;
+          const isStaleEnglishReq = isId && f && f.demoRequestId && rawDemoReq === f.demoRequest;
+          setEditedDemoRequest(!isStaleEnglishReq ? (rawDemoReq ?? null) : null);
+          const rawDemoRes = parsed.demoResult;
+          const isStaleEnglishRes = isId && f && f.demoResultId && rawDemoRes === f.demoResult;
+          setEditedDemoResult(!isStaleEnglishRes ? (rawDemoRes ?? null) : null);
           return;
         }
       }
@@ -1086,14 +1104,17 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
             className={`w-full min-h-[42px] px-3 py-2 pr-9 rounded-xl border text-xs font-semibold truncate transition-colors appearance-none cursor-pointer ${inputClass} ${focusRingClass}`}
           >
             <option value="current_formula">
-              ⚡ {isId ? '[Formula Aktif]' : '[Active Formula]'} {selectedFrameworkName || (baseRecord.title && baseRecord.title !== 'PromptMatrix Custom Skill' ? baseRecord.title : t('skill_editor_formula_option'))}
+              ⚡ {isId ? '[Formula Aktif]' : '[Active Formula]'} {isId && selectedFrameworkName ? translateFrameworkName(selectedFrameworkName, 'id') : (selectedFrameworkName || (baseRecord.title && baseRecord.title !== 'PromptMatrix Custom Skill' ? baseRecord.title : t('skill_editor_formula_option')))}
             </option>
             <optgroup label={t('skill_editor_flagship_group')}>
-              {flagshipPacks.map((pack) => (
-                <option key={pack.slug} value={pack.slug}>
-                  📦 {pack.title} ({pack.slug})
-                </option>
-              ))}
+              {flagshipPacks.map((pack) => {
+                const localizedTitle = isId && pack.titleId ? pack.titleId : pack.title;
+                return (
+                  <option key={pack.slug} value={pack.slug}>
+                    📦 {localizedTitle} ({pack.slug})
+                  </option>
+                );
+              })}
             </optgroup>
             <option value="custom_new">
               ✨ {t('skill_editor_custom_option')}

@@ -3,7 +3,7 @@
 > **Sistem:** PromptMatrix 2.0 - Guided AI Prompt Studio & Agent Skill Builder  
 > **Arsitek & Pemilik:** Sigit Adi ([https://sigitadi.id](https://sigitadi.id))  
 > **Domain Live:** [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
-> **Versi Saat Ini:** v7.6.3  
+> **Versi Saat Ini:** v7.6.4  
 > **Lisensi:** MIT  
 > **Standar Rekayasa:** Dikelola oleh RetroBOT (`RetroBOT.md`)
 
@@ -190,6 +190,11 @@ flowchart TD
     - **Engine Preset Lisensi Terkurasi (`services/agentSkillService.ts`):** Menyediakan konstanta `SKILL_LICENSE_PRESETS` lintas 4 kategori (Komersial Marketplace Single-Seat, Multi-Seat Team, Extended Agency, Open Source MIT, Apache-2.0, CC-BY-NC-4.0, dan Custom EULA) lengkap dengan lencana status, rekomendasi marketplace, dan deskripsi bilingual ID/EN.
     - **Selector Lisensi Interaktif (`components/AgentSkillViewer.tsx`):** Mengganti input teks mentah lisensi dengan dropdown interaktif adaptif ber-lencana visual, deskripsi cakupan hak cipta dinamis, dan fallback input manual otomatis saat memilih opsi kustom atau varian lisensi proprietary.
     - **Penyelarasan Peringatan Kepatuhan:** Memperbarui validator `validateAgentSkillSpec` untuk merekomendasikan lisensi komersial maupun open-source yang sah tanpa mengunci kreator semata-mata pada lisensi MIT saat bersiap menjual ke marketplace.
+
+  - **D41. Lokalisasi Penuh Judul & Profil Produk Agent Skill Studio (v7.6.4):**
+    - **Data Judul & Profil Flagship Dwibahasa (`config/agensiConfig.ts` & `data/skillListingDemos.ts`):** Menambahkan field `titleId` pada seluruh 15 paket resmi `bundledSkillPacks` dan `SKILL_LISTING_DEMOS_ID` (`tagline`, `categoryLabel`, `highlights`, `demoRequest`, `demoResult`) lengkap via helper `getSkillListingDemo`.
+    - **Kepatuhan Translasi Studio & Modal (`AgentSkillViewer.tsx` & `AgensiCatalogModal.tsx`):** Menghubungkan resolusi `baseRecord`, status bar H3, dropdown switcher formula, dan formulir Step 1 (*Judul Listing*, *Tagline Manfaat*, *Deskripsi Listing*, *Skenario Input Demo*, dan *Output Terverifikasi Demo*) ke kamus bahasa Indonesia saat mode ID aktif, mengeliminasi teks bahasa Inggris yang bocor.
+    - **Penyelarasan Fallback & Sanitasi Draf:** Memperbarui generator fallback demo (`buildFallbackDemoResult`) dengan header dan tabel berbahasa Indonesia, serta mencegah draf usang berbahasa Inggris dari `localStorage` menimpa judul atau profil resmi bahasa Indonesia.
 
 ### Register Modul & Komponen Utama
 

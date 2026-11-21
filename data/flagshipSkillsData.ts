@@ -1,21 +1,26 @@
 // Auto-generated flagship skills data for PromptMatrix Studio editor
 import { AgentSkillSpec } from '../services/agentSkillService';
-import { SKILL_LISTING_DEMOS } from './skillListingDemos';
+import { SKILL_LISTING_DEMOS, SKILL_LISTING_DEMOS_ID } from './skillListingDemos';
 import { AGENSI_CONFIG, AgensiPillar } from '../config/agensiConfig';
 
 export interface FlagshipSkillRecord {
   readonly slug: string;
   readonly name: string;
   readonly title: string;
+  readonly titleId?: string;
   readonly category: string;
+  readonly categoryId?: string;
   readonly pillar?: AgensiPillar;
   readonly priceUsd: number;
   readonly rawMarkdown: string;
   readonly spec: AgentSkillSpec;
   readonly tagline: string;
+  readonly taglineId?: string;
   readonly tags: readonly string[];
   readonly demoRequest: string;
+  readonly demoRequestId?: string;
   readonly demoResult: string;
+  readonly demoResultId?: string;
 }
 
 const RAW_FLAGSHIP_RECORDS: Record<string, {
@@ -224,19 +229,25 @@ export const FLAGSHIP_SKILLS_DATA: Record<string, FlagshipSkillRecord> = (() => 
         },
       };
 
+      const idDemo = SKILL_LISTING_DEMOS_ID[pack.slug];
       map[pack.slug] = {
         slug: pack.slug,
         name: raw.name,
         title: pack.title,
+        titleId: pack.titleId,
         category: demo.categoryLabel || pack.matchedCategories[0] || 'General',
+        categoryId: idDemo?.categoryLabel,
         pillar: pack.pillar,
         priceUsd: pack.priceUsd,
         rawMarkdown: raw.rawMarkdown,
         spec,
         tagline: demo.tagline,
+        taglineId: idDemo?.tagline,
         tags: demo.tags,
         demoRequest: demo.demoRequest,
+        demoRequestId: idDemo?.demoRequest,
         demoResult: demo.demoResult,
+        demoResultId: idDemo?.demoResult,
       };
     }
   }

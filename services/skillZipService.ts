@@ -1,5 +1,5 @@
 import { Language } from '../types';
-import { SKILL_LISTING_DEMOS, SkillListingDemoProfile } from '../data/skillListingDemos';
+import { SKILL_LISTING_DEMOS, SkillListingDemoProfile, getSkillListingDemo } from '../data/skillListingDemos';
 import { AgensiPillar } from '../config/agensiConfig';
 import { AgentSkillSpec } from './agentSkillService';
 import { sanitizeString } from './jsonPromptService';
@@ -882,13 +882,20 @@ const buildFallbackDemoResult = (
 
   const tableRows =
     entries.length > 0
-      ? entries.slice(0, 6).map((entry) => `| ${entry.label} | ${truncateLineAtBoundary(entry.value, 90)} | Applied |`)
-      : [
-        `| Workflow Target | ${title} | Active |`,
-        `| Domain Scope | ${category} | Verified |`,
-        `| Bundle Files | ${safeFiles} | Packaged |`,
-        `| Output Hygiene | Zero unresolved placeholders, zero em dashes | Enforced |`,
-      ];
+      ? entries.slice(0, 6).map((entry) => `| ${entry.label} | ${truncateLineAtBoundary(entry.value, 90)} | ${isIndonesian ? 'Diterapkan' : 'Applied'} |`)
+      : isIndonesian
+        ? [
+          `| Target Alur Kerja | ${title} | Aktif |`,
+          `| Cakupan Domain | ${category} | Terverifikasi |`,
+          `| Berkas Paket | ${safeFiles} | Terkemas |`,
+          `| Kerapian Output | Nol placeholder kosong, nol em dash | Ditegakkan |`,
+        ]
+        : [
+          `| Workflow Target | ${title} | Active |`,
+          `| Domain Scope | ${category} | Verified |`,
+          `| Bundle Files | ${safeFiles} | Packaged |`,
+          `| Output Hygiene | Zero unresolved placeholders, zero em dashes | Enforced |`,
+        ];
 
   const contractPreview = cleanCompiled
     ? truncateLineAtBoundary(cleanCompiled, 350)
@@ -897,46 +904,79 @@ const buildFallbackDemoResult = (
       : `Role: ${category} specialist executing ${title}\nInput: Structured parameters from templates/sample-input.json\nOutput: Verified deliverable free of unresolved placeholders and passing local CLI checks.`;
 
   const summaryText = description
-    ? `${description} Output below translates the active parameters into a repeatable ${category} deliverable.`
-    : `Applied ${title} rules for ${category} to convert raw requirements into a verified specification ready for execution.`;
+    ? isIndonesian
+      ? `${description} Output di bawah ini menerjemahkan parameter aktif menjadi deliverable ${category} yang terstruktur dan siap pakai.`
+      : `${description} Output below translates the active parameters into a repeatable ${category} deliverable.`
+    : isIndonesian
+      ? `Menerapkan aturan ${title} untuk domain ${category} guna mengubah instruksi mentah menjadi spesifikasi terverifikasi yang siap dieksekusi.`
+      : `Applied ${title} rules for ${category} to convert raw requirements into a verified specification ready for execution.`;
 
-  const lines: string[] = [
-    '## Summary',
-    summaryText,
-    '',
-    '### Deliverable Specification',
-    '',
-    '| Parameter / Check | Applied Configuration | Status |',
-    '| :--- | :--- | :--- |',
-    ...tableRows,
-    '',
-    '### Execution Contract Preview',
-    '',
-    '```text',
-    contractPreview,
-    '```',
-    '',
-    '## Next Steps',
-    '1. Extract the skill ZIP archive so `SKILL.md` sits at the root of your agent skill folder.',
-    '2. Run `node scripts/validate-output.mjs templates/sample-input.json` to confirm valid JSON, zero zero-width characters, and zero unresolved placeholders.',
-    '3. Invoke the workflow in your Open Agent Skills runner with real project inputs and review the verification checklist before shipping.',
-  ];
+  const lines: string[] = isIndonesian
+    ? [
+      '## Ringkasan',
+      summaryText,
+      '',
+      '### Spesifikasi Deliverable',
+      '',
+      '| Parameter / Pemeriksaan | Konfigurasi Diterapkan | Status |',
+      '| :--- | :--- | :--- |',
+      ...tableRows,
+      '',
+      '### Pratinjau Kontrak Eksekusi',
+      '',
+      '```text',
+      contractPreview,
+      '```',
+      '',
+      '## Langkah Selanjutnya',
+      '1. Ekstrak arsip ZIP skill sehingga SKILL.md berada di root folder skill agen Anda.',
+      '2. Jalankan node scripts/validate-output.mjs templates/sample-input.json untuk memastikan JSON valid, tanpa karakter zero-width, dan tanpa placeholder kosong.',
+      '3. Panggil alur kerja di runner Open Agent Skills pilihan Anda dengan input proyek riil dan tinjau checklist verifikasi sebelum merilis.',
+    ]
+    : [
+      '## Summary',
+      summaryText,
+      '',
+      '### Deliverable Specification',
+      '',
+      '| Parameter / Check | Applied Configuration | Status |',
+      '| :--- | :--- | :--- |',
+      ...tableRows,
+      '',
+      '### Execution Contract Preview',
+      '',
+      '```text',
+      contractPreview,
+      '```',
+      '',
+      '## Next Steps',
+      '1. Extract the skill ZIP archive so `SKILL.md` sits at the root of your agent skill folder.',
+      '2. Run `node scripts/validate-output.mjs templates/sample-input.json` to confirm valid JSON, zero zero-width characters, and zero unresolved placeholders.',
+      '3. Invoke the workflow in your Open Agent Skills runner with real project inputs and review the verification checklist before shipping.',
+    ];
 
   const assembled = cleanOutputText(lines.join('\n').trim());
   if (assembled.length >= 700) {
     return assembled;
   }
 
-  return cleanOutputText(
-    [
-      assembled,
+  const qualityGateSection = isIndonesian
+    ? [
+      '',
+      '### Verifikasi Standar Kualitas (Quality Gateway)',
+      '- Memastikan slug skill berupa kebab-case valid (<= 64 karakter) dan frontmatter YAML siap penemuan.',
+      '- Memverifikasi seluruh bagian wajib (Role & Trigger, Input Parameters, Execution Steps, Verification Checklist) terisi tanpa placeholder kosong.',
+      '- Memastikan eksekusi lokal client-side 100% tanpa dependensi jaringan eksternal atau kebocoran rahasia.',
+    ].join('\n')
+    : [
       '',
       '### Quality Gate Verification',
       '- Confirmed valid kebab-case skill slug (`<= 64` characters) and discovery-ready YAML frontmatter.',
       '- Verified all required sections (`Role & Trigger`, `Input Parameters`, `Execution Steps`, `Verification Checklist`) are populated without placeholder drift.',
       '- Confirmed local client-side execution with zero external network dependencies or secret leakage.',
-    ].join('\n')
-  );
+    ].join('\n');
+
+  return cleanOutputText([assembled, qualityGateSection].join('\n'));
 };
 
 const buildPromptBaseListing = (
@@ -1083,7 +1123,7 @@ export const buildAgensiListingCopy = (
   const recommendedPriceUsd = inferRecommendedPriceUsd(input.category, input.priceUsd, detectedPillar);
   const cleanTitle = cleanOutputText(input.title).trim();
   const cleanDesc = cleanOutputText(input.description).trim();
-  const demoProfile = SKILL_LISTING_DEMOS[cleanSlug];
+  const demoProfile = getSkillListingDemo(cleanSlug, input.language);
   const entries = extractVariableEntries(input.formValues);
 
   const tags = buildListingTags(

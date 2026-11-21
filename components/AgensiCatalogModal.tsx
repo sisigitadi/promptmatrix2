@@ -15,7 +15,7 @@ import {
 import { useLanguage } from '../contexts/LanguageContext';
 import { buildAgensiListingCopy } from '../services/skillZipService';
 import { AgentSkillSpec, SkillValidationResult } from '../services/agentSkillService';
-import { SKILL_LISTING_DEMOS } from '../data/skillListingDemos';
+import { SKILL_LISTING_DEMOS, getSkillListingDemo } from '../data/skillListingDemos';
 import {
   suggestSkillMetadataWithUniversalAI,
   generatePackPitchWithUniversalAI,
@@ -262,9 +262,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
 
   const handleCopyListingCopy = async (pack: AgensiSkillPackItem) => {
     const summary = language === 'id' ? pack.summaryId : pack.summaryEn;
+    const packTitle = language === 'id' && pack.titleId ? pack.titleId : pack.title;
     const listing = buildAgensiListingCopy({
       slug: pack.slug,
-      title: pack.title,
+      title: packTitle,
       description: summary,
       category: pack.matchedCategories[0] || 'General',
       pillar: pack.pillar,
@@ -299,9 +300,11 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
   };
 
   const handleCopyPackDemo = async (pack: AgensiSkillPackItem) => {
-    const demo = SKILL_LISTING_DEMOS[pack.slug];
+    const demo = getSkillListingDemo(pack.slug, language);
     if (!demo) return;
-    const demoText = `### The Request\n${demo.demoRequest}\n\n### The Result\n${demo.demoResult}\n`;
+    const reqHeader = language === 'id' ? '### Skenario Permintaan (The Request)' : '### The Request';
+    const resHeader = language === 'id' ? '### Hasil Eksekusi (The Result)' : '### The Result';
+    const demoText = `${reqHeader}\n${demo.demoRequest}\n\n${resHeader}\n${demo.demoResult}\n`;
 
     let copySucceeded = false;
     if (onCopyText) {
@@ -349,9 +352,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
     }
 
     const summary = language === 'id' ? pack.summaryId : pack.summaryEn;
+    const packTitle = language === 'id' && pack.titleId ? pack.titleId : pack.title;
     setPitchingSlug(pack.slug);
     try {
-      const pitchText = await generatePackPitchWithUniversalAI(pack.title, summary, language);
+      const pitchText = await generatePackPitchWithUniversalAI(packTitle, summary, language);
       let copied = false;
       if (onCopyText) {
         await Promise.resolve(onCopyText(pitchText, t('toast_skill_ai_pitch_copied')));
@@ -744,7 +748,7 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
                               className={`text-sm font-bold leading-snug mt-1 break-words ${isLightTheme ? 'text-slate-900' : 'text-slate-100'
                                 }`}
                             >
-                              {pack.title}
+                              {language === 'id' && pack.titleId ? pack.titleId : pack.title}
                             </h4>
                           </div>
                           <span

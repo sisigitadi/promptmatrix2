@@ -498,7 +498,7 @@ export const buildAgentSkillSpec = (input: BuildAgentSkillInput): AgentSkillSpec
       source: 'PromptMatrix 2.0',
       category: displayCategory,
       language,
-      framework: cleanSkillText(rawFrameworkName),
+      framework: cleanSkillText(displayFrameworkName),
     },
     body: bodyParts.join('\n').trim(),
     sections: {
