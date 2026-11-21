@@ -520,7 +520,14 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           setEditedVersion(parsed.version ?? null);
           setEditedLicense(parsed.license ?? null);
           setEditedTriggerDesc(parsed.triggerDesc ?? null);
-          setEditedTitle(parsed.title ?? null);
+          const rawTitle = parsed.title;
+          const sanitizedTitle =
+            rawTitle &&
+            rawTitle !== 'Universal Agent Skill & Market Kit' &&
+            rawTitle !== t('skill_universal_kit_title')
+              ? rawTitle
+              : null;
+          setEditedTitle(sanitizedTitle);
           setEditedTagline(parsed.tagline ?? null);
           setEditedPriceStr(parsed.priceStr ?? null);
           setEditedTagsStr(parsed.tagsStr ?? null);
@@ -884,11 +891,13 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       {/* Top Status & Controls Bar (Stacked cleanly, zero overlap at any width) */}
       <div className={`space-y-2.5 pb-3 border-b ${dividerClass}`}>
         <div className="flex flex-wrap items-center justify-between gap-2 min-w-0">
-          <div className="min-w-0 flex-1 space-y-1">
+          <div className="min-w-0 flex-1 space-y-1.5">
             <div className="flex flex-wrap items-center gap-1.5">
               <span
-                className={`text-xs font-bold tracking-tight ${
-                  isLightTheme ? 'text-slate-900' : 'text-slate-100'
+                className={`px-2 py-0.5 rounded-md text-[10px] font-semibold tracking-wide border uppercase ${
+                  isLightTheme
+                    ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
+                    : 'bg-emerald-950/40 border-emerald-600/40 text-emerald-300'
                 }`}
               >
                 {t('skill_universal_kit_title')}
@@ -906,13 +915,32 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
               >
                 {auditResult.score}/100
               </span>
+              <span
+                className={`px-2 py-0.5 rounded-md font-mono text-[10px] font-semibold border ${
+                  isLightTheme
+                    ? 'bg-slate-100 border-slate-300 text-slate-700'
+                    : 'bg-slate-800/70 border-slate-700 text-slate-300'
+                }`}
+              >
+                {effectiveCategory}
+              </span>
             </div>
-            <p
-              className={`text-[11px] font-mono break-all ${accentTextClass}`}
-              title={`${activeSpec.name}.zip`}
+            <h3
+              className={`text-sm sm:text-base font-bold tracking-tight leading-snug break-words ${
+                isLightTheme ? 'text-slate-900' : 'text-slate-100'
+              }`}
             >
-              {activeSpec.name}.zip
-            </p>
+              {activeTitle || effectiveTitle || activeSpec.metadata.framework || activeSpec.name}
+            </h3>
+            <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+              <span className={accentTextClass} title={`${activeSpec.name}.zip`}>
+                📦 {activeSpec.name}.zip
+              </span>
+              <span className={mutedTextClass}>•</span>
+              <span className={mutedTextClass}>v{effectiveVersion}</span>
+              <span className={mutedTextClass}>•</span>
+              <span className={mutedTextClass}>{effectiveLicense}</span>
+            </div>
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
@@ -1041,7 +1069,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
             className={`w-full min-h-[42px] px-3 py-2 pr-9 rounded-xl border text-xs font-semibold truncate transition-colors appearance-none cursor-pointer ${inputClass} ${focusRingClass}`}
           >
             <option value="current_formula">
-              ⚡ {isId ? '[Formula Aktif]' : '[Active Formula]'} {selectedFrameworkName || t('skill_editor_formula_option')}
+              ⚡ {isId ? '[Formula Aktif]' : '[Active Formula]'} {selectedFrameworkName || (baseRecord.title && baseRecord.title !== 'PromptMatrix Custom Skill' ? baseRecord.title : t('skill_editor_formula_option'))}
             </option>
             <optgroup label={t('skill_editor_flagship_group')}>
               {flagshipPacks.map((pack) => (
