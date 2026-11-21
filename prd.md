@@ -3,7 +3,7 @@
 > **Sistem:** PromptMatrix 2.0 - Guided AI Prompt Studio & Agent Skill Builder  
 > **Arsitek & Pemilik:** Sigit Adi ([https://sigitadi.id](https://sigitadi.id))  
 > **Domain Live:** [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
-> **Versi Saat Ini:** v7.6.1  
+> **Versi Saat Ini:** v7.6.2  
 > **Lisensi:** MIT  
 > **Standar Rekayasa:** Dikelola oleh RetroBOT (`RetroBOT.md`)
 
@@ -175,13 +175,16 @@ flowchart TD
     - **Generator Cerdas Listing & Pricing (`services/skillZipService.ts`):** Fungsi `inferAgensiPillar` untuk auto-deteksi pilar dari kategori/tags/slug, rekomendasi harga berbasis pilar, dan injeksi metadata pilar ke spesifikasi GEO & Schema JSON-LD.
     - **Distribusi Multi-Channel Suite Update (`scripts/package-multi-channels.mjs`):** Paket suite 14 flagship `promptmatrix-14-flagship-suite.zip` ($59.00 vs $195.87 satuan) dengan verifikasi otomatis keutuhan arsip POSIX.
 
-  - **D38. Resolusi Judul Dinamis & Sanitasi Draf Universal Agent Skill & Market Kit (v7.6.1):**
+  - **D38. Resolusi Judul Dinamis & Status Bar Universal Agent Skill & Market Kit (v7.6.1):**
     - **Resolusi Judul Dinamis:** Memperbaiki status bar atas `components/AgentSkillViewer.tsx` agar menampilkan nama riil paket/formula yang dimuat (`activeTitle` / `effectiveTitle` / `activeSpec.name`) alih-alih teks statis *"Universal Agent Skill & Market Kit"*.
-    - **Hierarki Status Bar Premium:** Menempatkan badge konteks `UNIVERSAL AGENT SKILL & MARKET KIT`, audit compliance score (`100/100`), dan badge kategori di baris lencana atas, diikuti judul H3 yang tegas dan subline metadata paket (`📦 <slug>.zip • v1.0.0 • MIT`).
-    - **Audit Playbook Sections Fleksibel (`services/agentSkillService.ts`):** Mengadopsi matcher bagian playbook (`RequiredPlaybookSection`) yang mengenali konvensi Open Agent Skills standar (`## When to Activate`, `## Step 1...`, `spec.sections`, dan `## Verification Checklist`), mengeliminasi false positive peringatan *"Missing sections: Role & Trigger, Input Parameters, Execution Steps"* pada 15 paket flagship.
-    - **Pemisahan Tegas Body vs Deskripsi Listing:** Memperbaiki isolasi `effectiveBody` di `AgentSkillViewer.tsx` agar selalu mempertahankan playbook instruksi teknis utuh dari `baseRecord.body`, mencegah tertimpa oleh deskripsi pemasaran marketplace (`activeDescMd`).
-    - **Sanitasi Draf LocalStorage:** Menambahkan mekanisme pembersih draf lokal otomatis pada `useEffect` agar placeholder generik atau raw markdown lawas tidak menimpa judul dan body paket komersial.
+    - **Hierarki Status Bar Premium:** Menempatkan badge konteks `UNIVERSAL AGENT SKILL & MARKET KIT`, audit compliance score, dan badge kategori di baris lencana atas, diikuti judul H3 yang tegas dan subline metadata paket (`📦 <slug>.zip • v1.0.0 • MIT`).
     - **Label Opsi Dropdown Interaktif:** Memperkaya label opsi `[Formula Aktif]` di dropdown switcher studio dengan nama framework atau draf canvas aktif.
+
+  - **D39. Resolusi Audit Seksi Playbook SKILL.md & Isolasi Body Playbook vs Deskripsi Listing (v7.6.2):**
+    - **Audit Playbook Sections Fleksibel (`services/agentSkillService.ts`):** Mengadopsi matcher bagian playbook multi-konvensi (`RequiredPlaybookSection`) yang mengenali konvensi Open Agent Skills standar (`## When to Activate`, `## Step 1...`, `spec.sections`, dan `## Verification Checklist`), mengeliminasi false positive peringatan *"Missing sections: Role & Trigger, Input Parameters, Execution Steps"* pada 15 paket flagship sehingga 15/15 paket meraih skor kepatuhan 100/100.
+    - **Pemisahan Tegas Body vs Deskripsi Listing (`components/AgentSkillViewer.tsx`):** Memperbaiki isolasi `effectiveBody` di `AgentSkillViewer.tsx` agar selalu mempertahankan playbook instruksi teknis utuh dari `baseRecord.body`, mencegah tertimpa oleh deskripsi pemasaran marketplace (`activeDescMd`).
+    - **Sanitasi Draf LocalStorage:** Menambahkan mekanisme pembersih draf lokal otomatis pada `useEffect` agar placeholder generik atau raw markdown lawas tidak menimpa judul dan body paket komersial.
+    - **Default Deskripsi Listing yang Bersih:** Mengarahkan nilai awal `activeDescMd` ke `listingCopy.descriptionMarkdown` alih-alih `baseRecord.rawMarkdown`, menjaga area pratinjau teks jual bebas dari kebocoran frontmatter `---`.
 
 ### Register Modul & Komponen Utama
 
