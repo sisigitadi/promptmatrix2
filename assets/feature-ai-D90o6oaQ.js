@@ -546,4 +546,4 @@ Draft 1 concise promotional post / pitch hook (for X / LinkedIn / Communities):
 2. Concrete solution delivered by this skill pack in 3 bullet points.
 3. Clear Call to Action (CTA).
 
-Plain text format, cleanly formatted and ready to copy:`,r=await _(s,i);return U(r).trim()};export{G as A,La as B,oe as C,na as D,Ga as E,Ha as F,Da as G,ve as H,qa as I,Va as J,Ra as K,_a as L,Ja as M,Oa as S,Te as a,Ba as b,X as c,ga as d,za as e,Ua as f,Ue as g,Na as h,Fa as i,ja as j,fe as k,F as l,Ma as m,Wa as n,Ya as o,Ea as p,Ka as q,Oe as r,V as s,Y as t,ca as u,$a as v,xa as w,Pa as x,Ta as y,da as z};
+Plain text format, cleanly formatted and ready to copy:`,r=await _(s,i);return U(r).trim()};export{G as A,da as B,oe as C,La as D,na as E,Ga as F,Ha as G,Da as H,ve as I,qa as J,Va as K,Ra as L,_a as M,Ja as N,Oa as S,Te as a,Ba as b,X as c,ga as d,za as e,Ua as f,Ue as g,Na as h,Fa as i,ja as j,fe as k,F as l,_ as m,Ma as n,Wa as o,Ya as p,Ea as q,Oe as r,V as s,Y as t,Ka as u,$a as v,ca as w,xa as x,Pa as y,Ta as z};
