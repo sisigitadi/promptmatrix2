@@ -92,7 +92,7 @@ flowchart TD
 
 # ==============================================================================
 
-### Status Sistem Terkini (v7.5.0 - Intern-Discovery AI & Studio Skill Editor Multi-Target)
+### Status Sistem Terkini (v7.5.0 - Intern-Discovery AI, Unifikasi Protokol & Studio Skill Editor Multi-Target)
 
 - **Framework Utama:** React 18.0.0 (Functional Components + Hooks)
 - **Bahasa & Compiler:** TypeScript 5.5.4 + Vite 5.4.19
@@ -152,13 +152,21 @@ flowchart TD
     - Di `AgensiCatalogModal.tsx` Tab 4: Matriks Komparasi 8 Marketplace, 4 Pilar Omnichannel Playbook, dan advisory jalur payout aman untuk kreator Indonesia (Direct IDR Bank, USDC Polygon, USDC Solana).
 
   - **D35. Integrasi Intern-Discovery AI & Studio Skill Editor Multi-Target (v7.5.0):**
-    - Dukungan penuh endpoint OpenAI-Compatible Shanghai AI Lab `https://discovery-api.intern-ai.org.cn/v1` dengan preset `internai` dan 11 model resmi (`intern-s2`, `intern-s2-preview-397b`, `intern-s2-preview-35b`, `internvl3.5-241b-a28b`, `intern-s1`, dll), bypass CORS browser pada `/v1/models` (405 OPTIONS), dan auto-detection domain saat menempel URL di `AISettingsModal`.
+    - Dukungan penuh endpoint OpenAI-Compatible Shanghai AI Lab `https://discovery-api.intern-ai.org.cn/v1` dengan preset `internai` dan 11 model resmi, bypass CORS browser pada `/v1/models` (405 OPTIONS), dan auto-detection domain saat menempel URL di `AISettingsModal`.
     - Transformasi Studio menjadi Skill Editor Lengkap (`AgentSkillViewer.tsx`, `data/flagshipSkillsData.ts`):
       - Switcher target: Formula Studio Aktif, 10 Paket Flagship Bawaan, dan Draf Kustom Baru.
       - Tombol `[✏️ Edit di Studio]` pada setiap kartu paket di Tab 1 Katalog 10 Paket (`AgensiCatalogModal.tsx`).
       - Formulir lengkap metadata marketplace: Nama Identifier Skill (`name` kebab-case dengan validasi visual & AI Suggest), Kategori Pasar (`category`), Penulis (`author`), Versi (`version`), Lisensi (`license`), Instruksi Pemicu Aktivasi (`description` YAML frontmatter maks 1024 kar), Judul Komersial, Tagline, Harga USD, Tag, Deskripsi Markdown, serta Live Demo (Request & Result).
       - Persistensi draf lokal (`localStorage` kunci `pm_skill_draft_<slug>`), tombol `💾 Simpan Draf` dan `↺ Reset ke Bawaan`.
       - Ekspor `.zip` dinamis (`<slug>.zip`) yang menyertakan seluruh frontmatter YAML dan isi markdown yang telah disunting, serta tombol salin cepat `SKILL.md`.
+
+  - **D36. Unifikasi Protokol AI OpenAI-Compatible, Endpoint Resolution & Pola SocialBiz Manager (v7.5.1):**
+    - **Penyederhanaan Arsitektur Protokol:** Menggantikan 3 handler terpisah dengan 2 jalur protokol bersih: `callOpenAICompatible` untuk seluruh provider (termasuk Google Gemini melalui gateway resmi `/v1beta/openai`) dan `callAnthropic` untuk Anthropic direct. Menghilangkan total seluruh kelas error *misrouted 404* saat pengguna berganti provider atau mengetik model non-Gemini.
+    - **Resolusi Endpoint Cerdas (`resolveAIEndpoint`):** Menentukan protokol (`openai` vs `anthropic`), `chatUrl`, dan `modelsUrl` secara deterministik murni berdasarkan Base URL, mengeliminasi kontaminasi tab dropdown provider.
+    - **Isolasi Kunci Per-Provider & Sanitasi Otomatis (`sanitizeApiKey` & `providerKeys`):** Menyimpan API Key independen per provider di `localStorage` sehingga pergantian provider tidak mencemari key lain. Membersihkan prefix `Bearer `, tanda kutip `.env`, spasi tak terlihat, dan newlines secara otomatis.
+    - **Deteksi Mismatch Kunci Real-Time (`detectKeyProviderMismatch`):** Peringatan dini jika pengguna menempel kunci Google (`AIzaSy...`) pada endpoint OpenAI/Intern-AI atau kunci `sk-...` pada Google AI Studio.
+    - **Penyelarasan 11 Model Intern-Discovery (Shanghai AI Lab):** Katalog model resmi (`Agents-A1`, `Atria-Dawn`, `Sage-A1.5`, `Sage-A1.5-Taiyi`, `Sage-S2.1-Flash`, `deepseek-v4.1-flash-1017`, `glm-5.3`, `intern-decision-4b`, `intern-s2`, `kimi-k3.1-pro`, `qwen3.8-27b`) dengan model bawaan `Agents-A1` (ultra hemat 4 kredit).
+    - **Filosofi Uji Koneksi Bersih & Smart Fallback Probe (Pola SocialBiz):** Menghapus parameter restriktif (`max_tokens: 16`, `stream: false`) pada uji koneksi, otomatis mencoba fallback probe ke `Agents-A1` jika model tier tinggi terkena limit, serta mengakui respons HTTP 429 sebagai bukti otentikasi dan koneksi 100% valid (`✅ Tes Koneksi & Otentikasi Berhasil`) dengan catatan saldo kuota transparan.
 
 ### Register Modul & Komponen Utama
 

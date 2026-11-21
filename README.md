@@ -15,6 +15,11 @@
 
 ## 🌟 Fitur Unggulan
 
+- ⚡ **Unifikasi Protokol OpenAI-Compatible & Arsitektur Koneksi AI (v7.5.0)**:
+  - Unifikasi seluruh provider melalui gateway OpenAI-Compatible (`callOpenAICompatible`), termasuk Google Gemini via endpoint resmi `/v1beta/openai` (menghilangkan misrouted 404 native Gemini).
+  - Resolusi endpoint terpusat (`resolveAIEndpoint`), isolasi kunci per-provider (`providerKeys`), sanitasi kunci otomatis (`sanitizeApiKey`), dan deteksi ketidakcocokan kunci real-time.
+  - Penyelarasan 11 model Shanghai AI Lab Intern-Discovery (`https://discovery-api.intern-ai.org.cn/v1`) dengan model default ultra-hemat `Agents-A1` (4 kredit).
+  - Filosofi uji koneksi bersih (pola SocialBiz Manager) dengan smart fallback probe dan penanganan status HTTP 429 sebagai bukti otentikasi valid.
 - 🛠️ **Multi-Target Studio Skill Editor & Dukungan Model Shanghai AI Lab (v7.5.0)**:
   - Beralih instan antara Formula Studio Aktif, 10 Paket Flagship Bawaan, dan Draf Skill Baru Mandiri langsung di Studio (`AgentSkillViewer.tsx`), dilengkapi tombol `[✏️ Edit di Studio]` pada katalog.
   - Lengkap dengan isian identitas marketplace (slug kebab-case tervalidasi dengan AI Suggest, kategori, author, version, license, trigger description), persistensi draft lokal browser (`localStorage`), dan 1-klik unduh ZIP siap jual (`<slug>.zip`).
