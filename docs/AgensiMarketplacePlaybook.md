@@ -193,3 +193,22 @@ PromptMatrix 2.0 separates **Public Affiliate Conversion** from **Private Creato
 ### Creator Mode (Unlocked via 9-Tap Header Logo)
 - **Studio `SKILL.md` Tab (`AgentSkillViewer`):** Unlocks 1-click browser `.zip` bundle export (`services/skillZipService.ts`, packing `SKILL.md`, `references/framework-guide.md`, `templates/sample-input.json`, and `scripts/validate-output.mjs`) plus **Copy Listing Copy (`Agensi.io/sell`)**.
 - **Creator Settings (`AISettingsModal` -> `Paket Skill` tab):** Configure live `affiliateUrl`, `creatorStoreUrl`, and `affiliateRefCode` overrides persisted in `localStorage` (`pm_agensi_urls`), or hardcode permanent production URLs in `config/agensiConfig.ts` before running `npm run build` and `npm run deploy`.
+
+---
+
+## 7. Commercial Licensing Architecture & IP Protection Framework
+
+Packaging and selling Open Agent Skills requires rigorous licensing boundaries to preserve creator revenue while maximizing organic distribution:
+
+| License Preset | Category | Target Marketplace | Permitted Scope | Redistribution & Resale Clause |
+| :--- | :--- | :--- | :--- | :--- |
+| **Commercial License (Single-Seat)** | Commercial | Agensi.io, Gumroad, Lemon Squeezy | Single buyer entity executing skill in internal agent workflows and client deliverables | Reselling, sublicensing, or distributing raw `.zip` source files is strictly forbidden |
+| **Team Commercial License (Multi-Seat)** | Commercial | Enterprise Storefronts & High-Value B2B | Organization-wide team seats for shared agency environments | Internal distribution permitted; public repo or raw asset leak prohibited |
+| **Extended Agency License** | Commercial | High-Ticket White-Label Packages | Delivering integrated client solutions with deep custom modifications | Deliverable integration permitted; raw asset bundle resale prohibited |
+| **MIT License** | Open Source | GitHub (`npx skills add`), skills.sh, skillsmp.com | Permissive public adoption, modification, and community trust building | Anyone may inspect or modify; reserved strictly for $0 lead magnets |
+| **Apache 2.0 License** | Open Source | Enterprise Open Source Ecosystems | Contributor patent grants and trademark protection | Permissive code use with explicit patent and trademark safeguards |
+| **CC BY-NC 4.0** | Hybrid | Dual-Licensing (Personal vs Business) | Free personal learning and academic research | Commercial usage requires separate paid commercial purchase |
+| **Custom EULA** | Custom | Bespoke Enterprise Contracts | Tailored contractual agreements and custom legal stipulations | Regulated entirely by the creator's written enterprise agreement |
+
+### Key Creator Takeaway
+Never release paid assets under a permissive open source license (such as MIT) because buyers obtain a legal right to resell or publicly redistribute your code. PromptMatrix Studio v7.6.3 (`components/AgentSkillViewer.tsx`) includes an interactive **License Selector** that defaults to **Commercial License (Single-Seat)** for paid products while preserving **MIT** for free lead magnets.

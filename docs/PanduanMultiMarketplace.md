@@ -8,9 +8,9 @@ Dokumen privat ini terbuka bersamaan dengan fitur **AI Pro & Mode Kreator (9-Ket
 
 PromptMatrix 2.0 memisahkan etalase publik dari pabrik `.zip` privat agar konversi afiliasi tetap terlindungi:
 
-- **Jalur Utama - Agensi.io (Marketplace Skill AI):** Menjual 9 paket flagship satuan (`$9.99` sampai `$19.99`) dan 1 paket gratis (`$0`). Komisi kreator **`70%`** organik atau **`90%`** lewat link `?ref=` (`https://www.agensi.io/r/SIGITADI`) ditambah **`20%`** komisi lintas marketplace selama 6 bulan.
+- **Jalur Utama - Agensi.io (Marketplace Skill AI):** Menjual 14 paket flagship satuan (`$9.99` sampai `$19.99`) dan 1 paket gratis (`$0`). Komisi kreator **`70%`** organik atau **`90%`** lewat link `?ref=` (`https://www.agensi.io/r/SIGITADI`) ditambah **`20%`** komisi lintas marketplace selama 6 bulan.
 - **Pilar 1 - Direktori OSS & Lead Magnet Gratis (`dist-lead-magnet/`):** Hanya mempublikasikan **1 skill gratis** (`prompt-matrix-prompt-architect`) sebagai corong trafik organik ke `https://prompt.sigitadi.id` dan link afiliasi Agensi.io.
-- **Pilar 2 - Toko Digital Global MoR (`dist-channels/storefronts/`):** Menjual bundel **Complete 9-Flagship Suite (`$59.00` vs `$133.92` satuan, hemat `$74.92` / `56%`)** di Lemon Squeezy, Creem.io, Gumroad, Whop, dan Payhip.
+- **Pilar 2 - Toko Digital Global MoR (`dist-channels/storefronts/`):** Menjual bundel **Complete 14-Flagship Suite (`$59.00` vs `$195.87` satuan, hemat `$136.87` / `70%`)** di Lemon Squeezy, Creem.io, Gumroad, Whop, dan Payhip.
 - **Pilar 3 - PromptBase (`dist-channels/promptbase/`):** Menjual **15 sistem prompt terstruktur** (`$4.99` sampai `$9.99`, format variabel `[Variable]`, bukan `.zip` kode) dengan payout harian `$0` minimum.
 
 ---
@@ -65,8 +65,8 @@ npm run package:channels
 ## 4. Pilar 2: Toko Digital Global & MoR (`dist-channels/storefronts/`)
 
 Setelah `npm run package:channels` selesai, buka folder **`dist-channels/storefronts/`**:
-- **`promptmatrix-9-flagship-suite.zip` (`~69.4 KB`, `32` entri POSIX):** Berisi `SUITE-README.md` di root dan seluruh 9 folder skill flagship berbayar (paket gratis tidak diikutkan).
-- **`STOREFRONT-MANIFEST.md`:** Berisi judul produk, deskripsi Markdown, tag, harga bundel **`$59.00` vs `$133.92` total satuan (hemat `$74.92` / `56%`)**, dan rincian copy 9 paket satuan (`dist-agensi/<slug>.zip`).
+- **`promptmatrix-14-flagship-suite.zip` (`~108 KB`, `48` entri POSIX):** Berisi `SUITE-README.md` di root dan seluruh 14 folder skill flagship berbayar (paket gratis tidak diikutkan).
+- **`STOREFRONT-MANIFEST.md`:** Berisi judul produk, deskripsi Markdown, tag, harga bundel **`$59.00` vs `$195.87` total satuan (hemat `$136.87` / `70%`)**, dan rincian copy 14 paket satuan (`dist-agensi/<slug>.zip`).
 
 ### Pilihan Platform Pilar 2 & Cara Payout Indonesia
 
@@ -137,3 +137,21 @@ git commit -m "feat: update secondary marketplace checkout URLs"
 git push origin main
 npm run deploy
 ```
+
+---
+
+## 8. Strategi Lisensi & Perlindungan Hak Cipta Komersial
+
+Memilih lisensi yang tepat sangat menentukan apakah karya prompt dan agen AI Anda terlindungi dari pembajakan atau kebocoran:
+
+| Format & Saluran | Lisensi Direkomendasikan | Hak yang Diberikan | Larangan Keras bagi Pembeli |
+| :--- | :--- | :--- | :--- |
+| **Produk Berbayar Satuan** (Agensi.io, Gumroad, Lemon Squeezy) | **Commercial License (Single-Seat)** | Menjalankan skill pada agent untuk proyek klien & bisnis pribadi | Dilarang mendistribusikan ulang, membagikan gratis, atau menjual kembali source code `.zip` |
+| **Bundel Suite Agensi** (Lemon Squeezy, Creem, Whop) | **Team Commercial License / Extended Agency** | Penggunaan multi-kursi tim internal dan delivery solusi white-label ke klien | Dilarang mempublikasikan berkas sumber mentah secara terbuka di repositori publik |
+| **Lead Magnet Gratis $0** (GitHub, skills.sh, skillsmp.com) | **MIT License / Apache 2.0** | Siapapun bebas menggunakan, mengkaji, dan mengintegrasikan | Bebas digunakan; ditujukan untuk membangun basis pengguna dan trust |
+| **Dual-Licensing Model** (Freemium) | **CC BY-NC 4.0** | Bebas dipakai untuk riset dan eksperimen personal non-komersial | Dilarang digunakan untuk kepentingan komersial tanpa membeli lisensi berbayar |
+
+### Catatan Keamanan Lisensi MIT untuk Kreator
+Lisensi MIT bersifat permisif penuh. Jika Anda menjual paket berbayar seharga $19.99 dengan lisensi MIT, secara hukum pembeli berhak menjual ulang atau mengunggah source code tersebut ke GitHub secara cuma-cuma. Oleh karena itu, gunakan **Commercial License (Single-Seat)** untuk semua produk komersial di Agensi.io, Gumroad, dan Lemon Squeezy, serta simpan lisensi **MIT** secara eksklusif untuk paket lead magnet $0 di GitHub.
+
+PromptMatrix v7.6.3 menyediakan **License Selector** terintegrasi di Step 1 Studio Agent Skill (`components/AgentSkillViewer.tsx`), memungkinkan pemilihan preset resmi lengkap dengan deskripsi hak cipta bilingual dan opsi kustom EULA otomatis.
