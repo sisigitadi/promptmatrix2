@@ -235,3 +235,27 @@ PromptMatrix 2.0 provides native dual-language localization (Indonesian and Engl
 4. **Stale Draft Sanitization (`components/AgentSkillViewer.tsx`):**
    - To prevent outdated English drafts cached in browser `localStorage` from overriding fresh Indonesian defaults, `AgentSkillViewer` detects default English text when switching to Indonesian and automatically replaces it with the official Indonesian title and profile.
 
+---
+
+## 9. AI Readiness Auto-Fix & Real-time Update Dashboard in Studio (v7.6.5)
+
+To streamline creator preparation and provide immediate feedback when utilizing AI generation or field suggestions, PromptMatrix 2.0 introduces an integrated auto-fix workflow and real-time post-update dashboard in `AgentSkillViewer.tsx`:
+
+### Key Features & Workflow
+1. **Direct 1-Click AI Auto-Fix in Readiness Box:**
+   - When the quality gate audit detects missing sections, short descriptions, improper tags, or suboptimal demo results, an interactive `[Auto-Fix Notes with AI]` button is rendered directly inside the warning header.
+   - Clicking this button automatically generates and repairs all flagged items without requiring creators to hunt for field-level controls.
+
+2. **Real-time Post-AI Update Dashboard (`aiUpdateRecord`):**
+   - Immediately after AI finishes generating or suggesting metadata, a dedicated status banner appears at the top of Step 1.
+   - Highlights the exact score transition (e.g., `67/100 ➔ 100/100 (+33 points)`), total passing checks, and an itemized list of resolved readiness notes.
+   - Lists all modified fields (Slug Name, Listing Title, Tagline, Tags, Description, Demo Request, Demo Result).
+   - Displays an unambiguous readiness confirmation when 100/100 is achieved, signaling that the skill is ready for export to `.zip` and marketplace distribution.
+
+3. **Bilingual Summary Section Validation:**
+   - The audit validator (`auditSkillMarketReadiness` in `services/agentSkillService.ts`) accepts both `## Ringkasan` and `## Summary` headings, ensuring native Indonesian live demo exemplars receive full compliance credit.
+
+4. **Strict Kebab-Case Tag Sanitization:**
+   - Tags returned by AI are deterministically formatted to lowercase kebab-case, stripped of `#` symbols, uppercase letters, spaces, and stopwords to ensure 100% adherence to marketplace discovery rules.
+
+

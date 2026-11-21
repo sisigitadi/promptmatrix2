@@ -174,3 +174,25 @@ Pada versi 7.6.4, Studio Agent Skill menerapkan sistem lokalisasi 100% dwibahasa
    - Sistem secara otomatis mendeteksi jika `localStorage` menyimpan draf bawaan bahasa Inggris dari sesi sebelumnya saat pengguna memilih bahasa Indonesia.
    - Draf bawaan usang tersebut digantikan secara instan dengan profil resmi bahasa Indonesia tanpa menghilangkan perubahan kustom yang dilakukan pengguna.
 
+---
+
+## 10. Perbaikan Otomatis Kesiapan AI & Dashboard Feedback Realtime (v7.6.5)
+
+Fitur perbaikan kesiapan AI di Studio Agent Skill (`components/AgentSkillViewer.tsx`) kini memberikan konfirmasi dan umpan balik langsung setelah AI generate atau suggestion dijalankan:
+
+1. **Tombol 1-Klik Perbaikan Otomatis pada Kotak Peringatan:**
+   - Kotak *Catatan Kesiapan* kini dilengkapi tombol interaktif `[Bantu Perbaiki Catatan dengan AI]`.
+   - Menghubungkan proses perbaikan langsung ke generator universal AI sehingga seluruh saran perbaikan (judul, tagline, tag, deskripsi, dan demo) dapat dioptimasi sekaligus dengan 1 ketukan.
+
+2. **Dashboard Pembaruan Realtime Pasca-AI (`aiUpdateRecord`):**
+   - Menampilkan kartu status pembaruan tepat di atas formulir Step 1 setelah AI selesai memproses data.
+   - Menampilkan transisi skor kesiapan (contoh: `67/100 ➔ 100/100 (+33 poin)`), jumlah cek yang lolos, serta rincian catatan kesiapan yang berhasil diselesaikan.
+   - Memberikan lencana bidang apa saja yang diperbarui dan konfirmasi kelayakan rilis 100% untuk mempublikasikan paket ke marketplace.
+
+3. **Validasi Header Demo Dwibahasa:**
+   - Mesin audit kepatuhan mengakui header `## Ringkasan` (dan `## Ringkasan Eksekutif`) setara dengan `## Summary`, memastikan demo hasil berbahasa Indonesia langsung mendapatkan skor maksimal.
+
+4. **Sanitasi Otomatis Tag Marketplace:**
+   - Seluruh tag hasil rekomendasi AI secara otomatis dikonversi ke format kebab-case murni (bebas huruf besar, tanda pagar, dan spasi) agar selalu memenuhi standar registri publik.
+
+
