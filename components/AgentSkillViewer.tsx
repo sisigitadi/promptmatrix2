@@ -970,29 +970,6 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     }
   };
 
-  const handleCopyLogoPng = async () => {
-    try {
-      const dataUrl = skillLogoPng ?? (await renderSvgToPngDataUrl(effectiveLogoSvg, 512, 512));
-      if (typeof window !== 'undefined' && 'ClipboardItem' in window && navigator.clipboard && 'write' in navigator.clipboard) {
-        try {
-          const res = await fetch(dataUrl);
-          const blob = await res.blob();
-          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-          setCopiedKey('logo_png');
-          setTimeout(() => setCopiedKey(null), 2000);
-          onAiSuggestToast?.(t('toast_skill_logo_copied'), 'success');
-          return;
-        } catch {
-          // fallback to data url string
-        }
-      }
-      await handleCopyField('logo_png', dataUrl);
-      onAiSuggestToast?.(t('toast_skill_logo_copied'), 'success');
-    } catch (err) {
-      console.error('Failed to copy PNG logo:', err);
-    }
-  };
-
   const handleCopyMidjourneyPrompt = async () => {
     const prompt = generateMidjourneyLogoPrompt({
       name: effectiveName,
@@ -1804,7 +1781,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     {t('skill_logo_desc')}
                   </p>
 
-                  {/* Actions: Download PNG, Copy PNG, Copy Midjourney Prompt */}
+                  {/* Actions: Download PNG, Copy Midjourney Prompt */}
                   <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 pt-0.5">
                     <button
                       type="button"
@@ -1813,18 +1790,6 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                       title={t('skill_logo_btn_download')}
                     >
                       <span>📥 {t('skill_logo_btn_download')}</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleCopyLogoPng}
-                      className={`px-2.5 py-1 rounded-lg border text-[11px] font-medium transition-colors ${focusRingClass} ${
-                        copiedKey === 'logo_png'
-                          ? 'bg-emerald-600 border-emerald-500 text-white'
-                          : secondaryBtnClass
-                      }`}
-                      title={t('skill_logo_btn_copy_svg')}
-                    >
-                      <span>{copiedKey === 'logo_png' ? `✓ ${t('copied_btn')}` : `📋 ${t('skill_logo_btn_copy_svg')}`}</span>
                     </button>
                     <button
                       type="button"

@@ -429,12 +429,12 @@ async function main() {
 
   // 5. Verify package.json version, public/sw.js cache version, and synced catalog docs
   const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
-  if (pkg.version !== '7.6.8') {
-    failures.push(`package.json version is "${pkg.version}", expected "7.6.8"`);
+  if (pkg.version !== '7.6.9') {
+    failures.push(`package.json version is "${pkg.version}", expected "7.6.9"`);
   }
   const swContent = fs.readFileSync(path.join(ROOT, 'public/sw.js'), 'utf8');
-  if (!swContent.includes('promptmatrix-v7.6.8')) {
-    failures.push('public/sw.js missing CACHE_NAME "promptmatrix-v7.6.8"');
+  if (!swContent.includes('promptmatrix-v7.6.9')) {
+    failures.push('public/sw.js missing CACHE_NAME "promptmatrix-v7.6.9"');
   }
   for (const catalogRel of ['docs/DaftarKerangkaKerja.md', 'public/docs/DaftarKerangkaKerja.md']) {
     const catalogAbs = path.join(ROOT, catalogRel);

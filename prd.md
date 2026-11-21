@@ -219,6 +219,10 @@ flowchart TD
     - **Tabel Spesifikasi Teknis Metadata GEO:** Menambahkan baris atribut visual resmi `Skill logo` (`Square, Recommended 512×512 PNG`) pada tabel spesifikasi teknis listing markdown (`services/skillZipService.ts`).
     - **Penyelarasan Badge Dimensi:** Menggunakan simbol perkalian dimensi presisi `512×512` pada badge studio dan tombol unduh.
 
+  - **D46. Penyederhanaan Aksi Studio Logo: Penghapusan Tombol Salin Data URL (v7.6.9):**
+    - **Pembersihan Antarmuka Pengguna:** Menghapus tombol *Salin PNG Data URL* dari kartu studio logo di `components/AgentSkillViewer.tsx` atas masukan pengguna, menyisakan dua tombol aksi utama yang esensial: `Unduh PNG (512×512)` dan `Salin Prompt Midjourney v7`.
+    - **Efisiensi Logika Komponen:** Mengeliminasi fungsi `handleCopyLogoPng` dan *handler clipboard blob* yang redundan untuk menyederhanakan alur kerja pengguna ke berkas fisik `icon.png`.
+
 ### Register Modul & Komponen Utama
 
 | Berkas / Direktori | Tanggung Jawab Teknis |
