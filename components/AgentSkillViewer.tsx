@@ -1757,7 +1757,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     )}
                   </div>
                   <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-md text-[9px] font-mono font-bold bg-slate-950 text-emerald-400 border border-emerald-500/30 shadow-sm">
-                    512x512
+                    512×512
                   </span>
                 </div>
 

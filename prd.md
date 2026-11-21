@@ -214,6 +214,11 @@ flowchart TD
     - **Pratinjau & Aksi Studio Berbasis PNG (`components/AgentSkillViewer.tsx`):** Menampilkan pratinjau live raster `<img>`, lencana `PNG 1:1` dan `512x512`, tombol `Unduh PNG` (`icon.png`), salin PNG Data URL / Blob clipboard, serta persistensi draf raster lokal.
     - **Pengemasan Biner ZIP (`services/skillZipService.ts`):** Mendukung entri biner `Uint8Array` dalam `ZipFileEntry` dan otomatis mengemas `icon.png` 512x512 ke dalam bundel `.zip` yang diekspor.
 
+  - **D45. Standarisasi Presisi Nomenklatur Logo Marketplace "Skill logo (square, recommended 512×512)" (v7.6.8):**
+    - **Presisi Nomenklatur Formulir:** Menyelaraskan teks judul kartu dan metadata penyerahan skill secara persis dengan spesifikasi marketplace Agensi.io: `Skill logo (square, recommended 512×512)` / `Logo Skill (Persegi, Rekomendasi 512×512)`.
+    - **Tabel Spesifikasi Teknis Metadata GEO:** Menambahkan baris atribut visual resmi `Skill logo` (`Square, Recommended 512×512 PNG`) pada tabel spesifikasi teknis listing markdown (`services/skillZipService.ts`).
+    - **Penyelarasan Badge Dimensi:** Menggunakan simbol perkalian dimensi presisi `512×512` pada badge studio dan tombol unduh.
+
 ### Register Modul & Komponen Utama
 
 | Berkas / Direktori | Tanggung Jawab Teknis |
