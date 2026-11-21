@@ -23,6 +23,8 @@ import {
   generateSkillLogoSvgWithUniversalAI,
   generateAlignedSkillLogoSvg,
   generateMidjourneyLogoPrompt,
+  renderSvgToPngDataUrl,
+  dataUrlToUint8Array,
 } from '../services/skillLogoService';
 
 export interface SkillListingOverrides {
@@ -71,6 +73,11 @@ const ZIP_BUNDLE_FILES: readonly ZipFileDescriptor[] = [
     path: 'SKILL.md',
     descId: 'Instruksi utama agen & metadata YAML agar otomatis terbaca di runtime AI.',
     descEn: 'Core agent instructions and YAML frontmatter auto-discovered by AI runtimes.',
+  },
+  {
+    path: 'icon.png',
+    descId: 'Ikon visual raster 1:1 (PNG 512x512) standar marketplace dan avatar agen.',
+    descEn: '1:1 raster visual icon (512x512 PNG) for marketplaces and agent avatars.',
   },
   {
     path: 'references/framework-guide.md',
@@ -522,6 +529,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   } | null>(null);
 
   const [skillLogoSvg, setSkillLogoSvg] = useState<string | null>(null);
+  const [skillLogoPng, setSkillLogoPng] = useState<string | null>(null);
   const [isGeneratingLogo, setIsGeneratingLogo] = useState(false);
 
   const prevReqRef = useRef<string | undefined>(listingOverrides?.demoRequest);
@@ -578,6 +586,11 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           } else {
             setSkillLogoSvg(null);
           }
+          if (parsed.logoPng && typeof parsed.logoPng === 'string' && parsed.logoPng.startsWith('data:image/png')) {
+            setSkillLogoPng(parsed.logoPng);
+          } else {
+            setSkillLogoPng(null);
+          }
           return;
         }
       }
@@ -600,6 +613,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     setEditedDemoResult(null);
     setAiUpdateRecord(null);
     setSkillLogoSvg(null);
+    setSkillLogoPng(null);
   }, [activeSourceSlug, skillSpec.name, draftStorageKey]);
 
   useEffect(() => {
@@ -742,6 +756,26 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     });
   }, [skillLogoSvg, activeSourceSlug, effectiveName, activeTitle, effectiveCategory, activeTagsList]);
 
+  useEffect(() => {
+    let isCancelled = false;
+    if (!effectiveLogoSvg) {
+      setSkillLogoPng(null);
+      return;
+    }
+    renderSvgToPngDataUrl(effectiveLogoSvg, 512, 512)
+      .then((pngDataUrl) => {
+        if (!isCancelled) {
+          setSkillLogoPng(pngDataUrl);
+        }
+      })
+      .catch((err) => {
+        console.warn('Failed to rasterize logo SVG to PNG:', err);
+      });
+    return () => {
+      isCancelled = true;
+    };
+  }, [effectiveLogoSvg]);
+
   const auditResult = useMemo(
     () =>
       auditSkillMarketReadiness(activeSpec, {
@@ -770,6 +804,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
         demoRequest: activeDemoRequest,
         demoResult: activeDemoResult,
         logoSvg: skillLogoSvg,
+        logoPng: skillLogoPng,
         savedAt: Date.now(),
       };
       localStorage.setItem(draftStorageKey, JSON.stringify(draftPayload));
@@ -797,6 +832,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       setEditedDemoResult(null);
       setAiUpdateRecord(null);
       setSkillLogoSvg(null);
+      setSkillLogoPng(null);
       onAiSuggestToast?.(t('toast_skill_draft_reset'), 'info');
     } catch (e) {
       console.error('Failed to reset skill draft:', e);
@@ -842,13 +878,30 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     }
   };
 
-  const handleDownloadZip = () => {
+  const handleDownloadZip = async () => {
+    let logoPngBytes: Uint8Array | undefined;
+    if (skillLogoPng) {
+      try {
+        logoPngBytes = dataUrlToUint8Array(skillLogoPng);
+      } catch (err) {
+        console.warn('Failed to convert logo PNG dataUrl to bytes:', err);
+      }
+    } else if (effectiveLogoSvg) {
+      try {
+        const pngUrl = await renderSvgToPngDataUrl(effectiveLogoSvg, 512, 512);
+        logoPngBytes = dataUrlToUint8Array(pngUrl);
+      } catch (err) {
+        console.warn('Failed to rasterize logo SVG to bytes:', err);
+      }
+    }
+
     const bundle = buildFormulaSkillZipBundle({
       skillSpec: activeSpec,
       skillMarkdown: activeSkillMarkdown,
       formValues,
       customOtherValues,
       compiledPrompt,
+      logoPngBytes,
       logoSvg: effectiveLogoSvg,
     });
     triggerZipDownload(bundle.filename, bundle.archiveBytes);
@@ -875,6 +928,12 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       });
 
       setSkillLogoSvg(svg);
+      try {
+        const png = await renderSvgToPngDataUrl(svg, 512, 512);
+        setSkillLogoPng(png);
+      } catch (e) {
+        console.warn('Failed to rasterize generated AI logo to PNG:', e);
+      }
       onAiSuggestToast?.(t('toast_skill_logo_generated'), 'success');
 
       setAiUpdateRecord((prev) => ({
@@ -884,7 +943,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
         newScore: prev?.newScore ?? auditResult.score,
         resolvedChecks: prev?.resolvedChecks ?? [],
         updatedFields: Array.from(
-          new Set([...(prev?.updatedFields ?? []), isId ? 'Logo Vektor SVG' : 'Vector SVG Logo'])
+          new Set([...(prev?.updatedFields ?? []), isId ? 'Logo Raster PNG' : 'Raster PNG Logo'])
         ),
         totalChecksCount: prev?.totalChecksCount ?? auditResult.totalCount,
         passedChecksCount: prev?.passedChecksCount ?? auditResult.passedCount,
@@ -897,25 +956,41 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     }
   };
 
-  const handleDownloadLogoSvg = () => {
+  const handleDownloadLogoPng = async () => {
     try {
-      const blob = new Blob([effectiveLogoSvg], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
+      const dataUrl = skillLogoPng ?? (await renderSvgToPngDataUrl(effectiveLogoSvg, 512, 512));
       const link = document.createElement('a');
-      link.href = url;
-      link.download = `${effectiveName}-icon.svg`;
+      link.href = dataUrl;
+      link.download = `${effectiveName}-icon.png`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      URL.revokeObjectURL(url);
     } catch (e) {
-      console.error('Failed to download SVG:', e);
+      console.error('Failed to download PNG:', e);
     }
   };
 
-  const handleCopyLogoSvg = async () => {
-    await handleCopyField('logo_svg', effectiveLogoSvg);
-    onAiSuggestToast?.(t('toast_skill_logo_copied'), 'success');
+  const handleCopyLogoPng = async () => {
+    try {
+      const dataUrl = skillLogoPng ?? (await renderSvgToPngDataUrl(effectiveLogoSvg, 512, 512));
+      if (typeof window !== 'undefined' && 'ClipboardItem' in window && navigator.clipboard && 'write' in navigator.clipboard) {
+        try {
+          const res = await fetch(dataUrl);
+          const blob = await res.blob();
+          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          setCopiedKey('logo_png');
+          setTimeout(() => setCopiedKey(null), 2000);
+          onAiSuggestToast?.(t('toast_skill_logo_copied'), 'success');
+          return;
+        } catch {
+          // fallback to data url string
+        }
+      }
+      await handleCopyField('logo_png', dataUrl);
+      onAiSuggestToast?.(t('toast_skill_logo_copied'), 'success');
+    } catch (err) {
+      console.error('Failed to copy PNG logo:', err);
+    }
   };
 
   const handleCopyMidjourneyPrompt = async () => {
@@ -1142,9 +1217,21 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
             <div className="flex flex-wrap items-center gap-2">
               <div
                 className="w-7 h-7 rounded-lg overflow-hidden shrink-0 shadow-sm border border-slate-700/60 bg-slate-900 flex items-center justify-center p-0.5"
-                dangerouslySetInnerHTML={{ __html: effectiveLogoSvg }}
                 title={effectiveTitle}
-              />
+              >
+                {skillLogoPng ? (
+                  <img
+                    src={skillLogoPng}
+                    alt=""
+                    className="w-full h-full object-contain rounded"
+                  />
+                ) : (
+                  <div
+                    className="w-full h-full flex items-center justify-center"
+                    dangerouslySetInnerHTML={{ __html: effectiveLogoSvg }}
+                  />
+                )}
+              </div>
               <span
                 className={`px-2 py-0.5 rounded-md text-[10px] font-semibold tracking-wide border uppercase ${isLightTheme
                     ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
@@ -1650,17 +1737,27 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
               </div>
             </div>
 
-            {/* Skill Logo & Visual Emblem Card (1:1 Vector SVG aligned with skill domain & pillar) */}
+            {/* Skill Logo & Visual Emblem Card (1:1 Raster PNG aligned with skill domain & pillar) */}
             <div className={`p-3.5 rounded-xl border space-y-3 ${insetBoxClass}`}>
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3.5">
-                {/* SVG Visual Emblem Preview (80x80 px) */}
+                {/* Raster PNG Preview (80x80 px on screen, 512x512 native) */}
                 <div className="relative group shrink-0">
-                  <div
-                    className="w-20 h-20 rounded-2xl overflow-hidden shadow-lg border border-slate-700/60 bg-slate-900 flex items-center justify-center p-1.5 transition-transform group-hover:scale-105"
-                    dangerouslySetInnerHTML={{ __html: effectiveLogoSvg }}
-                  />
+                  <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-lg border border-slate-700/60 bg-slate-900 flex items-center justify-center p-1.5 transition-transform group-hover:scale-105">
+                    {skillLogoPng ? (
+                      <img
+                        src={skillLogoPng}
+                        alt={`${activeTitle} Logo`}
+                        className="w-full h-full object-contain rounded-xl"
+                      />
+                    ) : (
+                      <div
+                        className="w-full h-full flex items-center justify-center"
+                        dangerouslySetInnerHTML={{ __html: effectiveLogoSvg }}
+                      />
+                    )}
+                  </div>
                   <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-md text-[9px] font-mono font-bold bg-slate-950 text-emerald-400 border border-emerald-500/30 shadow-sm">
-                    128x128
+                    512x512
                   </span>
                 </div>
 
@@ -1672,7 +1769,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                         <span>{t('skill_logo_title')}</span>
                       </span>
                       <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                        SVG Vector
+                        PNG 1:1
                       </span>
                     </div>
 
@@ -1707,11 +1804,11 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     {t('skill_logo_desc')}
                   </p>
 
-                  {/* Actions: Download SVG, Copy SVG, Copy Midjourney Prompt */}
+                  {/* Actions: Download PNG, Copy PNG, Copy Midjourney Prompt */}
                   <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 pt-0.5">
                     <button
                       type="button"
-                      onClick={handleDownloadLogoSvg}
+                      onClick={handleDownloadLogoPng}
                       className={`px-2.5 py-1 rounded-lg border text-[11px] font-medium transition-colors ${focusRingClass} ${secondaryBtnClass}`}
                       title={t('skill_logo_btn_download')}
                     >
@@ -1719,15 +1816,15 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     </button>
                     <button
                       type="button"
-                      onClick={handleCopyLogoSvg}
+                      onClick={handleCopyLogoPng}
                       className={`px-2.5 py-1 rounded-lg border text-[11px] font-medium transition-colors ${focusRingClass} ${
-                        copiedKey === 'logo_svg'
+                        copiedKey === 'logo_png'
                           ? 'bg-emerald-600 border-emerald-500 text-white'
                           : secondaryBtnClass
                       }`}
                       title={t('skill_logo_btn_copy_svg')}
                     >
-                      <span>{copiedKey === 'logo_svg' ? `✓ ${t('copied_btn')}` : `📋 ${t('skill_logo_btn_copy_svg')}`}</span>
+                      <span>{copiedKey === 'logo_png' ? `✓ ${t('copied_btn')}` : `📋 ${t('skill_logo_btn_copy_svg')}`}</span>
                     </button>
                     <button
                       type="button"

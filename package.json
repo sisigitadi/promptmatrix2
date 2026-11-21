@@ -1,7 +1,7 @@
 {
   "name": "promptmatrix",
   "private": true,
-  "version": "7.6.6",
+  "version": "7.6.7",
   "type": "module",
   "homepage": "https://prompt.sigitadi.id/",
   "repository": {

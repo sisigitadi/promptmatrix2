@@ -325,3 +325,101 @@ Return ONLY raw <svg> to </svg> markup:`;
     return generateAlignedSkillLogoSvg(input);
   }
 };
+
+/**
+ * Rasterizes an SVG string into a high-resolution PNG Data URL via client-side HTML5 Canvas.
+ * Supports high-smoothing quality, transparent or solid squircle boundaries, and 0 external dependencies.
+ */
+export const renderSvgToPngDataUrl = async (
+  svgString: string,
+  width = 512,
+  height = 512
+): Promise<string> => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    throw new Error('Canvas rasterization requires a browser window environment');
+  }
+
+  const sanitized = sanitizeSvgMarkup(svgString);
+  if (!sanitized) {
+    throw new Error('Empty or invalid SVG markup provided for rasterization');
+  }
+
+  return new Promise((resolve, reject) => {
+    let objectUrl = '';
+    try {
+      const blob = new Blob([sanitized], { type: 'image/svg+xml;charset=utf-8' });
+      objectUrl = URL.createObjectURL(blob);
+      const img = new Image();
+
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            URL.revokeObjectURL(objectUrl);
+            reject(new Error('Canvas 2D context unavailable'));
+            return;
+          }
+
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          ctx.clearRect(0, 0, width, height);
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const pngDataUrl = canvas.toDataURL('image/png');
+          URL.revokeObjectURL(objectUrl);
+          resolve(pngDataUrl);
+        } catch (canvasErr) {
+          URL.revokeObjectURL(objectUrl);
+          reject(canvasErr);
+        }
+      };
+
+      img.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        reject(new Error('Failed to load SVG into raster Image element'));
+      };
+
+      img.src = objectUrl;
+    } catch (err) {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+      reject(err);
+    }
+  });
+};
+
+/**
+ * Converts a PNG or base64 Data URL to raw Uint8Array binary bytes.
+ */
+export const dataUrlToUint8Array = (dataUrl: string): Uint8Array => {
+  const marker = ';base64,';
+  const markerIndex = dataUrl.indexOf(marker);
+  if (markerIndex === -1) {
+    throw new Error('Invalid Data URL: missing base64 marker');
+  }
+  const base64Data = dataUrl.slice(markerIndex + marker.length);
+  const binaryString = atob(base64Data);
+  const len = binaryString.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i += 1) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes;
+};
+
+/**
+ * Rasterizes an SVG string and returns raw PNG Uint8Array bytes directly.
+ */
+export const renderSvgToPngBytes = async (
+  svgString: string,
+  width = 512,
+  height = 512
+): Promise<Uint8Array> => {
+  const dataUrl = await renderSvgToPngDataUrl(svgString, width, height);
+  return dataUrlToUint8Array(dataUrl);
+};
+

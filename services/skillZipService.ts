@@ -16,6 +16,7 @@ export interface BuildFormulaSkillZipBundleInput {
   readonly formValues: Record<string, string | number | boolean | string[]>;
   readonly customOtherValues: Record<string, string>;
   readonly compiledPrompt: string;
+  readonly logoPngBytes?: Uint8Array;
   readonly logoSvg?: string;
 }
 
@@ -500,7 +501,9 @@ export const buildFormulaSkillZipBundle = (
     { name: 'scripts/validate-output.mjs', content: validatorScript },
   ];
 
-  if (input.logoSvg && input.logoSvg.trim().startsWith('<svg')) {
+  if (input.logoPngBytes && input.logoPngBytes.length > 0) {
+    entries.push({ name: 'icon.png', content: input.logoPngBytes });
+  } else if (input.logoSvg && input.logoSvg.trim().startsWith('<svg')) {
     entries.push({ name: 'icon.svg', content: input.logoSvg.trim() });
   }
 

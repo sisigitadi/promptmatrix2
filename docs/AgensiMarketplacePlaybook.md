@@ -276,9 +276,9 @@ Every commercial listing and portable agent package benefits from a distinct vis
    - Built-in instant fallback generator provides offline, high-precision SVG vector icons for all 15 flagship packages and 400 formula templates.
 
 3. **Multi-Format Export & ZIP Packaging:**
-   - **Live Preview:** Renders crisp 80x80 vector emblem in Step 1 and 28x28 mini emblem in the header.
-   - **`icon.svg` in Archive:** The generated SVG is automatically bundled into `dist-agensi/<slug>.zip` and custom formula `.zip` downloads (`services/skillZipService.ts`).
-   - **Download & Copy:** One-click `Download SVG` and `Copy SVG Code` buttons.
+   - **Live Preview:** Renders crisp 80x80 raster emblem in Step 1 and 28x28 mini emblem in the header.
+   - **`icon.png` (512x512 HD) in Archive:** The generated visual emblem is rasterized client-side via HTML5 Canvas and bundled as `icon.png` into `dist-agensi/<slug>.zip` and custom formula `.zip` downloads (`services/skillZipService.ts`), eliminating marketplace rejection caused by raw SVG/XML scripts.
+   - **Download & Copy:** One-click `Download PNG` and `Copy PNG Data URL` buttons.
    - **Midjourney v7 / FLUX Prompt Generator:** Automatically formats a ready-to-use 3D app icon prompt (`--ar 1:1 --v 7`) for Discord or Midjourney web.
 
 

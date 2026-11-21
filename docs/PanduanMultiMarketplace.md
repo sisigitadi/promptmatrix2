@@ -208,9 +208,9 @@ Identitas visual yang profesional sangat penting agar paket skill Anda menonjol 
 2. **Generator Aligned Deterministik (Offline & Instan):**
    - Menyediakan generator emblem deterministik berbasis pilar (Develop, Grow, Operate, Create) yang menghasilkan logo SVG tajam untuk seluruh 15 paket flagship dan 400 formula tanpa dependensi API luar.
 
-3. **Otomasi Bundel `icon.svg` ke Arsip ZIP:**
-   - Berkas `icon.svg` otomatis dikemas ke dalam arsip `.zip` saat tombol *Unduh Paket .zip* diklik (`services/skillZipService.ts`).
-   - Kreator dapat mengunduh berkas SVG secara terpisah atau menyalin kode SVG langsung ke clipboard.
+3. **Otomasi Bundel `icon.png` (Raster HD 512x512) ke Arsip ZIP:**
+   - Berkas `icon.png` otomatis dirasterisasi di browser menggunakan HTML5 Canvas dan dikemas ke dalam arsip `.zip` saat tombol *Unduh Paket .zip* diklik (`services/skillZipService.ts`). Format PNG diterima 100% oleh seluruh marketplace tanpa risiko penolakan berkas SVG.
+   - Kreator dapat mengunduh berkas PNG secara terpisah atau menyalin Data URL gambar langsung ke clipboard.
 
 4. **Generator Prompt Midjourney v7 / FLUX.2:**
    - Menyediakan tombol salin prompt Midjourney v7 berformat `--ar 1:1 --v 7` bagi kreator yang menginginkan render 3D fotorealistik atau ikon aplikasi gaya iOS.
