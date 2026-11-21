@@ -534,14 +534,38 @@ const BANNED_AI_BUZZWORDS: readonly string[] = [
 ];
 const BANNED_AI_BUZZWORD_REGEX = new RegExp(`\\b(${BANNED_AI_BUZZWORDS.join('|')})\\b`, 'gi');
 
-const REQUIRED_MARKET_SECTIONS: ReadonlyArray<{
+export interface RequiredPlaybookSection {
   readonly heading: string;
-  readonly pattern: RegExp;
-}> = [
-  { heading: 'Role & Trigger', pattern: /^##\s+Role\s*&\s*Trigger\b/im },
-  { heading: 'Input Parameters', pattern: /^##\s+Input\s+Parameters\b/im },
-  { heading: 'Execution Steps', pattern: /^##\s+Execution\s+Steps\b/im },
-  { heading: 'Verification Checklist', pattern: /^##\s+Verification\s+Checklist\b/im },
+  readonly isPresent: (body: string, spec: AgentSkillSpec) => boolean;
+}
+
+const REQUIRED_MARKET_SECTIONS: ReadonlyArray<RequiredPlaybookSection> = [
+  {
+    heading: 'Role & Trigger',
+    isPresent: (body, spec) =>
+      /^##\s+(?:Role\s*&?\s*Trigger|When\s+to\s+(?:Activate|Use)|Trigger(?:\s+Condition)?|Activation(?:\s+Criteria)?|Role\s+and\s+Trigger)\b/im.test(body) ||
+      Boolean(spec.sections?.roleAndTrigger?.trim()),
+  },
+  {
+    heading: 'Input Parameters',
+    isPresent: (body, spec) =>
+      /^##\s+(?:Input\s+Parameters?|Parameters?|Inputs?|Input\s+Context|Input\s+Variables?|Configuration)\b/im.test(body) ||
+      Boolean(spec.sections?.inputParameters?.trim()) ||
+      /(?:templates\/|sample-input|parameters?|input\s+context|variables?)/i.test(body) ||
+      /^##\s+Step\s+1\b/im.test(body),
+  },
+  {
+    heading: 'Execution Steps',
+    isPresent: (body, spec) =>
+      /^##\s+(?:Execution\s+Steps?|Step\s+1\b|Workflow|Core\s+Workflow|Instructions?|Procedure)\b/im.test(body) ||
+      Boolean(spec.sections?.executionSteps?.trim()),
+  },
+  {
+    heading: 'Verification Checklist',
+    isPresent: (body, spec) =>
+      /^##\s+(?:Verification\s+Checklist|Quality\s+Checklist|Verification|Checklist)\b/im.test(body) ||
+      Boolean(spec.sections?.verificationChecklist?.trim()),
+  },
 ];
 
 /**
@@ -567,7 +591,7 @@ export const auditSkillMarketReadiness = (
   const descValid = trimmedDesc.length >= 40 && trimmedDesc.length <= MAX_SKILL_DESCRIPTION_LENGTH;
 
   const missingSections = REQUIRED_MARKET_SECTIONS.filter(
-    (section) => !section.pattern.test(trimmedBody)
+    (section) => !section.isPresent(trimmedBody, spec)
   ).map((section) => section.heading);
   const sectionsValid = missingSections.length === 0;
 

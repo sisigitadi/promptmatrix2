@@ -531,7 +531,15 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           setEditedTagline(parsed.tagline ?? null);
           setEditedPriceStr(parsed.priceStr ?? null);
           setEditedTagsStr(parsed.tagsStr ?? null);
-          setEditedDescMd(parsed.descMd ?? null);
+          const rawDescMd = parsed.descMd;
+          const sanitizedDescMd =
+            rawDescMd &&
+            typeof rawDescMd === 'string' &&
+            !rawDescMd.trim().startsWith('---') &&
+            !rawDescMd.trim().startsWith('# ')
+              ? rawDescMd
+              : null;
+          setEditedDescMd(sanitizedDescMd);
           setEditedDemoRequest(parsed.demoRequest ?? null);
           setEditedDemoResult(parsed.demoResult ?? null);
           return;
@@ -585,7 +593,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   const effectiveVersion = editedVersion ?? baseRecord.version;
   const effectiveLicense = editedLicense ?? baseRecord.license;
   const effectiveTriggerDesc = editedTriggerDesc ?? baseRecord.description;
-  const effectiveBody = editedDescMd ?? baseRecord.body;
+  const effectiveBody = baseRecord.body;
 
   const activeSpec: AgentSkillSpec = useMemo(() => {
     return {
@@ -655,7 +663,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   const activeTagline = editedTagline ?? listingCopy.tagline;
   const activePriceStr = editedPriceStr ?? (baseRecord.priceUsd !== undefined ? baseRecord.priceUsd.toFixed(2) : listingCopy.recommendedPriceUsd.toFixed(2));
   const activeTagsStr = editedTagsStr ?? (baseRecord.tags ? baseRecord.tags.join(', ') : listingCopy.tags.join(', '));
-  const activeDescMd = editedDescMd ?? (baseRecord.rawMarkdown || listingCopy.descriptionMarkdown);
+  const activeDescMd = editedDescMd ?? listingCopy.descriptionMarkdown;
   const activeDemoRequest = editedDemoRequest ?? (baseRecord.demoRequest || listingCopy.demoRequest);
   const activeDemoResult = editedDemoResult ?? (baseRecord.demoResult || listingCopy.demoResult);
 

@@ -177,8 +177,10 @@ flowchart TD
 
   - **D38. Resolusi Judul Dinamis & Sanitasi Draf Universal Agent Skill & Market Kit (v7.6.1):**
     - **Resolusi Judul Dinamis:** Memperbaiki status bar atas `components/AgentSkillViewer.tsx` agar menampilkan nama riil paket/formula yang dimuat (`activeTitle` / `effectiveTitle` / `activeSpec.name`) alih-alih teks statis *"Universal Agent Skill & Market Kit"*.
-    - **Hierarki Status Bar Premium:** Menempatkan badge konteks `UNIVERSAL AGENT SKILL & MARKET KIT`, audit compliance score (`95/100`), dan badge kategori di baris lencana atas, diikuti judul H3 yang tegas dan subline metadata paket (`📦 <slug>.zip • v1.0.0 • MIT`).
-    - **Sanitasi Draf LocalStorage:** Menambahkan mekanisme pembersih draf lokal otomatis pada `useEffect` agar placeholder generik lawas tidak menimpa judul paket komersial.
+    - **Hierarki Status Bar Premium:** Menempatkan badge konteks `UNIVERSAL AGENT SKILL & MARKET KIT`, audit compliance score (`100/100`), dan badge kategori di baris lencana atas, diikuti judul H3 yang tegas dan subline metadata paket (`📦 <slug>.zip • v1.0.0 • MIT`).
+    - **Audit Playbook Sections Fleksibel (`services/agentSkillService.ts`):** Mengadopsi matcher bagian playbook (`RequiredPlaybookSection`) yang mengenali konvensi Open Agent Skills standar (`## When to Activate`, `## Step 1...`, `spec.sections`, dan `## Verification Checklist`), mengeliminasi false positive peringatan *"Missing sections: Role & Trigger, Input Parameters, Execution Steps"* pada 15 paket flagship.
+    - **Pemisahan Tegas Body vs Deskripsi Listing:** Memperbaiki isolasi `effectiveBody` di `AgentSkillViewer.tsx` agar selalu mempertahankan playbook instruksi teknis utuh dari `baseRecord.body`, mencegah tertimpa oleh deskripsi pemasaran marketplace (`activeDescMd`).
+    - **Sanitasi Draf LocalStorage:** Menambahkan mekanisme pembersih draf lokal otomatis pada `useEffect` agar placeholder generik atau raw markdown lawas tidak menimpa judul dan body paket komersial.
     - **Label Opsi Dropdown Interaktif:** Memperkaya label opsi `[Formula Aktif]` di dropdown switcher studio dengan nama framework atau draf canvas aktif.
 
 ### Register Modul & Komponen Utama
