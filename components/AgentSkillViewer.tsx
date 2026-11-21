@@ -92,11 +92,10 @@ const renderInlineTokens = (text: string, isLightTheme: boolean): React.ReactNod
       return (
         <code
           key={idx}
-          className={`px-1.5 py-0.5 rounded font-mono text-[11px] break-all ${
-            isLightTheme
+          className={`px-1.5 py-0.5 rounded font-mono text-[11px] break-all ${isLightTheme
               ? 'bg-slate-200/80 text-emerald-900'
               : 'bg-slate-800 text-emerald-300'
-          }`}
+            }`}
         >
           {token.slice(1, -1)}
         </code>
@@ -142,11 +141,10 @@ const renderSafeMarkdownPreview = (markdown: string, isLightTheme: boolean): Rea
       elements.push(
         <div
           key={`code-${i}`}
-          className={`rounded-xl border overflow-hidden my-2 ${
-            isLightTheme
+          className={`rounded-xl border overflow-hidden my-2 ${isLightTheme
               ? 'bg-slate-900 border-slate-300 text-slate-100'
               : 'bg-[#070b12] border-slate-800 text-slate-200'
-          }`}
+            }`}
         >
           {langLabel && (
             <div className="px-3 py-1 border-b border-slate-800 text-[10px] font-mono uppercase text-emerald-400 bg-slate-950">
@@ -184,9 +182,8 @@ const renderSafeMarkdownPreview = (markdown: string, isLightTheme: boolean): Rea
       elements.push(
         <div
           key={`table-${i}`}
-          className={`overflow-x-auto rounded-xl border my-2 ${
-            isLightTheme ? 'border-slate-300' : 'border-slate-800'
-          }`}
+          className={`overflow-x-auto rounded-xl border my-2 ${isLightTheme ? 'border-slate-300' : 'border-slate-800'
+            }`}
         >
           <table className="w-full text-left border-collapse text-[11px]">
             <thead
@@ -215,9 +212,8 @@ const renderSafeMarkdownPreview = (markdown: string, isLightTheme: boolean): Rea
                   {row.map((cell, cIdx) => (
                     <td
                       key={cIdx}
-                      className={`px-3 py-2 align-top break-words ${
-                        isLightTheme ? 'text-slate-800' : 'text-slate-300'
-                      }`}
+                      className={`px-3 py-2 align-top break-words ${isLightTheme ? 'text-slate-800' : 'text-slate-300'
+                        }`}
                     >
                       {renderInlineTokens(cell, isLightTheme)}
                     </td>
@@ -235,9 +231,8 @@ const renderSafeMarkdownPreview = (markdown: string, isLightTheme: boolean): Rea
       elements.push(
         <h4
           key={`h3-${i}`}
-          className={`text-xs font-bold pt-2 break-words ${
-            isLightTheme ? 'text-slate-900' : 'text-emerald-300'
-          }`}
+          className={`text-xs font-bold pt-2 break-words ${isLightTheme ? 'text-slate-900' : 'text-emerald-300'
+            }`}
         >
           {renderInlineTokens(trimmed.slice(4), isLightTheme)}
         </h4>
@@ -249,11 +244,10 @@ const renderSafeMarkdownPreview = (markdown: string, isLightTheme: boolean): Rea
       elements.push(
         <h3
           key={`h2-${i}`}
-          className={`text-sm font-bold pt-2.5 pb-1 border-b break-words ${
-            isLightTheme
+          className={`text-sm font-bold pt-2.5 pb-1 border-b break-words ${isLightTheme
               ? 'text-slate-900 border-slate-200'
               : 'text-slate-100 border-slate-800'
-          }`}
+            }`}
         >
           {renderInlineTokens(trimmed.slice(3), isLightTheme)}
         </h3>
@@ -265,9 +259,8 @@ const renderSafeMarkdownPreview = (markdown: string, isLightTheme: boolean): Rea
       elements.push(
         <h2
           key={`h1-${i}`}
-          className={`text-base font-bold break-words ${
-            isLightTheme ? 'text-slate-900' : 'text-slate-100'
-          }`}
+          className={`text-base font-bold break-words ${isLightTheme ? 'text-slate-900' : 'text-slate-100'
+            }`}
         >
           {renderInlineTokens(trimmed.slice(2), isLightTheme)}
         </h2>
@@ -315,9 +308,8 @@ const renderSafeMarkdownPreview = (markdown: string, isLightTheme: boolean): Rea
     elements.push(
       <p
         key={`p-${i}`}
-        className={`text-xs leading-relaxed break-words [overflow-wrap:anywhere] ${
-          isLightTheme ? 'text-slate-800' : 'text-slate-300'
-        }`}
+        className={`text-xs leading-relaxed break-words [overflow-wrap:anywhere] ${isLightTheme ? 'text-slate-800' : 'text-slate-300'
+          }`}
       >
         {renderInlineTokens(trimmed, isLightTheme)}
       </p>
@@ -546,9 +538,9 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           const isStaleEnglishTitle = isId && f && f.titleId && rawTitle === f.title;
           const sanitizedTitle =
             rawTitle &&
-            rawTitle !== 'Universal Agent Skill & Market Kit' &&
-            rawTitle !== t('skill_universal_kit_title') &&
-            !isStaleEnglishTitle
+              rawTitle !== 'Universal Agent Skill & Market Kit' &&
+              rawTitle !== t('skill_universal_kit_title') &&
+              !isStaleEnglishTitle
               ? rawTitle
               : null;
           setEditedTitle(sanitizedTitle);
@@ -560,9 +552,9 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           const rawDescMd = parsed.descMd;
           const sanitizedDescMd =
             rawDescMd &&
-            typeof rawDescMd === 'string' &&
-            !rawDescMd.trim().startsWith('---') &&
-            !rawDescMd.trim().startsWith('# ')
+              typeof rawDescMd === 'string' &&
+              !rawDescMd.trim().startsWith('---') &&
+              !rawDescMd.trim().startsWith('# ')
               ? rawDescMd
               : null;
           setEditedDescMd(sanitizedDescMd);
@@ -991,11 +983,11 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       const toastMsg =
         nextAudit.score === 100
           ? (isId
-              ? 'Sempurna! Pembaruan AI mencapai skor 100/100 (Semua catatan kesiapan selesai).'
-              : 'Perfect! AI update reached 100/100 (All readiness notes resolved).')
+            ? 'Sempurna! Pembaruan AI mencapai skor 100/100 (Semua catatan kesiapan selesai).'
+            : 'Perfect! AI update reached 100/100 (All readiness notes resolved).')
           : (isId
-              ? `Pembaruan AI diterapkan! Skor kesiapan meningkat: ${prevScore}/100 ➔ ${nextAudit.score}/100.`
-              : `AI update applied! Readiness score improved: ${prevScore}/100 ➔ ${nextAudit.score}/100.`);
+            ? `Pembaruan AI diterapkan! Skor kesiapan meningkat: ${prevScore}/100 ➔ ${nextAudit.score}/100.`
+            : `AI update applied! Readiness score improved: ${prevScore}/100 ➔ ${nextAudit.score}/100.`);
 
       onAiSuggestToast?.(toastMsg, 'success');
     } catch (err: unknown) {
@@ -1044,41 +1036,37 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           <div className="min-w-0 flex-1 space-y-1.5">
             <div className="flex flex-wrap items-center gap-1.5">
               <span
-                className={`px-2 py-0.5 rounded-md text-[10px] font-semibold tracking-wide border uppercase ${
-                  isLightTheme
+                className={`px-2 py-0.5 rounded-md text-[10px] font-semibold tracking-wide border uppercase ${isLightTheme
                     ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
                     : 'bg-emerald-950/40 border-emerald-600/40 text-emerald-300'
-                }`}
+                  }`}
               >
                 {t('skill_universal_kit_title')}
               </span>
               <span
-                className={`px-2 py-0.5 rounded-md font-mono text-[10px] font-semibold border ${
-                  activeValidation.valid
+                className={`px-2 py-0.5 rounded-md font-mono text-[10px] font-semibold border ${activeValidation.valid
                     ? isLightTheme
                       ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
                       : 'bg-emerald-500/15 border-emerald-500/35 text-emerald-300'
                     : isLightTheme
                       ? 'bg-rose-100 border-rose-300 text-rose-900'
                       : 'bg-rose-500/15 border-rose-500/35 text-rose-300'
-                }`}
+                  }`}
               >
                 {auditResult.score}/100
               </span>
               <span
-                className={`px-2 py-0.5 rounded-md font-mono text-[10px] font-semibold border ${
-                  isLightTheme
+                className={`px-2 py-0.5 rounded-md font-mono text-[10px] font-semibold border ${isLightTheme
                     ? 'bg-slate-100 border-slate-300 text-slate-700'
                     : 'bg-slate-800/70 border-slate-700 text-slate-300'
-                }`}
+                  }`}
               >
                 {effectiveCategory}
               </span>
             </div>
             <h3
-              className={`text-sm sm:text-base font-bold tracking-tight leading-snug break-words ${
-                isLightTheme ? 'text-slate-900' : 'text-slate-100'
-              }`}
+              className={`text-sm sm:text-base font-bold tracking-tight leading-snug break-words ${isLightTheme ? 'text-slate-900' : 'text-slate-100'
+                }`}
             >
               {activeTitle || effectiveTitle || activeSpec.metadata.framework || activeSpec.name}
             </h3>
@@ -1184,11 +1172,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
             <button
               type="button"
               onClick={handleSaveDraft}
-              className={`min-h-[34px] px-2.5 sm:px-3 py-1 rounded-xl border text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-sm ${
-                isLightTheme
+              className={`min-h-[34px] px-2.5 sm:px-3 py-1 rounded-xl border text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-sm ${isLightTheme
                   ? 'bg-emerald-50 border-emerald-300 text-emerald-800 hover:bg-emerald-100'
                   : 'bg-emerald-950/40 border-emerald-600/50 text-emerald-300 hover:bg-emerald-900/60'
-              } ${focusRingClass}`}
+                } ${focusRingClass}`}
               title={isId ? 'Simpan draf isian skill ini ke browser lokal' : 'Save this skill draft to local browser storage'}
             >
               <span>💾</span>
@@ -1244,13 +1231,12 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
         </div>
 
         {/* Active Source Sub-Banner Pill */}
-        <div className={`px-2.5 py-1.5 rounded-lg border text-[11px] flex items-center justify-between gap-2 ${
-          activeSourceSlug === 'current_formula'
+        <div className={`px-2.5 py-1.5 rounded-lg border text-[11px] flex items-center justify-between gap-2 ${activeSourceSlug === 'current_formula'
             ? 'bg-emerald-950/30 border-emerald-500/30 text-emerald-300'
             : activeSourceSlug === 'custom_new'
               ? 'bg-amber-950/30 border-amber-500/30 text-amber-300'
               : 'bg-indigo-950/30 border-indigo-500/30 text-indigo-300'
-        }`}>
+          }`}>
           <span className="truncate">
             {activeSourceSlug === 'current_formula'
               ? `⚡ ${isId ? 'Terhubung ke formula aktif Studio:' : 'Synced to active Studio formula:'} ${selectedFrameworkName || 'PromptMatrix'}`
@@ -1285,22 +1271,20 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
               role="tab"
               aria-selected={isActive}
               onClick={() => setActiveStep(step.id)}
-              className={`min-h-[42px] px-2 py-1.5 rounded-lg text-[11px] font-semibold transition-colors flex flex-col sm:flex-row items-center justify-center gap-1 text-center leading-tight ${focusRingClass} ${
-                isActive
+              className={`min-h-[42px] px-2 py-1.5 rounded-lg text-[11px] font-semibold transition-colors flex flex-col sm:flex-row items-center justify-center gap-1 text-center leading-tight ${focusRingClass} ${isActive
                   ? 'bg-emerald-700 text-white shadow-sm'
                   : isLightTheme
                     ? 'text-slate-700 hover:bg-slate-200/70 hover:text-slate-950'
                     : 'text-slate-300 hover:bg-slate-800 hover:text-white'
-              }`}
+                }`}
             >
               <span
-                className={`w-4 h-4 rounded-full text-[10px] font-mono font-bold inline-flex items-center justify-center shrink-0 ${
-                  isActive
+                className={`w-4 h-4 rounded-full text-[10px] font-mono font-bold inline-flex items-center justify-center shrink-0 ${isActive
                     ? 'bg-white/20 text-white'
                     : isLightTheme
                       ? 'bg-slate-300 text-slate-800'
                       : 'bg-slate-800 text-emerald-400'
-                }`}
+                  }`}
               >
                 {step.num}
               </span>
@@ -1318,15 +1302,14 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           {/* Post-AI Update Banner (Shows score delta, resolved checks, updated fields, and readiness status) */}
           {aiUpdateRecord && (
             <div
-              className={`p-3.5 rounded-xl border transition-all text-xs space-y-2.5 ${
-                aiUpdateRecord.newScore === 100
+              className={`p-3.5 rounded-xl border transition-all text-xs space-y-2.5 ${aiUpdateRecord.newScore === 100
                   ? isLightTheme
                     ? 'bg-emerald-50/95 border-emerald-300 text-emerald-950'
                     : 'bg-emerald-950/40 border-emerald-500/40 text-emerald-200'
                   : isLightTheme
                     ? 'bg-sky-50/95 border-sky-300 text-sky-950'
                     : 'bg-sky-950/35 border-sky-500/40 text-sky-200'
-              }`}
+                }`}
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
@@ -1442,11 +1425,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           {/* Actionable Quality Gate Summary (with 1-Click AI Auto-Fix Button) */}
           {failedAuditChecks.length > 0 && (
             <div
-              className={`p-3 rounded-xl border text-[11px] space-y-2 ${
-                isLightTheme
+              className={`p-3 rounded-xl border text-[11px] space-y-2 ${isLightTheme
                   ? 'bg-amber-50 border-amber-300 text-amber-950'
                   : 'bg-amber-950/30 border-amber-500/35 text-amber-200'
-              }`}
+                }`}
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="font-bold flex items-center gap-1.5">
@@ -1496,11 +1478,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
           {/* Product Identity & Pricing */}
           <div className={`p-3.5 rounded-xl border space-y-3 min-w-0 ${cardClass}`}>
             {/* One-Click AI Generate Full Profile & Demo Banner */}
-            <div className={`p-3 rounded-xl border flex flex-col ${isExpanded ? 'md:flex-row md:items-center' : ''} justify-between gap-2.5 ${
-              isLightTheme
+            <div className={`p-3 rounded-xl border flex flex-col ${isExpanded ? 'md:flex-row md:items-center' : ''} justify-between gap-2.5 ${isLightTheme
                 ? 'bg-emerald-50/80 border-emerald-300 text-emerald-950'
                 : 'bg-emerald-950/25 border-emerald-500/35 text-emerald-200'
-            }`}>
+              }`}>
               <div className="space-y-0.5 min-w-0">
                 <span className="text-xs font-bold flex items-center gap-1.5 text-emerald-400">
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
@@ -1571,11 +1552,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     <span className={`text-[11px] font-semibold block ${labelTextClass}`}>
                       {t('skill_field_name')}
                     </span>
-                    <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold border ${
-                      isNameValid
+                    <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold border ${isNameValid
                         ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300'
                         : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
-                    }`}>
+                      }`}>
                       {isNameValid ? '✓ kebab-case' : 'kebab-case required'}
                     </span>
                   </div>
@@ -1648,15 +1628,14 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     </span>
                     {matchedPreset && (
                       <span
-                        className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider ${
-                          matchedPreset.category === 'commercial'
+                        className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider ${matchedPreset.category === 'commercial'
                             ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
                             : matchedPreset.category === 'open-source'
-                            ? 'bg-blue-500/15 text-blue-400 border border-blue-500/30'
-                            : matchedPreset.category === 'hybrid'
-                            ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30'
-                            : 'bg-purple-500/15 text-purple-400 border border-purple-500/30'
-                        }`}
+                              ? 'bg-blue-500/15 text-blue-400 border border-blue-500/30'
+                              : matchedPreset.category === 'hybrid'
+                                ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30'
+                                : 'bg-purple-500/15 text-purple-400 border border-purple-500/30'
+                          }`}
                       >
                         {matchedPreset.badge}
                       </span>
@@ -1834,11 +1813,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                 <button
                   type="button"
                   onClick={() => handleCopyField('desc', activeDescMd)}
-                  className={`text-[10px] font-semibold px-2 py-1 rounded-lg border transition-colors ${focusRingClass} ${
-                    copiedKey === 'desc'
+                  className={`text-[10px] font-semibold px-2 py-1 rounded-lg border transition-colors ${focusRingClass} ${copiedKey === 'desc'
                       ? 'bg-emerald-700 border-emerald-600 text-white'
                       : secondaryBtnClass
-                  }`}
+                    }`}
                 >
                   {copiedKey === 'desc' ? `✓ ${t('copied_btn')}` : t('skill_copy_desc_btn')}
                 </button>
@@ -1870,26 +1848,24 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                 <button
                   type="button"
                   onClick={() => setDemoViewMode('edit')}
-                  className={`px-2.5 py-1 rounded text-[11px] font-semibold transition-colors ${
-                    demoViewMode === 'edit'
+                  className={`px-2.5 py-1 rounded text-[11px] font-semibold transition-colors ${demoViewMode === 'edit'
                       ? 'bg-emerald-700 text-white'
                       : isLightTheme
                         ? 'text-slate-700 hover:text-slate-950'
                         : 'text-slate-300 hover:text-white'
-                  }`}
+                    }`}
                 >
                   {isId ? 'Edit' : 'Edit'}
                 </button>
                 <button
                   type="button"
                   onClick={() => setDemoViewMode('preview')}
-                  className={`px-2.5 py-1 rounded text-[11px] font-semibold transition-colors ${
-                    demoViewMode === 'preview'
+                  className={`px-2.5 py-1 rounded text-[11px] font-semibold transition-colors ${demoViewMode === 'preview'
                       ? 'bg-emerald-700 text-white'
                       : isLightTheme
                         ? 'text-slate-700 hover:text-slate-950'
                         : 'text-slate-300 hover:text-white'
-                  }`}
+                    }`}
                 >
                   {isId ? 'Pratinjau' : 'Preview'}
                 </button>
@@ -1915,11 +1891,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                 <button
                   type="button"
                   onClick={() => handleCopyField('req', activeDemoRequest)}
-                  className={`text-[10px] font-semibold px-2 py-1 rounded-lg border transition-colors ${focusRingClass} ${
-                    copiedKey === 'req'
+                  className={`text-[10px] font-semibold px-2 py-1 rounded-lg border transition-colors ${focusRingClass} ${copiedKey === 'req'
                       ? 'bg-emerald-700 border-emerald-600 text-white'
                       : secondaryBtnClass
-                  }`}
+                    }`}
                 >
                   {copiedKey === 'req' ? `✓ ${t('copied_btn')}` : t('skill_copy_request_btn')}
                 </button>
@@ -1951,15 +1926,14 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     <span>✨ {aiSuggestingField === 'demoResult' ? '...' : t('skill_ai_suggest_demo_res')}</span>
                   </button>
                   <span
-                    className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold border ${
-                      demoResultReady
+                    className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold border ${demoResultReady
                         ? isLightTheme
                           ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
                           : 'bg-emerald-500/15 border-emerald-500/35 text-emerald-300'
                         : isLightTheme
                           ? 'bg-amber-100 border-amber-300 text-amber-950'
                           : 'bg-amber-500/15 border-amber-500/35 text-amber-300'
-                    }`}
+                      }`}
                   >
                     {demoResultChars} char {demoResultReady ? '✓' : '/ 700+'}
                   </span>
@@ -1968,11 +1942,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                 <button
                   type="button"
                   onClick={() => handleCopyField('res', activeDemoResult)}
-                  className={`text-[10px] font-semibold px-2 py-1 rounded-lg border transition-colors ${focusRingClass} ${
-                    copiedKey === 'res'
+                  className={`text-[10px] font-semibold px-2 py-1 rounded-lg border transition-colors ${focusRingClass} ${copiedKey === 'res'
                       ? 'bg-emerald-700 border-emerald-600 text-white'
                       : secondaryBtnClass
-                  }`}
+                    }`}
                 >
                   {copiedKey === 'res' ? `✓ ${t('copied_btn')}` : t('skill_copy_result_btn')}
                 </button>
@@ -2060,11 +2033,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
               <button
                 type="button"
                 onClick={() => handleCopyField('skill_md_copy', activeSkillMarkdown)}
-                className={`w-full min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold border transition-colors flex items-center justify-center gap-2 ${focusRingClass} ${
-                  copiedKey === 'skill_md_copy'
+                className={`w-full min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold border transition-colors flex items-center justify-center gap-2 ${focusRingClass} ${copiedKey === 'skill_md_copy'
                     ? 'bg-emerald-700 border-emerald-600 text-white'
                     : secondaryBtnClass
-                }`}
+                  }`}
               >
                 <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -2096,11 +2068,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   key={guide.id}
                   type="button"
                   onClick={() => setSelectedRunnerId(guide.id)}
-                  className={`min-h-[34px] px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-colors ${focusRingClass} ${
-                    selectedRunnerId === guide.id
+                  className={`min-h-[34px] px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-colors ${focusRingClass} ${selectedRunnerId === guide.id
                       ? 'bg-emerald-700 border-emerald-600 text-white'
                       : secondaryBtnClass
-                  }`}
+                    }`}
                 >
                   {guide.name}
                 </button>
@@ -2117,11 +2088,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyField('win_path', resolvedWinPath)}
-                    className={`text-[10px] font-semibold px-2 py-0.5 rounded border transition-colors ${focusRingClass} ${
-                      copiedKey === 'win_path'
+                    className={`text-[10px] font-semibold px-2 py-0.5 rounded border transition-colors ${focusRingClass} ${copiedKey === 'win_path'
                         ? 'bg-emerald-700 border-emerald-600 text-white'
                         : secondaryBtnClass
-                    }`}
+                      }`}
                   >
                     {copiedKey === 'win_path' ? `✓ ${t('copied_btn')}` : isId ? 'Salin' : 'Copy'}
                   </button>
@@ -2139,11 +2109,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyField('unix_path', resolvedUnixPath)}
-                    className={`text-[10px] font-semibold px-2 py-0.5 rounded border transition-colors ${focusRingClass} ${
-                      copiedKey === 'unix_path'
+                    className={`text-[10px] font-semibold px-2 py-0.5 rounded border transition-colors ${focusRingClass} ${copiedKey === 'unix_path'
                         ? 'bg-emerald-700 border-emerald-600 text-white'
                         : secondaryBtnClass
-                    }`}
+                      }`}
                   >
                     {copiedKey === 'unix_path' ? `✓ ${t('copied_btn')}` : isId ? 'Salin' : 'Copy'}
                   </button>
@@ -2163,11 +2132,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                 <button
                   type="button"
                   onClick={() => handleCopyField('cli_cmd', validateCmd)}
-                  className={`text-[10px] font-semibold px-2 py-0.5 rounded border transition-colors ${focusRingClass} ${
-                    copiedKey === 'cli_cmd'
+                  className={`text-[10px] font-semibold px-2 py-0.5 rounded border transition-colors ${focusRingClass} ${copiedKey === 'cli_cmd'
                       ? 'bg-emerald-700 border-emerald-600 text-white'
                       : secondaryBtnClass
-                  }`}
+                    }`}
                 >
                   {copiedKey === 'cli_cmd' ? `✓ ${t('copied_btn')}` : isId ? 'Salin' : 'Copy'}
                 </button>
@@ -2253,65 +2221,60 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                 <button
                   type="button"
                   onClick={() => setMarketFormatTab('universal')}
-                  className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${focusRingClass} ${
-                    marketFormatTab === 'universal'
+                  className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${focusRingClass} ${marketFormatTab === 'universal'
                       ? 'bg-emerald-600 text-white shadow-sm'
                       : isLightTheme
                         ? 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                         : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
-                  }`}
+                    }`}
                 >
                   🌐 {t('skill_market_universal')}
                 </button>
                 <button
                   type="button"
                   onClick={() => setMarketFormatTab('promptbase')}
-                  className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${focusRingClass} ${
-                    marketFormatTab === 'promptbase'
+                  className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${focusRingClass} ${marketFormatTab === 'promptbase'
                       ? 'bg-emerald-600 text-white shadow-sm'
                       : isLightTheme
                         ? 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                         : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
-                  }`}
+                    }`}
                 >
                   ⚡ {t('skill_market_promptbase')}
                 </button>
                 <button
                   type="button"
                   onClick={() => setMarketFormatTab('storefront')}
-                  className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${focusRingClass} ${
-                    marketFormatTab === 'storefront'
+                  className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${focusRingClass} ${marketFormatTab === 'storefront'
                       ? 'bg-emerald-600 text-white shadow-sm'
                       : isLightTheme
                         ? 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                         : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
-                  }`}
+                    }`}
                 >
                   🛍️ {t('skill_market_storefronts')}
                 </button>
                 <button
                   type="button"
                   onClick={() => setMarketFormatTab('oss')}
-                  className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${focusRingClass} ${
-                    marketFormatTab === 'oss'
+                  className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${focusRingClass} ${marketFormatTab === 'oss'
                       ? 'bg-emerald-600 text-white shadow-sm'
                       : isLightTheme
                         ? 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                         : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
-                  }`}
+                    }`}
                 >
                   🐙 {t('skill_market_oss')}
                 </button>
                 <button
                   type="button"
                   onClick={() => setMarketFormatTab('jsonld')}
-                  className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${focusRingClass} ${
-                    marketFormatTab === 'jsonld'
+                  className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${focusRingClass} ${marketFormatTab === 'jsonld'
                       ? 'bg-emerald-600 text-white shadow-sm'
                       : isLightTheme
                         ? 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                         : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
-                  }`}
+                    }`}
                 >
                   🏷️ Schema JSON-LD
                 </button>
@@ -2344,11 +2307,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     <button
                       type="button"
                       onClick={() => handleCopyField('title_tag', `${activeTitle}\n${activeTagline}`)}
-                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                        copiedKey === 'title_tag'
+                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'title_tag'
                           ? 'bg-emerald-700 border-emerald-600 text-white'
                           : secondaryBtnClass
-                      }`}
+                        }`}
                     >
                       {copiedKey === 'title_tag'
                         ? `✓ ${t('copied_btn')}`
@@ -2360,11 +2322,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     <button
                       type="button"
                       onClick={() => handleCopyField('sell_desc', activeDescMd)}
-                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                        copiedKey === 'sell_desc'
+                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'sell_desc'
                           ? 'bg-emerald-700 border-emerald-600 text-white'
                           : secondaryBtnClass
-                      }`}
+                        }`}
                     >
                       {copiedKey === 'sell_desc'
                         ? `✓ ${t('copied_btn')}`
@@ -2376,11 +2337,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     <button
                       type="button"
                       onClick={() => handleCopyField('sell_req', activeDemoRequest)}
-                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                        copiedKey === 'sell_req'
+                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'sell_req'
                           ? 'bg-emerald-700 border-emerald-600 text-white'
                           : secondaryBtnClass
-                      }`}
+                        }`}
                     >
                       {copiedKey === 'sell_req'
                         ? `✓ ${t('copied_btn')}`
@@ -2392,11 +2352,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     <button
                       type="button"
                       onClick={() => handleCopyField('sell_res', activeDemoResult)}
-                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                        copiedKey === 'sell_res'
+                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'sell_res'
                           ? 'bg-emerald-700 border-emerald-600 text-white'
                           : secondaryBtnClass
-                      }`}
+                        }`}
                     >
                       {copiedKey === 'sell_res'
                         ? `✓ ${t('copied_btn')}`
@@ -2408,11 +2367,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     <button
                       type="button"
                       onClick={() => handleCopyField('geo_faq', listingCopy.geoFaqMarkdown)}
-                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                        copiedKey === 'geo_faq'
+                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'geo_faq'
                           ? 'bg-emerald-700 border-emerald-600 text-white'
                           : secondaryBtnClass
-                      }`}
+                        }`}
                     >
                       {copiedKey === 'geo_faq'
                         ? `✓ ${t('copied_btn')}`
@@ -2424,11 +2382,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                     <button
                       type="button"
                       onClick={onCopy}
-                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                        isCopied
+                      className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${isCopied
                           ? 'bg-emerald-700 border-emerald-600 text-white'
                           : secondaryBtnClass
-                      }`}
+                        }`}
                     >
                       {isCopied ? `✓ ${t('copied_btn')}` : t('copy_skill_btn')}
                     </button>
@@ -2496,11 +2453,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyField('pb_title', listingCopy.promptBase.title)}
-                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                      copiedKey === 'pb_title'
+                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'pb_title'
                         ? 'bg-amber-600 border-amber-500 text-slate-950'
                         : secondaryBtnClass
-                    }`}
+                      }`}
                   >
                     {copiedKey === 'pb_title'
                       ? `✓ ${t('copied_btn')}`
@@ -2510,11 +2466,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyField('pb_desc', listingCopy.promptBase.description)}
-                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                      copiedKey === 'pb_desc'
+                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'pb_desc'
                         ? 'bg-amber-600 border-amber-500 text-slate-950'
                         : secondaryBtnClass
-                    }`}
+                      }`}
                   >
                     {copiedKey === 'pb_desc' ? `✓ ${t('copied_btn')}` : isId ? 'Salin Deskripsi PB' : 'Copy PB Description'}
                   </button>
@@ -2522,11 +2477,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyField('pb_tpl', listingCopy.promptBase.promptTemplate)}
-                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                      copiedKey === 'pb_tpl'
+                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'pb_tpl'
                         ? 'bg-amber-600 border-amber-500 text-slate-950'
                         : secondaryBtnClass
-                    }`}
+                      }`}
                   >
                     {copiedKey === 'pb_tpl' ? `✓ ${t('copied_btn')}` : isId ? 'Salin Template [Variabel]' : 'Copy [Variable] Template'}
                   </button>
@@ -2534,11 +2488,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyField('pb_test', listingCopy.promptBase.testingExample)}
-                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                      copiedKey === 'pb_test'
+                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'pb_test'
                         ? 'bg-amber-600 border-amber-500 text-slate-950'
                         : secondaryBtnClass
-                    }`}
+                      }`}
                   >
                     {copiedKey === 'pb_test' ? `✓ ${t('copied_btn')}` : isId ? 'Salin Contoh Pengujian' : 'Copy Test Example'}
                   </button>
@@ -2599,11 +2552,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyField('sf_head', listingCopy.storefront.headline)}
-                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                      copiedKey === 'sf_head'
+                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'sf_head'
                         ? 'bg-sky-600 border-sky-500 text-white'
                         : secondaryBtnClass
-                    }`}
+                      }`}
                   >
                     {copiedKey === 'sf_head' ? `✓ ${t('copied_btn')}` : isId ? 'Salin Headline Penjualan' : 'Copy Sales Headline'}
                   </button>
@@ -2611,11 +2563,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyField('sf_body', listingCopy.storefront.bodyMarkdown)}
-                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                      copiedKey === 'sf_body'
+                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'sf_body'
                         ? 'bg-sky-600 border-sky-500 text-white'
                         : secondaryBtnClass
-                    }`}
+                      }`}
                   >
                     {copiedKey === 'sf_body' ? `✓ ${t('copied_btn')}` : isId ? 'Salin Body Markdown' : 'Copy Body Markdown'}
                   </button>
@@ -2665,11 +2616,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyField('oss_cmd', listingCopy.ossLeadMagnet.cliCommand)}
-                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                      copiedKey === 'oss_cmd'
+                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'oss_cmd'
                         ? 'bg-violet-600 border-violet-500 text-white'
                         : secondaryBtnClass
-                    }`}
+                      }`}
                   >
                     {copiedKey === 'oss_cmd' ? `✓ ${t('copied_btn')}` : isId ? 'Salin Perintah CLI (npx)' : 'Copy CLI Command (npx)'}
                   </button>
@@ -2677,11 +2627,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyField('oss_readme', listingCopy.ossLeadMagnet.readmeMarkdown)}
-                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${
-                      copiedKey === 'oss_readme'
+                    className={`min-h-[40px] px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-colors ${focusRingClass} ${copiedKey === 'oss_readme'
                         ? 'bg-violet-600 border-violet-500 text-white'
                         : secondaryBtnClass
-                    }`}
+                      }`}
                   >
                     {copiedKey === 'oss_readme' ? `✓ ${t('copied_btn')}` : isId ? 'Salin README.md' : 'Copy README.md'}
                   </button>
