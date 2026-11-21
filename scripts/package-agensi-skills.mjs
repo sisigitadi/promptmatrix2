@@ -119,6 +119,36 @@ const LISTING_METADATA_BY_SLUG = {
     overviewNote:
       'Defines Fan-Out/Fan-In and Author-Verifier topologies with disjoint `ownedPaths` (`references/subagent-handoff-patterns.md`, `templates/swarm-task-contract.json`) and checks dependency cycles and `SKILL.md` frontmatter via `scripts/validate-agent-workspace.mjs`.',
   },
+  'ai-product-manager-and-prd-architect': {
+    tagline: 'Draft engineering-ready PRDs, Gherkin acceptance criteria, and RICE backlog matrices.',
+    tags: ['product-management', 'prd', 'gherkin', 'user-stories', 'rice-prioritization', 'agile'],
+    overviewNote:
+      'Transforms product ideas into structured PRDs with non-goals and metrics (`references/prd-and-user-story-standards.md`, `templates/prd-template.md`), validated by `scripts/validate-prd-structure.mjs`.',
+  },
+  'business-workflow-and-n8n-integrator': {
+    tagline: 'Design production n8n, Zapier, Make, and webhook workflows with idempotency and retry DLQs.',
+    tags: ['n8n', 'workflow-automation', 'zapier', 'webhooks', 'idempotency', 'dead-letter-queue'],
+    overviewNote:
+      'Provides HMAC authentication patterns, idempotency key checks, and exponential backoff dead-letter routing (`references/workflow-patterns.md`, `templates/workflow-contract.json`), checked by `scripts/validate-workflow-spec.mjs`.',
+  },
+  'b2b-cold-outreach-and-sales-engine': {
+    tagline: 'Write deliverable 4-stage B2B cold email sequences with zero spam trigger penalties.',
+    tags: ['cold-email', 'b2b-sales', 'outreach', 'copywriting', 'deliverability', 'lead-generation'],
+    overviewNote:
+      'Crafts personalized 4-touch sequences under the 125-word cap (`references/outreach-frameworks.md`, `templates/email-sequence.json`), scanned for spam triggers and subject length via `scripts/validate-outreach-copy.mjs`.',
+  },
+  'viral-short-form-video-hook-architect': {
+    tagline: 'Engineer 3-second opening hooks, visual pattern interrupts, and retention pacing for TikTok and Reels.',
+    tags: ['short-form-video', 'tiktok-hooks', 'reels', 'youtube-shorts', 'video-pacing', 'storyboard'],
+    overviewNote:
+      'Pairs 3-second hook structures with second-by-second visual cut cues (`references/hook-retention-formulas.md`, `templates/video-script.json`), verified for 130-160 wpm pacing by `scripts/validate-video-script.mjs`.',
+  },
+  'suno-ai-music-and-audio-director': {
+    tagline: 'Direct Suno v6 music prompts with tested genre tags, BPM, and song structure meta-tags.',
+    tags: ['suno-v6', 'ai-music', 'audio-prompts', 'songwriting', 'genre-tags', 'sound-design'],
+    overviewNote:
+      'Directs Suno v6/v5 style descriptors under the 200-character cap (`references/suno-v6-prompting-guide.md`, `templates/suno-prompt.json`), verified for section brackets and tempo tags by `scripts/validate-suno-prompt.mjs`.',
+  },
 };
 
 // Precompute standard IEEE 802.3 CRC-32 lookup table
@@ -706,7 +736,7 @@ function buildListingManifest(packagedResults) {
   lines.push('## 2. Recommended Upload Sequence');
   lines.push('');
   lines.push('1. **Upload #1 First (`prompt-matrix-prompt-architect` at `$0 Free`):** Establishes your Agensi creator store profile, verifies automated security scan clearance, builds install count social proof, and drops 6-month `20%` affiliate cookies when PromptMatrix visitors claim the free pack.');
-  lines.push('2. **Upload #2 to #10 (Paid Flagships `$9.99` to `$19.99`):** Upload each `.zip` directly from `dist-agensi/<slug>.zip`. Every archive places `SKILL.md` at the ZIP root with POSIX `/` paths and passes size (`< 50 MB`) and script security checks.');
+  lines.push('2. **Upload #2 to #15 (Paid Flagships `$9.99` to `$19.99`):** Upload each `.zip` directly from `dist-agensi/<slug>.zip`. Every archive places `SKILL.md` at the ZIP root with POSIX `/` paths and passes size (`< 50 MB`) and script security checks.');
   lines.push('3. **Wire Production Affiliate Links:** Copy your Creator Store URL, Affiliate Referral URL, and `ref` code into PromptMatrix (`9-tap header logo -> Pengaturan AI -> Tab Paket Skill` or `config/agensiConfig.ts`) so public visitors on `https://prompt.sigitadi.id` route through your 90% affiliate funnel.');
   lines.push('');
   lines.push('| # | Slug | Tier | Price (USD) | Archive | Size | Root `SKILL.md` | Demo Result |');
@@ -719,7 +749,7 @@ function buildListingManifest(packagedResults) {
   lines.push('');
   lines.push('---');
   lines.push('');
-  lines.push('## 3. Ready-to-Copy Listing Copy (Step 1, Step 2, Step 3 for All 10 Skills)');
+  lines.push('## 3. Ready-to-Copy Listing Copy (Step 1, Step 2, Step 3 for All 15 Skills)');
   lines.push('');
 
   ordered.forEach((item, idx) => {
@@ -778,8 +808,8 @@ function main() {
   console.log('=== PromptMatrix 2.0 Agensi.io Skill Packager ===\n');
 
   const configPacks = parseBundledSkillPacksFromConfig(CONFIG_PATH);
-  if (configPacks.length !== 10) {
-    throw new Error(`Expected 10 skill packs in config/agensiConfig.ts, found ${configPacks.length}`);
+  if (configPacks.length !== 15) {
+    throw new Error(`Expected 15 skill packs in config/agensiConfig.ts, found ${configPacks.length}`);
   }
 
   if (!fs.existsSync(SKILLS_ROOT)) {
@@ -887,7 +917,7 @@ function main() {
   fs.writeFileSync(manifestPath, manifestContent, 'utf8');
 
   console.log(`\nGenerated manifest: dist-agensi/AGENSI-LISTING-MANIFEST.md`);
-  console.log(`SUCCESS: Packaged and verified ${packagedResults.length}/10 Agensi.io skill archives in dist-agensi/.`);
+  console.log(`SUCCESS: Packaged and verified ${packagedResults.length}/15 Agensi.io skill archives in dist-agensi/.`);
 }
 
 main();

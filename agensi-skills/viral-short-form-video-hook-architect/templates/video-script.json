@@ -1,0 +1,32 @@
+{
+  "title": "Preventing Production Database Migration Locks",
+  "target_duration_seconds": 30,
+  "platform": "tiktok_shorts_reels",
+  "hook": {
+    "visual": "Red 504 Gateway Timeout error screen on laptop.",
+    "spoken_text": "Running a standard CREATE INDEX query in Postgres can freeze your entire app.",
+    "duration_seconds": 3.0,
+    "word_count": 13
+  },
+  "scenes": [
+    {
+      "scene_id": 1,
+      "timestamp": "0:03 - 0:10",
+      "visual": "Database monitoring graph with query queue spiking.",
+      "spoken_text": "Postgres acquires an exclusive table lock, halting every incoming customer write until the index build completes."
+    },
+    {
+      "scene_id": 2,
+      "timestamp": "0:10 - 0:22",
+      "visual": "Terminal showing CREATE INDEX CONCURRENTLY running without blocking.",
+      "spoken_text": "Instead, pass the CONCURRENTLY keyword outside of a transaction block. Postgres builds the index in the background while writes continue."
+    },
+    {
+      "scene_id": 3,
+      "timestamp": "0:22 - 0:30",
+      "visual": "Clean syntax card with final SQL command highlighted.",
+      "spoken_text": "Save this command before your next deployment, and check the description for the full zero downtime migration checklist."
+    }
+  ],
+  "total_words": 68
+}

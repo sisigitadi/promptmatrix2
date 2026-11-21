@@ -564,6 +564,316 @@ test('creates workspace item via API and renders it', async ({ page }) => {
     storefrontHook: 'Eliminate Playwright sleep flakiness and OpenAPI schema drift before CI deploys.',
     promptBaseHook: 'Convert brittle browser tests into deterministic Playwright specs paired with OpenAPI 3.1 schemas.',
   },
+  'ai-product-manager-and-prd-architect': {
+    slug: 'ai-product-manager-and-prd-architect',
+    tagline: 'Draft engineering-ready PRDs, Gherkin acceptance criteria, and RICE backlog matrices.',
+    tags: ['product-management', 'prd', 'gherkin', 'user-stories', 'rice-prioritization', 'agile'],
+    categoryLabel: 'Product & Operations',
+    highlights: [
+      'Standardized 7-section PRD schema with non-goals and metrics',
+      'Gherkin Given-When-Then criteria covering happy and error paths',
+      'Bundled validate-prd-structure.mjs checks completeness offline',
+    ],
+    demoRequest:
+      'Draft a PRD section for a client-side prompt stash export feature with privacy-first client execution.',
+    demoResult: `## Summary
+Drafted a complete specification containing problem framing, metric definitions, user stories with Gherkin criteria, and explicit non-goals emphasizing zero-server ingestion.
+
+### Compiled Specification
+
+\`\`\`markdown
+# PRD: Client-Side Prompt Stash Backup and Export
+
+## 1. Problem Statement
+PromptMatrix creators and engineers accumulate customized prompt templates in their browser IndexedDB storage. Without an export mechanism, users risk data loss upon browser cache purges and cannot migrate their prompts to other workstations.
+
+## 2. Success Metrics
+- **Primary Metric**: 100% successful local export rate without network dependency.
+- **Guardrail Metric**: 0 bytes of prompt payload transmitted to remote servers during export.
+
+## 3. User Story & Acceptance Criteria
+
+### US-EXPORT-01: Export Stash to JSON and Markdown
+As a **Prompt Engineer**,
+I want to **export my prompt stash into a single JSON or Markdown file**,
+So that **I can maintain an offline version-controlled backup of my prompt library**.
+
+#### Scenario 1: Export Complete Stash to JSON
+- **Given** I have 15 prompts saved in my local stash IndexedDB,
+- **When** I click "Export Backup (JSON)",
+- **Then** the browser generates a timestamped file \`promptmatrix-stash-YYYY-MM-DD.json\`,
+- **And** the file conforms to RFC 8259 JSON format containing all prompt metadata and field values,
+- **And** zero network requests are dispatched.
+
+#### Scenario 2: Empty Stash State
+- **Given** I have 0 prompts saved in my stash,
+- **When** I view the Stash modal,
+- **Then** the export buttons display in a disabled state with a tooltip: "Save at least one prompt to export."
+\`\`\`
+
+| Section | Target Standard | Risk Prevented |
+| :--- | :--- | :--- |
+| Client-Side Scope | Pure browser Blob download | Accidental server ingestion of proprietary prompts |
+| Disabled Empty State | Clear UI feedback | Corrupted zero-byte export downloads |
+| RFC 8259 JSON Contract | Standardized JSON schema | Parse errors during cross-device restore |
+
+## Next Steps
+1. Run \`node scripts/validate-prd-structure.mjs templates/prd-template.md\` to confirm baseline structural integrity.
+2. Review the technical feasibility with the frontend lead before sprint planning.`,
+    storefrontHook: 'Transform raw product requests into testable PRDs with Gherkin acceptance criteria.',
+    promptBaseHook: 'Deterministic agile PRD and user story builder with RICE prioritization scoring.',
+  },
+  'business-workflow-and-n8n-integrator': {
+    slug: 'business-workflow-and-n8n-integrator',
+    tagline: 'Design production n8n, Zapier, Make, and webhook workflows with idempotency and retry DLQs.',
+    tags: ['n8n', 'workflow-automation', 'zapier', 'webhooks', 'idempotency', 'dead-letter-queue'],
+    categoryLabel: 'Workflow Automation',
+    highlights: [
+      'Idempotency-key deduplication and HMAC signature validation',
+      'Bounded exponential backoff with dead-letter queue routing',
+      'Bundled validate-workflow-spec.mjs verifies workflow schemas offline',
+    ],
+    demoRequest:
+      'Design a webhook processing workflow for inbound Stripe checkout events with deduplication and error isolation.',
+    demoResult: `## Summary
+Created a hardened workflow specification enforcing Stripe signature validation, Redis-backed idempotency, bounded retry policies, and dead-letter queue isolation for downstream database failures.
+
+### Compiled Specification (\`templates/workflow-contract.json\`)
+
+\`\`\`json
+{
+  "workflow_id": "stripe-checkout-provisioning-v1",
+  "name": "Stripe Checkout Event Ingestion and Provisioning",
+  "trigger": {
+    "type": "webhook",
+    "endpoint": "/api/webhooks/stripe",
+    "auth": {
+      "type": "hmac_sha256",
+      "signature_header": "Stripe-Signature",
+      "tolerance_seconds": 300
+    }
+  },
+  "idempotency": {
+    "enabled": true,
+    "key_path": "payload.id",
+    "storage": "redis",
+    "ttl_seconds": 86400
+  },
+  "retry_policy": {
+    "max_retries": 4,
+    "initial_delay_ms": 1000,
+    "backoff_multiplier": 2.0,
+    "jitter": true,
+    "dead_letter_target": "dlq-stripe-events"
+  },
+  "steps": [
+    {
+      "step_id": "verify_event",
+      "action": "crypto.verify_stripe_signature"
+    },
+    {
+      "step_id": "deduplicate_check",
+      "action": "redis.acquire_idempotency_lock"
+    },
+    {
+      "step_id": "update_database",
+      "action": "postgres.update_user_tier"
+    },
+    {
+      "step_id": "send_confirmation",
+      "action": "resend.send_onboarding_email"
+    }
+  ]
+}
+\`\`\`
+
+| Guardrail | Target Rule | Risk Prevented |
+| :--- | :--- | :--- |
+| \`tolerance_seconds: 300\` | 5-minute freshness check | Malicious replay of old captured webhook packets |
+| \`key_path: "payload.id"\` | Event ID deduplication | Double billing or duplicate account provisioning |
+| \`dead_letter_target\` | Bounded retries to DLQ | Poison-pill events blocking worker queue pipelines |
+
+## Next Steps
+1. Run \`node scripts/validate-workflow-spec.mjs templates/workflow-contract.json\` to verify schema validity.
+2. Import the specification into your n8n workflow or Node.js webhook consumer service.`,
+    storefrontHook: 'Harden webhook automations with idempotency keys and dead-letter queues.',
+    promptBaseHook: 'Production-grade n8n and webhook contract architect with exponential backoff rules.',
+  },
+  'b2b-cold-outreach-and-sales-engine': {
+    slug: 'b2b-cold-outreach-and-sales-engine',
+    tagline: 'Write deliverable 4-stage B2B cold email sequences with zero spam trigger penalties.',
+    tags: ['cold-email', 'b2b-sales', 'outreach', 'copywriting', 'deliverability', 'lead-generation'],
+    categoryLabel: 'Sales & Growth',
+    highlights: [
+      '4-stage sequence framework spaced over 14 business days',
+      'Strict < 125 words body cap and 2-5 word subject line rules',
+      'Bundled validate-outreach-copy.mjs flags spam triggers and word overflows',
+    ],
+    demoRequest:
+      'Write an initial cold email and follow-up touchpoint targeting VP of Engineering prospects at SaaS startups.',
+    demoResult: `## Summary
+Constructed a high-deliverability 2-touch cold sequence focused on engineering team velocity, referencing specific public repository friction, and utilizing a low-friction question CTA.
+
+### Compiled Sequence (\`templates/email-sequence.json\`)
+
+\`\`\`json
+{
+  "campaign_name": "SaaS Engineering Agentic Workflow Outreach",
+  "target_persona": "VP of Engineering / Head of Platform",
+  "sequence": [
+    {
+      "step": 1,
+      "day": 1,
+      "subject": "developer workflow velocity",
+      "body": "Hi {{first_name}},\\n\\nSaw your team recently open-sourced the new connector for your platform.\\n\\nMost engineering teams expanding with AI coding assistants run into unexpected PR review bottlenecks when junior engineers generate large diffs.\\n\\nWe put together an automated workflow checklist that cuts PR review cycle time by 40% without adding headcount.\\n\\nWorth sending over a 2-minute overview?",
+      "cta": "Worth sending over a 2-minute overview?",
+      "word_count": 62
+    },
+    {
+      "step": 2,
+      "day": 4,
+      "subject": "developer workflow velocity",
+      "body": "Hi {{first_name}},\\n\\nQuick metric follow-up: a peer SaaS team applied the checklist to their core repo and dropped unreviewed PR aging from 48 hours to 14 hours in their first sprint.\\n\\nOpen to taking a look at the workflow diagram?",
+      "cta": "Open to taking a look at the workflow diagram?",
+      "word_count": 41
+    }
+  ]
+}
+\`\`\`
+
+| Guardrail | Target Rule | Risk Prevented |
+| :--- | :--- | :--- |
+| Subject: 3 words | \`developer workflow velocity\` | Mobile notification clipping and spam flagging |
+| Word count: 62 words | Under 125-word cap | Reader abandonment on mobile screens |
+| Soft CTA | \`Worth sending over a 2-minute overview?\` | High friction calendar rejection |
+
+## Next Steps
+1. Run \`node scripts/validate-outreach-copy.mjs templates/email-sequence.json\` to verify zero spam penalties.
+2. Load the sequence into your outbound sales platform (Smartlead, Instantly, or Apollo).`,
+    storefrontHook: 'Ship high-deliverability B2B cold email sequences tested against inbox spam filters.',
+    promptBaseHook: 'Short-form, signal-focused B2B cold outreach sequence generator with soft CTAs.',
+  },
+  'viral-short-form-video-hook-architect': {
+    slug: 'viral-short-form-video-hook-architect',
+    tagline: 'Engineer 3-second opening hooks, visual pattern interrupts, and retention pacing for TikTok and Reels.',
+    tags: ['short-form-video', 'tiktok-hooks', 'reels', 'youtube-shorts', 'video-pacing', 'storyboard'],
+    categoryLabel: 'Video & Social Growth',
+    highlights: [
+      '3-second hook formulas with visual and verbal synchronization',
+      'Pacing guidelines (130-160 wpm) and scene cut frequency caps',
+      'Bundled validate-video-script.mjs verifies hook duration and speaking pace',
+    ],
+    demoRequest:
+      'Script a 30-second technical short for TikTok and YouTube Shorts on PostgreSQL zero-downtime index creation.',
+    demoResult: `## Summary
+Created a 30-second structured script pairing a contrarian hook on standard CREATE INDEX locks with split-screen visual cuts and a concrete CONCURRENTLY demonstration.
+
+### Compiled Script (\`templates/video-script.json\`)
+
+\`\`\`json
+{
+  "title": "PostgreSQL Zero Downtime Index Creation",
+  "target_duration_seconds": 30,
+  "platform": "tiktok_shorts_reels",
+  "hook": {
+    "visual": "Close-up of a frozen production dashboard with red 504 gateway timeout alerts.",
+    "spoken_text": "Running a standard CREATE INDEX query in Postgres can freeze your entire app.",
+    "duration_seconds": 3.0,
+    "word_count": 13
+  },
+  "scenes": [
+    {
+      "scene_id": 1,
+      "timestamp": "0:03 - 0:10",
+      "visual": "Terminal cursor highlighting a table lock icon.",
+      "spoken_text": "Postgres takes an exclusive write lock while building the B-tree, queueing every incoming customer transaction until the query finishes."
+    },
+    {
+      "scene_id": 2,
+      "timestamp": "0:10 - 0:22",
+      "visual": "Split screen showing CREATE INDEX CONCURRENTLY command running while live transactions pass.",
+      "spoken_text": "Instead, always pass the CONCURRENTLY flag outside a transaction block. Postgres builds the index in the background without blocking writes."
+    },
+    {
+      "scene_id": 3,
+      "timestamp": "0:22 - 0:30",
+      "visual": "Text card showing the complete SQL snippet with syntax highlighting.",
+      "spoken_text": "Save this snippet before your next production schema migration, and check the description for the full checklist."
+    }
+  ],
+  "total_words": 68
+}
+\`\`\`
+
+| Metric | Target | Actual Result |
+| :--- | :--- | :--- |
+| Hook Word Count | < 15 words | 13 words (0:00 - 0:03) |
+| Total Script Words | 65 - 75 words (for 30s) | 68 words (~136 wpm) |
+| Visual Scene Changes | Cut every 3-8s | 3 distinct visual setups |
+
+## Next Steps
+1. Run \`node scripts/validate-video-script.mjs templates/video-script.json\` to confirm pace and structure.
+2. Record the voiceover and screencast according to the scene timestamps.`,
+    storefrontHook: 'Defeat short-form video swipe-away with engineered 3-second pattern interrupt hooks.',
+    promptBaseHook: 'High-retention TikTok, Shorts, and Reels script architect with scene-by-scene timing.',
+  },
+  'suno-ai-music-and-audio-director': {
+    slug: 'suno-ai-music-and-audio-director',
+    tagline: 'Direct Suno v6 music prompts with tested genre tags, BPM, and song structure meta-tags.',
+    tags: ['suno-v6', 'ai-music', 'audio-prompts', 'songwriting', 'genre-tags', 'sound-design'],
+    categoryLabel: 'Audio & Music Creation',
+    highlights: [
+      'Style prompt optimization under strict 200-character budget',
+      'Full structural section tags ([Verse], [Chorus], [Guitar Solo], [Outro])',
+      'Bundled validate-suno-prompt.mjs enforces character and section tag limits',
+    ],
+    demoRequest:
+      'Draft a complete Suno v6 prompt for an energetic Japanese Cyberpunk City Pop track with female vocals, 124 BPM, and full song structure tags.',
+    demoResult: `## Summary
+Formulated a compliant Suno v6 style prompt (166 characters) pairing vintage Japanese City Pop instrumentation with cyberpunk synth textures, accompanied by structured bilingual lyrics.
+
+### Compiled Specification (\`templates/suno-prompt.json\`)
+
+\`\`\`json
+{
+  "title": "Tokyo Neon Midnight (City Pop x Cyberpunk)",
+  "engine": "Suno v6",
+  "style_prompt": "Japanese City Pop, Cyberpunk, 124 BPM, slap bass, brass stabs, shimmering electric piano, gated snare, bright female vocal, retro 80s Tokyo anime production",
+  "style_char_count": 166,
+  "structure": {
+    "sections": [
+      "[Intro - funk slap bass riff and brass stabs]",
+      "[Verse 1]",
+      "Raindrops glowing on the shinjuku street,",
+      "Walking in rhythm to the midnight beat.",
+      "[Pre-Chorus - rising synthesizer build]",
+      "Before the sunrise washes the glow away,",
+      "[Chorus - punchy brass, vocal harmonies, peak energy]",
+      "Dancing under neon rain,",
+      "Lost inside the Tokyo train,",
+      "[Bridge - Rhodes piano solo with tape echo]",
+      "[Chorus - full band, driving groove]",
+      "Dancing under neon rain,",
+      "[Outro - fading slap bass groove and saxophone]",
+      "[Fade Out]",
+      "[End]"
+    ]
+  }
+}
+\`\`\`
+
+| Guardrail | Target Rule | Risk Prevented |
+| :--- | :--- | :--- |
+| Style length: 166 chars | Under 200-char cap | Truncation of critical instruments by Suno tokenizer |
+| Structural tags | [Verse], [Chorus], [Outro] | Monotonous repetition or premature song ending |
+| Tempo: 124 BPM | Explicit BPM tag | Engine guessing inappropriate slow tempo |
+
+## Next Steps
+1. Run \`node scripts/validate-suno-prompt.mjs templates/suno-prompt.json\` to verify character budget compliance.
+2. Copy the style_prompt into Suno v6 Custom Mode Style and the lyrics block into the Lyrics box.`,
+    storefrontHook: 'Generate radio-quality tracks on Suno v6 with calibrated genre tags and section directives.',
+    promptBaseHook: 'Master Suno v6 and v5 style and lyric prompts with tested 200-character budget constraints.',
+  },
 };
 
 export const RUNNER_INSTALL_GUIDES: readonly RunnerInstallGuide[] = [

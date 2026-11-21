@@ -260,8 +260,8 @@ async function main() {
     failures.push('Missing agensi-skills/ directory');
   } else {
     const skillDirs = fs.readdirSync(skillsRoot, { withFileTypes: true }).filter(d => d.isDirectory());
-    if (skillDirs.length !== 10) {
-      failures.push(`Expected 10 packages in agensi-skills/, found ${skillDirs.length}`);
+    if (skillDirs.length !== 15) {
+      failures.push(`Expected 15 packages in agensi-skills/, found ${skillDirs.length}`);
     }
     const nameRegex = /^[a-z0-9-]+$/;
     for (const dir of skillDirs) {
@@ -429,12 +429,12 @@ async function main() {
 
   // 5. Verify package.json version, public/sw.js cache version, and synced catalog docs
   const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
-  if (pkg.version !== '7.5.0') {
-    failures.push(`package.json version is "${pkg.version}", expected "7.5.0"`);
+  if (pkg.version !== '7.6.0') {
+    failures.push(`package.json version is "${pkg.version}", expected "7.6.0"`);
   }
   const swContent = fs.readFileSync(path.join(ROOT, 'public/sw.js'), 'utf8');
-  if (!swContent.includes('promptmatrix-v7.5.0')) {
-    failures.push('public/sw.js missing CACHE_NAME "promptmatrix-v7.5.0"');
+  if (!swContent.includes('promptmatrix-v7.6.0')) {
+    failures.push('public/sw.js missing CACHE_NAME "promptmatrix-v7.6.0"');
   }
   for (const catalogRel of ['docs/DaftarKerangkaKerja.md', 'public/docs/DaftarKerangkaKerja.md']) {
     const catalogAbs = path.join(ROOT, catalogRel);
@@ -461,7 +461,7 @@ async function main() {
     for (const f of failures) console.error(`  [FAIL] ${f}`);
     process.exit(1);
   } else {
-    console.log('ALL CHECKS PASSED (400 frameworks, 8 categories, 100% localization, 10 valid SKILL.md packages, 0 em-dashes, 0 buzzwords, 0 stale 360 counts).');
+    console.log('ALL CHECKS PASSED (400 frameworks, 8 categories, 100% localization, 15 valid SKILL.md packages, 0 em-dashes, 0 buzzwords, 0 stale 360 counts).');
     process.exit(0);
   }
 }

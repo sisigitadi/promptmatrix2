@@ -367,9 +367,9 @@ function buildLeadMagnetPillar(agensiConfig) {
   const leadPack = allPacks.find((p) => p.slug === LEAD_MAGNET_SLUG);
   const flagshipPacks = allPacks.filter((p) => p.tier === 'flagship');
 
-  if (!leadPack || flagshipPacks.length !== 9) {
+  if (!leadPack || flagshipPacks.length !== 14) {
     throw new Error(
-      `Expected 1 lead-magnet and 9 flagship packs in config/agensiConfig.ts, found lead=${Boolean(leadPack)}, flagship=${flagshipPacks.length}`
+      `Expected 1 lead-magnet and 14 flagship packs in config/agensiConfig.ts, found lead=${Boolean(leadPack)}, flagship=${flagshipPacks.length}`
     );
   }
 
@@ -500,9 +500,9 @@ function buildLeadMagnetPillar(agensiConfig) {
     'node scripts/validate-json-prompt.mjs templates/sample-prompt.json --strict-schema --no-placeholders',
     '```',
     '',
-    '## Upgrade to the 9 Flagship Engineering & Multimodal Skills',
+    '## Upgrade to the 14 Flagship Engineering & Creative Skills',
     '',
-    `Looking for production validators for Next.js, MCP servers, PostgreSQL zero-downtime migrations, OWASP API security, Playwright E2E, SEO/GEO, or Veo 3 / Midjourney v7? Explore all 9 Flagship Skill Packs on [Agensi.io](${affiliateUrl}):`,
+    `Looking for production validators for Next.js, MCP servers, PostgreSQL zero-downtime migrations, OWASP API security, Playwright E2E, SEO/GEO, PRD architecture, n8n workflows, B2B cold outreach, TikTok/Reels hooks, Suno v6 music, or Veo 3 / Midjourney v7? Explore all 14 Flagship Skill Packs on [Agensi.io](${affiliateUrl}):`,
     '',
     '| Flagship Skill Pack | Slug | Price | Focus | Link |',
     '| :--- | :--- | :--- | :--- | :--- |',
@@ -521,7 +521,7 @@ function buildLeadMagnetPillar(agensiConfig) {
     '# Public OSS & Directory Submission Checklist',
     '',
     'Publish `dist-lead-magnet/` as a dedicated public GitHub repository (for example: `https://github.com/<github-user>/prompt-matrix-skill`).',
-    'Never push any of the 9 paid flagship folders into this public repository.',
+    'Never push any of the 14 paid flagship folders into this public repository.',
     '',
     '## Pre-Publish Verification',
     '',
@@ -563,7 +563,7 @@ function buildLeadMagnetPillar(agensiConfig) {
     '### 8. `Product Hunt`',
     '- Prepare launch assets for **PromptMatrix 2.0 + Free Prompt Architect Skill**:',
     '  - Tagline: `400 structured AI prompt frameworks and Open Agent Skills, 100% local.`',
-    '  - Links: `https://prompt.sigitadi.id` (primary), GitHub `prompt-matrix-skill` (free OSS skill), and `https://www.agensi.io/r/SIGITADI` (9 Flagship packs).',
+    '  - Links: `https://prompt.sigitadi.id` (primary), GitHub `prompt-matrix-skill` (free OSS skill), and `https://www.agensi.io/r/SIGITADI` (14 Flagship packs).',
     '  - Schedule launch at 00:01 PST (14:01 WIB / 15:01 WIB depending on DST) and share in maker comment.',
     '',
   ].join('\n');
@@ -598,8 +598,8 @@ function buildStorefrontPillar(agensiConfig) {
 
   const allPacks = agensiConfig.bundledSkillPacks || [];
   const flagshipPacks = allPacks.filter((p) => p.tier === 'flagship');
-  if (flagshipPacks.length !== 9) {
-    throw new Error(`Expected 9 flagship packs in config/agensiConfig.ts, found ${flagshipPacks.length}`);
+  if (flagshipPacks.length !== 14) {
+    throw new Error(`Expected 14 flagship packs in config/agensiConfig.ts, found ${flagshipPacks.length}`);
   }
 
   const individualTotalUsd = flagshipPacks.reduce((sum, p) => sum + Number(p.priceUsd || 0), 0);
@@ -607,9 +607,9 @@ function buildStorefrontPillar(agensiConfig) {
   const discountPct = individualTotalUsd > 0 ? Math.round((savingsUsd / individualTotalUsd) * 100) : 0;
 
   const suiteReadme = [
-    '# PromptMatrix 2.0: 9 Flagship Open Agent Skills Suite',
+    '# PromptMatrix 2.0: 14 Flagship Open Agent Skills Suite',
     '',
-    'Complete offline bundle of all 9 Flagship PromptMatrix Open Agent Skills (`SKILL.md`, `references/`, `templates/`, and deterministic Node.js `scripts/*.mjs` validators).',
+    'Complete offline bundle of all 14 Flagship PromptMatrix Open Agent Skills (`SKILL.md`, `references/`, `templates/`, and deterministic Node.js `scripts/*.mjs` validators).',
     '',
     '## Compatible Runtimes (27 Open Agent Skills Environments)',
     '',
@@ -624,7 +624,7 @@ function buildStorefrontPillar(agensiConfig) {
     '',
     '## Quick Installation',
     '',
-    '1. Unzip `promptmatrix-9-flagship-suite.zip`.',
+    '1. Unzip `promptmatrix-14-flagship-suite.zip`.',
     '2. Copy any `<slug>/` folder into your agent skills directory:',
     '   - **Project-scoped (Claude Code / Cursor / Antigravity):** `.claude/skills/<slug>/` or `.agents/skills/<slug>/`',
     '   - **Global user-scoped:** `~/.claude/skills/<slug>/`',
@@ -677,7 +677,7 @@ function buildStorefrontPillar(agensiConfig) {
     throw new Error(`Suite ZIP exceeds 50 MB limit (${zipBuffer.length} bytes)`);
   }
 
-  const suiteZipPath = path.join(STOREFRONTS_DIR, 'promptmatrix-9-flagship-suite.zip');
+  const suiteZipPath = path.join(STOREFRONTS_DIR, 'promptmatrix-14-flagship-suite.zip');
   fs.writeFileSync(suiteZipPath, zipBuffer);
 
   // Read back Central Directory from disk to verify POSIX paths and SUITE-README.md at root
@@ -707,9 +707,9 @@ function buildStorefrontPillar(agensiConfig) {
     '',
     '## 1. Suite Bundle Archive Verification',
     '',
-    `- **Archive:** \`dist-channels/storefronts/promptmatrix-9-flagship-suite.zip\` (${formatBytes(writtenZip.length)}, ${cdFilenames.length} POSIX entries)`,
+    `- **Archive:** \`dist-channels/storefronts/promptmatrix-14-flagship-suite.zip\` (${formatBytes(writtenZip.length)}, ${cdFilenames.length} POSIX entries)`,
     '- **Root README:** `SUITE-README.md` verified at ZIP root',
-    `- **Included Packs:** 9 paid Flagship folders (\`${flagshipPacks.map((p) => p.slug).join('`, `')}\`)`,
+    `- **Included Packs:** 14 paid Flagship folders (\`${flagshipPacks.map((p) => p.slug).join('`, `')}\`)`,
     `- **Bundle Price:** \`$${SUITE_BUNDLE_PRICE_USD.toFixed(2)}\` USD (vs \`$${individualTotalUsd.toFixed(2)}\` individual total computed from \`config/agensiConfig.ts\`, saving \`$${savingsUsd.toFixed(2)}\` / \`${discountPct}%\` off)`,
     '',
     '---',
@@ -730,20 +730,20 @@ function buildStorefrontPillar(agensiConfig) {
     '',
     '## 3. Ready-to-Paste Suite Bundle Copy ($59.00)',
     '',
-    '- **Product Title:** `PromptMatrix 2.0: 9 Flagship AI Agent Skills Suite (Claude Code, Cursor, Copilot)`',
+    '- **Product Title:** `PromptMatrix 2.0: 14 Flagship AI Agent Skills Suite (Claude Code, Cursor, Copilot)`',
     `- **Price:** \`$${SUITE_BUNDLE_PRICE_USD.toFixed(2)}\` USD (Compare at \`$${individualTotalUsd.toFixed(2)}\`, save \`$${savingsUsd.toFixed(2)}\` / \`${discountPct}%\`)`,
-    '- **Upload File:** `dist-channels/storefronts/promptmatrix-9-flagship-suite.zip`',
+    '- **Upload File:** `dist-channels/storefronts/promptmatrix-14-flagship-suite.zip`',
     '- **Tags:** `claude-code`, `cursor-rules`, `agent-skills`, `skill-md`, `prompt-engineering`, `mcp-server`, `postgresql`, `playwright`, `owasp-security`',
-    '- **Short Tagline:** `9 production SKILL.md packs for TypeScript, MCP, Postgres, security, SEO/GEO, and media with offline Node.js validators.`',
+    '- **Short Tagline:** `14 production SKILL.md packs across Develop, Grow, Operate, and Create with offline Node.js validators.`',
     '',
     '### Product Description (Markdown)',
     '',
     '```markdown',
-    `Ship production specs and verified code checks with all **9 Flagship Open Agent Skills** from PromptMatrix 2.0 in one complete bundle ($${SUITE_BUNDLE_PRICE_USD.toFixed(2)} vs $${individualTotalUsd.toFixed(2)} standalone, saving $${savingsUsd.toFixed(2)}).`,
+    `Ship production specs and verified code checks with all **14 Flagship Open Agent Skills** from PromptMatrix 2.0 in one complete bundle ($${SUITE_BUNDLE_PRICE_USD.toFixed(2)} vs $${individualTotalUsd.toFixed(2)} standalone, saving $${savingsUsd.toFixed(2)}).`,
     '',
     'Every package follows the portable `SKILL.md` standard compatible with **Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, Antigravity**, and 27 Open Agent Skills runtimes. Each skill includes offline reference playbooks, structured templates, and zero-dependency Node.js 18+ CLI validators.',
     '',
-    '### What Is Inside (`promptmatrix-9-flagship-suite.zip`)',
+    '### What Is Inside (`promptmatrix-14-flagship-suite.zip`)',
     '',
     ...flagshipPacks.map(
       (p, idx) =>
@@ -759,28 +759,28 @@ function buildStorefrontPillar(agensiConfig) {
     '### Platform-Specific Storefront Copy & Notes (Whop & Payhip)',
     '',
     '#### Whop (Digital File Vault & Update Pass)',
-    '- **Whop Headline:** `PromptMatrix 2.0: 9 Flagship Agent Skills + Offline Node.js Validators`',
-    '- **Whop Setup & Payout Note:** Upload `promptmatrix-9-flagship-suite.zip` inside a Whop **Files** app so buyers get instant ZIP access plus future release drops. Before publishing, verify your active Indonesia bank or crypto payout rail under Whop Dashboard -> Payouts.',
+    '- **Whop Headline:** `PromptMatrix 2.0: 14 Flagship Agent Skills + Offline Node.js Validators`',
+    '- **Whop Setup & Payout Note:** Upload `promptmatrix-14-flagship-suite.zip` inside a Whop **Files** app so buyers get instant ZIP access plus future release drops. Before publishing, verify your active Indonesia bank or crypto payout rail under Whop Dashboard -> Payouts.',
     '- **Whop Summary Copy (Paste into Description):**',
     '',
     '```markdown',
-    'Get instant access to all 9 PromptMatrix Flagship Agent Skill folders (`SKILL.md`, `references/`, `templates/`, and Node.js 18+ CLI validators) in one ZIP archive, plus future pack updates.',
+    'Get instant access to all 14 PromptMatrix Flagship Agent Skill folders (`SKILL.md`, `references/`, `templates/`, and Node.js 18+ CLI validators) in one ZIP archive, plus future pack updates.',
     '',
     'Built for engineering teams and solo builders using Claude Code, Cursor, GitHub Copilot, Gemini CLI, Windsurf, OpenAI Codex, and Antigravity. Every validator script runs offline with zero external network calls.',
     '```',
     '',
     '#### Payhip (Global PayPal + Indonesian QRIS / Virtual Account)',
-    '- **Payhip Headline:** `PromptMatrix 2.0 Complete 9-Skill Suite (Open Agent Skills .zip)`',
+    '- **Payhip Headline:** `PromptMatrix 2.0 Complete 14-Skill Suite (Open Agent Skills .zip)`',
     '- **Payhip Setup & Payout Note:** Enable Payhip EU/UK VAT handling if selling globally, and connect **Midtrans** or **Xendit** alongside **PayPal** so Indonesian buyers can pay directly in IDR via QRIS, BCA/Mandiri/BRI Virtual Account, or e-wallets.',
     '- **Payhip Summary Copy (Paste into Description):**',
     '',
     '```markdown',
-    `Download all 9 Flagship Open Agent Skills in one archive ($${SUITE_BUNDLE_PRICE_USD.toFixed(2)} bundle price vs $${individualTotalUsd.toFixed(2)} individually). Each skill ships a root SKILL.md workflow, reference checklists, starter templates, and offline Node.js 18+ verification scripts for 27 Open Agent Skills runtimes.`,
+    `Download all 14 Flagship Open Agent Skills in one archive ($${SUITE_BUNDLE_PRICE_USD.toFixed(2)} bundle price vs $${individualTotalUsd.toFixed(2)} individually). Each skill ships a root SKILL.md workflow, reference checklists, starter templates, and offline Node.js 18+ verification scripts for 27 Open Agent Skills runtimes.`,
     '```',
     '',
     '---',
     '',
-    '## 4. Individual Flagship Pack Listings (9 Standalone Products)',
+    '## 4. Individual Flagship Pack Listings (14 Standalone Products)',
     '',
     'Upload individual `.zip` files from `dist-agensi/<slug>.zip` (generated by `npm run package:skills`) when listing packs separately on Lemon Squeezy, Creem.io, Gumroad, Whop, or Payhip:',
     '',

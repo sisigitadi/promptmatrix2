@@ -1,5 +1,6 @@
 import { Language } from '../types';
 import { SKILL_LISTING_DEMOS, SkillListingDemoProfile } from '../data/skillListingDemos';
+import { AgensiPillar } from '../config/agensiConfig';
 import { AgentSkillSpec } from './agentSkillService';
 import { sanitizeString } from './jsonPromptService';
 
@@ -29,6 +30,7 @@ export interface BuildAgensiListingCopyInput {
   readonly title: string;
   readonly description: string;
   readonly category: string;
+  readonly pillar?: AgensiPillar;
   readonly priceUsd?: number;
   readonly includedFiles: readonly string[];
   readonly language: Language;
@@ -59,6 +61,7 @@ export interface AgensiOssLeadMagnetListing {
 
 export interface AgensiListingCopyResult {
   readonly recommendedPriceUsd: number;
+  readonly detectedPillar: AgensiPillar;
   readonly title: string;
   readonly tagline: string;
   readonly tags: string[];
@@ -507,21 +510,138 @@ export const buildFormulaSkillZipBundle = (
   };
 };
 
-const inferRecommendedPriceUsd = (category: string, explicitPrice?: number): number => {
+/**
+ * Infers the Agensi.io functional pillar ('develop' | 'grow' | 'operate' | 'create')
+ * from category, explicit tags, and slug.
+ */
+export const inferAgensiPillar = (
+  category: string,
+  tags?: readonly string[],
+  slug?: string
+): AgensiPillar => {
+  const combined = [
+    category,
+    slug || '',
+    ...(tags || []),
+  ].join(' ').toLowerCase();
+
+  // Operate: Product management, workflows, automation, enterprise ops
+  if (
+    combined.includes('prd') ||
+    combined.includes('product manager') ||
+    combined.includes('workflow') ||
+    combined.includes('n8n') ||
+    combined.includes('automation') ||
+    combined.includes('operate') ||
+    combined.includes('agile') ||
+    combined.includes('scrum') ||
+    combined.includes('operations') ||
+    combined.includes('orchestrat')
+  ) {
+    return 'operate';
+  }
+
+  // Grow: Sales, cold email, marketing, SEO/GEO/AEO, viral hooks, retention
+  if (
+    combined.includes('outreach') ||
+    combined.includes('sales') ||
+    combined.includes('cold email') ||
+    combined.includes('hook') ||
+    combined.includes('viral') ||
+    combined.includes('tiktok') ||
+    combined.includes('reels') ||
+    combined.includes('grow') ||
+    combined.includes('marketing') ||
+    combined.includes('seo') ||
+    combined.includes('geo') ||
+    combined.includes('aeo') ||
+    combined.includes('copywriting') ||
+    combined.includes('conversion')
+  ) {
+    return 'grow';
+  }
+
+  // Create: Music, audio, video generation, image generation, creative writing
+  if (
+    combined.includes('music') ||
+    combined.includes('audio') ||
+    combined.includes('suno') ||
+    combined.includes('midjourney') ||
+    combined.includes('flux') ||
+    combined.includes('create') ||
+    combined.includes('multimodal') ||
+    combined.includes('art') ||
+    combined.includes('creative') ||
+    combined.includes('video') ||
+    combined.includes('image')
+  ) {
+    return 'create';
+  }
+
+  // Develop: Code, TypeScript, Next.js, MCP, SQL, testing, security, architecture
+  return 'develop';
+};
+
+export const inferRecommendedPriceUsd = (
+  category: string,
+  explicitPrice?: number,
+  pillar?: AgensiPillar
+): number => {
   if (typeof explicitPrice === 'number' && Number.isFinite(explicitPrice) && explicitPrice >= 0) {
     return Number(explicitPrice.toFixed(2));
   }
   const normalized = category.toLowerCase();
-  if (normalized.includes('kode') || normalized.includes('code') || normalized.includes('security')) {
+  if (
+    normalized.includes('security') ||
+    normalized.includes('multi-agent') ||
+    normalized.includes('swarm') ||
+    normalized.includes('owasp')
+  ) {
+    return 19.99;
+  }
+  if (
+    normalized.includes('kode') ||
+    normalized.includes('code') ||
+    normalized.includes('engineering') ||
+    normalized.includes('backend') ||
+    normalized.includes('fullstack') ||
+    normalized.includes('database') ||
+    normalized.includes('prisma') ||
+    normalized.includes('sql') ||
+    normalized.includes('mcp') ||
+    normalized.includes('playwright') ||
+    normalized.includes('prd') ||
+    normalized.includes('workflow') ||
+    normalized.includes('n8n')
+  ) {
     return 14.99;
   }
-  if (normalized.includes('video') || normalized.includes('gambar') || normalized.includes('audio')) {
+  if (
+    normalized.includes('video') ||
+    normalized.includes('gambar') ||
+    normalized.includes('audio') ||
+    normalized.includes('music') ||
+    normalized.includes('suno') ||
+    normalized.includes('hook')
+  ) {
     return 9.99;
   }
-  if (normalized.includes('teks') || normalized.includes('text') || normalized.includes('content')) {
+  if (
+    normalized.includes('teks') ||
+    normalized.includes('text') ||
+    normalized.includes('content') ||
+    normalized.includes('outreach') ||
+    normalized.includes('sales') ||
+    normalized.includes('seo') ||
+    normalized.includes('copywriting')
+  ) {
     return 11.99;
   }
-  return 12;
+
+  if (pillar === 'operate') return 14.99;
+  if (pillar === 'grow') return 11.99;
+  if (pillar === 'create') return 9.99;
+  return 14.99;
 };
 
 const TAG_STOPWORDS = new Set(['and', 'the', 'for', 'with', 'from', 'into', 'your']);
@@ -956,11 +1076,13 @@ const buildOssLeadMagnetListing = (
 export const buildAgensiListingCopy = (
   input: BuildAgensiListingCopyInput
 ): AgensiListingCopyResult => {
-  const recommendedPriceUsd = inferRecommendedPriceUsd(input.category, input.priceUsd);
-  const cleanTitle = cleanOutputText(input.title).trim();
-  const cleanDesc = cleanOutputText(input.description).trim();
   const cleanCategory = cleanOutputText(input.category).trim() || 'General';
   const cleanSlug = input.slug.trim() || 'promptmatrix-skill';
+  const detectedPillar: AgensiPillar =
+    input.pillar || inferAgensiPillar(cleanCategory, input.tags, cleanSlug);
+  const recommendedPriceUsd = inferRecommendedPriceUsd(input.category, input.priceUsd, detectedPillar);
+  const cleanTitle = cleanOutputText(input.title).trim();
+  const cleanDesc = cleanOutputText(input.description).trim();
   const demoProfile = SKILL_LISTING_DEMOS[cleanSlug];
   const entries = extractVariableEntries(input.formValues);
 
@@ -1090,6 +1212,7 @@ export const buildAgensiListingCopy = (
       '| Parameter | Nilai Spesifikasi | Keterangan Standar |',
       '| :--- | :--- | :--- |',
       `| **Format Produk** | Open Agent Skill (\`SKILL.md\` + \`.zip\`) | Universal Open Agent Standards |`,
+      `| **Pilar Ekosistem** | ${detectedPillar.toUpperCase()} | Taksonomi Agensi.io 4 Pilar |`,
       `| **Domain & Kategori** | ${cleanCategory} | Taksonomi Direktori Industri |`,
       `| **Harga Lisensi** | ${priceDisplay} | Akses Komersial Tim Non-Eksklusif |`,
       `| **Runner Kompatibel** | Claude Code, Cursor, Antigravity, Copilot, Gemini CLI | 27 Runtime CLI & IDE |`,
@@ -1101,6 +1224,7 @@ export const buildAgensiListingCopy = (
       '| Attribute | Value Specification | Industry Standard |',
       '| :--- | :--- | :--- |',
       `| **Product Format** | Open Agent Skill (\`SKILL.md\` + \`.zip\`) | Universal Open Agent Standards |`,
+      `| **Ecosystem Pillar** | ${detectedPillar.toUpperCase()} | Agensi.io 4-Pillar Taxonomy |`,
       `| **Domain Scope** | ${cleanCategory} | Curated Marketplace Taxonomy |`,
       `| **Commercial License** | ${priceDisplay} | Non-Exclusive Team Commercial License |`,
       `| **Compatible Runtimes** | Claude Code, Cursor, Antigravity, Copilot, Gemini CLI | 27 CLI & IDE Runtimes |`,
@@ -1170,6 +1294,7 @@ export const buildAgensiListingCopy = (
 
   return {
     recommendedPriceUsd,
+    detectedPillar,
     title: cleanTitle,
     tagline,
     tags,

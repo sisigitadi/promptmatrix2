@@ -630,6 +630,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
         title: effectiveTitle,
         description: effectiveTriggerDesc,
         category: effectiveCategory,
+        pillar: baseRecord.pillar,
         priceUsd: baseRecord.priceUsd,
         includedFiles: ZIP_BUNDLE_FILE_TREE,
         language,

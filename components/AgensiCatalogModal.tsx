@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   AGENSI_CONFIG,
+  AgensiPillar,
   AgensiSkillPackItem,
   AgensiUrlOverrides,
   SUITE_BUNDLE_INFO,
@@ -55,12 +56,12 @@ type SecondaryAgensiUrlFieldKey =
 interface SecondaryChannelField {
   readonly key: SecondaryAgensiUrlFieldKey;
   readonly labelKey:
-    | 'secondary_ls_label'
-    | 'secondary_creem_label'
-    | 'secondary_gumroad_label'
-    | 'secondary_promptbase_label'
-    | 'secondary_whop_label'
-    | 'secondary_payhip_label';
+  | 'secondary_ls_label'
+  | 'secondary_creem_label'
+  | 'secondary_gumroad_label'
+  | 'secondary_promptbase_label'
+  | 'secondary_whop_label'
+  | 'secondary_payhip_label';
   readonly labelId: string;
   readonly labelEn: string;
   readonly placeholder: string;
@@ -144,6 +145,7 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
   const { t, language } = useLanguage();
   const [activeTab, setActiveTab] = useState<SkillModalTab>(initialTab);
   const [activeFilter, setActiveFilter] = useState<CatalogFilter>('all');
+  const [activePillar, setActivePillar] = useState<AgensiPillar | 'all'>('all');
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const [copiedDemoSlug, setCopiedDemoSlug] = useState<string | null>(null);
   const [copiedPackCommand, setCopiedPackCommand] = useState<string | null>(null);
@@ -195,15 +197,20 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
     const all = AGENSI_CONFIG.bundledSkillPacks.length;
     const free = AGENSI_CONFIG.bundledSkillPacks.filter((p) => p.tier === 'lead-magnet').length;
     const paid = AGENSI_CONFIG.bundledSkillPacks.filter((p) => p.tier === 'flagship').length;
-    return { all, free, paid };
+    const develop = AGENSI_CONFIG.bundledSkillPacks.filter((p) => p.pillar === 'develop').length;
+    const grow = AGENSI_CONFIG.bundledSkillPacks.filter((p) => p.pillar === 'grow').length;
+    const operate = AGENSI_CONFIG.bundledSkillPacks.filter((p) => p.pillar === 'operate').length;
+    const create = AGENSI_CONFIG.bundledSkillPacks.filter((p) => p.pillar === 'create').length;
+    return { all, free, paid, develop, grow, operate, create };
   }, []);
 
   const filteredPacks = useMemo(() => {
-    if (activeFilter === 'all') {
-      return AGENSI_CONFIG.bundledSkillPacks;
-    }
-    return AGENSI_CONFIG.bundledSkillPacks.filter((pack) => pack.tier === activeFilter);
-  }, [activeFilter]);
+    return AGENSI_CONFIG.bundledSkillPacks.filter((pack) => {
+      const matchesTier = activeFilter === 'all' || pack.tier === activeFilter;
+      const matchesPillar = activePillar === 'all' || pack.pillar === activePillar;
+      return matchesTier && matchesPillar;
+    });
+  }, [activeFilter, activePillar]);
 
   if (!show) return null;
 
@@ -260,6 +267,7 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
       title: pack.title,
       description: summary,
       category: pack.matchedCategories[0] || 'General',
+      pillar: pack.pillar,
       priceUsd: pack.priceUsd,
       includedFiles: pack.includedFiles,
       language,
@@ -420,42 +428,37 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
       className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5"
     >
       <div
-        className={`rounded-2xl sm:rounded-3xl border max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden ${
-          isLightTheme
+        className={`rounded-2xl sm:rounded-3xl border max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden ${isLightTheme
             ? 'bg-white border-slate-300 text-slate-900'
             : 'bg-[#0f172a] border-slate-800 text-slate-100'
-        }`}
+          }`}
       >
         {/* Header */}
         <div
-          className={`p-4 sm:p-5 border-b flex items-start justify-between gap-3 ${
-            isLightTheme ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
-          }`}
+          className={`p-4 sm:p-5 border-b flex items-start justify-between gap-3 ${isLightTheme ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
+            }`}
         >
           <div className="space-y-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <h2
                 id="skill-packs-modal-title"
-                className={`text-base sm:text-lg font-bold leading-snug ${
-                  isLightTheme ? 'text-slate-900' : 'text-slate-100'
-                }`}
+                className={`text-base sm:text-lg font-bold leading-snug ${isLightTheme ? 'text-slate-900' : 'text-slate-100'
+                  }`}
               >
                 {isCreatorMode ? t('catalog_title_creator') : t('catalog_title')}
               </h2>
               <span
-                className={`px-2 py-0.5 rounded-full text-[11px] font-mono font-semibold border ${
-                  isLightTheme
+                className={`px-2 py-0.5 rounded-full text-[11px] font-mono font-semibold border ${isLightTheme
                     ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
                     : 'bg-emerald-500/15 border-emerald-500/35 text-emerald-300'
-                }`}
+                  }`}
               >
                 {supportedAgentsCount} {t('catalog_agents_label')}
               </span>
             </div>
             <p
-              className={`text-xs sm:text-sm leading-relaxed ${
-                isLightTheme ? 'text-slate-700' : 'text-slate-300'
-              }`}
+              className={`text-xs sm:text-sm leading-relaxed ${isLightTheme ? 'text-slate-700' : 'text-slate-300'
+                }`}
             >
               {isCreatorMode ? t('catalog_subtitle_creator') : t('catalog_subtitle')}
             </p>
@@ -465,11 +468,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
             type="button"
             onClick={onClose}
             aria-label={t('close_btn')}
-            className={`min-h-[44px] min-w-[44px] rounded-xl text-sm font-bold flex items-center justify-center shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-              isLightTheme
+            className={`min-h-[44px] min-w-[44px] rounded-xl text-sm font-bold flex items-center justify-center shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${isLightTheme
                 ? 'bg-white hover:bg-slate-200 border border-slate-300 text-slate-800'
                 : 'bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200'
-            }`}
+              }`}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -483,11 +485,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
             <button
               type="button"
               onClick={() => setActiveTab('catalog')}
-              className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-1.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                activeTab === 'catalog'
+              className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-1.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${activeTab === 'catalog'
                   ? 'bg-emerald-700 text-white shadow-sm'
                   : 'text-slate-300 hover:text-white hover:bg-slate-900 border border-transparent'
-              }`}
+                }`}
             >
               <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -501,11 +502,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
             <button
               type="button"
               onClick={() => setActiveTab('export')}
-              className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-1.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                activeTab === 'export'
+              className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-1.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${activeTab === 'export'
                   ? 'bg-emerald-700 text-white shadow-sm'
                   : 'text-slate-300 hover:text-white hover:bg-slate-900 border border-transparent'
-              }`}
+                }`}
             >
               <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -513,9 +513,8 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
               <span>{t('skill_tab_export')}</span>
               {hasActivePrompt && activeSkillValidation && (
                 <span
-                  className={`px-1.5 py-0.5 rounded-full text-[10px] font-mono ${
-                    activeSkillValidation.valid ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'
-                  }`}
+                  className={`px-1.5 py-0.5 rounded-full text-[10px] font-mono ${activeSkillValidation.valid ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'
+                    }`}
                 >
                   {activeSkillValidation.valid ? '✓ Siap' : '! Cek'}
                 </span>
@@ -525,11 +524,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
             <button
               type="button"
               onClick={() => setActiveTab('store')}
-              className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-1.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                activeTab === 'store'
+              className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-1.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${activeTab === 'store'
                   ? 'bg-emerald-700 text-white shadow-sm'
                   : 'text-slate-300 hover:text-white hover:bg-slate-900 border border-transparent'
-              }`}
+                }`}
             >
               <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -540,11 +538,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
             <button
               type="button"
               onClick={() => setActiveTab('guide')}
-              className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-1.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                activeTab === 'guide'
+              className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-1.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${activeTab === 'guide'
                   ? 'bg-emerald-700 text-white shadow-sm'
                   : 'text-slate-300 hover:text-white hover:bg-slate-900 border border-transparent'
-              }`}
+                }`}
             >
               <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -564,11 +561,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
             <>
               {/* Suite Bundle Hero Promo */}
               <div
-                className={`rounded-2xl border p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 ${
-                  isLightTheme
+                className={`rounded-2xl border p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 ${isLightTheme
                     ? 'bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-300 text-slate-900'
                     : 'bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-900 border-emerald-500/40 text-slate-100'
-                }`}
+                  }`}
               >
                 <div className="space-y-1.5 min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
@@ -629,30 +625,65 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
                 </div>
               </div>
 
-              {/* Filter Tabs */}
-              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 text-xs font-sans">
-                {[
-                  { id: 'all', label: `${t('catalog_filter_all')} (${counts.all})` },
-                  { id: 'lead-magnet', label: `${t('catalog_filter_free')} (${counts.free})` },
-                  { id: 'flagship', label: `${t('catalog_filter_paid')} (${counts.paid})` },
-                ].map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setActiveFilter(item.id as CatalogFilter)}
-                    className={`min-h-[44px] sm:min-h-[34px] px-3.5 py-1 rounded-xl font-semibold border transition-all shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                      activeFilter === item.id
-                        ? isLightTheme
-                          ? 'bg-emerald-700 text-white border-emerald-700 shadow-sm'
-                          : 'bg-emerald-700 text-white border-emerald-600 shadow-sm'
-                        : isLightTheme
-                          ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'
-                          : 'bg-slate-900/80 hover:bg-slate-800 text-slate-300 border-slate-800'
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
+              {/* Dual-Filter: 4 Pillars of Agensi.io & Pricing Tiers */}
+              <div className="space-y-2">
+                {/* Row 1: 4 Pillars */}
+                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5 text-xs font-sans">
+                  <span className={`text-[11px] font-semibold uppercase tracking-wider shrink-0 mr-1 ${isLightTheme ? 'text-slate-600' : 'text-slate-400'}`}>
+                    {language === 'id' ? '4 Pilar Pasar:' : 'Market Pillars:'}
+                  </span>
+                  {[
+                    { id: 'all', label: `${language === 'id' ? 'Semua Pilar' : 'All Pillars'} (${counts.all})` },
+                    { id: 'develop', label: `Develop (${counts.develop})` },
+                    { id: 'grow', label: `Grow (${counts.grow})` },
+                    { id: 'operate', label: `Operate (${counts.operate})` },
+                    { id: 'create', label: `Create (${counts.create})` },
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setActivePillar(item.id as AgensiPillar | 'all')}
+                      className={`min-h-[44px] sm:min-h-[30px] px-3 py-1 rounded-lg font-semibold border transition-all shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${activePillar === item.id
+                          ? isLightTheme
+                            ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
+                            : 'bg-emerald-600 text-white border-emerald-500 shadow-sm'
+                          : isLightTheme
+                            ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'
+                            : 'bg-slate-900/80 hover:bg-slate-800 text-slate-300 border-slate-800'
+                        }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Row 2: Tiers */}
+                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 text-xs font-sans">
+                  <span className={`text-[11px] font-semibold uppercase tracking-wider shrink-0 mr-1 ${isLightTheme ? 'text-slate-600' : 'text-slate-400'}`}>
+                    {language === 'id' ? 'Tingkat Harga:' : 'Pricing Tier:'}
+                  </span>
+                  {[
+                    { id: 'all', label: `${t('catalog_filter_all')} (${counts.all})` },
+                    { id: 'lead-magnet', label: `${t('catalog_filter_free')} (${counts.free})` },
+                    { id: 'flagship', label: `${t('catalog_filter_paid')} (${counts.paid})` },
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setActiveFilter(item.id as CatalogFilter)}
+                      className={`min-h-[44px] sm:min-h-[30px] px-3 py-1 rounded-lg font-semibold border transition-all shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${activeFilter === item.id
+                          ? isLightTheme
+                            ? 'bg-emerald-700 text-white border-emerald-700 shadow-sm'
+                            : 'bg-emerald-700 text-white border-emerald-600 shadow-sm'
+                          : isLightTheme
+                            ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'
+                            : 'bg-slate-900/80 hover:bg-slate-800 text-slate-300 border-slate-800'
+                        }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Skill Packs Grid */}
@@ -667,71 +698,86 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
                   return (
                     <div
                       key={pack.slug}
-                      className={`rounded-2xl border p-4 flex flex-col justify-between gap-3 min-w-0 transition-colors ${
-                        isLightTheme
+                      className={`rounded-2xl border p-4 flex flex-col justify-between gap-3 min-w-0 transition-colors ${isLightTheme
                           ? 'bg-white border-slate-200 shadow-sm hover:border-emerald-300'
                           : 'bg-[#0b1120] border-slate-800/90 shadow-md hover:border-slate-700'
-                      }`}
+                        }`}
                     >
                       <div className="space-y-2 min-w-0">
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0">
-                            <span
-                              className={`inline-block text-[10px] font-mono px-2 py-0.5 rounded-md font-bold uppercase tracking-wider border ${
-                                pack.tier === 'lead-magnet'
-                                  ? isLightTheme
-                                    ? 'bg-slate-100 text-slate-800 border-slate-300'
-                                    : 'bg-slate-900 text-slate-300 border-slate-700'
-                                  : isLightTheme
-                                    ? 'bg-emerald-100 text-emerald-900 border-emerald-300'
-                                    : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
-                              }`}
-                            >
-                              {pack.tier === 'lead-magnet' ? 'Free Starter' : 'Flagship'}
-                            </span>
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span
+                                className={`inline-block text-[10px] font-mono px-2 py-0.5 rounded-md font-bold uppercase tracking-wider border ${pack.tier === 'lead-magnet'
+                                    ? isLightTheme
+                                      ? 'bg-slate-100 text-slate-800 border-slate-300'
+                                      : 'bg-slate-900 text-slate-300 border-slate-700'
+                                    : isLightTheme
+                                      ? 'bg-emerald-100 text-emerald-900 border-emerald-300'
+                                      : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                                  }`}
+                              >
+                                {pack.tier === 'lead-magnet' ? 'Free Starter' : 'Flagship'}
+                              </span>
+                              <span
+                                className={`inline-block text-[10px] font-mono px-2 py-0.5 rounded-md font-bold uppercase tracking-wider border ${pack.pillar === 'develop'
+                                    ? isLightTheme
+                                      ? 'bg-blue-100 text-blue-900 border-blue-300'
+                                      : 'bg-blue-500/20 text-blue-300 border-blue-500/30'
+                                    : pack.pillar === 'grow'
+                                      ? isLightTheme
+                                        ? 'bg-teal-100 text-teal-900 border-teal-300'
+                                        : 'bg-teal-500/20 text-teal-300 border-teal-500/30'
+                                      : pack.pillar === 'operate'
+                                        ? isLightTheme
+                                          ? 'bg-amber-100 text-amber-900 border-amber-300'
+                                          : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                                        : isLightTheme
+                                          ? 'bg-purple-100 text-purple-900 border-purple-300'
+                                          : 'bg-purple-500/20 text-purple-300 border-purple-500/30'
+                                  }`}
+                              >
+                                {pack.pillar.toUpperCase()}
+                              </span>
+                            </div>
                             <h4
-                              className={`text-sm font-bold leading-snug mt-1 break-words ${
-                                isLightTheme ? 'text-slate-900' : 'text-slate-100'
-                              }`}
+                              className={`text-sm font-bold leading-snug mt-1 break-words ${isLightTheme ? 'text-slate-900' : 'text-slate-100'
+                                }`}
                             >
                               {pack.title}
                             </h4>
                           </div>
                           <span
-                            className={`text-sm font-bold font-mono px-2 py-1 rounded-lg shrink-0 border ${
-                              isLightTheme
+                            className={`text-sm font-bold font-mono px-2 py-1 rounded-lg shrink-0 border ${isLightTheme
                                 ? 'bg-slate-100 text-slate-900 border-slate-300'
                                 : 'bg-slate-900 text-emerald-400 border-slate-800'
-                            }`}
+                              }`}
                           >
                             {pack.priceLabel}
                           </span>
                         </div>
 
                         <p
-                          className={`text-xs leading-relaxed line-clamp-3 ${
-                            isLightTheme ? 'text-slate-600' : 'text-slate-300'
-                          }`}
+                          className={`text-xs leading-relaxed line-clamp-3 ${isLightTheme ? 'text-slate-600' : 'text-slate-300'
+                            }`}
                         >
                           {summary}
                         </p>
 
                         {/* Included files */}
                         <div className="pt-1 space-y-1">
-                          <span className={`text-[10px] font-semibold uppercase tracking-wider ${
-                            isLightTheme ? 'text-slate-500' : 'text-slate-400'
-                          }`}>
+                          <span className={`text-[10px] font-semibold uppercase tracking-wider ${isLightTheme ? 'text-slate-500' : 'text-slate-400'
+                            }`}>
                             {t('catalog_included_files')}:
                           </span>
                           <div className="flex flex-wrap gap-1">
                             {pack.includedFiles.map((file, fIdx) => (
                               <span
                                 key={fIdx}
-                                className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${
-                                  isLightTheme
+                                className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${isLightTheme
                                     ? 'bg-slate-100 text-slate-700 border-slate-300'
                                     : 'bg-slate-900/90 text-slate-300 border-slate-800'
-                                }`}
+                                  }`}
                               >
                                 {file}
                               </span>
@@ -758,11 +804,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
                             <button
                               type="button"
                               onClick={() => handleCopyListingCopy(pack)}
-                              className={`min-h-[44px] sm:min-h-[34px] px-3 py-1 rounded-lg font-semibold text-xs border transition-colors flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                                isCopied
+                              className={`min-h-[44px] sm:min-h-[34px] px-3 py-1 rounded-lg font-semibold text-xs border transition-colors flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${isCopied
                                   ? 'bg-emerald-700 border-emerald-600 text-white'
                                   : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-emerald-300'
-                              }`}
+                                }`}
                             >
                               <span>{isCopied ? `✓ ${t('copied_btn')}` : t('copy_listing_btn')}</span>
                             </button>
@@ -785,11 +830,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
                             <button
                               type="button"
                               onClick={() => handleCopyPackDemo(pack)}
-                              className={`min-h-[44px] sm:min-h-[34px] px-2.5 py-1 rounded-lg border text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                                isDemoCopied
+                              className={`min-h-[44px] sm:min-h-[34px] px-2.5 py-1 rounded-lg border text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${isDemoCopied
                                   ? 'bg-emerald-700 border-emerald-600 text-white'
                                   : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200'
-                              }`}
+                                }`}
                               title="Copy Step 3 Demo (Request & Result)"
                             >
                               {isDemoCopied ? `✓ ${t('copied_btn')}` : language === 'id' ? 'Demo Step 3' : 'Step 3 Demo'}
@@ -799,11 +843,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
                               type="button"
                               onClick={() => handleGeneratePackPitch(pack)}
                               disabled={pitchingSlug === pack.slug}
-                              className={`min-h-[44px] sm:min-h-[34px] px-2.5 py-1 rounded-lg border text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 flex items-center gap-1 disabled:opacity-50 ${
-                                copiedPitchSlug === pack.slug
+                              className={`min-h-[44px] sm:min-h-[34px] px-2.5 py-1 rounded-lg border text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 flex items-center gap-1 disabled:opacity-50 ${copiedPitchSlug === pack.slug
                                   ? 'bg-emerald-700 border-emerald-600 text-white'
                                   : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-amber-300'
-                              }`}
+                                }`}
                               title={language === 'id' ? 'Buat draf promosi media sosial dengan AI' : 'Generate AI promotional pitch for social media'}
                             >
                               <span className={pitchingSlug === pack.slug ? 'animate-spin' : ''}>✨</span>
@@ -811,8 +854,8 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
                                 {pitchingSlug === pack.slug
                                   ? (language === 'id' ? 'Menyusun...' : 'Drafting...')
                                   : copiedPitchSlug === pack.slug
-                                  ? `✓ ${t('copied_btn')}`
-                                  : t('skill_ai_pitch_btn')}
+                                    ? `✓ ${t('copied_btn')}`
+                                    : t('skill_ai_pitch_btn')}
                               </span>
                             </button>
 
@@ -851,16 +894,16 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
                                     {channel.id === 'lemonsqueezy'
                                       ? 'Lemon Squeezy'
                                       : channel.id === 'gumroad'
-                                      ? 'Gumroad'
-                                      : channel.id === 'promptbase'
-                                      ? 'PromptBase'
-                                      : channel.id === 'whop'
-                                      ? 'Whop'
-                                      : channel.id === 'payhip'
-                                      ? 'Payhip'
-                                      : channel.id === 'creem'
-                                      ? 'Creem.io'
-                                      : channel.id} ↗
+                                        ? 'Gumroad'
+                                        : channel.id === 'promptbase'
+                                          ? 'PromptBase'
+                                          : channel.id === 'whop'
+                                            ? 'Whop'
+                                            : channel.id === 'payhip'
+                                              ? 'Payhip'
+                                              : channel.id === 'creem'
+                                                ? 'Creem.io'
+                                                : channel.id} ↗
                                   </a>
                                 ))}
                               </div>
@@ -891,11 +934,10 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
 
                   {hasActivePrompt && activeSkillValidation && (
                     <span
-                      className={`px-2.5 py-1 rounded-xl border font-mono text-xs font-semibold ${
-                        activeSkillValidation.valid
+                      className={`px-2.5 py-1 rounded-xl border font-mono text-xs font-semibold ${activeSkillValidation.valid
                           ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300'
                           : 'bg-rose-500/15 border-rose-500/40 text-rose-300'
-                      }`}
+                        }`}
                     >
                       {activeSkillValidation.valid ? t('skill_valid_badge') : t('skill_invalid_badge')} • name{' '}
                       {activeSkillValidation.nameLength}/64
@@ -1688,9 +1730,8 @@ export const AgensiCatalogModal: React.FC<AgensiCatalogModalProps> = ({
 
         {/* Footer */}
         <div
-          className={`p-3.5 sm:p-4 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs ${
-            isLightTheme ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
-          }`}
+          className={`p-3.5 sm:p-4 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs ${isLightTheme ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
+            }`}
         >
           <div className="space-y-0.5">
             <p className="font-semibold text-emerald-400">

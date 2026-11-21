@@ -1,0 +1,44 @@
+{
+  "workflow_id": "sample-customer-sync-v1",
+  "name": "Customer Data Synchronization and CRM Provisioning",
+  "trigger": {
+    "type": "webhook",
+    "endpoint": "/api/webhooks/customer-created",
+    "auth": {
+      "type": "hmac_sha256",
+      "signature_header": "X-Hubspot-Signature",
+      "tolerance_seconds": 300
+    }
+  },
+  "idempotency": {
+    "enabled": true,
+    "key_path": "payload.customer_id",
+    "storage": "redis",
+    "ttl_seconds": 86400
+  },
+  "retry_policy": {
+    "max_retries": 4,
+    "initial_delay_ms": 1000,
+    "backoff_multiplier": 2.0,
+    "jitter": true,
+    "dead_letter_target": "dlq-customer-sync-failures"
+  },
+  "steps": [
+    {
+      "step_id": "validate_signature",
+      "action": "auth.verify_hmac"
+    },
+    {
+      "step_id": "deduplicate_event",
+      "action": "cache.check_idempotency"
+    },
+    {
+      "step_id": "sync_to_postgres",
+      "action": "database.upsert_customer"
+    },
+    {
+      "step_id": "notify_slack",
+      "action": "notification.post_channel_message"
+    }
+  ]
+}

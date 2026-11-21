@@ -14,10 +14,13 @@ export interface AgensiCommissionInfo {
   readonly paymentFeesCovered: boolean;
 }
 
+export type AgensiPillar = 'develop' | 'grow' | 'operate' | 'create';
+
 export interface AgensiSkillPackItem {
   readonly slug: string;
   readonly title: string;
   readonly tier: 'lead-magnet' | 'flagship';
+  readonly pillar: AgensiPillar;
   readonly priceUsd: number;
   readonly priceLabel: string;
   readonly matchedCategories: readonly string[];
@@ -137,6 +140,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
       slug: 'prompt-matrix-prompt-architect',
       title: 'PromptMatrix Prompt Architect',
       tier: 'lead-magnet',
+      pillar: 'develop',
       priceUsd: 0,
       priceLabel: 'Free ($0)',
       matchedCategories: ['Koleksi & Inovasi', 'Prompt Ringkas', 'Teks & Konten', 'Prompt Proyek'],
@@ -155,6 +159,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
       slug: 'antislop-ui-and-copy-auditor',
       title: 'Antislop UI & Copy Auditor',
       tier: 'flagship',
+      pillar: 'create',
       priceUsd: 12,
       priceLabel: '$12.00',
       matchedCategories: ['Teks & Konten', 'Kode & Pengembang', 'Gambar & Desain'],
@@ -172,6 +177,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
       slug: 'fullstack-ts-nextjs-architect',
       title: 'Fullstack TS & Next.js Architect',
       tier: 'flagship',
+      pillar: 'develop',
       priceUsd: 14.99,
       priceLabel: '$14.99',
       matchedCategories: ['Kode & Pengembang', 'Prompt Proyek'],
@@ -189,6 +195,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
       slug: 'mcp-server-production-builder',
       title: 'MCP Server Production Builder',
       tier: 'flagship',
+      pillar: 'develop',
       priceUsd: 14.99,
       priceLabel: '$14.99',
       matchedCategories: ['Kode & Pengembang', 'Koleksi & Inovasi'],
@@ -206,6 +213,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
       slug: 'seo-geo-aeo-content-engine',
       title: 'SEO, GEO & AEO Content Engine',
       tier: 'flagship',
+      pillar: 'grow',
       priceUsd: 11.99,
       priceLabel: '$11.99',
       matchedCategories: ['Teks & Konten', 'Prompt Proyek', 'Prompt Ringkas'],
@@ -223,6 +231,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
       slug: 'multimodal-video-image-director',
       title: 'Multimodal Video & Image Director',
       tier: 'flagship',
+      pillar: 'create',
       priceUsd: 9.99,
       priceLabel: '$9.99',
       matchedCategories: ['Gambar & Desain', 'Video & Animasi', 'Audio & Musik'],
@@ -240,6 +249,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
       slug: 'owasp-api-and-cloud-security-auditor',
       title: 'OWASP API & Cloud Security Auditor',
       tier: 'flagship',
+      pillar: 'develop',
       priceUsd: 19.99,
       priceLabel: '$19.99',
       matchedCategories: ['Kode & Pengembang', 'Prompt Proyek'],
@@ -258,6 +268,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
       slug: 'multi-agent-swarm-and-subagent-orchestrator',
       title: 'Multi-Agent Swarm & Subagent Orchestrator',
       tier: 'flagship',
+      pillar: 'develop',
       priceUsd: 19.99,
       priceLabel: '$19.99',
       matchedCategories: ['Koleksi & Inovasi', 'Kode & Pengembang'],
@@ -276,6 +287,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
       slug: 'postgres-prisma-zero-downtime-sql-tuner',
       title: 'Postgres & Prisma Zero-Downtime SQL Tuner',
       tier: 'flagship',
+      pillar: 'develop',
       priceUsd: 14.99,
       priceLabel: '$14.99',
       matchedCategories: ['Kode & Pengembang'],
@@ -294,6 +306,7 @@ export const AGENSI_CONFIG: AgensiConfig = {
       slug: 'playwright-e2e-and-openapi-contract-suite',
       title: 'Playwright E2E & OpenAPI Contract Suite',
       tier: 'flagship',
+      pillar: 'develop',
       priceUsd: 14.99,
       priceLabel: '$14.99',
       matchedCategories: ['Kode & Pengembang', 'Prompt Proyek'],
@@ -307,6 +320,101 @@ export const AGENSI_CONFIG: AgensiConfig = {
       summaryEn: 'Flake-free Playwright E2E testing and OpenAPI 3.x schema contract validation with an automated CLI checker.',
       folderPath: 'agensi-skills/playwright-e2e-and-openapi-contract-suite',
       validatorScript: 'node agensi-skills/playwright-e2e-and-openapi-contract-suite/scripts/validate-openapi-and-e2e.mjs',
+    },
+    {
+      slug: 'ai-product-manager-and-prd-architect',
+      title: 'AI Product Manager & PRD Architect',
+      tier: 'flagship',
+      pillar: 'operate',
+      priceUsd: 14.99,
+      priceLabel: '$14.99',
+      matchedCategories: ['Prompt Proyek', 'Koleksi & Inovasi', 'Teks & Konten'],
+      includedFiles: [
+        'SKILL.md',
+        'references/prd-and-user-story-standards.md',
+        'templates/prd-template.md',
+        'scripts/validate-prd-structure.mjs',
+      ],
+      summaryId: 'Merumuskan PRD terstruktur, acceptance criteria Gherkin, matriks RICE, dan backlog sprint siap eksekusi.',
+      summaryEn: 'Transforms product ideas into structured PRDs, Gherkin acceptance criteria, RICE scoring, and sprint backlogs.',
+      folderPath: 'agensi-skills/ai-product-manager-and-prd-architect',
+      validatorScript: 'node agensi-skills/ai-product-manager-and-prd-architect/scripts/validate-prd-structure.mjs',
+    },
+    {
+      slug: 'business-workflow-and-n8n-integrator',
+      title: 'Business Workflow & n8n Integrator',
+      tier: 'flagship',
+      pillar: 'operate',
+      priceUsd: 14.99,
+      priceLabel: '$14.99',
+      matchedCategories: ['Prompt Proyek', 'Kode & Pengembang'],
+      includedFiles: [
+        'SKILL.md',
+        'references/workflow-patterns.md',
+        'templates/workflow-contract.json',
+        'scripts/validate-workflow-spec.mjs',
+      ],
+      summaryId: 'Arsitektur otomasi alur kerja n8n/Zapier/Make, kunci idempotency, dead-letter queue, dan isolasi webhook.',
+      summaryEn: 'Architects n8n/Zapier/Make workflows, idempotency keys, dead-letter queues, and secure webhook ingestion.',
+      folderPath: 'agensi-skills/business-workflow-and-n8n-integrator',
+      validatorScript: 'node agensi-skills/business-workflow-and-n8n-integrator/scripts/validate-workflow-spec.mjs',
+    },
+    {
+      slug: 'b2b-cold-outreach-and-sales-engine',
+      title: 'B2B Cold Outreach & Sales Engine',
+      tier: 'flagship',
+      pillar: 'grow',
+      priceUsd: 11.99,
+      priceLabel: '$11.99',
+      matchedCategories: ['Teks & Konten', 'Prompt Proyek', 'Prompt Ringkas'],
+      includedFiles: [
+        'SKILL.md',
+        'references/outreach-frameworks.md',
+        'templates/email-sequence.json',
+        'scripts/validate-outreach-copy.mjs',
+      ],
+      summaryId: 'Sekuens email outbound B2B 4 tahap, riset prospek, penanganan keberatan, dan audit kata pemicu spam.',
+      summaryEn: 'Crafts 4-stage B2B cold email sequences, prospect research, objection handling, and spam-trigger deliverability audits.',
+      folderPath: 'agensi-skills/b2b-cold-outreach-and-sales-engine',
+      validatorScript: 'node agensi-skills/b2b-cold-outreach-and-sales-engine/scripts/validate-outreach-copy.mjs',
+    },
+    {
+      slug: 'viral-short-form-video-hook-architect',
+      title: 'Viral Short-Form Video Hook Architect',
+      tier: 'flagship',
+      pillar: 'grow',
+      priceUsd: 9.99,
+      priceLabel: '$9.99',
+      matchedCategories: ['Video & Animasi', 'Teks & Konten'],
+      includedFiles: [
+        'SKILL.md',
+        'references/hook-retention-formulas.md',
+        'templates/video-script.json',
+        'scripts/validate-video-script.mjs',
+      ],
+      summaryId: 'Hook pembuka 3 detik, pattern interrupt visual, pacing retensi tinggi TikTok/Reels, dan storyboard script.',
+      summaryEn: 'Engineers 3-second opening hooks, visual pattern interrupts, high-retention pacing, and video storyboards.',
+      folderPath: 'agensi-skills/viral-short-form-video-hook-architect',
+      validatorScript: 'node agensi-skills/viral-short-form-video-hook-architect/scripts/validate-video-script.mjs',
+    },
+    {
+      slug: 'suno-ai-music-and-audio-director',
+      title: 'Suno AI Music & Audio Director',
+      tier: 'flagship',
+      pillar: 'create',
+      priceUsd: 9.99,
+      priceLabel: '$9.99',
+      matchedCategories: ['Audio & Musik'],
+      includedFiles: [
+        'SKILL.md',
+        'references/suno-v6-prompting-guide.md',
+        'templates/suno-prompt.json',
+        'scripts/validate-suno-prompt.mjs',
+      ],
+      summaryId: 'Pengarah komposisi musik Suno v6/v5, tag genre teruji, BPM, meta-tags struktur lagu, dan verifikasi karakter.',
+      summaryEn: 'Directs Suno v6/v5 generative music prompts, engine-tested genre tags, BPM, song section tags, and character budgets.',
+      folderPath: 'agensi-skills/suno-ai-music-and-audio-director',
+      validatorScript: 'node agensi-skills/suno-ai-music-and-audio-director/scripts/validate-suno-prompt.mjs',
     },
   ],
 };
@@ -331,7 +439,7 @@ const computeSuiteBundleInfo = (packs: readonly AgensiSkillPackItem[]): SuiteBun
     bundlePriceLabel: '$59.00',
     savingsUsd,
     savingsPercent,
-    zipFilename: 'promptmatrix-9-flagship-suite.zip',
+    zipFilename: 'promptmatrix-14-flagship-suite.zip',
   };
 };
 
@@ -460,11 +568,11 @@ export const getEffectiveAgensiUrls = (): EffectiveAgensiUrls => {
 export const hasSecondaryMarketplaceUrls = (effective: EffectiveAgensiUrls): boolean => {
   return Boolean(
     effective.lemonSqueezyBundleUrl.trim() ||
-      effective.creemBundleUrl.trim() ||
-      effective.gumroadBundleUrl.trim() ||
-      effective.promptBaseStoreUrl.trim() ||
-      (effective.whopBundleUrl || '').trim() ||
-      (effective.payhipBundleUrl || '').trim()
+    effective.creemBundleUrl.trim() ||
+    effective.gumroadBundleUrl.trim() ||
+    effective.promptBaseStoreUrl.trim() ||
+    (effective.whopBundleUrl || '').trim() ||
+    (effective.payhipBundleUrl || '').trim()
   );
 };
 
@@ -551,8 +659,8 @@ export const getContextualSkillPacksForCategory = (
   const normalizedCategory = (categoryName || '').trim().toLowerCase();
   const matchedFlagships = normalizedCategory
     ? flagshipPacks.filter((pack) =>
-        pack.matchedCategories.some((cat) => cat.trim().toLowerCase() === normalizedCategory)
-      )
+      pack.matchedCategories.some((cat) => cat.trim().toLowerCase() === normalizedCategory)
+    )
     : [];
 
   const selectedFlagships =

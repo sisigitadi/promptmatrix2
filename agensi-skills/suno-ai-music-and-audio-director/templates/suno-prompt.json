@@ -1,0 +1,25 @@
+{
+  "title": "Neon Horizon (Synthwave)",
+  "engine": "Suno v6",
+  "style_prompt": "Synthwave, Darksynth, 118 BPM, heavy sidechain analog bass, 80s gated reverb drums, lush polyphonic pads, driving nocturnal arpeggio, male vocal",
+  "style_char_count": 142,
+  "structure": {
+    "sections": [
+      "[Intro - atmospheric synth arpeggio]",
+      "[Verse 1]",
+      "Midnight road stretching into the dark,",
+      "City skyline glowing like a dying spark.",
+      "[Pre-Chorus - snare roll build]",
+      "We leave the rearview mirror behind,",
+      "[Chorus - massive gated drums, vocal harmonies]",
+      "Chasing shadows on the neon line,",
+      "Running out of road, running out of time.",
+      "[Guitar Solo - screaming 80s analog synth lead]",
+      "[Chorus - full peak energy]",
+      "Chasing shadows on the neon line,",
+      "[Outro - fading arpeggios and distant sirens]",
+      "[Fade Out]",
+      "[End]"
+    ]
+  }
+}

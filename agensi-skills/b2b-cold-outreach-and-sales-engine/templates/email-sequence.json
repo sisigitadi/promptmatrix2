@@ -1,0 +1,38 @@
+{
+  "campaign_name": "B2B SaaS Technical Workflow Campaign",
+  "target_persona": "VP of Engineering / CTO",
+  "sequence": [
+    {
+      "step": 1,
+      "day": 1,
+      "subject": "engineering review cycles",
+      "body": "Hi {{first_name}},\n\nNoticed your team is scaling backend microservices on Kubernetes.\n\nEngineering leaders we talk with frequently note that PR review turnaround times double once teams pass 20 developers.\n\nWe documented an automated PR checklist that keeps review times under 4 hours without meeting overhead.\n\nWould it be useful to share the summary?",
+      "cta": "Would it be useful to share the summary?",
+      "word_count": 58
+    },
+    {
+      "step": 2,
+      "day": 4,
+      "subject": "engineering review cycles",
+      "body": "Hi {{first_name}},\n\nFollowing up with a brief data point: another team used this structure to resolve their PR review bottleneck in two weeks.\n\nHappy to forward the 1-page playbook if interested.",
+      "cta": "Happy to forward the 1-page playbook if interested.",
+      "word_count": 33
+    },
+    {
+      "step": 3,
+      "day": 8,
+      "subject": "engineering review cycles",
+      "body": "Hi {{first_name}},\n\nCurious if maintaining fast review turnaround is a current priority for your team this quarter, or if you already have this solved internally?\n\nEither way, keep up the great work on the new release.",
+      "cta": "Curious if maintaining fast review turnaround is a current priority for your team this quarter?",
+      "word_count": 38
+    },
+    {
+      "step": 4,
+      "day": 14,
+      "subject": "closing the loop",
+      "body": "Hi {{first_name}},\n\nAssuming this is not a priority right now, so I will pause reaching out.\n\nIf review velocity becomes a bottleneck down the road, feel free to reach back out.\n\nBest of luck with your product roadmap.",
+      "cta": "Clean breakaway - no action requested.",
+      "word_count": 39
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Agensi.io Marketplace Playbook for PromptMatrix 2.0
 
-A practical commercialization guide for packaging, pricing, listing, and distributing the 10 PromptMatrix Open Agent Skills on [Agensi.io](https://agensi.io), paired with the Hybrid Public Storefront and 9-Tap Creator Studio inside `https://prompt.sigitadi.id`.
+A practical commercialization guide for packaging, pricing, listing, and distributing the 15 PromptMatrix Open Agent Skills on [Agensi.io](https://agensi.io), paired with the Hybrid Public Storefront and 9-Tap Creator Studio inside `https://prompt.sigitadi.id`.
 
 ---
 
@@ -10,7 +10,7 @@ Agensi.io is a marketplace for portable Agent Skills (`SKILL.md` bundles) compat
 
 | Term | Value | Operational Impact |
 | :--- | :--- | :--- |
-| **Listing Fee** | $0 (Free) | Zero upfront cost to publish all 10 packages. |
+| **Listing Fee** | $0 (Free) | Zero upfront cost to publish all 15 packages. |
 | **Exclusivity** | Non-exclusive | You retain full IP ownership and can distribute freely on GitHub, sigitadi.id, or PromptMatrix 2.0. |
 | **Standard Revenue Share** | **70% to creator** | Payment processing fees are absorbed by Agensi.io; buyers discovered organically via Agensi search yield 70% net. |
 | **Affiliate Signup Share** | **90% to creator** | When a new buyer registers through your PromptMatrix affiliate link and buys your skill, you keep 90%. |
@@ -18,51 +18,78 @@ Agensi.io is a marketplace for portable Agent Skills (`SKILL.md` bundles) compat
 
 ### Net Payout Math (Per Single Sale)
 
-| Tier | List Price (USD) | Standard 70% Net | Affiliate 90% Net |
+| Tier / Pillar | List Price (USD) | Standard 70% Net | Affiliate 90% Net |
 | :--- | :--- | :--- | :--- |
 | Lead Magnet (`prompt-matrix-prompt-architect`) | $0.00 (Free) | $0.00 | $0.00 (locks 6-month 20% affiliate cookie & store follows) |
-| Entry Flagship (`multimodal-video-image-director`) | $9.99 | $6.99 | $8.99 |
-| Content Engine (`seo-geo-aeo-content-engine`) | $11.99 | $8.39 | $10.79 |
-| UI & Copy Auditor (`antislop-ui-and-copy-auditor`) | $12.00 | $8.40 | $10.80 |
-| Core Engineering Flagships (4 packs) | $14.99 | $10.49 | $13.49 |
-| Security & Multi-Agent Pro Flagships (2 packs) | $19.99 | $13.99 | $17.99 |
+| Create: Media & Sound (`multimodal-video-image-director`, `suno-ai-music-and-audio-director`) | $9.99 | $6.99 | $8.99 |
+| Grow: Video Retention (`viral-short-form-video-hook-architect`) | $9.99 | $6.99 | $8.99 |
+| Grow: Content & Outreach (`seo-geo-aeo-content-engine`, `b2b-cold-outreach-and-sales-engine`) | $11.99 | $8.39 | $10.79 |
+| Create: Quality Auditor (`antislop-ui-and-copy-auditor`) | $12.00 | $8.40 | $10.80 |
+| Develop: Core Engineering (4 packs: Next.js, MCP, Postgres, Playwright) | $14.99 | $10.49 | $13.49 |
+| Operate: Management & Automation (2 packs: PRD Architect, n8n Integrator) | $14.99 | $10.49 | $13.49 |
+| Develop: Security & Multi-Agent Pro (2 packs: OWASP Security, Multi-Agent Swarm) | $19.99 | $13.99 | $17.99 |
 
 ---
 
-## 2. Catalog & Pricing Architecture (10 Verified Packages)
+## 2. Catalog & Pricing Architecture (15 Verified Packages across 4 Pillars)
 
-All 10 skill directories live in `agensi-skills/` and ship with `SKILL.md`, deep `references/`, runnable offline `scripts/*.mjs` validators, and drop-in `templates/` where applicable.
+All 15 skill directories live in `agensi-skills/` and ship with `SKILL.md`, deep `references/`, runnable offline `scripts/*.mjs` validators, and drop-in `templates/` where applicable.
 
+### Lead Magnet ($0 Free)
 1. **`prompt-matrix-prompt-architect` ($0 Free - Lead Magnet):**
-   - Deliverables: `SKILL.md`, `references/frameworks-cheatsheet.md`, `scripts/validate-json-prompt.mjs`
+   - Pillar: **Develop**
+   - Deliverables: `SKILL.md`, `references/frameworks-cheatsheet.md`, `templates/sample-prompt.json`, `scripts/validate-json-prompt.mjs`
    - Purpose: Zero-friction onboarding for developers and PromptMatrix visitors; establishes creator trust and activates the 6-month 20% affiliate cookie on signup.
-2. **`multimodal-video-image-director` ($9.99 - Flagship):**
-   - Deliverables: `SKILL.md`, `references/model-syntax-matrix.md`, `scripts/validate-multimodal-params.mjs`
-   - Purpose: Model-native prompt compiler for Midjourney v8.2, FLUX.3 / FLUX.2, Google Veo 3.1, Kling 3.0, Runway Gen-4.5, and Suno v6 with offline parameter validation.
-3. **`seo-geo-aeo-content-engine` ($11.99 - Flagship):**
-   - Deliverables: `SKILL.md`, `references/schema-jsonld-templates.md`, `scripts/validate-jsonld.mjs`
-   - Purpose: Evidence-first SEO pillar pages, AI synthesis citation blocks (GEO), AEO 40-60 word direct answers, and Schema.org JSON-LD validation.
-4. **`antislop-ui-and-copy-auditor` ($12.00 - Flagship):**
-   - Deliverables: `SKILL.md`, `references/contrast-and-copy-rules.md`, `scripts/audit-slop.mjs`
-   - Purpose: Audits WCAG AA dark/light contrast, 375px mobile reflow, keyboard focus rings, `U+2014` em-dashes, and banned marketing buzzwords.
-5. **`fullstack-ts-nextjs-architect` ($14.99 - Flagship):**
+
+### Develop Pillar (6 Flagships)
+2. **`fullstack-ts-nextjs-architect` ($14.99 - Flagship):**
    - Deliverables: `SKILL.md`, `references/architecture-checklist.md`, `scripts/check-strict-ts.mjs`
    - Purpose: Enforces Next.js App Router server/client boundaries, zero-`any` TypeScript, Zod API contracts, and lock-safe SQL migrations.
-6. **`mcp-server-production-builder` ($14.99 - Flagship):**
+3. **`mcp-server-production-builder` ($14.99 - Flagship):**
    - Deliverables: `SKILL.md`, `references/mcp-transport-and-security.md`, `scripts/validate-mcp-schema.mjs`
    - Purpose: Hardened Model Context Protocol server design for `stdio` and Streamable HTTP transports with strict Zod/JSON Schemas and secret redaction.
-7. **`postgres-prisma-zero-downtime-sql-tuner` ($14.99 - Flagship):**
+4. **`postgres-prisma-zero-downtime-sql-tuner` ($14.99 - Flagship):**
    - Deliverables: `SKILL.md`, `references/rls-and-index-playbook.md`, `templates/zero-downtime-migration.sql`, `scripts/lint-sql-migrations.mjs`
    - Purpose: Lock-safe PostgreSQL and Prisma migrations, `CONCURRENTLY` index enforcement, and Row-Level Security (RLS) policy auditing.
-8. **`playwright-e2e-and-openapi-contract-suite` ($14.99 - Flagship):**
+5. **`playwright-e2e-and-openapi-contract-suite` ($14.99 - Flagship):**
    - Deliverables: `SKILL.md`, `references/e2e-and-api-contract-matrix.md`, `templates/openapi-contract-stub.json`, `scripts/validate-openapi-and-e2e.mjs`
    - Purpose: Flake-free Playwright E2E testing (flagging `waitForTimeout` anti-patterns) paired with OpenAPI 3.x schema contract validation.
-9. **`owasp-api-and-cloud-security-auditor` ($19.99 - Flagship):**
+6. **`owasp-api-and-cloud-security-auditor` ($19.99 - Flagship):**
    - Deliverables: `SKILL.md`, `references/owasp-cloud-security-checklist.md`, `templates/security-audit-findings.json`, `scripts/scan-security-risks.mjs`
    - Purpose: Static security risk scanner for hardcoded API keys, dynamic `eval`/`Function`, wildcard CORS, unsafe HTML sinks, and insecure TLS flags.
-10. **`multi-agent-swarm-and-subagent-orchestrator` ($19.99 - Flagship):**
-    - Deliverables: `SKILL.md`, `references/subagent-handoff-patterns.md`, `templates/swarm-task-contract.json`, `scripts/validate-agent-workspace.mjs`
-    - Purpose: Parallel subagent delegation, strict file ownership boundaries, JSON handoff contracts, and `AGENTS.md`/`SKILL.md` workspace verification.
+7. **`multi-agent-swarm-and-subagent-orchestrator` ($19.99 - Flagship):**
+   - Deliverables: `SKILL.md`, `references/subagent-handoff-patterns.md`, `templates/swarm-task-contract.json`, `scripts/validate-agent-workspace.mjs`
+   - Purpose: Parallel subagent delegation, strict file ownership boundaries, JSON handoff contracts, and `AGENTS.md`/`SKILL.md` workspace verification.
+
+### Operate Pillar (2 Flagships)
+8. **`ai-product-manager-and-prd-architect` ($14.99 - Flagship):**
+   - Deliverables: `SKILL.md`, `references/prd-and-user-story-standards.md`, `templates/prd-template.md`, `scripts/validate-prd-structure.mjs`
+   - Purpose: Complete PRD specifications, INVEST user stories, acceptance criteria, metric trees, and structural markdown validation.
+9. **`business-workflow-and-n8n-integrator` ($14.99 - Flagship):**
+   - Deliverables: `SKILL.md`, `references/workflow-patterns.md`, `templates/workflow-contract.json`, `scripts/validate-workflow-spec.mjs`
+   - Purpose: Resilient n8n and automation workflow contracts with error handling, dead-letter queues, idempotent webhooks, and credential safety checks.
+
+### Grow Pillar (3 Flagships)
+10. **`seo-geo-aeo-content-engine` ($11.99 - Flagship):**
+    - Deliverables: `SKILL.md`, `references/schema-jsonld-templates.md`, `scripts/validate-jsonld.mjs`
+    - Purpose: Evidence-first SEO pillar pages, AI synthesis citation blocks (GEO), AEO 40-60 word direct answers, and Schema.org JSON-LD validation.
+11. **`b2b-cold-outreach-and-sales-engine` ($11.99 - Flagship):**
+    - Deliverables: `SKILL.md`, `references/outreach-frameworks.md`, `templates/email-sequence.json`, `scripts/validate-outreach-copy.mjs`
+    - Purpose: High-conversion 4-touch cold email sequences, plain ASCII punctuation, spam buzzword elimination, and personalization audit.
+12. **`viral-short-form-video-hook-architect` ($9.99 - Flagship):**
+    - Deliverables: `SKILL.md`, `references/hook-retention-formulas.md`, `templates/video-script.json`, `scripts/validate-video-script.mjs`
+    - Purpose: 3-second visual and verbal pattern interrupt hooks, 60-second pacing grids, and character-budget verification for TikTok, Reels, and Shorts.
+
+### Create Pillar (3 Flagships)
+13. **`multimodal-video-image-director` ($9.99 - Flagship):**
+    - Deliverables: `SKILL.md`, `references/model-syntax-matrix.md`, `scripts/validate-multimodal-params.mjs`
+    - Purpose: Model-native prompt compiler for Midjourney v8.2, FLUX.3 / FLUX.2, Google Veo 3.1, Kling 3.0, Runway Gen-4.5, and Suno v6 with offline parameter validation.
+14. **`antislop-ui-and-copy-auditor` ($12.00 - Flagship):**
+    - Deliverables: `SKILL.md`, `references/contrast-and-copy-rules.md`, `scripts/audit-slop.mjs`
+    - Purpose: Audits WCAG AA dark/light contrast, 375px mobile reflow, keyboard focus rings, `U+2014` em-dashes, and banned marketing buzzwords.
+15. **`suno-ai-music-and-audio-director` ($9.99 - Flagship):**
+    - Deliverables: `SKILL.md`, `references/suno-v6-prompting-guide.md`, `templates/suno-prompt.json`, `scripts/validate-suno-prompt.mjs`
+    - Purpose: Suno v6/v5 style prompts under 200 characters, structural meta-tag arrangement (`[Verse]`, `[Chorus]`, `[Outro]`), vocal timbre calibration, and offline validation.
 
 ---
 
@@ -80,16 +107,19 @@ Agensi.io enforces strict archive rules during automated security scanning and m
 Use the built-in zero-dependency POSIX packager instead:
 
 ```bash
-# 1. Validate all 10 packages, build dist-agensi/<slug>.zip, and generate upload copy
+# 1. Validate all 15 packages, build dist-agensi/<slug>.zip, and generate upload copy
 npm run package:skills
 
-# 2. Run the full PromptMatrix verification audit (400 formulas, 10 skills, 0 em-dashes, 0 buzzwords)
+# 2. Package multi-channel distribution (dist-lead-magnet/, dist-channels/storefronts/, dist-channels/promptbase/)
+npm run package:channels
+
+# 3. Run the full PromptMatrix verification audit (400 formulas, 15 skills, 0 em-dashes, 0 buzzwords)
 npm run audit
 ```
 
 `npm run package:skills` writes:
-- `dist-agensi/<slug>.zip` (10 verified archives with root `SKILL.md` and POSIX paths, git-ignored via `.gitignore`)
-- `dist-agensi/AGENSI-LISTING-MANIFEST.md` (complete upload checklist, Indonesia payout SOP, and ready-to-copy title/price/tagline/description/tags for all 10 skills)
+- `dist-agensi/<slug>.zip` (15 verified archives with root `SKILL.md` and POSIX paths, git-ignored via `.gitignore`)
+- `dist-agensi/AGENSI-LISTING-MANIFEST.md` (complete upload checklist, Indonesia payout SOP, and ready-to-copy title/price/tagline/description/tags for all 15 skills)
 
 ---
 
@@ -131,7 +161,7 @@ npm run package:channels
    - Exports ONLY the free `prompt-matrix-prompt-architect` pack (`SKILL.md`, `references/frameworks-cheatsheet.md`, `scripts/validate-json-prompt.mjs`) with an automated guard ensuring zero paid flagship files leak into the public repo.
    - Generates `.cursor/rules/prompt-matrix-architect.mdc` (for `cursor.directory`), `CLAUDE.md` (for Claude Code and `claudemarketplaces.com`), `README.md` (`npx skills add <github-user>/prompt-matrix-skill` plus upgrade table linking `https://prompt.sigitadi.id` and `https://www.agensi.io/r/SIGITADI`), and `SUBMISSION-CHECKLIST.md` (`skills.sh`, `skillsmp.com` requiring `>= 2` GitHub stars, `clawhub.ai`, `lobehub.com`, `claudemarketplaces.com`, `cursor.directory`, `futuretools.io`, and `Product Hunt`).
 2. **Pillar 2: Global MoR Storefront Suite (`dist-channels/storefronts/`)**
-   - Bundles all 9 paid flagship folders into `promptmatrix-9-flagship-suite.zip` (POSIX `/` paths, `SUITE-README.md` at ZIP root, `< 50 MB`) and generates `STOREFRONT-MANIFEST.md` with ready-to-paste copy for **Lemon Squeezy**, **Creem.io**, **Gumroad**, **Whop**, and **Payhip** ($59.00 bundle vs individual total computed from `config/agensiConfig.ts`).
+   - Bundles all 14 paid flagship folders into `promptmatrix-14-flagship-suite.zip` (POSIX `/` paths, `SUITE-README.md` at ZIP root, `< 50 MB`) and generates `STOREFRONT-MANIFEST.md` with ready-to-paste copy for **Lemon Squeezy**, **Creem.io**, **Gumroad**, **Whop**, and **Payhip** ($59.00 bundle vs $195.87 individual total computed from `config/agensiConfig.ts`).
 3. **Pillar 3: PromptBase 15 Structured Systems (`dist-channels/promptbase/`)**
    - Extracts 15 high-intent frameworks across Agent Engineering, SaaS/SEO, and Multimodal (Midjourney v7, FLUX.2, Veo 3, Sora 2, Suno v4.5/v5) and outputs `PROMPTBASE-15-LISTINGS.md` and `promptbase-15-listings.json` with `<= 40` char titles, `[Variable]` prompt templates, populated testing examples, and `?via=` 0% fee referral instructions.
 
@@ -156,7 +186,7 @@ npm run package:channels
 PromptMatrix 2.0 separates **Public Affiliate Conversion** from **Private Creator Packaging Tools**:
 
 ### Public Storefront (Visible to All Visitors)
-- **Header (`Skills 10` button)** and **Gallery Catalog Banner**: Open `AgensiCatalogModal` showcasing all 10 official skill packs, filters (`All` / `Free` / `Paid`), price badges, included files, and 27 supported agent runtimes.
+- **Header (`Skills 15` button)** and **Gallery Catalog Banner**: Open `AgensiCatalogModal` showcasing all 15 official skill packs across 4 Pillars (`Develop`, `Grow`, `Operate`, `Create`), Dual-Filter tabs (Row 1 Pillar, Row 2 Tier), price badges, included files, and 27 supported agent runtimes.
 - **Studio Contextual Promo (`AgensiSkillPromoCard`)**: Automatically matches the active framework category to relevant Flagship skills plus the `$0 Free` lead magnet (`prompt-matrix-prompt-architect`).
 - **Affiliate Gate Protection:** Public visitors never see raw `.zip` export buttons in the catalog modal; instead, CTAs route to your configured Agensi.io affiliate/store URL (`?ref=...`) to capture the **90% creator share** and **20% 6-month cross-marketplace commission**.
 

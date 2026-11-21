@@ -1,5 +1,29 @@
 # Changelog - PromptMatrix 2.0
 
+## [7.6.0] - 2026-11-21
+### Adaptasi Standar Agensi.io, 4 Pilar Omnichannel & 15 Flagship Skills
+- **Ekspansi 15 Flagship Packages (`agensi-skills/`, `config/agensiConfig.ts`)**:
+  - Menambah 5 paket Open Agent Skills baru ke `agensi-skills/` untuk melengkapi pilar fungsional yang sebelumnya minim:
+    - **Operate**: `ai-product-manager-and-prd-architect` ($14.99) dan `business-workflow-and-n8n-integrator` ($14.99).
+    - **Grow**: `b2b-cold-outreach-and-sales-engine` ($11.99) dan `viral-short-form-video-hook-architect` ($9.99).
+    - **Create**: `suno-ai-music-and-audio-director` ($9.99).
+  - Setiap paket dilengkapi berkas root `SKILL.md`, panduan arsitektur di `references/`, starter template di `templates/`, serta validator offline Node.js 18+ di `scripts/`.
+- **Taksonomi 4 Pilar Agensi.io (`config/agensiConfig.ts`, `data/skillListingDemos.ts`, `data/flagshipSkillsData.ts`)**:
+  - Mengadopsi taksonomi 4 pilar fungsional Agensi.io (`Develop`, `Grow`, `Operate`, `Create`) pada konfigurasi `config/agensiConfig.ts` dan tipe `AgensiPillar`.
+  - Mendaftarkan profil demo listing lengkap untuk ke-5 paket baru dengan ringkasan kapabilitas, input nyata, dan output berstandar emas agen (>= 700 karakter berstruktur `## Summary`).
+- **Modal Katalog Dual-Filter Modern (`components/AgensiCatalogModal.tsx`)**:
+  - Menghadirkan navigasi filter 2 baris terstruktur:
+    - **Baris 1**: Pills 4 Pilar (`Semua Pilar`, `Develop`, `Grow`, `Operate`, `Create`) lengkap dengan counter aktif.
+    - **Baris 2**: Pills Tier (`Semua Tier`, `Gratis (Lead Magnet)`, `Berbayar (Flagship)`).
+  - Menambahkan lencana pilar berwarna di setiap kartu paket (Indigo untuk Develop, Emerald untuk Grow, Amber untuk Operate, Purple untuk Create).
+- **Generator Cerdas Listing & Pricing (`services/skillZipService.ts`, `components/AgentSkillViewer.tsx`)**:
+  - Menambahkan fungsi deterministik `inferAgensiPillar` untuk mendeteksi pilar secara otomatis dari kategori, tags, atau slug.
+  - Memperbarui `inferRecommendedPriceUsd` dengan kalibrasi harga berbasis pilar dan kesediaan bayar pasar.
+  - Menginjeksi baris spesifikasi `Pilar Ekosistem` ke tabel metadata GEO dan Schema.org JSON-LD.
+- **Pembaruan Distribusi Multi-Channel Suite (`scripts/package-multi-channels.mjs`, `docs/AgensiMarketplacePlaybook.md`)**:
+  - Memperbarui suite bundle multi-channel menjadi `promptmatrix-14-flagship-suite.zip` ($59.00 vs $195.87 total individual, hemat 70%) yang memuat seluruh 14 paket flagship berbayar.
+  - Menyinkronkan seluruh playbook marketplace, SOP payout Zoneless USDC Solana untuk kreator Indonesia, serta register PRD v7.6.0.
+
 ## [7.5.0] - 2026-11-21
 ### Integrasi Intern-Discovery AI & Studio Skill Editor Multi-Target
 - **Dukungan Provider Intern-Discovery (Shanghai AI Lab) (`services/aiSettingsService.ts`, `services/universalAIService.ts`, `components/AISettingsModal.tsx`)**:
