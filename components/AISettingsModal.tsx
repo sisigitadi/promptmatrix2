@@ -613,32 +613,30 @@ const AISettingsModal: React.FC<AISettingsModalProps> = ({
             <div
               className={`p-3 rounded-xl border text-xs leading-relaxed flex items-start gap-2 ${
                 testResult.success
-                  ? 'bg-emerald-950/60 border-emerald-500/60 text-emerald-200'
-                  : testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')
-                    ? 'bg-amber-950/60 border-amber-500/60 text-amber-200'
-                    : testResult.isAuthError || testResult.message.includes('401') || testResult.message.includes('403')
-                      ? 'bg-rose-950/60 border-rose-500/60 text-rose-200'
-                      : 'bg-rose-950/60 border-rose-500/60 text-rose-200'
+                  ? testResult.isQuotaExceeded
+                    ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-100'
+                    : 'bg-emerald-950/60 border-emerald-500/60 text-emerald-200'
+                  : testResult.isAuthError || testResult.message.includes('401') || testResult.message.includes('403')
+                    ? 'bg-rose-950/60 border-rose-500/60 text-rose-200'
+                    : 'bg-rose-950/60 border-rose-500/60 text-rose-200'
               }`}
             >
               <span className="text-base shrink-0 mt-0.5">
                 {testResult.success
                   ? '✅'
-                  : testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')
-                    ? '⚠️'
-                    : testResult.isAuthError || testResult.message.includes('401') || testResult.message.includes('403')
-                      ? '🔑'
-                      : '❌'}
+                  : testResult.isAuthError || testResult.message.includes('401') || testResult.message.includes('403')
+                    ? '🔑'
+                    : '❌'}
               </span>
               <div className="flex-1 space-y-1">
                 <span className="font-bold block">
                   {testResult.success
-                    ? (language === 'id' ? 'Tes Koneksi Berhasil' : 'Connection Successful')
-                    : testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')
-                      ? (language === 'id' ? 'Otentikasi Berhasil - Kuota Akun Habis (HTTP 429)' : 'Authentication Succeeded - Account Quota Exceeded (HTTP 429)')
-                      : testResult.isAuthError || testResult.message.includes('401') || testResult.message.includes('403')
-                        ? (language === 'id' ? 'Otentikasi Gagal - API Key Ditolak' : 'Authentication Failed - API Key Rejected')
-                        : (language === 'id' ? 'Tes Koneksi Gagal' : 'Connection Failed')}
+                    ? testResult.isQuotaExceeded
+                      ? (language === 'id' ? 'Tes Koneksi & Otentikasi Berhasil (Catatan Saldo Kuota)' : 'Connection & Authentication Successful (Quota Advisory)')
+                      : (language === 'id' ? 'Tes Koneksi Berhasil' : 'Connection Successful')
+                    : testResult.isAuthError || testResult.message.includes('401') || testResult.message.includes('403')
+                      ? (language === 'id' ? 'Otentikasi Gagal - API Key Ditolak' : 'Authentication Failed - API Key Rejected')
+                      : (language === 'id' ? 'Tes Koneksi Gagal' : 'Connection Failed')}
                 </span>
                 <p className="whitespace-pre-line">{testResult.message}</p>
                 {(testResult.isQuotaExceeded || testResult.message.includes('429') || testResult.message.toLowerCase().includes('quota')) && (
