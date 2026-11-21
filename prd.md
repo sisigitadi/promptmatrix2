@@ -3,7 +3,7 @@
 > **Sistem:** PromptMatrix 2.0 - Guided AI Prompt Studio & Agent Skill Builder  
 > **Arsitek & Pemilik:** Sigit Adi ([https://sigitadi.id](https://sigitadi.id))  
 > **Domain Live:** [https://prompt.sigitadi.id](https://prompt.sigitadi.id)  
-> **Versi Saat Ini:** v7.6.4  
+> **Versi Saat Ini:** v7.6.5  
 > **Lisensi:** MIT  
 > **Standar Rekayasa:** Dikelola oleh RetroBOT (`RetroBOT.md`)
 
@@ -195,6 +195,12 @@ flowchart TD
     - **Data Judul & Profil Flagship Dwibahasa (`config/agensiConfig.ts` & `data/skillListingDemos.ts`):** Menambahkan field `titleId` pada seluruh 15 paket resmi `bundledSkillPacks` dan `SKILL_LISTING_DEMOS_ID` (`tagline`, `categoryLabel`, `highlights`, `demoRequest`, `demoResult`) lengkap via helper `getSkillListingDemo`.
     - **Kepatuhan Translasi Studio & Modal (`AgentSkillViewer.tsx` & `AgensiCatalogModal.tsx`):** Menghubungkan resolusi `baseRecord`, status bar H3, dropdown switcher formula, dan formulir Step 1 (*Judul Listing*, *Tagline Manfaat*, *Deskripsi Listing*, *Skenario Input Demo*, dan *Output Terverifikasi Demo*) ke kamus bahasa Indonesia saat mode ID aktif, mengeliminasi teks bahasa Inggris yang bocor.
     - **Penyelarasan Fallback & Sanitasi Draf:** Memperbarui generator fallback demo (`buildFallbackDemoResult`) dengan header dan tabel berbahasa Indonesia, serta mencegah draf usang berbahasa Inggris dari `localStorage` menimpa judul atau profil resmi bahasa Indonesia.
+
+  - **D42. Perbaikan Otomatis Kesiapan AI & Dashboard Pembaruan Realtime (v7.6.5):**
+    - **Tombol Aksi AI Langsung pada Kotak Catatan Kesiapan (`components/AgentSkillViewer.tsx`):** Menambahkan tombol `Bantu Perbaiki Catatan dengan AI` langsung pada header peringatan kesiapan saat audit menemukan saran perbaikan, memungkinkan resolusi 1-klik tanpa perlu mencari tombol di bagian bawah.
+    - **Banner Status Pembaruan Pasca-AI (`aiUpdateRecord`):** Menampilkan ringkasan audit realtime setelah fitur AI generate atau suggestion dijalankan, memuat delta skor kesiapan (sebelum ➔ sesudah, contoh: 67/100 ➔ 100/100), daftar perbaikan yang berhasil diselesaikan, bidang yang dimutakhirkan, dan konfirmasi kelayakan rilis 100%.
+    - **Penyelarasan Header Audit Bahasa Indonesia:** Mengizinkan header `## Ringkasan` di samping `## Summary` pada validator `auditSkillMarketReadiness` dan `AgentSkillViewer` sehingga hasil demo berbahasa Indonesia lolos uji kepatuhan secara otomatis.
+    - **Sanitasi Kebab-Case Tag AI (`services/universalAIService.ts`):** Memastikan tag hasil saran AI selalu dibersihkan menjadi format kebab-case murni (bebas huruf kapital, tanda pagar, spasi, dan stopword) agar 100% lolos verifikasi kepatuhan marketplace.
 
 ### Register Modul & Komponen Utama
 

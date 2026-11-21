@@ -706,7 +706,7 @@ export const auditSkillMarketReadiness = (
 
   const taglinePresent = tagline.length > 0;
   const demoRequestValid = demoRequest.length >= 25;
-  const hasSummaryHeading = /^##\s+Summary\b/im.test(demoResult);
+  const hasSummaryHeading = /^##\s+(?:Summary|Ringkasan)\b/im.test(demoResult);
   const demoResultValid = demoResult.length >= 700 && hasSummaryHeading;
 
   const checks: SkillMarketAuditCheck[] = [
@@ -778,11 +778,11 @@ export const auditSkillMarketReadiness = (
     },
     {
       id: 'demo-result',
-      label: 'Step 3 demo result (>= 700 chars + ## Summary)',
+      label: 'Step 3 demo result (>= 700 chars + ## Summary / ## Ringkasan)',
       passed: demoResultValid,
       detail: demoResultValid
-        ? `${demoResult.length} chars with ## Summary section`
-        : `Demo result is ${demoResult.length} chars (need >= 700 chars and a ## Summary heading).`,
+        ? `${demoResult.length} chars with summary section`
+        : `Demo result is ${demoResult.length} chars (need >= 700 chars and a ## Summary / ## Ringkasan heading).`,
     },
   ];
 

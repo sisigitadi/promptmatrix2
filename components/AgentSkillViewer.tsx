@@ -512,6 +512,16 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   const [editedDescMd, setEditedDescMd] = useState<string | null>(null);
   const [editedDemoRequest, setEditedDemoRequest] = useState<string | null>(null);
   const [editedDemoResult, setEditedDemoResult] = useState<string | null>(null);
+  const [aiUpdateRecord, setAiUpdateRecord] = useState<{
+    timestamp: number;
+    field: string;
+    previousScore: number;
+    newScore: number;
+    resolvedChecks: string[];
+    updatedFields: string[];
+    totalChecksCount: number;
+    passedChecksCount: number;
+  } | null>(null);
 
   const prevReqRef = useRef<string | undefined>(listingOverrides?.demoRequest);
   const prevResRef = useRef<string | undefined>(listingOverrides?.demoResult);
@@ -582,6 +592,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
     setEditedDescMd(null);
     setEditedDemoRequest(null);
     setEditedDemoResult(null);
+    setAiUpdateRecord(null);
   }, [activeSourceSlug, skillSpec.name, draftStorageKey]);
 
   useEffect(() => {
@@ -702,7 +713,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
   }, [activeTagsStr]);
 
   const demoResultChars = activeDemoResult.trim().length;
-  const demoResultHasSummary = /^##\s+Summary\b/im.test(activeDemoResult);
+  const demoResultHasSummary = /^##\s+(?:Summary|Ringkasan)\b/im.test(activeDemoResult);
   const demoResultReady = demoResultChars >= 700 && demoResultHasSummary;
 
   const currentRunner: RunnerInstallGuide = useMemo(
@@ -763,6 +774,7 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       setEditedDescMd(null);
       setEditedDemoRequest(null);
       setEditedDemoResult(null);
+      setAiUpdateRecord(null);
       onAiSuggestToast?.(t('toast_skill_draft_reset'), 'info');
     } catch (e) {
       console.error('Failed to reset skill draft:', e);
@@ -839,6 +851,10 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       return;
     }
 
+    const prevScore = auditResult.score;
+    const prevFailedChecks = auditResult.checks.filter((c) => !c.passed);
+    const prevFailedIds = new Set(prevFailedChecks.map((c) => c.id));
+
     setAiSuggestingField(field);
     try {
       const res = await suggestSkillMetadataWithUniversalAI({
@@ -852,37 +868,136 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
         language,
       });
 
+      const updatedFieldLabels: string[] = [];
+
+      let nextName = effectiveName;
+      let nextTitle = activeTitle;
+      let nextTagline = activeTagline;
+      let nextTagsList = activeTagsList;
+      let nextDescMd = activeDescMd;
+      let nextDemoReq = activeDemoRequest;
+      let nextDemoRes = activeDemoResult;
+
       if (field === 'name' && res.name) {
-        setEditedSkillName(res.name.toLowerCase().replace(/[^a-z0-9-]+/g, '-'));
+        nextName = res.name.toLowerCase().replace(/[^a-z0-9-]+/g, '-');
+        setEditedSkillName(nextName);
+        updatedFieldLabels.push(isId ? 'Nama Slug' : 'Slug Name');
       } else if (field === 'title' && res.title) {
-        setEditedTitle(res.title);
+        nextTitle = res.title;
+        setEditedTitle(nextTitle);
+        updatedFieldLabels.push(isId ? 'Judul Listing' : 'Listing Title');
       } else if (field === 'tagline' && res.tagline) {
-        setEditedTagline(res.tagline);
+        nextTagline = res.tagline;
+        setEditedTagline(nextTagline);
+        updatedFieldLabels.push(isId ? 'Tagline' : 'Tagline');
       } else if (field === 'tags' && res.tags) {
+        nextTagsList = res.tags;
         setEditedTagsStr(res.tags.join(', '));
+        updatedFieldLabels.push(isId ? 'Tag Kategori' : 'Category Tags');
       } else if (field === 'description' && res.description) {
-        setEditedDescMd(res.description);
+        nextDescMd = res.description;
+        setEditedDescMd(nextDescMd);
+        updatedFieldLabels.push(isId ? 'Deskripsi Markdown' : 'Description Markdown');
       } else if (field === 'demoRequest' && res.demoRequest) {
-        setEditedDemoRequest(res.demoRequest);
-        onUpdateDemoFields?.({ demoRequest: res.demoRequest });
+        nextDemoReq = res.demoRequest;
+        setEditedDemoRequest(nextDemoReq);
+        onUpdateDemoFields?.({ demoRequest: nextDemoReq });
+        updatedFieldLabels.push(isId ? 'Demo Permintaan' : 'Demo Request');
       } else if (field === 'demoResult' && res.demoResult) {
-        setEditedDemoResult(res.demoResult);
-        onUpdateDemoFields?.({ demoResult: res.demoResult });
+        nextDemoRes = res.demoResult;
+        setEditedDemoResult(nextDemoRes);
+        onUpdateDemoFields?.({ demoResult: nextDemoRes });
+        updatedFieldLabels.push(isId ? 'Demo Hasil' : 'Demo Result');
       } else if (field === 'all') {
-        if (res.name) setEditedSkillName(res.name.toLowerCase().replace(/[^a-z0-9-]+/g, '-'));
-        if (res.title) setEditedTitle(res.title);
-        if (res.tagline) setEditedTagline(res.tagline);
-        if (res.tags) setEditedTagsStr(res.tags.join(', '));
-        if (res.priceUsd) setEditedPriceStr(String(res.priceUsd));
-        if (res.description) setEditedDescMd(res.description);
-        if (res.demoRequest) setEditedDemoRequest(res.demoRequest);
-        if (res.demoResult) setEditedDemoResult(res.demoResult);
+        if (res.name) {
+          nextName = res.name.toLowerCase().replace(/[^a-z0-9-]+/g, '-');
+          setEditedSkillName(nextName);
+          updatedFieldLabels.push(isId ? 'Nama Slug' : 'Slug Name');
+        }
+        if (res.title) {
+          nextTitle = res.title;
+          setEditedTitle(nextTitle);
+          updatedFieldLabels.push(isId ? 'Judul Listing' : 'Listing Title');
+        }
+        if (res.tagline) {
+          nextTagline = res.tagline;
+          setEditedTagline(nextTagline);
+          updatedFieldLabels.push(isId ? 'Tagline' : 'Tagline');
+        }
+        if (res.tags) {
+          nextTagsList = res.tags;
+          setEditedTagsStr(res.tags.join(', '));
+          updatedFieldLabels.push(isId ? 'Tag Kategori' : 'Category Tags');
+        }
+        if (res.priceUsd) {
+          setEditedPriceStr(String(res.priceUsd));
+          updatedFieldLabels.push(isId ? 'Harga' : 'Price');
+        }
+        if (res.description) {
+          nextDescMd = res.description;
+          setEditedDescMd(nextDescMd);
+          updatedFieldLabels.push(isId ? 'Deskripsi' : 'Description');
+        }
+        if (res.demoRequest) {
+          nextDemoReq = res.demoRequest;
+          setEditedDemoRequest(nextDemoReq);
+          updatedFieldLabels.push(isId ? 'Demo Permintaan' : 'Demo Request');
+        }
+        if (res.demoResult) {
+          nextDemoRes = res.demoResult;
+          setEditedDemoResult(nextDemoRes);
+          updatedFieldLabels.push(isId ? 'Demo Hasil' : 'Demo Result');
+        }
         onUpdateDemoFields?.({
           demoRequest: res.demoRequest,
           demoResult: res.demoResult,
         });
       }
-      onAiSuggestToast?.(t('toast_skill_ai_suggested'), 'success');
+
+      // Compute next audit state synchronously
+      const nextSpec: AgentSkillSpec = {
+        ...activeSpec,
+        name: nextName,
+        description: nextDescMd.slice(0, 1024),
+        metadata: {
+          ...activeSpec.metadata,
+          framework: nextTitle,
+        },
+      };
+
+      const nextAudit = auditSkillMarketReadiness(nextSpec, {
+        tagline: nextTagline,
+        tags: nextTagsList,
+        demoRequest: nextDemoReq,
+        demoResult: nextDemoRes,
+      });
+
+      const nextFailedIds = new Set(nextAudit.checks.filter((c) => !c.passed).map((c) => c.id));
+      const resolvedChecks = prevFailedChecks
+        .filter((c) => prevFailedIds.has(c.id) && !nextFailedIds.has(c.id))
+        .map((c) => c.label);
+
+      setAiUpdateRecord({
+        timestamp: Date.now(),
+        field,
+        previousScore: prevScore,
+        newScore: nextAudit.score,
+        resolvedChecks,
+        updatedFields: updatedFieldLabels,
+        totalChecksCount: nextAudit.totalCount,
+        passedChecksCount: nextAudit.passedCount,
+      });
+
+      const toastMsg =
+        nextAudit.score === 100
+          ? (isId
+              ? 'Sempurna! Pembaruan AI mencapai skor 100/100 (Semua catatan kesiapan selesai).'
+              : 'Perfect! AI update reached 100/100 (All readiness notes resolved).')
+          : (isId
+              ? `Pembaruan AI diterapkan! Skor kesiapan meningkat: ${prevScore}/100 ➔ ${nextAudit.score}/100.`
+              : `AI update applied! Readiness score improved: ${prevScore}/100 ➔ ${nextAudit.score}/100.`);
+
+      onAiSuggestToast?.(toastMsg, 'success');
     } catch (err: unknown) {
       console.error('Error suggesting skill metadata with AI:', err);
       onAiSuggestToast?.(t('toast_skill_ai_error'), 'error');
@@ -1200,22 +1315,176 @@ export const AgentSkillViewer: React.FC<AgentSkillViewerProps> = ({
       {/* STEP 1: Info Produk & Contoh Demo */}
       {activeStep === 'info' && (
         <div className="space-y-3.5 min-w-0">
-          {/* Actionable Quality Gate Summary (only shows items needing attention) */}
+          {/* Post-AI Update Banner (Shows score delta, resolved checks, updated fields, and readiness status) */}
+          {aiUpdateRecord && (
+            <div
+              className={`p-3.5 rounded-xl border transition-all text-xs space-y-2.5 ${
+                aiUpdateRecord.newScore === 100
+                  ? isLightTheme
+                    ? 'bg-emerald-50/95 border-emerald-300 text-emerald-950'
+                    : 'bg-emerald-950/40 border-emerald-500/40 text-emerald-200'
+                  : isLightTheme
+                    ? 'bg-sky-50/95 border-sky-300 text-sky-950'
+                    : 'bg-sky-950/35 border-sky-500/40 text-sky-200'
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-2.5 w-2.5 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                  </span>
+                  <span className="font-bold text-xs uppercase tracking-wider">
+                    {t('skill_ai_update_banner_title')}
+                  </span>
+                  <span className="text-[10px] opacity-75 font-mono">
+                    {new Date(aiUpdateRecord.timestamp).toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit',
+                    })}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setAiUpdateRecord(null)}
+                  className="p-1 rounded hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+                  title={t('skill_ai_update_dismiss')}
+                  aria-label={t('skill_ai_update_dismiss')}
+                >
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                      fillRule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Score Delta Display */}
+              <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                <div className="flex items-center gap-1.5 font-semibold text-xs">
+                  <span>{t('skill_ai_update_score_delta')}</span>
+                  <span className="line-through opacity-70 font-mono">
+                    {aiUpdateRecord.previousScore}/100
+                  </span>
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400 font-mono text-sm">
+                    ➔ {aiUpdateRecord.newScore}/100
+                  </span>
+                  {aiUpdateRecord.newScore > aiUpdateRecord.previousScore && (
+                    <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold">
+                      +{aiUpdateRecord.newScore - aiUpdateRecord.previousScore} poin
+                    </span>
+                  )}
+                </div>
+                <span className="text-[11px] opacity-80">
+                  ({aiUpdateRecord.passedChecksCount}/{aiUpdateRecord.totalChecksCount}{' '}
+                  {isId ? 'cek lolos' : 'checks passed'})
+                </span>
+              </div>
+
+              {/* Resolved Readiness Notes */}
+              {aiUpdateRecord.resolvedChecks.length > 0 && (
+                <div className="space-y-1 pt-1 border-t border-current/10">
+                  <p className="font-semibold text-[11px] text-emerald-700 dark:text-emerald-300 flex items-center gap-1">
+                    <svg className="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <span>
+                      {isId
+                        ? `${aiUpdateRecord.resolvedChecks.length} Catatan Kesiapan Berhasil Diselesaikan:`
+                        : `${aiUpdateRecord.resolvedChecks.length} Readiness Notes Resolved:`}
+                    </span>
+                  </p>
+                  <ul className="list-disc pl-5 space-y-0.5 text-[11px]">
+                    {aiUpdateRecord.resolvedChecks.map((item, idx) => (
+                      <li key={idx} className="font-medium">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Updated Fields */}
+              {aiUpdateRecord.updatedFields.length > 0 && (
+                <div className="text-[11px] opacity-90 flex flex-wrap items-center gap-1.5 pt-1">
+                  <span className="font-medium">{t('skill_ai_update_changed_fields')}</span>
+                  {aiUpdateRecord.updatedFields.map((f, i) => (
+                    <span
+                      key={i}
+                      className="px-1.5 py-0.5 rounded bg-black/10 dark:bg-white/10 font-mono text-[10px]"
+                    >
+                      {f}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {/* Final outcome status */}
+              {aiUpdateRecord.newScore === 100 ? (
+                <p className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300 pt-0.5">
+                  🎉 {t('skill_ai_update_all_passed')}
+                </p>
+              ) : (
+                <p className="text-[10px] opacity-80 pt-0.5">
+                  💡 {t('skill_ai_update_partial')}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Actionable Quality Gate Summary (with 1-Click AI Auto-Fix Button) */}
           {failedAuditChecks.length > 0 && (
             <div
-              className={`p-3 rounded-xl border text-[11px] space-y-1 ${
+              className={`p-3 rounded-xl border text-[11px] space-y-2 ${
                 isLightTheme
                   ? 'bg-amber-50 border-amber-300 text-amber-950'
                   : 'bg-amber-950/30 border-amber-500/35 text-amber-200'
               }`}
             >
-              <p className="font-bold">
-                {isId
-                  ? `Catatan Kesiapan (${failedAuditChecks.length} saran perbaikan):`
-                  : `Readiness Notes (${failedAuditChecks.length} items to polish):`}
-              </p>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <p className="font-bold flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-amber-500" />
+                  <span>
+                    {isId
+                      ? `Catatan Kesiapan (${failedAuditChecks.length} saran perbaikan):`
+                      : `Readiness Notes (${failedAuditChecks.length} items to polish):`}
+                  </span>
+                </p>
+                <button
+                  type="button"
+                  onClick={() => handleAiSuggestSkill('all')}
+                  disabled={Boolean(aiSuggestingField)}
+                  className={`min-h-[30px] px-2.5 py-1 rounded-lg font-semibold text-[11px] bg-amber-600 hover:bg-amber-700 text-white flex items-center gap-1.5 shadow-sm transition-colors disabled:opacity-50 ${focusRingClass}`}
+                >
+                  <svg
+                    className={`w-3 h-3 ${aiSuggestingField === 'all' ? 'animate-spin' : ''}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                  <span>
+                    {aiSuggestingField === 'all'
+                      ? t('skill_ai_fixing_notes')
+                      : t('skill_ai_fix_readiness_btn')}
+                  </span>
+                </button>
+              </div>
               <ul className="list-disc pl-4 space-y-0.5">
-                {failedAuditChecks.slice(0, 3).map((item) => (
+                {failedAuditChecks.slice(0, 4).map((item) => (
                   <li key={item.id} className="break-words">
                     <span className="font-semibold">{item.label}:</span> {item.detail}
                   </li>

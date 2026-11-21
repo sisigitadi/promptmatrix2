@@ -1707,9 +1707,22 @@ Return ONLY comma-separated tags:`;
     const cleaned = sanitizePromptText(raw).replace(/^["']|["']$/g, '').trim();
     const tags = cleaned
       .split(',')
-      .map((t) => t.trim().replace(/^#/, ''))
-      .filter(Boolean);
-    return { tags };
+      .map((t) =>
+        t
+          .trim()
+          .toLowerCase()
+          .replace(/^#+/, '')
+          .replace(/[^a-z0-9-]+/g, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-+|-+$/g, '')
+      )
+      .filter((t) => t.length >= 2 && !['ai', 'tool', 'agent'].includes(t));
+    return {
+      tags:
+        tags.length >= 3
+          ? tags.slice(0, 7)
+          : ['open-agent-skills', 'agent-skill', 'workflow', 'automation'],
+    };
   }
 
   if (field === 'description') {
@@ -1861,12 +1874,31 @@ Return ONLY valid JSON without markdown codeblock wrapper (\`\`\`json):`;
     .replace(/\s*```$/, '')
     .trim();
 
+  const sanitizeKebabTag = (t: string) =>
+    t
+      .trim()
+      .toLowerCase()
+      .replace(/^#+/, '')
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
   try {
     const parsed = JSON.parse(cleanJson);
+    const rawTags = Array.isArray(parsed.tags) ? parsed.tags.map(String) : undefined;
+    const cleanTags = rawTags
+      ? rawTags
+          .map(sanitizeKebabTag)
+          .filter((t) => t.length >= 2 && !['ai', 'tool', 'agent'].includes(t))
+      : undefined;
+
     return {
       title: typeof parsed.title === 'string' ? parsed.title.trim() : undefined,
       tagline: typeof parsed.tagline === 'string' ? parsed.tagline.trim() : undefined,
-      tags: Array.isArray(parsed.tags) ? parsed.tags.map(String) : undefined,
+      tags:
+        cleanTags && cleanTags.length >= 3
+          ? cleanTags.slice(0, 7)
+          : ['open-agent-skills', 'agent-skill', 'workflow', 'automation'],
       priceUsd: typeof parsed.priceUsd === 'number' ? parsed.priceUsd : 14.99,
       description: typeof parsed.description === 'string' ? parsed.description.trim() : undefined,
       demoRequest: typeof parsed.demoRequest === 'string' ? parsed.demoRequest.trim() : undefined,
@@ -1878,7 +1910,7 @@ Return ONLY valid JSON without markdown codeblock wrapper (\`\`\`json):`;
       tagline: isIndonesian
         ? 'Otomasi alur kerja prompt cerdas dan deterministik dengan panduan teruji.'
         : 'Automates intelligent, deterministic prompt workflows with production guardrails.',
-      tags: ['AI Agent', 'Prompt Engineering', 'Productivity'],
+      tags: ['open-agent-skills', 'agent-skill', 'workflow', 'automation', 'productivity'],
       priceUsd: 14.99,
       description: raw,
     };
