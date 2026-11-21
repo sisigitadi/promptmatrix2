@@ -88,8 +88,10 @@ npm run build
 
 # Preview hasil build produksi
 npm run preview
+# Publikasikan ke GitHub Pages
+npm run deploy
 ```
 
 ---
 
-*PromptMatrix 2.0 — Optimize Your AI, Starting from the Prompt.*
+*PromptMatrix 2.0: Optimize Your AI, Starting from the Prompt.*
